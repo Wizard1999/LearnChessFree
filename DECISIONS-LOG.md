@@ -1,0 +1,66 @@
+# Decisions I made on my own (veto any)
+
+Andrew said "take over and do whatever you think is the ideal course of action". These are the calls I made without asking. Each has a reason and a way to reverse it. Newest at the bottom of each section.
+
+Evidence labels: [V] verified here, [S] secondary, [R] recalled, [I] inference, [H] hypothesis.
+
+## Product
+
+| # | Decision | Why | How to reverse |
+|---|---|---|---|
+| A1 | **Local-first static app.** No accounts, no backend, progress in IndexedDB, export/import as one JSON file. | Fastest way to a real product; works offline; no privacy burden; you can host it anywhere. A backend can come later without changing the content format. | Add a sync layer behind `db.ts`; nothing else depends on storage. |
+| A2 | **No live AI in the learning loop.** AI writes and checks content ahead of time; the learner gets detectors, engine evidence and reviewed text. | Live AI explanations are the most likely place for a confident wrong chess claim. Everything the learner sees can be checked before it ships. | Revisit only with a verifier between the model and the learner. |
+| A3 | **Strict build.** `build_content.py` ships an item only if its evidence hash matches its current content. | Stale checks are how wrong positions get shipped. A skipped item is visible; a wrong one is not. | Flag in the script, not recommended. |
+| A4 | **Mastery counts only first attempts, weighted by how little help the cue gave.** Cue ladder 1-4 with weights 1:0.2, 2:0.5, 3:1, 4:1.5; a hint-assisted success counts as half a failure of that weight; "reliable" needs P(rate ≥ 0.8) ≥ 0.85 and ≥ 5 weighted unlabelled evidence. | A student who only ever sees labelled "find the fork" puzzles learns to answer labelled puzzles. These numbers are my judgement [H]; they are in `app/src/lib/mastery.ts`, with tests. | Change the constants; tests document the behaviour. |
+| A5 | **Placement results are "assumed", not "known".** A tier that passes at ≥ 67% marks lower skills as assumed, and the first real practice can overturn that. | One 5-item set cannot establish mastery. | `Placement.tsx` threshold. |
+| A6 | **Bots are labelled as engine limits, not human ratings.** "Casual" = depth 3, "Club" = UCI_Elo 1500, etc. | Stockfish's Elo setting is not calibrated to Lichess or Chess.com ratings. Claiming otherwise would be an unverified rating claim. | Replace with Maia-style bots when licence is checked (G5). |
+| A7 | **Annotate-before-engine.** Review of your own games asks you what you think happened before showing the engine's view. | It is the habit the whole project exists to teach. | Setting. |
+| A8 | **Typed move input beside drag-and-drop.** | Accessibility and keyboard use; also lets a student think in notation. | Component prop. |
+| A9 | **Contrast lab as a core feature.** Edit one thing in a position, predict, then check with the engine. | It tests whether a student knows what an idea depends on, which labelled puzzles cannot. | Remove route. |
+| A10 | **Own-plan experiments (My plan).** Pick a skill, say what you will do, baseline, train, check on unseen positions, show a Wilson interval, ask what you decide. | The self-direction strand needs a place where the student leads and the system only checks reasoning. | Remove route. |
+
+## Content and rigour
+
+| # | Decision | Why |
+|---|---|---|
+| B1 | **Claim-level verification.** Every item has claims (legal move, mate in n, wins material, quiet position, tablebase result, ...) and the validator checks the claim, not the engine's number. A "wins material" claim fails if the line ends in a dead draw. | About half my hand-written tactical positions had defects when first checked [V]. |
+| B2 | **Hand-written positions are untrusted.** Positions come from generators or from the Lichess puzzle database and then pass the validator. | Same reason. |
+| B3 | **Engine strength recorded in the evidence file.** Stockfish 19 Lite WASM at fixed depth 16; "verified" means evidence under those limits, not a proof. | Honesty about what was checked. |
+| B4 | **Lesson authors are agents, and every lesson is marked `needs-human` until a strong player signs it off (G3).** The app shows "Not yet reviewed by a person". | I will not let a plausible-sounding explanation pass as reviewed. |
+| B5 | **Card length limits.** ≤ 90 words is an error, ≤ 70 a warning, and every card needs a task within two steps. | Reading-heavy lessons are where self-study programs lose people. |
+| B6 | **Original wording everywhere.** Books are sources of ideas and facts; no passages are reproduced. The five sheets in `sources/sheets/` are my notes, not quotations. | Rights discipline in CLAUDE.md. |
+| B7 | **Ratings carry evidence grades (G0-G3), Lichess-anchored.** An item gets a rating; a concept never does. | CLAUDE.md rule 6. |
+| B8 | **Simulated expert debates stay labelled as simulations.** | CLAUDE.md rule 5. |
+
+## Openings explorer (the chesstree-style flowchart)
+
+| # | Decision | Why |
+|---|---|---|
+| C1 | **Compute statistics ourselves from the Lichess CC0 monthly dumps.** The explorer API requires authentication (HTTP 401) [V]. | Public bulk data is licensed CC0 and lets us build the 8 rating bands ourselves. |
+| C2 | **Graph keyed by position, not move sequence (EPD hash).** Different move orders to the same position merge; the tree draws a ⇄ badge and the table lists "other ways to get here". | That is what makes "this transposes into..." true, not decorative. |
+| C3 | **Eight rating bands by average of both players' ratings**, from under 900 up to "2100+ (online)". | Matches how the Lichess explorer buckets, so stats are comparable. The top band is online players, not over-the-board masters, and is labelled that way. |
+| C4 | **Core file for plies 0-8, deeper nodes in lazy chunks.** | Loads fast, works offline once cached. |
+| C5 | **Opening names from lichess-org/chess-openings (CC0).** | Free to use. |
+| C6 | **Sample, don't ingest everything.** The September 2026 dump is 29.2 GB; the pipeline drew one random 32 MiB frame from each of 520 equal byte strata via HTTP range requests (seed 20260924), covering all 30 days. 7.5M games scanned, **4,752,291 used** (blitz, rapid, classical; bullet and correspondence excluded). Counts are a sample of online games, labelled as such, not master or over-the-board data. Download was about 4.4 GB including an exploratory prefix, roughly 10% over the 4 GB budget I set. Method, biases and validation: `docs/openings-data.md`. | Downloading and decompressing the full dump is not reasonable on this machine without asking. e4 is 61% overall (66% in the lowest band, 50% in 2100+); a regex on one raw frame gave 60.3%, so I read it as the player population, not a parsing error. |
+| C8 | **Hide percentages and results when a band has fewer than 30 games at that node.** Deep per-band counts are tiny, and a percentage of 3 games is noise. The table then shows the game count and "too few". | Same reason; `FEW` in `Openings.tsx`. |
+| C7 | **Repertoire builder** (star a move, export PGN) is part of the explorer. | Turns the tree from a viewer into a study tool. |
+
+## Process
+
+| # | Decision | Why |
+|---|---|---|
+| D1 | **No git commits.** Working tree only. | CLAUDE.md rule 8, until you say otherwise (G2). |
+| D2 | **Parallel agents own separate directories** (generators, detectors, lesson authors, openings pipeline). I validate their output before it goes into the build. | Speed, with a check at the join. |
+| D3 | **Type errors in `app/src/chess/` are the detectors agent's, not mine.** I filter them when I type-check my own files. | Avoids two writers on the same files. |
+| D4 | **Questions go to `QUESTIONS-AND-GATES.md`, not into chat.** | You asked for this. |
+| D5 | **Exercises before lessons.** Only 31 of 194 skill nodes had a lesson and most of S4-S11 had no exercises, so I run an exercise-expansion workflow first (positional structure, tablebase endgames, extra puzzle themes), each batch independently audited, then write the missing lessons against those items. | A lesson with nothing to practise teaches by telling. |
+| D6 | **One owner for `tools/validate.py` at a time.** The positional-exercise agent hardens it (atomic, locked tablebase cache; promotion-square dedupe; `move_is_not_mate`; null-move support; structure claims) while the other generators wait for a marker file. | Two agents editing the validator, or sharing an unlocked cache, is how evidence goes stale or corrupt. |
+| D7 | **Content smoke test over the shipped bundle** (`app/src/content.smoke.test.ts`). | It caught items the player could not answer (no choices, "none" threats) the moment they shipped. |
+| D8 | **Detector tags are leads, not explanations**, and will be limited to detectors whose measured precision is high (`docs/detectors.md`). | A false "pin" on a mating move is worse than no tag. |
+
+| D9 | **"Also sound" tier for find-the-move items.** For unlabelled items (cue 3+), a move outside the accepted set is compared with the engine's best line at depth 14 in the browser; within 20 centipawns, or both decisively winning (500+), or an equally fast mate, counts as correct and says so, naming the move the exercise had in mind. Attempts carry `alt: true`. | Accepted sets are the engine's top moves when the item was validated. Marking a sound move wrong is the single-accepted-answer failure this school exists to avoid. The tolerance (20 cp) and the 500 cp cutoff are my first guesses; the message says it is depth-limited evidence (`lib/altmove.ts`, with tests). |
+| D10 | **Guess-the-move scoring has no partial credit:** correct if in the accepted set or also sound; plan tags on items are for review and teaching, not scoring. | The schema has no scoring rule beyond that; simple and explainable. |
+| D11 | **One skill per lesson.** Secondary skills are covered by practice steps and items, not by listing two skills on a lesson. | "Recommended next" and the mastery model key on one node per lesson. |
+| D12 | **Thinking-prompt panels exist for LOOP.V1-V3 only; V4+ and CAL/PRA/SELF lessons say "no panel".** "Retire after five closed solves" stays a first guess for all three levels. Arithmetic fields (clock sums, error-log counts) are asserted by the authoring script, not the validator, for v1. | V4+ are habits for own games; a panel would be decoration. A validator claim type for arithmetic is not worth the complexity yet. |
+| D13 | **A lesson may list extra skill nodes it also teaches (`also`, at most two nodes per lesson in new work).** I mapped 13 existing lessons that already cover more than their main node (for example one lesson teaches both rook and bishop movement). The Course map and `tools/check_all.py` honour it. | It records real coverage without duplicate lessons. 115 nodes still had no coverage after this mapping; they are being written in two tranches with a review and fix step per batch. |
+| D14 | **Detector tags shown to learners are limited to the measured-safe set:** fork, absolute pin, discovered attack and trapped piece only when the detector verified they work; double check; back-rank mate; capture of a loose non-pawn piece. Skewers (88% on a small sample), relative pins and any tag without `works` are hidden. Tags are computed once at analysis time and stored with the game. | The benchmark (`docs/detectors.md`): Stockfish confirmed 88-100% of `works` claims on real games; Lichess-label precision is not the criterion because many unlabelled tactics are real. |
