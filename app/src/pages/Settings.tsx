@@ -3,7 +3,7 @@ import { exportAll, importAll, resetAll } from '../db'
 import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
-export function Settings() {
+export function SettingsContent() {
   const [msg, setMsg] = useState<string | null>(null)
   const [loop, setLoop] = useState<LoopState>(EMPTY_LOOP)
   const [look, setLook] = useState<Appearance>(loadAppearance())
@@ -35,18 +35,7 @@ export function Settings() {
   }
 
   return (
-    <main className="page">
-      <h1>Settings and your data</h1>
-      <section className="card">
-        <h2>Your data stays with you</h2>
-        <p>Progress, notes and games are stored only in this browser. There is no account. Nothing is sent anywhere, except that pressing "Fetch my latest games" on the My games page asks Lichess or Chess.com for your public games and so sends them the username you typed. Export a file regularly: it is plain JSON you can read without this app, and importing it restores everything.</p>
-        <div className="row">
-          <button type="button" className="primary" onClick={() => void doExport()}>Export everything</button>
-          <label className="button">Import a file <input type="file" accept="application/json" hidden onChange={e => void doImport(e.target.files?.[0])} /></label>
-          <button type="button" onClick={() => void doReset()}>Delete everything</button>
-        </div>
-        {msg && <p role="status">{msg}</p>}
-      </section>
+    <>
       <section className="card">
         <h2>Appearance</h2>
         <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches.</p>
@@ -65,6 +54,16 @@ export function Settings() {
         ))}
       </section>
       <section className="card">
+        <h2>Your data stays with you</h2>
+        <p>Progress, notes and games are stored only in this browser. There is no account. Nothing is sent anywhere, except that pressing "Fetch my latest games" on the My games page asks Lichess or Chess.com for your public games and so sends them the username you typed. Export a file regularly: it is plain JSON you can read without this app, and importing it restores everything.</p>
+        <div className="row">
+          <button type="button" className="primary" onClick={() => void doExport()}>Export everything</button>
+          <label className="button">Import a file <input type="file" accept="application/json" hidden onChange={e => void doImport(e.target.files?.[0])} /></label>
+          <button type="button" onClick={() => void doReset()}>Delete everything</button>
+        </div>
+        {msg && <p role="status">{msg}</p>}
+      </section>
+      <section className="card">
         <h2>Thinking prompts</h2>
         <p className="small">After you finish a Thinking Loop lesson, its prompt is offered during mixed practice. It goes away once you solve {RETIRE_AFTER} mixed exercises in a row without opening it (that number is a first guess). You can bring any of them back here.</p>
         <ul className="plain small">{LOOP_LEVELS.map(l => (
@@ -80,6 +79,11 @@ export function Settings() {
           <li>Engine strength settings in the practice opponent are limits on the engine, not human ratings.</li>
         </ul>
       </section>
-    </main>
+    </>
   )
+}
+
+/** The full-page version, kept so /settings still works as a direct link. */
+export function Settings() {
+  return <main className="page"><h1>Settings and your data</h1><SettingsContent /></main>
 }

@@ -3,13 +3,13 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 58%** (47 of 83 tasks done, in-progress tasks count half). Updated 2026-10-25T10:15+00:00 UTC.
+**Overall: 59%** (49 of 85 tasks done, in-progress tasks count half). Updated 2026-10-25T10:20+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
-| Phase 2: The app | 16/19 | 84% |
+| Phase 2: The app | 18/21 | 86% |
 | Phase 3: Curriculum graph | 2/4 | 50% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/9 | 22% |
 | Phase 4: Exercise bank | 4/8 | 62% |
@@ -81,6 +81,8 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] "Also sound" recognition of equally good moves
 - [x] Memory drills and whole-line entry
 - [x] Fix: Black pieces can be moved by dragging (board turn colour)
+- [x] Fix: crooked board (crisp SVG squares, width snapped to a multiple of 8)
+- [x] Settings as a side panel (overlay drawer) with theme, board, text size, motion
 - [x] Roadmap page in the app
 - [ ] Adversarial code review of the app and fixes
 - [ ] Accessibility and mobile fixes from the review

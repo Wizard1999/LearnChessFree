@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { ContentProvider } from './lib/content'
 import { Today } from './pages/Today'
@@ -15,10 +16,12 @@ import { PlanPage } from './pages/Plan'
 import { Lab } from './pages/Lab'
 import { Drill } from './pages/Drill'
 import { Roadmap } from './pages/Roadmap'
+import { SettingsDrawer } from './components/SettingsDrawer'
 
-const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/plan', 'My plan'], ['/progress', 'Progress'], ['/lab', 'Contrast lab'], ['/openings', 'Openings'], ['/games', 'My games'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap'], ['/settings', 'Settings']]
+const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/plan', 'My plan'], ['/progress', 'Progress'], ['/lab', 'Contrast lab'], ['/openings', 'Openings'], ['/games', 'My games'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
 export default function App() {
+  const [settingsOpen, setSettingsOpen] = useState(false)
   return (
     <ContentProvider>
       <header className="top">
@@ -26,7 +29,9 @@ export default function App() {
         <nav aria-label="Main">
           {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
         </nav>
+        <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>
       </header>
+      <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <Routes>
         <Route path="/" element={<Today />} />
         <Route path="/course" element={<Course />} />
