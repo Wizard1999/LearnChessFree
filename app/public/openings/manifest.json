@@ -1,0 +1,82 @@
+{
+ "version": 1,
+ "source": {
+  "name": "Lichess standard rated games (CC0)",
+  "month": "2026-09",
+  "url": "https://database.lichess.org/standard/lichess_db_standard_rated_2026-09.pgn.zst",
+  "games_scanned": 7503458,
+  "games_used": 4752291,
+  "speeds": [
+   "blitz",
+   "rapid",
+   "classical"
+  ],
+  "sampling": "Stratified random sample of 520 complete zstd frames of the monthly file (the file is a chain of independent 32 MiB frames, ~14,400 consecutive games each, 3-15 minutes of play): the 29.2 GB file was cut into 520 equal byte strata and one frame was drawn at random (seed 20260924) in each, so the sample spans 2026.09.01 00:00:00 to 2026.09.30 22:40:06 UTC (30 distinct days, every hour of the day) instead of only the first days of the month. Bias: online games by Lichess players, not master or over-the-board data; bullet/ultrabullet/correspondence excluded; one short contiguous window per stratum, so the same players recur and busy hours are over-represented in proportion to traffic; the first and last (cut) game of every frame is dropped; byte-position sampling gives each frame an equal chance (frames are ~equal in games).",
+  "generated": "2026-10-25T00:11:00+00:00"
+ },
+ "bands": [
+  {
+   "id": "u900",
+   "label": "Below 900",
+   "min": 0,
+   "max": 899,
+   "games": 177947
+  },
+  {
+   "id": "b900",
+   "label": "900-1100",
+   "min": 900,
+   "max": 1099,
+   "games": 366802
+  },
+  {
+   "id": "b1100",
+   "label": "1100-1300",
+   "min": 1100,
+   "max": 1299,
+   "games": 584692
+  },
+  {
+   "id": "b1300",
+   "label": "1300-1500",
+   "min": 1300,
+   "max": 1499,
+   "games": 812466
+  },
+  {
+   "id": "b1500",
+   "label": "1500-1700",
+   "min": 1500,
+   "max": 1699,
+   "games": 977309
+  },
+  {
+   "id": "b1700",
+   "label": "1700-1900",
+   "min": 1700,
+   "max": 1899,
+   "games": 925796
+  },
+  {
+   "id": "b1900",
+   "label": "1900-2100",
+   "min": 1900,
+   "max": 2099,
+   "games": 593223
+  },
+  {
+   "id": "b2100",
+   "label": "2100+ (online)",
+   "min": 2100,
+   "max": 9999,
+   "games": 314056
+  }
+ ],
+ "bandRule": "average of white and black rating",
+ "maxPly": 16,
+ "minCountCore": 130,
+ "minCountChunk": 17,
+ "core": "core.json",
+ "chunkIndex": "chunks.json",
+ "dir": "chunks/"
+}
