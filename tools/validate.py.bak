@@ -1,0 +1,150 @@
+"""Content validator: structural checks + machine verification of every claim.
+
+    python tools/validate.py [content/items/foo.json ...]    (default: all item files)
+
+Writes generated evidence to content/_evidence/<item-file>.evidence.json. Exit code 1 if anything fails.
+"""
+import hashlib, json, sys, datetime
+from pathlib import Path
+import chess
+from engine import Engine, ROOT
+
+VAL = {chess.PAWN: 1, chess.KNIGHT: 3, chess.BISHOP: 3, chess.ROOK: 5, chess.QUEEN: 9, chess.KING: 0}
+DEPTH = 16
+
+
+def material(board, color):
+    return sum(VAL[p.piece_type] for p in board.piece_map().values() if p.color == color)
+
+
+def quiet_end_delta(board, pv, mover, max_plies=12):
+    """Play the engine's best-defence line for up to `max_plies`; return the mover's net material change
+    measured right after the LAST capture in that line (so trailing quiet moves, and quiet replies to a check
+    that precede a capture, do not distort it). Returns (None, ply) if the line contains an illegal move."""
+    b = board.copy()
+    start = material(b, mover) - material(b, not mover)
+    delta = 0
+    for i, uci in enumerate(pv[:max_plies]):
+        mv = chess.Move.from_uci(uci)
+        if mv not in b.legal_moves:
+            return None, i
+        cap = b.is_capture(mv)
+        b.push(mv)
+        if cap or b.is_checkmate():
+            delta = (material(b, mover) - material(b, not mover)) - start
+    return delta, b
+
+
+def check_claim(eng, pos, claim):
+    board = chess.Board(pos["fen"])
+    t = claim["type"]; p = claim.get("params", {})
+    if t == "legal_move":
+        ok = chess.Move.from_uci(p["move"]) in board.legal_moves
+        return dict(result="pass" if ok else "fail", measured=None, settings=None, pv=None, score=None)
+    if t == "material_after_move":
+        mv = chess.Move.from_uci(p["move"])
+        if mv not in board.legal_moves:
+            return dict(result="fail", reason="illegal move", measured=None, settings=None, pv=None, score=None)
+        mover = board.turn
+        after = board.copy(); after.push(mv)
+        if after.is_game_over():                              # e.g. the move delivers mate: nothing left to search
+            delta, _ = quiet_end_delta(board, [mv.uci()], mover)
+            ok = delta >= p.get("min", -999) and delta <= p.get("max", 999)
+            if ok and not after.is_checkmate() and p.get("min", -999) > 0:   # "wins material" must not end in a dead draw
+                return dict(result="fail", reason="material is won but the game is a draw (insufficient material/stalemate)", measured=dict(net_material=delta, game_over=True), settings=None, pv=[mv.uci()], score=None)
+            return dict(result="pass" if ok else "fail", measured=dict(net_material=delta, game_over=True), settings=None, pv=[mv.uci()], score=None)
+        res = eng.search(after.fen(), depth=DEPTH)[1]       # best defence for the opponent
+        line = [mv.uci()] + res["pv"]
+        delta, final = quiet_end_delta(board, line, mover)
+        ok = delta is not None and delta >= p.get("min", -999) and delta <= p.get("max", 999)
+        if ok and p.get("min", -999) > 0 and hasattr(final, "is_insufficient_material") and final.is_insufficient_material():
+            return dict(result="fail", reason="material is won but the resulting position is a dead draw", measured=dict(net_material=delta), settings=eng.settings(DEPTH), pv=line[:12], score=None)
+        score = dict(kind=res["kind"], value=res["value"], side="opponent after the move")
+        return dict(result="pass" if ok else "fail", measured=dict(net_material=delta), settings=eng.settings(DEPTH), pv=line[:12], score=score)
+    if t == "legal_destinations":      # exact set of squares the piece on `from` can legally move to
+        sq = chess.parse_square(p["from"])
+        got = sorted(chess.square_name(m.to_square) for m in board.legal_moves if m.from_square == sq)
+        return dict(result="pass" if got == sorted(p["to"]) else "fail", measured=dict(got=got), settings=None, pv=None, score=None)
+    if t == "game_state":              # checkmate / stalemate / check / ongoing for the side to move
+        state = "checkmate" if board.is_checkmate() else "stalemate" if board.is_stalemate() else "check" if board.is_check() else "ongoing"
+        return dict(result="pass" if state == p["state"] else "fail", measured=dict(state=state), settings=None, pv=None, score=None)
+    if t == "illegal_move":
+        mv = chess.Move.from_uci(p["move"])
+        return dict(result="pass" if mv not in board.legal_moves else "fail", measured=None, settings=None, pv=None, score=None)
+    if t == "mate_in":
+        if p.get("null_move_first"):   # "what does the opponent threaten?": give the opponent a free move first
+            board = board.copy(); board.push(chess.Move.null())
+        mv = chess.Move.from_uci(p["move"])
+        after = board.copy(); after.push(mv)
+        if after.is_checkmate():
+            return dict(result="pass", measured=dict(mate=0), settings=None, pv=[mv.uci()], score=None)
+        res = eng.search(after.fen(), depth=DEPTH)[1]
+        # "mate in n" counts the mover's moves including this one; after it the opponent is "mated in n-1" (negative score)
+        ok = res["kind"] == "mate" and res["value"] < 0 and (-res["value"]) <= p["n"] - 1
+        return dict(result="pass" if ok else "fail", measured=dict(mate=res["value"]), settings=eng.settings(DEPTH), pv=[mv.uci()] + res["pv"][:10], score=dict(kind=res["kind"], value=res["value"]))
+    if t == "quiet_position":
+        res = eng.search(board.fen(), depth=DEPTH)[1]
+        mover = board.turn
+        delta, _ = quiet_end_delta(board, res["pv"], mover)
+        ok = delta is not None and delta <= p.get("max", 1)
+        return dict(result="pass" if ok else "fail", measured=dict(best_line_net_material=delta), settings=eng.settings(DEPTH), pv=res["pv"][:12], score=dict(kind=res["kind"], value=res["value"], side="mover"))
+    raise ValueError(f"unknown claim type {t}")
+
+
+def validate_file(path, eng):
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    errors, evidence = [], []
+    positions = {x["id"]: x for x in data["positions"]}
+    seen_ids = set()
+    for pid, pos in positions.items():
+        b = chess.Board(pos["fen"])
+        if not b.is_valid():
+            errors.append(f"{pid}: invalid position ({b.status().name})")
+        for k in ("kind", "licence"):
+            if k not in pos.get("provenance", {}):
+                errors.append(f"{pid}: provenance.{k} missing")
+        if "family" not in pos:
+            errors.append(f"{pid}: family missing")
+    for item in data["items"]:
+        iid = item["id"]
+        if iid in seen_ids: errors.append(f"{iid}: duplicate id")
+        seen_ids.add(iid)
+        if item["position"] not in positions: errors.append(f"{iid}: unknown position"); continue
+        if item["cue"] not in (1, 2, 3, 4): errors.append(f"{iid}: bad cue level")
+        if not item.get("claims"): errors.append(f"{iid}: no claims (every item needs a machine check)")
+        pos = positions[item["position"]]
+        h = hashlib.sha256(json.dumps([item, pos], sort_keys=True).encode()).hexdigest()[:16]
+        for claim in item.get("claims", []):
+            try:
+                r = check_claim(eng, pos, claim)
+            except Exception as ex:
+                r = dict(result="fail", reason=f"error: {ex}")
+            rec = dict(item=iid, claim=claim["id"], type=claim["type"], content_hash=h,
+                       checked_at=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"), **r)
+            evidence.append(rec)
+            tag = "ok " if r["result"] == "pass" else "FAIL"
+            print(f"  [{tag}] {iid} / {claim['id']} ({claim['type']}) measured={r.get('measured')} score={r.get('score')}")
+            if r["result"] != "pass":
+                errors.append(f"{iid}/{claim['id']}: claim failed ({r.get('reason', r.get('measured'))})")
+    out = ROOT / "content" / "_evidence" / (Path(path).stem + ".evidence.json")
+    out.write_text(json.dumps(evidence, indent=1), encoding="utf-8")
+    return errors
+
+
+def main():
+    files = [Path(a) for a in sys.argv[1:]] or sorted((ROOT / "content" / "items").glob("*.json"))
+    eng = Engine()
+    print(f"engine: {eng.name}  depth={DEPTH}")
+    all_errors = []
+    try:
+        for f in files:
+            print(f"\n{f.name}")
+            all_errors += [f"{f.name}: {e}" for e in validate_file(f, eng)]
+    finally:
+        eng.close()
+    print("\n" + ("ALL CHECKS PASSED" if not all_errors else f"{len(all_errors)} PROBLEM(S):\n  " + "\n  ".join(all_errors)))
+    sys.exit(1 if all_errors else 0)
+
+
+if __name__ == "__main__":
+    main()
