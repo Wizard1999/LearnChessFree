@@ -17,6 +17,29 @@ ALLOW = "--allow-unverified" in sys.argv
 def jload(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 
 
+FIRST_LESSONS = 12      # lessons a brand-new learner can reach first (same order as lessonSort in app/src/lib/progress.ts)
+FIRST_PRACTICE_CAP = 30  # items kept per practice step, so the first visit does not need the whole exercise bank
+
+
+def first_visit_items(skills, lessons, items):
+    """The exercises the first lessons need, so the app can start teaching before the whole bank (items.json, ~10 MB) has arrived.
+    The app loads this file first and swaps in items.json when it finishes (app/src/lib/content.tsx). `ready` lists the practice tag sets
+    whose exercises are all here, so those lessons can start at once."""
+    tier = {s["id"]: s.get("tier", 9) for s in skills}
+    order = sorted(lessons, key=lambda l: (tier.get(l["skill"], 9), l["skill"], l["depth"], l["id"]))[:FIRST_LESSONS]
+    by_id = {i["id"]: i for i in items}
+    keep, ready = {}, set()
+    for l in order:
+        for st in l.get("steps", []):
+            for k in ("item", "working", "failing", "irrelevant"):
+                if st.get(k) in by_id: keep[st[k]] = by_id[st[k]]
+            if st.get("type") == "practice":
+                tags = st.get("tags", [])
+                ready.add("|".join(sorted(tags)))   # this tag set has its practice exercises in the first-visit file (all of them, or FIRST_PRACTICE_CAP)
+                for it in [i for i in items if all(t in i.get("tags", []) for t in tags)][:FIRST_PRACTICE_CAP]: keep[it["id"]] = it
+    return {"items": list(keep.values()), "ready": sorted(ready)}
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     skills = [jload(f) for f in sorted((ROOT / "content" / "skills").glob("*.json"))]
@@ -54,6 +77,7 @@ def main():
                                   depth=next((r["settings"]["depth"] for r in recs if (r.get("settings") or {}).get("depth")), None))
     def w(name, obj): (OUT / name).write_text(json.dumps(obj, separators=(",", ":")), encoding="utf-8")
     w("skills.json", skills); w("items.json", items); w("lessons.json", lessons); w("verified.json", verified)
+    w("items-first.json", first_visit_items(skills, lessons, items))
     blob = json.dumps([skills, items, lessons], sort_keys=True).encode()
     manifest = dict(version=1, built=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
                     hash=hashlib.sha256(blob).hexdigest()[:16], skills=len(skills), items=len(items), lessons=len(lessons),

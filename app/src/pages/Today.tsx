@@ -9,6 +9,7 @@ import { ItemSequence, LessonPlayer, RichText } from '../components/LessonPlayer
 import { db, kvGet, kvSet } from '../db'
 import { describeMastery } from '../lib/mastery'
 import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/drill'
+import { useStorageStatus } from '../lib/persist'
 
 export function Today() {
   const content = useContent()
@@ -17,9 +18,11 @@ export function Today() {
   const placementQ = usePlacement()
   const day = dateKey()
   const [doneIds, setDoneIds] = useState<string[]>([])
-  const [active, setActive] = useState<string | null>(null)
+  // The block being worked on is a snapshot: finishing a lesson changes what 'the next lesson' is, and the screen must not switch under the learner.
+  const [active, setActive] = useState<Block | null>(null)
   const [extras, setExtras] = useState<Extras>(NO_EXTRAS)
   const missionData = useMissionData()
+  const storage = useStorageStatus()
   const [lastChallenge, setLastChallenge] = useState<number | null | undefined>(undefined)
   useEffect(() => { void kvGet<number | null>('challenge:last', null).then(setLastChallenge) }, [])
   const [intention, setIntention] = useState<string | null | undefined>(undefined) // undefined = loading, '' = not set yet, null = skipped
@@ -62,52 +65,90 @@ export function Today() {
   }
   if (!ready) return <main className="page"><p className="muted">Loading…</p></main>
 
-  const activeBlock = blocks.find(b => b.id === active)
+  const activeBlock = active
+  const fresh = (attempts ?? []).length === 0 && (progress ?? []).length === 0 && !placement.done
+  const firstLesson = fresh ? blocks.find(b => b.kind === 'lesson') : undefined
+  const upNext = fresh ? undefined : blocks.find(b => !doneIds.includes(b.id))
+  const others = blocks.filter(b => b !== upNext)
   const learning = [...masteries.entries()].filter(([, m]) => m.state !== 'unseen').sort((a, b) => b[1].n - a[1].n).slice(0, 6)
+
+  const inProgress = (b: Block) => b.kind === 'lesson' && (progress ?? []).some(p => p.lessonId === b.lessonId && !p.done && p.step > 0)
+  const action = (b: Block, big = false, label?: string) => {
+    const cls = big ? 'primary big' : 'primary'
+    const done = doneIds.includes(b.id)
+    if (b.kind === 'start') return <Link className={`button ${cls}`} to="/placement">Start placement</Link>
+    if (b.kind === 'link' && b.to) return <Link className={`button ${cls}`} to={b.to}>{b.cta ?? 'Open'}</Link>
+    if (b.kind === 'lesson' && b.lessonId) return <button type="button" className={cls} onClick={() => setActive(b)}>{label ?? (done ? 'Review lesson' : inProgress(b) ? 'Continue lesson' : 'Start lesson')}</button>
+    return <button type="button" className={cls} onClick={() => setActive(b)}>{done ? 'Do it again' : 'Start'}</button>
+  }
+
+  if (firstLesson && !activeBlock) {
+    return (
+      <main className="page startpage">
+        <h1>Learn chess, starting now</h1>
+        <p className="lede">No sign-up and nothing to set up. Your progress saves on this device as you go.</p>
+        {storage && !storage.works && <p className="warn-text" role="alert">This browser is not storing anything (a private window does this), so progress will be lost when you close the tab.</p>}
+        <section className="card hero">
+          <p className="eyebrow">First lesson · about {firstLesson.minutes} min</p>
+          <h2>{firstLesson.title}</h2>
+          <p>Lessons run in order from the beginning, and each one has you try things on a real board. Already know the basics? Skip ahead below.</p>
+          <div className="row">{action(firstLesson, true, 'Start learning')}</div>
+        </section>
+        <p className="small">Already play? <Link to="/placement">Find your starting level</Link> (about 15 minutes, optional). Or <Link to="/course">see the whole course</Link>.</p>
+        <details className="small howitworks">
+          <summary>How this school works</summary>
+          <ul>
+            <li><strong>Test first, then learn.</strong> Most practice here does not tell you which idea to use, because in a real game nobody does. Lessons come with labelled examples; practice does not.</li>
+            <li><strong>Help is allowed and counted.</strong> Hints and prompts are there when you need them. They lower the credit an answer earns, so what the app thinks you know stays honest.</li>
+            <li><strong>You steer.</strong> You can say what you want to work on, and later make your own training plans and test whether they worked.</li>
+            <li><strong>Every position is checked by software</strong> (rules, a chess engine, endgame tablebases). A strong human player has not yet reviewed the explanations; the app says so on each exercise.</li>
+            <li><strong>Your data stays on this device.</strong> Back it up or move it from Settings whenever you like.</li>
+          </ul>
+        </details>
+      </main>
+    )
+  }
 
   return (
     <main className="page">
       <h1>Today</h1>
       {!activeBlock && (
         <>
-          {(attempts ?? []).length === 0 && !placement.done && (
-            <section className="card welcome">
-              <h2>Welcome. How this school works</h2>
-              <ul className="small">
-                <li><strong>Test first, then learn.</strong> Most practice here does not tell you which idea to use, because in a real game nobody does. Lessons come with labelled examples; practice does not.</li>
-                <li><strong>Help is allowed and counted.</strong> Hints and prompts are there when you need them. They lower the credit an answer earns, so what the app thinks you know stays honest.</li>
-                <li><strong>You steer.</strong> Each day you can say what you want to work on before you see my suggestion. Later you make your own training plans and test whether they worked.</li>
-                <li><strong>Every position is checked by software</strong> (rules, a chess engine, endgame tablebases). A strong human player has not yet reviewed the explanations; the app says so on each exercise.</li>
-                <li><strong>Your data stays on this device.</strong> No account. Export it from Settings whenever you like.</li>
-              </ul>
-              <p className="small muted">Good first step: the placement check below, about 15 minutes. You can skip it (it has a Skip button): the course then starts from the beginning.</p>
+          {upNext ? (
+            <section className="card hero">
+              <p className="eyebrow">Up next · about {upNext.minutes} min</p>
+              <h2>{upNext.title}</h2>
+              <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
+              <div className="row">{action(upNext, true)}</div>
+            </section>
+          ) : (
+            <section className="card hero">
+              <h2>Today's plan is done</h2>
+              <p>You can stop here, or keep going with <Link to="/practice">more practice</Link>.</p>
             </section>
           )}
           <section className="card">
-            <h2>Your own aim for today</h2>
+            <h2>Your own aim for today <span className="muted small">· optional</span></h2>
             {intention === undefined ? <p className="muted">Loading…</p> : intention === null ? (
               <p className="muted">You skipped this today. <button type="button" className="link" onClick={() => void saveIntention('')}>Set one now</button></p>
             ) : intention !== '' ? (
               <p>{intention} <button type="button" className="link" onClick={() => { setDraft(intention); void saveIntention('') }}>Change</button></p>
             ) : (
               <>
-                <p className="small muted">Before you read my suggestions: what would you like to work on today, and why? One line. Deciding first, even badly, is a skill you are building here. "No idea" is a fine answer.</p>
+                <p className="small muted">What would you like to work on today, and why? One line. Deciding for yourself, even badly, is a skill you are building here. "No idea" is a fine answer.</p>
                 <div className="row"><input type="text" value={draft} onChange={e => setDraft(e.target.value)} placeholder="e.g. Stop hanging pieces. I lost two games to it this week." aria-label="Your aim for today" />
                   <button type="button" className="primary" disabled={!draft.trim()} onClick={() => { void saveIntention(draft.trim()); setDraft('') }}>Save</button>
                   <button type="button" onClick={() => void saveIntention(null)}>Skip</button></div>
               </>
             )}
           </section>
-          <p className="lede">Here is what I would suggest today, and why. {intention ? 'Compare it with your own aim; you decide which to follow. ' : ''}You can skip, reorder, or do something else on the Practice page. The plan is a suggestion, not a requirement.</p>
-          {blocks.map(b => (
+          {others.length > 0 && <p className="lede">{upNext ? 'Also on the plan today. ' : ''}{intention ? 'Compare it with your own aim; you decide which to follow. ' : ''}You can skip, reorder, or do something else on the Practice page. The plan is a suggestion, not a requirement.</p>}
+          {others.map(b => (
             <section key={b.id} className={doneIds.includes(b.id) ? 'card done' : 'card'}>
               <h2>{b.title} <span className="muted small">· about {b.minutes} min</span></h2>
               <p className="why"><strong>Why this:</strong> {b.why}</p>
               <div className="row">
-                {b.kind === 'start' && <Link className="button primary" to="/placement">Start placement</Link>}
-                {b.kind === 'link' && b.to && <Link className="button primary" to={b.to}>{b.cta ?? 'Open'}</Link>}
-                {b.kind === 'lesson' && b.lessonId && <button type="button" className="primary" onClick={() => setActive(b.id)}>{doneIds.includes(b.id) ? 'Review lesson' : 'Start lesson'}</button>}
-                {(b.kind === 'review' || b.kind === 'mixed' || b.kind === 'reflect') && <button type="button" className="primary" onClick={() => setActive(b.id)}>{doneIds.includes(b.id) ? 'Do it again' : 'Start'}</button>}
+                {action(b)}
                 {doneIds.includes(b.id) && <span className="muted small">Done today</span>}
               </div>
             </section>
@@ -124,7 +165,7 @@ export function Today() {
       )}
       {activeBlock && (
         <>
-          <p><button type="button" onClick={() => setActive(null)}>← Back to today's plan</button></p>
+          <p><button type="button" onClick={() => setActive(null)}>← Back</button></p>
           <h2>{activeBlock.title}</h2>
           {activeBlock.kind === 'lesson' && activeBlock.lessonId && (() => { const l = content.lessonById.get(activeBlock.lessonId); return l ? <LessonPlayer lesson={l} /> : <p>Lesson not found.</p> })()}
           {(activeBlock.kind === 'review' || activeBlock.kind === 'mixed') && (

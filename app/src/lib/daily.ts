@@ -34,11 +34,6 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const bySkill = groupBySkillKey(attempts)
   const poolFor = (key: string) => c.items.filter(i => i.skill === key)
 
-  if (attempts.length === 0 && !placement.done) {
-    blocks.push({ id: 'start', kind: 'start', title: 'Find your starting point', minutes: 15,
-      why: 'You have no history yet. A short mixed placement (positions from several levels, none labelled) shows where to begin so you do not repeat what you already know.' })
-  }
-
   const due = [...bySkill.entries()].filter(([, v]) => v.length >= 3 && isDue(v)).map(([k]) => k).slice(0, 3)
   const reviewItems: Item[] = []
   for (const k of due) reviewItems.push(...pickFresh(poolFor(k).filter(i => i.cue >= 2), attempts, 2, `${day}:rev:${k}`))
@@ -48,6 +43,11 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const lessons = nextLessons(c, masteries, placement, progress, 1)
   if (lessons[0]) blocks.push({ id: 'lesson', kind: 'lesson', title: lessons[0].title, minutes: lessons[0].minutes ?? 8, lessonId: lessons[0].id,
     why: 'It is the next lesson whose prerequisites you have met, in curriculum order.' })
+
+  if (attempts.length === 0 && !placement.done) {
+    blocks.push({ id: 'start', kind: 'start', title: 'Already play? Find your starting point', minutes: 15,
+      why: 'Optional. A short mixed placement (positions from several levels, none labelled) shows where to begin so you do not repeat what you already know. You can skip it and start from the beginning.' })
+  }
 
   const open = [...masteries.entries()].filter(([, m]) => m.state === 'introduced' || m.state === 'practising')
     .sort((a, b) => a[1].pReliable - b[1].pReliable).slice(0, 5).map(([k]) => k)

@@ -73,10 +73,10 @@ def main():
     overall = round(100 * score / total) if total else 0
     m = metrics()
     now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes")
-    doing = [{"phase": p["title"], "text": t["text"]} for p in phases for t in p["tasks"] if t["state"] == "doing"]
-    is_user = lambda t: bool(re.search(r"\((?:gate|question)s?|\(gate\)|gate G|\(Q\d", t["text"]))
+    is_user = lambda t: bool(re.search(r"\((?:gate|question)s?[ )]|gate G|\(Q\d", t["text"]))
+    doing = [{"phase": p["title"], "text": t["text"]} for p in phases for t in p["tasks"] if t["state"] == "doing" and not is_user(t)]
     todo = [{"phase": p["title"], "text": t["text"]} for p in phases for t in p["tasks"] if t["state"] == "todo" and not is_user(t)]
-    waiting = [{"phase": p["title"], "text": t["text"]} for p in phases for t in p["tasks"] if t["state"] == "todo" and is_user(t)]
+    waiting = [{"phase": p["title"], "text": t["text"]} for p in phases for t in p["tasks"] if t["state"] != "done" and is_user(t)]
     data = {"updated": now, "overall": overall, "tasksDone": sum(p["done"] for p in phases), "tasksTotal": total,
             "building": doing, "next": todo[:8], "waiting": waiting, "phases": phases, "metrics": m}
     OUT.write_text(json.dumps(data, indent=1), encoding="utf-8")

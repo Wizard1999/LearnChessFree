@@ -8,8 +8,10 @@ import './theme.css'
 import './index.css'
 import App from './App.tsx'
 import { applyAppearance, loadAppearance } from './lib/appearance'
+import { watchPersistence } from './lib/persist'
 
 applyAppearance(loadAppearance())
+watchPersistence()
 
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch(() => undefined) })

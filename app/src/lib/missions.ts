@@ -150,7 +150,7 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
   }
   const bySkill = new Map<string, Item[]>()
   for (const i of items) { if (i.cue >= 3) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i]) }
-  const rank = (n: NodeProgress) => (n.due ? 0 : 1) * 1e15 + (n.lastTs ?? 0) - (n.level < 4 ? 0 : 5e14) // due first, then stalest; mastered ones come last
+  const rank = (n: NodeProgress) => (n.due ? 0 : 1) * 1e15 + (n.lastTs ?? 0) + (n.level < 4 ? 0 : 5e14) // due first, then stalest; mastered ones come last (a higher rank sorts later)
   const ordered = [...started].sort((a, b) => rank(a) - rank(b))
   const picks: ChallengePlan['picks'] = []
   let mastered = 0

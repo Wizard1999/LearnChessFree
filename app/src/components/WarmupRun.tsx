@@ -9,7 +9,8 @@ import type { Item } from '../types'
 /** The warm-up questions for one mission, one at a time, silent and unpenalised; stops early when two tiers in a row go badly. */
 export function WarmupRun({ mission, items, attempts, onFinish, onCancel }: { mission: Mission; items: Item[]; attempts: Attempt[]; onFinish: (r: StrandWarmup) => void; onCancel: () => void }) {
   const [seed] = useState(() => String(Date.now()))
-  const plan = useMemo(() => planWarmup(mission, items, attempts, seed), [mission, items, attempts, seed])
+  // The plan is fixed when the warm-up starts. Each answer adds an attempt, and re-planning from the new attempts would shift the questions under the index.
+  const [plan] = useState(() => planWarmup(mission, items, attempts, seed))
   const planned = useMemo(() => plannedPerTier(plan), [plan])
   const [idx, setIdx] = useState(0)
   const [results, setResults] = useState<TierResult[]>([])

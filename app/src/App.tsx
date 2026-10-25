@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
-import { ContentProvider } from './lib/content'
+import { ContentProvider, RequireFullContent } from './lib/content'
 import { Today } from './pages/Today'
 import { Course } from './pages/Course'
 import { LessonPage } from './pages/LessonPage'
@@ -35,18 +35,18 @@ export default function App() {
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <Routes>
         <Route path="/" element={<Today />} />
-        <Route path="/course" element={<Course />} />
+        <Route path="/course" element={<RequireFullContent><Course /></RequireFullContent>} />
         <Route path="/lesson/:id" element={<LessonPage />} />
-        <Route path="/practice" element={<Practice />} />
-        <Route path="/placement" element={<Placement />} />
-        <Route path="/plan" element={<PlanPage />} />
-        <Route path="/lab" element={<Lab />} />
-        <Route path="/progress" element={<Progress />} />
+        <Route path="/practice" element={<RequireFullContent><Practice /></RequireFullContent>} />
+        <Route path="/placement" element={<RequireFullContent><Placement /></RequireFullContent>} />
+        <Route path="/plan" element={<RequireFullContent><PlanPage /></RequireFullContent>} />
+        <Route path="/lab" element={<RequireFullContent><Lab /></RequireFullContent>} />
+        <Route path="/progress" element={<RequireFullContent><Progress /></RequireFullContent>} />
         <Route path="/play" element={<PlayPage />} />
         <Route path="/openings" element={<Openings />} />
         <Route path="/drill" element={<Drill />} />
-        <Route path="/games" element={<Games />} />
-        <Route path="/library" element={<Library />} />
+        <Route path="/games" element={<RequireFullContent><Games /></RequireFullContent>} />
+        <Route path="/library" element={<RequireFullContent><Library /></RequireFullContent>} />
         <Route path="/roadmap" element={<Roadmap />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<main className="page"><h1>Not found</h1></main>} />

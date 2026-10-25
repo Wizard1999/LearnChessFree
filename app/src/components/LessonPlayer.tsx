@@ -1,15 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChessBoard } from './ChessBoard'
 import { ItemPlayer, type ItemResult } from './ItemPlayer'
 import { LinePlayer } from './LinePlayer'
 import { db, type AttemptSource } from '../db'
-import { itemsByTags, useContent } from '../lib/content'
+import { itemsByTags, stepItemIds, useContent, useContentFull, usePracticeReady } from '../lib/content'
 import { pickFresh } from '../lib/select'
 import { useAttempts } from '../lib/progress'
 import { sideToMove } from '../lib/play'
 import type { Item, Lesson, LessonStep, ReflectField } from '../types'
 import type { LoopLevel } from '../lib/loop'
+
+const NO_ITEMS: Item[] = []
 
 /** Renders **bold** and line breaks only. Cards are plain text by design (no HTML from content). */
 export function RichText({ text }: { text: string }) {
@@ -22,7 +24,9 @@ export function RichText({ text }: { text: string }) {
 export function ItemSequence({ items, source, silent, onComplete, intro, loopShown, askConfidence }: { items: Item[]; source: AttemptSource; silent?: boolean; onComplete: (results: ItemResult[]) => void; intro?: string; loopShown?: LoopLevel; askConfidence?: boolean }) {
   const [i, setI] = useState(0)
   const [results, setResults] = useState<ItemResult[]>([])
-  useEffect(() => { setI(0); setResults([]) }, [items])
+  // Restart only when the SET of exercises changes, not whenever a caller builds a new array with the same exercises.
+  const signature = items.map(x => x.id).join('|')
+  useEffect(() => { setI(0); setResults([]) }, [signature])
   if (items.length === 0) return <p className="muted">No exercises available here yet.</p>
   const item = items[i]
   return (
@@ -77,24 +81,50 @@ function ReflectStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { t
 
 export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   const content = useContent()
+  const full = useContentFull()
+  const practiceReady = usePracticeReady()
   const attempts = useAttempts()
   const [i, setI] = useState(0)
   const steps = lesson.steps
   const step = steps[i]
   const done = i >= steps.length
 
-  useEffect(() => { setI(0) }, [lesson.id])
+  // Pick up where the learner left off in an unfinished lesson. Nothing is written until the saved step has been read.
+  const [restored, setRestored] = useState(false)
+  const [resumedAt, setResumedAt] = useState<number | null>(null)
   useEffect(() => {
+    let live = true
+    setI(0); setRestored(false); setResumedAt(null)
+    void db.lessonProgress.get(lesson.id).then(p => {
+      if (!live) return
+      if (p && !p.done && p.step > 0 && p.step < lesson.steps.length) { setI(p.step); setResumedAt(p.step) }
+    }).catch(() => undefined).finally(() => { if (live) setRestored(true) })
+    return () => { live = false }
+  }, [lesson.id, lesson.steps.length])
+  useEffect(() => {
+    if (!restored) return
     if (!done) void db.lessonProgress.put({ lessonId: lesson.id, step: i, done: false, ts: Date.now() }).catch(() => undefined)
     else void db.lessonProgress.put({ lessonId: lesson.id, step: steps.length, done: true, ts: Date.now() }).catch(() => undefined)
-  }, [i, done, lesson.id, steps.length])
+  }, [restored, i, done, lesson.id, steps.length])
 
   const next = () => setI(x => x + 1)
   const loopLevel = (/^LOOP\.(V[1-3])$/.exec(lesson.skill)?.[1] ?? undefined) as LoopLevel | undefined
-  const practice = useMemo(() => {
-    if (!step || step.type !== 'practice') return []
-    return pickFresh(itemsByTags(content.items, step.tags), attempts ?? [], step.n, `${lesson.id}:${i}:${(attempts ?? []).length > 0}`)
-  }, [step, content.items, attempts, lesson.id, i])
+  // A practice set is picked once per step and kept: answering an exercise changes `attempts` (and, on first load, the exercise bank
+  // grows), and re-picking then would swap the set under the learner.
+  const picked = useRef(new Map<string, Item[]>())
+  let practice: Item[] = NO_ITEMS
+  if (step && step.type === 'practice' && attempts !== undefined) {
+    const key = `${lesson.id}:${i}`
+    let set = picked.current.get(key)
+    if (!set) { set = pickFresh(itemsByTags(content.items, step.tags), attempts, step.n, `${key}:${attempts.length > 0}`); picked.current.set(key, set) }
+    practice = set
+  }
+
+  // While only the first-visit exercises have arrived, a lesson that needs others (named exercises, or a practice set drawn from a tag)
+  // waits for the whole bank rather than start with a different set.
+  const waiting = !full && steps.some(s => stepItemIds(s).some(id => !content.itemById.has(id)) || (s.type === 'practice' && !practiceReady(s.tags)))
+  if (!restored) return null
+  if (waiting) return <p className="muted">Loading the exercises for this lesson…</p>
 
   if (done) {
     const sk = content.skillById.get(lesson.skill)
@@ -111,6 +141,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
 
   return (
     <div className="lesson">
+      {resumedAt !== null && i === resumedAt && <p className="small muted">Picked up where you left off. <button type="button" className="link" onClick={() => { setI(0); setResumedAt(null) }}>Start from the beginning</button></p>}
       <div className="progress" aria-label={`Step ${i + 1} of ${steps.length}`}>
         {steps.map((_, k) => <span key={k} className={k < i ? 'dot done' : k === i ? 'dot now' : 'dot'} />)}
       </div>

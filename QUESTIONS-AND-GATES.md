@@ -30,6 +30,8 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 | G11 | G | Recruit about 5 people for the first usability round after the identity study (doctrine section 15): a mix of people who have never used a chess site and people who play online, plus one keyboard or screen-reader user | I cannot recruit; automated and expert checks are only substitutes | Heuristic review and automated checks, labelled as such | no |
 | G5 | G | Maia-2 model weights licence check (needs a human read of the repository's LICENSE/weights terms) | Humanlike bots and rating-conditioned priors | Not used | no |
 
+| Q11 | Q | Optional sign-in to keep progress across devices: which route? (A) none for now, use the export/import file (built); (B) the learner's own cloud storage (Google Drive / Dropbox / a folder) with their own login; (C) a small hosted backend with email magic-link or passkey sign-in; (D) self-hosted. Any of B-D needs an outside service, so it is your call and your money/privacy decision | The product works with no account (progress saves in the browser on first visit, nothing to set up). Sign-in would only add sync and recovery if the browser data is cleared. C is the simplest for learners; it means running or renting a server and storing their progress | A: nothing hosted. Export/import stays the only way to move progress | no |
+
 ## Answered / done
 *(none yet)*
 

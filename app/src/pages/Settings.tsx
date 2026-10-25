@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { exportAll, importAll, resetAll } from '../db'
 import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
+import { useStorageStatus } from '../lib/persist'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function SettingsContent() {
   const [msg, setMsg] = useState<string | null>(null)
   const [loop, setLoop] = useState<LoopState>(EMPTY_LOOP)
+  const storage = useStorageStatus()
   const [look, setLook] = useState<Appearance>(loadAppearance())
   const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = { ...look, [k]: v }; setLook(n); saveAppearance(n) }
   useEffect(() => { void loadLoop().then(setLoop) }, [])
@@ -54,8 +56,12 @@ export function SettingsContent() {
         ))}
       </section>
       <section className="card">
-        <h2>Your data stays with you</h2>
-        <p>Progress, notes and games are stored only in this browser. There is no account. Nothing is sent anywhere, except that pressing "Fetch my latest games" on the My games page asks Lichess or Chess.com for your public games and so sends them the username you typed. Export a file regularly: it is plain JSON you can read without this app, and importing it restores everything.</p>
+        <h2>Your progress saves itself</h2>
+        <p>Everything you do is saved on this device as you go. You never need an account to learn here or to keep your progress. Nothing is sent anywhere, except that pressing "Fetch my latest games" on the My games page asks Lichess or Chess.com for your public games and so sends them the username you typed.</p>
+        {storage && !storage.works && <p className="warn-text" role="alert">This browser is not storing anything (a private window does this). You can still learn, but your progress will be lost when you close the tab. Export a file before you leave.</p>}
+        {storage?.works && storage.persisted === true && <p className="small muted">The browser has agreed to keep this data.</p>}
+        {storage?.works && storage.persisted !== true && <p className="small muted">The browser may clear this data if the device runs short of space, so export a file now and then.</p>}
+        <p>To use another device, or keep a copy, export a file here and import it there. It is plain JSON you can read without this app. Signing in to sync across devices is planned, not built yet (it needs a server; the roadmap tracks it).</p>
         <div className="row">
           <button type="button" className="primary" onClick={() => void doExport()}>Export everything</button>
           <label className="button">Import a file <input type="file" accept="application/json" hidden onChange={e => void doImport(e.target.files?.[0])} /></label>
