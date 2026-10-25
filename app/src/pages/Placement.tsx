@@ -47,12 +47,13 @@ export function Placement() {
       if (b.ok / b.n >= 0.67) frontier = t + 1
       else break
     }
-    const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: Math.min(frontier, MAX_TIER), ts: Date.now(), byTier }
+    const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: Math.min(frontier, MAX_TIER), ts: Date.now(), byTier, skipped: false }
     void kvSet('placement', p)
     setOutcome(p)
   }
 
   function skip() {
+    if (existing?.done && !existing.skipped) { setOutcome(existing); return } // a real earlier result stands: skipping a retake does not wipe it
     const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: 0, ts: Date.now(), byTier: {}, skipped: true }
     void kvSet('placement', p)
     setOutcome(p)

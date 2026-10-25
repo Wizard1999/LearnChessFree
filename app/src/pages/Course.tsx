@@ -5,18 +5,19 @@ import { ItemSequence } from '../components/LessonPlayer'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
-import { challengeVerdict, LEVEL_HELP, LEVEL_NAMES, nodeProgress, planChallenge, skillsUpNext, type ChallengePlan, type Level, type Mission, type NodeProgress } from '../lib/missions'
+import { challengeSeed, challengeVerdict, LEVEL_HELP, LEVEL_NAMES, nodeProgress, planChallenge, skillsUpNext, type ChallengePlan, type Level, type Mission, type NodeProgress } from '../lib/missions'
 import { masteryMap, nextLessons, type Placement, type StrandWarmup } from '../lib/progress'
 import { interleave } from '../lib/select'
 import { useMissionData } from '../lib/useMissions'
-import type { Skill } from '../types'
+import { splitSkillKey, type Skill } from '../types'
 
 const FILL = [0, 25, 50, 75, 100]
 
 function Block({ n, selected, onPick }: { n: NodeProgress; selected: boolean; onPick: (id: string) => void }) {
-  const label = `${n.title}: ${LEVEL_NAMES[n.level]}${n.due ? ', refresher due' : ''}${n.assumed ? ', assumed from placement or warm-up' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
+  const credited = n.levelWithAssumed > n.level // the fill includes credit that is only assumed
+  const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
-    <button type="button" className={`blk${selected ? ' sel' : ''}${n.due ? ' due' : ''}${n.assumed ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.level]}%` }}
+    <button type="button" className={`blk${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
       data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} title={label} aria-pressed={selected} onClick={() => onPick(n.id)} />
   )
 }
@@ -25,11 +26,12 @@ function Swatch({ level }: { level: Level }) {
   return <span className="blk swatch" style={{ ['--fill' as string]: `${FILL[level]}%` }} aria-hidden="true" />
 }
 
-function Donut({ percent, label = 'progress' }: { percent: number; label?: string }) {
+function Donut({ percent, assumed = percent, label = 'progress' }: { percent: number; assumed?: number; label?: string }) {
   const r = 46, c = 2 * Math.PI * r
   return (
-    <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label={`${percent} percent ${label}`} className="donut">
+    <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label={`${percent} percent ${label}${assumed > percent ? `, ${assumed} percent if the skills you assumed are confirmed` : ''}`} className="donut">
       <circle cx="60" cy="60" r={r} fill="none" stroke="var(--chip)" strokeWidth="12" />
+      {assumed > percent && <circle cx="60" cy="60" r={r} fill="none" stroke="var(--accent)" strokeOpacity="0.35" strokeWidth="12" strokeLinecap="butt" strokeDasharray={`${(c * assumed) / 100} ${c}`} transform="rotate(-90 60 60)" />}
       <circle cx="60" cy="60" r={r} fill="none" stroke="var(--accent)" strokeWidth="12" strokeLinecap="butt" strokeDasharray={`${(c * percent) / 100} ${c}`} transform="rotate(-90 60 60)" />
       <text x="60" y="58" textAnchor="middle" fontSize="26" fontWeight="700" fill="var(--text)">{percent}%</text>
       <text x="60" y="76" textAnchor="middle" fontSize="11" fill="var(--text-secondary)">{label}</text>
@@ -71,7 +73,7 @@ export function Course() {
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
   const upNext = useMemo(() => (ctx ? skillsUpNext(current, ctx, dismissedSet, isAll ? 8 : 6) : []), [ctx, current, dismissedSet, isAll])
-  const plan = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, lastChallenge, Date.now(), `${new Date().toDateString()}:${current.strand}:${lastChallenge ?? 0}`) : null), [ctx, attempts, current, content.items, lastChallenge])
+  const plan = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, lastChallenge, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
 
   if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
 
@@ -87,9 +89,9 @@ export function Course() {
     if (!run || !ctx) return
     const now = Date.now()
     await kvSet('challenge:last', now); setLastChallenge(now)
-    const ctx2 = { ...ctx, masteries: masteryMap(await db.attempts.toArray()) }
+    const ctx2 = { ...ctx, masteries: masteryMap(await db.attempts.toArray(), Date.now(), content.cuedOnly) }
     const rows = run.plan.picks.map(p => {
-      const rights = run.items.reduce((s, it, k) => s + (it.skill.startsWith(p.node.id + '.') && results[k]?.correct ? 1 : 0), 0)
+      const rights = run.items.reduce((s, it, k) => s + (splitSkillKey(it.skill).skill === p.node.id && results[k]?.correct ? 1 : 0), 0)
       return { node: p.node, rights, before: run.before[p.node.id] as Level, after: nodeProgress(content.skillById.get(p.node.id) as Skill, ctx2).level }
     })
     setResult(rows); setRun(null)
@@ -131,12 +133,13 @@ export function Course() {
           <h2>{current.name}</h2>
           <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'MISSION PROGRESS'}</p>
           <div className="donutrow">
-            <Donut percent={current.percent} label={isAll ? 'overall' : 'progress'} />
+            <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
             <ul className="plain legendlist">
               {([4, 3, 2, 1, 0] as Level[]).map(l => <li key={l}><Swatch level={l} /> <strong>{current.counts[l]}</strong> {l === 4 ? 'mastered' : l === 0 ? 'not started' : LEVEL_NAMES[l].toLowerCase()}</li>)}
+              {current.assumedCount > 0 && <li><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> <strong>{current.assumedCount}</strong> assumed, not yet shown</li>}
             </ul>
           </div>
-          <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).</p>
+          <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.assumedCount > 0 && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
           <button type="button" className="link" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</button>
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
@@ -162,7 +165,7 @@ export function Course() {
           ) : run ? (
             <section className="card challenge">
               <h2>Mastery challenge</h2>
-              <ItemSequence items={run.items} source="challenge" intro="Six questions on three skills" onComplete={r => void finishChallenge(r)} />
+              <ItemSequence items={run.items} source="challenge" silent intro="Six questions on three skills, no hints" onComplete={r => void finishChallenge(r)} />
             </section>
           ) : (
             <>
@@ -171,7 +174,7 @@ export function Course() {
                   <h2>Warm-up: test out what you know</h2>
                   {warmDone || warm ? (() => { const w = warmDone ?? warm!; const shown = Object.entries(w.byTier).map(([t, b]) => `tier ${t}: ${b.ok} of ${b.n}`).join(', '); return (
                     <p role="status">Taken {new Date(w.ts).toLocaleDateString()} ({shown}). Skills in tiers below {w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on a skill you had not practised was not held against you.</p>) })()
-                    : <p>About ten unlabelled questions, easiest tier first, no hints and no penalty. It stops early if two tiers in a row go badly. If you do well, the early skills in this mission show as assumed instead of making you walk through them.</p>}
+                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on a skill you have not practised is not held against you (once you have practised a skill, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this mission show as assumed, and their lessons are left out of Continue (you can still open them). Assumed skills are not counted as progress until you show them.</p>}
                   <div className="row"><button type="button" className={warm || warmDone ? '' : 'primary'} onClick={() => { setWarmDone(null); setWarmOpen(true) }}>{warm || warmDone ? 'Take it again' : 'Start the warm-up'}</button></div>
                 </section>
               )}
@@ -180,7 +183,7 @@ export function Course() {
                 <p>Strengthen skills you have already practised: six unlabelled questions on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
                 {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <p className="muted small">{plan?.reason}</p>}
                 <details><summary className="small">How a challenge changes your levels</summary>
-                  <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. Levels are read from all your evidence, so they can move more than one step when the evidence shifts, and nothing is deducted for missing practice. Ordinary practice is never penalised.</p></details>
+                  <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops to Level two when a refresher is due (after about three weeks) and returns when you answer it again.</p></details>
               </section>
             </>
           )}
@@ -223,7 +226,7 @@ export function Course() {
           {node && sk && !busy && (
             <section className="card skilldetail" aria-label={`${node.title} detail`}>
               <h2>{node.title}</h2>
-              <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.assumed ? ' · assumed from your placement or warm-up, not yet shown' : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
+              <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
               {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
               <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
                 <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>

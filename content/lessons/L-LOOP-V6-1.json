@@ -17,51 +17,51 @@
     },
     {
       "type": "board",
-      "fen": "r3r1k1/p3Qp1p/6p1/4P3/2b5/8/Pq4PP/1R2R1K1 w - - 2 29",
-      "caption": "White to move. Four candidates are on the table; this is how one of them is crossed out.",
+      "fen": "4rr2/1p4kp/p2N1p2/2pP4/2P5/2Qnq3/PP4PP/3R3K w - - 0 28",
+      "caption": "White to move. One candidate is crossed out in two moves.",
       "line": [
         {
-          "move": "e7f7",
-          "say": "Qxf7+ takes a pawn with check. It looks strong."
+          "move": "d6e8",
+          "say": "Nxe8+ takes a rook with check. It looks strong."
         },
         {
-          "move": "c4f7",
-          "say": "The bishop on c4 takes the queen. One reply crossed the candidate out."
+          "move": "f8e8",
+          "say": "The rook on f8 takes the knight, and nothing of White's defends it."
         }
       ],
       "arrows": [
         {
-          "from": "e7",
-          "to": "f7"
+          "from": "d6",
+          "to": "e8"
         },
         {
-          "from": "c4",
-          "to": "f7"
+          "from": "f8",
+          "to": "e8"
         }
       ],
       "highlight": [
-        "f7"
+        "e8"
       ],
       "claims": [
         {
           "id": "C1",
           "type": "move_loses",
           "params": {
-            "move": "e7f7",
+            "move": "d6e8",
             "cp": 300
           },
-          "statement": "Qxf7+ is at least 300 centipawns worse than the best move (depth 16)."
+          "statement": "Nxe8+ is at least 300 centipawns worse than the best move (depth 16)."
         },
         {
           "id": "C2",
           "type": "attackers",
           "params": {
-            "square": "f7",
+            "square": "e8",
             "color": "black",
             "count": 2,
-            "after_move": "e7f7"
+            "after_move": "d6e8"
           },
-          "statement": "After Qxf7+ the queen on f7 is attacked by 2 black pieces."
+          "statement": "After Nxe8+ the knight on e8 is attacked by 2 black pieces."
         },
         {
           "id": "C3",
@@ -69,22 +69,21 @@
           "params": {
             "color": "white",
             "squares": [
-              "a2",
-              "f7"
+              "e8"
             ],
-            "after_move": "e7f7"
+            "after_move": "d6e8"
           },
-          "statement": "After Qxf7+ the queen on f7 is loose."
+          "statement": "After Nxe8+ the knight on e8 is loose."
         }
       ]
     },
     {
       "type": "item",
-      "item": "IB4-39"
+      "item": "IB4-37"
     },
     {
       "type": "item",
-      "item": "IB4-37"
+      "item": "IB4-39"
     },
     {
       "type": "card",
@@ -93,6 +92,10 @@
     {
       "type": "item",
       "item": "IB4-38"
+    },
+    {
+      "type": "item",
+      "item": "IB4-43"
     },
     {
       "type": "card",
@@ -104,11 +107,108 @@
     },
     {
       "type": "card",
-      "text": "**Test the escape squares before you trust a perpetual.** A run of checks is a perpetual only if the king has no way out and nothing can capture or block the checker. List the king's squares first, then ask whether the checks can repeat. One extra escape square ends it."
+      "text": "**Test the escape squares before you trust a perpetual.** A run of checks forces a draw only if every reply Black has leads back into the same checks: no capture of the checker, no block, and no king step that gets out of them. List the king's squares first, then ask where each one leads. A free square often ends the checks, but not always."
     },
     {
       "type": "item",
       "item": "IB4-49"
+    },
+    {
+      "type": "board",
+      "fen": "6bk/2p1N1p1/5p1p/7n/8/r6P/6PK/8 w - - 0 38",
+      "caption": "White is far behind. Can the knight keep checking?",
+      "line": [
+        {
+          "move": "e7g6",
+          "say": "Ng6+. Nothing can take the knight, and the king has one square: h7."
+        },
+        {
+          "move": "h8h7",
+          "say": "Kh7 is forced."
+        },
+        {
+          "move": "g6f8",
+          "say": "Nf8+. Again nothing can take it, and the king's only square is h8."
+        },
+        {
+          "move": "h7h8",
+          "say": "Kh8 is forced. Ng6+ would now repeat the position after the first check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "g6"
+        },
+        {
+          "from": "g6",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "h8",
+        "h7",
+        "g6",
+        "f8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "h8",
+            "mode": "legal",
+            "count": 1,
+            "after_moves": [
+              "e7g6"
+            ]
+          },
+          "statement": "After Ng6+ the black king on h8 has exactly one legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "e7g6"
+            ]
+          },
+          "statement": "After Ng6+ no black piece attacks the knight on g6."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "h7",
+            "mode": "legal",
+            "count": 1,
+            "after_moves": [
+              "e7g6",
+              "h8h7",
+              "g6f8"
+            ]
+          },
+          "statement": "After Ng6+ Kh7 Nf8+ the black king on h7 has exactly one legal move."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "e7g6",
+              "h8h7",
+              "g6f8"
+            ]
+          },
+          "statement": "After Nf8+ no black piece attacks the knight on f8."
+        }
+      ]
     },
     {
       "type": "contrast",
@@ -135,15 +235,6 @@
     {
       "type": "item",
       "item": "IB4-45",
-      "silent": true
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.LOOP.V6",
-        "cue.3"
-      ],
-      "n": 2,
       "silent": true
     },
     {

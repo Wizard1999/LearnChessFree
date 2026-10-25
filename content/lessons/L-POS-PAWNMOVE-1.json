@@ -1,0 +1,135 @@
+{
+  "id": "L-POS-PAWNMOVE-1",
+  "title": "What a pawn move leaves behind",
+  "skill": "POS.PAWNMOVE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Marks the squares a pawn move stops guarding and the pawns it leaves without a pawn protector",
+    "Checks which enemy pieces could use the new holes before pushing a pawn",
+    "Explains why a pawn move near the king is not automatically safer than a piece move",
+    "Tells a costly pawn move from one that is worth its price"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Pawns cannot move backward. A pawn move gives up the squares that pawn guarded, and the support it gave to neighbouring pawns, for the rest of the game. Before you push, name what it **stops guarding** and which pawns it **leaves without a pawn protector**. Then ask whether an enemy piece can use them."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/1p3ppp/p1n1b3/3pPp2/1b1P4/1QN1BN2/PP3PPP/R4RK1 b - - 3 13",
+      "caption": "Black to move. Think about what ...g6 would stop guarding.",
+      "line": [
+        {
+          "move": "g7g6",
+          "say": "The pawn leaves g7 for good. f6 and h6 become holes: no Black pawn can ever guard them."
+        },
+        {
+          "move": "e3h6",
+          "say": "The bishop goes to h6, one of those holes. A pawn can no longer challenge it there."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g6"
+        },
+        {
+          "from": "e3",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "h6"
+      ],
+      "claims": [
+        {
+          "type": "holes",
+          "params": {
+            "color": "black",
+            "includes": [
+              "f6",
+              "h6"
+            ],
+            "after_move": "g7g6"
+          },
+          "statement": "After g6, f6 and h6 are holes in Black's camp."
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "h6",
+            "piece": "B",
+            "after_moves": [
+              "g7g6",
+              "e3h6"
+            ]
+          },
+          "statement": "After g6 and Bh6 the white bishop stands on h6."
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "g7g6",
+            "cp": 80
+          },
+          "statement": "g6 is at least 0.8 of a pawn worse than the best move by the engine's count."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-SQ-92"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-7"
+    },
+    {
+      "type": "card",
+      "text": "A pawn move costs something only if the squares and pawns it gives up can be used: a knight, a bishop of the right colour or a queen must be able to reach them. Sometimes the price is worth paying: the pawn may drive off an attacker or answer a pin. So \"pawn moves near the king are safer\" is false, and so is \"never move them\". Weigh cost against gain; this is a *rule of thumb*."
+    },
+    {
+      "type": "contrast",
+      "title": "Same kind of pawn move, different verdicts",
+      "prompt": "Each position asks whether one pawn move is a good idea. Predict each, then check. Two of the positions are the same except for one piece: the White bishop stands on c1 or on b1.",
+      "working": "IBp2-9",
+      "failing": "IBp2-10",
+      "irrelevant": "IBp2-11"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-13",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PAWNMOVE",
+        "cue.2"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you looked at the enemy pieces: when you saw a pawn move near a castled king, did you ask which piece could use the new holes? Write what you checked first."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K9, K17, K19; items 9, 11)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C28)",
+    "docs/curriculum-map-v1.1.md (POS.PAWNMOVE)",
+    "content/items/lesson-p2.json (IBp2 items); shipped items IP-SQ-92 and the pm-class set"
+  ]
+}

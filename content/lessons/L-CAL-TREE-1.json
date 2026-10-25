@@ -1,0 +1,273 @@
+{
+  "id": "L-CAL-TREE-1",
+  "title": "The analysis tree: fill each cell once",
+  "skill": "CAL.TREE",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Lays out a table of candidates, replies and one-word verdicts for a forcing position",
+    "Judges a candidate by its worst cell, not its best",
+    "Knows two ways a tree fails: a missing reply and going back over a branch",
+    "Recognises a quiet position where a tree has no verdicts to find"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **tree** is a table you fill once. Rows are your candidates. For each, write the opponent's best replies (two is a start) and follow every branch about four plies to its end. At the end write **one word**: *mates, wins, even* or *loses* (judge by material). Fill each cell once, in order, and do not jump back. A candidate is only as good as its worst cell for you."
+    },
+    {
+      "type": "board",
+      "fen": "7k/2p2p2/1ppn1r2/3pN3/1P6/1r3PR1/5KP1/4R3 w - - 0 42",
+      "caption": "White to move. Three candidates, each followed against the best defence. A) Rh1+ : every reply loses to mate, so its cell says mates. B) Nxf7+ : White ends at least two points down, so loses. C) Rg4 : no net material change, so even. The best row is A.",
+      "line": [
+        {
+          "move": "e1h1",
+          "say": "Rh1+ gives check, and the king on h8 has no legal move of its own."
+        },
+        {
+          "move": "f6h6",
+          "say": "Black can only interpose the rook on h6."
+        },
+        {
+          "move": "h1h6",
+          "say": "Rxh6 is checkmate: the g3 rook covers g7 and g8, the h6 rook covers h7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "h1"
+        },
+        {
+          "from": "e5",
+          "to": "f7"
+        },
+        {
+          "from": "g3",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "h8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1h1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e1h1",
+            "n": 2
+          },
+          "statement": "Rh1+ forces checkmate within two moves, whatever Black replies (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "h8",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "e1h1"
+          },
+          "statement": "After Rh1+ the king on h8 has no legal move."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "g3",
+            "includes": [
+              "g7",
+              "g8"
+            ]
+          },
+          "statement": "The rook on g3 attacks g7 and g8."
+        },
+        {
+          "id": "C5",
+          "type": "piece_attacks",
+          "params": {
+            "square": "h6",
+            "includes": [
+              "h7"
+            ],
+            "after_moves": [
+              "e1h1",
+              "f6h6",
+              "h1h6"
+            ]
+          },
+          "statement": "After Rxh6 the rook on h6 attacks h7."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5f7",
+            "max": -2
+          },
+          "statement": "After Nxf7+ and Black's best defence White ends at least 2 points down."
+        },
+        {
+          "id": "C7",
+          "type": "move_loses",
+          "params": {
+            "move": "e5f7",
+            "cp": 300
+          },
+          "statement": "Nxf7+ is at least 3 pawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C8",
+          "type": "material_after_move",
+          "params": {
+            "move": "g3g4",
+            "min": 0,
+            "max": 0
+          },
+          "statement": "After Rg4 and the best defence White's net material change is zero."
+        },
+        {
+          "id": "C9",
+          "type": "move_loses",
+          "params": {
+            "move": "g3g4",
+            "cp": 100
+          },
+          "statement": "Rg4 is at least a pawn worse than the best move (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc1-14"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-15"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-16"
+    },
+    {
+      "type": "item",
+      "item": "IL-VVPHw-L"
+    },
+    {
+      "type": "card",
+      "text": "**When a tree works.** It works when branches end in a clear verdict within about four plies: checks, captures, threats. It fails in two ways. A reply you never listed (the table looks complete and is not), and going back over a branch you already judged. In a quiet position branches never end, and a tree is the wrong tool. Four plies and two replies are rules of thumb."
+    },
+    {
+      "type": "contrast",
+      "title": "Same candidate, one extra defender",
+      "prompt": "In the first position A) Ra7+ mates. In the second a black knight stands on c8; everything else is the same. Fill the cell for Ra7+ before you answer: which reply did the first table not have?",
+      "working": "IBc1-14",
+      "failing": "IBc1-17",
+      "irrelevant": "IBc1-27"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-27"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next three are silent and share one position: three candidates. Fill your table on paper first, then answer. The plan is to offer hints only on request once you solve unlabeled items without them (planned, not built yet)."
+    },
+    {
+      "type": "item",
+      "item": "IBc1-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-20",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Look at your paper table for the silent position. Count honestly. This note stays on this device.",
+      "fields": [
+        {
+          "id": "cells",
+          "label": "Cells I filled with a verdict word:",
+          "type": "number"
+        },
+        {
+          "id": "revisits",
+          "label": "Times I went back to a cell I had already judged:",
+          "type": "number"
+        },
+        {
+          "id": "missed",
+          "label": "A reply I had not listed turned out to matter:",
+          "options": [
+            "yes",
+            "no",
+            "not sure"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.TREE",
+        "cue.3"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Tree sheet: ten minutes, away from the app.** Draw three rows and two columns. Rows are your candidates; columns are the opponent's two best replies. Follow each branch four plies and write one verdict word per cell. Tick each finished cell; put a dot each time you go back to one. Then check the best row against an engine or a book. Fewer dots is the aim."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one tree sheet for this week, using a position from your own game. This note stays on this device.",
+      "fields": [
+        {
+          "id": "position",
+          "label": "The position will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "dots",
+          "label": "After the sheet: dots (times I went back to a cell):",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.TREE)",
+    "docs/council-synthesis.md Round 3 (each branch once; avoid repeated rechecking) [R]",
+    "sources/sheets/emlasker_common-sense.md section 4.13 (trees versus plans; completeness claims are suspect) [S]",
+    "positions: Lichess puzzles and games (CC0); one authored one-feature edit (black knight added on c8)"
+  ]
+}

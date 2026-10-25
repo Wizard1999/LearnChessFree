@@ -28,7 +28,13 @@ STRUCTS = {
     "Advance French chain": [("P", "d4"), ("P", "e5"), ("p", "d5"), ("p", "e6")],
 }
 NAMES = list(STRUCTS)
-NODES = {"Carlsbad structure": ["OPN.STRUCT"], "Isolated queen's pawn": ["OPN.STRUCT", "POS.STRUCTURE.IQP"], "Maroczy bind": ["OPN.STRUCT"], "Hedgehog": ["OPN.STRUCT"],
+# Added for POS.STRUCTURE.KID (lesson L-POS-STRUCTURE-KID-1). Deliberately NOT part of STRUCTS/NAMES, so the five-structure
+# OPN.STRUCT recognition items and a rerun of this generator are unchanged. Working definition (ours, white orientation):
+# pawns on c4, d5 and e4 against pawns on d6, e5 and g6; the colours may be reversed. Use extra_matches(board).
+EXTRA_STRUCTS = {
+    "King's Indian chain": [("P", "c4"), ("P", "d5"), ("P", "e4"), ("p", "d6"), ("p", "e5"), ("p", "g6")],
+}
+NODES ={"Carlsbad structure": ["OPN.STRUCT"], "Isolated queen's pawn": ["OPN.STRUCT", "POS.STRUCTURE.IQP"], "Maroczy bind": ["OPN.STRUCT"], "Hedgehog": ["OPN.STRUCT"],
          "Advance French chain": ["OPN.STRUCT", "POS.STRUCTURE.CHAIN"]}
 NONE = "None of these five"
 DEFS = {
@@ -64,6 +70,17 @@ def matches(board):
     for n in NAMES:
         for o in ("white", "black"):
             if all(holds(board, c) for c in conds(n, o)):
+                out.append((n, o))
+    return out
+
+
+def extra_matches(board):
+    """(name, orientation) pairs of the EXTRA_STRUCTS definitions that hold on the board (either colour)."""
+    out = []
+    for n, base in EXTRA_STRUCTS.items():
+        for o in ("white", "black"):
+            cs = base if o == "white" else [mirror_cond(c) for c in base]
+            if all(holds(board, c) for c in cs):
                 out.append((n, o))
     return out
 

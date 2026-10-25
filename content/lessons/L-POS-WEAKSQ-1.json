@@ -1,0 +1,125 @@
+{
+  "id": "L-POS-WEAKSQ-1",
+  "title": "Holes: squares your pawns can never guard again",
+  "skill": "POS.WEAKSQ",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Marks the holes in one side's camp: squares in front of its pawns that none of its pawns can guard again",
+    "Names the enemy piece that could move onto a given hole",
+    "Checks that a piece can reach a hole and stay there, not only that the hole exists",
+    "Tells a hole from a square a pawn can still guard"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **hole** is a square in front of your own pawns that none of those pawns can ever guard again, because pawns never move backward. A hole is a weakness only if an enemy piece can **reach** it and **stay** there. It is a fact about *your* pawns; your opponent decides whether it matters."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqnrk1/pp2bppp/2np4/2p5/2B1PB2/2N2N2/PPPQ1PPP/3R1RK1 w - - 4 11",
+      "caption": "White to move. Black has no e-pawn and his c-pawn stands on c5, so d5 is a hole in his camp.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "The knight settles on d5. No Black pawn can ever attack it, and no Black piece attacks it now."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "holes",
+          "params": {
+            "color": "black",
+            "includes": [
+              "d5"
+            ]
+          },
+          "statement": "No Black pawn can ever attack d5."
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 0,
+            "after_move": "c3d5"
+          },
+          "statement": "After Nd5 no Black piece attacks the knight."
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c3d5",
+              "f1e1"
+            ]
+          },
+          "statement": "Nd5 is among the engine's top two moves."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-SQ-33"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-3"
+    },
+    {
+      "type": "card",
+      "text": "Before you call a hole a weakness, ask three things.\n**Can a piece reach it?** A knight can reach any square in time; a bishop only squares of its colour.\n**Can it stay?** If an enemy knight or bishop attacks it, your piece can be traded off.\n**Is there something to aim at from there?**\nThis is a *rule of thumb*: the more answers are yes, the more the hole matters."
+    },
+    {
+      "type": "contrast",
+      "title": "The same hole, one piece different",
+      "prompt": "In the first two positions only one Black piece differs (a knight on b8 or on d7), and White's knight can go to c5. Predict, then check: is Nc5 a good move in each? The third position asks a different question: is the square a hole at all?",
+      "working": "IBp2-1",
+      "failing": "IBp2-2",
+      "irrelevant": "IP-SQ-54"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.WEAKSQ",
+        "cue.2"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last position, which of the three questions (reach, stay, aim) did you ask first, and which did you skip? Write one line."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md (4.9 weak point / strong point)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-41 the hole)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C28, C32; contrast D)",
+    "sources/sheets/nimzowitsch_my-system.md (idea 15)",
+    "content/items/lesson-p2.json (IBp2 items); shipped items IP-SQ-33, IP-SQ-54 and the hole-yn set"
+  ]
+}

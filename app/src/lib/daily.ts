@@ -1,7 +1,7 @@
 import type { Attempt, LessonProgress } from '../db'
 import type { ContentBundle, Item } from '../types'
 import { isDue } from './schedule'
-import { groupBySkillKey, masteryMap, nextLessons, type Placement } from './progress'
+import { evidenceAttempts, groupBySkillKey, masteryMap, nextLessons, type Placement } from './progress'
 import { interleave, pickFresh } from './select'
 
 export interface Block {
@@ -30,8 +30,8 @@ export const dateKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMon
  */
 export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Placement, progress: LessonProgress[], day = dateKey(), extras: Extras = NO_EXTRAS): Block[] {
   const blocks: Block[] = []
-  const masteries = masteryMap(attempts)
-  const bySkill = groupBySkillKey(attempts)
+  const masteries = masteryMap(attempts, Date.now(), c.cuedOnly)
+  const bySkill = groupBySkillKey(evidenceAttempts(attempts))
   const poolFor = (key: string) => c.items.filter(i => i.skill === key)
 
   const due = [...bySkill.entries()].filter(([, v]) => v.length >= 3 && isDue(v)).map(([k]) => k).slice(0, 3)

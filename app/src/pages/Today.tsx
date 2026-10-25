@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
 import { independence, masteryMap, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
 import { buildDaily, dateKey, NO_EXTRAS, type Block, type Extras } from '../lib/daily'
-import { planChallenge } from '../lib/missions'
+import { challengeSeed, planChallenge } from '../lib/missions'
 import { useMissionData } from '../lib/useMissions'
 import { ItemSequence, LessonPlayer, RichText } from '../components/LessonPlayer'
 import { db, kvGet, kvSet } from '../db'
@@ -48,12 +48,12 @@ export function Today() {
   const ready = attempts !== undefined && progress !== undefined && placementQ !== undefined
   const challenge = useMemo(() => {
     if (!missionData.ctx || !missionData.attempts || lastChallenge === undefined) return null
-    const p = planChallenge(missionData.overall.nodes, content.items, missionData.attempts, lastChallenge, Date.now(), `${day}:today`)
+    const p = planChallenge(missionData.overall.nodes, content.items, missionData.attempts, lastChallenge, Date.now(), challengeSeed(missionData.overall.strand, lastChallenge))
     return p.unlocked ? { skills: p.picks.map(x => x.node.title) } : null
   }, [missionData.ctx, missionData.attempts, missionData.overall, lastChallenge, content.items, day])
   const blocks = useMemo<Block[]>(() => ready ? buildDaily(content, attempts, placement, progress, day, { ...extras, challenge }) : [], [ready, content, attempts, placement, progress, day, extras, challenge])
   const ind = useMemo(() => independence(attempts ?? []), [attempts])
-  const masteries = useMemo(() => masteryMap(attempts ?? []), [attempts])
+  const masteries = useMemo(() => masteryMap(attempts ?? [], Date.now(), content.cuedOnly), [attempts, content.cuedOnly])
 
   async function saveIntention(text: string | null) {
     setIntention(text); await kvSet(`daily:${day}:intention`, text)

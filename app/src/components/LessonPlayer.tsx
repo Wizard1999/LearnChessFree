@@ -92,18 +92,20 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   // Pick up where the learner left off in an unfinished lesson. Nothing is written until the saved step has been read.
   const [restored, setRestored] = useState(false)
   const [resumedAt, setResumedAt] = useState<number | null>(null)
+  const finishedBefore = useRef(false) // re-reading a finished lesson must not mark it unfinished
   useEffect(() => {
     let live = true
-    setI(0); setRestored(false); setResumedAt(null)
+    setI(0); setRestored(false); setResumedAt(null); finishedBefore.current = false
     void db.lessonProgress.get(lesson.id).then(p => {
       if (!live) return
+      if (p?.done) finishedBefore.current = true
       if (p && !p.done && p.step > 0 && p.step < lesson.steps.length) { setI(p.step); setResumedAt(p.step) }
     }).catch(() => undefined).finally(() => { if (live) setRestored(true) })
     return () => { live = false }
   }, [lesson.id, lesson.steps.length])
   useEffect(() => {
     if (!restored) return
-    if (!done) void db.lessonProgress.put({ lessonId: lesson.id, step: i, done: false, ts: Date.now() }).catch(() => undefined)
+    if (!done) { if (!finishedBefore.current) void db.lessonProgress.put({ lessonId: lesson.id, step: i, done: false, ts: Date.now() }).catch(() => undefined) }
     else void db.lessonProgress.put({ lessonId: lesson.id, step: steps.length, done: true, ts: Date.now() }).catch(() => undefined)
   }, [restored, i, done, lesson.id, steps.length])
 

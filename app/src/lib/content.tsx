@@ -51,6 +51,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       skillById: new Map(skills.map(s => [s.id, s])),
       itemById: new Map(items.map(i => [i.id, i])),
       lessonById: new Map(lessons.map(l => [l.id, l])),
+      cuedOnly: new Set(manifest.cued_only ?? []),
+      depthsWithItems: new Set(manifest.depths_with_items ?? []),
     })
     void (async () => {
       try {

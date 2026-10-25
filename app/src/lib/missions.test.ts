@@ -6,7 +6,7 @@ import { buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpN
 
 const skill = (id: string, strand = 'S3', tier = 2, depths: Record<string, string[]> = { D0: [], D1: [], D2: ['X.D1'], D3: ['X.D2'] }): Skill =>
   ({ id, title: id, strand, tier, depths: Object.fromEntries(Object.entries(depths).map(([d, p]) => [d, { outcome: 'does the thing well enough', prereqs: p.map(x => x.replace('X', id)) }])) } as Skill)
-const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, pReliable: 0.5, unlabeledWeight: 5, n: 5, ok: 4, lastTs, state })
+const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, pReliable: 0.5, unlabeledWeight: 5, cuedOnly: false, n: 5, ok: 4, lastTs, state })
 const ctxFor = (skills: Skill[], masteries: Record<string, Mastery>, itemDepths: Record<string, string[]>, lessonDone: string[] = []): MissionContext => ({
   masteries: new Map(Object.entries(masteries)), placement: { done: false, frontierTier: 0, ts: 0, byTier: {} },
   skillById: new Map(skills.map(s => [s.id, s])), itemDepths: new Map(Object.entries(itemDepths)), lessonDone: new Set(lessonDone), hasLesson: new Set(lessonDone),
@@ -37,10 +37,24 @@ describe('node levels come from evidence', () => {
     const n = nodeProgress(F, ctxFor([F], {}, {}, ['F']))
     expect(n.level).toBe(1); expect(n.noExercises).toBe(true)
   })
-  it('placement-assumed depths show Level two but never Mastered', () => {
+  it('placement-assumed depths are credited separately and never reach Mastered', () => {
     const c = { ...ctxFor([F], {}, { F: ['D1', 'D2'] }), placement: { done: true, frontierTier: 4, ts: 1, byTier: {} } }
     const n = nodeProgress(F, c)
-    expect(n.assumed).toBe(true); expect(n.level).toBe(3)
+    expect(n.assumed).toBe(true); expect(n.level).toBe(0); expect(n.levelWithAssumed).toBe(3)
+  })
+  it('assumed credit stays out of the mission percentage and is reported beside it', () => {
+    const c = { ...ctxFor([F], {}, { F: ['D1', 'D2'] }), placement: { done: true, frontierTier: 4, ts: 1, byTier: {} } }
+    const [mission] = buildMissions([F], c)
+    expect(mission.percent).toBe(0); expect(mission.percentWithAssumed).toBe(75); expect(mission.assumedCount).toBe(1)
+  })
+  it('a depth with no exercises is met when a deeper depth with exercises is reliable', () => {
+    const G = skill('G')
+    const n = nodeProgress(G, ctxFor([G], { 'G.D2': m('reliable') }, { G: ['D2'] }))
+    expect(n.level).toBe(4)
+  })
+  it('a lower depth that is overdue does not make the node due when the deeper depth is reliable', () => {
+    const n = nodeProgress(F, ctxFor([F], { 'F.D1': m('refresh'), 'F.D2': m('reliable') }, { F: ['D1', 'D2'] }))
+    expect(n.due).toBe(false); expect(n.level).toBe(4)
   })
 })
 

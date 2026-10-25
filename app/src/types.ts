@@ -91,7 +91,7 @@ export interface Lesson {
 }
 
 export interface VerifiedInfo { claims: number; checked_at: string | null; engine: string | null; depth: number | null }
-export interface Manifest { version: number; built: string; hash: string; skills: number; items: number; lessons: number; skipped: number; by_review: Record<string, number> }
+export interface Manifest { version: number; /** Skill-depth keys whose exercises are all cued (cue 1-2). */ cued_only?: string[]; /** Skill-depth keys that have at least one shipped exercise. */ depths_with_items?: string[]; built: string; hash: string; skills: number; items: number; lessons: number; skipped: number; by_review: Record<string, number> }
 
 export interface ContentBundle {
   manifest: Manifest
@@ -102,6 +102,10 @@ export interface ContentBundle {
   skillById: Map<string, Skill>
   itemById: Map<string, Item>
   lessonById: Map<string, Lesson>
+  /** Skill-depth keys whose exercises are all cued: evidence there counts in full (lib/mastery.ts). From the manifest, so it is right before the whole bank has loaded. */
+  cuedOnly: ReadonlySet<string>
+  /** Skill-depth keys with at least one exercise. A prerequisite depth without any is met by finishing the skill's lesson (progress.ts prereqMet). */
+  depthsWithItems: ReadonlySet<string>
 }
 
 export const skillKeyOf = (skillDepth: string) => skillDepth // alias for clarity: 'TAC.FORK.D2'

@@ -20,30 +20,50 @@ describe('beta function', () => {
 describe('mastery', () => {
   it('is unseen with no evidence', () => expect(masteryOf([]).state).toBe('unseen'))
   it('cued evidence alone never makes a skill reliable', () => {
-    const at = Array.from({ length: 30 }, (_, i) => att({ cue: 1, ts: T0 + i }))
+    const at = Array.from({ length: 30 }, (_, i) => att({ itemId: `i${i}`, cue: 1, ts: T0 + i }))
     expect(masteryOf(at, { now: T0 + 100 }).state).toBe('introduced')
   })
   it('needs enough unlabeled successes', () => {
-    const few = Array.from({ length: 4 }, (_, i) => att({ ts: T0 + i }))
+    const few = Array.from({ length: 4 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     expect(masteryOf(few, { now: T0 + 10 }).state).toBe('practising')
-    const many = Array.from({ length: 10 }, (_, i) => att({ ts: T0 + i }))
+    const many = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     expect(masteryOf(many, { now: T0 + 100 }).state).toBe('reliable')
   })
   it('hint-assisted successes do not count as independent', () => {
-    const hinted = Array.from({ length: 12 }, (_, i) => att({ hints: 1, ts: T0 + i }))
+    const hinted = Array.from({ length: 12 }, (_, i) => att({ itemId: `i${i}`, hints: 1, ts: T0 + i }))
     expect(masteryOf(hinted, { now: T0 + 100 }).state).toBe('practising')
   })
   it('retries are ignored as evidence', () => {
-    const base = Array.from({ length: 10 }, (_, i) => att({ ts: T0 + i }))
+    const base = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     const noisy = [...base, ...Array.from({ length: 20 }, (_, i) => att({ correct: false, firstAttempt: false, ts: T0 + 50 + i }))]
     expect(masteryOf(noisy, { now: T0 + 100 }).state).toBe('reliable')
   })
   it('turns to refresh after a long gap', () => {
-    const many = Array.from({ length: 10 }, (_, i) => att({ ts: T0 + i }))
+    const many = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     expect(masteryOf(many, { now: T0 + 40 * DAY }).state).toBe('refresh')
   })
+  it('the same exercise answered again adds a quarter of the evidence', () => {
+    const eight = Array.from({ length: 8 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
+    expect(masteryOf(eight, { now: T0 + 100 }).state).toBe('reliable')
+    const oneRepeated = Array.from({ length: 8 }, (_, i) => att({ ts: T0 + i })) // eight presentations of one exercise
+    const m = masteryOf(oneRepeated, { now: T0 + 100 })
+    expect(m.state).not.toBe('reliable')
+    expect(m.unlabeledWeight).toBeCloseTo(1 + 7 * 0.25, 9)
+  })
+  it('a depth with only cued exercises can become reliable on cued evidence, and says so', () => {
+    const cued = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, cue: 1, ts: T0 + i }))
+    expect(masteryOf(cued, { now: T0 + 100 }).state).toBe('introduced')
+    const m = masteryOf(cued, { now: T0 + 100, cuedOnly: true })
+    expect(m.state).toBe('reliable'); expect(m.cuedOnly).toBe(true)
+    expect(masteryOf(cued.slice(0, 2), { now: T0 + 100, cuedOnly: true }).state).toBe('practising') // enough to count as started
+  })
+  it('the refresher clock runs from the last answer that counts, not from a cue-1 lesson answer', () => {
+    const real = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
+    const lesson = att({ itemId: 'lesson-q', cue: 1, source: 'lesson', ts: T0 + 39 * DAY })
+    expect(masteryOf([...real, lesson], { now: T0 + 40 * DAY }).state).toBe('refresh')
+  })
   it('mixed results keep it from being reliable', () => {
-    const mixed = Array.from({ length: 12 }, (_, i) => att({ correct: i % 2 === 0, ts: T0 + i }))
+    const mixed = Array.from({ length: 12 }, (_, i) => att({ itemId: `i${i}`, correct: i % 2 === 0, ts: T0 + i }))
     expect(masteryOf(mixed, { now: T0 + 100 }).state).not.toBe('reliable')
   })
 })

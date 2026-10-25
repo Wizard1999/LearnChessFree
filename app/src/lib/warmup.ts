@@ -5,10 +5,11 @@ import type { Attempt } from '../db'
 import type { Item } from '../types'
 import type { Mission, NodeProgress } from './missions'
 import type { StrandWarmup } from './progress'
-import { pickFresh } from './select'
+import { pickFresh, shuffled } from './select'
 
 export const WARMUP_PASS = 0.66 // two of three right passes (0.67 would fail 2 of 3 by a hair)
 export const WARMUP_MAX_ITEMS = 12
+export const MIN_PER_TIER = 2
 
 export interface WarmupPlan { items: Item[]; tierOf: Map<string, number> }
 
@@ -22,7 +23,8 @@ export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[],
   const tierOf = new Map<string, number>()
   const used = new Set<string>()
   for (const t of tiers) {
-    const nodes = t.nodes.filter(n => !n.noExercises && n.level < 4).sort((a, b) => a.level - b.level)
+    // a different sample of the tier's skills each time, so a retake does not ask the same few questions and call them the whole tier
+    const nodes = shuffled(t.nodes.filter(n => !n.noExercises && n.level < 4), `${seed}:${t.tier}`)
     let picked = 0
     for (const n of nodes) {
       if (picked >= perTier || out.length >= WARMUP_MAX_ITEMS) break
@@ -67,7 +69,7 @@ export function concludeWarmup(results: TierResult[], now: number): StrandWarmup
   let frontier = tiers.length ? tiers[0] : 0
   for (const t of tiers) {
     const b = byTier[t]
-    if (b.ok / b.n >= WARMUP_PASS) frontier = t + 1
+    if (b.n >= MIN_PER_TIER && b.ok / b.n >= WARMUP_PASS) frontier = t + 1 // one question cannot vouch for a tier
     else break
   }
   if (tiers.length) frontier = Math.min(frontier, tiers[tiers.length - 1]) // never assume the top tier that was tested

@@ -14,7 +14,7 @@ export function Progress() {
   const attempts = useAttempts()
   const reflections = useLiveQuery(() => db.reflections.orderBy('ts').reverse().toArray(), [])
   const firsts = useMemo(() => (attempts ?? []).filter(a => a.firstAttempt), [attempts])
-  const masteries = useMemo(() => masteryMap(attempts ?? []), [attempts])
+  const masteries = useMemo(() => masteryMap(attempts ?? [], Date.now(), content.cuedOnly), [attempts, content.cuedOnly])
 
   const weekly = useMemo(() => {
     const m = new Map<number, { n: number; cued: number; hints: number; ok: number; unp: number }>()

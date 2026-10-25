@@ -79,7 +79,11 @@ def main():
     w("skills.json", skills); w("items.json", items); w("lessons.json", lessons); w("verified.json", verified)
     w("items-first.json", first_visit_items(skills, lessons, items))
     blob = json.dumps([skills, items, lessons], sort_keys=True).encode()
-    manifest = dict(version=1, built=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+    # Skill-depths that have exercises but none at cue 3 or above: the app counts their cued evidence in full (app/src/lib/mastery.ts)
+    best_cue = {}
+    for it in items: best_cue[it["skill"]] = max(best_cue.get(it["skill"], 0), it.get("cue", 0))
+    cued_only = sorted(k for k, c in best_cue.items() if c < 3)
+    manifest = dict(version=1, cued_only=cued_only, depths_with_items=sorted(best_cue), built=datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
                     hash=hashlib.sha256(blob).hexdigest()[:16], skills=len(skills), items=len(items), lessons=len(lessons),
                     skipped=len(skipped), by_review={s: sum(1 for i in items if i.get("review", {}).get("status") == s) for s in ("machine-only", "needs-human", "human-reviewed")})
     w("manifest.json", manifest)

@@ -13,7 +13,11 @@ describe('concludeWarmup', () => {
     expect(concludeWarmup([{ tier: 1, ok: false }, { tier: 1, ok: false }], 0).frontierTier).toBe(1)
   })
   it('never assumes the top tier that was tested', () => {
-    expect(concludeWarmup([{ tier: 2, ok: true }, { tier: 3, ok: true }, { tier: 4, ok: true }], 0).frontierTier).toBe(4)
+    const two = (tier: number) => [{ tier, ok: true }, { tier, ok: true }]
+    expect(concludeWarmup([...two(2), ...two(3), ...two(4)], 0).frontierTier).toBe(4)
+  })
+  it('one question cannot vouch for a tier', () => {
+    expect(concludeWarmup([{ tier: 2, ok: true }, { tier: 3, ok: true }], 0).frontierTier).toBe(2)
   })
 })
 

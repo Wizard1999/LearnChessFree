@@ -459,6 +459,26 @@
     "ref": "authored one-feature edit of Lichess puzzle 1fqXp, after Ng6+",
     "licence": "project"
    }
+  },
+  {
+   "id": "PB4-47",
+   "fen": "rnbqkb1r/ppp1nppp/3P4/8/8/5N2/PPP1PPPP/RNBQKB1R w KQkq - 1 5",
+   "family": "FAM-B4-TRAP-DX",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored one-feature edit of PB4-12: the black bishop stands on f8 instead of c5",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB4-48",
+   "fen": "rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 2",
+   "family": "FAM-B4-GRAB-QGA",
+   "provenance": {
+    "kind": "authored",
+    "ref": "legal moves from the starting position: 1.d4 d5 2.c4",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -519,7 +539,7 @@
     "One move places two pieces at once. The king moves two squares toward a rook.",
     "Castle on the kingside."
    ],
-   "explain": "Castling puts the king on g1 and the rook on f1 in one move (both checked). The engine ranks it within 40 centipawns of its first choice here, so the setup move is also a sound move.",
+   "explain": "Castling puts the king on g1 and the rook on f1 in one move (both checked). The engine ranks it within 40 centipawns of its first choice here (a centipawn is a hundredth of a pawn), so the setup move is also a sound move.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -778,6 +798,50 @@
       "min": 50
      },
      "statement": "White stands at least half a pawn better after the best reply (White's point of view, depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 3,
+      "after_move": "d4e5"
+     },
+     "statement": "After dxe5 White has three pawns on the queenside."
+    },
+    {
+     "id": "C4",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 4,
+      "after_move": "d4e5"
+     },
+     "statement": "After dxe5 White has four pawns on the kingside (seven in all)."
+    },
+    {
+     "id": "C5",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 4,
+      "after_move": "d4e5"
+     },
+     "statement": "After dxe5 Black has four pawns on the queenside."
+    },
+    {
+     "id": "C6",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 3,
+      "after_move": "d4e5"
+     },
+     "statement": "After dxe5 Black has three pawns on the kingside (seven in all)."
     }
    ],
    "tags": [
@@ -790,11 +854,11 @@
     "contrast.grab"
    ],
    "hints": [
-    "The knight on e4 and the pawn on e5 both stand in front of a white pawn.",
+    "Black has taken on e4. Which black pawn can your d-pawn capture?",
     "Which white pawn can capture something?",
     "dxe5."
    ],
-   "explain": "After the grab, dxe5 is the engine's first choice and the engine rates White at least half a pawn better at depth 16 (checked). The grab won a pawn and still left Black worse.",
+   "explain": "After the grab, dxe5 is the engine's first choice. Material is level again (Black took on e4, White takes on e5; both pawn counts checked), but the engine rates White at least half a pawn better at depth 16 (checked). Holding the extra pawn was not an advantage.",
    "contrast_group": "CG-B4-GRAB-BO",
    "orientation": "white",
    "review": {
@@ -911,7 +975,7 @@
     "Which moves develop a piece or challenge the centre?",
     "Four developing or centre-challenging moves are close together. Holding the pawn is not one of them."
    ],
-   "explain": "Four developing or centre-challenging moves are within 20 centipawns of each other (depth 16). The pawn-holding move b5 is at least 50 centipawns worse than the best move (checked): keeping the pawn costs more than the pawn is worth here.",
+   "explain": "Four developing or centre-challenging moves are within 20 centipawns of each other (depth 16). The pawn-holding move b5 is at least 50 centipawns worse than the best move (checked): holding the extra pawn gains nothing here and costs about half a pawn or more.",
    "feedback_by_move": {
     "b7b5": "b5 tries to keep the pawn, but it is at least 50 centipawns worse than the developing moves at depth 16."
    },
@@ -1177,6 +1241,20 @@
       "count": 1
      },
      "statement": "The pawn on e5 is attacked by one black piece (the d6 pawn), so fxe5 is only an exchange of pawns."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f4e5",
+       "d8h4"
+      ]
+     },
+     "statement": "After fxe5 Qh4+ the black queen attacks the white king on e1."
     }
    ],
    "tags": [
@@ -1189,12 +1267,12 @@
    ],
    "hints": [
     "Is the pawn on e5 really free? Count what attacks it.",
-    "After fxe5 dxe5, which diagonal near your king has opened?",
+    "After fxe5, which diagonal near your king has opened, and which black piece can use it with check?",
     "Develop a piece or play d3 instead of capturing."
    ],
-   "explain": "The d6 pawn guards e5, so fxe5 only trades pawns, and it opens the h4-e1 diagonal toward the white king (the f-pawn is the shield). The engine rates fxe5 at least 300 centipawns worse than the best move (checked). Quiet moves such as d3, Nc3 and Be2 stay within 40 centipawns of the first choice.",
+   "explain": "The d6 pawn guards e5, so fxe5 looks like an even trade of pawns, but with the f-pawn gone the h4-e1 diagonal is open and Black can answer Qh4+ instead of recapturing (checked). The engine rates fxe5 at least 300 centipawns worse than the best move (checked). Quiet moves such as d3, Nc3 and Be2 stay within 40 centipawns of the first choice.",
    "feedback_by_move": {
-    "f4e5": "fxe5 is at least 300 centipawns worse than the best move: after dxe5 or Qh4+ the white king is open."
+    "f4e5": "fxe5 is at least 300 centipawns worse than the best move: Black does not have to recapture, because Qh4+ is check and the f-pawn no longer shields the king."
    },
    "orientation": "white",
    "contrast_group": "CG-B4-TRAP-E5",
@@ -1889,7 +1967,7 @@
     "What can the white knight on e4 do if the f6 square is taken by the other knight?",
     "Ngf6 allows Nd6 mate."
    ],
-   "explain": "After ...Ngf6 White has a forced mate (checked: the engine scores it as mate). Other moves such as Ndf6 and Qc7 are within 40 centipawns of the first choice. One natural developing move loses at once, so the trap has to be remembered.",
+   "explain": "After ...Ngf6 White has a forced mate (checked: the engine scores it as mate). Other moves such as Ndf6 and Qc7 are within 40 centipawns of the first choice. One natural developing move loses at once, so the trap has to be remembered. If you forget it, the habit that catches it is to list White's checks before you play a natural move.",
    "orientation": "black",
    "review": {
     "status": "needs-human",
@@ -2133,7 +2211,7 @@
    "position": "PB4-25",
    "prompt": "Black to move. How would you prepare for this position: exact recall or understanding?",
    "answer": {
-    "class": "exact recall",
+    "class": "understanding",
     "options": [
      "exact recall",
      "understanding"
@@ -2169,6 +2247,38 @@
       "cp": 50
      },
      "statement": "The central move d5 is at least 50 centipawns worse than the best move."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The bishop on c5 is attacked by one white pawn (the pawn on d4)."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1,
+      "after_move": "d7d6"
+     },
+     "statement": "After d6 the bishop on c5 is still attacked by one white piece."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1,
+      "after_move": "d7d5"
+     },
+     "statement": "After d5 the bishop on c5 is still attacked by one white piece."
     }
    ],
    "tags": [
@@ -2181,11 +2291,11 @@
     "mode.silent"
    ],
    "hints": [
-    "Count the moves that hold.",
-    "What does the natural pawn move d6 allow?",
-    "Two bishop moves hold; the natural pawn moves do not."
+    "Is anything of yours attacked right now?",
+    "The bishop on c5 is attacked by a pawn. Which moves deal with that, and which ignore it?",
+    "Move the bishop: Bb6 and Be7 are close together, so nothing here has to be memorised."
    ],
-   "explain": "Two bishop moves hold; d6 is at least 200 centipawns worse and d5 at least 50 (checked, depth 16). With so few safe moves and such a gap, this is a position to remember.",
+   "explain": "The bishop on c5 is attacked by the d4 pawn, so you move it: Bb6 and Be7 are within 15 centipawns of each other (checked, depth 16). d6 is at least 200 centipawns worse and d5 at least 50, and both leave the bishop attacked (checked). Nothing here needs to be memorised.",
    "orientation": "black",
    "review": {
     "status": "needs-human",
@@ -2448,6 +2558,14 @@
     ]
    },
    "claims": [
+    {
+     "id": "C0",
+     "type": "legal_move",
+     "params": {
+      "move": "f6e4"
+     },
+     "statement": "Nxe4 is a legal move."
+    },
     {
      "id": "C1",
      "type": "best_move_in",
@@ -2870,6 +2988,18 @@
       "count": 1
      },
      "statement": "Before any move, the rook on b1 is already attacked by 1 black piece."
+    },
+    {
+     "id": "C10",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "a7"
+      ],
+      "after_move": "e7a7"
+     },
+     "statement": "After Qxa7 the queen on a7 is loose."
     }
    ],
    "tags": [
@@ -2884,11 +3014,11 @@
     "Look at the squares the candidate pieces land on: which are attacked? Which moves leave something else of yours loose?",
     "The survivor is Qxe8+."
    ],
-   "explain": "Qxe8+ is the engine's first choice at depth 16. Each of the other three candidates loses at least 300 centipawns (checked): Qxf7+ leaves the queen loose on f7; Qf8+ leaves the queen loose on f8; Qxa7 leaves the attacked rook on b1 alone.",
+   "explain": "Qxe8+ is the engine's first choice at depth 16. Each of the other three candidates loses at least 300 centipawns (checked): Qxf7+ leaves the queen loose on f7; Qf8+ leaves the queen loose on f8; Qxa7 leaves the queen loose on a7, where the rook on a8 takes it, and the rook on b1 is still attacked by the queen on b2.",
    "feedback_by_move": {
     "e7f7": "Qxf7+ puts the queen on f7, where it can be captured and nothing of yours defends it: at least 300 centipawns worse than the best move (depth 16).",
     "e7f8": "Qf8+ puts the queen on f8, where it can be captured and nothing of yours defends it: at least 300 centipawns worse than the best move (depth 16).",
-    "e7a7": "Qxa7 is at least 300 centipawns worse than the best move (depth 16). It does nothing about the rook on b1, which is already attacked."
+    "e7a7": "Qxa7 puts the queen on a7, where the rook on a8 takes it and nothing defends it: at least 300 centipawns worse than the best move (depth 16)."
    },
    "orientation": "white",
    "source": {
@@ -3615,6 +3745,53 @@
       "cp": 300
      },
      "statement": "Qh6+ is at least 300 centipawns worse than the best move."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "d8",
+      "color": "white",
+      "count": 1,
+      "after_move": "g5d8"
+     },
+     "statement": "After Qd8+ the queen on d8 is defended by one white piece (the rook on d1)."
+    },
+    {
+     "id": "C7",
+     "type": "material_after_move",
+     "params": {
+      "move": "g5d8",
+      "min": 0,
+      "max": 0
+     },
+     "statement": "Qd8+ ends level in material along the engine's best line (a queen trade)."
+    },
+    {
+     "id": "C8",
+     "type": "material_after_move",
+     "params": {
+      "move": "b1f5",
+      "min": 0
+     },
+     "statement": "Bxf5 does not lose material along the engine's best line."
+    },
+    {
+     "id": "C9",
+     "type": "material_after_move",
+     "params": {
+      "move": "g5h6",
+      "min": 0
+     },
+     "statement": "Qh6+ does not lose material along the engine's best line."
+    },
+    {
+     "id": "C10",
+     "type": "eval_range",
+     "params": {
+      "min": 400
+     },
+     "statement": "White stands at least four pawns better with best play (White's point of view, depth 16)."
     }
    ],
    "tags": [
@@ -3630,9 +3807,9 @@
     "Look at the squares the candidate pieces land on: which are attacked? Which moves leave something else of yours loose?",
     "The survivor is Rd8+."
    ],
-   "explain": "Rd8+ is the engine's first choice at depth 16. Each of the other three candidates loses at least 300 centipawns (checked): Qd8+ puts the queen on an attacked square (d8); Bxf5 also loses at least 300 centipawns; Qh6+ also loses at least 300 centipawns.",
+   "explain": "Rd8+ is the engine's first choice at depth 16 and leaves White at least four pawns better (checked). Three tempting alternatives are at least 300 centipawns worse (checked), but none of them loses material: Qd8+ is only a queen trade (Rd1 defends d8), and Bxf5 and Qh6+ keep the material. They give up the win, not a piece.",
    "feedback_by_move": {
-    "g5d8": "Qd8+ puts the queen on d8, where 1 black piece attacks it: at least 300 centipawns worse than the best move (depth 16).",
+    "g5d8": "Qd8+ meets Qxd8 and the queens are traded: at least 300 centipawns worse than the best move (depth 16).",
     "b1f5": "Bxf5 is at least 300 centipawns worse than the best move (depth 16). Look at everything the opponent can do after it, not only at the square it lands on.",
     "g5h6": "Qh6+ is at least 300 centipawns worse than the best move (depth 16). Look at everything the opponent can do after it, not only at the square it lands on."
    },
@@ -3752,6 +3929,166 @@
       "after_move": "c3f6"
      },
      "statement": "After Qxf6+ the queen on f6 is loose."
+    },
+    {
+     "id": "C10",
+     "type": "attackers",
+     "params": {
+      "square": "h1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white king on h1 is in check from one black piece."
+    },
+    {
+     "id": "C11",
+     "type": "mobility",
+     "params": {
+      "square": "h1",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white king on h1 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C12",
+     "type": "mobility",
+     "params": {
+      "square": "d3",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white rook on d3 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C13",
+     "type": "mobility",
+     "params": {
+      "square": "d6",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white knight on d6 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C14",
+     "type": "mobility",
+     "params": {
+      "square": "a2",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on a2 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C15",
+     "type": "mobility",
+     "params": {
+      "square": "b2",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on b2 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C16",
+     "type": "mobility",
+     "params": {
+      "square": "c4",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on c4 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C17",
+     "type": "mobility",
+     "params": {
+      "square": "d5",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on d5 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C18",
+     "type": "mobility",
+     "params": {
+      "square": "g2",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on g2 has no legal move (so Re1 is checkmate)."
+    },
+    {
+     "id": "C19",
+     "type": "mobility",
+     "params": {
+      "square": "h2",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "c3d3",
+       "e3d3",
+       "d1d3",
+       "e8e1"
+      ]
+     },
+     "statement": "After Qxd3 Qxd3 Rxd3 Re1+ the white pawn on h2 has no legal move (so Re1 is checkmate)."
     }
    ],
    "tags": [
@@ -3767,10 +4104,10 @@
     "Look at the squares the candidate pieces land on: which are attacked? Which moves leave something else of yours loose?",
     "The survivor is Nf5+."
    ],
-   "explain": "Nf5+ is the engine's first choice at depth 16. Each of the other three candidates loses at least 300 centipawns (checked): Nxe8+ leaves the knight loose on e8; Qxd3 puts the queen on an attacked square (d3); Qxf6+ leaves the queen loose on f6.",
+   "explain": "Nf5+ is the engine's first choice at depth 16. Three tempting alternatives fail (checked): Nxe8+ leaves the knight loose on e8; Qxf6+ leaves the queen loose on f6; Qxd3 meets Qxd3, and the recapture Rxd3 pulls the rook off the back rank and allows Re1#.",
    "feedback_by_move": {
     "d6e8": "Nxe8+ puts the knight on e8, where it can be captured and nothing of yours defends it: at least 300 centipawns worse than the best move (depth 16).",
-    "c3d3": "Qxd3 puts the queen on d3, where 1 black piece attacks it: at least 300 centipawns worse than the best move (depth 16).",
+    "c3d3": "Qxd3 Qxd3 and if Rxd3 then Re1 is checkmate: at least 300 centipawns worse than the best move (depth 16).",
     "c3f6": "Qxf6+ puts the queen on f6, where it can be captured and nothing of yours defends it: at least 300 centipawns worse than the best move (depth 16)."
    },
    "orientation": "white",
@@ -3832,7 +4169,7 @@
     "The bishop on g8 and the pawn on g7 take two squares away from the king.",
     "Only one square is left."
    ],
-   "explain": "The king has one legal move, Kh7 (checked), and nothing captures the knight on g6 (checked). With so few escape squares the checks may repeat; the next exercise asks whether they do.",
+   "explain": "The king has one legal move, Kh7 (checked), and nothing captures the knight on g6 (checked). With so few escape squares the checks may repeat; the next board shows whether they do.",
    "orientation": "black",
    "source": {
     "kind": "lichess_puzzle",
@@ -3970,7 +4307,7 @@
     "The bishop has left g8.",
     "The king can go to g8 or h7."
    ],
-   "explain": "The king now has two legal moves, Kg8 and Kh7 (checked). A second escape square is enough to end the checks: the next exercise shows the cost.",
+   "explain": "The king now has two legal moves, Kg8 and Kh7 (checked). A second escape square gives Black a way out of the repetition; the next exercise shows what that costs White.",
    "orientation": "black",
    "review": {
     "status": "needs-human",
@@ -4032,10 +4369,168 @@
    "hints": [
     "List the king's squares after the check.",
     "Is g8 free? What happens to the checks if the king steps there?",
-    "No: the king steps out of the checks."
+    "No: the king has a way out of the repetition."
    ],
-   "explain": "With g8 empty and not attacked after Ng6+ (both checked), the king steps to g8 and the checks stop. The engine rates Black at least five pawns better whatever White plays (checked, depth 16). Assuming a perpetual without listing the escape squares would have been a mistake.",
+   "explain": "With g8 empty and not attacked after Ng6+ (both checked), the king can step to g8 instead of going back to h7, so the checks need not repeat. The engine rates Black at least five pawns better whatever White plays (checked, depth 16), so there is no perpetual. Assuming one without listing the escape squares would have been a mistake.",
    "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB4-53",
+   "skill": "OPN.TRAPS.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PB4-47",
+   "prompt": "White to move. The pawn on d6 can take the knight on e7. Decide whether that is sure material or bait, and play your move.",
+   "answer": {
+    "moves": [
+     "d6e7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C0",
+     "type": "legal_move",
+     "params": {
+      "move": "d6e7"
+     },
+     "statement": "dxe7 is a legal move."
+    },
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d6e7"
+      ]
+     },
+     "statement": "dxe7 is the engine's first choice (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d8",
+      "color": "white",
+      "count": 1,
+      "after_move": "d6e7"
+     },
+     "statement": "After dxe7 the pawn on e7 attacks the queen on d8."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f8",
+      "color": "white",
+      "count": 1,
+      "after_move": "d6e7"
+     },
+     "statement": "After dxe7 the pawn on e7 attacks the bishop on f8."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "d6e7",
+      "min": 2
+     },
+     "statement": "dxe7 wins at least two counting units of material along the engine's best line."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "b1c3",
+      "cp": 150
+     },
+     "statement": "The quiet move Nc3 is at least 150 centipawns worse than dxe7."
+    },
+    {
+     "id": "C6",
+     "type": "move_loses",
+     "params": {
+      "move": "c1f4",
+      "cp": 150
+     },
+     "statement": "The quiet move Bf4 is at least 150 centipawns worse than dxe7."
+    }
+   ],
+   "tags": [
+    "node.OPN.TRAPS",
+    "cue.2",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en",
+    "contrast.take"
+   ],
+   "hints": [
+    "Is the knight on e7 defended, and what would your pawn attack from e7?",
+    "A pawn on e7 attacks d8 and f8. Which black pieces stand there?",
+    "Take the knight: dxe7."
+   ],
+   "explain": "Here dxe7 takes the knight and the new pawn on e7 attacks both the queen on d8 and the bishop on f8 (both checked). The engine's first choice is dxe7 and it wins at least two counting units of material along its line; the quiet moves Nc3 and Bf4 are each at least 150 centipawns worse (checked, depth 16).",
+   "feedback_by_move": {
+    "b1c3": "Nc3 develops, but it passes up a capture that wins material: at least 150 centipawns worse than dxe7 (depth 16).",
+    "c1f4": "Bf4 develops, but it passes up a capture that wins material: at least 150 centipawns worse than dxe7 (depth 16)."
+   },
+   "contrast_group": "CG-B4-TRAP-E5",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB4-54",
+   "skill": "OPN.SETUP.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PB4-48",
+   "prompt": "Black to move. A pawn is offered. Choose a move.",
+   "answer": {
+    "moves": [
+     "e7e6",
+     "d5c4",
+     "c7c6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e7e6",
+       "d5c4",
+       "c7c6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "e6, dxc4 and c6 are each within 40 centipawns of the engine's first choice (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.OPN.SETUP",
+    "cue.2",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en",
+    "contrast.grab"
+   ],
+   "hints": [
+    "Compare the offered pawn with the developing moves. How big is the gap?",
+    "e6, c6 and the capture dxc4 are all close together.",
+    "e6, dxc4 or c6."
+   ],
+   "explain": "Taking on c4 is within 40 centipawns of the first choice, as are e6 and c6 (checked, depth 16), so taking the offered pawn is not a mistake by itself. The cost can come later, from trying to hold the pawn (see the next exercises).",
+   "contrast_group": "CG-B4-GRAB-BO",
+   "orientation": "black",
    "review": {
     "status": "needs-human",
     "reviewer": null

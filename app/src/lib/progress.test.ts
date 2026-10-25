@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Attempt } from '../db'
 import type { Skill } from '../types'
-import { evidenceAttempts, masteryMap, statusOf, type Placement } from './progress'
+import { evidenceAttempts, frontierFor, masteryMap, prereqMet, statusOf, type Placement } from './progress'
 
 const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: 'f', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
 
@@ -38,4 +38,42 @@ describe('strand warm-ups override the overall placement for that strand', () =>
     expect(statusOf('N.D1', skills, new Map(), p)).toBe('unseen')
     expect(statusOf('M.D1', skills, new Map(), p)).toBe('assumed')
   })
+})
+
+describe('assumed skills hold until the evidence says otherwise', () => {
+  const N = { id: 'N', title: 'N', strand: 'S3', tier: 2, depths: {} } as Skill
+  const skills = new Map<string, Skill>([['N', N]])
+  const placed: Placement = { done: true, frontierTier: 4, ts: 10, byTier: {} }
+  it('a few right answers leave a skill assumed instead of lowering it to "seen"', () => {
+    const m = masteryMap([att({ cue: 1, source: 'lesson', ts: 20 })])
+    expect(statusOf('N.D2', skills, m, placed)).toBe('assumed')
+  })
+  it('a miss on real practice replaces the assumption with what was seen', () => {
+    const m = masteryMap([att({ correct: false, source: 'practice', ts: 20 }), att({ itemId: 'j', correct: false, source: 'practice', ts: 21 })])
+    expect(statusOf('N.D2', skills, m, placed)).not.toBe('assumed')
+  })
+})
+
+describe('which frontier applies', () => {
+  const N = { id: 'N', title: 'N', strand: 'S3', tier: 2, depths: {} } as Skill
+  const warm = { frontierTier: 1, ts: 50, byTier: {} }
+  it('uses the newer of the strand warm-up and the overall placement', () => {
+    expect(frontierFor(N, { done: true, frontierTier: 4, ts: 10, byTier: {}, byStrand: { S3: warm } })).toBe(1) // warm-up is newer
+    expect(frontierFor(N, { done: true, frontierTier: 4, ts: 90, byTier: {}, byStrand: { S3: warm } })).toBe(4) // a retaken placement is newer
+  })
+  it('a skipped placement does not cancel a warm-up', () => {
+    expect(frontierFor(N, { done: true, skipped: true, frontierTier: 0, ts: 90, byTier: {}, byStrand: { S3: warm } })).toBe(1)
+  })
+})
+
+describe('prerequisites on depths that have no exercises', () => {
+  const skills = new Map<string, Skill>([['H', { id: 'H', title: 'H', strand: 'S11', tier: 1, depths: {} } as Skill]])
+  const none: Placement = { done: false, frontierTier: 0, ts: 0, byTier: {} }
+  const call = (hasItems: boolean, done: boolean, lesson: boolean) => prereqMet('H.D2', skills, new Map(), none, () => hasItems, () => done, () => lesson)
+  it("are met by finishing the skill's lesson, and not before", () => {
+    expect(call(false, false, true)).toBe(false)
+    expect(call(false, true, true)).toBe(true)
+  })
+  it('do not block when nothing at all can be done about them', () => expect(call(false, false, false)).toBe(true))
+  it('still need real evidence when the depth has exercises', () => expect(call(true, true, true)).toBe(false))
 })
