@@ -3,22 +3,22 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 62%** (49 of 86 tasks done, in-progress tasks count half). Updated 2026-10-25T10:21+00:00 UTC.
+**Overall: 61%** (50 of 89 tasks done, in-progress tasks count half). Updated 2026-10-25T10:51+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
-| Phase 2: The app | 18/21 | 86% |
-| Phase 3: Curriculum graph | 2/4 | 50% |
+| Phase 2: The app | 19/23 | 83% |
+| Phase 3: Curriculum graph | 2/4 | 62% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 6/13 | 65% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 6/14 | 61% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 7: Release | 1/5 | 20% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 114 of 194 skill nodes have a lesson (59%); 134 nodes have 10 or more shipped exercises; 6209 exercises ship, 0 wait for validation; 0 items reviewed by a person, 1575 flagged for human review.
+**Coverage (computed from the files):** 114 of 194 skill nodes have a lesson (59%); 133 nodes have 10 or more shipped exercises; 6221 exercises ship, 2 wait for validation; 0 items reviewed by a person, 1587 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -30,13 +30,13 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S6 Attack, sacrifice and defense | 18 | 1 | 15 |
 | S7 Endgames | 34 | 14 | 32 |
 | S8 Openings and structures | 12 | 12 | 5 |
-| S9 Game study | 7 | 7 | 2 |
+| S9 Game study | 7 | 7 | 1 |
 | S10 Practical performance | 8 | 8 | 0 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing); Tranche 2a: calculation (7 nodes); Tranche 2b: positional play remaining (about 30 nodes); Tranche 2c: attack, defence, sacrifice, initiative (17 nodes); Tranche 2d: endgames remaining (about 20 nodes)
+**Building now:** Fill gaps the graph agent named: mate search, knight and rook endings, four pawn-structure families, exchange sacrifice, practical resistance (node files being written); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing); Tranche 2a: calculation (7 nodes); Tranche 2b: positional play remaining (about 30 nodes); Tranche 2c: attack, defence, sacrifice, initiative (17 nodes); Tranche 2d: endgames remaining (about 20 nodes)
 
-**Next up:** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Adversarial code review of the app and fixes
+**Next up:** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Missions follow-ups: mastery-challenge nudge on Today, per-mission warm-up (test out), mission completion screen
 
 **Waiting on you (gates and questions):** nothing
 
@@ -84,6 +84,8 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Fix: crooked board (crisp SVG squares, width snapped to a multiple of 8)
 - [x] Settings as a side panel (overlay drawer) with theme, board, text size, motion
 - [x] Roadmap page in the app
+- [x] Missions: progress donut, five levels per skill, block map of the whole course, skills up next, mastery challenge (`docs/missions-design.md`)
+- [ ] Missions follow-ups: mastery-challenge nudge on Today, per-mission warm-up (test out), mission completion screen
 - [ ] Adversarial code review of the app and fixes
 - [ ] Accessibility and mobile fixes from the review
 - [ ] Full-course walkthrough in the browser as a first-time learner
@@ -91,7 +93,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 ## Phase 3: Curriculum graph
 - [x] 194 skill nodes with outcomes, conditions, contrasts and misconceptions
 - [x] Graph is acyclic, tier-consistent, with a default route
-- [ ] Fill gaps the graph agent named: mate-in-two search, knight endings, rook-pawn endings, structure families, exchange sacrifice, practical resistance
+- [~] Fill gaps the graph agent named: mate search, knight and rook endings, four pawn-structure families, exchange sacrifice, practical resistance (node files being written)
 - [ ] Re-check tiers and prerequisites after the structure critic
 
 ## Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`)
@@ -128,6 +130,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [~] Tranche 2b: positional play remaining (about 30 nodes)
 - [~] Tranche 2c: attack, defence, sacrifice, initiative (17 nodes)
 - [~] Tranche 2d: endgames remaining (about 20 nodes)
+- [ ] Lessons and exercises for the new gap nodes (mate search, knight and rook endings, structure families, exchange sacrifice, practical resistance)
 - [ ] Review and fix pass on every tranche lesson
 - [ ] Read-through of all lessons for voice, order and consistency
 
