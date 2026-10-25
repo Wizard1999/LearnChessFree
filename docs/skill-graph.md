@@ -1,44 +1,44 @@
 # Skill graph v1: the curriculum as data
 
-Generated 2026-10-24 from `content/skills/*.json` by the numbers below; checked by `tools/check_graph.py`. Evidence labels as in `CLAUDE.md`: **[V]** the graph structure (acyclic, references exist, tiers consistent) is machine-checked; **[I]** tier, depth and prerequisite choices are our design (all ratings **G0**, expert estimate); **[S]/[R]** the conditions and contrasts come from the five synthesis sheets, which are themselves summaries of the books; every engine- or tablebase-flagged claim in them stays **[CHECK]** until an item is validated.
+Generated 2026-10-24 and extended 2026-10-25 (ten nodes for the gaps of section 6) from `content/skills/*.json` by the numbers below; checked by `tools/check_graph.py`. Evidence labels as in `CLAUDE.md`: **[V]** the graph structure (acyclic, references exist, tiers consistent) is machine-checked; **[I]** tier, depth and prerequisite choices are our design (all ratings **G0**, expert estimate); **[S]/[R]** the conditions and contrasts come from the five synthesis sheets, which are themselves summaries of the books; every engine- or tablebase-flagged claim in them stays **[CHECK]** until an item is validated.
 
 This document replaces nothing: `curriculum-map-v1.md` and `-v1.1.md` say *what* the nodes are and why; `content-schema.md` is the file contract; this file says what was built from them, how to read it, where the choices were mine, and what is still missing.
 
 ## 1. What exists
 
-- One file per node: `content/skills/<ID>.json`. **194 nodes**: 169 written here and 25 written by the foundation worker (the 24 ids of the assignment plus `FND.SPECIAL`, a combiner node it added). Foundation ids missing when this was generated: none.
-- **Fields beyond `content-schema.md`** (additive; the foundation worker's files use the same shapes): `origin` (map-v1, map-v1.1, reconciliation, or a note on how the id came about) · `invented_by_us` (true where the id or the node is not in a map: `END.THEORY.MUSTKNOW`, `FND.DRAWS`, `FND.SPECIAL`, `OPN.REPERTOIRE.BLACK`, `OPN.REPERTOIRE.WHITE`, `SAF.FICTITIOUS`) · `status` (`placeholder`, `blocked`) · `note` · `soft_prereqs` (list of `NODE.Dn` strings) with `soft_prereq_notes` (`{ref: why}`, one per soft prerequisite) · **evidence for every line of `conditions` and `contrasts` in parallel arrays**: `condition_sources[i]` for `conditions[i]`, `contrast_sources[i]` and `contrast_kinds[i]` (`fails` = failing look-alike, `irrelevant` = irrelevant case) for `contrasts[i]`. The texts stay clean because the app shows them to learners on the Course page; the evidence stays machine-readable. `strand` uses `S1`..`S11` as in the schema (the first v0 file used a word and was replaced).
-- **Depths.** D0 idea (explains it, no prerequisites) · D1 cued (told the theme or the name) · D2 unlabeled (mixed set, includes positions where the idea does not apply; this is what a *tier* refers to) · D3 under calculation and counterexamples (one-feature changes, failing look-alikes) · D4 in play (evidence from own games with prompts off) · D5 teach/repair (builds a contrast family, repairs a faulty exercise). Nodes with a D4: 14; with a D5: 1. Not every node has D4/D5: only where evidence from play is meaningful. Habit nodes (`LOOP.V1`, `SELF.1`, `PRA.*`) are defined by D4 evidence and cannot be tested out by items alone.
-- **Prerequisites.** `prereqs` are *hard*: `NODE.Dn` strings, only where the skill truly cannot be learned without the other. Depth Dn (n >= 2) always lists `NODE.D(n-1)` first (the chain, as in the TAC.FORK example); D0 has none. Cross-node prerequisites are chosen per depth, so an advanced node's D1 does not wait for what only its D3 needs. `soft_prereqs` ("helps if known first", 103 links in all) never block access; a scheduler may use them to order teaching and to pick review items. A soft link never points at a node that hard-depends on this one.
+- One file per node: `content/skills/<ID>.json`. **204 nodes**: 179 written here (169 in the first pass, 10 in the 2026-10-25 extension) and 25 written by the foundation worker (the 24 ids of the assignment plus `FND.SPECIAL`, a combiner node it added). Foundation ids missing when this was generated: none.
+- **Fields beyond `content-schema.md`** (additive; the foundation worker's files use the same shapes): `origin` (map-v1, map-v1.1, reconciliation, or a note on how the id came about) · `invented_by_us` (true where the id or the node is not in a map: `END.THEORY.MUSTKNOW`, `FND.DRAWS`, `FND.SPECIAL`, `OPN.REPERTOIRE.BLACK`, `OPN.REPERTOIRE.WHITE`, `SAF.FICTITIOUS`; and the ten ids of the 2026-10-25 extension, `TAC.MATE-SEARCH`, `END.KNIGHT`, `END.ROOK-PAWN`, `END.ROOK-BASICS`, `POS.STRUCTURE.CARLSBAD`, `.MAROCZY`, `.HEDGEHOG`, `.KID`, `SAC.EXCHANGE`, `PRA.RESIST`) · `status` (`placeholder`, `blocked`) · `note` · `soft_prereqs` (list of `NODE.Dn` strings) with `soft_prereq_notes` (`{ref: why}`, one per soft prerequisite) · **evidence for every line of `conditions` and `contrasts` in parallel arrays**: `condition_sources[i]` for `conditions[i]`, `contrast_sources[i]` and `contrast_kinds[i]` (`fails` = failing look-alike, `irrelevant` = irrelevant case) for `contrasts[i]`. The texts stay clean because the app shows them to learners on the Course page; the evidence stays machine-readable. `strand` uses `S1`..`S11` as in the schema (the first v0 file used a word and was replaced).
+- **Depths.** D0 idea (explains it, no prerequisites) · D1 cued (told the theme or the name) · D2 unlabeled (mixed set, includes positions where the idea does not apply; this is what a *tier* refers to) · D3 under calculation and counterexamples (one-feature changes, failing look-alikes) · D4 in play (evidence from own games with prompts off) · D5 teach/repair (builds a contrast family, repairs a faulty exercise). Nodes with a D4: 16 (the extension adds `TAC.MATE-SEARCH` and `PRA.RESIST`); with a D5: 1. Not every node has D4/D5: only where evidence from play is meaningful. Habit nodes (`LOOP.V1`, `SELF.1`, `PRA.*`) are defined by D4 evidence and cannot be tested out by items alone.
+- **Prerequisites.** `prereqs` are *hard*: `NODE.Dn` strings, only where the skill truly cannot be learned without the other. Depth Dn (n >= 2) always lists `NODE.D(n-1)` first (the chain, as in the TAC.FORK example); D0 has none. Cross-node prerequisites are chosen per depth, so an advanced node's D1 does not wait for what only its D3 needs. `soft_prereqs` ("helps if known first", 150 links in all) never block access; a scheduler may use them to order teaching and to pick review items. A soft link never points at a node that hard-depends on this one.
 - **Rules the checker enforces.** The hard graph is acyclic at depth level and, as a stricter policy, at node level; every reference exists (node and depth); a node's tier is never lower than a hard prerequisite's tier; no tier >= 2 node is an orphan; average hard in-degree (distinct prerequisite nodes per node) <= 2.5; one node should not lean on more than four others; the source and kind arrays are as long as the texts they annotate; every soft prerequisite has a note.
 - **Source vocabulary** (entries of `condition_sources` and `contrast_sources`): `CAP CI-n` Capablanca sheet core idea n (`§5 item n` the dated/contestable list, `§8 item n` exercise idea) · `Nimz #n` Nimzowitsch sheet idea n · `EML 4.n` Em. Lasker sheet idea 4.n · `EDL Kn` Ed. Lasker sheet idea Kn · `ZB Cnn` Znosko-Borovsky sheet idea Cnn · letters in parentheses are the sheets' own fields: (b) idea, (c) conditions, (d) exceptions, (e) where, (f) example type, (g) likely misconception · `FH ...` `docs/first-hours.md` · `CNC ...` `docs/council-synthesis.md` (Round n, CD-n) · `MAP1`, `MAP11`, `REC` the maps and the reconciliation · `rules` a rules fact · **`ours`** no sheet supports the line; it is our reasoning and must be checked by engine/tablebase and a reviewer before any item uses it.
 
 ## 2. Counts
 
-194 nodes, 415 distinct hard edges between nodes, average hard in-degree **2.14** (limit 2.5), 103 soft links. Longest hard chain: **19 nodes**: `FND.BOARD` -> `FND.PIECE.BISHOP` -> `FND.PIECE.QUEEN` -> `FND.VALUE` -> `FND.CAPTURE` -> `FND.CHECK` -> `FND.STALEMATE` -> `FND.PROMOTE` -> `FND.MATE1` -> `SAF.THREAT` -> `LOOP.V1` -> `LOOP.V2` -> `CAL.CANDIDATES` -> `CAL.TREE` -> `CAL.DEFENSE` -> `TAC.PERPETUAL` -> `DEF.RESOURCES` -> `DEF.TRADES` -> `DEF.FORTRESS`.
+204 nodes, 452 distinct hard edges between nodes, average hard in-degree **2.22** (limit 2.5), 150 soft links. Longest hard chain (unchanged by the extension): **19 nodes**: `FND.BOARD` -> `FND.PIECE.BISHOP` -> `FND.PIECE.QUEEN` -> `FND.VALUE` -> `FND.CAPTURE` -> `FND.CHECK` -> `FND.STALEMATE` -> `FND.PROMOTE` -> `FND.MATE1` -> `SAF.THREAT` -> `LOOP.V1` -> `LOOP.V2` -> `CAL.CANDIDATES` -> `CAL.TREE` -> `CAL.DEFENSE` -> `TAC.PERPETUAL` -> `DEF.RESOURCES` -> `DEF.TRADES` -> `DEF.FORTRESS`.
 
 | Strand | T0 | T1 | T2 | T3 | T4 | T5 | T6 | T7 | Total |
 |---|---|---|---|---|---|---|---|---|---|
 | S1 Rules and board vision | 15 | 4 | 0 | 1 | 0 | 0 | 0 | 0 | 20 |
 | S2 Safety and the Thinking Loop | 0 | 5 | 2 | 2 | 1 | 1 | 1 | 0 | 12 |
-| S3 Tactics | 0 | 0 | 6 | 9 | 7 | 1 | 0 | 0 | 23 |
+| S3 Tactics | 0 | 0 | 6 | 10 | 7 | 1 | 0 | 0 | 24 |
 | S4 Calculation | 0 | 0 | 0 | 2 | 3 | 2 | 1 | 0 | 8 |
-| S5 Positional play and planning | 0 | 0 | 4 | 15 | 13 | 10 | 3 | 0 | 45 |
-| S6 Attack, sacrifice and defense | 0 | 0 | 0 | 3 | 9 | 4 | 2 | 0 | 18 |
-| S7 Endgames | 0 | 5 | 1 | 10 | 7 | 8 | 2 | 1 | 34 |
+| S5 Positional play and planning | 0 | 0 | 4 | 15 | 15 | 12 | 3 | 0 | 49 |
+| S6 Attack, sacrifice and defense | 0 | 0 | 0 | 3 | 9 | 5 | 2 | 0 | 19 |
+| S7 Endgames | 0 | 5 | 1 | 11 | 9 | 8 | 2 | 1 | 37 |
 | S8 Openings and structures | 0 | 1 | 5 | 3 | 1 | 1 | 0 | 1 | 12 |
 | S9 Game study and own-game analysis | 0 | 0 | 0 | 3 | 2 | 1 | 1 | 0 | 7 |
-| S10 Practical performance | 0 | 1 | 4 | 1 | 1 | 0 | 1 | 0 | 8 |
+| S10 Practical performance | 0 | 1 | 4 | 1 | 2 | 0 | 1 | 0 | 9 |
 | S11 Self-direction | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 7 |
-| **All** | **16** | **16** | **23** | **50** | **45** | **29** | **12** | **3** | **194** |
+| **All** | **16** | **16** | **23** | **52** | **50** | **32** | **12** | **3** | **204** |
 
 Tier gloss as in the map (a tier is when a node's unlabeled use, D2, joins the recommended route; no tier implies a rating): T0 plays a legal game · T1 doesn't hang pieces, mates simply · T2 sees basic tactics, develops sensibly · T3 holds a plan, short calculation, simple pawn endings · T4 compares resulting positions, uses structures and imbalances, practical rook endings · T5 allocates depth, prophylaxis, transitions · T6 rigorous best-defence calculation, independent analysis · T7 original research and preparation.
 
 ## 3. Default route
 
-The order in which a learner first meets the nodes (D0 to D2), aligned with `first-hours.md` (nodes 1-31 are its sessions 1-5 plus the Tier 1 endgame spine) and with the placement idea: **a mid-level learner takes the 20-30 minute placement and tests out of nodes 1-31 at D2 (unlabeled), entering at node 32.** Habit nodes in that zone (`SELF.1`, `LOOP.V1`, `SAF.THREAT`, `PRA.CLOCK`) stay open until games show the behaviour unprompted (D4). The checker verifies that every node's D0-D2 prerequisites (the foundation nodes' too) appear earlier in this list.
+The order in which a learner first meets the nodes (D0 to D2), aligned with `first-hours.md` (nodes 1-31 are its sessions 1-5 plus the Tier 1 endgame spine) and with the placement idea: **a mid-level learner takes the 20-30 minute placement and tests out of nodes 1-31 at D2 (unlabeled), entering at node 32.** Habit nodes in that zone (`SELF.1`, `LOOP.V1`, `SAF.THREAT`, `PRA.CLOCK`) stay open until games show the behaviour unprompted (D4). The checker verifies that every node's D0-D2 prerequisites (the foundation nodes' too) appear earlier in this list. The list is a path, not the whole graph. The 2026-10-25 extension inserted its ten new nodes (marked *new*) and added fourteen existing nodes that the new ones need as D0-D2 prerequisites (marked *added*), because the checker requires every prerequisite of a listed node to be listed before it.
 
-Andrew's remembered basics (`first-hours.md`): development and castling early (nodes 27 and 41-45), connecting rooks (47), open files (48), passed pawns (59) and the bishop pair (61) all fall inside the first 60; the Greek gift is node 84 because it truly needs the count, the mate patterns and the castled-king attack ideas before it. It is the end of a path, not a lesson to jump to.
+Andrew's remembered basics (`first-hours.md`): development and castling early (nodes 27 and 41-45), connecting rooks (47), open files (48), passed pawns (59) and the bishop pair (61) all fall inside the first 60; the Greek gift is node 89 because it truly needs the count, the mate patterns and the castled-king attack ideas before it. It is the end of a path, not a lesson to jump to.
 
 ### A. The first hours: sessions 1-5 of first-hours.md and the Tier 0-1 endgame spine (a mid-level player tests out of these)
 
@@ -114,44 +114,71 @@ Andrew's remembered basics (`first-hours.md`): development and castling early (n
 ### D. Continuation: the pawn-ending spine, calculation basics, and the path to the Greek gift
 
 63. `END.KPK` (T3, S7) - king first, pawn second; win or draw by the controlling condition.
-64. `POS.EXCHANGE` (T3, S5) - which trades help and which relieve the opponent.
-65. `TAC.REMOVE-DEFENDER` (T3, S3) - removing the guard; the count lies.
-66. `TAC.MATE-PATTERNS` (T3, S3) - what must be true for a check to be mate; named families.
-67. `FND.VISUAL` (T3, S1) - board vision without the board; feeds calculation.
-68. `CAL.VISUALIZE` (T3, S4) - tracking a short line.
-69. `CAL.CANDIDATES` (T3, S4) - list and prune candidates.
-70. `LOOP.V3` (T3, S2) - candidates and short lines as a habit.
-71. `GAME.OWN` (T3, S9) - annotate before the engine.
-72. `POS.TARGET` (T3, S5) - attack what cannot move away.
-73. `POS.PLAN` (T3, S5) - a plan you can carry out.
-74. `OPN.REPERTOIRE.WHITE` (T3, S8) - a reasons-first line as White built from own opponents.
-75. `OPN.REPERTOIRE.BLACK` (T3, S8) - same as Black.
-76. `SAF.COUNT.FUTURE` (T3, S2) - count what can arrive; bridge to calculation.
-77. `ATK.SUPERIORITY` (T3, S6) - do not attack without a tangible superiority.
-78. `ATK.CENTER` (T3, S6) - the king in the centre as a target.
-79. `POS.PAWNMOVE` (T3, S5) - what does this pawn move leave behind.
-80. `DEF.SHELTER` (T3, S6) - pawn cover in front of the king.
-81. `CAL.TREE` (T4, S4) - the analysis tree: each branch once.
-82. `SAC.TYPES` (T4, S6) - why sacrifices work and when they do not.
-83. `ATK.CASTLED` (T4, S6) - count attackers against defenders around the castled king.
-84. `ATK.GREEKGIFT` (T4, S6) - the h7 sacrifice with its conditions and its failing look-alike.
+64. `END.SQUARE` (T3, S7) - the rule of the square: counting a race, with the double step; *added* because the outside passed pawn needs it.
+65. `END.OUTSIDE-PASSER` (T3, S7) - a distant passed pawn drags the enemy king away; *added* as the pawn-ending basis of the knight endings.
+66. `END.ROOK-BASICS` (T3, S7) - *new*: rook behind the passed pawn, cutting the king off, the seventh rank, the checking defender; each with its exceptions.
+67. `POS.EXCHANGE` (T3, S5) - which trades help and which relieve the opponent.
+68. `TAC.REMOVE-DEFENDER` (T3, S3) - removing the guard; the count lies.
+69. `TAC.MATE-PATTERNS` (T3, S3) - what must be true for a check to be mate; named families.
+70. `FND.VISUAL` (T3, S1) - board vision without the board; feeds calculation.
+71. `CAL.VISUALIZE` (T3, S4) - tracking a short line.
+72. `CAL.CANDIDATES` (T3, S4) - list and prune candidates.
+73. `LOOP.V3` (T3, S2) - candidates and short lines as a habit.
+74. `TAC.MATE-SEARCH` (T3, S3) - *new*: list every check, then every quiet move; 'no forced mate' is a valid answer.
+75. `TAC.STALEMATE-TRICK` (T3, S3) - stalemate as a resource; *added* because practical resistance needs it.
+76. `GAME.OWN` (T3, S9) - annotate before the engine.
+77. `POS.TARGET` (T3, S5) - attack what cannot move away.
+78. `POS.PLAN` (T3, S5) - a plan you can carry out.
+79. `OPN.REPERTOIRE.WHITE` (T3, S8) - a reasons-first line as White built from own opponents.
+80. `OPN.REPERTOIRE.BLACK` (T3, S8) - same as Black.
+81. `SAF.COUNT.FUTURE` (T3, S2) - count what can arrive; bridge to calculation.
+82. `ATK.SUPERIORITY` (T3, S6) - do not attack without a tangible superiority.
+83. `ATK.CENTER` (T3, S6) - the king in the centre as a target.
+84. `POS.PAWNMOVE` (T3, S5) - what does this pawn move leave behind.
+85. `DEF.SHELTER` (T3, S6) - pawn cover in front of the king.
+86. `CAL.TREE` (T4, S4) - the analysis tree: each branch once.
+87. `SAC.TYPES` (T4, S6) - why sacrifices work and when they do not.
+88. `ATK.CASTLED` (T4, S6) - count attackers against defenders around the castled king.
+89. `ATK.GREEKGIFT` (T4, S6) - the h7 sacrifice with its conditions and its failing look-alike.
+
+### E. The 2026-10-25 extension: structures, knight and rook endings, the exchange sacrifice, resistance
+
+90. `POS.CENTER.CONTROL` (T3, S5) - controlling the centre; *added*, a prerequisite of the pawn breaks and of space.
+91. `POS.BREAKS` (T4, S5) - pawn breaks and levers; *added*, a prerequisite of every structure node below.
+92. `POS.SPACE` (T4, S5) - space and restriction; *added*, needed by the Maroczy bind.
+93. `POS.BLOCKADE` (T3, S5) - blockading a passed pawn; *added*, needed by the pawn-chain node.
+94. `POS.STRUCTURE.CHAIN` (T4, S5) - pawn chains: attack the base; *added*, needed by the King's Indian chain.
+95. `POS.STRUCTURE.CARLSBAD` (T4, S5) - *new*: the minority attack and the plans of the other side.
+96. `POS.STRUCTURE.MAROCZY` (T4, S5) - *new*: the bind, the cramped side's breaks and the hole on d4.
+97. `DEF.WAIT` (T4, S6) - defence by waiting; *added*, needed by the hedgehog.
+98. `POS.STRUCTURE.HEDGEHOG` (T5, S5) - *new*: the compact set-up, waiting, and the timed break.
+99. `ATK.PACE` (T4, S6) - pace of the attack; *added*, needed by pawn storms.
+100. `ATK.PAWNSTORM` (T4, S6) - pawn storms and opposite-side castling; *added*, needed by the King's Indian chain.
+101. `POS.STRUCTURE.KID` (T5, S5) - *new*: the locked centre, the two breaks and the race of the two wings.
+102. `POS.VALUES` (T4, S5) - piece values depend on the position; *added*, needed by the exchange sacrifice.
+103. `SAC.EXCHANGE` (T5, S6) - *new*: a rook for a minor piece, when it works and the failing look-alikes.
+104. `END.KNIGHT` (T4, S7) - *new*: knight routes, king first, the outside passed pawn with knights, the knight against the rim pawn.
+105. `END.ROOK-PAWN` (T4, S7) - *new*: the corner draw, the wrong bishop's neighbours, knight and rook pawn, the failing bridge.
+106. `CAL.DEFENSE` (T4, S4) - the opponent's best resource; *added*, needed by the defender's resources.
+107. `DEF.RESOURCES` (T4, S6) - a defender's resources; *added*, needed by practical resistance.
+108. `PRA.RESIST` (T4, S10) - *new*: set problems, avoid the quickest loss, stalemate and fortress tricks, and when resigning is right.
 
 ## 4. The ten most connected nodes
 
 Degree = distinct hard prerequisite nodes plus distinct hard dependents.
 
 1. `SAF.COUNT` (T1, S2) - in 3, out 17. Counting attackers and defenders.
-2. `SAF.THREAT` (T1, S2) - in 2, out 10. What does their last move threaten?
-3. `CAL.DEFENSE` (T4, S4) - in 2, out 9. The opponent's best resource.
+2. `CAL.DEFENSE` (T4, S4) - in 2, out 10. The opponent's best resource.
+3. `SAF.THREAT` (T1, S2) - in 2, out 10. What does their last move threaten?
 4. `FND.ATTACK` (T0, S1) - in 2, out 9. Attacked and defended squares.
 5. `FND.CHECK` (T0, S1) - in 2, out 9. Check.
 6. `POS.ACTIVITY` (T2, S5) - in 2, out 9. Piece activity.
-7. `POS.WEAKSQ` (T3, S5) - in 2, out 8. Weak squares and holes.
-8. `FND.PROMOTE` (T0, S1) - in 3, out 7. Promotion.
-9. `FND.STALEMATE` (T0, S1) - in 1, out 8. Stalemate.
-10. `CAL.TREE` (T4, S4) - in 2, out 7. The analysis tree.
+7. `POS.BREAKS` (T4, S5) - in 2, out 9. Pawn breaks and levers.
+8. `POS.WEAKSQ` (T3, S5) - in 2, out 8. Weak squares and holes.
+9. `FND.PROMOTE` (T0, S1) - in 3, out 7. Promotion.
+10. `FND.STALEMATE` (T0, S1) - in 1, out 8. Stalemate.
 
-What this says: the safety count (`SAF.COUNT`), what a piece attacks (`FND.ATTACK`), and the threat check (`SAF.THREAT`) are the roots of almost everything tactical, so their D1-D2 items carry most of the graph's weight and their quality matters more than any other single piece of content. `POS.ACTIVITY` and `POS.WEAKSQ` play the same role for the positional strand, and `CAL.DEFENSE`/`CAL.TREE` for calculation.
+What this says: the safety count (`SAF.COUNT`), what a piece attacks (`FND.ATTACK`), and the threat check (`SAF.THREAT`) are the roots of almost everything tactical, so their D1-D2 items carry most of the graph's weight and their quality matters more than any other single piece of content. `POS.ACTIVITY` and `POS.WEAKSQ` play the same role for the positional strand, and `CAL.DEFENSE` for calculation (`CAL.TREE` left the list in the 2026-10-25 extension). `POS.BREAKS` entered it because all four new structure nodes depend on it.
 
 ## 5. Judgement calls (the places where the map was ambiguous)
 
@@ -162,14 +189,16 @@ What this says: the safety count (`SAF.COUNT`), what a piece attacks (`FND.ATTAC
 **Ambiguity kept visible:** `END.REMOTE` is undefined in the map; it is read here as the remote passed pawn used as a decoy (Nimz #19). `END.PAWN-TEMPO` is carried as `status: blocked` with depths D0-D1 only, as MAP11 says. `END.THEORY.MUSTKNOW` is `status: placeholder`.
 **Replaced file:** `content/skills/TAC.FORK.json` (the v0 example) was overwritten with the full node; its two prerequisites `FND.ATTACK.D1` and `FND.THREAT.D1` became `FND.ATTACK.D1/D2` and `SAF.COUNT.D2`.
 
+**Extension of 2026-10-25 (ten nodes closing the gaps of section 6):** `TAC.MATE-SEARCH` is T3 because `TAC.MATE-PATTERNS` is T3, so it cannot be lower; its hard prerequisites are the pattern families (D1) and candidate listing (D2), not the tier-4 tree. `END.ROOK-BASICS` is T3 and overlaps the first depth of `END.ROOK-ACTIVE` (T4) on purpose: the T3 node teaches the placements, the T4 node uses them in mixed endings; the link from `END.ROOK-ACTIVE` is soft because existing nodes were edited only to add soft prerequisites. `END.ROOK-PAWN` is T4 (not T3) because its D2 needs `END.KNIGHT.D1` for the knight-and-rook-pawn cases. The four structure nodes use the exact pawn squares of `tools/positional/gen_struct.py` for Carlsbad, Maroczy and hedgehog; **the King's Indian chain has no definition there yet** (the node's definition is new and must be added to the generator before any item uses it). `POS.STRUCTURE.HEDGEHOG` hard-depends on `POS.STRUCTURE.MAROCZY.D1` because, in the app's definitions, both sets of pawns face the same c4/e4 formation. `SAC.EXCHANGE` is T5, after `POS.VALUES` and `SAC.TYPES`. `PRA.RESIST` is hypothesis-level: its resign-or-play-on rule is ours [H] and the sources disagree (stated in the node). New nodes have hard dependents only among themselves (`END.ROOK-BASICS` and `END.KNIGHT` into `END.ROOK-PAWN`; `POS.STRUCTURE.MAROCZY` into `POS.STRUCTURE.HEDGEHOG`); everywhere else existing nodes were edited only to add soft prerequisites with notes (24 soft links on 17 existing nodes, including the gap-6 links `END.SQUARE` to `CAL.VISUALIZE.D1` and `END.PAWN-FLANK` to `CAL.CANDIDATES.D1`).
+
 ## 6. Gaps found in the map
 
-1. **Mate search.** Between `FND.MATE1` and `TAC.MATE-PATTERNS` there is no "mate in two / forced-mate search" node; it is folded into `TAC.MATE-PATTERNS` D2 but deserves its own node or a `LOOP.V2` depth.
-2. **Endgame breadth.** No knight endings, queen-and-pawn endings (only queen against a pawn), rook against minor pieces beyond the mating-material classification, rook-pawn special cases, or rook endings beyond Lucena/Philidor/activity. The de la Villa and Silman CEC sheets would define them; `END.THEORY.MUSTKNOW` stands in.
-3. **Structure families.** Only four `POS.STRUCTURE.*` families are sheet-backed (chain, isolani, hanging pawns, doubled pawns). Carlsbad, Maroczy, Hedgehog, King's Indian chains and Sicilian structures need the Flores Rios and Soltis sheets.
-4. **Exchange sacrifice.** Nimzowitsch, Capablanca and Z-B all praise giving the exchange for activity or to replace a blockader; `SAC.TYPES` covers reasons but there is no node for it.
-5. **Practical resistance.** Capablanca's G6 note (playing on in a lost game hoping for a trap) and Z-B's advice to resign pull in opposite directions; the map has no swindle or resourcefulness node (`DEF.RESOURCES` only partly covers it).
-6. **Endgame counting is not linked to calculation.** `END.SQUARE`, `END.PAWN-FLANK` and `CAL.*` share no prerequisite, although exact counting is calculation.
+1. **Mate search.** Between `FND.MATE1` and `TAC.MATE-PATTERNS` there is no "mate in two / forced-mate search" node; it is folded into `TAC.MATE-PATTERNS` D2 but deserves its own node or a `LOOP.V2` depth. **Closed 2026-10-25** by `TAC.MATE-SEARCH` (T3, S3): the mate-in-two and mate-in-three search and the no-mate answer; `TAC.MATE-PATTERNS` D2 keeps its pattern-recognition role.
+2. **Endgame breadth.** No knight endings, queen-and-pawn endings (only queen against a pawn), rook against minor pieces beyond the mating-material classification, rook-pawn special cases, or rook endings beyond Lucena/Philidor/activity. The de la Villa and Silman CEC sheets would define them; `END.THEORY.MUSTKNOW` stands in. **Partly closed 2026-10-25** by `END.KNIGHT`, `END.ROOK-PAWN` and `END.ROOK-BASICS`, whose `condition_sources` carry tablebase-checked instances ([V], 2026-10-25); still open: queen-and-pawn endings and rook against minor pieces. The de la Villa and Silman sheets were not written, so the remaining lines are recalled [R] or ours.
+3. **Structure families.** Only four `POS.STRUCTURE.*` families are sheet-backed (chain, isolani, hanging pawns, doubled pawns). Carlsbad, Maroczy, Hedgehog, King's Indian chains and Sicilian structures need the Flores Rios and Soltis sheets. **Partly closed 2026-10-25** by `POS.STRUCTURE.CARLSBAD`, `.MAROCZY`, `.HEDGEHOG` and `.KID`; the plans are recalled, ours, and need a strong-player review; still open: Sicilian structures and other opening-born families.
+4. **Exchange sacrifice.** Nimzowitsch, Capablanca and Z-B all praise giving the exchange for activity or to replace a blockader; `SAC.TYPES` covers reasons but there is no node for it. **Closed 2026-10-25** by `SAC.EXCHANGE` (T5, S6).
+5. **Practical resistance.** Capablanca's G6 note (playing on in a lost game hoping for a trap) and Z-B's advice to resign pull in opposite directions; the map has no swindle or resourcefulness node (`DEF.RESOURCES` only partly covers it). **Closed 2026-10-25** by `PRA.RESIST` (T4, S10), hypothesis-level, with the disagreement of the sources stated in the node; its D4 log is how the rule gets tested on the learner's own games.
+6. **Endgame counting is not linked to calculation.** `END.SQUARE`, `END.PAWN-FLANK` and `CAL.*` share no prerequisite, although exact counting is calculation. **Closed 2026-10-25** by two soft links, `END.SQUARE` to `CAL.VISUALIZE.D1` and `END.PAWN-FLANK` to `CAL.CANDIDATES.D1`; no hard prerequisite was added.
 7. **Foundation count and ids.** The assignment said 25 foundation ids and listed 24; the foundation worker also wrote `FND.SPECIAL` (a "which special move?" combiner, not in the map), which makes 25. Draws are in neither: `FND.DRAWS` is ours. Earlier item files that pointed at `FND.THREAT`, `FND.POSITIONTYPE` and `FND.DRAW` (none of which exist) have since been corrected: every skill reference in `content/items` and `content/lessons` resolves to a node and depth in this graph.
 8. **Thin source support.** The five sheets say almost nothing about `TAC.SKEWER`, `TAC.INTERFERE`, `TAC.CLEARANCE`, `TAC.ZWISCHENZUG`, `TAC.DESPERADO`, `TAC.UNDERPROMOTE`, and little about S4, S9, S10 and S11. Their conditions are marked `[ours]` or rest on the council document; they are the first lines to check.
 9. **Calibration.** Every tier is G0. Tiers 2-3 of S3 are the first candidates to upgrade to G1 with the Lichess puzzle data.
@@ -177,6 +206,8 @@ What this says: the safety count (`SAF.COUNT`), what a piece attacks (`FND.ATTAC
 ## 7. What is not verified
 
 No position was authored, so nothing here is checked by engine or tablebase; the sheets' [CHECK] flags carry over as flags in the `conditions` text (for example the K+P frame, the opposition wording, rook-ending cut-off criteria, the Philidor skeleton). Outcomes are written to be observable, but no item exists yet that tests them. Tiers and depths are expert estimates.
+
+The 2026-10-25 extension did run tablebase probes (Lichess tablebase service, **[V]**) for the instances named in the `condition_sources` of `END.KNIGHT`, `END.ROOK-PAWN` and `END.ROOK-BASICS`; the cut-off criteria and the short-side line of `END.ROOK-BASICS` are marked provisional there. The structure, exchange-sacrifice, resistance and mate-search nodes rest on recalled plans, the sheets and the rules, and are unchecked until items are built.
 
 ## 8. Running the check
 
@@ -231,7 +262,7 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `LOOP.V5` | 5 | Thinking Loop v5: depth allocation and best defence | `CAL.DEPTH`, `LOOP.V4` |  |
 | `LOOP.V6` | 6 | Thinking Loop v6: elimination and verification | `CAL.BLIND`, `CAL.DEPTH`, `LOOP.V5` |  |
 
-### S3 Tactics (23 nodes)
+### S3 Tactics (24 nodes)
 
 | ID | T | Title | Hard prerequisites (nodes) | Flags |
 |---|---|---|---|---|
@@ -244,6 +275,7 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `TAC.DECOY` | 3 | Decoy | `FND.MATE1`, `TAC.DEFLECT` |  |
 | `TAC.DEFLECT` | 3 | Deflection | `TAC.REMOVE-DEFENDER` |  |
 | `TAC.MATE-PATTERNS` | 3 | Mating patterns | `FND.ATTACK`, `TAC.BACKRANK` |  |
+| `TAC.MATE-SEARCH` | 3 | Searching for a forced mate | `CAL.CANDIDATES`, `CAL.VISUALIZE`, `FND.MATE1`, `TAC.MATE-PATTERNS` | invented |
 | `TAC.NONE` | 3 | Is there a tactic at all? | `SAF.COUNT`, `TAC.FORK`, `TAC.PIN` |  |
 | `TAC.OVERLOAD` | 3 | Overloaded defenders | `TAC.REMOVE-DEFENDER` |  |
 | `TAC.REMOVE-DEFENDER` | 3 | Removing the defender | `SAF.COUNT`, `TAC.PIN` |  |
@@ -272,7 +304,7 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `CAL.DEPTH` | 5 | How deep, and when to stop | `CAL.COMPARE`, `CAL.DEFENSE` |  |
 | `CAL.ENDURANCE` | 6 | Long lines and accuracy under fatigue | `CAL.BLIND`, `PRA.PRESSURE` |  |
 
-### S5 Positional play and planning (45 nodes)
+### S5 Positional play and planning (49 nodes)
 
 | ID | T | Title | Hard prerequisites (nodes) | Flags |
 |---|---|---|---|---|
@@ -304,8 +336,10 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `POS.PLAN.PIECES` | 4 | Allocating pieces to the plan | `POS.GOODBAD`, `POS.PLAN` |  |
 | `POS.REASSESS` | 4 | Re-evaluating after changes | `LOOP.V4`, `POS.IMBALANCES` | recon. |
 | `POS.SPACE` | 4 | Space and restriction | `POS.CENTER.CONTROL`, `POS.WEAKSQ` |  |
+| `POS.STRUCTURE.CARLSBAD` | 4 | Carlsbad structure: the minority attack | `CAL.COMPARE`, `POS.BREAKS`, `POS.PAWNWEAK`, `POS.TARGET` | invented |
 | `POS.STRUCTURE.CHAIN` | 4 | Pawn chains: attack the base | `POS.BLOCKADE`, `POS.BREAKS` |  |
 | `POS.STRUCTURE.IQP` | 4 | Isolated queen's pawn | `POS.OUTPOST`, `POS.PAWNWEAK` |  |
+| `POS.STRUCTURE.MAROCZY` | 4 | The Maroczy bind | `POS.BREAKS`, `POS.OUTPOST`, `POS.SPACE` | invented |
 | `POS.SWITCH` | 4 | Switch of wing | `POS.PLAN`, `POS.TARGET` |  |
 | `POS.VALUES` | 4 | Piece values depend on the position | `FND.VALUE`, `POS.ACTIVITY` |  |
 | `POS.CONVERT` | 5 | Converting an advantage | `END.TRANSITION`, `POS.EXCHANGE`, `POS.PLAN.MODE` |  |
@@ -316,13 +350,15 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `POS.RESTRAINT` | 5 | Restraint | `POS.BLOCKADE`, `POS.PROPHYLAXIS`, `POS.SPACE` |  |
 | `POS.STRUCTURE.DOUBLED` | 5 | Doubled pawns in context | `POS.BISHOPS`, `POS.PAWNWEAK` |  |
 | `POS.STRUCTURE.HANGING` | 5 | Hanging pawns | `POS.BREAKS`, `POS.STRUCTURE.IQP` |  |
+| `POS.STRUCTURE.HEDGEHOG` | 5 | The hedgehog | `DEF.WAIT`, `POS.BREAKS`, `POS.PROPHYLAXIS`, `POS.STRUCTURE.MAROCZY` | invented |
+| `POS.STRUCTURE.KID` | 5 | The King's Indian chain and its pawn breaks | `ATK.PAWNSTORM`, `POS.BREAKS`, `POS.PLAN.RACE`, `POS.STRUCTURE.CHAIN` | invented |
 | `POS.TRANSFORM` | 5 | Favourable transformations | `POS.EXCHANGE`, `POS.IMBALANCES` |  |
 | `POS.TWOWEAK` | 5 | Two weaknesses | `POS.SWITCH`, `POS.TARGET` |  |
 | `POS.DYNAMIC` | 6 | Dynamic play | `INI.INITIATIVE`, `POS.EXCEPTIONS` |  |
 | `POS.EXCEPTIONS` | 6 | When the rule fails | `OPN.NONDEV`, `POS.IMBALANCES`, `POS.REASSESS` |  |
 | `POS.MANEUVER` | 6 | Manoeuvring against weaknesses | `POS.PLAN.PIECES`, `POS.TWOWEAK` |  |
 
-### S6 Attack, sacrifice and defense (18 nodes)
+### S6 Attack, sacrifice and defense (19 nodes)
 
 | ID | T | Title | Hard prerequisites (nodes) | Flags |
 |---|---|---|---|---|
@@ -342,10 +378,11 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `DEF.TRADES` | 5 | Defensive exchanges | `DEF.RESOURCES`, `POS.EXCHANGE` |  |
 | `INI.INITIATIVE` | 5 | The initiative | `ATK.PACE`, `OPN.TEMPO`, `POS.PLAN.MODE` |  |
 | `INI.THREAT` | 5 | The held threat | `INI.INITIATIVE`, `SAF.FICTITIOUS` |  |
+| `SAC.EXCHANGE` | 5 | The exchange sacrifice | `CAL.DEFENSE`, `POS.VALUES`, `SAC.TYPES` | invented |
 | `DEF.FORTRESS` | 6 | Fortresses in the middlegame and ending | `DEF.TRADES`, `END.FORTRESS` |  |
 | `INI.COMPENSATION` | 6 | Compensation for material | `INI.INITIATIVE`, `POS.CONVERT`, `SAC.TYPES` |  |
 
-### S7 Endgames (34 nodes)
+### S7 Endgames (37 nodes)
 
 | ID | T | Title | Hard prerequisites (nodes) | Flags |
 |---|---|---|---|---|
@@ -363,14 +400,17 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `END.OUTSIDE-PASSER` | 3 | The outside passed pawn | `END.KING-ACTIVE`, `END.SQUARE`, `POS.PASSED` |  |
 | `END.PAWN-FLANK` | 3 | Pawn endings: act on the stronger flank | `END.KING-ACTIVE`, `END.PAWN-RACE` |  |
 | `END.PAWN-RACE.QUEEN-FIRST` | 3 | Both sides queen: the first queen's move | `END.PAWN-RACE`, `FND.PROMOTE` |  |
+| `END.ROOK-BASICS` | 3 | Rook endings: the basic rules | `END.KING-ACTIVE`, `END.KPK`, `POS.PASSED`, `POS.SEVENTH` | invented |
 | `END.SQUARE` | 3 | The rule of the square | `END.PAWN-RACE`, `FND.PROMOTE` |  |
 | `END.ZUGZWANG` | 3 | Zugzwang | `END.KEYSQ`, `END.OPPOSITION` | v1.1 |
+| `END.KNIGHT` | 4 | Knight endings | `END.KING-ACTIVE`, `END.OUTSIDE-PASSER`, `END.TEMPO`, `FND.PIECE.KNIGHT` | invented |
 | `END.LUCENA` | 4 | Lucena: building the bridge | `END.ROOK-ACTIVE`, `FND.PROMOTE` |  |
 | `END.MINOR` | 4 | Minor-piece endings | `END.KING-ACTIVE`, `POS.BISHOPS`, `POS.GOODBAD` |  |
 | `END.OPPOSITION.DISTANT` | 4 | Distant and lateral opposition | `END.KEYSQ`, `END.OPPOSITION` |  |
 | `END.PHILIDOR` | 4 | Philidor: the passive defence that works | `END.LUCENA`, `END.ROOK-ACTIVE` |  |
 | `END.QUEEN-PAWN` | 4 | Queen against an advanced pawn | `END.KPK`, `TAC.STALEMATE-TRICK` |  |
 | `END.ROOK-ACTIVE` | 4 | Active rooks in rook endings | `END.KING-ACTIVE`, `POS.PASSED`, `POS.SEVENTH` |  |
+| `END.ROOK-PAWN` | 4 | Rook-pawn special cases | `END.KNIGHT`, `END.KPK`, `END.ROOK-BASICS` | invented |
 | `END.TEMPO` | 4 | Spare moves and knight parity | `END.ZUGZWANG`, `FND.PIECE.KNIGHT` |  |
 | `END.FORTRESS` | 5 | Fortresses in endings | `END.WRONG-BISHOP`, `TAC.STALEMATE-TRICK` |  |
 | `END.MATE-BN` | 5 | Mate with bishop and knight | `END.MATE-2B`, `FND.DRAWS` | v1.1 |
@@ -413,7 +453,7 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `GAME.FAMILIES` | 5 | Model games by structure | `GAME.GUESS`, `POS.STRUCTURE.CHAIN`, `POS.STRUCTURE.IQP` |  |
 | `GAME.HISTORY` | 6 | How ideas changed over time | `GAME.FAMILIES`, `POS.EXCEPTIONS` | recon. |
 
-### S10 Practical performance (8 nodes)
+### S10 Practical performance (9 nodes)
 
 | ID | T | Title | Hard prerequisites (nodes) | Flags |
 |---|---|---|---|---|
@@ -424,6 +464,7 @@ Options: `--top N`, `--json`, `--strict` (warnings fail), `--skills DIR` (test o
 | `PRA.SECURE` | 2 | Complacency when ahead | `LOOP.V1`, `SAF.THREAT` | v1.1 |
 | `PRA.PHASEBUDGET` | 3 | Budgeting by phase | `GAME.OWN`, `PRA.BUDGET` |  |
 | `PRA.PRESSURE` | 4 | Deciding under time pressure | `CAL.TREE`, `LOOP.V4`, `PRA.PHASEBUDGET` |  |
+| `PRA.RESIST` | 4 | Practical resistance when worse | `DEF.DIAGNOSE`, `DEF.RESOURCES`, `TAC.PERPETUAL`, `TAC.STALEMATE-TRICK` | invented |
 | `PRA.COMPETE` | 6 | Competition routine | `GAME.PATTERNS`, `PRA.PRESSURE`, `PRA.RECOVER` |  |
 
 ### S11 Self-direction (7 nodes)

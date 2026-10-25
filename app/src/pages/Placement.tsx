@@ -47,13 +47,13 @@ export function Placement() {
       if (b.ok / b.n >= 0.67) frontier = t + 1
       else break
     }
-    const p: PlacementT = { done: true, frontierTier: Math.min(frontier, MAX_TIER), ts: Date.now(), byTier }
+    const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: Math.min(frontier, MAX_TIER), ts: Date.now(), byTier }
     void kvSet('placement', p)
     setOutcome(p)
   }
 
   function skip() {
-    const p: PlacementT = { done: true, frontierTier: 0, ts: Date.now(), byTier: {}, skipped: true }
+    const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: 0, ts: Date.now(), byTier: {}, skipped: true }
     void kvSet('placement', p)
     setOutcome(p)
   }

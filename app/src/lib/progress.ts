@@ -4,7 +4,14 @@ import { masteryOf, type Mastery } from './mastery'
 import type { ContentBundle, Lesson, Skill } from '../types'
 import { splitSkillKey } from '../types'
 
-export interface Placement { done: boolean; frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }>; /** The learner chose not to take the test: nothing is assumed, lessons start from the beginning. */ skipped?: boolean }
+export interface StrandWarmup { frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }> }
+export interface Placement {
+  done: boolean; frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }>
+  /** The learner chose not to take the test: nothing is assumed, lessons start from the beginning. */
+  skipped?: boolean
+  /** Mission warm-ups (test-out within one strand). A strand's own result overrides the overall placement for that strand. */
+  byStrand?: Record<string, StrandWarmup>
+}
 export const NO_PLACEMENT: Placement = { done: false, frontierTier: 0, ts: 0, byTier: {} }
 
 export function useAttempts(): Attempt[] | undefined { return useLiveQuery(() => db.attempts.toArray(), []) }
@@ -16,9 +23,28 @@ export function groupBySkillKey(attempts: Attempt[]): Map<string, Attempt[]> {
   for (const a of attempts) { const l = m.get(a.skillKey) ?? []; l.push(a); m.set(a.skillKey, l) }
   return m
 }
+/**
+ * Test-out attempts (placement, mission warm-up) carry no penalty on a skill the learner has never practised: a right answer is
+ * evidence, a wrong one is only "not yet shown" and is left out. After real practice (lesson, practice, review, challenge, game)
+ * every attempt counts, so a warm-up can never lower a skill the learner has worked on.
+ */
+export function evidenceAttempts(attempts: Attempt[]): Attempt[] {
+  const out: Attempt[] = []
+  for (const group of groupBySkillKey(attempts).values()) {
+    let practised = false
+    for (const a of [...group].sort((x, y) => x.ts - y.ts)) {
+      const testOut = a.source === 'placement' || a.source === 'warmup'
+      if (!testOut) practised = true
+      if (testOut && !a.correct && !practised) continue
+      out.push(a)
+    }
+  }
+  return out
+}
+
 export function masteryMap(attempts: Attempt[], now = Date.now()): Map<string, Mastery> {
   const out = new Map<string, Mastery>()
-  for (const [k, v] of groupBySkillKey(attempts)) out.set(k, masteryOf(v, { now }))
+  for (const [k, v] of groupBySkillKey(evidenceAttempts(attempts))) out.set(k, masteryOf(v, { now }))
   return out
 }
 
@@ -28,8 +54,10 @@ export function statusOf(key: string, skills: Map<string, Skill>, masteries: Map
   const m = masteries.get(key)
   if (m && m.state !== 'unseen') return m.state
   const { skill } = splitSkillKey(key)
-  const tier = skills.get(skill)?.tier
-  if (placement.done && tier !== undefined && tier < placement.frontierTier) return 'assumed'
+  const sk = skills.get(skill)
+  const tier = sk?.tier
+  const frontier = (sk && placement.byStrand?.[sk.strand]?.frontierTier) ?? (placement.done ? placement.frontierTier : 0)
+  if (tier !== undefined && tier < frontier) return 'assumed'
   return 'unseen'
 }
 export const isMet = (s: NodeStatus) => s === 'reliable' || s === 'refresh' || s === 'assumed' || s === 'practising'

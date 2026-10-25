@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
 import { independence, masteryMap, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
 import { buildDaily, dateKey, NO_EXTRAS, type Block, type Extras } from '../lib/daily'
+import { planChallenge } from '../lib/missions'
+import { useMissionData } from '../lib/useMissions'
 import { ItemSequence, LessonPlayer, RichText } from '../components/LessonPlayer'
 import { db, kvGet, kvSet } from '../db'
 import { describeMastery } from '../lib/mastery'
@@ -17,6 +19,9 @@ export function Today() {
   const [doneIds, setDoneIds] = useState<string[]>([])
   const [active, setActive] = useState<string | null>(null)
   const [extras, setExtras] = useState<Extras>(NO_EXTRAS)
+  const missionData = useMissionData()
+  const [lastChallenge, setLastChallenge] = useState<number | null | undefined>(undefined)
+  useEffect(() => { void kvGet<number | null>('challenge:last', null).then(setLastChallenge) }, [])
   const [intention, setIntention] = useState<string | null | undefined>(undefined) // undefined = loading, '' = not set yet, null = skipped
   const [draft, setDraft] = useState('')
   useEffect(() => { void kvGet<string[]>(`daily:${day}:done`, []).then(setDoneIds) }, [day])
@@ -31,14 +36,19 @@ export function Today() {
       const repDue = dueCards(buildCards(rep), drillState).length
       setExtras({
         plans: plans.map(p => ({ created: p.created, checked: !!p.check, due: !!p.baseline && Date.now() >= p.baseline.ts + p.days * 86400000 })),
-        games: games.length, analysedGames: games.filter(g => g.analysis).length, labUses, hasPlan: plans.length > 0, repDue,
+        games: games.length, analysedGames: games.filter(g => g.analysis).length, labUses, hasPlan: plans.length > 0, repDue, challenge: null,
       })
     })()
   }, [])
 
   const placement = placementQ ?? NO_PLACEMENT
   const ready = attempts !== undefined && progress !== undefined && placementQ !== undefined
-  const blocks = useMemo<Block[]>(() => ready ? buildDaily(content, attempts, placement, progress, day, extras) : [], [ready, content, attempts, placement, progress, day, extras])
+  const challenge = useMemo(() => {
+    if (!missionData.ctx || !missionData.attempts || lastChallenge === undefined) return null
+    const p = planChallenge(missionData.overall.nodes, content.items, missionData.attempts, lastChallenge, Date.now(), `${day}:today`)
+    return p.unlocked ? { skills: p.picks.map(x => x.node.title) } : null
+  }, [missionData.ctx, missionData.attempts, missionData.overall, lastChallenge, content.items, day])
+  const blocks = useMemo<Block[]>(() => ready ? buildDaily(content, attempts, placement, progress, day, { ...extras, challenge }) : [], [ready, content, attempts, placement, progress, day, extras, challenge])
   const ind = useMemo(() => independence(attempts ?? []), [attempts])
   const masteries = useMemo(() => masteryMap(attempts ?? []), [attempts])
 

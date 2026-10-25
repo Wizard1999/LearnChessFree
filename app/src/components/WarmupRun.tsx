@@ -1,0 +1,34 @@
+import { useMemo, useState } from 'react'
+import { ItemPlayer, type ItemResult } from './ItemPlayer'
+import type { Attempt } from '../db'
+import type { Mission } from '../lib/missions'
+import type { StrandWarmup } from '../lib/progress'
+import { concludeWarmup, planWarmup, plannedPerTier, shouldStop, type TierResult } from '../lib/warmup'
+import type { Item } from '../types'
+
+/** The warm-up questions for one mission, one at a time, silent and unpenalised; stops early when two tiers in a row go badly. */
+export function WarmupRun({ mission, items, attempts, onFinish, onCancel }: { mission: Mission; items: Item[]; attempts: Attempt[]; onFinish: (r: StrandWarmup) => void; onCancel: () => void }) {
+  const [seed] = useState(() => String(Date.now()))
+  const plan = useMemo(() => planWarmup(mission, items, attempts, seed), [mission, items, attempts, seed])
+  const planned = useMemo(() => plannedPerTier(plan), [plan])
+  const [idx, setIdx] = useState(0)
+  const [results, setResults] = useState<TierResult[]>([])
+  if (plan.items.length === 0) return <div><p className="muted">There are no unlabelled exercises in this mission yet, so a warm-up is not possible.</p><button type="button" onClick={onCancel}>Back</button></div>
+  const it = plan.items[idx]
+  const done = (r: ItemResult) => {
+    const next = [...results, { tier: plan.tierOf.get(it.id) ?? 0, ok: r.correct }]
+    setResults(next)
+    if (idx + 1 >= plan.items.length || shouldStop(next, planned)) onFinish(concludeWarmup(next, Date.now()))
+    else setIdx(idx + 1)
+  }
+  return (
+    <div>
+      <p className="muted small">Warm-up · question {idx + 1} of up to {plan.items.length}. No hints, no penalty: a wrong answer on a skill you have not practised is not held against you.</p>
+      <ItemPlayer key={it.id} item={it} source="warmup" silent nextLabel={idx + 1 >= plan.items.length ? 'See result' : 'Next question'} onDone={done} />
+      <div className="row">
+        {results.length >= 3 && <button type="button" onClick={() => onFinish(concludeWarmup(results, Date.now()))}>Stop here and use my answers so far</button>}
+        <button type="button" onClick={onCancel}>Leave the warm-up</button>
+      </div>
+    </div>
+  )
+}

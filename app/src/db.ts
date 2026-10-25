@@ -1,6 +1,6 @@
 import Dexie, { type Table } from 'dexie'
 
-export type AttemptSource = 'lesson' | 'practice' | 'placement' | 'review' | 'daily' | 'challenge' | 'game'
+export type AttemptSource = 'lesson' | 'practice' | 'placement' | 'warmup' | 'review' | 'daily' | 'challenge' | 'game'
 export interface Attempt {
   id?: number
   itemId: string

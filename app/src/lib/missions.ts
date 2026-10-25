@@ -114,6 +114,15 @@ export function buildMissions(skills: Skill[], ctx: MissionContext): Mission[] {
   })
 }
 
+/** The whole course as one mission: the same wheel, counts, challenge and suggestions, across every strand. */
+export function overallMission(missions: Mission[]): Mission {
+  const nodes = missions.flatMap(m => m.nodes)
+  const counts = [0, 0, 0, 0, 0]
+  for (const n of nodes) counts[n.level]++
+  const percent = nodes.length ? Math.round((100 * nodes.reduce((s, n) => s + n.level, 0)) / (4 * nodes.length)) : 0
+  return { strand: 'all', name: 'All missions', nodes, percent, counts, tiers: [] }
+}
+
 /** "Skills up next": started skills first, then the lowest tier; only where the prerequisites of the working depth are met. */
 export function skillsUpNext(mission: Mission, ctx: MissionContext, dismissed: ReadonlySet<string>, limit = 6): NodeProgress[] {
   const ok = mission.nodes.filter(n => !dismissed.has(n.id) && (n.level < 4 || n.due) && !n.noExercises)

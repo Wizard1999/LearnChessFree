@@ -17,8 +17,8 @@ export interface Block {
 }
 
 /** Things the plan can point to that live outside the exercise attempts. */
-export interface Extras { plans: { due: boolean; created: number; checked: boolean }[]; games: number; analysedGames: number; labUses: number; hasPlan: boolean; repDue: number }
-export const NO_EXTRAS: Extras = { plans: [], games: 0, analysedGames: 0, labUses: 0, hasPlan: false, repDue: 0 }
+export interface Extras { plans: { due: boolean; created: number; checked: boolean }[]; games: number; analysedGames: number; labUses: number; hasPlan: boolean; repDue: number; /** A mastery challenge is unlocked: the skills it would review. */ challenge: { skills: string[] } | null }
+export const NO_EXTRAS: Extras = { plans: [], games: 0, analysedGames: 0, labUses: 0, hasPlan: false, repDue: 0, challenge: null }
 
 
 export const dateKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
@@ -66,6 +66,8 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const dueCheck = extras.plans.find(p => p.due && !p.checked)
   if (dueCheck) blocks.push({ id: 'plan-check', kind: 'link', to: '/plan', cta: 'Open my plan', title: 'Check your training plan', minutes: 6,
     why: 'You set a plan and the time you chose has passed. Checking on positions you have not seen is how you find out whether it worked.' })
+  if (extras.challenge) blocks.push({ id: 'challenge', kind: 'link', to: '/course', cta: 'Start the challenge', title: 'A mastery challenge is ready', minutes: 6,
+    why: `Six unlabelled questions on three skills you have already practised (${extras.challenge.skills.join(', ')}). They are the most overdue. Spaced review is what keeps a skill from fading, and it can raise a level as well as lower one.` })
   if (extras.repDue > 0) blocks.push({ id: 'drill', kind: 'link', to: '/drill', cta: 'Drill my lines', title: 'Repertoire drill', minutes: Math.max(3, Math.min(8, extras.repDue)),
     why: `${extras.repDue} position${extras.repDue === 1 ? '' : 's'} in the openings you saved ${extras.repDue === 1 ? 'is' : 'are'} due. A line you do not recall at the board is not yet a line you play.` })
   const unanalysed = extras.games - extras.analysedGames
