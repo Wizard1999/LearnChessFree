@@ -1,0 +1,192 @@
+{
+  "id": "L-POS-OUTOFPLAY-1",
+  "title": "The piece that is doing nothing",
+  "skill": "POS.OUTOFPLAY",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the piece with the fewest moves and says what cuts it off: its own men, or enemy pawns that attack every square it could reach",
+    "Tells a piece that is out of play from one that has plenty of moves",
+    "Checks what a freeing pawn move would cost before playing it",
+    "Does not treat a shut-in piece as lost, and does not free it at any price"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A piece is **out of play** when it can do little: its own men block it, or enemy pawns attack every square it could reach. A **trapped** piece is different: the opponent can win it. A piece out of play may stay on the board for a long time and be freed later. Ask: what cuts it off, and what would freeing it cost?"
+    },
+    {
+      "type": "board",
+      "fen": "2kr3r/1bpnq2p/1p1p1p1n/p2Pp1p1/P1P1P3/3BBN1P/2P1QPP1/R4RK1 w - - 0 15",
+      "caption": "White to move. The bishop on d3 has no legal move: c4, e4, c2 and e2 all hold White's own men.",
+      "line": [
+        {
+          "move": "c4c5",
+          "say": "The pawn steps forward and offers an exchange. The bishop's diagonals stay shut while it stands on c4."
+        },
+        {
+          "move": "d6c5",
+          "say": "If Black takes, the pawn that blocked the bishop is gone and the bishop has three squares."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c2",
+        "c4",
+        "e2",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "d3",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The bishop on d3 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d3",
+            "squares": [
+              "c2",
+              "c4",
+              "e2",
+              "e4"
+            ]
+          },
+          "statement": "It attacks only c2, c4, e2 and e4."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "c4",
+            "piece": "P"
+          },
+          "statement": "A White pawn stands on c4."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "e4",
+            "piece": "P"
+          },
+          "statement": "A White pawn stands on e4."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "c2",
+            "piece": "P"
+          },
+          "statement": "A White pawn stands on c2."
+        },
+        {
+          "id": "C6",
+          "type": "piece_on",
+          "params": {
+            "square": "e2",
+            "piece": "Q"
+          },
+          "statement": "The White queen stands on e2."
+        },
+        {
+          "id": "C7",
+          "type": "mobility",
+          "params": {
+            "square": "d3",
+            "mode": "legal",
+            "count": 3,
+            "after_moves": [
+              "c4c5",
+              "d6c5"
+            ]
+          },
+          "statement": "After c5 dxc5 the bishop has three legal moves."
+        },
+        {
+          "id": "C8",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1b1",
+              "c4c5",
+              "f3d2",
+              "a1b1"
+            ]
+          },
+          "statement": "c5 is among the engine's top moves."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PIECES-44"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-14"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-15"
+    },
+    {
+      "type": "card",
+      "text": "Out of play is not lost. A pawn lever or an exchange can often free the piece, but the price differs: the same lever can be free in one position and costly in another. As a *rule of thumb*, count the squares, then ask what the lever allows. The count is only a first test: a piece can also be out of play because it stands far from the action."
+    },
+    {
+      "type": "contrast",
+      "title": "Can the shut-in bishop be freed?",
+      "prompt": "In the first two positions White's bishop on a2 is shut in by the pawn on b3, and the plan is b4. They differ by one Black pawn. Predict each before you check. In the third, only the bishop's square differs.",
+      "working": "IBp2-17",
+      "failing": "IBp2-16",
+      "irrelevant": "IBp2-18"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.OUTOFPLAY",
+        "cue.1"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of your last game. Which of your pieces did the least, and what cut it off: your own men or the enemy's pawns? Write one line, then say what freeing it would have cost."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-35 cutting off a piece; section 8 item 16)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C13)",
+    "docs/curriculum-map-v1.1.md (POS.OUTOFPLAY as the contrast with TAC.TRAPPED)",
+    "content/items/lesson-p2.json (IBp2 items); shipped items IP-PIECES-44 and the oop-set"
+  ]
+}

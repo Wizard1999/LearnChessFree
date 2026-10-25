@@ -1,0 +1,174 @@
+{
+ "id": "L-END-BREAKTHROUGH-1",
+ "title": "The pawn breakthrough: giving pawns to make a passed pawn",
+ "skill": "END.BREAKTHROUGH",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Finds the breakthrough sacrifice in a three-against-three pawn skeleton when it exists",
+  "Predicts that the same skeleton is level when the other side moves or when the pawns stand one rank further back",
+  "Names the three things to check before trying it: who moves, how far the pawns are from queening, where the kings are"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A **breakthrough** gives up one or two pawns so that a pawn is left with no enemy pawn in front of it. It needs pawns facing pawns; the classic case is three against three on neighbouring files, and the middle pawn moves first. Look for it when your pawns are further advanced and the kings are far away. Watch one, then find it yourself."
+  },
+  {
+   "type": "board",
+   "fen": "7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1",
+   "caption": "White to move. The sacrifice b6 breaks through; one line is shown.",
+   "line": [
+    {
+     "move": "b5b6",
+     "say": "White offers the b-pawn. Black can take it with the a-pawn or the c-pawn."
+    },
+    {
+     "move": "a7b6",
+     "say": "Black takes with the a-pawn."
+    },
+    {
+     "move": "c5c6",
+     "say": "A second offer. The pawn on c6 attacks the pawn on b7."
+    },
+    {
+     "move": "b6a5",
+     "say": "Black takes the pawn on a5 instead."
+    },
+    {
+     "move": "c6b7",
+     "say": "White takes on b7. The pawn is one step from queening."
+    },
+    {
+     "move": "a5a4",
+     "say": "Black pushes his own pawn."
+    },
+    {
+     "move": "b7b8q",
+     "say": "White queens first, with check."
+    },
+    {
+     "move": "h8g7",
+     "say": "Black's king steps to g7; White has a new queen."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b5",
+     "to": "b6"
+    },
+    {
+     "from": "c5",
+     "to": "c6"
+    }
+   ],
+   "highlight": [
+    "a7",
+    "b7",
+    "c7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b5b6"
+      ]
+     },
+     "statement": "The engine's best move is the sacrifice b6."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 500,
+      "depth": 24
+     },
+     "statement": "The engine rates the position as clearly winning for White (depth 24, evidence not proof)."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe1-19"
+  },
+  {
+   "type": "card",
+   "text": "The breakthrough is **not a rule**. Here it works because White's pawns are further advanced, the kings are far from the pawns, and White moves first. Change one of these and the same skeleton may be level. Counting who queens first, and where the kings stand, decides. Having the same number of pawns, or more, does not guarantee it."
+  },
+  {
+   "type": "contrast",
+   "title": "The same skeleton, the other side to move",
+   "prompt": "In the first position White to move wins. Now it is Black's move, with every piece where it was. Predict the result.",
+   "working": "IBe1-19",
+   "failing": "IBe1-20",
+   "irrelevant": "IBe1-21"
+  },
+  {
+   "type": "contrast",
+   "title": "The same skeleton, one rank further back",
+   "prompt": "White to move wins in the first position. Now every pawn stands one rank further back. Predict the result.",
+   "working": "IBe1-22",
+   "failing": "IBe1-23",
+   "irrelevant": "IBe1-24"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-25",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-28",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.BREAKTHROUGH",
+    "cue.3"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: which did you check first, who is to move, how far each side's pawns are from queening, or where the kings stand? Which one did you forget?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I checked first:",
+     "options": [
+      "who is to move",
+      "how far the pawns are",
+      "where the kings are"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "The one I forgot:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-10, read: the idea of the centre-pawn sacrifice and its conditions; the book's diagram is not recoverable, all positions here are our own)",
+  "content/skills/END.BREAKTHROUGH.json (conditions and contrasts)",
+  "Three pawns against three plus two kings is 8 pieces, outside the 7-man tablebase: the claims in content/items/lesson-e1-b.json are engine claims at recorded depth (evidence, not proof). The shipped 3 v 2 families (tablebase) appear in the practice step"
+ ]
+}

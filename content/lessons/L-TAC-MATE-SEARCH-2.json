@@ -1,0 +1,188 @@
+{
+  "id": "L-TAC-MATE-SEARCH-2",
+  "title": "When no check works: quiet moves and \"no forced mate\"",
+  "skill": "TAC.MATE-SEARCH",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Searches in order: every check, then captures next to the king, then quiet moves that threaten mate",
+    "Counts the enemy king's legal moves before and after a quiet move",
+    "Rejects a quiet move that allows a counter-check or meets an extra defender on the mating square",
+    "Answers \"no forced mate in two\" and names what stops the candidate"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When no check works, look for a **quiet move**: not a check, but a threat of mate that no reply can meet. Search in this order: every check, then captures next to the king, then quiet moves. For a quiet move ask: how many moves does the king have? Can the defender check, or take my attacking piece? Does every reply allow mate? This order is a *rule of thumb*: it saves time and proves nothing."
+    },
+    {
+      "type": "board",
+      "fen": "k7/P7/8/KN1p4/5p2/2p5/1n6/8 w - - 1 60",
+      "caption": "White to move. The only check is Nc7+. Test it, then look for a quiet move.",
+      "line": [
+        {
+          "move": "a5a6",
+          "say": "A quiet move. The black king has no legal move, and Nc7 would be mate."
+        },
+        {
+          "move": "b2c4",
+          "say": "Black has to move something else."
+        },
+        {
+          "move": "b5c7",
+          "say": "Nc7 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "a6"
+        },
+        {
+          "from": "b5",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "b7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "a5a6",
+            "n": 2
+          },
+          "statement": "Ka6 forces checkmate in two."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "a8",
+            "mode": "legal",
+            "count": 2,
+            "after_move": "b5c7"
+          },
+          "statement": "After the check Nc7+ the black king still has two legal moves, so it is not mate."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "b5c7",
+            "cp": 1000
+          },
+          "statement": "Nc7+ is far worse than Ka6 (at least ten pawns, depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "mobility",
+          "params": {
+            "square": "a8",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "a5a6"
+          },
+          "statement": "After Ka6 the black king has no legal move."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "a8",
+            "color": "white",
+            "count": 0,
+            "after_move": "a5a6"
+          },
+          "statement": "Ka6 is not a check."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBg1-6"
+    },
+    {
+      "type": "card",
+      "text": "**Two ways a quiet move fails.** First, a counter-check: the defender gives check, a check must be answered at once, and the mate never comes. Second, one extra defender covering the mating square. A threat of mate is not a mate: it counts only if every reply, every check included, still loses. *Rule of thumb:* after your quiet move, list the defender's checks and captures first."
+    },
+    {
+      "type": "contrast",
+      "title": "One more defender",
+      "prompt": "In the first position Nxd7 forces mate. Now one black pawn stands on a different square. Predict, then check.",
+      "working": "IBg1-6",
+      "failing": "IBg1-7"
+    },
+    {
+      "type": "item",
+      "item": "IBg1-8"
+    },
+    {
+      "type": "contrast",
+      "title": "A counter-check",
+      "prompt": "In the first position Qh6 forces mate. Now one black rook has moved. Predict, then check.",
+      "working": "IBg1-8",
+      "failing": "IBg1-9"
+    },
+    {
+      "type": "card",
+      "text": "No labels now. In each position decide: is there a forced mate in two? If you think so, find the first move. If you think not, say so, and name what stops it. The next three exercises are silent."
+    },
+    {
+      "type": "item",
+      "item": "IBg1-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.quietMove",
+        "theme.mateIn2"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part of the search is least secure: counting the king's legal moves, listing the defender's checks, or deciding that there is no mate? In your next game, when you find a threat of mate, write down the defender's checks before you play it.",
+      "fields": [
+        {
+          "id": "weak",
+          "label": "Least secure:",
+          "options": [
+            "counting the king's moves",
+            "listing the defender's checks",
+            "deciding there is no mate"
+          ]
+        },
+        {
+          "id": "note",
+          "label": "One position from your games where you could try this (move number):"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.MATE-SEARCH.json (conditions 2-4, contrasts 2-4)",
+    "sources/sheets/emlasker_common-sense.md §4.14 (the king's squares: the flight-square count)",
+    "positions: Lichess puzzles WZbVC, szvIT, n9Ehy, k2Zlp, FsTEZ (CC0) and authored one-feature edits of szvIT and n9Ehy",
+    "The search order is our own design [H]; no synthesis sheet states a procedure"
+  ]
+}

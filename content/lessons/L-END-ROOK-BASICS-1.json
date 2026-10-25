@@ -1,0 +1,228 @@
+{
+ "id": "L-END-ROOK-BASICS-1",
+ "title": "Rook endings: four habits and where they fail",
+ "skill": "END.ROOK-BASICS",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Puts the rook behind a passed pawn and predicts how the result changes when the rook stands in front of it",
+  "Predicts win or draw with the rook on the seventh rank, and names a position where the seventh rank is not enough",
+  "Finds the defender's far check instead of a close one, and spots a position with no passed pawn, where the rook-behind habit does not apply"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Four rook-ending habits.\n**Behind:** put the rook behind a passed pawn.\n**Cut off:** keep the enemy king away along a file or rank.\n**Seventh:** a rook on the seventh rank can shut the enemy king on the back rank.\n**Distance:** the defender's rook checks from far away.\nEach is a *rule of thumb* with exceptions. A **tablebase** (exact results for few pieces) checks every position."
+  },
+  {
+   "type": "board",
+   "fen": "8/7k/8/4P3/4RK2/r7/8/8 w - - 0 1",
+   "caption": "White to move wins. The rook stands on e4, behind the passed pawn on e5. One line is shown.",
+   "line": [
+    {
+     "move": "e5e6",
+     "say": "The pawn advances. The rook on e4 defends it from behind along the open file."
+    },
+    {
+     "move": "a3a8",
+     "say": "Black's rook runs to the far end of the board."
+    },
+    {
+     "move": "e6e7",
+     "say": "The pawn reaches e7. The rook still defends it from behind, across more squares."
+    },
+    {
+     "move": "a8e8",
+     "say": "Black's rook takes the square in front of the pawn."
+    },
+    {
+     "move": "f4f5",
+     "say": "White's king steps up the board towards the pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5e6"
+     },
+     "statement": "1.e6 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "e5"
+      ]
+     },
+     "statement": "The pawn on e5 is passed."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "R"
+     },
+     "statement": "White's rook is on e4."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1,
+      "after_move": "e5e6"
+     },
+     "statement": "After e6 the rook defends the pawn."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e5e6",
+       "a3a8",
+       "e6e7"
+      ]
+     },
+     "statement": "After e7 the rook still defends the pawn."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBg2-33"
+  },
+  {
+   "type": "card",
+   "text": "**Why behind?** From behind, the rook keeps the whole file ahead of the pawn in view after every push. In front of the pawn it loses a square with each push. This is a *rule of thumb*: sometimes the passive rook is right, and you will meet that exception below. First test the habit: predict each position, then check."
+  },
+  {
+   "type": "contrast",
+   "title": "Behind or in front?",
+   "prompt": "In the first position White's rook is behind its passed pawn. Predict the other two, then check.",
+   "working": "IBg2-34",
+   "failing": "IBg2-35",
+   "irrelevant": "IBg2-36"
+  },
+  {
+   "type": "item",
+   "item": "IA3-701"
+  },
+  {
+   "type": "card",
+   "text": "**Seventh rank:** a rook there attacks the whole rank if it is open, keeping the enemy king on the back rank. It is strongest with an advanced passed pawn, but no guarantee.\n**Distance:** the defender's rook checks from far away, where the king cannot attack it. A check right next to the king can simply lose the rook.\nBoth are *rules of thumb*. Predict, then check."
+  },
+  {
+   "type": "item",
+   "item": "IBg2-44"
+  },
+  {
+   "type": "contrast",
+   "title": "The rook on the seventh rank",
+   "prompt": "In the first position White's rook is on the seventh rank and Black's king is shut in on a8. Predict the other two, then check.",
+   "working": "IBg2-37",
+   "failing": "IBg2-38",
+   "irrelevant": "IBg2-39"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-41"
+  },
+  {
+   "type": "item",
+   "item": "IE-PHI-1",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBg2-40",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBg2-42",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "cue.3"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Think back to the three silent positions. Which of the four habits did you reach for first in each, and in which one did an exception catch you?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I reached first for:",
+     "options": [
+      "the passed pawn",
+      "the enemy king",
+      "the seventh rank",
+      "the checks",
+      "nothing in particular"
+     ]
+    },
+    {
+     "id": "caught",
+     "label": "An exception caught me in:",
+     "options": [
+      "the passive defence",
+      "the seventh-rank position",
+      "the position with no passed pawn",
+      "none of them"
+     ]
+    },
+    {
+     "id": "note",
+     "label": "One sentence for next time (optional):"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/skill-graph.md section 6, gap 2 (rook endings beyond Lucena and Philidor)",
+  "sources/sheets/nimzowitsch_my-system.md (ideas 13 and 24: the habits and their exceptions; no sentences used)",
+  "sources/sheets/edlasker_chess-strategy.md (K28: activity over material)",
+  "content/skills/END.ROOK-BASICS.json (conditions; the short-side-defence line and the two-file cut-off criterion are provisional there and are NOT taught here)",
+  "Positions: own constructions and tablebase scans; every result from the Lichess tablebase service [V] (items IBg2-33 to IBg2-44; shipped items IA3-701 and IE-PHI-1)"
+ ]
+}

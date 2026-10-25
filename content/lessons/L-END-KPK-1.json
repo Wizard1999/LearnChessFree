@@ -1,0 +1,220 @@
+{
+ "id": "L-END-KPK-1",
+ "title": "King and pawn against king: the king leads",
+ "skill": "END.KPK",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Wins king and pawn against king by bringing the king in front of the pawn first and pushing the pawn only when a push is needed",
+  "Holds the draw as the defender by standing in front of the pawn and taking the opposition",
+  "Recognises when the plan fails: the defender facing the king with the move against it, a rook pawn with the defender near the corner"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**King and pawn against king** is decided by the kings more than by the pawn. Attacker: bring your king in front of the pawn and push only when a push is needed (a **rule of thumb**, not a law). Defender: stand in front of the pawn and keep the opposition. Pushing early is the classic way to throw a win away. Watch one win, then test the rule."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/3k4/8/4K3/5P2/8/8 w - - 0 1",
+   "caption": "White to move. Each of the king moves Kf5, Kd4 and Kf4 wins; the push f4 only draws.",
+   "line": [
+    {
+     "move": "e4f5",
+     "say": "The king goes first. Kd4 and Kf4 also win here; the push f4 only draws."
+    },
+    {
+     "move": "d6e7",
+     "say": "Black's king goes to e7."
+    },
+    {
+     "move": "f5g6",
+     "say": "White's king keeps going, further ahead of the pawn."
+    },
+    {
+     "move": "e7f8",
+     "say": "Black's king steps to f8."
+    },
+    {
+     "move": "f3f4",
+     "say": "Only now does the pawn move, one square, with the king well ahead of it."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black's king steps along the back rank."
+    },
+    {
+     "move": "g6g7",
+     "say": "White's king advances again."
+    },
+    {
+     "move": "e8e7",
+     "say": "Black's king goes to e7."
+    },
+    {
+     "move": "f4f5",
+     "say": "The pawn follows the king."
+    },
+    {
+     "move": "e7d6",
+     "say": "Black's king goes to d6."
+    },
+    {
+     "move": "f5f6",
+     "say": "The pawn steps forward again, protected by the king on g7."
+    },
+    {
+     "move": "d6e5",
+     "say": "Black's king cannot reach the pawn."
+    },
+    {
+     "move": "f6f7",
+     "say": "One step from queening, and the king guards the queening square."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "f5"
+    },
+    {
+     "from": "f5",
+     "to": "g6"
+    }
+   ],
+   "highlight": [
+    "f3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e4f5"
+     },
+     "statement": "Kf5 wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e4d4"
+     },
+     "statement": "Kd4 wins."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e4f4"
+     },
+     "statement": "Kf4 wins."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f3f4"
+     },
+     "statement": "The push f4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe1-1"
+  },
+  {
+   "type": "card",
+   "text": "The plan is a **rule of thumb**; it fails in two ways. The enemy king may cover the squares ahead, so a pawn push is the only winning move. Or nothing wins: the defender faces your king and you are to move, or the pawn is on the edge file with his king near the corner. Ask: can my king get ahead of the pawn, and who is to move?"
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn, the enemy king one step away",
+   "prompt": "In the first position the king step wins. Black's king moves one square. Find the winning move again.",
+   "working": "IBe1-1",
+   "failing": "IBe1-2",
+   "irrelevant": "IBe1-3"
+  },
+  {
+   "type": "contrast",
+   "title": "Same plan, the edge file",
+   "prompt": "In the first position Black is lost. In the second Black's king is one step nearer the corner. Predict the result.",
+   "working": "IBe1-4",
+   "failing": "IBe1-5",
+   "irrelevant": "IBe1-6"
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-25"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-30"
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-33"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KPK",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you look at the two kings first, or at the pawn? Which of your moves or predictions came from pushing the pawn too early?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I looked first at:",
+     "options": [
+      "the kings",
+      "the pawn",
+      "who is to move"
+     ]
+    },
+    {
+     "id": "early",
+     "label": "A push I would have played too early:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-07, read: the idea of king first and the conditions; the sheet's wording is not used)",
+  "content/skills/END.KPK.json (conditions and contrasts; the node also cites E. Lasker K23, not re-read for this lesson)",
+  "docs/lessons-endgames.md (L-END-OPPOSITION-1 and L-END-KINGACTIVE-1 are the prerequisites; their positions are not repeated)",
+  "All positions: own constructions; results from the local exact K+P v K solver and the Lichess tablebase (claims in content/items/lesson-e1.json)"
+ ]
+}

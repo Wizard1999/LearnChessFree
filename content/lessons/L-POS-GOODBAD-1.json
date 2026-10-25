@@ -1,0 +1,196 @@
+{
+ "id": "L-POS-GOODBAD-1",
+ "title": "Good and bad pieces: now, and later",
+ "skill": "POS.GOODBAD",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Finds the worst-placed piece of each side by counting squares",
+  "Says why a piece is bad: hemmed in by its own pawns, shut out, or passive",
+  "Tells a bishop that is only temporarily bad from one that stays bad"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A piece is **good** or **bad** by what it can do now: squares, targets, a useful job. Bad means few useful squares: hemmed in by its own pawns, shut out, or passive.\nIt can be bad *now* and good later. Before you give up on it, ask: **can it do a job where it stands? can it move with a threat? can I trade it for the enemy's best piece?**"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pppnbppp/4pn2/3p2B1/2PP4/2N1PN2/PP3PPP/2RQKB1R b K - 4 7",
+   "caption": "Black to move. The bishop on c8 is shut in by its own pieces and pawns.",
+   "line": [
+    {
+     "move": "b7b6",
+     "say": "Black plays b6. The bishop on c8 now has two squares, b7 and a6."
+    },
+    {
+     "move": "c4d5",
+     "say": "White captures on d5. The bishop still has the same two squares."
+    },
+    {
+     "move": "e6d5",
+     "say": "Black recaptures. The pawn leaves e6 and light-squared pawns become fewer."
+    },
+    {
+     "move": "g5f4",
+     "say": "White moves a bishop. This does not change the bishop on c8."
+    },
+    {
+     "move": "c8b7",
+     "say": "The bishop goes to b7 and sees the long diagonal."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b7",
+     "to": "b6"
+    },
+    {
+     "from": "c8",
+     "to": "b7"
+    }
+   ],
+   "highlight": [
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 0
+     },
+     "statement": "The bishop on c8 starts with 0 legal moves."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_colours",
+     "params": {
+      "color": "black",
+      "light": 5,
+      "dark": 3
+     },
+     "statement": "Five of Black's eight pawns stand on light squares, the colour of the bishop."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 2,
+      "after_move": "b7b6"
+     },
+     "statement": "After b6 the bishop on c8 has 2 legal moves."
+    },
+    {
+     "id": "C4",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 2,
+      "after_moves": [
+       "b7b6",
+       "c4d5",
+       "e6d5",
+       "g5f4"
+      ]
+     },
+     "statement": "After White's bishop move the bishop on c8 still has 2 legal moves."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_colours",
+     "params": {
+      "color": "black",
+      "light": 3,
+      "dark": 4,
+      "after_moves": [
+       "b7b6",
+       "c4d5",
+       "e6d5"
+      ]
+     },
+     "statement": "After the exchange on d5, three of Black's seven pawns stand on light squares."
+    },
+    {
+     "id": "C6",
+     "type": "mobility",
+     "params": {
+      "square": "b7",
+      "mode": "legal",
+      "count": 3,
+      "after_moves": [
+       "b7b6",
+       "c4d5",
+       "e6d5",
+       "g5f4",
+       "c8b7"
+      ]
+     },
+     "statement": "On b7 the bishop has 3 legal moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-26"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-23"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.GOODBAD"
+   ],
+   "n": 3
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** keep your own pawns off the colour of your bishop; this is well supported. The opposite advice, pawns on the colour of the enemy bishop, is only a hypothesis; the pawns may become targets.\nA bishop hemmed in by pawns is bad only for now if one pawn move frees it. And the worst piece is not always the first to fix."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn lever, one pawn moved",
+   "prompt": "In the next position the f-pawn stands on e6, not f7, and Black plays the same lever, d6. Does the bishop get out? Predict first, then check.",
+   "working": "IBp1-24",
+   "failing": "IBp1-25",
+   "irrelevant": "IBp1-26"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBp1-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBp1-28",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the last positions, before you moved, which piece did you name as the worst placed? Did you check what it could do where it stands before trying to move it?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-17, CI-18: pieces and the colour of the pawns)",
+  "sources/sheets/znosko-borovsky_middle-game.md (C13, C26)",
+  "sources/sheets/emlasker_common-sense.md (4.21 g: bishops and pawn colours)",
+  "content/skills/POS.GOODBAD.json (conditions and contrasts)"
+ ]
+}

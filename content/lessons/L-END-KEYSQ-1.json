@@ -1,0 +1,199 @@
+{
+ "id": "L-END-KEYSQ-1",
+ "title": "Key squares: where the king must get to",
+ "skill": "END.KEYSQ",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Marks the key squares of a pawn on its 3rd or 4th rank and steps the king onto one",
+  "Predicts that a king on a key square wins whoever is to move, and that one step short the move decides",
+  "Names where the rule does not decide: an edge-file pawn with the defender near the corner, and positions with extra pieces"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A **key square** is a square where your king wins whoever is to move, provided the enemy king cannot take the pawn at once. For a pawn on its 3rd or 4th rank they are the three squares two ranks ahead, on its file and the files beside it: d6, e6 and f6 for a pawn on e4. Reach one and the pawn queens."
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/8/3K4/4P3/8/8/8 w - - 0 1",
+   "caption": "White to move. The key squares of the e4 pawn are d6, e6 and f6.",
+   "line": [
+    {
+     "move": "d5d6",
+     "say": "White's king steps onto d6, a key square of the pawn on e4."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black's king goes to e8, in front of the pawn's file."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn advances, with the king beside it and ahead."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black's king goes to d8."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn steps forward, protected by the king."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black's king goes back to e8."
+    },
+    {
+     "move": "e6e7",
+     "say": "The pawn on e7 is protected by the king on d6."
+    },
+    {
+     "move": "e8f7",
+     "say": "Black's king attacks the pawn."
+    },
+    {
+     "move": "d6d7",
+     "say": "The king steps to d7 and protects the pawn again."
+    },
+    {
+     "move": "f7f6",
+     "say": "Black's king goes to f6."
+    },
+    {
+     "move": "e7e8q",
+     "say": "The pawn queens."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "d6"
+    }
+   ],
+   "highlight": [
+    "d6",
+    "e6",
+    "f6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5d6"
+     },
+     "statement": "Kd6 wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5e6"
+     },
+     "statement": "Ke6 wins."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5c6"
+     },
+     "statement": "Kc6 does not win: c6 is not a key square of the e4 pawn."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe1-9"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-10"
+  },
+  {
+   "type": "card",
+   "text": "A **rule of thumb** for a pawn on its 3rd or 4th rank. It fails in three places: one step short of a key square, who moves decides; on the edge file, a defender near the corner holds; with other pieces on the board, key squares do not decide. Tested here only for the squares in this lesson; the general rule is standard theory."
+  },
+  {
+   "type": "contrast",
+   "title": "The king on a key square, or one step short",
+   "prompt": "In the first position White wins. Put White's king one step back, on d5. Predict the result.",
+   "working": "IBe1-12",
+   "failing": "IBe1-13",
+   "irrelevant": "IBe1-14"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-15",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-18",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KEYSQ",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you find the squares two ranks in front of the pawn first? And when the king was one step short, did you check who was to move?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I looked first at:",
+     "options": [
+      "the key squares",
+      "the pawn",
+      "who is to move"
+     ]
+    },
+    {
+     "id": "short",
+     "label": "A position where one step short changed the result:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.KEYSQ.json (conditions, contrasts and the misconception; the node cites E. Lasker K23 and Capablanca section 7 row 6, not re-read for this lesson)",
+  "docs/lessons-endgames.md (L-END-OPPOSITION-1 states the key-square case for the e4 pawn informally; this lesson does not repeat its positions)",
+  "The key-square rule is standard theory [R]; here it is checked only for the squares and black-king placements in this lesson (tablebase claims in content/items/lesson-e1.json)"
+ ]
+}

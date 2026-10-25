@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 62%** (53 of 92 tasks done, in-progress tasks count half). Updated 2026-10-25T16:01+00:00 UTC.
+**Overall: 62%** (54 of 93 tasks done, in-progress tasks count half). Updated 2026-10-25T20:06+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -13,28 +13,28 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 6/14 | 64% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 7/15 | 63% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 127 of 204 skill nodes have a lesson (62%); 138 nodes have 10 or more shipped exercises; 6310 exercises ship, 43 wait for validation; 0 items reviewed by a person, 1668 flagged for human review.
+**Coverage (computed from the files):** 152 of 204 skill nodes have a lesson (75%); 148 nodes have 10 or more shipped exercises; 6568 exercises ship, 0 wait for validation; 0 items reviewed by a person, 1910 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
 | S1 Rules and board vision | 20 | 20 | 18 |
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
-| S3 Tactics | 24 | 23 | 24 |
+| S3 Tactics | 24 | 24 | 24 |
 | S4 Calculation | 8 | 5 | 8 |
-| S5 Positional play and planning | 49 | 12 | 25 |
-| S6 Attack, sacrifice and defense | 19 | 7 | 15 |
-| S7 Endgames | 37 | 14 | 32 |
+| S5 Positional play and planning | 49 | 25 | 30 |
+| S6 Attack, sacrifice and defense | 19 | 8 | 16 |
+| S7 Endgames | 37 | 23 | 35 |
 | S8 Openings and structures | 12 | 12 | 7 |
 | S9 Game study | 7 | 7 | 2 |
-| S10 Practical performance | 9 | 8 | 0 |
+| S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing); Tranche 2a: calculation (7 nodes); Tranche 2b: positional play remaining (about 30 nodes); Tranche 2c: attack, defence, sacrifice, initiative (17 nodes); Tranche 2d: endgames remaining (about 20 nodes); Lessons and exercises for the new gap nodes (mate search, knight and rook endings, structure families, exchange sacrifice, practical resistance)
+**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md)
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
@@ -127,13 +127,14 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Openings and game study first set (8)
 - [x] Positional first set (10)
 - [x] Endgames first set (9)
-- [~] Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing)
-- [~] Tranche 2a: calculation (7 nodes)
-- [~] Tranche 2b: positional play remaining (about 30 nodes)
-- [~] Tranche 2c: attack, defence, sacrifice, initiative (17 nodes)
-- [~] Tranche 2d: endgames remaining (about 20 nodes)
-- [~] Lessons and exercises for the new gap nodes (mate search, knight and rook endings, structure families, exchange sacrifice, practical resistance)
-- [ ] Review and fix pass on every tranche lesson
+- [x] Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written, reviewed and fixed)
+- [~] Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started)
+- [~] Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started)
+- [~] Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started)
+- [~] Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started)
+- [~] Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md)
+- [ ] Review and fix pass on the unreviewed tranche lessons (p1, p2, a1, e1, g1, g2, g3) and the remaining batches c2, p3-p6, a2, a3, e2-e4 (paused: weekly usage limit)
+- [ ] Contrast step: show the baseline result and ask the irrelevant item, as the lesson cards promise (review finding on the g2 lessons)
 - [ ] Read-through of all lessons for voice, order and consistency
 
 ## Phase 6: Data

@@ -1,0 +1,175 @@
+{
+  "id": "L-POS-TARGET-1",
+  "title": "Aim at what cannot move away",
+  "skill": "POS.TARGET",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names a target that cannot step aside: a backward pawn whose front square the enemy controls, or a pinned piece",
+    "Finds the file along which to attack a backward pawn",
+    "Says why a pawn kick on a piece that can move away gains little",
+    "Says when there is nothing to aim at"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Aim at what cannot get away. A **backward pawn** whose front square an enemy pawn controls cannot simply step forward, and a **pinned** piece cannot leave its square. These are fixed targets: you can bring more attackers. A piece that can move away is a poor target for a pawn kick: it moves, and the pawn that kicked it can never go back."
+    },
+    {
+      "type": "board",
+      "fen": "1rbq1rk1/6p1/2nbpn1p/5p2/3P1P2/2PB1N2/6PP/RNBQ1RK1 w - - 1 20",
+      "caption": "White to move. The pawn on e6 is behind f5, and the pawns on d4 and f4 control the square in front of it, e5.",
+      "line": [
+        {
+          "move": "d1e1",
+          "say": "The queen takes the half-open e-file and attacks e6. A pawn on e5 would face three White attackers and two defenders."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "e1"
+        },
+        {
+          "from": "e1",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "black",
+            "squares": [
+              "e6"
+            ]
+          },
+          "statement": "The pawn on e6 is Black's only backward pawn."
+        },
+        {
+          "id": "C2",
+          "type": "open_files",
+          "params": {
+            "half_open_white": [
+              "e"
+            ]
+          },
+          "statement": "The e-file is half-open for White."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Two White pawns attack e5."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 3
+          },
+          "statement": "Three White men attack e5."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two Black men defend e5."
+        },
+        {
+          "id": "C6",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e1",
+            "includes": [
+              "e6"
+            ],
+            "after_move": "d1e1"
+          },
+          "statement": "After Qe1 the queen attacks e6."
+        },
+        {
+          "id": "C7",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d1e1",
+              "f1e1",
+              "d1e2"
+            ]
+          },
+          "statement": "Qe1, Re1 and Qe2 are all within a fraction of a pawn of the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-34"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-74"
+    },
+    {
+      "type": "card",
+      "text": "A target is fixed only if it cannot step aside and the attack can bring more units than the defence. Before you push a pawn at a piece, ask where the piece goes. If it has a good square, you have spent a move and left squares behind. Chasing is not always wrong: it can gain space or send a piece offside. This is a *rule of thumb*."
+    },
+    {
+      "type": "contrast",
+      "title": "Fix it, or chase it?",
+      "prompt": "The first two items are the same position with the same side to move: one asks about a rook move at the backward pawn, the other about a pawn kick at a knight. Predict each. The third position has nothing to aim at.",
+      "working": "IBp2-21",
+      "failing": "IBp2-22",
+      "irrelevant": "IBp2-23"
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-82",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-24",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.TARGET",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last position, what did you look for first: a pinned piece, a backward pawn, a piece to chase, or something else? Write what you checked, and whether you reached for a kick first."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K15 choose an objective that cannot move away; K16 backward pawn as a target)",
+    "sources/sheets/nimzowitsch_my-system.md (idea 12, pick one objective)",
+    "docs/curriculum-map-v1.1.md",
+    "content/items/lesson-p2.json (IBp2 items); shipped items IP-PAWNS-34, IP-PAWNS-74, IP-QUIET-82"
+  ]
+}

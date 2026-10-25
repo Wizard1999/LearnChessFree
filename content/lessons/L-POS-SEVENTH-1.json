@@ -1,0 +1,141 @@
+{
+ "id": "L-POS-SEVENTH-1",
+ "title": "The seventh rank: targets and a cut-off king",
+ "skill": "POS.SEVENTH",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Finds the entry square and the targets on the seventh rank",
+  "Checks that the enemy king is cut off and that the target is not defended",
+  "Tells a rook on the seventh that wins from one that only looks active"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A rook on the **seventh rank** (the rank next to the enemy back rank) attacks pawns from behind, since they often stand on their starting squares, and it can keep the enemy king on the back rank.\nTo get there you need a safe **entry square** on an open file. Then look at what the rook can **attack** from the rank."
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-94"
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-99"
+  },
+  {
+   "type": "board",
+   "fen": "5k2/3R3p/8/r5P1/7P/1K6/8/8 w - - 0 1",
+   "caption": "White to move. The rook is already on the seventh rank and the Black king is on f8.",
+   "line": [
+    {
+     "move": "d7h7",
+     "say": "The rook takes the pawn on h7 from behind. The king on f8 still has only e8 and g8."
+    },
+    {
+     "move": "a5a1",
+     "say": "Black's rook looks for activity on the first rank."
+    },
+    {
+     "move": "b3b4",
+     "say": "The White king comes forward to help the pawns."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d7",
+     "to": "h7"
+    }
+   ],
+   "highlight": [
+    "d7",
+    "h7",
+    "f8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position (tablebase, exact)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d7h7"
+     },
+     "statement": "Rxh7 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "f8",
+      "mode": "legal",
+      "count": 2,
+      "after_move": "d7h7"
+     },
+     "statement": "After Rxh7 the king on f8 still has only two squares."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** a rook on the seventh is strong when it has **targets** (loose pawns, a king with no room) and the enemy king is **cut off** behind it. It is *not* a win by itself.\nIf the king can step out, or the target is defended, or there is nothing on the rank to attack, the same rook may do little. Check before you count on it."
+  },
+  {
+   "type": "contrast",
+   "title": "Same rook, one rank lower",
+   "prompt": "In the next position the rook stands on d6, one rank lower. Can White still win? Predict first, then check.",
+   "working": "IBp1-5",
+   "failing": "IBp1-6",
+   "irrelevant": "IBp1-7"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-7"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-96",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-23",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.SEVENTH",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you checked, did you expect the rook on the seventh to win in the last positions? What would you look at first next time: the targets, the defenders of the target, or where the king can go?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (idea 7, 12, 13: the seventh rank; flagged CHECK for 'absolute')",
+  "sources/sheets/edlasker_chess-strategy.md (K20)",
+  "content/skills/POS.SEVENTH.json (conditions and contrasts)",
+  "tablebase positions of this lesson (Lichess tablebase service, exact)"
+ ]
+}

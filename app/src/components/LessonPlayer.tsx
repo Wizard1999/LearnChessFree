@@ -185,7 +185,10 @@ function ContrastStep({ step, onNext }: { step: Extract<LessonStep, { type: 'con
   const failing = itemById.get(step.failing)
   const [stage, setStage] = useState<'working' | 'predict'>('working')
   if (!working || !failing) return <p className="warn">Missing contrast items.</p>
-  const wMove = (working.claims.find(c => typeof (c.params as { move?: string }).move === 'string')?.params as { move?: string } | undefined)?.move
+  // The arrow shows the move that works. For a find-the-move item that is its answer; for other tasks no single move is "the idea", and the first
+  // claim carrying a move can be one that loses (a review caught arrows on a losing king move), so draw nothing.
+  const claimMove = (working.claims.find(c => typeof (c.params as { move?: string }).move === 'string')?.params as { move?: string } | undefined)?.move
+  const wMove = working.task === 'find_move' ? (working.answer.moves?.[0] ?? claimMove) : undefined
   return (
     <section className="card contrast">
       <h3>{step.title ?? 'Same idea, one change'}</h3>

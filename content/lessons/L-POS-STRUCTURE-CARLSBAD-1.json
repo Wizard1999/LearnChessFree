@@ -1,0 +1,264 @@
+{
+  "id": "L-POS-STRUCTURE-CARLSBAD-1",
+  "title": "Carlsbad structure: the minority attack and its limits",
+  "skill": "POS.STRUCTURE.CARLSBAD",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Recognises the app's Carlsbad structure from the pawn squares, and tells it from the look-alike where White still has a c-pawn",
+    "Names the usual plans: the b-pawn minority attack, and the e-pawn or kingside play for the other side",
+    "Checks that the pawn pushed to b4 is supported before starting the minority attack",
+    "Finds a move in this structure without being told the plan, including moves that are not the minority attack"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The app's **Carlsbad structure**: one side has pawns on d4 and e3 and no c-pawn, the other has pawns on c6, d5 and e6 (colours may be reversed). This is the app's own definition; books may draw the line differently.\nRule of thumb: with two pawns on the a-, b- and c-files against three, play b2-b4-b5, the **minority attack**, to trade on c6 and leave a pawn to attack."
+    },
+    {
+      "type": "board",
+      "fen": "r2qk2r/pp1nbppp/2p1pn2/3p4/3P4/PP1PPN2/1B1N1PPP/R2QK2R w KQkq - 1 9",
+      "caption": "White to move. White has two pawns on the a-, b- and c-files (a3, b3) against Black's three (a7, b7, c6). One possible line, to show the pawn mechanics: Black can answer differently.",
+      "line": [
+        {
+          "move": "b3b4",
+          "say": "b4: the a3 pawn guards it, and the engine rates it within 0.4 pawns of its best move."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles. Other replies are possible; this line only shows the pawn mechanics."
+        },
+        {
+          "move": "b4b5",
+          "say": "b5 attacks the pawn on c6."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black attacks b5 a second time."
+        },
+        {
+          "move": "b5c6",
+          "say": "White takes on c6."
+        },
+        {
+          "move": "b7c6",
+          "say": "After the exchange Black's c6 pawn is backward: d5 is ahead of it and d4 attacks c5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a3",
+          "to": "b4"
+        },
+        {
+          "from": "b4",
+          "to": "b5"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "b4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d4",
+            "piece": "P"
+          },
+          "statement": "d4 holds the white pawn."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e3",
+            "piece": "P"
+          },
+          "statement": "e3 holds the white pawn."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "c6",
+            "piece": "p"
+          },
+          "statement": "c6 holds the black pawn."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "p"
+          },
+          "statement": "d5 holds the black pawn."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "e6",
+            "piece": "p"
+          },
+          "statement": "e6 holds the black pawn."
+        },
+        {
+          "id": "C6",
+          "type": "open_files",
+          "params": {
+            "open": [],
+            "half_open_white": [
+              "c"
+            ],
+            "half_open_black": []
+          },
+          "statement": "Open files: none. Half-open for White: c. Half-open for Black: none."
+        },
+        {
+          "id": "C7",
+          "type": "piece_attacks",
+          "params": {
+            "square": "a3",
+            "includes": [
+              "b4"
+            ]
+          },
+          "statement": "The pawn on a3 guards b4."
+        },
+        {
+          "id": "C8",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1f1",
+              "a1b1",
+              "g2g3",
+              "b2c3",
+              "a1c1",
+              "d1e2",
+              "e1g1",
+              "d1c2",
+              "d1b1",
+              "b3b4",
+              "h2h3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is Bc3; b4 scores within 0.4 pawns of it."
+        },
+        {
+          "id": "C9",
+          "type": "piece_attacks",
+          "params": {
+            "square": "b5",
+            "includes": [
+              "c6"
+            ],
+            "after_moves": [
+              "b3b4",
+              "e8g8",
+              "b4b5"
+            ]
+          },
+          "statement": "After b4, O-O, b5 the pawn on b5 attacks c6."
+        },
+        {
+          "id": "C10",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "black",
+            "includes": [
+              "c6"
+            ],
+            "after_moves": [
+              "b3b4",
+              "e8g8",
+              "b4b5",
+              "a7a6",
+              "b5c6",
+              "b7c6"
+            ]
+          },
+          "statement": "After b4, O-O, b5, a6, bxc6, bxc6, Black's pawn on c6 is backward: d5 stands ahead of it and d4 attacks c5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-STRUCT-1"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-3"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** The minority attack tends to work when the exchange on c6 leaves a pawn to attack, rooks can use the c-file, the opponent has no quicker threat, and the pawn you push is not simply lost: count its attackers and defenders first. If one condition fails, a quiet move or the e-pawn break may come first. A weak pawn is a target, not a verdict."
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, one pawn different",
+      "prompt": "In the first two positions only White's a-pawn differs (a3 or a2). Predict whether b4 works in each, then check. The third position asks a different question: is it still the Carlsbad structure?",
+      "working": "IBg3-1",
+      "failing": "IBg3-2",
+      "irrelevant": "IBg3-7"
+    },
+    {
+      "type": "card",
+      "text": "**The other side.** With pawns on c6, d5 and e6, the usual plans are the e-pawn break (...e5) and play on the kingside. These are rules of thumb as well. A break is only as good as its support: before ...e5, count what attacks e5 and what defends it, and ask what happens to d5 after dxe5."
+    },
+    {
+      "type": "item",
+      "item": "IBg3-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-11",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.CARLSBAD",
+        "cue.2"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you just played without hints. Before you chose, what did you check? For the side with the minority: was the pawn that goes to b4 supported? For the other side: what attacks and defends the break square? Write one line each.",
+      "fields": [
+        {
+          "id": "white",
+          "label": "For the side with the minority: what I checked before b4"
+        },
+        {
+          "id": "black",
+          "label": "For the other side: what I checked before a break"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.CARLSBAD.json (the app's definition and the plans, recalled [R]; no sheet describes them)",
+    "docs/exercises-positional.md §5 and tools/positional/gen_struct.py (exact pawn squares)",
+    "content/items/lesson-g3.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-pawn edits are marked authored)",
+    "shipped items IP-STRUCT-1 (recognition)"
+  ]
+}

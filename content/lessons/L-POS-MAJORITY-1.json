@@ -1,0 +1,186 @@
+{
+ "id": "L-POS-MAJORITY-1",
+ "title": "Pawn majorities: the candidate and the kings",
+ "skill": "POS.MAJORITY",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Counts the pawns on each wing and finds the majority",
+  "Names the candidate and shows how a passed pawn arises by exchange",
+  "Sees that the first pawn move and the kings' positions can matter more than the count"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A **pawn majority** is more pawns than the opponent on one wing (files a-d or e-h). Its job is to make a **passed pawn**. The pawn with no enemy pawn in front of it on its own file is the **candidate**; it usually leads and the others follow.\nOnly *healthy* pawns count: no tactics, no doubled or blocked pawns."
+  },
+  {
+   "type": "board",
+   "fen": "6k1/1p6/8/PP6/8/8/6K1/8 w - - 0 1",
+   "caption": "White has two pawns against one on the queenside. White to move.",
+   "line": [
+    {
+     "move": "a5a6",
+     "say": "The a-pawn has no Black pawn in front of it. It leads and offers an exchange."
+    },
+    {
+     "move": "b7a6",
+     "say": "Black takes on a6. Each side now has one pawn on the wing."
+    },
+    {
+     "move": "b5a6",
+     "say": "White recaptures. Black has no pawns left, so the pawn on a6 is passed."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a5",
+     "to": "a6"
+    }
+   ],
+   "highlight": [
+    "a5",
+    "b5",
+    "b7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position (tablebase, exact)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "a5a6"
+     },
+     "statement": "a6 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 1,
+      "after_moves": [
+       "a5a6",
+       "b7a6"
+      ]
+     },
+     "statement": "After Black takes, each side has one pawn on the queenside."
+    },
+    {
+     "id": "C4",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 0,
+      "after_moves": [
+       "a5a6",
+       "b7a6",
+       "b5a6"
+      ]
+     },
+     "statement": "After White recaptures, Black has no pawns on the queenside."
+    },
+    {
+     "id": "C5",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 0,
+      "after_moves": [
+       "a5a6",
+       "b7a6",
+       "b5a6"
+      ]
+     },
+     "statement": "After White recaptures, Black has no pawns on the kingside either."
+    },
+    {
+     "id": "C6",
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "a6"
+      ],
+      "after_moves": [
+       "a5a6",
+       "b7a6",
+       "b5a6"
+      ]
+     },
+     "statement": "After the exchange the pawn on a6 is passed."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-PAWNS-104"
+  },
+  {
+   "type": "item",
+   "item": "IP-PAWNS-20"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** the candidate leads, the middle pawn waits. It holds only while the majority is healthy and nothing else interferes. Counting is the first step, not the last: **king position and tempo can decide**.\nNext: three pawns against two, the Black king far away, and two different first moves."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawns, a different first move",
+   "prompt": "Now White plays the middle pawn two squares, b4, instead of a4. Predict the result first, then check.",
+   "working": "IBp1-9",
+   "failing": "IBp1-10",
+   "irrelevant": "IP-PAWNS-109"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-11"
+  },
+  {
+   "type": "item",
+   "item": "IA3-509",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IA3-510",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.MAJORITY",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which part is least clear: counting the majority, choosing the candidate, or seeing when the kings matter more than the count?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (idea 14: majority and candidate; flagged CHECK for the absolute wording)",
+  "sources/sheets/edlasker_chess-strategy.md (K24: counting moves, majorities)",
+  "content/skills/POS.MAJORITY.json (conditions and contrasts)",
+  "tablebase positions of this lesson (Lichess tablebase service, exact)"
+ ]
+}

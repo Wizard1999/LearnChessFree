@@ -1,0 +1,155 @@
+{
+ "id": "L-END-MATE-MATERIAL-1",
+ "title": "Which armies can force mate",
+ "skill": "END.MATE-MATERIAL",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Classifies the bare-king armies as can or cannot force mate: queen, rook, two bishops, bishop and knight, against one minor piece or two knights",
+  "Tells two bishops on opposite colours from two on one colour, and a rook against a bishop from a rook against a bare king",
+  "Names the corner needed for bishop and knight: the colour of the bishop's squares"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Against a lone king some armies can **force mate** and some cannot. Can: queen, rook, two bishops on opposite colours, bishop and knight. Cannot: one bishop, one knight, two knights. 'Can' means the stronger side wins with best play; the tablebase confirms it for each position here. Test two armies first."
+  },
+  {
+   "type": "item",
+   "item": "IE-MAT-3"
+  },
+  {
+   "type": "item",
+   "item": "IE-MAT-4"
+  },
+  {
+   "type": "board",
+   "fen": "7k/5K2/4N3/8/8/8/3B4/8 w - - 0 1",
+   "caption": "White to move mates in three. White has a dark-squared bishop; the corner h8 is a dark square.",
+   "line": [
+    {
+     "move": "d2g5",
+     "say": "A quiet move: the dark bishop heads for f6."
+    },
+    {
+     "move": "h8h7",
+     "say": "Black's king steps to h7."
+    },
+    {
+     "move": "e6f8",
+     "say": "The knight checks from f8."
+    },
+    {
+     "move": "h7h8",
+     "say": "Black's king goes back to the corner."
+    },
+    {
+     "move": "g5f6",
+     "say": "Mate in the corner h8. The bishop gives check from a dark square, like h8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "g5"
+    },
+    {
+     "from": "g5",
+     "to": "f6"
+    }
+   ],
+   "highlight": [
+    "h8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "d2g5",
+      "n": 3
+     },
+     "statement": "Bg5 starts a forced mate in three."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins with best play (tablebase)."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "Check three things. Is the king really bare? A rook does not beat a bishop. Are the two bishops on opposite colours? With **bishop and knight**, the mate has to come in a corner of the bishop's colour. That is the textbook rule; this lesson checks it on one pair of positions."
+  },
+  {
+   "type": "contrast",
+   "title": "Two bishops or two knights",
+   "prompt": "In the first position White wins. Now the bishops are knights on the same squares. Predict the result.",
+   "working": "IE-MAT-21",
+   "failing": "IE-MAT-22",
+   "irrelevant": "IBe1-40"
+  },
+  {
+   "type": "contrast",
+   "title": "The same pieces, the bishop on the other colour",
+   "prompt": "In the first position White can force mate within three moves. Now the bishop stands on a light square. Predict again.",
+   "working": "IBe1-37",
+   "failing": "IBe1-38",
+   "irrelevant": "IBe1-39"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-41",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-42",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-MAT-10",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-MATERIAL"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "For each army you classified: what did you check first, the number of pieces, the colour of the bishop, or whether the other side was really bare?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I checked first:",
+     "options": [
+      "the pieces",
+      "the bishop's colour",
+      "that the king is bare"
+     ]
+    },
+    {
+     "id": "wrong",
+     "label": "An army I got wrong, and why:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-MATERIAL.json (conditions and contrasts; the node cites E. Lasker K22 and Capablanca CI-05, not re-read for this lesson)",
+  "The corner rule for bishop and knight is the textbook result [R]; here it is checked on one pair of positions (engine: no mate within ten moves; tablebase: both still won). Claims in content/items/lesson-e1-c.json"
+ ]
+}

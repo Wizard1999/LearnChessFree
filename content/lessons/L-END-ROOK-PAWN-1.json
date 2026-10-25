@@ -1,0 +1,194 @@
+{
+ "id": "L-END-ROOK-PAWN-1",
+ "title": "Rook pawns: the corner draw and its limits",
+ "skill": "END.ROOK-PAWN",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Predicts win or draw in a king-and-rook-pawn ending from Black's king distance to the corner, and says what White's king changes",
+  "Tells the rook-pawn draw from the win when the same set-up stands on the b- or c-file",
+  "Predicts what a knight adds (a win with the pawn on the fifth rank, a draw with it on the seventh) and reuses the wrong-bishop rule"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Pawns on the a- and h-files are special. A rook pawn has only one neighbouring file, so the attacking king can come at it from one side only, and the defending king can wait in the corner in front of it. Watch what a king in the corner can do, then predict."
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/1K6/P7/8/8/8/8 w - - 0 1",
+   "caption": "White to move. Black's king is in the corner on a8. The tablebase gives a draw. One line is shown.",
+   "line": [
+    {
+     "move": "a5a6",
+     "say": "The pawn advances."
+    },
+    {
+     "move": "a8b8",
+     "say": "Black's king stays next to the corner."
+    },
+    {
+     "move": "a6a7",
+     "say": "The pawn checks the king."
+    },
+    {
+     "move": "b8a8",
+     "say": "Black's king goes back to the corner."
+    },
+    {
+     "move": "b6c7",
+     "say": "The pawn is blocked, so White must move the king. Kc7 no longer guards a7."
+    },
+    {
+     "move": "a8a7",
+     "say": "Black takes the pawn. Only the kings are left: a draw."
+    }
+   ],
+   "highlight": [
+    "a8",
+    "b6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The position is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a5a6"
+     },
+     "statement": "1.a6 does not change that."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b6c7"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b6b5"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b6c6"
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBg2-22"
+  },
+  {
+   "type": "card",
+   "text": "**How close is close enough?** With White's king on b6 and the pawn on a5, Black's king draws from squares close to the corner and loses from farther away. How close depends on White's king too. *Rule of thumb:* count Black's king moves to the corner. Predict, then check."
+  },
+  {
+   "type": "contrast",
+   "title": "How far from the corner?",
+   "prompt": "In the first position Black's king is on c8, two king moves from the corner. Predict the other two, then check.",
+   "working": "IBg2-21",
+   "failing": "IBg2-19",
+   "irrelevant": "IBg2-20"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-23"
+  },
+  {
+   "type": "card",
+   "text": "**Add a piece.** With a knight, White usually wins a rook pawn on the fifth rank even against a king in the corner. *Rule of thumb:* the extra piece wins, unless Black's king is shut in the corner in front of a pawn on the seventh. The wrong-coloured bishop has its own lesson; its rule comes back in the last position below."
+  },
+  {
+   "type": "contrast",
+   "title": "A knight on the board",
+   "prompt": "In the first position White has a knight and the pawn is on a5. Predict the other two, then check.",
+   "working": "IBg2-25",
+   "failing": "IBg2-26",
+   "irrelevant": "IBg2-27"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-24",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBg2-30",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IA3-905",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.ROOK-PAWN",
+    "cue.3"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Think back to the three silent positions. What did you check first, and which check would have saved you if you skipped it?",
+   "fields": [
+    {
+     "id": "checked",
+     "label": "I checked first:",
+     "options": [
+      "Black king's moves to the corner",
+      "where White's king stands",
+      "which file the pawn is on",
+      "which piece White has",
+      "nothing in particular"
+     ]
+    },
+    {
+     "id": "missed",
+     "label": "I would have missed:",
+     "options": [
+      "White's king position",
+      "the pawn's file",
+      "the bishop's colour",
+      "none"
+     ]
+    },
+    {
+     "id": "note",
+     "label": "One sentence for next time (optional):"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/skill-graph.md section 6, gap 2 (rook-pawn special cases)",
+  "sources/sheets/edlasker_chess-strategy.md (K23); sources/sheets/capablanca_chess-fundamentals.md (CI-14): ideas only",
+  "docs/curriculum-map-v1.1.md section 4 (wrong-bishop pair); the wrong bishop itself is L-END-WRONGBISHOP-1, not repeated here",
+  "Positions: own constructions; results from the Lichess tablebase service [V] (items IBg2-18 to IBg2-32; shipped item IA3-905)"
+ ]
+}

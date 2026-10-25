@@ -5,7 +5,7 @@
   "depth": "D1",
   "minutes": 12,
   "outcomes": [
-    "Compares the positions two candidates reach, feature by feature: material, king safety, piece activity, pawn structure",
+    "Checks the positions two candidates reach on four counts (material, king safety, piece activity, pawn structure) and names the one that differs; the exercises here differ by piece activity and the king's pawn cover",
     "Names the one feature that separates two end positions",
     "Checks what is attacked before trusting a count of squares",
     "Recognises a position where a forcing line, not a comparison, decides"
@@ -18,7 +18,7 @@
     {
       "type": "board",
       "fen": "6k1/p1p3p1/2bppq1p/2p5/2P5/1P1B4/P3QPPP/6K1 w - - 2 23",
-      "caption": "White to move: Qe1 or Qc2, the same queen. Material: level, neither move captures. King cover: the pawns on f2, g2, h2 in both. Pawns: a queen move moves none. Activity: after Qe1 the queen reaches 14 squares, after Qc2 only 7. Of the four checks, activity is the one that differs; the engine prefers Qe1.",
+      "caption": "White to move: Qe1 or Qc2, the same queen. Material: level, neither move captures. King cover: pawns on f2, g2, h2 in both. Pawns: a queen move moves none. Activity: Qe1 reaches 14 squares, Qc2 only 7, and the engine prefers Qe1. Careful: Qe3 reaches 15 squares yet the engine rates it more than a pawn below Qe1, so the count alone is not the reason. After Qe3 or Qc2, Black can play ...Qa1+, a check along the first rank, which the four checks do not show.",
       "line": [
         {
           "move": "e2e1",
@@ -129,6 +129,54 @@
             "after_move": "e2c2"
           },
           "statement": "After Qc2 the pawns in the two ranks in front of the king stand on f2, g2 and h2."
+        },
+        {
+          "id": "C10",
+          "type": "mobility",
+          "params": {
+            "square": "e3",
+            "mode": "legal",
+            "count": 15,
+            "after_move": "e2e3"
+          },
+          "statement": "After Qe3 the queen can move to 15 squares."
+        },
+        {
+          "id": "C11",
+          "type": "move_loses",
+          "params": {
+            "move": "e2e3",
+            "cp": 100
+          },
+          "statement": "Qe3 is at least a pawn worse than the best move (depth 16)."
+        },
+        {
+          "id": "C12",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2c2",
+              "f6a1"
+            ]
+          },
+          "statement": "After Qc2, Qa1+ is check."
+        },
+        {
+          "id": "C13",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e3",
+              "f6a1"
+            ]
+          },
+          "statement": "After Qe3, Qa1+ is check."
         }
       ]
     },
@@ -158,7 +206,7 @@
     },
     {
       "type": "card",
-      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next three are silent: no hints, no engine. For the first two, write the four checks on paper and name the feature that differs, then answer. The third asks which tool fits. The plan is to offer hints only on request once you solve unlabeled items without them (planned, not built yet)."
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next four are silent: no hints, no engine. For the first two, write the four checks on paper and name the feature that differs, then answer. The last two ask which tool fits. The plan is to offer hints only on request once you solve unlabeled items without them (planned, not built yet)."
     },
     {
       "type": "item",
@@ -168,6 +216,11 @@
     {
       "type": "item",
       "item": "IBc1-42",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-49",
       "silent": true
     },
     {

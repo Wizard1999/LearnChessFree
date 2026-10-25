@@ -1,0 +1,147 @@
+{
+ "id": "L-POS-BLOCKADE-1",
+ "title": "Blockading a passed pawn: check the square",
+ "skill": "POS.BLOCKADE",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Finds the blockading square and a suitable piece for a passed pawn",
+  "Checks that the blockading square is not attacked, above all by a pawn",
+  "Sees when attacking or winning the pawn is better than blockading it"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A **passed pawn** has no enemy pawn in front of it on its file or a neighbouring file. A **blockade** puts a piece on the square directly in front of it, so the pawn cannot advance.\n**Rule of thumb:** the default blockader is a **knight**, which a pawn cannot chase away. The queen leaves at the first attack; the king belongs in the endgame."
+  },
+  {
+   "type": "board",
+   "fen": "r1r1n2k/pp3ppp/8/3P4/8/2P5/1N3PPP/2RR2K1 b - - 0 1",
+   "caption": "Black to move. White's passed pawn is on d5.",
+   "line": [
+    {
+     "move": "e8d6",
+     "say": "The knight lands on d6, directly in front of the passed pawn. No White piece attacks it."
+    },
+    {
+     "move": "c3c4",
+     "say": "White supports the pawn from the side. It still cannot advance: d6 is occupied."
+    },
+    {
+     "move": "b7b6",
+     "say": "Black makes a waiting move. The pawn on d5 stays blockaded."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "d6"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "moves_where",
+     "params": {
+      "property": "blockades_passed",
+      "moves": [
+       "e8d6"
+      ]
+     },
+     "statement": "Nd6 is the only blockading move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 0,
+      "after_move": "e8d6"
+     },
+     "statement": "After Nd6 no White piece attacks the knight."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "blockaded_passed",
+      "color": "white",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "e8d6",
+       "c3c4",
+       "b7b6"
+      ]
+     },
+     "statement": "After the three moves the pawn on d5 is still blockaded."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-SQ-109"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-20"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** a blockade works when the blockading square is **safe** and the pawn is dangerous (passed, advanced or central). Check who attacks the square, above all pawns. A piece on a square an enemy pawn attacks will simply be taken.\nIt is a default, not a duty: if the pawn can be won, win it. A queen can blockade when nothing can hit it."
+  },
+  {
+   "type": "contrast",
+   "title": "Same blockade, one pawn moved",
+   "prompt": "In the next position White's pawn stands on c5, not c3, and Black blockades again with Nd6. Is the knight safe? Predict first, then check.",
+   "working": "IBp1-20",
+   "failing": "IBp1-21",
+   "irrelevant": "IBp1-22"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-34",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-5",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.BLOCKADE",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you moved in the last positions, what did you check first: whether the passed pawn was dangerous, who attacked the blockading square, or whether the pawn could simply be won?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (ideas 15-17: the blockade; section 8 items 9-10)",
+  "sources/sheets/znosko-borovsky_middle-game.md (C29)",
+  "docs/curriculum-map-v1.1.md section 3 (POS.BLOCKADE: a default, not a duty)",
+  "content/skills/POS.BLOCKADE.json (conditions and contrasts)"
+ ]
+}

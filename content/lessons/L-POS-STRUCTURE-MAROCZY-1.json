@@ -1,0 +1,260 @@
+{
+  "id": "L-POS-STRUCTURE-MAROCZY-1",
+  "title": "The Maroczy bind: what it holds back, and what it costs",
+  "skill": "POS.STRUCTURE.MAROCZY",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Recognises the app's Maroczy bind and counts the White pawns that attack d5 and b5",
+    "Names the price of the bind: d4 is a hole that no White pawn can attack",
+    "As the cramped side, checks that a pawn can recapture on the break square, and that it has enough defenders, before playing ...d5 or ...b5",
+    "As the owner, sees that pushing the c-pawn or the e-pawn gives up part of the grip on d5"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The app's **Maroczy bind**: pawns on c4 and e4 and none on the d-file, against pawns on d6 and g6 and none on the c-file (colours may be reversed). This is the app's own definition.\nThe c4 pawn attacks b5 and d5, the e4 pawn attacks d5, so the cramped side cannot play ...d5 or ...b5 without preparation. The price: d4 is a **hole**, a square no White pawn attacks."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/1p3pbp/p2ppnp1/n7/2PNP3/2NBBP2/PP4PP/R2QK2R b KQ - 1 12",
+      "caption": "Black to move. Two White pawns (c4, e4) attack d5, and d4 is a hole in White's camp. Here Black's pieces are ready, so the break works.",
+      "line": [
+        {
+          "move": "d6d5",
+          "say": "d5: three attackers against three defenders, and the pawn on e6 can recapture."
+        },
+        {
+          "move": "e4e5",
+          "say": "White pushes e5; now only the pawn on c4 still attacks d5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "d5"
+        },
+        {
+          "from": "e4",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d4",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "c4",
+            "piece": "P"
+          },
+          "statement": "c4 holds the white pawn."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e4",
+            "piece": "P"
+          },
+          "statement": "e4 holds the white pawn."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "d6",
+            "piece": "p"
+          },
+          "statement": "d6 holds the black pawn."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "g6",
+            "piece": "p"
+          },
+          "statement": "g6 holds the black pawn."
+        },
+        {
+          "id": "C5",
+          "type": "open_files",
+          "params": {
+            "open": [],
+            "half_open_white": [
+              "d"
+            ],
+            "half_open_black": [
+              "c"
+            ]
+          },
+          "statement": "Open files: none. Half-open for White: d. Half-open for Black: c."
+        },
+        {
+          "id": "C6",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Two White pawns (on c4 and e4) attack d5."
+        },
+        {
+          "id": "C7",
+          "type": "holes",
+          "params": {
+            "color": "white",
+            "includes": [
+              "d4"
+            ]
+          },
+          "statement": "No White pawn can attack d4 now or by advancing: d4 is a hole."
+        },
+        {
+          "id": "C8",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 3,
+            "after_move": "d6d5"
+          },
+          "statement": "After d5, three White pieces attack d5."
+        },
+        {
+          "id": "C9",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 3,
+            "after_move": "d6d5"
+          },
+          "statement": "After d5, three Black pieces defend d5."
+        },
+        {
+          "id": "C10",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1,
+            "after_move": "d6d5"
+          },
+          "statement": "After d5, one Black pawn (on e6) attacks d5."
+        },
+        {
+          "id": "C11",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "d6d5",
+              "e4e5"
+            ]
+          },
+          "statement": "After d5 and e5, only the White pawn on c4 still attacks d5."
+        },
+        {
+          "id": "C12",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d6d5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 d5 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-STRUCT-9"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-27"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-25"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-26"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** The bind holds while both breaks stay unready. The cramped side trades pieces and plays ...d5 or ...b5 when the square has enough defenders and a pawn can recapture; counting is the first check, not the whole answer. As pieces come off, it tends to get more room. The owner keeps c4 and e4: pushing either gives up part of the grip on d5."
+    },
+    {
+      "type": "contrast",
+      "title": "Same break, one pawn different",
+      "prompt": "In the first two positions only Black's e-pawn differs (e6 or e7). Predict whether ...d5 works in each, then check. In the third position a White pawn has moved: is it still the Maroczy bind?",
+      "working": "IBg3-12",
+      "failing": "IBg3-13",
+      "irrelevant": "IBg3-24"
+    },
+    {
+      "type": "card",
+      "text": "**The owner's side.** White keeps c4 and e4, develops, and trades pieces that could support a break. A pawn push such as c5 or e5 releases part of the bind. These are rules of thumb; the next positions test them. Name the plan for the side to move, then check the break square."
+    },
+    {
+      "type": "item",
+      "item": "IBg3-29",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-30",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.MAROCZY",
+        "cue.2"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. As the cramped side: what did you count before a break? As the owner: which moves did you avoid, and why? Write one line each.",
+      "fields": [
+        {
+          "id": "break",
+          "label": "Before a break: what I counted"
+        },
+        {
+          "id": "owner",
+          "label": "As the owner of the bind: what I avoided and why"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.MAROCZY.json (the app's definition and the plans, recalled [R]; no sheet describes them)",
+    "docs/exercises-positional.md §5 and tools/positional/gen_struct.py (exact pawn squares); hole definition of docs/exercises-positional.md §5",
+    "content/items/lesson-g3.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-pawn edits are marked authored)",
+    "shipped items IP-STRUCT-9 (recognition)"
+  ]
+}

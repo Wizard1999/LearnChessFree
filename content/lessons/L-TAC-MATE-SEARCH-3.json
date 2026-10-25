@@ -1,0 +1,153 @@
+{
+  "id": "L-TAC-MATE-SEARCH-3",
+  "title": "Mate in three: the same list, one round deeper",
+  "skill": "TAC.MATE-SEARCH",
+  "depth": "D3",
+  "minutes": 10,
+  "outcomes": [
+    "Follows a first move through each reply to the mate in three",
+    "Counts the king's legal moves after the first move before following a line",
+    "Rejects a mate in three that one extra king square breaks",
+    "Says \"no forced mate in three\" when a promising check fails"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **mate in three** adds one more round: your move, their reply, your move, their reply, mate. Use the same list at each of your turns. After your first move, test the defender's forcing replies first: a check, the capture of your attacking piece, a move that gives the king a square. *Rule of thumb:* count the replies after the first move. If there are only one or two, follow each to the end."
+    },
+    {
+      "type": "board",
+      "fen": "8/k1K5/b7/2p2B2/7b/4B3/8/8 w - - 0 55",
+      "caption": "White to move. Bxc5+ starts a mate in three. Count the king's moves after each check.",
+      "line": [
+        {
+          "move": "e3c5",
+          "say": "Check. The black king has one legal move."
+        },
+        {
+          "move": "a7a8",
+          "say": "Ka8 is forced."
+        },
+        {
+          "move": "f5e4",
+          "say": "Check again, along the long diagonal."
+        },
+        {
+          "move": "a6b7",
+          "say": "Black blocks with the bishop."
+        },
+        {
+          "move": "e4b7",
+          "say": "The bishop takes the blocker. Checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "c5"
+        },
+        {
+          "from": "f5",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "a7",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e3c5",
+            "n": 3
+          },
+          "statement": "Bxc5+ forces checkmate in three."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "a7",
+            "mode": "legal",
+            "count": 1,
+            "after_move": "e3c5"
+          },
+          "statement": "After Bxc5+ the black king has one legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-bU7fb-c1"
+    },
+    {
+      "type": "card",
+      "text": "**Where the search breaks.** The defender has more chances: a check, the capture of your attacking piece, or a king square you did not count. One extra square can end the line. *Rule of thumb:* after the first move, count the king's squares and the defender's checks before following any line. A strong attack is not a mate: if the list runs out, say \"no forced mate\" and look for another plan."
+    },
+    {
+      "type": "contrast",
+      "title": "One bishop moved",
+      "prompt": "In the first position Bxc5+ forces mate in three. Now one black piece stands elsewhere. Predict, then check.",
+      "working": "IL-AJuxM",
+      "failing": "IBg1-18"
+    },
+    {
+      "type": "card",
+      "text": "No labels now. In each position decide whether there is a forced mate in three. The next three exercises are silent: no hints and no engine line until you answer."
+    },
+    {
+      "type": "item",
+      "item": "IL-fsRU3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.mateIn3",
+        "cue.3"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last exercise, did you follow every reply to the end, or stop when the first one worked? In your own games, the next time you see a strong attack, write down the king's squares and the defender's checks before you commit.",
+      "fields": [
+        {
+          "id": "followed",
+          "label": "Did you follow every reply to the end?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "note",
+          "label": "What did you miss, if anything? (one line)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.MATE-SEARCH.json (D3, conditions 1-4)",
+    "positions: Lichess puzzles AJuxM, bU7fb, fsRU3, Hx5Fs (CC0) and authored one-feature edits of AJuxM",
+    "The search order is our own design [H]; no synthesis sheet states a procedure"
+  ]
+}

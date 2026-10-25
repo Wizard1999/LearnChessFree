@@ -1,0 +1,172 @@
+{
+ "id": "L-END-MATE-2B-1",
+ "title": "Two bishops against a lone king",
+ "skill": "END.MATE-2B",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Mates with two bishops and the king against a bare king from a position given, finding the quiet first move",
+  "Avoids the stalemate by counting the lone king's legal moves before a quiet move",
+  "Tells two bishops on opposite colours (can mate) from two on one colour (cannot)"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Two bishops on **opposite-coloured squares** can mate a lone king, but only with their own king close by. Your king takes away flight squares, the bishops attack squares of both colours near the corner, and a quiet bishop move (a waiting move) or a check forces the last steps. Watch one finish, then find the first move yourself."
+  },
+  {
+   "type": "board",
+   "fen": "k7/2K5/8/8/8/8/8/B2B4 w - - 0 1",
+   "caption": "White to move mates in three. Black's king is in the corner a8; White's king covers b7 and b8.",
+   "line": [
+    {
+     "move": "d1e2",
+     "say": "A quiet move. The bishop now attacks a6, so Black's king has one square left."
+    },
+    {
+     "move": "a8a7",
+     "say": "Black's king steps to a7."
+    },
+    {
+     "move": "a1d4",
+     "say": "The dark bishop checks along the diagonal to a7."
+    },
+    {
+     "move": "a7a8",
+     "say": "Black's king goes back to a8."
+    },
+    {
+     "move": "e2f3",
+     "say": "The light bishop checks on the long diagonal. Mate: the king covers b7 and b8, the other bishop a7."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "e2"
+    },
+    {
+     "from": "a1",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "a8",
+    "c7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "d1e2",
+      "n": 3
+     },
+     "statement": "Be2 starts a forced mate in three."
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "a8",
+      "mode": "legal",
+      "count": 1,
+      "after_move": "d1e2"
+     },
+     "statement": "After Be2 the black king has exactly one legal move."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "a6",
+      "color": "white",
+      "count": 1,
+      "after_move": "d1e2"
+     },
+     "statement": "After Be2 the bishop attacks a6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe1-29"
+  },
+  {
+   "type": "card",
+   "text": "Three conditions. The bishops must stand on **opposite colours**: in the example two bishops on one colour only draw. Your king must come close; bishops alone do not mate. And count Black's moves before any quiet move: if the king has no legal move and is not in check, the game is **stalemate**, a draw."
+  },
+  {
+   "type": "contrast",
+   "title": "Opposite colours or the same colour",
+   "prompt": "In the first position White wins. Now one bishop stands on a square of the other colour. Predict the result.",
+   "working": "IE-M2B-21",
+   "failing": "IE-M2B-22",
+   "irrelevant": "IBe1-33"
+  },
+  {
+   "type": "contrast",
+   "title": "The right check, or the stalemate",
+   "prompt": "In the first position Bb7+ mates in two. Now White plays the other bishop move instead. Is that checkmate, stalemate or neither?",
+   "working": "IBe1-30",
+   "failing": "IBe1-31",
+   "irrelevant": "IBe1-32"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-34",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-35",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-36",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-M2B-6"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-2B",
+    "cue.2"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each move or answer: did you count the lone king's legal moves, and did you check the colour of both bishops? Which did you forget?",
+   "fields": [
+    {
+     "id": "counted",
+     "label": "I counted the king's moves:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "What I forgot to check:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-2B.json (conditions and contrasts; the node cites Capablanca CI-02, not re-read for this lesson)",
+  "docs/lessons-endgames.md (the stalemate traps of the mating lessons)",
+  "All positions: own constructions; mates by the engine (depth 16), stalemates by the rules, results by the Lichess tablebase (claims in content/items/lesson-e1-c.json)"
+ ]
+}

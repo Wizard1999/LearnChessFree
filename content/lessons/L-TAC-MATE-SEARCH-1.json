@@ -1,0 +1,172 @@
+{
+  "id": "L-TAC-MATE-SEARCH-1",
+  "title": "Mate in two: list every check, list every reply",
+  "skill": "TAC.MATE-SEARCH",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Lists every legal reply to a check: take the checking piece, block the line, or move the king",
+    "Finds the mating move against each reply when a check starts a mate in two",
+    "Rejects a check that the defender can simply capture",
+    "Answers \"no forced mate\" when every check can be met"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A forced mate is found by **listing**, not by hoping. First write down every check. Then, for one check, list every reply: take the checking piece, block the line, or move the king. The check starts a **mate in two** only if you have a mating move against *every* reply. If the list runs out, \"no forced mate here\" is a correct answer."
+    },
+    {
+      "type": "board",
+      "fen": "5Q2/p6p/1p3pr1/2p5/2PpPPk1/6Pp/Pq5P/5R1K w - - 1 44",
+      "caption": "White to move. Qc8+ starts a mate in two. List Black's replies first.",
+      "line": [
+        {
+          "move": "f8c8",
+          "say": "Check along the diagonal. The king can step to h5, or the f-pawn can block."
+        },
+        {
+          "move": "f6f5",
+          "say": "Black blocks with the pawn."
+        },
+        {
+          "move": "c8f5",
+          "say": "The queen takes the blocker. Checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c8",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "f8c8",
+            "n": 2
+          },
+          "statement": "Qc8+ forces checkmate in two."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "g4",
+            "mode": "legal",
+            "count": 1,
+            "after_move": "f8c8"
+          },
+          "statement": "After Qc8+ the black king has one legal move."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "f6",
+            "mode": "legal",
+            "count": 1,
+            "after_move": "f8c8"
+          },
+          "statement": "After Qc8+ the f-pawn has one legal move, f5, which blocks the check."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBg1-1"
+    },
+    {
+      "type": "item",
+      "item": "IBg1-2"
+    },
+    {
+      "type": "card",
+      "text": "**Why the list matters.** A check can fail in three ways: the defender takes the checking piece, a block spoils your next move, or the king has a step you did not count. *Rule of thumb:* before you call a check a mate in two, try to take the checking piece with each enemy piece, king included. A check the king can simply capture is no threat at all."
+    },
+    {
+      "type": "item",
+      "item": "IL-GSAXQ-c1"
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, a different check",
+      "prompt": "In the first position Rb8+ forces mate in two. Now White tries the other check. Predict, then check.",
+      "working": "IL-M3Mya-c1",
+      "failing": "IBg1-3",
+      "irrelevant": "IG-MATE1-4"
+    },
+    {
+      "type": "card",
+      "text": "No labels now. Some of these positions have a mate in two and some do not. Run the same list: every check, every reply. The next three exercises are silent: no hints and no engine line until you answer."
+    },
+    {
+      "type": "item",
+      "item": "IL-ZU8e2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg1-5",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.mateIn2",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of the last silent exercise. Did you list the checks and the replies before you moved? In your own games, the next time you have a check, count the replies before you play it.",
+      "fields": [
+        {
+          "id": "listed",
+          "label": "Did you list the checks and replies before moving?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "hardest",
+          "label": "Which reply is hardest for you to see?",
+          "options": [
+            "taking the checking piece",
+            "a block",
+            "a king move",
+            "I could not find a mate"
+          ]
+        },
+        {
+          "id": "note",
+          "label": "What surprised you, if anything? (one line)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.MATE-SEARCH.json (conditions, contrasts, misconceptions)",
+    "docs/skill-graph.md section 6, gap 1",
+    "positions: Lichess puzzles mwEbn, M3Mya, GSAXQ, ZU8e2, ee4CI (CC0) and an authored one-feature edit of 6dbYB",
+    "The search order is our own design [H]; no synthesis sheet states a procedure"
+  ]
+}

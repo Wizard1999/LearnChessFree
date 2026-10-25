@@ -1,0 +1,197 @@
+{
+  "id": "L-POS-CENTER-MOBILE-1",
+  "title": "A free pawn in the centre: break it or restrain it",
+  "skill": "POS.CENTER.MOBILE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Recognises a free centre pawn: on d4 or e4 (d5 or e5), attacked by no enemy pawn and able to advance",
+    "Chooses between a prepared break and a quiet set-up of pieces for a given free pawn",
+    "Counts defenders and attackers of the break square before breaking",
+    "Says when there is no free centre pawn"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **free centre pawn** stands on d4 or e4 (d5 or e5 for the other side). No enemy pawn attacks it and it can advance. You have two answers. **Break** it with a prepared pawn move that attacks it, or **restrain** it: place pieces so that the square in front is covered, and wait. Neither answer always works."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp2bppp/2nppn2/8/3P4/2PB1N1P/PP1N1PP1/R1BQ1RK1 b - - 0 9",
+      "caption": "Black to move. White's pawn on d4 is free: no Black pawn attacks it and it can advance.",
+      "line": [
+        {
+          "move": "e6e5",
+          "say": "The break e5 attacks d4. Two Black men defend e5 and two White men attack it."
+        },
+        {
+          "move": "d4e5",
+          "say": "White takes."
+        },
+        {
+          "move": "d6e5",
+          "say": "Black retakes, and White's free pawn is gone. The d-file is open."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No Black pawn attacks d4."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d4",
+            "mode": "legal",
+            "count": 1
+          },
+          "statement": "The pawn on d4 can advance."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e5",
+            "includes": [
+              "d4"
+            ],
+            "after_move": "e6e5"
+          },
+          "statement": "After e5 the pawn attacks d4."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 2,
+            "after_move": "e6e5"
+          },
+          "statement": "Two Black men defend e5."
+        },
+        {
+          "id": "C8",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2,
+            "after_move": "e6e5"
+          },
+          "statement": "Two White men attack e5."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "d4",
+            "piece": "empty",
+            "after_moves": [
+              "e6e5",
+              "d4e5",
+              "d6e5"
+            ]
+          },
+          "statement": "After the exchange there is no White pawn on d4."
+        },
+        {
+          "id": "C5",
+          "type": "open_files",
+          "params": {
+            "open": [
+              "d"
+            ],
+            "after_moves": [
+              "e6e5",
+              "d4e5",
+              "d6e5"
+            ]
+          },
+          "statement": "The d-file is open."
+        },
+        {
+          "id": "C6",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e6e5",
+              "h7h6",
+              "b7b6"
+            ]
+          },
+          "statement": "e5 is among the engine's top moves."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp2-30"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-31"
+    },
+    {
+      "type": "card",
+      "text": "Both answers cost something. A break needs the pieces behind it: count the defenders of the break square against the attackers. Restraint takes several moves and ties pieces to their squares, so it is slow; that is a *rule of thumb*, not a law. Sometimes the break is not ready, and sometimes there is no free pawn at all. Check which case you are in."
+    },
+    {
+      "type": "contrast",
+      "title": "Break now, or not?",
+      "prompt": "In the first two positions Black can play ...c5 against White's free d4 pawn. They differ by one Black knight (on d7 or on g8). Predict each before you check. In the third, the Black c-pawn has already moved to c5.",
+      "working": "IBp2-32",
+      "failing": "IBp2-33",
+      "irrelevant": "IBp2-34"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-35",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-36",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.CENTER.MOBILE",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last two positions, what did you check first: whether White had a free pawn, or which move to play? Write what you looked at, and what you would check next time."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 4 and 36; section 8 item 3)",
+    "docs/curriculum-map-v1.1.md (POS.CENTER.MOBILE)",
+    "content/items/lesson-p2.json (IBp2 items, positions from the Lichess January 2013 sample)"
+  ]
+}

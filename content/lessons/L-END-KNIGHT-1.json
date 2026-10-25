@@ -1,0 +1,146 @@
+{
+ "id": "L-END-KNIGHT-1",
+ "title": "Knight endings: count the journey",
+ "skill": "END.KNIGHT",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Counts a knight's route between two squares (four moves from a1 to b2) and says whose knight arrives first",
+  "Compares a knight's count with the two moves a rim pawn needs to queen, and checks the guess against the tablebase",
+  "Predicts how one change (the extra pawn's file, the knight's square, Black's king, a bishop instead of a knight) can flip a knight ending"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Knights are slow. A knight needs up to six moves to cross the board, and every move changes the colour of its square. So in knight endings you **count the journey**: the number of knight moves, not the number of squares. First see the colour change on the board, then count a route yourself."
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/8/8/3N4/8/8/7K w - - 0 1",
+   "caption": "White to move. The knight on d4 stands on a dark square and has eight moves. Every one of them lands on a light square.",
+   "line": [
+    {
+     "move": "d4e6",
+     "say": "The knight goes from a dark square, d4, to a light square, e6."
+    },
+    {
+     "move": "h8g8",
+     "say": "Black's king makes a waiting move."
+    },
+    {
+     "move": "e6c5",
+     "say": "Another knight move, another change of colour: c5 is dark."
+    },
+    {
+     "move": "g8h8",
+     "say": "Black waits again."
+    },
+    {
+     "move": "c5b3",
+     "say": "Light again. After an even number of knight moves the knight is back on a dark square."
+    }
+   ],
+   "highlight": [
+    "d4",
+    "b3",
+    "b5",
+    "c2",
+    "c6",
+    "e2",
+    "e6",
+    "f3",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "b3",
+       "b5",
+       "c2",
+       "c6",
+       "e2",
+       "e6",
+       "f3",
+       "f5"
+      ]
+     },
+     "statement": "The knight on d4 has exactly these eight moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBg2-1"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-5"
+  },
+  {
+   "type": "card",
+   "text": "**Counting judges a race.** Black's pawn on a3 needs two moves to queen. A knight that reaches b3 or c2, the squares that cover a1, in two moves is in the race. You count its moves just as you count the pawn's. But counting is only a *rule of thumb*: the kings matter too, so check the result."
+  },
+  {
+   "type": "contrast",
+   "title": "Can the knight stop the rim pawn?",
+   "prompt": "Black's pawn on a3 queens in two moves unless White stops it. White to move. Predict the result of each position, then check.",
+   "working": "IBg2-6",
+   "failing": "IBg2-7",
+   "irrelevant": "IBg2-8"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-9"
+  },
+  {
+   "type": "card",
+   "text": "*Rule of thumb:* a passed pawn far from the other pawns (an **outside passed pawn**) ties down the defender's king and knight, so it often wins. Move the same pawn closer and the ending can be a draw. Predict, then check."
+  },
+  {
+   "type": "contrast",
+   "title": "An outside passed pawn",
+   "prompt": "In the first position White's a-pawn is passed and far from the kingside. Predict the other two, then check.",
+   "working": "IBg2-13",
+   "failing": "IBg2-15",
+   "irrelevant": "IBg2-16"
+  },
+  {
+   "type": "item",
+   "item": "IBg2-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBg2-12",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KNIGHT",
+    "cue.3"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which part is least clear: counting a knight's route, comparing it with the pawn's moves, or remembering that the kings count too?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/skill-graph.md section 6, gap 2 (knight endings missing from the map)",
+  "sources/sheets/edlasker_chess-strategy.md (K25, K27: ideas only)",
+  "docs/curriculum-map-v1.1.md section 2 (the six-move slip) and section 4",
+  "Route lengths: items IBg2-1 to IBg2-5, piece_attacks claims (rules, no engine). Positions: own constructions; results from the Lichess tablebase service [V] (items IBg2-6 to IBg2-17)"
+ ]
+}

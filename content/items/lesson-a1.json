@@ -815,6 +815,30 @@
       "after_move": "g7g5"
      },
      "statement": "After g5 the pawns in front of Black's king are still b7, c7."
+    },
+    {
+     "id": "C4",
+     "type": "holes",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Before the move Black has no holes."
+    },
+    {
+     "id": "C5",
+     "type": "holes",
+     "params": {
+      "color": "black",
+      "squares": [
+       "f5",
+       "f6",
+       "h5",
+       "h6"
+      ],
+      "after_move": "g7g5"
+     },
+     "statement": "After g5 the holes in Black's camp are f5, f6, h5, h6, all on the kingside."
     }
    ],
    "hints": [
@@ -1293,7 +1317,7 @@
    ],
    "hints": [
     "Which white pieces can reach f7 or g6 now?",
-    "The bishop is the third attacker in the winning line. Where is it, and can it reach g6?",
+    "Count the white pieces that can bear on f7 or g6. The knight and the queen do. Where is the bishop, and can it reach g6?",
     "The bishop on e2 cannot come to g6, so an attacker is missing."
    ],
    "explain": "The bishop on e2 cannot reach g6, so the third attacker is missing. The engine rates Nxf7 at least 3.5 pawns worse than its best move and White ends behind in material, but the position without the sacrifice is roughly level, so there is time to bring the piece.",
@@ -1383,7 +1407,7 @@
    ],
    "hints": [
     "What does Black threaten in this position?",
-    "Look at the black knight that has moved. Which white piece does it attack?",
+    "Look at the black knight on c5. Which white piece does it attack?",
     "The knight on c5 attacks the bishop on d3, which the attack needs."
    ],
    "explain": "The black knight on c5 attacks the bishop on d3, the piece White's attack needs. The engine rates Nxf7 at least 3.5 pawns worse than its best move and rates the position as worse for White: Black's own threat comes first.",
@@ -1463,20 +1487,27 @@
     },
     {
      "id": "C5",
-     "type": "piece_on",
+     "type": "piece_attacks",
      "params": {
-      "square": "d7",
-      "piece": "empty"
+      "square": "b6",
+      "squares": [
+       "a4",
+       "a8",
+       "c4",
+       "c8",
+       "d5",
+       "d7"
+      ]
      },
-     "statement": "The d7 square is empty."
+     "statement": "The knight on b6 attacks only a4, c4, d5, d7, a8 and c8."
     }
    ],
    "hints": [
     "Which white pieces bear on f7 or g6, and which black pieces defend f7?",
-    "Does the knight on b6 attack any of White's attacking pieces or defend f7?",
-    "The knight on b6 does neither, so the attack is as strong as before."
+    "Which squares does the knight on b6 attack? Is f7 one of them, or a square where a white piece stands?",
+    "The knight on b6 attacks neither f7 nor any white piece, so the attack is as strong as before."
    ],
-   "explain": "The black knight on b6 neither defends f7 nor attacks any of White's pieces. Nxf7 is the engine's best move and the position is rated at least 3 pawns better for White.",
+   "explain": "The black knight on b6 attacks only a4, c4, d5, d7, a8 and c8: not f7 and no white piece. Nxf7 is the engine's best move and the position is rated at least 3 pawns better for White.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -1503,7 +1534,7 @@
    "cue": 1,
    "task": "find_move",
    "position": "PBa1-20",
-   "prompt": "White to move. Theme: a line-opening sacrifice against a king that cannot hide. Find the best move.",
+   "prompt": "White to move. Theme: a line-opening sacrifice against a king in the centre. Find the best move.",
    "answer": {
     "moves": [
      "h4g6"
@@ -1572,11 +1603,11 @@
     }
    ],
    "hints": [
-    "Where is the black king, and which black pieces cannot move out of the way quickly?",
+    "Where is the black king, and which black pieces are still on their starting squares?",
     "The king cannot castle short. Which black pieces could a knight on g6 attack?",
     "The first move is made by the knight on h4: it takes the pawn on g6."
    ],
-   "explain": "Nxg6 is the engine's best move and the position is rated at least 3 pawns better for White. Black's king is still on e8 and cannot castle short; after Nxg6 the knight attacks the rook on h8 and the bishop on f8.",
+   "explain": "Nxg6 is the engine's best move and the position is rated at least 3 pawns better for White. Black's king is still on e8 and cannot castle short because the bishop on f8 is in the way; after Nxg6 the knight attacks the rook on h8 and the bishop on f8.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -1614,9 +1645,9 @@
      "type": "move_loses",
      "params": {
       "move": "h4g6",
-      "cp": 300
+      "cp": 250
      },
-     "statement": "Nxg6 is at least 3 pawns worse than the engine's best move (depth 16)."
+     "statement": "Nxg6 is at least 2.5 pawns worse than the engine's best move (depth 16)."
     },
     {
      "id": "C2",
@@ -1657,10 +1688,10 @@
    ],
    "hints": [
     "What changed about the black king?",
-    "In the first position the king stood in the centre. Does Nxg6 still threaten checks against it?",
+    "Where is the black king now? Does Nxg6 still threaten checks against it?",
     "The king has castled, so the sacrifice has lost its target; the engine rates it clearly worse than a quiet move."
    ],
-   "explain": "The black king has left the centre and stands on c8. The engine rates Nxg6 at least 3 pawns worse than its best move, White ends behind in material along the best-defence line, and without the sacrifice the position is roughly level.",
+   "explain": "The black king has left the centre and stands on c8. The engine rates Nxg6 at least 2.5 pawns worse than its best move, White ends behind in material along the best-defence line, and without the sacrifice the position is roughly level.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -1738,7 +1769,7 @@
    ],
    "hints": [
     "What changed, and does it touch the black king, the rook on h8 or the bishop on f8?",
-    "Is the king still in the centre, and can it still not castle short?",
+    "Is the king still in the centre, and is castling short still blocked?",
     "The change is on the far side of the board, so the answer stays the same."
    ],
    "explain": "The a-pawn is far from the king. The king is still in the centre, Nxg6 is still the engine's best move and the position is still rated at least 3 pawns better for White.",
@@ -1826,8 +1857,8 @@
    ],
    "hints": [
     "What has the bishop move changed for the black king?",
-    "In the first position the king could not castle short. Can it now?",
-    "The king can castle short now, so it is no longer stuck in the centre."
+    "Can the black king castle short now? What stood in its way before?",
+    "The king can castle short now, which was impossible before."
    ],
    "explain": "The bishop has left f8, so the king can castle short. The engine rates Nxg6 at least 3.5 pawns worse than its best move, White does not come out ahead in material along the best-defence line, and without the sacrifice the position is roughly level.",
    "orientation": "white",
@@ -1914,7 +1945,7 @@
    ],
    "hints": [
     "Which black pieces attack the square g6 now?",
-    "The h8 rook has moved. What does it do on its new square?",
+    "Look at the rook on g8. Which squares on the g-file does it attack?",
     "The rook on g8 attacks g6, so the knight is simply taken."
    ],
    "explain": "The rook on g8 attacks g6, so the knight is taken at once. The engine rates Nxg6 at least 4 pawns worse than its best move, White ends behind in material, and without the sacrifice the position is roughly level.",
@@ -2098,6 +2129,17 @@
     },
     {
      "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "h2",
+      "color": "black",
+      "count": 1,
+      "after_move": "h4h2"
+     },
+     "statement": "After Qxh2+ the bishop on c7 still attacks h2, so the queen is defended."
+    },
+    {
+     "id": "C6",
      "type": "piece_attacks",
      "params": {
       "square": "c7",
@@ -2108,7 +2150,7 @@
      "statement": "The bishop on c7 attacks h2 along the diagonal."
     },
     {
-     "id": "C6",
+     "id": "C7",
      "type": "move_loses",
      "params": {
       "move": "c7h2",
@@ -2117,7 +2159,7 @@
      "statement": "Bxh2+ is at least 3 pawns worse than the best move (depth 16)."
     },
     {
-     "id": "C7",
+     "id": "C8",
      "type": "move_loses",
      "params": {
       "move": "e8e1",
@@ -2218,7 +2260,7 @@
    ],
    "hints": [
     "What changed? Count the black pieces that attack h2 now.",
-    "Before, the bishop on c7 looked along a diagonal at h2. What is on that diagonal now?",
+    "The bishop on c7 looks along a diagonal toward h2. What stands on that diagonal?",
     "The knight on g3 blocks the bishop, so the queen is alone against the king."
    ],
    "explain": "The knight on g3 stands on the bishop's diagonal, so only the queen attacks h2 and the king defends it. The engine rates Qxh2+ at least 6 pawns worse than its best move, and Black ends behind in material along the best-defence line.",
@@ -2400,7 +2442,7 @@
    ],
    "hints": [
     "Count the black pieces that attack h2 and the white pieces that defend it.",
-    "Where is the bishop that used to point at h2?",
+    "Which squares does the bishop on a5 attack? Is h2 one of them?",
     "The bishop on a5 no longer attacks h2, so one attacker meets one defender."
    ],
    "explain": "The bishop on a5 no longer attacks h2, so one black piece (the queen) meets one defender (the king). The engine rates Qxh2+ at least 4.5 pawns worse than its best move, and Black ends behind in material along the best-defence line.",
@@ -2509,7 +2551,7 @@
     "The bishop on e4 attacks h7 once and only the king defends it. Ask which of your pieces can reach g5 and h5, and whether any black piece covers g5.",
     "The first move is made by the bishop on e4: it takes the pawn on h7 with check."
    ],
-   "explain": "Bxh7+ is the engine's best move and the engine rates the position at least 3 pawns better for White. The bishop attacks h7 once and only the king defends it; f6 and e7 are empty, so no black knight or bishop stands next to h7 or g5.",
+   "explain": "Bxh7+ is the engine's best move and the engine rates the position at least 3 pawns better for White. The bishop attacks h7 once and only the king defends it; f6 and e7 are empty, so there is no black knight on f6 and no black bishop on e7.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2595,7 +2637,7 @@
     "After Bxh7+ Kxh7 the knight wants to check from g5. Which black piece now attacks g5?",
     "The bishop on e7 attacks g5, so the knight can be taken there."
    ],
-   "explain": "The bishop on e7 attacks g5, so the knight cannot come to g5 safely. The engine rates Bxh7+ at least 3.5 pawns worse than its best move, and along its best-defence line White ends behind in material. Without the sacrifice the position is roughly level.",
+   "explain": "The bishop on e7 attacks g5, so a knight arriving on g5 can be taken. The engine rates Bxh7+ at least 3.5 pawns worse than its best move, and along its best-defence line White ends behind in material. Without the sacrifice the position is roughly level.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2834,7 +2876,7 @@
     "The bishop would only give itself up with check. What does the sacrifice win?",
     "The pawn is on h6, so the move wins no pawn and the king simply takes the bishop."
    ],
-   "explain": "The h-pawn is already on h6, so there is nothing on h7 to capture and the bishop is given away for nothing. The engine rates Bh7+ at least 4.5 pawns worse than its best move.",
+   "explain": "The h-pawn is already on h6, so there is nothing on h7 to capture. The engine rates Bh7+ at least 4.5 pawns worse than its best move, and White ends behind in material along the best-defence line.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2874,9 +2916,9 @@
      "type": "move_loses",
      "params": {
       "move": "e4h7",
-      "cp": 200
+      "cp": 150
      },
-     "statement": "Bxh7+ is at least 2 pawns worse than the engine's best move (depth 16)."
+     "statement": "Bxh7+ is at least 1.5 pawns worse than the engine's best move (depth 16)."
     },
     {
      "id": "C2",
@@ -2914,7 +2956,7 @@
     "The sacrifice needs the knight to check from g5 right after the king takes. Where is the knight?",
     "The knight on e1 needs two moves to reach g5."
    ],
-   "explain": "The knight on e1 cannot reach g5 in one move (its only moves are d3 and f3). The engine rates Bxh7+ at least 2 pawns worse than its best move, and White ends behind in material. The sacrifice is not yet ready.",
+   "explain": "The knight on e1 cannot reach g5 in one move (its only moves are d3 and f3). The engine rates Bxh7+ at least 1.5 pawns worse than its best move, and White ends behind in material. The sacrifice is not yet ready.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -3222,7 +3264,7 @@
    ],
    "hints": [
     "What changed? Which white pieces can take part in the attack on h7 at the end of the line?",
-    "The bishop was the second attacker on h7. Where is it now, and what does it attack?",
+    "Which white pieces attack h7 at the end of the line? Is the bishop on f1 one of them?",
     "The bishop on f1 does not attack h7, so the queen would meet the king alone."
    ],
    "explain": "With the bishop on f1 only the queen attacks h7 at the end of the line, against one defender. The engine rates Rxh6+ at least 3.5 pawns worse than its best move, and White ends behind in material along the best-defence line.",
@@ -3392,7 +3434,7 @@
    ],
    "hints": [
     "Which white pieces can reach the squares h6 and h7 after the rook has taken?",
-    "The queen was the piece that gave the second check. Where is it now?",
+    "Which white piece gives the second check on h6 in the line? Can it reach h6 from where it stands?",
     "The queen on e2 cannot reach h6, so the follow-up is missing."
    ],
    "explain": "The queen on e2 does not attack h6 or h7, so the follow-up check on h6 is missing. The engine rates Rxh6+ at least 3.5 pawns worse than its best move, and White ends behind in material along the best-defence line.",
@@ -3474,14 +3516,31 @@
       "piece": "N"
      },
      "statement": "The white knight stands on f3."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "excludes": [
+       "h7"
+      ],
+      "after_moves": [
+       "g6h6",
+       "g7h6",
+       "h5h6",
+       "f8h7"
+      ]
+     },
+     "statement": "The knight on f3 does not attack h7."
     }
    ],
    "hints": [
     "Which white pieces take part in the attack on h7?",
-    "Is the knight one of them, in either position?",
+    "Does the knight on f3 attack h7?",
     "The knight is not needed; the rook, queen and bishop are."
    ],
-   "explain": "The knight on f3 changes nothing about the attack: the rook, queen and bishop are all in place, two white pieces attack h7 at the end of the line, and Rxh6+ forces mate in three.",
+   "explain": "The knight on f3 takes no part in the line: it does not attack h7, the rook, queen and bishop are all in place, two white pieces attack h7 at the end of the line, and Rxh6+ forces mate in three.",
    "orientation": "white",
    "review": {
     "status": "needs-human",

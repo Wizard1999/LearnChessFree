@@ -1,0 +1,265 @@
+{
+  "id": "L-POS-STRUCTURE-KID-1",
+  "title": "The King's Indian chain: two wings, two breaks, one race",
+  "skill": "POS.STRUCTURE.KID",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Recognises the app's King's Indian chain in either orientation",
+    "Names each side's break and target: White's c4-c5 against d6, Black's ...f5 against e4",
+    "Checks the support for a break before starting it: a pawn to recapture on c5, and the f6 square cleared for ...f5",
+    "Looks at the other wing before hurrying the break, and finds moves in the structure without being told the plan"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The app's **King's Indian chain**: pawns on c4, d5 and e4 against pawns on d6, e5 and g6 (colours may be reversed). This is the app's own definition.\nThe centre is locked, so each side attacks on its own wing. Rule of thumb: attack the base, not the head. White plays c4-c5 against d6, the base of Black's d6-e5 pair; Black plays ...f5 against e4."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppnnpbp/3p2p1/3Pp3/1PP1P3/2NBBP2/P3N1PP/R2QK2R w KQ - 3 10",
+      "caption": "White to move. The centre is locked, so each side attacks on its own wing. The pawn on b4 supports the break c5.",
+      "line": [
+        {
+          "move": "c4c5",
+          "say": "c5 attacks d6. If dxc5, bxc5 recaptures and the pawn on e5 loses its pawn support."
+        },
+        {
+          "move": "f7f5",
+          "say": "Black answers on the other wing: f5 attacks the pawn on e4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "c5"
+        },
+        {
+          "from": "c5",
+          "to": "d6"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "c4",
+            "piece": "P"
+          },
+          "statement": "c4 holds the white pawn."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "P"
+          },
+          "statement": "d5 holds the white pawn."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "e4",
+            "piece": "P"
+          },
+          "statement": "e4 holds the white pawn."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "d6",
+            "piece": "p"
+          },
+          "statement": "d6 holds the black pawn."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "e5",
+            "piece": "p"
+          },
+          "statement": "e5 holds the black pawn."
+        },
+        {
+          "id": "C6",
+          "type": "piece_on",
+          "params": {
+            "square": "g6",
+            "piece": "p"
+          },
+          "statement": "g6 holds the black pawn."
+        },
+        {
+          "id": "C7",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_move": "c4c5"
+          },
+          "statement": "After c5 the White pawn on c5 attacks d6, the base of Black's d6-e5 pair."
+        },
+        {
+          "id": "C8",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "c4c5",
+              "d6c5"
+            ]
+          },
+          "statement": "After c5 dxc5, one White pawn (on b4) can recapture on c5."
+        },
+        {
+          "id": "C9",
+          "type": "pawn_set",
+          "params": {
+            "kind": "protected",
+            "color": "black",
+            "excludes": [
+              "e5"
+            ],
+            "after_moves": [
+              "c4c5",
+              "d6c5",
+              "b4c5"
+            ]
+          },
+          "statement": "After c5 dxc5 bxc5, the pawn on e5 is no longer protected by a Black pawn."
+        },
+        {
+          "id": "C10",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4c5",
+              "a2a3",
+              "h2h3",
+              "e1g1",
+              "d1d2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is c5; c5 is within 0.4 pawns of it."
+        },
+        {
+          "id": "C11",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "c4c5",
+              "f7f5"
+            ]
+          },
+          "statement": "After c5 and f5, the Black pawn on f5 attacks e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBg3-53"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-54"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-62"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** A break needs support. c5 needs a pawn to recapture on c5 (here the pawn on b4), or the exchange only loses a pawn; ...f5 needs f6 cleared, so a knight on f6 must move first. Each break is a race on its own wing: before you start yours, look at how fast theirs is. The pawn on e5 also blocks the bishop on g7."
+    },
+    {
+      "type": "contrast",
+      "title": "Same break, one pawn different",
+      "prompt": "In the first two positions only a White b-pawn differs (on b4, or not yet there). Predict whether c5 works in each, then check. In the third position a pawn has moved: is it still the chain?",
+      "working": "IBg3-46",
+      "failing": "IBg3-47",
+      "irrelevant": "IBg3-52"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-55"
+    },
+    {
+      "type": "item",
+      "item": "IBg3-56"
+    },
+    {
+      "type": "card",
+      "text": "**Counting the race.** If your break is ready and theirs is not, start it. If theirs is ready and yours is not, deal with theirs first. Count moves, not hopes, and look for forcing moves that break the count. This is a rule of thumb. The next positions are unlabeled: decide whether to start a break, prepare it, or leave it for now."
+    },
+    {
+      "type": "item",
+      "item": "IBg3-57",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-58",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-59",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBg3-60",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.KID",
+        "cue.2"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. What was your break, what supported it, and how fast was the other side's break? Write one line each.",
+      "fields": [
+        {
+          "id": "mine",
+          "label": "My break and what supports it"
+        },
+        {
+          "id": "theirs",
+          "label": "Their break and how fast it is"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.KID.json (the definition is new and ours; the plans are recalled [R])",
+    "tools/positional/gen_struct.py (EXTRA_STRUCTS: the King's Indian chain definition; exact pawn squares)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 30 (attack the base of a chain, two fronts); wording is ours",
+    "content/items/lesson-g3.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-pawn edits are marked authored)"
+  ]
+}

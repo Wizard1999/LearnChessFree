@@ -1,0 +1,164 @@
+{
+  "id": "L-POS-BREAKS-1",
+  "title": "Pawn breaks: ready or premature?",
+  "skill": "POS.BREAKS",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Finds the pawn move that offers an exchange against an enemy pawn, and names the line it opens",
+    "Counts the pieces that defend and attack the break square before pushing",
+    "Says that who profits from the opened line depends on the pieces behind it",
+    "Tells a break that is supported by developed pieces from a premature one"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **pawn break** (or lever) pushes a pawn so that it can be exchanged for an enemy pawn. It opens a file or diagonal, or changes the pawn structure. It is also how you attack a pawn that another pawn protects: strike at the protector. Judge a break by what it opens and who is ready to use it."
+    },
+    {
+      "type": "board",
+      "fen": "2rr2k1/pbqn1ppp/1p2pb2/8/2PP4/PQ3P2/1B2B1PP/R2R1NK1 b - - 2 19",
+      "caption": "Black to move. The pawn on e6 can step to e5 and attack d4.",
+      "line": [
+        {
+          "move": "e6e5",
+          "say": "The pawn offers an exchange. It attacks d4, and three Black pieces defend e5."
+        },
+        {
+          "move": "d4e5",
+          "say": "White takes the pawn."
+        },
+        {
+          "move": "f6e5",
+          "say": "Black retakes with the bishop. The d-file and the e-file are now open."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e5",
+            "includes": [
+              "d4"
+            ],
+            "after_move": "e6e5"
+          },
+          "statement": "After e5 the pawn attacks d4."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 3,
+            "after_move": "e6e5"
+          },
+          "statement": "Three Black pieces defend e5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 1,
+            "after_move": "e6e5"
+          },
+          "statement": "One White piece, the d4 pawn, attacks e5."
+        },
+        {
+          "id": "C4",
+          "type": "open_files",
+          "params": {
+            "open": [
+              "d",
+              "e"
+            ],
+            "after_moves": [
+              "e6e5",
+              "d4e5",
+              "f6e5"
+            ]
+          },
+          "statement": "After the exchange the d-file and the e-file are open."
+        },
+        {
+          "id": "C5",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e6e5"
+            ]
+          },
+          "statement": "e5 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-71"
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-12"
+    },
+    {
+      "type": "card",
+      "text": "A break is ready when pieces stand behind it: count the defenders of the break square against the attackers, and check that no pin punishes the move. Then ask whether your rooks and bishops can use the line it opens. In an undeveloped position a break can give the opponent targets, and a break can free the opponent's pieces too. As a *rule of thumb*, finish development first."
+    },
+    {
+      "type": "contrast",
+      "title": "The same break, ready and premature",
+      "prompt": "In the first two positions Black plays ...d5 against the e4 pawn. They differ by one Black knight (on f6 or on b8). Predict each before you check. In the third, only White's e-pawn differs.",
+      "working": "IBp2-25",
+      "failing": "IBp2-26",
+      "irrelevant": "IBp2-27"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp2-29",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.BREAKS",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last two positions the break looked the same. What did you count before deciding it was ready or not? Write the numbers you looked at."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 4, 8, 35)",
+    "sources/sheets/edlasker_chess-strategy.md (K11 keep the option of ...d5)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C27; contrast G)",
+    "sources/sheets/emlasker_common-sense.md (4.12; section 8 item 6)",
+    "content/items/lesson-p2.json (IBp2 items); shipped items IP-PAWNS-71 and IP-QUIET-12"
+  ]
+}

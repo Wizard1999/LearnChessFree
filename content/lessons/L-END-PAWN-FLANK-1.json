@@ -1,0 +1,185 @@
+{
+ "id": "L-END-PAWN-FLANK-1",
+ "title": "Pawns on both wings: push, stop or march the king",
+ "skill": "END.PAWN-FLANK",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Picks a first move among pushing the free pawn, stopping the pawns on the other wing and marching the king, after checking where the enemy king stands",
+  "Sees that one step of the enemy king can change which of the three first moves wins",
+  "Recognises a position where none of the three wins"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "With pawns on both wings, start from the pawn nothing opposes: the **free pawn**. Then choose the first move from three: **push** the free pawn, **stop** the pawns on the other wing, or **march** the king. A rule of thumb: push if the enemy king cannot reach your pawn in time; stop if his king is far from his own pawns; otherwise bring your king. Count first."
+  },
+  {
+   "type": "board",
+   "fen": "8/7p/4k3/7P/p1P5/2K5/8/8 w - - 0 1",
+   "caption": "White to move. The pushes c5 and h6 only draw; the king march Kb4 wins.",
+   "line": [
+    {
+     "move": "c3b4",
+     "say": "The king goes first. It attacks the pawn on a4, which has no help."
+    },
+    {
+     "move": "a4a3",
+     "say": "Black's pawn steps forward, still attacked."
+    },
+    {
+     "move": "b4a3",
+     "say": "White's king takes the pawn."
+    },
+    {
+     "move": "e6d7",
+     "say": "Black's king goes to d7."
+    },
+    {
+     "move": "a3a4",
+     "say": "White's king steps up the board."
+    },
+    {
+     "move": "d7c6",
+     "say": "Black's king goes to c6."
+    },
+    {
+     "move": "a4b4",
+     "say": "White's king stays close to its c-pawn."
+    },
+    {
+     "move": "c6b6",
+     "say": "Black's king goes to b6."
+    },
+    {
+     "move": "b4c3",
+     "say": "White's king keeps guard of the pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "b4"
+    }
+   ],
+   "highlight": [
+    "a4",
+    "c4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3b4"
+     },
+     "statement": "Kb4 wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c4c5"
+     },
+     "statement": "The push c5 only draws."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h5h6"
+     },
+     "statement": "The push h6 only draws."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe1-43"
+  },
+  {
+   "type": "card",
+   "text": "The rule of thumb needs a count every time. Pushing the free pawn is not a law: it fails when the enemy king can stop the pawn, and then the king or the other wing decides. Stopping is not a law either. In the pairs ahead, one step of Black's king changes which first move wins. Look at where his king stands before you move."
+  },
+  {
+   "type": "contrast",
+   "title": "Push the free pawn, or bring the king",
+   "prompt": "In the first position the push a5 keeps the win. Black's king steps one square nearer. Find a winning move again.",
+   "working": "IBe1-43",
+   "failing": "IBe1-44",
+   "irrelevant": "IBe1-45"
+  },
+  {
+   "type": "contrast",
+   "title": "Push the free pawn, or stop the other wing",
+   "prompt": "In the first position the push a5 keeps the win. Black's king steps to d7. Find the winning move.",
+   "working": "IBe1-46",
+   "failing": "IBe1-47",
+   "irrelevant": "IBe1-48"
+  },
+  {
+   "type": "item",
+   "item": "IBe1-49",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-50",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-51",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.PAWN-FLANK",
+    "cue.2"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each first move: did you look for the free pawn, and then at where the enemy king stands? Which first move did you reach for out of habit?",
+   "fields": [
+    {
+     "id": "habit",
+     "label": "My habit:",
+     "options": [
+      "push the pawn",
+      "move the king",
+      "stop the other wing"
+     ]
+    },
+    {
+     "id": "count",
+     "label": "A position where I should have counted:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-08 and CI-09, read: the free pawn, counting, and stopping a counter-advance only when his king is far; ideas only, the book's diagrams are not recoverable and all positions are our own)",
+  "content/skills/END.PAWN-FLANK.json (conditions and contrasts)",
+  "docs/lessons-endgames.md (L-END-KINGACTIVE-1 and L-END-PAWNRACE-1 are the prerequisites)",
+  "All positions: own constructions screened with the engine; every result and every first move of the find-the-move items comes from the Lichess tablebase (claims in content/items/lesson-e1-d.json)"
+ ]
+}

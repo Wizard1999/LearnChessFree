@@ -1,0 +1,172 @@
+{
+ "id": "L-POS-CENTER-CONTROL-1",
+ "title": "Controlling the centre: count the attackers",
+ "skill": "POS.CENTER.CONTROL",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Counts the attackers of d4, e4, d5 and e5 for both sides",
+  "Picks the move that adds the most attackers to the central squares and names the pieces involved",
+  "Checks whether a central pawn can be held, and what is attacked, before playing for the centre"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "To **control** a square means your pawns and pieces attack it, and can win the fight there. A pawn standing on e4 or d4 *occupies* a central square; it controls only the squares it attacks.\nCount attackers: for d4, e4, d5 and e5, how many pawns and pieces does each side have? More attackers is a first sign of control, not a verdict."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "caption": "White to move. Watch the attackers on e5.",
+   "line": [
+    {
+     "move": "g1f3",
+     "say": "Nf3 attacks e5 (and d4). White has one attacker on e5."
+    },
+    {
+     "move": "b8c6",
+     "say": "Nc6 defends e5. Black has one defender of e5 and also attacks d4."
+    },
+    {
+     "move": "d2d4",
+     "say": "The d-pawn attacks e5 too. White now has two attackers on e5 against one defender."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "e5"
+    },
+    {
+     "from": "d4",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "g1f3"
+      ]
+     },
+     "statement": "After Nf3 White attacks e5 once."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g1f3",
+       "b8c6"
+      ]
+     },
+     "statement": "After Nc6 Black defends e5 once."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "g1f3",
+       "b8c6",
+       "d2d4"
+      ]
+     },
+     "statement": "After d4 White attacks e5 twice."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g1f3",
+       "b8c6",
+       "d2d4"
+      ]
+     },
+     "statement": "Black still defends e5 once."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBp1-12"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-13"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-14"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.CENTER.CONTROL",
+    "tpl.centre-who"
+   ],
+   "n": 3
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** a central pawn controls squares only while it can be **held**. Count its attackers and defenders; if the count is against you, the pawn is a target, not control.\nCapturing the enemy's central pawn is not automatic either: check what lines it opens. And what is attacked comes first: no plan beats losing a piece."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawns, one defender fewer",
+   "prompt": "In the next position White's bishop stands on e2, not d3. Does the pawn on e4 still hold? Predict first, then check.",
+   "working": "IBp1-15",
+   "failing": "IBp1-16",
+   "irrelevant": "IBp1-19"
+  },
+  {
+   "type": "item",
+   "item": "IBp1-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBp1-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-26",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the last positions, before you moved: did you count the attackers on the central squares, or look first at what was attacked? What would you check first next time?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/edlasker_chess-strategy.md (K10: the centre, lines and pieces)",
+  "sources/sheets/nimzowitsch_my-system.md (idea 38)",
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-47)",
+  "content/skills/POS.CENTER.CONTROL.json (conditions and contrasts)"
+ ]
+}

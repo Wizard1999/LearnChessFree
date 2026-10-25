@@ -32,7 +32,7 @@
   },
   {
    "id": "PBe1-4",
-   "fen": "4k3/8/1K6/P7/8/8/8/8 b - - 0 1",
+   "fen": "8/4k3/1K6/P7/8/8/8/8 b - - 0 1",
    "family": "FAM-Be1-KPK-R",
    "provenance": {
     "kind": "generated",
@@ -42,7 +42,7 @@
   },
   {
    "id": "PBe1-5",
-   "fen": "3k4/8/1K6/P7/8/8/8/8 b - - 0 1",
+   "fen": "8/3k4/1K6/P7/8/8/8/8 b - - 0 1",
    "family": "FAM-Be1-KPK-R",
    "provenance": {
     "kind": "generated",
@@ -52,7 +52,7 @@
   },
   {
    "id": "PBe1-6",
-   "fen": "5k2/8/1K6/P7/8/8/8/8 b - - 0 1",
+   "fen": "8/5k2/1K6/P7/8/8/8/8 b - - 0 1",
    "family": "FAM-Be1-KPK-R",
    "provenance": {
     "kind": "generated",
@@ -82,11 +82,11 @@
   },
   {
    "id": "PBe1-9",
-   "fen": "4k3/8/8/4K3/4P3/8/8/8 w - - 0 1",
+   "fen": "3k4/8/8/3K4/3P4/8/8/8 w - - 0 1",
    "family": "FAM-Be1-KEY-SEL1",
    "provenance": {
     "kind": "generated",
-    "ref": "batch e1: key squares of the e4 pawn; Ke5 v Ke8 (local exact solver)",
+    "ref": "batch e1: key squares of the d4 pawn; Kd5 v Kd8 (local exact solver)",
     "licence": "project"
    }
   },
@@ -296,7 +296,7 @@
     "Compare the king steps with the pawn push. For each, ask whether Black's king can then get in front of the pawn.",
     "The winning move is a king step, not a pawn push: the king goes to d6."
    ],
-   "explain": "Kd6 is the only move that keeps the win. The pawn push c6+ and every other king move let Black draw (tablebase).",
+   "explain": "Kd6 is the only move that keeps the win. The pawn push c6 and every other king move let Black draw (tablebase).",
    "feedback_by_move": {
     "c5c6": "c6 lets the win slip: the tablebase shows a draw.",
     "e5d4": "Kd4 lets the win slip: the tablebase shows a draw.",
@@ -419,7 +419,7 @@
     "Compare the king steps with the pawn push. For each, ask whether Black's king can then get in front of the pawn.",
     "Black's king on e7 covers d6, e6 and f6. So the winning move is a pawn push."
    ],
-   "explain": "Black's king on e7 covers d6, e6 and f6, so White's king cannot step in front of the pawn. Only the pawn push c6 keeps the win; every king move lets Black draw (tablebase).",
+   "explain": "Black's king on e7 covers d6, e6 and f6, so White's king has no step onto the sixth rank. Only the pawn push c6 keeps the win; every king move lets Black draw (tablebase).",
    "feedback_by_move": {
     "e5d5": "Kd5 lets the win slip: the tablebase shows a draw.",
     "e5d4": "Kd4 lets the win slip: the tablebase shows a draw.",
@@ -556,7 +556,7 @@
    "hints": [
     "Look at where White's king can go. Which squares in front of the pawn can it reach, and which does Black's king cover?",
     "Compare the king steps with the pawn push. For each, ask whether Black's king can then get in front of the pawn.",
-    "Black's king has moved away from d7. Is the square d6 free to enter?"
+    "Is the square d6 covered by Black's king?"
    ],
    "explain": "With Black's king on c8, d6 is not covered, and Kd6 is again the only winning move; the pawn push c6 and the other king moves draw (tablebase).",
    "feedback_by_move": {
@@ -620,7 +620,7 @@
     "Count the steps for Black's king to the squares next to the corner a8. Does it arrive in time?",
     "Compare with the first position: Black's king is one step nearer to the corner, or not."
    ],
-   "explain": "Black loses: White wins with best play (tablebase). Black's king is too far from the corner.",
+   "explain": "Black loses: White wins with best play (tablebase).",
    "options": [
     "win",
     "draw",
@@ -682,7 +682,7 @@
     "Count the steps for Black's king to the squares next to the corner a8. Does it arrive in time?",
     "Compare with the first position: Black's king is one step nearer to the corner, or not."
    ],
-   "explain": "A draw (tablebase): Black's king is near enough to the corner to hold, and White cannot make progress.",
+   "explain": "A draw (tablebase): with the pawn on the edge file, Black's king, one step nearer the corner than in the first position, holds.",
    "options": [
     "win",
     "draw",
@@ -744,7 +744,7 @@
     "Count the steps for Black's king to the squares next to the corner a8. Does it arrive in time?",
     "Compare with the first position: Black's king is one step nearer to the corner, or not."
    ],
-   "explain": "Black loses (tablebase): a king even further away does not change the result.",
+   "explain": "Black loses (tablebase), as in the first position: one step further from the corner changes nothing.",
    "options": [
     "win",
     "draw",
@@ -861,7 +861,7 @@
     "Count: can the attacking king get in front of the pawn before the defending king can stop it?",
     "Check the file of the pawn and whether the defender's king can take the opposition."
    ],
-   "explain": "A draw (tablebase): White's king cannot get in front of the pawn, because Black's king faces it and White is the one to move.",
+   "explain": "A draw (tablebase). The kings face each other with one square between them, and White is the one to move.",
    "options": [
     "win",
     "draw",
@@ -885,11 +885,11 @@
    "position": "PBe1-9",
    "prompt": "White to move wins. Idea: key squares. Tap every square the white king can step to that keeps the win.",
    "answer": {
-    "from": "e5",
+    "from": "d5",
     "squares": [
+     "c6",
      "d6",
-     "e6",
-     "f6"
+     "e6"
     ]
    },
    "claims": [
@@ -906,7 +906,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "e5d4"
+      "move": "d5c4"
      }
     },
     {
@@ -914,7 +914,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "e5f4"
+      "move": "d5e4"
      }
     },
     {
@@ -922,7 +922,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "e5d5"
+      "move": "d5c5"
      }
     },
     {
@@ -930,7 +930,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "e5f5"
+      "move": "d5e5"
      }
     },
     {
@@ -938,7 +938,7 @@
      "type": "tablebase",
      "params": {
       "result": "win",
-      "move": "e5d6"
+      "move": "d5c6"
      }
     },
     {
@@ -946,7 +946,7 @@
      "type": "tablebase",
      "params": {
       "result": "win",
-      "move": "e5e6"
+      "move": "d5d6"
      }
     },
     {
@@ -954,7 +954,7 @@
      "type": "tablebase",
      "params": {
       "result": "win",
-      "move": "e5f6"
+      "move": "d5e6"
      }
     }
    ],
@@ -974,9 +974,9 @@
    "hints": [
     "Look two ranks in front of the pawn. Which squares there would let your king walk in front of it, whoever moves?",
     "The key squares are on one rank, on the pawn's file and the two files beside it. Which of them can the king reach in one step?",
-    "The pawn is on e4; the key squares are d6, e6 and f6. Tap the ones the king can reach."
+    "The pawn is on d4; the key squares are c6, d6 and e6. Tap the ones the king can reach."
    ],
-   "explain": "Only d6, e6 and f6 keep the win (tablebase); the sideways and backward steps let Black draw. These three are the key squares of the pawn on e4.",
+   "explain": "Only c6, d6 and e6 keep the win (tablebase); the sideways and backward steps let Black draw. These are the key squares of the pawn on d4.",
    "orientation": "auto",
    "source": {
     "kind": "authored",
@@ -1297,7 +1297,7 @@
     "Who is to move, and does that matter if the king stands on a key square?",
     "Test Black's best moves: can Black's king ever get in front of the pawn?"
    ],
-   "explain": "A draw (tablebase): d5 is not a key square, and with Black to move the defender holds.",
+   "explain": "A draw (tablebase): d5 is not a key square of the pawn on e4, and with Black to move the defender holds.",
    "options": [
     "win",
     "draw",
@@ -1359,7 +1359,7 @@
     "Who is to move, and does that matter if the king stands on a key square?",
     "Test Black's best moves: can Black's king ever get in front of the pawn?"
    ],
-   "explain": "White wins (tablebase), as with Black to move: on a key square the side to move does not matter.",
+   "explain": "White wins (tablebase), as with Black to move: with the king on this key square the side to move does not change the result.",
    "options": [
     "win",
     "draw",
@@ -1535,7 +1535,7 @@
     "Is the pawn on an edge file, and are there other pieces? Both change what key squares can do.",
     "If the king is one step short, who is to move matters."
    ],
-   "explain": "A draw (tablebase): on the edge file the king on b6 does not win, because Black's king reaches the corner area.",
+   "explain": "A draw (tablebase): with the pawn on the edge file, the king on b6 does not win here.",
    "options": [
     "win",
     "draw",
@@ -1602,7 +1602,7 @@
     "Is the pawn on an edge file, and are there other pieces? Both change what key squares can do.",
     "If the king is one step short, who is to move matters."
    ],
-   "explain": "A draw (tablebase): Black's knight takes the pawn with check, and king and knight against king cannot win. Key squares only decide king-and-pawn against king.",
+   "explain": "A draw (tablebase): Black's knight takes the pawn with check, and king and knight against king cannot win. Key squares are a rule for king and pawn against king.",
    "options": [
     "win",
     "draw",
