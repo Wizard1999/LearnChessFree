@@ -90,15 +90,19 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
   let ok = 0
   let last: number | null = null
   let lastEvidence: number | null = null // the refresher clock runs from the last first attempt that counts toward "reliable"
-  const answered = new Set<string>()
+  const presented = new Map<string, number>()
   for (const t of attempts) {
     last = last === null ? t.ts : Math.max(last, t.ts)
     if (!t.firstAttempt) continue
-    const counts = t.cue >= 3 || cuedOnly
+    // Inside a lesson the idea has just been named, so a lesson answer is never evidence about an unnamed position: cap it at cue 2.
+    const cue = t.source === 'lesson' ? Math.min(t.cue, 2) : t.cue
+    const counts = cue >= 3 || cuedOnly
+    // The first time an exercise is answered counts in full; the second adds a quarter; later ones add nothing (they show memory of the position).
+    const times = presented.get(t.itemId) ?? 0
+    presented.set(t.itemId, times + 1)
+    const w = (cuedOnly ? 1 : (CUE_WEIGHT[cue] ?? 1)) * (times === 0 ? 1 : times === 1 ? REPEAT_WEIGHT : 0)
+    if (w === 0) continue
     if (counts) lastEvidence = lastEvidence === null ? t.ts : Math.max(lastEvidence, t.ts)
-    let w = cuedOnly ? 1 : (CUE_WEIGHT[t.cue] ?? 1)
-    if (answered.has(t.itemId)) w *= REPEAT_WEIGHT
-    else answered.add(t.itemId)
     n++
     if (t.correct && t.hints === 0) { a += w; ok++ }
     else if (t.correct) b += 0.5 * w // right, but not independently
@@ -123,7 +127,7 @@ export function describeMastery(m: Mastery): string {
   if (m.state === 'introduced') return m.cuedOnly ? 'Seen; no first attempts counted yet.' : 'Seen with hints or labels; not yet tested when the idea is not named.'
   const pct = Math.round(m.mean * 100)
   if (m.state === 'practising' && m.n < 6) return `Practising. ${m.ok} of ${m.n} right on the first try without hints so far. That is too few to say how reliable it is.`
-  if (m.state === 'practising') return `Practising. About ${pct}% on fresh unlabeled items so far (${m.n} counted); not enough evidence to call it reliable.`
+  if (m.state === 'practising') return `Practising. About ${pct}% on ${m.cuedOnly ? 'named or cued' : 'fresh unlabeled'} items so far (${m.n} counted); not enough evidence to call it reliable.`
   if (m.state === 'reliable' && m.cuedOnly) return `Reliable when the idea is named or cued (about ${pct}%, ${m.n} counted). This depth has no unlabeled exercises yet, so that is the best evidence it can give.`
   if (m.state === 'reliable') return `Reliable on fresh unlabeled items (about ${pct}%, ${m.n} counted). Not yet shown in your own games unless you import some.`
   return 'Was reliable; it has been a while. A short refresher will confirm it.'

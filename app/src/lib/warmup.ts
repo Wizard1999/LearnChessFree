@@ -26,10 +26,18 @@ export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[],
     // a different sample of the tier's skills each time, so a retake does not ask the same few questions and call them the whole tier
     const nodes = shuffled(t.nodes.filter(n => !n.noExercises && n.level < 4), `${seed}:${t.tier}`)
     let picked = 0
+    const asked: NodeProgress[] = []
     for (const n of nodes) {
       if (picked >= perTier || out.length >= WARMUP_MAX_ITEMS) break
       const pool = depthPool(n, bySkill)
       const it = pickFresh(pool, attempts, 1, `${seed}:${n.id}`, { exclude: used })[0]
+      if (!it) continue
+      used.add(it.id); out.push(it); tierOf.set(it.id, t.tier); picked++; asked.push(n)
+    }
+    // A tier with a single usable skill still gets MIN_PER_TIER questions (a different position of the same skill): one answer cannot vouch for a tier.
+    for (let k = 0; picked > 0 && picked < MIN_PER_TIER && k < asked.length * 3 && out.length < WARMUP_MAX_ITEMS; k++) {
+      const n = asked[k % asked.length]
+      const it = pickFresh(depthPool(n, bySkill), attempts, 1, `${seed}:${n.id}:more${k}`, { exclude: used })[0]
       if (!it) continue
       used.add(it.id); out.push(it); tierOf.set(it.id, t.tier); picked++
     }
@@ -73,5 +81,6 @@ export function concludeWarmup(results: TierResult[], now: number): StrandWarmup
     else break
   }
   if (tiers.length) frontier = Math.min(frontier, tiers[tiers.length - 1]) // never assume the top tier that was tested
-  return { frontierTier: frontier, ts: now, byTier }
+  const conclusive = tiers.some(t => byTier[t].n >= MIN_PER_TIER)
+  return { frontierTier: frontier, ts: now, byTier, conclusive }
 }

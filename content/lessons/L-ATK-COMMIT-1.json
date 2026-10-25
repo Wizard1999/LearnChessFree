@@ -1,0 +1,187 @@
+{
+  "id": "L-ATK-COMMIT-1",
+  "title": "Before you sacrifice, count every piece that must arrive",
+  "skill": "ATK.COMMIT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Writes out a forcing line and lists the pieces that must move or support",
+    "Sees that a quiet piece, such as a bishop behind a rook, can be the one that decides",
+    "Declines to start when one needed piece cannot arrive",
+    "Ignores changes on the other wing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A direct attack is a commitment. After the first sacrifice the replies are forced and there is no way back. So **before** the first move, write the whole line, list every piece that must move or support, and check that each can arrive. The last piece to arrive often decides. If one piece cannot come, do not start yet."
+    },
+    {
+      "type": "board",
+      "fen": "r4nrk/pp2qpp1/2p3Rp/3pP2Q/3P4/P1PB4/1P1N2PP/6K1 w - - 0 1",
+      "caption": "White to move. Count the pieces the line needs.",
+      "line": [
+        {
+          "move": "g6h6",
+          "say": "The rook takes h6 with check. Black must take it."
+        },
+        {
+          "move": "g7h6",
+          "say": "Black takes the rook."
+        },
+        {
+          "move": "h5h6",
+          "say": "The queen takes h6 with check. The rook has left g6, so the bishop on d3 now looks at h7."
+        },
+        {
+          "move": "f8h7",
+          "say": "The knight blocks on h7."
+        },
+        {
+          "move": "h6h7",
+          "say": "Qxh7 is checkmate. The bishop protects the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "h6"
+        },
+        {
+          "from": "h5",
+          "to": "h6"
+        },
+        {
+          "from": "d3",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g6h6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Rxh6+ is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "g6h6",
+            "n": 3
+          },
+          "statement": "Rxh6+ forces checkmate in three."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "g6h6",
+              "g7h6",
+              "h5h6",
+              "f8h7"
+            ]
+          },
+          "statement": "At the end two white pieces attack h7: the queen and the bishop."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g6h6",
+              "g7h6",
+              "h5h6",
+              "f8h7"
+            ]
+          },
+          "statement": "Only the black king defends h7 at that moment."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa1-45"
+    },
+    {
+      "type": "item",
+      "item": "IL-NRmA9-c1"
+    },
+    {
+      "type": "card",
+      "text": "Count the quiet pieces too. Here the bishop does nothing until the rook leaves g6, yet without it the mate fails. A simple winning move, if you have one, is often a better choice than a long attack you cannot see to the end; that is a **rule of thumb**, not something the positions here test. When to stop or repeat moves is a later lesson that is not written yet."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "Predict for each: does Rxh6+ work? Then check.",
+      "working": "IBa1-40",
+      "failing": "IBa1-41",
+      "irrelevant": "IBa1-42"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-43",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-44",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-ahkMz",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.commitAttack",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the next sacrifice in one of your games, write the line and list the pieces it needs on a piece of paper. Afterwards, note whether every piece could arrive. Today: which piece would you most likely have left out of the list?",
+      "fields": [
+        {
+          "id": "left_out",
+          "label": "The piece I would most likely leave out:",
+          "options": [
+            "the quiet piece behind another",
+            "the piece that arrives last",
+            "the piece that defends",
+            "none"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-32; §5 item 21 (ideas and conditions only)",
+    "docs/exercises-themes.md (theme.commitAttack items)",
+    "items: IBa1-40..45 (content/items/lesson-a1.json); position source: Lichess puzzle QtgD9 (CC0) with one-feature edits; shipped items IL-NRmA9-c1, IL-ahkMz"
+  ]
+}

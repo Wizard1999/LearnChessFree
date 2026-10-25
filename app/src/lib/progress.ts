@@ -4,7 +4,11 @@ import { masteryOf, type Mastery } from './mastery'
 import type { ContentBundle, Lesson, Skill } from '../types'
 import { splitSkillKey } from '../types'
 
-export interface StrandWarmup { frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }> }
+export interface StrandWarmup {
+  frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }>
+  /** False when no tier had enough questions to vouch for it: such a result is shown but not saved, so it cannot replace what a placement assumed. */
+  conclusive?: boolean
+}
 export interface Placement {
   done: boolean; frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }>
   /** The learner chose not to take the test: nothing is assumed, lessons start from the beginning. */
@@ -124,7 +128,7 @@ export function nextLessons(c: ContentBundle, masteries: Map<string, Mastery>, p
 /** Independence ledger: how often the learner got it right unprompted (cue >= 3, no hints) in the last N attempts. */
 export function independence(attempts: Attempt[], last = 60) {
   const recent = evidenceAttempts(attempts).sort((x, y) => x.ts - y.ts).filter(a => a.firstAttempt).slice(-last)
-  const cued = recent.filter(a => a.cue >= 3)
+  const cued = recent.filter(a => a.cue >= 3 && a.source !== 'lesson') // a lesson names the idea, so its answers are not unprompted
   const unprompted = cued.filter(a => a.hints === 0)
   const withConf = cued.filter(a => a.confidence)
   let calibration: number | null = null

@@ -38,12 +38,13 @@ describe('planWarmup', () => {
   const ctx = { masteries: new Map(), placement: { done: false, frontierTier: 0, ts: 0, byTier: {} }, skillById: new Map(skills.map(s => [s.id, s])), itemDepths: new Map(skills.map(s => [s.id, ['D2']])), lessonDone: new Set<string>(), hasLesson: new Set<string>() } as unknown as MissionContext
   const mission = buildMissions(skills as never, ctx)[0]
   const items = skills.flatMap(s => [1, 2].map(n => ({ id: `${s.id}-${n}`, skill: `${s.id}.D2`, cue: 3, family: `${s.id}-${n}` } as unknown as Item)))
-  it('asks one question per node, easiest tier first, never two for the same node', () => {
+  it('asks one question per node, easiest tier first, and tops a one-skill tier up to two questions', () => {
     const p = planWarmup(mission, items, [], 'seed')
-    expect(p.items).toHaveLength(5)
-    expect(new Set(p.items.map(i => i.skill)).size).toBe(5)
+    expect(p.items).toHaveLength(6)
     const tiers = p.items.map(i => p.tierOf.get(i.id)!)
     expect([...tiers].sort((a, b) => a - b)).toEqual(tiers)
-    expect([...plannedPerTier(p).entries()].sort()).toEqual([[2, 2], [3, 2], [4, 1]])
+    expect([...plannedPerTier(p).entries()].sort()).toEqual([[2, 2], [3, 2], [4, 2]]) // tier 4 has one skill: two positions of it
+    expect(new Set(p.items.map(i => i.id)).size).toBe(6) // never the same position twice
+    expect(new Set(p.items.filter(i => p.tierOf.get(i.id) !== 4).map(i => i.skill)).size).toBe(4) // tiers with two skills ask one question each
   })
 })

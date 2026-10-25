@@ -2,8 +2,9 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import type { ContentBundle, Item, Lesson, LessonStep, Manifest, Skill, VerifiedInfo } from '../types'
 
 const base = import.meta.env.BASE_URL
-async function load<T>(name: string): Promise<T> {
-  const r = await fetch(`${base}content/${name}`)
+/** `v`: the manifest's hash. Each content file is requested as ?v=<hash>, so one visit never mixes files of different builds (the service worker caches by URL). */
+async function load<T>(name: string, v?: string): Promise<T> {
+  const r = await fetch(`${base}content/${name}${v ? `?v=${v}` : ''}`)
   if (!r.ok) throw new Error(`Could not load content/${name} (${r.status}). Run tools/build_content.py.`)
   return r.json() as Promise<T>
 }
@@ -12,7 +13,7 @@ async function load<T>(name: string): Promise<T> {
  * `full` is false while only the first-visit exercises (items-first.json) have arrived; the whole bank (items.json, about 10 MB) follows.
  * `ready` holds the practice tag sets (see tagKey) that are complete in the partial bank.
  */
-interface Loaded { bundle: ContentBundle; full: boolean; ready: ReadonlySet<string> }
+interface Loaded { bundle: ContentBundle; full: boolean; ready: ReadonlySet<string>; /** The whole bank could not be downloaded (the first lessons still work). */ bankFailed?: boolean }
 interface FirstVisit { items: Item[]; ready: string[] }
 export const tagKey = (tags: string[]) => [...tags].sort().join('|')
 const Ctx = createContext<Loaded | null>(null)
@@ -30,7 +31,10 @@ export function usePracticeReady(): (tags: string[]) => boolean {
 
 /** Pages that draw on the whole exercise bank wait for it; the first lesson and the start screen do not. */
 export function RequireFullContent({ children }: { children: ReactNode }) {
-  return useContentFull() ? <>{children}</> : <main className="page"><p className="muted">Loading the exercise bank…</p></main>
+  const c = useContext(Ctx)
+  if (c?.full) return <>{children}</>
+  if (c?.bankFailed) return <main className="page"><p>The exercises could not be downloaded. Check your connection, then <button type="button" className="link" onClick={() => location.reload()}>try again</button>. The first lessons still work.</p></main>
+  return <main className="page"><p className="muted">Loading the exercise bank…</p></main>
 }
 
 /** Exercise ids a lesson step names directly. */
@@ -45,7 +49,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
     let cancelled = false
-    const small = Promise.all([load<Manifest>('manifest.json'), load<Skill[]>('skills.json'), load<Lesson[]>('lessons.json'), load<Record<string, VerifiedInfo>>('verified.json')])
+    const small = load<Manifest>('manifest.json').then(async manifest => {
+      const v = manifest.hash
+      return [manifest, ...(await Promise.all([load<Skill[]>('skills.json', v), load<Lesson[]>('lessons.json', v), load<Record<string, VerifiedInfo>>('verified.json', v)]))] as const
+    })
     const assemble = ([manifest, skills, lessons, verified]: Awaited<typeof small>, items: Item[]): ContentBundle => ({
       manifest, skills, items, lessons, verified,
       skillById: new Map(skills.map(s => [s.id, s])),
@@ -55,15 +62,25 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       depthsWithItems: new Set(manifest.depths_with_items ?? []),
     })
     void (async () => {
+      let shown = false // a running app is never replaced by an error page because the big download failed
       try {
         const parts = await small
+        const v = parts[0].hash
         // The first lessons need only a few exercises: show the app as soon as those are here, then fetch the whole bank.
-        const first = await load<FirstVisit>('items-first.json').catch(() => null)
+        const first = await load<FirstVisit>('items-first.json', v).catch(() => null)
         if (cancelled) return
-        if (first) setLoaded(prev => prev?.full ? prev : { bundle: assemble(parts, first.items), full: false, ready: new Set(first.ready) })
-        const items = await load<Item[]>('items.json')
-        if (!cancelled) setLoaded({ bundle: assemble(parts, items), full: true, ready: new Set() })
-      } catch (e) { if (!cancelled) setError(String((e as Error).message ?? e)) }
+        if (first) { shown = true; setLoaded(prev => prev?.full ? prev : { bundle: assemble(parts, first.items), full: false, ready: new Set(first.ready) }) }
+        let items: Item[] | null = null
+        for (const wait of [0, 1500, 4000]) { // a flaky connection gets two more tries
+          if (wait) await new Promise(r => setTimeout(r, wait))
+          if (cancelled) return
+          try { items = await load<Item[]>('items.json', v); break } catch (e) { console.error(e) }
+        }
+        if (cancelled) return
+        if (items) setLoaded({ bundle: assemble(parts, items), full: true, ready: new Set() })
+        else if (shown) setLoaded(prev => (prev ? { ...prev, bankFailed: true } : prev))
+        else setError('The curriculum could not be downloaded. Check your connection and reload the page.')
+      } catch (e) { console.error(e); if (!cancelled) setError('The curriculum could not be downloaded. Check your connection and reload the page.') }
     })()
     return () => { cancelled = true }
   }, [])

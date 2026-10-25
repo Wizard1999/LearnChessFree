@@ -1,0 +1,269 @@
+{
+  "id": "L-CAL-COMPARE-1",
+  "title": "Compare the end positions: name the feature that decides",
+  "skill": "CAL.COMPARE",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Compares the positions two candidates reach, feature by feature: material, king safety, piece activity, pawn structure",
+    "Names the one feature that separates two end positions",
+    "Checks what is attacked before trusting a count of squares",
+    "Recognises a position where a forcing line, not a comparison, decides"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "After you follow two candidates, **compare the positions they reach**, not the moves. Make four short checks and write one line each: *material, king safety, piece activity (squares the pieces reach), pawn structure.* If material is level, find the **one feature that differs** and say which position it favours. The new step: write the feature's name, not just a preference."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p1p3p1/2bppq1p/2p5/2P5/1P1B4/P3QPPP/6K1 w - - 2 23",
+      "caption": "White to move: Qe1 or Qc2, the same queen. Material: level, neither move captures. King cover: the pawns on f2, g2, h2 in both. Pawns: a queen move moves none. Activity: after Qe1 the queen reaches 14 squares, after Qc2 only 7. Of the four checks, activity is the one that differs; the engine prefers Qe1.",
+      "line": [
+        {
+          "move": "e2e1",
+          "say": "Qe1: from here the queen can move to 14 squares. From c2 it would reach 7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e1"
+        },
+        {
+          "from": "e2",
+          "to": "c2"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e2e1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e2e1"
+            ]
+          },
+          "statement": "Qe1 is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e2c2",
+            "cp": 100
+          },
+          "statement": "Qc2 is at least a pawn worse than the best move (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "e1",
+            "piece": "empty"
+          },
+          "statement": "Qe1 captures nothing."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "c2",
+            "piece": "empty"
+          },
+          "statement": "Qc2 captures nothing."
+        },
+        {
+          "id": "C6",
+          "type": "mobility",
+          "params": {
+            "square": "e1",
+            "mode": "legal",
+            "count": 14,
+            "after_move": "e2e1"
+          },
+          "statement": "After Qe1 the queen can move to 14 squares."
+        },
+        {
+          "id": "C7",
+          "type": "mobility",
+          "params": {
+            "square": "c2",
+            "mode": "legal",
+            "count": 7,
+            "after_move": "e2c2"
+          },
+          "statement": "After Qc2 the queen can move to 7 squares."
+        },
+        {
+          "id": "C8",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f2",
+              "g2",
+              "h2"
+            ],
+            "after_move": "e2e1"
+          },
+          "statement": "After Qe1 the pawns in the two ranks in front of the king stand on f2, g2 and h2."
+        },
+        {
+          "id": "C9",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f2",
+              "g2",
+              "h2"
+            ],
+            "after_move": "e2c2"
+          },
+          "statement": "After Qc2 the pawns in the two ranks in front of the king stand on f2, g2 and h2."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc1-32"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-33"
+    },
+    {
+      "type": "card",
+      "text": "**When counting works, and when it fails.** A count of squares helps when material is level and nothing is attacked. If a piece lands where something cheaper attacks it, the count does not matter. It also fails when both moves lead to the same position, or when a forcing line decides and nothing is left to compare. Counting squares is a rule of thumb, not a verdict."
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, a different second candidate",
+      "prompt": "Both positions are the same game position. In the first you compare Ne2 with Nd1: the knight reaches more squares from e2. In the second you compare Ne2 with Nd5, where the knight reaches even more. Predict, then check.",
+      "working": "IBc1-34",
+      "failing": "IBc1-39",
+      "irrelevant": "IBc1-37"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-37"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next three are silent: no hints, no engine. For the first two, write the four checks on paper and name the feature that differs, then answer. The third asks which tool fits. The plan is to offer hints only on request once you solve unlabeled items without them (planned, not built yet)."
+    },
+    {
+      "type": "item",
+      "item": "IBc1-41",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-42",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-38",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Look at your paper checks for the first two silent positions. This note stays on this device.",
+      "fields": [
+        {
+          "id": "feature1",
+          "label": "What decided the first comparison (the knight)?",
+          "options": [
+            "material",
+            "king safety",
+            "piece activity",
+            "pawn structure",
+            "I did not compare"
+          ]
+        },
+        {
+          "id": "feature2",
+          "label": "What decided the second comparison (castling or not)?",
+          "options": [
+            "material",
+            "king safety",
+            "piece activity",
+            "pawn structure",
+            "I did not compare"
+          ]
+        },
+        {
+          "id": "attacked",
+          "label": "Before I trusted a count I checked what attacks the piece:",
+          "options": [
+            "yes, both times",
+            "once",
+            "no"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "The next set compares two moves in tactical positions, where one move loses material outright. That is the easy end of the same skill: when the formal counts differ a lot, the comparison is quick. Notice how much of it you did by counting and how much by following a line."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.COMPARE",
+        "cue.2"
+      ],
+      "n": 3
+    },
+    {
+      "type": "card",
+      "text": "**Two-column sheet: ten minutes, away from the app.** Take two candidates from a position in your own game. Draw two columns and four rows: material, king safety, piece activity, pawn structure. Picture the position after each move and write one line per cell. Circle the row where the columns differ most. Before you trust it, check that no piece stands attacked by something cheaper. Then compare with an engine."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan two comparison sheets for this week. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "The positions will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "diagrams in a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "agree",
+          "label": "After the week: sheets where my circled row matched the engine's preference, out of 2:",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.COMPARE)",
+    "sources/sheets/znosko-borovsky_middle-game.md section 4 C02-C07 (formal counts, and counts that mislead), ideas only, recalled [S]",
+    "sources/sheets/emlasker_common-sense.md section 4.13 [S]",
+    "builds on L-LOOP-V4-1 (the four-question checklist) and L-CAL-TREE-1 (verdicts at the end of a branch)",
+    "positions: Lichess standard rated games 2013-01 (CC0) and Lichess puzzles (CC0)"
+  ]
+}

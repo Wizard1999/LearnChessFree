@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
 import { useAttempts, usePlacement, type Placement as PlacementT } from '../lib/progress'
 import { shuffled } from '../lib/select'
+import { MIN_PER_TIER, WARMUP_PASS } from '../lib/warmup'
 import { ItemPlayer, type ItemResult } from '../components/ItemPlayer'
 import { kvSet } from '../db'
 import type { Item } from '../types'
@@ -19,6 +20,7 @@ export function Placement() {
   const [results, setResults] = useState<{ tier: number; ok: boolean }[]>([])
   const [outcome, setOutcome] = useState<PlacementT | null>(null)
   const [started, setStarted] = useState(false)
+  const [keptEarlier, setKeptEarlier] = useState(false)
 
   const tierOf = (i: Item): number => {
     const t = (i.tags ?? []).find(x => x.startsWith('tier.'))
@@ -40,11 +42,12 @@ export function Placement() {
   function conclude(rs: { tier: number; ok: boolean }[]) {
     const byTier: PlacementT['byTier'] = {}
     for (const r of rs) { const b = byTier[r.tier] ?? { n: 0, ok: 0 }; b.n++; if (r.ok) b.ok++; byTier[r.tier] = b }
+    // The same bar as a mission warm-up: two of three right, and at least two answers in a tier (fewer only when the tier has fewer positions to ask).
     let frontier = 0
     for (let t = 0; t <= MAX_TIER; t++) {
       const b = byTier[t]
-      if (!b || b.n === 0) break
-      if (b.ok / b.n >= 0.67) frontier = t + 1
+      if (!b || b.n < Math.min(MIN_PER_TIER, plan.filter(p => tierOf(p) === t).length)) break
+      if (b.ok / b.n >= WARMUP_PASS) frontier = t + 1
       else break
     }
     const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: Math.min(frontier, MAX_TIER), ts: Date.now(), byTier, skipped: false }
@@ -53,7 +56,7 @@ export function Placement() {
   }
 
   function skip() {
-    if (existing?.done && !existing.skipped) { setOutcome(existing); return } // a real earlier result stands: skipping a retake does not wipe it
+    if (existing?.done && !existing.skipped) { setKeptEarlier(true); setOutcome(existing); return } // a real earlier result stands: skipping a retake does not wipe it
     const p: PlacementT = { ...(existing ?? {}), done: true, frontierTier: 0, ts: Date.now(), byTier: {}, skipped: true }
     void kvSet('placement', p)
     setOutcome(p)
@@ -78,7 +81,8 @@ export function Placement() {
       <section className="card">
         <p className="lede">About 15 minutes. You will see positions from easy to harder levels. <strong>Nothing tells you which idea applies</strong>, and some positions have no tactic. Please do not use outside help; the point is to learn what you can do on your own.</p>
         <ul><li>Hints are off during placement.</li><li>You can stop at any time; a short placement still helps.</li><li>Placement does not mark anything as mastered. It only skips the order of lessons you probably do not need, and you can always open any lesson from the Course page.</li></ul>
-        {existing?.done && <p className="muted small">Last placement: highest comfortable tier {existing.frontierTier} ({new Date(existing.ts).toLocaleDateString()}). Taking it again is fine.</p>}
+        {existing?.done && !existing.skipped && <p className="muted small">Last placement ({new Date(existing.ts).toLocaleDateString()}): {existing.frontierTier === 0 ? 'nothing was assumed' : `tiers below ${existing.frontierTier} looked comfortable`}. Taking it again is fine.</p>}
+        {existing?.skipped && <p className="muted small">You skipped the placement on {new Date(existing.ts).toLocaleDateString()}. You can take it now.</p>}
         {plan.length === 0 && <p className="warn">There are not enough unlabeled exercises in the content yet to run a placement. Try again after more content is built.</p>}
         <div className="row">
           <button type="button" className="primary" disabled={plan.length === 0} onClick={() => setStarted(true)}>Begin ({plan.length} positions)</button>
@@ -93,11 +97,12 @@ export function Placement() {
     <main className="page">
       <h1>Placement result</h1>
       <section className="card">
+        {keptEarlier && <p>You skipped this retake, so your earlier result from {new Date(outcome.ts).toLocaleDateString()} still applies.</p>}
         {outcome.skipped ? (
           <p>You skipped the placement. Nothing is assumed: the course starts from the beginning, and the daily plan will pick lessons and practice for you. If you find the early lessons easy, take the placement later and the app will skip ahead.</p>
         ) : (
           <>
-            <p>Your comfortable level is <strong>tier {outcome.frontierTier}</strong>. Lessons below that tier are marked <em>assumed</em>, not mastered, and will be tested by mixed practice instead of taught again.</p>
+            <p>{outcome.frontierTier === 0 ? 'Nothing is assumed: the course starts at the beginning.' : <>Tiers below <strong>tier {outcome.frontierTier}</strong> looked comfortable, so tier {outcome.frontierTier} is where learning starts. Skills in the lower tiers are marked <em>assumed</em> (hatched on the course map), not mastered, and do not count as progress until you show them. Mixed practice will test them, and their lessons are left out of Continue except for the tier just below.</>}</p>
             <table className="table"><thead><tr><th>Tier</th><th>Right</th><th>Shown</th></tr></thead>
               <tbody>{Object.entries(outcome.byTier).map(([t, b]) => <tr key={t}><td>{t}</td><td>{b.ok}</td><td>{b.n}</td></tr>)}</tbody></table>
             <p className="muted small">This is a rough starting point from a handful of positions, not a rating. {(attempts?.length ?? 0) > 0 ? '' : 'Your history starts here.'}</p>

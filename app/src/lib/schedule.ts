@@ -5,9 +5,9 @@ const DAY = 86400000
 export const INTERVAL_DAYS = [1, 2, 4, 8, 16, 32]
 const dayKey = (ts: number) => Math.floor(ts / DAY)
 
-/** Next review time for a skill-depth, from its first attempts at cue >= 2 (cue 1 only shows the idea was seen). */
-export function nextDue(attempts: Attempt[]): number | null {
-  const usable = attempts.filter(a => a.firstAttempt && a.cue >= 2)
+/** Next review time for a skill-depth, from its first attempts at cue >= minCue (default 2: cue 1 only shows the idea was seen; use 1 for a depth that has nothing but cue 1 exercises). */
+export function nextDue(attempts: Attempt[], minCue = 2): number | null {
+  const usable = attempts.filter(a => a.firstAttempt && a.cue >= minCue)
   if (usable.length === 0) return null
   const byDay = new Map<number, { ok: number; n: number }>()
   for (const t of usable) {
@@ -31,7 +31,7 @@ export function nextDue(attempts: Attempt[]): number | null {
   return (last[0] + interval) * DAY
 }
 
-export const isDue = (attempts: Attempt[], now = Date.now()) => {
-  const d = nextDue(attempts)
+export const isDue = (attempts: Attempt[], now = Date.now(), minCue = 2) => {
+  const d = nextDue(attempts, minCue)
   return d !== null && d <= now
 }

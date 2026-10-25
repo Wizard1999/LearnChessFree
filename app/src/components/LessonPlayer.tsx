@@ -20,13 +20,19 @@ export function RichText({ text }: { text: string }) {
   ))}</>
 }
 
-/** Items one after another, with a progress line. */
-export function ItemSequence({ items, source, silent, onComplete, intro, loopShown, askConfidence }: { items: Item[]; source: AttemptSource; silent?: boolean; onComplete: (results: ItemResult[]) => void; intro?: string; loopShown?: LoopLevel; askConfidence?: boolean }) {
+interface SequenceProps { items: Item[]; source: AttemptSource; silent?: boolean; onComplete: (results: ItemResult[]) => void; intro?: string; loopShown?: LoopLevel; askConfidence?: boolean }
+
+/**
+ * Items one after another, with a progress line. It starts again only when the SET of exercises changes (not whenever a caller builds a
+ * new array of the same exercises), by remounting: a stale index into a shorter list would crash the page.
+ */
+export function ItemSequence(props: SequenceProps) {
+  return <ItemSequenceRun key={props.items.map(x => x.id).join('|')} {...props} />
+}
+
+function ItemSequenceRun({ items, source, silent, onComplete, intro, loopShown, askConfidence }: SequenceProps) {
   const [i, setI] = useState(0)
   const [results, setResults] = useState<ItemResult[]>([])
-  // Restart only when the SET of exercises changes, not whenever a caller builds a new array with the same exercises.
-  const signature = items.map(x => x.id).join('|')
-  useEffect(() => { setI(0); setResults([]) }, [signature])
   if (items.length === 0) return <p className="muted">No exercises available here yet.</p>
   const item = items[i]
   return (
@@ -79,7 +85,8 @@ function ReflectStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { t
   )
 }
 
-export function LessonPlayer({ lesson }: { lesson: Lesson }) {
+/** `onExit`: called when the learner leaves from the lesson-complete card (a page that embeds the player uses it to close the lesson). */
+export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () => void }) {
   const content = useContent()
   const full = useContentFull()
   const practiceReady = usePracticeReady()
@@ -90,17 +97,18 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   const done = i >= steps.length
 
   // Pick up where the learner left off in an unfinished lesson. Nothing is written until the saved step has been read.
-  const [restored, setRestored] = useState(false)
+  const [restoredFor, setRestoredFor] = useState<string | null>(null)
+  const restored = restoredFor === lesson.id // derived, so switching lessons on one mounted player cannot write the old step to the new lesson
   const [resumedAt, setResumedAt] = useState<number | null>(null)
   const finishedBefore = useRef(false) // re-reading a finished lesson must not mark it unfinished
   useEffect(() => {
     let live = true
-    setI(0); setRestored(false); setResumedAt(null); finishedBefore.current = false
+    setI(0); setResumedAt(null); finishedBefore.current = false
     void db.lessonProgress.get(lesson.id).then(p => {
       if (!live) return
       if (p?.done) finishedBefore.current = true
       if (p && !p.done && p.step > 0 && p.step < lesson.steps.length) { setI(p.step); setResumedAt(p.step) }
-    }).catch(() => undefined).finally(() => { if (live) setRestored(true) })
+    }).catch(() => undefined).finally(() => { if (live) setRestoredFor(lesson.id) })
     return () => { live = false }
   }, [lesson.id, lesson.steps.length])
   useEffect(() => {
@@ -114,6 +122,13 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
   // A practice set is picked once per step and kept: answering an exercise changes `attempts` (and, on first load, the exercise bank
   // grows), and re-picking then would swap the set under the learner.
   const picked = useRef(new Map<string, Item[]>())
+
+  // While only the first-visit exercises have arrived, a lesson that needs others (named exercises, or a practice set drawn from a tag)
+  // waits for the whole bank rather than start with a different set. (The set is picked only after this check, so it is never picked early.)
+  const waiting = !full && steps.some(s => stepItemIds(s).some(id => !content.itemById.has(id)) || (s.type === 'practice' && !practiceReady(s.tags)))
+  if (!restored) return null
+  if (waiting) return <p className="muted">Loading the exercises for this lesson…</p>
+
   let practice: Item[] = NO_ITEMS
   if (step && step.type === 'practice' && attempts !== undefined) {
     const key = `${lesson.id}:${i}`
@@ -121,12 +136,6 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
     if (!set) { set = pickFresh(itemsByTags(content.items, step.tags), attempts, step.n, `${key}:${attempts.length > 0}`); picked.current.set(key, set) }
     practice = set
   }
-
-  // While only the first-visit exercises have arrived, a lesson that needs others (named exercises, or a practice set drawn from a tag)
-  // waits for the whole bank rather than start with a different set.
-  const waiting = !full && steps.some(s => stepItemIds(s).some(id => !content.itemById.has(id)) || (s.type === 'practice' && !practiceReady(s.tags)))
-  if (!restored) return null
-  if (waiting) return <p className="muted">Loading the exercises for this lesson…</p>
 
   if (done) {
     const sk = content.skillById.get(lesson.skill)
@@ -136,7 +145,7 @@ export function LessonPlayer({ lesson }: { lesson: Lesson }) {
         <p>You finished <strong>{lesson.title}</strong>.</p>
         {lesson.outcomes && <><p className="small muted">What you should now be able to do:</p><ul>{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></>}
         <p className="muted small">Finishing a lesson only means you have <em>seen</em> the idea. It counts as <strong>reliable</strong> only after you solve fresh positions where nobody names it. Those come back as mixed practice{sk ? ` (skill: ${sk.title})` : ''}.</p>
-        <div className="row"><Link className="button primary" to="/">Back to today</Link><Link className="button" to="/practice">Practise mixed positions</Link></div>
+        <div className="row"><Link className="button primary" to="/" onClick={onExit}>Back to today</Link><Link className="button" to="/practice">Practise mixed positions</Link></div>
       </section>
     )
   }

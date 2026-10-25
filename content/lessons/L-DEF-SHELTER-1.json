@@ -1,0 +1,184 @@
+{
+  "id": "L-DEF-SHELTER-1",
+  "title": "Pawn cover: what a pawn push in front of your king gives away",
+  "skill": "DEF.SHELTER",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the pawns that form the cover in front of a castled king",
+    "Names the holes that a pawn push in front of the king creates",
+    "Tells a push that creates holes (g6) from one that creates none (h6) and from one on the other wing",
+    "Names the enemy pieces that can move to a new hole next move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A castled king hides behind his **pawn cover**: the pawns on his file and the files beside it, on the two ranks in front of him. A pawn guards the squares diagonally ahead of it, and when it steps forward it stops guarding them. A **hole** is a square on your third to fifth rank that none of your pawns attacks now or can attack later. An enemy piece can sit on a hole and no pawn can chase it away."
+    },
+    {
+      "type": "board",
+      "fen": "r1r3k1/1b1q1ppp/p3p3/3p4/3P4/1P2QB2/P4PPP/2R2RK1 b - - 0 1",
+      "caption": "Black to move. His king stands on g8 behind the pawns f7, g7 and h7.",
+      "line": [
+        {
+          "move": "g7g6",
+          "say": "The g-pawn steps to g6. It no longer guards f6 or h6, and no other pawn can."
+        },
+        {
+          "move": "e3h6",
+          "say": "The white queen lands on h6. No black pawn attacks that square, now or later."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g6"
+        },
+        {
+          "from": "e3",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "holes",
+          "params": {
+            "color": "black",
+            "squares": [
+              "a4",
+              "a5",
+              "b6",
+              "c5",
+              "c6",
+              "d6"
+            ]
+          },
+          "statement": "Before the move the holes in Black's camp are a4, a5, b6, c5, c6, d6."
+        },
+        {
+          "id": "C2",
+          "type": "holes",
+          "params": {
+            "color": "black",
+            "squares": [
+              "a4",
+              "a5",
+              "b6",
+              "c5",
+              "c6",
+              "d6",
+              "f6",
+              "h6"
+            ],
+            "after_move": "g7g6"
+          },
+          "statement": "After g6 the holes in Black's camp are a4, a5, b6, c5, c6, d6, f6, h6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e3",
+            "includes": [
+              "h6"
+            ],
+            "after_move": "g7g6"
+          },
+          "statement": "After g6 the queen on e3 attacks h6."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "h6",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "g7g6",
+              "e3h6"
+            ]
+          },
+          "statement": "No black pawn attacks h6 once the queen is there."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-KING-1"
+    },
+    {
+      "type": "item",
+      "item": "IP-KING-13"
+    },
+    {
+      "type": "card",
+      "text": "A hole matters when an enemy piece can reach it and your own pieces cannot cover it, so a push is a warning sign, a **rule of thumb**, not a ban. Some pushes create no hole at all, and a push on the other wing leaves the king's cover alone. Before a pawn move near your king, name the squares it stops guarding and the enemy pieces that could land there."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three pawn moves",
+      "prompt": "For each move, predict: does it give White a new hole on the f-, g- or h-file? Then check.",
+      "working": "IBa1-50",
+      "failing": "IBa1-51",
+      "irrelevant": "IBa1-52"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-53"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-54",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-55",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.DEF.SHELTER",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part is harder for you: seeing which squares a pawn stops guarding, or seeing which enemy piece can reach them? Name one pawn move near the king from your own games and check it on the board.",
+      "fields": [
+        {
+          "id": "hard",
+          "label": "The harder part:",
+          "options": [
+            "which squares the pawn stops guarding",
+            "which enemy piece can reach them",
+            "neither"
+          ]
+        },
+        {
+          "id": "move",
+          "label": "A pawn move near my king from a game:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-28 (ideas and conditions only, no sentences)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K17",
+    "docs/content-schema.md (king_pawn_shield, holes, piece_attacks claims)",
+    "items: IP-KING-1, IP-KING-13, IP-KING-21 and the generated IP-KING pool; IBa1-50..55 (content/items/lesson-a1.json)",
+    "positions: project corpus positions with one-feature edits (provenance in lesson-a1.json)"
+  ]
+}

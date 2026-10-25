@@ -42,13 +42,17 @@ describe('mastery', () => {
     const many = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     expect(masteryOf(many, { now: T0 + 40 * DAY }).state).toBe('refresh')
   })
-  it('the same exercise answered again adds a quarter of the evidence', () => {
+  it('the same exercise answered again adds a quarter of the evidence, and later times add nothing', () => {
     const eight = Array.from({ length: 8 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i }))
     expect(masteryOf(eight, { now: T0 + 100 }).state).toBe('reliable')
     const oneRepeated = Array.from({ length: 8 }, (_, i) => att({ ts: T0 + i })) // eight presentations of one exercise
     const m = masteryOf(oneRepeated, { now: T0 + 100 })
     expect(m.state).not.toBe('reliable')
-    expect(m.unlabeledWeight).toBeCloseTo(1 + 7 * 0.25, 9)
+    expect(m.unlabeledWeight).toBeCloseTo(1.25, 9)
+  })
+  it('answers given inside a lesson count at cue 2 at most: the lesson has just named the idea', () => {
+    const inLesson = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, cue: 3, source: 'lesson', ts: T0 + i }))
+    expect(masteryOf(inLesson, { now: T0 + 100 }).state).toBe('introduced')
   })
   it('a depth with only cued exercises can become reliable on cued evidence, and says so', () => {
     const cued = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, cue: 1, ts: T0 + i }))

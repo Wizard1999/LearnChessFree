@@ -1,0 +1,185 @@
+{
+  "id": "L-ATK-SUPERIORITY-1",
+  "title": "Count before you attack: attack now, not yet, or no",
+  "skill": "ATK.SUPERIORITY",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Counts the pieces that attack a target square and the pieces that defend it",
+    "Sees which piece is still missing from an attack and says \"not yet\"",
+    "Says \"no\" when the opponent has a threat that comes first",
+    "Says \"attack now\" only after checking the move, not from the count alone"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An attack needs **tangible superiority** at its target: more of your pieces bear on it than your opponent can bring to defend it, and his own threats are not faster. So count. List the pieces that attack the target and the ones that can join in a move, then list his defenders. The count is a **rule of thumb**: it tells you where to look, and the move itself still has to be checked."
+    },
+    {
+      "type": "item",
+      "item": "IBa1-10"
+    },
+    {
+      "type": "board",
+      "fen": "r1b1kb1r/pp1nqpp1/2n1p2p/3pP1NQ/3p1P2/P2B4/1PPN2PP/R1B1K2R w KQkq - 0 1",
+      "caption": "White to move. Black's king is still on e8 and the bishop on f8 stops him castling short.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight takes f7. Before the move two white pieces attacked f7 and two black pieces defended it."
+        },
+        {
+          "move": "e7f7",
+          "say": "The queen takes the knight and now stands on f7."
+        },
+        {
+          "move": "d3g6",
+          "say": "The third piece joins: the bishop comes to g6 and attacks the queen on f7."
+        },
+        {
+          "move": "f7g6",
+          "say": "Black takes the bishop."
+        },
+        {
+          "move": "h5g6",
+          "say": "The white queen takes the black queen, with check."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king steps aside. White gave up a knight and a bishop for a pawn and the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        },
+        {
+          "from": "d3",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "f7",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5f7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nxf7 is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "g5f7",
+            "min": 2
+          },
+          "statement": "Along the engine's best-defence line White ends at least 2 points ahead."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Two white pieces attack f7."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces defend f7."
+        },
+        {
+          "id": "C5",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d3",
+            "includes": [
+              "g6"
+            ]
+          },
+          "statement": "The bishop on d3 attacks g6."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Three verdicts. **Attack now**: the attacking move works. **Not yet**: it fails, but the position is level, so there is time to bring the missing piece. **No**: it fails and the opponent's own threat is already faster. These labels are a **rule of thumb** for deciding. What makes a verdict true in the items is the engine check behind it."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "Predict for each: does the knight sacrifice on f7 work? Then check.",
+      "working": "IBa1-11",
+      "failing": "IBa1-12",
+      "irrelevant": "IBa1-13"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-14",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-15",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-16",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.attackDecision",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of an attack you started in one of your games. Before you started, how many of your pieces bore on the target, and how many of his defended it? If you cannot say, that is the number to write down next time.",
+      "fields": [
+        {
+          "id": "mine",
+          "label": "My pieces on the target (a number):"
+        },
+        {
+          "id": "his",
+          "label": "His defenders (a number):"
+        },
+        {
+          "id": "result",
+          "label": "What happened?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.8, §4.10, §8 item 4 (ideas and conditions only)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K7, K18",
+    "docs/exercises-themes.md (theme.attackDecision items, D2)",
+    "items: IBa1-10..16 (content/items/lesson-a1.json); position source: Lichess puzzle Lu4nn (CC0) with one-feature edits"
+  ]
+}

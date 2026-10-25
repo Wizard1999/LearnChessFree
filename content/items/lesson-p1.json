@@ -1,0 +1,275 @@
+{
+ "positions": [
+  {
+   "id": "PBp1-1",
+   "fen": "3q1rk1/pbpnbppp/1p1rpn2/8/2PP4/2NBBP2/PPQ1N1PP/R3K2R w KQ - 3 11",
+   "family": "FAM-PS-jkv2d48f",
+   "provenance": {
+    "kind": "authored",
+    "ref": "One-feature edit of PP-QUIET-4 (shipped, Lichess game position): Black rook a8 moved to d6.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBp1-2",
+   "fen": "r2q1rk1/ppp1bpp1/3p1n1p/7n/3P4/2PBBN2/PP3QPP/R4RK1 b - - 5 15",
+   "family": "FAM-PS-whjhfc4j",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Same position as PP-MIX-35 (Lichess game position, CC0); new question.",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PBp1-3",
+   "fen": "r1b2rk1/2qnbpp1/2p1p2p/p1ppP3/7P/1P1P1N2/PBPNQPP1/2KR3R w - - 0 13",
+   "family": "FAM-PS-mhj1abje",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Same position as PP-KING-37 (Lichess game position, CC0); new question: White's rooks are already connected.",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBp1-1",
+   "skill": "POS.CONNECT.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PBp1-1",
+   "prompt": "White to move. Black's rook stands on d6 instead of a8. Find a strong move.",
+   "answer": {
+    "moves": [
+     "c3b5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c3b5"
+      ]
+     },
+     "statement": "Nb5 is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "rooks_connected",
+     "params": {
+      "color": "white",
+      "value": false
+     },
+     "statement": "White's rooks are not connected now."
+    },
+    {
+     "id": "C3",
+     "type": "rooks_connected",
+     "params": {
+      "color": "white",
+      "value": true,
+      "after_move": "e1c1"
+     },
+     "statement": "Castling long would connect them."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "e1c1",
+      "cp": 120
+     },
+     "statement": "Castling long is at least 1.2 pawns worse than Nb5."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b5",
+      "includes": [
+       "d6"
+      ],
+      "after_move": "c3b5"
+     },
+     "statement": "After Nb5 the knight attacks the rook on d6."
+    }
+   ],
+   "hints": [
+    "Before you clear the back rank, look at what your pieces can attack.",
+    "Black's rook has left the corner. Which of your pieces can hit it?",
+    "A knight move attacks the rook on d6."
+   ],
+   "explain": "Engine evidence (Stockfish 19 lite, depth 16, one thread): Nb5 is the top choice, and castling long, which connects the rooks, scores at least 1.2 pawns lower. Nb5 attacks the rook on d6. Rule of thumb, not proved by the engine: a move that makes a threat usually comes before connecting the rooks.",
+   "tags": [
+    "node.POS.CONNECT",
+    "cue.2",
+    "tier.2",
+    "kind.authored",
+    "lang.en",
+    "family.FAM-PS-jkv2d48f",
+    "contrast.failing"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "e1c1": "Castling long connects the rooks, but the engine rates it at least 1.2 pawns below Nb5 here."
+   },
+   "contrast_group": "CG-P1-CONNECT",
+   "orientation": "white"
+  },
+  {
+   "id": "IBp1-2",
+   "skill": "POS.CONNECT.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBp1-2",
+   "prompt": "Black to move. Find a strong move.",
+   "answer": {
+    "moves": [
+     "f6g4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f6g4"
+      ]
+     },
+     "statement": "Ng4 is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "rooks_connected",
+     "params": {
+      "color": "black",
+      "value": false
+     },
+     "statement": "Black's rooks are not connected now."
+    },
+    {
+     "id": "C3",
+     "type": "rooks_connected",
+     "params": {
+      "color": "black",
+      "value": true,
+      "after_move": "d8d7"
+     },
+     "statement": "Qd7 would connect them."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "d8d7",
+      "cp": 80
+     },
+     "statement": "Qd7 is at least 0.8 pawns worse than Ng4."
+    },
+    {
+     "id": "C5",
+     "type": "piece_on",
+     "params": {
+      "square": "f2",
+      "piece": "Q"
+     },
+     "statement": "White's queen stands on f2."
+    },
+    {
+     "id": "C6",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g4",
+      "includes": [
+       "e3",
+       "f2"
+      ],
+      "after_move": "f6g4"
+     },
+     "statement": "After Ng4 the knight attacks the queen on f2 and the bishop on e3."
+    }
+   ],
+   "hints": [
+    "Your queen is the last piece between the rooks. Before you move it, check what your other pieces attack.",
+    "Which of your knights can reach a square that attacks something valuable?",
+    "A knight move attacks the queen and a bishop together."
+   ],
+   "explain": "Engine evidence (Stockfish 19 lite, depth 16, one thread): Ng4 is the top choice, and Qd7, which would connect the rooks, scores at least 0.8 pawns lower. Ng4 attacks White's queen and the bishop on e3, so White has to answer it. Rule of thumb, not proved by the engine: a developing move that attacks something can come before connecting the rooks.",
+   "tags": [
+    "node.POS.CONNECT",
+    "cue.3",
+    "tier.2",
+    "kind.authored",
+    "lang.en",
+    "family.FAM-PS-whjhfc4j"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d8d7": "Qd7 connects the rooks, but it gives up the chance to attack the queen and the bishop with the knight; the engine rates it at least 0.8 pawns lower."
+   },
+   "orientation": "black"
+  },
+  {
+   "id": "IBp1-3",
+   "skill": "POS.CONNECT.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBp1-3",
+   "prompt": "White to move. Find a strong move.",
+   "answer": {
+    "moves": [
+     "a2a4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a2a4"
+      ]
+     },
+     "statement": "a4 is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "rooks_connected",
+     "params": {
+      "color": "white",
+      "value": true
+     },
+     "statement": "White's rooks are already connected."
+    }
+   ],
+   "hints": [
+    "Check the rooks first: is anything left to clear off the back rank?",
+    "Nothing stands between your rooks, so the question is where to play next.",
+    "The best move is a pawn move."
+   ],
+   "explain": "Engine evidence (Stockfish 19 lite, depth 16, one thread): a4 is the top choice. White's rooks on d1 and h1 are already connected, so connecting is not the question here. Rule of thumb, not proved by the engine: once the rooks are connected, look for where the position can be improved next.",
+   "tags": [
+    "node.POS.CONNECT",
+    "cue.3",
+    "tier.2",
+    "kind.authored",
+    "lang.en",
+    "family.FAM-PS-mhj1abje"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "white"
+  }
+ ]
+}

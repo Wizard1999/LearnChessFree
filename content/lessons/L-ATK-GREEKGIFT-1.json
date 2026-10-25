@@ -1,0 +1,230 @@
+{
+  "id": "L-ATK-GREEKGIFT-1",
+  "title": "The Greek gift: when the bishop sacrifice on h7 works, and when it does not",
+  "skill": "ATK.GREEKGIFT",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Plays Bxh7+ and finds the follow-up (Ng5+, then the queen to h5) when the conditions hold",
+    "Checks the four conditions before playing it",
+    "Declines the sacrifice when a knight on f6 or a bishop on e7 covers the squares, or when the second attacker is missing",
+    "Sees that a pawn move far from the king changes nothing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **Greek gift** is the bishop sacrifice on h7 (or h2). Bxh7+ Kxh7 drags the king out; then the knight checks from g5 and the queen joins on h5. It needs a bishop on the b1-h7 diagonal, a knight that can reach g5, and a second attacker such as the queen. It is a pattern with conditions, not a trick that always works."
+    },
+    {
+      "type": "board",
+      "fen": "rn1q1rk1/pp1b1ppp/2pbp3/8/3PB3/P4N2/1PP3PP/R1BQ1RK1 w - - 0 1",
+      "caption": "White to move. Only the black king defends h7.",
+      "line": [
+        {
+          "move": "e4h7",
+          "say": "The bishop takes h7 with check."
+        },
+        {
+          "move": "g8h7",
+          "say": "The king takes the bishop."
+        },
+        {
+          "move": "f3g5",
+          "say": "The knight checks from g5 and clears the queen's diagonal toward h5."
+        },
+        {
+          "move": "h7g8",
+          "say": "The king goes back to g8."
+        },
+        {
+          "move": "d1h5",
+          "say": "The queen joins. Two white pieces now attack h7 and one black piece defends it."
+        },
+        {
+          "move": "d8g5",
+          "say": "Black takes the knight with the queen."
+        },
+        {
+          "move": "c1g5",
+          "say": "The bishop takes the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "h7"
+        },
+        {
+          "from": "f3",
+          "to": "g5"
+        },
+        {
+          "from": "d1",
+          "to": "h5"
+        }
+      ],
+      "highlight": [
+        "h7",
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4h7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Bxh7+ is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4h7",
+            "min": 2
+          },
+          "statement": "Along the engine's best-defence line White ends at least 2 points ahead."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The bishop on e4 attacks h7."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Only the king defends h7."
+        },
+        {
+          "id": "C5",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d1",
+            "includes": [
+              "h5"
+            ],
+            "after_moves": [
+              "e4h7",
+              "g8h7",
+              "f3g5"
+            ]
+          },
+          "statement": "Once the knight has left f3 the queen on d1 attacks h5."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e4h7",
+              "g8h7",
+              "f3g5",
+              "h7g8",
+              "d1h5"
+            ]
+          },
+          "statement": "After Qh5 two white pieces attack h7."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e4h7",
+              "g8h7",
+              "f3g5",
+              "h7g8",
+              "d1h5"
+            ]
+          },
+          "statement": "After Qh5 one black piece defends h7."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa1-7"
+    },
+    {
+      "type": "card",
+      "text": "Check four things before you play it, as a **rule of thumb**: the bishop reaches h7 and the king must take; a knight can check from g5; a second attacker can join on h5; and no black knight on f6 or bishop on e7 covers h7 or g5. If one is missing the sacrifice may just lose a piece. The engine check on each position, not this list, decides."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three changes",
+      "prompt": "Predict for each: does Bxh7+ work? Then check.",
+      "working": "IBa1-1",
+      "failing": "IBa1-2",
+      "irrelevant": "IBa1-3"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-p80wn-g",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.greekGift",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which of the four conditions would you most likely forget to check in a game: the bishop's diagonal, the knight's route to g5, the second attacker, or a defender on f6 or e7? Write the one you will check first.",
+      "fields": [
+        {
+          "id": "first",
+          "label": "The condition I will check first:",
+          "options": [
+            "bishop's diagonal",
+            "knight to g5",
+            "second attacker",
+            "defender on f6 or e7"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-29; §8 item 13 (conditions are ours, verified by engine)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C33",
+    "docs/council-synthesis.md CD-5",
+    "items: IBa1-1..7 (content/items/lesson-a1.json); position source: Lichess puzzle lz7jB (CC0) with one-feature edits; shipped item IL-p80wn-g"
+  ]
+}

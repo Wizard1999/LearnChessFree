@@ -72,6 +72,8 @@ export function Course() {
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
+  const currentIds = useMemo(() => new Set(current.nodes.map(n => n.id)), [current])
+  const dismissedHere = useMemo(() => dismissed.filter(id => currentIds.has(id)), [dismissed, currentIds])
   const upNext = useMemo(() => (ctx ? skillsUpNext(current, ctx, dismissedSet, isAll ? 8 : 6) : []), [ctx, current, dismissedSet, isAll])
   const plan = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, lastChallenge, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
 
@@ -98,8 +100,10 @@ export function Course() {
   }
   async function finishWarmup(r: StrandWarmup) {
     if (!mission) return
-    const cur = (await kvGet<Placement>('placement', placement))
-    await kvSet('placement', { ...cur, byStrand: { ...(cur.byStrand ?? {}), [mission.strand]: r } })
+    if (r.conclusive !== false) {
+      const cur = (await kvGet<Placement>('placement', placement))
+      await kvSet('placement', { ...cur, byStrand: { ...(cur.byStrand ?? {}), [mission.strand]: r } })
+    } // an inconclusive warm-up is shown but not saved: it must not replace what a placement assumed
     setWarmDone(r); setWarmOpen(false)
   }
   const dismiss = async (id: string) => { const n = [...dismissed, id]; setDismissed(n); await kvSet('upnext:dismissed', n) }
@@ -107,24 +111,31 @@ export function Course() {
   const lessonsFor = (id: string) => content.lessons.filter(l => l.skill === id || l.also?.includes(id))
   const sk = node ? content.skillById.get(node.id) : undefined
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
-  const busy = !!run || warmOpen
+  const busy = !!run || (warmOpen && !!mission)
 
   return (
     <main className="page wide">
       <h1>Course map</h1>
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
 
+      {!busy && (
+        <p className="muted small">
+          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a mission and take its warm-up.</>
+            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a mission's warm-up.</>
+            : <>You took the placement on {new Date(placement.ts).toLocaleDateString()}. You can <Link to="/placement">take it again</Link>.</>}
+        </p>
+      )}
+
       {next.length > 0 && !busy && (
         <section className="card">
           <h2>Continue</h2>
           <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {l.minutes ?? 8} min</span></li>)}</ul>
-          {!placement.done && <p className="muted small">Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a mission and take its warm-up.</p>}
         </section>
       )}
 
       <div className="row filters" role="group" aria-label="Missions">
-        <button type="button" className={isAll ? 'chip on' : 'chip'} onClick={() => setView('all')}>All missions · {overall.percent}%</button>
-        {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All missions · {overall.percent}%</button>
+        {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
 
       <div className="missiongrid">
@@ -139,7 +150,7 @@ export function Course() {
               {current.assumedCount > 0 && <li><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> of these, <strong>{current.assumedCount}</strong> are only assumed (hatched), not yet shown</li>}
             </ul>
           </div>
-          <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.assumedCount > 0 && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
+          <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
           <button type="button" className="link" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</button>
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
@@ -172,9 +183,16 @@ export function Course() {
               {mission && (
                 <section className="card">
                   <h2>Warm-up: test out what you know</h2>
-                  {warmDone || warm ? (() => { const w = warmDone ?? warm!; const shown = Object.entries(w.byTier).map(([t, b]) => `tier ${t}: ${b.ok} of ${b.n}`).join(', '); return (
-                    <p role="status">Taken {new Date(w.ts).toLocaleDateString()} ({shown}). Skills in tiers below {w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on a skill you had not practised was not held against you.</p>) })()
-                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on a skill you have not practised is not held against you (once you have practised a skill, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this mission show as assumed, and their lessons are left out of Continue (you can still open them). Assumed skills are not counted as progress until you show them.</p>}
+                  {warmDone || warm ? (() => { const w = warmDone ?? warm!; const shown = Object.entries(w.byTier).map(([t, b]) => `tier ${t}: ${b.ok} of ${b.n}`).join(', ')
+                    const superseded = !warmDone && placement.done && !placement.skipped && placement.ts > w.ts // a newer placement replaced it (progress.ts frontierFor)
+                    const assumedHere = mission.nodes.filter(n => n.levelWithAssumed > n.level).length
+                    return (
+                    <p role="status">Taken {new Date(w.ts).toLocaleDateString()} ({shown}).{' '}
+                      {w.conclusive === false ? 'It was too short to vouch for any tier, so nothing was changed.'
+                        : superseded ? `A newer placement (${new Date(placement.ts).toLocaleDateString()}) replaced this result.`
+                        : assumedHere > 0 ? `${assumedHere} skills in tiers below ${w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on something you had not practised at that level was not held against you.`
+                        : 'Nothing in this mission is assumed from it.'}</p>) })()
+                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on something you have not practised at that level is not held against you (once you have practised it, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this mission show as assumed, and their lessons (except the tier just below the line) are left out of Continue; you can still open any lesson. Assumed skills are not counted as progress until you show them.</p>}
                   <div className="row"><button type="button" className={warm || warmDone ? '' : 'primary'} onClick={() => { setWarmDone(null); setWarmOpen(true) }}>{warm || warmDone ? 'Take it again' : 'Start the warm-up'}</button></div>
                 </section>
               )}
@@ -183,7 +201,7 @@ export function Course() {
                 <p>Strengthen skills you have already practised: six unlabelled questions on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
                 {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <p className="muted small">{plan?.reason}</p>}
                 <details><summary className="small">How a challenge changes your levels</summary>
-                  <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops to Level two when a refresher is due (after about three weeks) and returns when you answer it again.</p></details>
+                  <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
               </section>
             </>
           )}
@@ -211,15 +229,15 @@ export function Course() {
                       <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{n.levelWithAssumed > n.level ? `${LEVEL_NAMES[n.level]}, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()}` : LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
                       {d && <p className="small muted">{n.workingDepth}: {d.outcome}</p>}
                       <div className="row">
-                        {lessonsFor(n.id).filter(() => !n.lessonDone).slice(0, 1).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`}>Lesson</Link>)}
-                        {n.workingDepth && <Link className="button primary" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practice</Link>}
-                        <button type="button" className="link" onClick={() => void dismiss(n.id)}>Remove</button>
+                        {lessonsFor(n.id).filter(() => !n.lessonDone).slice(0, 1).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`} aria-label={`Lesson: ${n.title}`}>Lesson</Link>)}
+                        {n.workingDepth && <Link className="button primary" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`} aria-label={`Practice: ${n.title}`}>Practice</Link>}
+                        <button type="button" className="link" aria-label={`Remove ${n.title} from suggestions`} onClick={() => void dismiss(n.id)}>Remove</button>
                       </div>
                     </li>
                   )
                 })}</ul>
               )}
-              {dismissed.length > 0 && <button type="button" className="link small" onClick={async () => { setDismissed([]); await kvSet('upnext:dismissed', []) }}>Show removed suggestions again ({dismissed.length})</button>}
+              {dismissedHere.length > 0 && <button type="button" className="link small" onClick={async () => { const keep = dismissed.filter(id => !currentIds.has(id)); setDismissed(keep); await kvSet('upnext:dismissed', keep) }}>Show removed suggestions again ({dismissedHere.length})</button>}
             </section>
           )}
 
@@ -228,6 +246,7 @@ export function Course() {
               <h2>{node.title}</h2>
               <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
               {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
+              {node.cuedTop && <p className="small muted">The deepest exercises for this skill are ones that name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
               <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
                 <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
                   <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>

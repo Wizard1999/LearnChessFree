@@ -1,0 +1,144 @@
+{
+ "id": "L-POS-CONNECT-1",
+ "title": "Connecting the rooks: a step, not a goal",
+ "skill": "POS.CONNECT",
+ "depth": "D1",
+ "minutes": 9,
+ "outcomes": [
+  "Names the pieces that stand between the rooks and the moves that clear them",
+  "Connects the rooks when development is otherwise finished",
+  "Checks for threats and tempo moves before connecting, and sees when the rooks are already connected"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Rooks are **connected** when they stand on one rank or file with no piece of either colour between them. Then each rook defends the other, and they can share a file. At the start the knights, bishops, queen and king are in the way, so connecting is usually the **last step of development**, not the first.\n*Which pieces are in the way, and where can they go?*"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/pbpnbpp1/1p2pn1p/3p4/2PP3B/2N1PN2/PP2BPPP/R2Q1RK1 w - - 4 10",
+   "caption": "White to move. Only the queen stands between the rooks on a1 and f1.",
+   "line": [
+    {
+     "move": "d1c2",
+     "say": "The queen leaves d1. Nothing stands between the rooks on a1 and f1 now: they are connected."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black strikes in the centre. This changes nothing about the rooks."
+    },
+    {
+     "move": "a1d1",
+     "say": "One rook goes to the d-file. The rook on f1 still defends it, because nothing stands between them."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "c2"
+    }
+   ],
+   "highlight": [
+    "a1",
+    "f1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "rooks_connected",
+     "params": {
+      "color": "white",
+      "value": false
+     },
+     "statement": "At the start the rooks are not connected."
+    },
+    {
+     "id": "C2",
+     "type": "rooks_connected",
+     "params": {
+      "color": "white",
+      "value": true,
+      "after_moves": [
+       "d1c2"
+      ]
+     },
+     "statement": "After Qc2 they are connected."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f1",
+      "includes": [
+       "d1"
+      ],
+      "after_moves": [
+       "d1c2",
+       "c7c5",
+       "a1d1"
+      ]
+     },
+     "statement": "After Rad1 the rook on f1 defends the rook on d1."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-67"
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-56"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** connect the rooks once your other pieces are out and nothing is pending. It is a step, not a goal.\nBefore you do, ask: *does anything hang, mine or theirs? Is there a move that makes a threat?* Connecting can also wait on purpose, for instance when castling is delayed. And connected rooks on closed files do little until a file opens."
+  },
+  {
+   "type": "contrast",
+   "title": "Same position, one rook moved",
+   "prompt": "In the second position Black's a8 rook stands on d6. Does castling long, which connects White's rooks, still look best? Predict first, then check.",
+   "working": "IP-QUIET-4",
+   "failing": "IBp1-1",
+   "irrelevant": "IP-PIECES-61"
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-19",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBp1-2",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBp1-3",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.CONNECT",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the last positions, what did you check first: whether the rooks were connected, or whether anything could be attacked? Which should come first?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-45, CI-48: development, castling timing)",
+  "docs/first-hours.md (remembered basics: connecting rooks)",
+  "content/skills/POS.CONNECT.json (conditions and contrasts)"
+ ]
+}

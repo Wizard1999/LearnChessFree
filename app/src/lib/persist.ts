@@ -1,7 +1,8 @@
 // Progress is saved to this browser (IndexedDB) as the learner works, with no account. Two things make that dependable:
 // 1. ask the browser to keep the data (navigator.storage.persist), but only after the learner has invested a few answers, never on
 //    arrival, because some browsers show a permission prompt for it;
-// 2. tell the learner plainly when the browser is not storing anything (a private window), so nothing is lost by surprise.
+// 2. tell the learner plainly where progress lives. A private window deletes it on close (modern browsers still allow the writes, so this
+//    cannot be detected: the start screen and Settings say it in words); where storage will not open at all, say so.
 import { useEffect, useState } from 'react'
 import { db } from '../db'
 

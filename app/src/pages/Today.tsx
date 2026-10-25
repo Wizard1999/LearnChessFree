@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useContent } from '../lib/content'
+import { useContent, useContentFull } from '../lib/content'
 import { independence, masteryMap, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
 import { buildDaily, dateKey, NO_EXTRAS, type Block, type Extras } from '../lib/daily'
 import { challengeSeed, planChallenge } from '../lib/missions'
@@ -11,8 +11,11 @@ import { describeMastery } from '../lib/mastery'
 import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/drill'
 import { useStorageStatus } from '../lib/persist'
 
+const NONE: never[] = []
+
 export function Today() {
   const content = useContent()
+  const full = useContentFull()
   const attempts = useAttempts()
   const progress = useLessonProgress()
   const placementQ = usePlacement()
@@ -45,13 +48,19 @@ export function Today() {
   }, [])
 
   const placement = placementQ ?? NO_PLACEMENT
-  const ready = attempts !== undefined && progress !== undefined && placementQ !== undefined
+  // If the browser will not open storage at all, the learner is treated as new (and told so) instead of waiting for ever.
+  const storageDead = storage?.works === false
+  const A = attempts ?? NONE, P = progress ?? NONE
+  const ready = storageDead || (attempts !== undefined && progress !== undefined && placementQ !== undefined)
+  const fresh = ready && A.length === 0 && P.length === 0 && !placement.done
+  // A returning learner's plan draws on the whole exercise bank; a new learner only needs the first lesson, so the start screen does not wait.
+  const planReady = ready && (full || fresh)
   const challenge = useMemo(() => {
     if (!missionData.ctx || !missionData.attempts || lastChallenge === undefined) return null
     const p = planChallenge(missionData.overall.nodes, content.items, missionData.attempts, lastChallenge, Date.now(), challengeSeed(missionData.overall.strand, lastChallenge))
     return p.unlocked ? { skills: p.picks.map(x => x.node.title) } : null
   }, [missionData.ctx, missionData.attempts, missionData.overall, lastChallenge, content.items, day])
-  const blocks = useMemo<Block[]>(() => ready ? buildDaily(content, attempts, placement, progress, day, { ...extras, challenge }) : [], [ready, content, attempts, placement, progress, day, extras, challenge])
+  const blocks = useMemo<Block[]>(() => planReady ? buildDaily(content, A, placement, P, day, { ...extras, challenge }) : [], [planReady, content, A, placement, P, day, extras, challenge])
   const ind = useMemo(() => independence(attempts ?? []), [attempts])
   const masteries = useMemo(() => masteryMap(attempts ?? [], Date.now(), content.cuedOnly), [attempts, content.cuedOnly])
 
@@ -66,9 +75,8 @@ export function Today() {
   if (!ready) return <main className="page"><p className="muted">Loading…</p></main>
 
   const activeBlock = active
-  const fresh = (attempts ?? []).length === 0 && (progress ?? []).length === 0 && !placement.done
   const firstLesson = fresh ? blocks.find(b => b.kind === 'lesson') : undefined
-  const upNext = fresh ? undefined : blocks.find(b => !doneIds.includes(b.id))
+  const upNext = blocks.find(b => !doneIds.includes(b.id))
   const others = blocks.filter(b => b !== upNext)
   const learning = [...masteries.entries()].filter(([, m]) => m.state !== 'unseen').sort((a, b) => b[1].n - a[1].n).slice(0, 6)
 
@@ -86,8 +94,8 @@ export function Today() {
     return (
       <main className="page startpage">
         <h1>Learn chess, starting now</h1>
-        <p className="lede">No sign-up and nothing to set up. Your progress saves on this device as you go.</p>
-        {storage && !storage.works && <p className="warn-text" role="alert">This browser is not storing anything (a private window does this), so progress will be lost when you close the tab.</p>}
+        <p className="lede">No sign-up and nothing to set up. Your progress is saved in this browser as you go. A private or incognito window deletes it when you close it, so use a normal window (or export a file from Settings).</p>
+        {storageDead && <p className="warn-text" role="alert">This browser is not storing anything (blocked site data does this), so your progress will be lost when you close the tab.</p>}
         <section className="card hero">
           <p className="eyebrow">First lesson · about {firstLesson.minutes} min</p>
           <h2>{firstLesson.title}</h2>
@@ -114,17 +122,24 @@ export function Today() {
       <h1>Today</h1>
       {!activeBlock && (
         <>
-          {upNext ? (
+          {!planReady ? (
+            <section className="card hero"><p className="muted">Preparing today's plan…</p></section>
+          ) : upNext ? (
             <section className="card hero">
               <p className="eyebrow">Up next · about {upNext.minutes} min</p>
               <h2>{upNext.title}</h2>
               <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
               <div className="row">{action(upNext, true)}</div>
             </section>
-          ) : (
+          ) : blocks.length > 0 ? (
             <section className="card hero">
               <h2>Today's plan is done</h2>
               <p>You can stop here, or keep going with <Link to="/practice">more practice</Link>.</p>
+            </section>
+          ) : (
+            <section className="card hero">
+              <h2>Nothing is planned yet</h2>
+              <p>Open the <Link to="/course">course</Link> to pick something, or try <Link to="/practice">some practice</Link>.</p>
             </section>
           )}
           <section className="card">
@@ -167,7 +182,7 @@ export function Today() {
         <>
           <p><button type="button" onClick={() => setActive(null)}>← Back</button></p>
           <h2>{activeBlock.title}</h2>
-          {activeBlock.kind === 'lesson' && activeBlock.lessonId && (() => { const l = content.lessonById.get(activeBlock.lessonId); return l ? <LessonPlayer lesson={l} /> : <p>Lesson not found.</p> })()}
+          {activeBlock.kind === 'lesson' && activeBlock.lessonId && (() => { const l = content.lessonById.get(activeBlock.lessonId); return l ? <LessonPlayer lesson={l} onExit={() => setActive(null)} /> : <p>Lesson not found.</p> })()}
           {(activeBlock.kind === 'review' || activeBlock.kind === 'mixed') && (
             <ItemSequence items={(activeBlock.itemIds ?? []).map(id => content.itemById.get(id)!).filter(Boolean)} source={activeBlock.kind === 'review' ? 'review' : 'daily'} onComplete={() => void complete(activeBlock.id)} intro={activeBlock.title} />
           )}

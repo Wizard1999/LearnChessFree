@@ -13,7 +13,7 @@ export function LessonPage() {
       <p className="small muted"><Link to="/course">Course</Link> › {sk?.title ?? lesson.skill} › {lesson.depth}</p>
       <h1>{lesson.title}</h1>
       <p className="muted small">About {lesson.minutes ?? 8} minutes · {lesson.review.status === 'human-reviewed' ? 'reviewed by a person' : 'machine-checked; not yet reviewed by a person'}</p>
-      <LessonPlayer lesson={lesson} />
+      <LessonPlayer key={lesson.id} lesson={lesson} />
     </main>
   )
 }

@@ -34,6 +34,8 @@ export interface MissionContext {
   /** nodes whose lesson (main skill or 'also') has been finished / exists */
   lessonDone: ReadonlySet<string>
   hasLesson: ReadonlySet<string>
+  /** Skill-depth keys whose exercises are all cued (manifest.cued_only). */
+  cuedOnly?: ReadonlySet<string>
   now?: number
 }
 
@@ -43,6 +45,8 @@ export interface NodeProgress {
   level: Level
   /** The level if the assumed depths were taken as met. Equal to `level` when nothing is assumed. */
   levelWithAssumed: Level
+  /** The deepest depth that has exercises has only cued ones (cue 1-2), so Level two or Mastered here means "reliable when named or cued". */
+  cuedTop: boolean
   due: boolean
   assumed: boolean
   lessonDone: boolean
@@ -88,7 +92,7 @@ export function nodeProgress(skill: Skill, ctx: MissionContext): NodeProgress {
 
   let working: string | null = null
   if (top) working = items.find(d => st(d) !== 'reliable') ?? top
-  return { id, title: skill.title, strand: skill.strand, tier: skill.tier, level, levelWithAssumed, due, assumed, lessonDone, hasLesson: ctx.hasLesson.has(id), noExercises: !top, depths: statuses, workingDepth: working, lastTs }
+  return { id, title: skill.title, strand: skill.strand, tier: skill.tier, level, levelWithAssumed, cuedTop: !!top && !!ctx.cuedOnly?.has(`${id}.${top}`), due, assumed, lessonDone, hasLesson: ctx.hasLesson.has(id), noExercises: !top, depths: statuses, workingDepth: working, lastTs }
 }
 
 export interface Mission {
@@ -167,15 +171,24 @@ export interface ChallengePlan { unlocked: boolean; reason: string; picks: { nod
  * most (a retention check). Unlocks when 3 skills have been started and 12 hours have passed since the last challenge.
  */
 export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: Attempt[], lastChallengeTs: number | null, now: number, seed: string): ChallengePlan {
-  // "Started" means the learner has answered exercises in it: a finished lesson alone has no date to rank by, and an assumed skill has no evidence.
-  const started = nodes.filter(n => n.level >= 1 && !n.noExercises && n.lastTs !== null)
+  const bySkill = new Map<string, Item[]>()
+  for (const i of items) { if (i.cue >= 3) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i]) }
+  /** Unlabelled exercises for the node at the depth to test: at least two, from at least two different positions. */
+  const usablePool = (n: NodeProgress): Item[] => {
+    for (const d of [n.workingDepth, ...n.depths.map(x => x.depth).reverse()].filter((x): x is string => !!x)) {
+      const pool = bySkill.get(`${n.id}.${d}`) ?? []
+      if (pool.length >= 2 && new Set(pool.map(i => i.family)).size >= 2) return pool
+    }
+    return []
+  }
+  // "Started" means the learner has answered exercises in it (a finished lesson alone has no date to rank by, and an assumed skill has no
+  // evidence) and the challenge has something to ask about it.
+  const started = nodes.filter(n => n.level >= 1 && !n.noExercises && n.lastTs !== null && usablePool(n).length > 0)
   if (started.length < 3) return { unlocked: false, reason: `Practise at least 3 skills first (${started.length} so far).`, picks: [] }
   if (lastChallengeTs !== null && now - lastChallengeTs < CHALLENGE_GAP_MS) {
     const h = Math.ceil((CHALLENGE_GAP_MS - (now - lastChallengeTs)) / 3600000)
     return { unlocked: false, reason: `Another challenge opens in about ${h} hour${h === 1 ? '' : 's'}. The gap is on purpose: spaced review works better than back-to-back review. Ordinary practice is open any time.`, picks: [] }
   }
-  const bySkill = new Map<string, Item[]>()
-  for (const i of items) { if (i.cue >= 3) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i]) }
   const rank = (n: NodeProgress) => (n.due ? 0 : 1) * 1e15 + (n.lastTs ?? 0) + (n.level < 4 ? 0 : 5e14) // due first, then stalest; mastered ones come last (a higher rank sorts later)
   const ordered = [...started].sort((a, b) => rank(a) - rank(b))
   const picks: ChallengePlan['picks'] = []
@@ -183,9 +196,7 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
   for (const n of shuffled(ordered.slice(0, 12), seed).sort((a, b) => rank(a) - rank(b))) {
     if (picks.length >= 3) break
     if (n.level === 4 && mastered >= 1) continue
-    const depths = [n.workingDepth, ...n.depths.map(d => d.depth).reverse()].filter((d): d is string => !!d)
-    let pool: Item[] = []
-    for (const d of depths) { pool = bySkill.get(`${n.id}.${d}`) ?? []; if (pool.length >= 2) break }
+    const pool = usablePool(n)
     const chosen = pickFresh(pool, attempts, 2, `${seed}:${n.id}`)
     if (chosen.length < 2 || chosen[0].family === chosen[1].family) continue // two variants of one position test memory, not the skill
     if (n.level === 4) mastered++

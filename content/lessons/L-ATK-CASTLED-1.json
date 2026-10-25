@@ -1,0 +1,158 @@
+{
+  "id": "L-ATK-CASTLED-1",
+  "title": "Attacking a castled king: count at the weak square",
+  "skill": "ATK.CASTLED",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts the pieces that attack a square near a castled king and the pieces that defend it",
+    "Names the square near the king that is attacked more often than it is defended",
+    "Sees that a piece standing in the way removes an attacker from the count",
+    "Checks the attacking move before relying on the count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "To judge an attack on a castled king, **count at the weak square**: how many of your pieces attack it, and how many of his defend it, the king included. The weak square is usually part of the pawn cover, such as h2 or h7. More attackers than defenders is a reason to look further, not a proof."
+    },
+    {
+      "type": "board",
+      "fen": "r3r1k1/ppb2pp1/2p2n1p/5N2/3P3q/1PPB1Q2/P4PPP/R3R1K1 b - - 0 1",
+      "caption": "Black to move. Count at h2.",
+      "line": [
+        {
+          "move": "h4h2",
+          "say": "The queen takes h2 with check. The bishop on c7 defends the queen, so the king cannot take it."
+        },
+        {
+          "move": "g1f1",
+          "say": "The king steps to f1."
+        },
+        {
+          "move": "h2h1",
+          "say": "Qh1 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h4",
+          "to": "h2"
+        },
+        {
+          "from": "c7",
+          "to": "h2"
+        }
+      ],
+      "highlight": [
+        "h2",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h4h2",
+            "n": 2
+          },
+          "statement": "Qxh2+ forces checkmate in two."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces attack h2: the queen and the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One white piece defends h2: the king."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 1,
+            "after_move": "h4h2"
+          },
+          "statement": "After Qxh2+ the bishop on c7 still attacks h2, so the queen is defended."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa1-30"
+    },
+    {
+      "type": "item",
+      "item": "IP-KING-30"
+    },
+    {
+      "type": "card",
+      "text": "The count only helps if every counted piece really reaches the square: a piece standing in its way blocks a line and removes an attacker. Treat the count as a **rule of thumb** and check the move itself. In the next three positions the same queen sacrifice is tried after one small change."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "Predict for each: does Qxh2+ work? Then check.",
+      "working": "IBa1-31",
+      "failing": "IBa1-32",
+      "irrelevant": "IBa1-33"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-34",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-e9c8B",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-MCu5c",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.kingsideAttack",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In your own games, do you count attackers and defenders at the weak square before you attack, or do you start because the king looks weak? Write what you will count first next time.",
+      "fields": [
+        {
+          "id": "count",
+          "label": "The first thing I will count:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-28, CI-29 (ideas and conditions only)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C28, C30, C32",
+    "docs/exercises-themes.md (theme.kingsideAttack items); IP-KING-22..35 (generated count items)",
+    "items: IBa1-30..34 (content/items/lesson-a1.json); position source: Lichess puzzle ydikX (CC0) with one-feature edits; shipped items IP-KING-30, IL-e9c8B, IL-MCu5c"
+  ]
+}

@@ -18,7 +18,7 @@ export function useMissionData() {
     const doneIds = new Set(progress.filter(p => p.done).map(p => p.lessonId))
     const lessonDone = new Set<string>(), hasLesson = new Set<string>()
     for (const l of content.lessons) for (const node of [l.skill, ...(l.also ?? [])]) { hasLesson.add(node); if (doneIds.has(l.id)) lessonDone.add(node) }
-    return { masteries: masteryMap(attempts, Date.now(), content.cuedOnly), placement, skillById: content.skillById, itemDepths, lessonDone, hasLesson }
+    return { masteries: masteryMap(attempts, Date.now(), content.cuedOnly), placement, skillById: content.skillById, itemDepths, lessonDone, hasLesson, cuedOnly: content.cuedOnly }
   }, [attempts, progress, placement, content])
   const missions = useMemo(() => (ctx ? buildMissions(content.skills, ctx) : []), [ctx, content.skills])
   const overall = useMemo(() => overallMission(missions), [missions])

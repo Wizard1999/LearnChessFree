@@ -34,11 +34,14 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const bySkill = groupBySkillKey(evidenceAttempts(attempts))
   const poolFor = (key: string) => c.items.filter(i => i.skill === key)
 
-  const due = [...bySkill.entries()].filter(([, v]) => v.length >= 3 && isDue(v)).map(([k]) => k).slice(0, 3)
+  // A depth whose exercises are all cued (cue 1) still needs its refresher: count cue 1 there, and only there.
+  const minCueOf = (k: string) => (c.cuedOnly.has(k) ? 1 : 2)
+  const due = [...bySkill.entries()].filter(([k, v]) => v.length >= 3 && isDue(v, Date.now(), minCueOf(k))).map(([k]) => k).slice(0, 3)
   const reviewItems: Item[] = []
-  for (const k of due) reviewItems.push(...pickFresh(poolFor(k).filter(i => i.cue >= 2), attempts, 2, `${day}:rev:${k}`))
+  for (const k of due) reviewItems.push(...pickFresh(poolFor(k).filter(i => i.cue >= minCueOf(k)), attempts, 2, `${day}:rev:${k}`))
+  const dueName = (k: string) => { const i = k.lastIndexOf('.'); return `${c.skillById.get(k.slice(0, i))?.title ?? k.slice(0, i)} (${k.slice(i + 1)})` }
   if (reviewItems.length) blocks.push({ id: 'review', kind: 'review', title: 'Quick return', minutes: Math.max(3, reviewItems.length),
-    why: `These skills are due for a look (${due.join(', ')}). You get fresh positions, not the ones you have already seen.`, itemIds: reviewItems.map(i => i.id) })
+    why: `These skills are due for a look: ${due.map(dueName).join(', ')}. You get fresh positions, not the ones you have already seen.`, itemIds: reviewItems.map(i => i.id) })
 
   const lessons = nextLessons(c, masteries, placement, progress, 1)
   if (lessons[0]) blocks.push({ id: 'lesson', kind: 'lesson', title: lessons[0].title, minutes: lessons[0].minutes ?? 8, lessonId: lessons[0].id,
@@ -73,7 +76,7 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const unanalysed = extras.games - extras.analysedGames
   if (unanalysed > 0) blocks.push({ id: 'game-review', kind: 'link', to: '/games', cta: 'Review a game', title: 'Review one of your games', minutes: 10,
     why: `You have ${unanalysed} saved game${unanalysed === 1 ? '' : 's'} not yet reviewed. Marking your own critical moments first, then comparing with the engine, shows what you do and do not notice.` })
-  const firsts = attempts.filter(a => a.firstAttempt && a.cue >= 3).length
+  const firsts = attempts.filter(a => a.firstAttempt && a.cue >= 3 && a.source !== 'lesson').length
   if (!extras.hasPlan && firsts >= 20) blocks.push({ id: 'make-plan', kind: 'link', to: '/plan', cta: 'Make a plan', title: 'Choose what to work on yourself', minutes: 5,
     why: 'You have enough history to pick your own focus. Say what you will do and how you will know it worked. The system will check your reasoning rather than choose for you.' })
   if (extras.labUses === 0 && firsts >= 15) blocks.push({ id: 'lab', kind: 'link', to: '/lab', cta: 'Try the lab', title: 'Contrast lab: change one thing', minutes: 6,

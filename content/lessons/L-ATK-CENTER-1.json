@@ -1,0 +1,167 @@
+{
+  "id": "L-ATK-CENTER-1",
+  "title": "A king in the centre: open the lines before he hides",
+  "skill": "ATK.CENTER",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the line-opening sacrifice against a king that has not castled, with its follow-up",
+    "Checks that the king has not castled and cannot castle quickly",
+    "Declines the same sacrifice once the king has castled",
+    "Ignores changes far from the king"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A king that cannot castle soon is a target: lines point at him and few of his pieces help. To attack him you need **open lines** and **more pieces in play than he has**. The lines usually come from a pawn break or a sacrifice. Before you sacrifice, name the lines it opens and the checks or forks that follow. Without a follow-up the sacrifice is a gift."
+    },
+    {
+      "type": "board",
+      "fen": "r2qkb1r/ppp2ppp/2n2n2/4p3/2B5/1QN1PbP1/PP1P1P1P/R1B1K2R w KQkq - 0 8",
+      "caption": "White to move. Black's king is on e8 and has not castled.",
+      "line": [
+        {
+          "move": "c4f7",
+          "say": "The bishop takes f7 with check. It leaves c4 and opens the diagonal from b3 toward e6."
+        },
+        {
+          "move": "e8d7",
+          "say": "In the engine's line the king goes to d7."
+        },
+        {
+          "move": "b3e6",
+          "say": "Qe6 is checkmate. The bishop on f7 protects the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        },
+        {
+          "from": "b3",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e8",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4f7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Bxf7+ is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "c4f7",
+            "n": 2
+          },
+          "statement": "Bxf7+ forces checkmate in two."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "b3",
+            "includes": [
+              "e6"
+            ],
+            "after_move": "c4f7"
+          },
+          "statement": "After Bxf7+ the queen on b3 attacks e6."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "c4f7",
+              "e8d7",
+              "b3e6"
+            ]
+          },
+          "statement": "The queen on e6 is protected once, by the bishop on f7."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-SKhUi-c1"
+    },
+    {
+      "type": "card",
+      "text": "This works when the king **cannot castle soon** and you have more pieces in play, so the lines you open point at him. It is a **rule of thumb**, and it fails when he has already castled and developed: the same sacrifice then just loses material. Check the sacrifice and the follow-up every time, and look at what changed since the last position you saw."
+    },
+    {
+      "type": "contrast",
+      "title": "Same sacrifice, different king",
+      "prompt": "Predict for each: does Nxg6 work? Then check.",
+      "working": "IBa1-20",
+      "failing": "IBa1-21",
+      "irrelevant": "IBa1-22"
+    },
+    {
+      "type": "item",
+      "item": "IBa1-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa1-24",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-JFGab",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.exposedKing",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you see an uncastled king in your own games, which do you check first: whether he can castle, how many pieces you have in play, or which line a sacrifice would open? Say which one you tend to skip.",
+      "fields": [
+        {
+          "id": "skip",
+          "label": "The one I tend to skip:",
+          "options": [
+            "can he castle",
+            "my pieces in play",
+            "the line the sacrifice opens",
+            "none of them"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K7, K32 (ideas and conditions only)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C33",
+    "docs/exercises-themes.md (theme.exposedKing items)",
+    "items: IBa1-20..24 (content/items/lesson-a1.json); position source: Lichess puzzle b2ZzO (CC0) with one-feature edits; shipped puzzle items IL-SKhUi-c1, IL-JFGab"
+  ]
+}

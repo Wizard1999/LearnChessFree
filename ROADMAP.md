@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 62%** (53 of 92 tasks done, in-progress tasks count half). Updated 2026-10-25T15:13+00:00 UTC.
+**Overall: 62%** (53 of 92 tasks done, in-progress tasks count half). Updated 2026-10-25T16:01+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -18,16 +18,16 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 118 of 204 skill nodes have a lesson (58%); 137 nodes have 10 or more shipped exercises; 6264 exercises ship, 2 wait for validation; 0 items reviewed by a person, 1628 flagged for human review.
+**Coverage (computed from the files):** 127 of 204 skill nodes have a lesson (62%); 138 nodes have 10 or more shipped exercises; 6310 exercises ship, 43 wait for validation; 0 items reviewed by a person, 1668 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
 | S1 Rules and board vision | 20 | 20 | 18 |
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
-| S3 Tactics | 24 | 23 | 23 |
-| S4 Calculation | 8 | 3 | 8 |
-| S5 Positional play and planning | 49 | 11 | 25 |
-| S6 Attack, sacrifice and defense | 19 | 1 | 15 |
+| S3 Tactics | 24 | 23 | 24 |
+| S4 Calculation | 8 | 5 | 8 |
+| S5 Positional play and planning | 49 | 12 | 25 |
+| S6 Attack, sacrifice and defense | 19 | 7 | 15 |
 | S7 Endgames | 37 | 14 | 32 |
 | S8 Openings and structures | 12 | 12 | 7 |
 | S9 Game study | 7 | 7 | 2 |
