@@ -13,7 +13,7 @@ The best possible place to learn chess and to learn how to learn: text-and-board
 5. **Simulated experts are labeled simulations.** No fabricated quotations or endorsements (`docs/council-synthesis.md`).
 6. **No ratings without evidence grades** (G0 guess … G3 replicated). A rating attaches to items and learners, never to a concept.
 7. **No live AI in the learner's loop in v1.** AI is the author's assistant; feedback comes from detectors and reviewed text.
-8. **Do not commit unless asked.** Do not publish, send, or spend anything external without asking.
+8. **Commit and push only to the repository Andrew named** (github.com/Wizard1999/LearnChessFree, public by his choice), in logical commits, never rewriting history, after the checks pass (`tools/check_all.py`, `npm test`, `npm run build`). Do not publish anywhere else, enable hosting, send, or spend anything external without asking. Before any push: scan for secrets and personal data, keep large intermediates out (`.gitignore`).
 
 ## How to work
 - **Keep the roadmap current.** `ROADMAP.md` is the visible plan (also shown in the app on the Roadmap page). When a task finishes, tick it (`[x]`, or `[~]` while in progress) and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`, which recomputes the percentages and the coverage metrics from the real files. Add new tasks when new work appears. Andrew wants to see what is built and what is next at all times.

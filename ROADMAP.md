@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 57%** (45 of 83 tasks done, in-progress tasks count half). Updated 2026-10-25T10:10+00:00 UTC.
+**Overall: 57%** (46 of 83 tasks done, in-progress tasks count half). Updated 2026-10-25T10:11+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -15,7 +15,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 6/13 | 50% |
 | Phase 6: Data | 1/3 | 33% |
-| Phase 7: Release | 0/5 | 10% |
+| Phase 7: Release | 1/5 | 20% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
 **Coverage (computed from the files):** 114 of 194 skill nodes have a lesson (59%); 134 nodes have 10 or more shipped exercises; 6209 exercises ship, 0 wait for validation; 0 items reviewed by a person, 1575 flagged for human review.
@@ -34,7 +34,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 8 | 8 | 0 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7; Public GitHub repository (Wizard1999/LearnChessFree): first commit and push
+**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7
 
 **Next up:** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Adversarial code review of the app and fixes
 
@@ -134,7 +134,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Difficulty calibration from real learner data (needs learners)
 
 ## Phase 7: Release
-- [~] Public GitHub repository (Wizard1999/LearnChessFree): first commit and push
+- [x] Public GitHub repository (Wizard1999/LearnChessFree): first commits pushed
 - [ ] Build-and-deploy workflow for GitHub Pages
 - [ ] Turn on Pages in the repository settings (gate G10)
 - [ ] Choose a name and a content licence (questions Q3, Q4)

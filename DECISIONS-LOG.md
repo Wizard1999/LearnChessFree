@@ -49,7 +49,7 @@ Evidence labels: [V] verified here, [S] secondary, [R] recalled, [I] inference, 
 
 | # | Decision | Why |
 |---|---|---|
-| D1 | **No git commits.** Working tree only. | CLAUDE.md rule 8, until you say otherwise (G2). |
+| D1 | **Commits only on your say-so.** You answered G2 on 2026-10-25 by telling me to use github.com/Wizard1999/LearnChessFree (public is fine). I commit in logical groups and push to `main`; I do not rewrite history. | CLAUDE.md rule 8. Before the first push I scanned for secrets and personal email (none), removed a personal-project mention from the README and design doc, and ignored large intermediates (the 15 GB of working data, caches, 280 MB pickles). |
 | D2 | **Parallel agents own separate directories** (generators, detectors, lesson authors, openings pipeline). I validate their output before it goes into the build. | Speed, with a check at the join. |
 | D3 | **Type errors in `app/src/chess/` are the detectors agent's, not mine.** I filter them when I type-check my own files. | Avoids two writers on the same files. |
 | D4 | **Questions go to `QUESTIONS-AND-GATES.md`, not into chat.** | You asked for this. |
