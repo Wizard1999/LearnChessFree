@@ -1,0 +1,92 @@
+{
+  "id": "END.ROOK-BASICS",
+  "title": "Rook endings: the basic rules",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "gap 2 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Names four ideas every rook ending uses: the rook behind the passed pawn, the rook that cuts the enemy king off along a file, the rook on the seventh rank, and the defender's rook that checks from a distance; says each is a default with exceptions.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Places the rook in simple rook-and-pawn positions: behind the passed pawn, on the file or rank that cuts the king off, or on the seventh, and says which of the four ideas applies.",
+      "prereqs": [
+        "POS.PASSED.D1",
+        "POS.SEVENTH.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled rook endings chooses between the four ideas and their exceptions (the passive defence that is the only draw, the king that can step out, the king that is not cut off), and counts the pawn's moves against the king's.",
+      "prereqs": [
+        "END.ROOK-BASICS.D1",
+        "END.KING-ACTIVE.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts win or draw for rook-and-pawn positions from the cut-off distance, the pawn's rank and the rook's side, verifies each claim against the tablebase, and knows which rook endings turn into won or drawn pawn endings.",
+      "prereqs": [
+        "END.ROOK-BASICS.D2",
+        "END.KPK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Rook endings with an extra pawn are always won.",
+    "The rook must always be active; passive defence always loses.",
+    "A rook on the seventh rank always wins something.",
+    "The rook belongs in front of the pawn, to push it."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 2 (rook endings beyond Lucena and Philidor)",
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 13 and 24; §5 items 7 and 10; §8 items 7 and 8",
+    "sources/sheets/edlasker_chess-strategy.md §4 K28 (rook endings: activity over material)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-21 (cut-off criteria, flagged CHECK)",
+    "tablebase checks run for this node on 2026-10-25 (positions in condition_sources); the Lucena and Philidor positions are END.LUCENA and END.PHILIDOR"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3; three tablebase-checked instances; the cut-off criteria and the short-side line are provisional"
+  },
+  "conditions": [
+    "Put the rook behind a passed pawn, your own or the enemy's: from there it keeps the whole file ahead of the pawn in view and loses no scope as the pawn advances; in front of the pawn it loses scope with every push.",
+    "Exception: a passive rook can be the only draw (the Philidor position), and a king sometimes needs the rook for shelter (the Lucena bridge), so 'behind the pawn' is a default, not a law.",
+    "Keep the enemy king away from the pawn's path, cut off along a file or rank by your rook; the defence holds only while the king stays within reach of the squares in front of the pawn, and one file can decide. Provisional criterion from a book ending (cut off by two files, pawn on the fourth rank before the checks begin) is not yet checked.",
+    "A rook on the seventh rank is strongest when it confines the king to the back rank and attacks pawns from behind, best with an advanced passed pawn; if the king can step out, the advantage can shrink to a draw.",
+    "Provisional, not yet checked: when the attacking king shelters on the short side of the pawn (the side with fewer files to the board's edge), the defender's rook checks from the long side, as far away as the board allows, so the checks cannot be blocked; the side names and the rule must be confirmed against a named source and the tablebase before a lesson uses them."
+  ],
+  "condition_sources": [
+    "Nimz #24 (b); EDL K28 (b); Tarrasch's formula as quoted there [R]",
+    "Nimz #24 (d) [CHECK]; [V] tablebase 2026-10-25: 4k3/8/7r/3KP3/8/8/8/R7 w draws (Philidor); END.PHILIDOR, END.LUCENA",
+    "CAP CI-21 (b) [CHECK]; [V] tablebase 2026-10-25: 1r6/2k5/8/1P6/1K6/8/8/4R3 w draws, 1r6/3k4/8/1P6/1K6/8/8/4R3 w wins",
+    "Nimz #13 (b), (d) [CHECK]; Nimz §5 item 7",
+    "ours [R]; no FEN family built yet"
+  ],
+  "contrasts": [
+    "The rook stands in front of its own passed pawn: after each push it has less scope, and the pawn blocks its file.",
+    "The Philidor position: the passive rook on the sixth rank is the only draw, an active-looking rook elsewhere is not enough.",
+    "The rook is on the seventh rank but the enemy king can step out of the back rank: no confinement, so no win.",
+    "A rook ending with no passed pawn on either side: the behind-the-pawn rule has nothing to apply to, and activity (an open file, the seventh rank) decides."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz §8 item 7 (W: behind; the look-alike is in front); rules",
+    "Nimz §8 item 7 (F: passive defence that is the only draw); [V] tablebase 2026-10-25 (condition 2)",
+    "Nimz §8 item 8 (F: king can step out)",
+    "Nimz §8 item 7 (I: no passer)"
+  ],
+  "soft_prereqs": [
+    "POS.OPENFILE.D2",
+    "END.KEYSQ.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.OPENFILE.D2": "an active rook is first of all a rook with an entry square",
+    "END.KEYSQ.D1": "cutting the king off in a rook ending is the rook version of denying the key squares"
+  }
+}

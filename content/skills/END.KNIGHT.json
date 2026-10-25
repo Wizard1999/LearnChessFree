@@ -1,0 +1,88 @@
+{
+  "id": "END.KNIGHT",
+  "title": "Knight endings",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "gap 2 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains why knight endings are slow and driven by the king: a knight needs up to six moves to cross the board, always changes square colour so it cannot lose a tempo, and stops a distant passed pawn only if it is already near.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Counts knight routes between squares (four moves from a1 to b2, six from a1 to h8) and says which side's knight reaches the key square first in a simple ending with pawns.",
+      "prereqs": [
+        "FND.PIECE.KNIGHT.D2",
+        "END.KING-ACTIVE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled king, knight and pawn endings decides win, draw or plan: king first, the outside passed pawn, the knight to the pawn that cannot run; sees when the knight is too far to stop a rim pawn.",
+      "prereqs": [
+        "END.KNIGHT.D1",
+        "END.OUTSIDE-PASSER.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the effect of one-feature changes (the extra pawn on the rim or not, one more move for the knight, the other side to move) and checks each prediction against the tablebase; uses knight parity to see who is in zugzwang.",
+      "prereqs": [
+        "END.KNIGHT.D2",
+        "END.TEMPO.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A knight ending is a pawn ending with a knight added, so the knight needs no special care.",
+    "A knight can stop any passed pawn from anywhere on the board.",
+    "A knight can lose a tempo by a triangle, like a king.",
+    "A knight is always better than a bishop in endings with pawns."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 2 (knight endings missing from the map)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K25 (knight parity), K27 (knight endings: a passed pawn engages both king and knight)",
+    "docs/curriculum-map-v1.1.md §2 (Em. Lasker numeric slip: six moves between opposite corners) and §4 (tablebase service)",
+    "tablebase checks run for this node on 2026-10-25 (positions in condition_sources)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4; two tablebase pairs verified, the rest rules or recalled"
+  },
+  "conditions": [
+    "Count the knight's journey, not the distance: it needs up to six moves between opposite corners and four between a1 and b2, and every move changes the colour of its square.",
+    "A passed pawn that engages both the enemy king and the enemy knight leaves only one defender for everything else, and a lone defending knight is too slow to hold a distant passer, so the defending king has to go.",
+    "An outside passed pawn wins a knight ending when the defender's king and knight cannot both stop it and still guard the pawns on the other wing; take the outside pawn away and the same ending can be a draw.",
+    "A lone knight stops a rim pawn only if it is already near the pawn's path: on the rim it has at most four moves and in the corner two, so a knight on the far side of the board arrives too late.",
+    "Because a knight changes square colour with every move, it cannot lose a tempo by itself the way a king or a bishop can; where the move decides, count the parity (END.TEMPO)."
+  ],
+  "condition_sources": [
+    "rules; [V] breadth-first search 2026-10-25; MAP11 §2 (Em. Lasker slip: six moves, not five)",
+    "EDL K27 (b); ours",
+    "ours; [V] tablebase 2026-10-25: 5n2/6p1/5k2/8/P5P1/2N2K2/8/8 w wins, 5n2/6p1/5k2/8/6P1/2N2K2/8/8 w draws (pawn-ending version: END.OUTSIDE-PASSER)",
+    "rules; ours; [V] tablebase 2026-10-25: 7K/8/8/4k3/8/p6N/8/8 w is lost for White",
+    "EDL K25 (b)"
+  ],
+  "contrasts": [
+    "The extra pawn stands on the same wing as the others, so there is no outside passer and the ending is a draw.",
+    "The knight is one move too far from the rim pawn's path: it looks close, but the pawn queens.",
+    "A bishop instead of the knight, or a rook ending: the bishop covers both wings from afar, so the knight's slowness rules do not carry over (END.MINOR)."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours; [V] tablebase 2026-10-25 (second position of condition 3)",
+    "ours",
+    "EDL K27 (b); ours"
+  ],
+  "soft_prereqs": [
+    "POS.BLOCKADE.D1",
+    "END.PAWN-FLANK.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.BLOCKADE.D1": "the knight is the default blockader of a passed pawn",
+    "END.PAWN-FLANK.D1": "the knight ending usually reduces to the same wing-and-count decision as the pawn ending"
+  }
+}

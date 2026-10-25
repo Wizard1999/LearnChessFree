@@ -149,6 +149,26 @@
     "ref": "authored for batch b3",
     "licence": "project"
    }
+  },
+  {
+   "id": "PB3-116",
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "family": "FAM-B3-NOT-LINE-W",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-117",
+   "fen": "4k3/8/8/R7/8/8/8/R3K3 w - - 0 1",
+   "family": "FAM-B3-NOT-WRITE-RANK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -616,7 +636,7 @@
    "cue": 2,
    "task": "find_move",
    "position": "PB3-109",
-   "prompt": "The board is turned: Black's pieces are at the bottom. White to move. The score says Bc4. Play that move.",
+   "prompt": "The board is turned: Black's pieces are at the bottom. White to move. The score says Bc4. Type the move in the box below the board.",
    "answer": {
     "moves": [
      "f1c4"
@@ -1150,6 +1170,115 @@
     "The rook on the d-file, on d1, goes to e1."
    ],
    "explain": "The letter after R is the file the rook leaves from: d. So the rook on d1 goes to e1; the rook on f1 would be Rfe1.",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-118",
+   "skill": "FND.NOTATION.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PB3-116",
+   "prompt": "White to move. Play this score on the board, both sides: 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6.",
+   "answer": {
+    "moves": [
+     "e2e4"
+    ],
+    "line": [
+     "e2e4",
+     "e7e5",
+     "g1f3",
+     "b8c6",
+     "f1b5",
+     "a7a6",
+     "b5a4",
+     "g8f6"
+    ],
+    "plies": 8
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e2e4"
+     },
+     "statement": "The first move of the score, 1.e4, is legal."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-NOT-LINE-W",
+    "lang.en",
+    "task.find_move",
+    "tier.1",
+    "mode.notation",
+    "mode.variation"
+   ],
+   "hints": [
+    "Each number covers a White move and Black's reply: 1.e4 e5 means White plays e4, then Black plays e5.",
+    "Play one move at a time and say its record aloud: piece letter, then square.",
+    "Pawn moves have no letter: e4, e5, a6. The others name their piece: Nf3, Nc6, Bb5, Ba4, Nf6."
+   ],
+   "explain": "Eight moves, four by each side. Pawn moves have no letter; the knights and bishops are named by N and B. No x appears because nothing is captured.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-119",
+   "skill": "FND.NOTATION.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PB3-117",
+   "prompt": "Both white rooks can reach a3. The rook on a1 goes to a3. Which record says exactly this move?",
+   "answer": {
+    "class": "R1a3",
+    "options": [
+     "Ra3",
+     "R1a3",
+     "Raa3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "a1a3"
+     },
+     "statement": "The rook on a1 can go to a3."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "a5a3"
+     },
+     "statement": "The rook on a5 can also go to a3, so Ra3 is ambiguous."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-NOT-WRITE-RANK",
+    "lang.en",
+    "task.classify_position",
+    "tier.1",
+    "mode.notation"
+   ],
+   "hints": [
+    "Which rooks can reach a3? Look at the files they stand on.",
+    "Both rooks stand on the a-file, so a file letter cannot tell them apart. Use the rank number the mover leaves from.",
+    "The rook on a1 leaves from rank 1."
+   ],
+   "explain": "Both rooks can reach a3 and both stand on the a-file, so neither Ra3 nor Raa3 says which one moves. The rank number does: the rook from a1 is R1a3, and the rook from a5 would be R5a3.",
    "review": {
     "status": "machine-only",
     "reviewer": null

@@ -89,6 +89,16 @@
         "ref": "left-right mirror of a pawn ending from the K+P strand (6 pieces)",
         "licence": "project"
       }
+    },
+    {
+      "id": "PB7-10",
+      "fen": "2bk1b1r/1pp3p1/3pp2p/5p2/qn2nP2/3BPN1P/PBPPQ1P1/R3RK2 b - - 6 12",
+      "family": "FAM-B7-FORKLA",
+      "provenance": {
+        "kind": "authored",
+        "ref": "PB7-1 with the black e-pawn moved from e7 to e6 (one-feature edit, mirrored)",
+        "licence": "project"
+      }
     }
   ],
   "items": [
@@ -519,7 +529,7 @@
       "cue": 2,
       "task": "predict_outcome",
       "position": "PB7-4",
-      "prompt": "You solved the version of this position whose prompt said \"Find the knight fork\". Does solving that version show that you can find a fork when nobody names it? Predict, then check.",
+      "prompt": "You solved the version of this position whose prompt said \"Find the knight fork\". The unnamed version says only \"Find the best move\". Does solving the named version show that you can find a fork when nobody names it? Predict, then look at the result.",
       "answer": {
         "outcome": "no",
         "options": [
@@ -555,11 +565,11 @@
         "kind.authored"
       ],
       "hints": [
-        "Compare the two prompts word by word.",
+        "Compare the two prompts: what does the first tell you that the second does not?",
         "What did the first prompt tell you that a game never does?",
         "A prompt that names the idea makes the exercise a cued one."
       ],
-      "explain": "The position and the answer are the same, but the first prompt named the idea, so it showed that you can follow the prompt. The independence record on the Progress page counts only first attempts at exercises that do not name the idea (cue 3 or higher).",
+      "explain": "The position and the answer are the same, but the first prompt named the idea, so it showed that you can follow the prompt. The independence record on the Progress page counts only first attempts at exercises that do not name the idea (it calls them 'unlabeled').",
       "orientation": "white",
       "review": {
         "status": "needs-human",
@@ -916,6 +926,102 @@
         "reviewer": null
       },
       "contrast_group": "CG-B7-TOOLS"
+    },
+    {
+      "id": "IB7-13",
+      "skill": "SELF.5.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-10",
+      "prompt": "Black to move. Black's e-pawn stands on e6, not e7. Does ...Ng3+ still win material? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4g3"
+          },
+          "statement": "The knight move is still legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4g3"
+            ]
+          },
+          "statement": "The fork is still the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4g3",
+            "min": 5
+          },
+          "statement": "The fork still wins at least five points of material along the engine's best line."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece attacks the knight's square, so it cannot be taken."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "f1",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move the knight attacks the white king."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "e2",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move the knight attacks the white queen."
+        }
+      ],
+      "tags": [
+        "node.SELF.5",
+        "cue.2",
+        "tier.5",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "Which squares does the fork depend on: the knight's, the king's and the queen's?",
+        "Does the pawn that moved touch any of them?",
+        "Nothing white can capture on g3, and the knight still attacks both pieces."
+      ],
+      "explain": "The pawn move changes nothing the fork depends on: the knight still checks the king, attacks the queen, and no white piece attacks g3. Not every change breaks an idea; a fair check needs both kinds.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-FORK"
     }
   ]
 }

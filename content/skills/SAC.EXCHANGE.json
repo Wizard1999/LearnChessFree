@@ -1,0 +1,94 @@
+{
+  "id": "SAC.EXCHANGE",
+  "title": "The exchange sacrifice",
+  "strand": "S6",
+  "tier": 5,
+  "origin": "gap 4 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains that giving a rook for a minor piece (about two points on the usual count) is justified only by a lasting gain that can be named: a dominating minor piece, a pawn majority that makes passed pawns, a broken king shelter or a blockade.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given an exchange sacrifice, names its reason (dominating piece, majority, broken shelter or blockade) and the payoff that justifies the material.",
+      "prereqs": [
+        "SAC.TYPES.D1",
+        "POS.VALUES.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions decides whether an exchange sacrifice is available, whether to accept or decline it, and labels the verdict sound or practical.",
+      "prereqs": [
+        "SAC.EXCHANGE.D1",
+        "SAC.TYPES.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Calculates the declined lines and the position a few moves later, checks the claim with the engine, and predicts how one-feature changes (the minor piece can be challenged, a file opens for the remaining rook) turn the sacrifice into a mistake.",
+      "prereqs": [
+        "SAC.EXCHANGE.D2",
+        "CAL.DEFENSE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "An exchange sacrifice is good when it looks dynamic.",
+    "A rook is always worth more than a minor piece.",
+    "The compensation can be vague: 'activity' is enough.",
+    "The side that gets the exchange is simply winning."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 4 (no node for the exchange sacrifice)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 17 (replace the blockader, giving up the exchange), idea 47 (a pawn sacrificed for a blockade, flagged CHECK), idea 8",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-34 (an exchange sacrifice for an attack that sound defence refuted)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C23 (d) (the exchange or a pawn is often the price of a counter-attack)",
+    "Every verdict in an item needs an engine check; the condition lines are not a proof of any position"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5; reasons from three sheets, conditions mostly ours"
+  },
+  "conditions": [
+    "The exchange costs about two points on the usual count, so the compensation must be named and lasting: a minor piece that cannot be challenged, passed pawns, an exposed king or a blockade.",
+    "To replace a strong blockader, give the exchange only if the replacement (the rook) really is weaker or less elastic than the piece it replaces.",
+    "An exchange sacrifice for an attack needs more than the exchange itself to show for it: in a well-known example the attack failed against calm defence, which returned the material at the right moment.",
+    "A sacrifice for counter-attack is often the price of the initiative, but the rook that stays on the board must not become active on an open file afterwards."
+  ],
+  "condition_sources": [
+    "ZB C23 (d); ours for the count and the list of reasons",
+    "Nimz #17 (b), (c)",
+    "CAP CI-34 (b)",
+    "ZB C23 (d); ours"
+  ],
+  "contrasts": [
+    "The piece won can be challenged by a pawn or traded, so the lasting gain disappears and only the material loss is left.",
+    "The sacrifice opens a file for the opponent's remaining rook, which then becomes the dominating piece.",
+    "The attack runs out: no pawn compensation, the king shelter intact, and the opponent consolidates.",
+    "A rook for a minor piece that wins a pawn back at once or is forced anyway: an exchange of material, not a sacrifice."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz #17 (c) (the replacement must be weaker); ours",
+    "ours",
+    "CAP CI-34 (b)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "POS.OUTPOST.D2",
+    "POS.MAJORITY.D1",
+    "DEF.SHELTER.D1",
+    "POS.BLOCKADE.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.OUTPOST.D2": "the dominating minor piece is an outpost piece",
+    "POS.MAJORITY.D1": "the pawn-majority reason needs the majority condition",
+    "DEF.SHELTER.D1": "the broken-shelter reason needs the shelter pawns",
+    "POS.BLOCKADE.D2": "the blockade reason needs the blockading square and the quality of the blockader"
+  }
+}

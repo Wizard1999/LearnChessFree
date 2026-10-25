@@ -1,0 +1,86 @@
+{
+  "id": "POS.STRUCTURE.CARLSBAD",
+  "title": "Carlsbad structure: the minority attack",
+  "strand": "S5",
+  "tier": 4,
+  "origin": "gap 3 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "States the app's working definition (pawns on d4 and e3 and no c-pawn for one side, against pawns on c6, d5 and e6; colours may be reversed) and the two standard plans: the minority attack on the queenside, and play on the kingside or in the centre.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the structure, names each side's standard plan: the b-pawn minority attack for the side with two queenside pawns against three, and the kingside or e-pawn play for the other side.",
+      "prereqs": [
+        "POS.PAWNWEAK.D2",
+        "POS.BREAKS.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions with this structure chooses between the minority attack, the e-pawn break and a waiting move, and notices when the minority attack has no target or no time.",
+      "prereqs": [
+        "POS.STRUCTURE.CARLSBAD.D1",
+        "POS.TARGET.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how one-feature changes (a pair of pieces traded, the c-file already closed, a faster kingside attack) change which plan is right, and checks the verdict with the engine.",
+      "prereqs": [
+        "POS.STRUCTURE.CARLSBAD.D2",
+        "CAL.COMPARE.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The minority attack always produces a weak pawn.",
+    "The side facing the minority attack is simply worse.",
+    "A backward pawn on a half-open file loses by force."
+  ],
+  "sources": [
+    "docs/exercises-positional.md §5 (named structures are the app's own working definitions)",
+    "tools/positional/gen_struct.py (the exact pawn squares; used by the OPN.STRUCT items)",
+    "docs/skill-graph.md section 6, gap 3 (structure families missing)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 43 (f) names Queen's Gambit structures (Carlsbad 1907 games) but states no plan; the plans below are recalled [R], not read in a sheet",
+    "sources/sheets/capablanca_chess-fundamentals.md §5 item 17 (backward pawns 'invariably lose' is flagged as too absolute)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4; plans are recalled from standard teaching and need a strong-player review and engine checks before any item"
+  },
+  "conditions": [
+    "Working definition (the app's own, used for recognition practice, not claimed to match any book): one side has pawns on d4 and e3 and no c-pawn, the other has pawns on c6, d5 and e6; the colours may be reversed.",
+    "The minority attack (b2-b4-b5 by the side with two queenside pawns against three) aims to exchange on c6 and leave a backward or isolated c-pawn that can be attacked down the half-open c-file; it needs rooks ready for the c-file and time.",
+    "The side facing the attack uses the slow plan's time elsewhere: pieces toward the kingside, or an e-pawn break when the d-pawn is loose.",
+    "A backward pawn is a tendency, not a verdict: 'invariably lose' is the claim not to teach, and hedgehog-type positions hold backward pawns."
+  ],
+  "condition_sources": [
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py",
+    "ours [R]; needs review",
+    "ours [R]; needs review",
+    "CAP §5 item 17 (flagged; the counter-example is named there from outside knowledge)"
+  ],
+  "contrasts": [
+    "The minority attack is started while the opponent's kingside play is already faster: the plan is too slow and loses the race.",
+    "The exchange on c6 is recaptured so that no pawn is weak: the pawns have been traded for nothing and the plan has produced no target.",
+    "The same pieces but the first side still has a c-pawn (for example on c3): this is not the structure and there is no minority attack to run."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours [R]",
+    "ours [R]",
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py (the 'no c-pawn' condition)"
+  ],
+  "soft_prereqs": [
+    "POS.STRUCTURE.IQP.D1",
+    "POS.EXCHANGE.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.STRUCTURE.IQP.D1": "the Queen's Gambit structures turn into isolated-pawn positions by one exchange",
+    "POS.EXCHANGE.D2": "which trades help decides whether the minority attack succeeds"
+  }
+}

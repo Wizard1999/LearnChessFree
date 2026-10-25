@@ -445,6 +445,15 @@
             "within_cp": 250
           },
           "statement": "Qxc7+ and Kg1 both keep a winning advantage; Qxc7+ is the engine's first choice."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "b7c7",
+            "min": 3
+          },
+          "statement": "Along the engine line Qxc7+ wins at least a bishop."
         }
       ],
       "tags": [
@@ -459,9 +468,9 @@
       "hints": [
         "Before you look at your own captures, ask what Black threatens.",
         "The black queen attacks the rook on f1, and nothing defends it.",
-        "Qxf1 would be checkmate. Qxc7+ is a check that also wins a bishop; Kg1 makes room for the king."
+        "Qxf1 would be checkmate. Qxc7+ is a check that wins a bishop, and Kg1 defends the rook."
       ],
-      "explain": "Black threatens Qxf1, checkmate. Qxa7 takes the first pawn on offer and loses to it. Qxc7+ is a check that wins more than the pawn and gives Black no time; Kg1 also stops the mate.",
+      "explain": "Black threatens Qxf1, checkmate. Qxa7 takes the first pawn on offer and loses to it. Qxc7+ is a check that wins a bishop, but the threat on f1 is still there afterwards, so White must still meet it (the engine line has Kg1). Kg1 at once also stops the mate.",
       "orientation": "white",
       "review": {
         "status": "needs-human",
@@ -700,12 +709,15 @@
       "id": "IB6-8",
       "skill": "PRA.PHASEBUDGET.D1",
       "cue": 3,
-      "task": "find_move",
+      "task": "classify_position",
       "position": "PB6-8",
-      "prompt": "White to move. Find the best move.",
+      "prompt": "White to move. How much of your clock should this move get?",
       "answer": {
-        "moves": [
-          "d4c5"
+        "class": "critical: extra from the phase share",
+        "options": [
+          "routine: the usual price (about 10 seconds)",
+          "critical: extra from the phase share",
+          "forced: almost nothing"
         ]
       },
       "claims": [
@@ -788,21 +800,18 @@
         "lang.en",
         "kind.authored",
         "mode.silent",
-        "mode.find"
+        "mode.classify"
       ],
       "hints": [
-        "Count how far each king is from the pawn.",
-        "A pawn push is not always the strongest idea in a king and pawn ending.",
-        "Bring the king forward: Kc5."
+        "Is there a natural move that looks fine?",
+        "Check what the pawn push d6 leads to.",
+        "d6 draws; only Kc5 wins."
       ],
-      "explain": "Only Kc5 wins; every other legal move, including the natural pawn push d6, draws (exact tablebase result). With so few pieces one move can decide the whole game.",
+      "explain": "Only Kc5 wins; every other legal move, including the natural pawn push d6, draws (exact tablebase result). With so few pieces one move can decide the game, so this move deserves extra clock.",
       "orientation": "white",
       "review": {
         "status": "needs-human",
         "reviewer": null
-      },
-      "feedback_by_move": {
-        "d5d6": "d6 pushes the pawn but only draws (tablebase)."
       }
     },
     {

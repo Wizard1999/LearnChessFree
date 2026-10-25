@@ -6,7 +6,7 @@
   "minutes": 11,
   "outcomes": [
     "Records his pace on one item and sets a half-time limit from it",
-    "Says what a ten-second look can find (checks, captures, threats)",
+    "Lists the opponent's checks and captures after his move in a short look, and says what the look can miss",
     "Solves a short set at half time and names the loop step he skipped",
     "Writes a weekly half-time set with a first target to test"
   ],
@@ -23,7 +23,7 @@
     {
       "type": "reflect",
       "kind": "plan",
-      "prompt": "Write the seconds you took. Half of that is your limit for each position in the half-time set. The app does not run a countdown: use a timer and stop when it rings. One item is only a rough baseline.",
+      "prompt": "Write the seconds you took, counted up to your first move. Half of that is your limit for each position in the half-time set (a set solved in half your usual time); use at least 10 seconds if half is less. The app does not run a countdown: use a timer, and when it rings play the move you have. One item is only a rough baseline, and a quick wrong answer gives a small limit.",
       "fields": [
         {
           "id": "base_s",
@@ -39,7 +39,7 @@
     },
     {
       "type": "contrast",
-      "title": "What a ten-second look finds",
+      "title": "What a short look finds",
       "prompt": "You have about ten seconds. The look is one question: after my move, what can the opponent do with a check, a capture or a threat? In the first position the capture was safe. Predict what the look finds in this one, then check.",
       "working": "IB6-14",
       "failing": "IB6-15",
@@ -47,7 +47,7 @@
     },
     {
       "type": "card",
-      "text": "**What a short look can do.** Ten seconds is enough to list the opponent's checks, captures and threats after your move. Rule of thumb, not tested here: with little time keep the look and play the simpler move; do not start a long calculation you cannot finish. Next: four positions, each at your limit, with no hints and no engine line."
+      "text": "**What a short look can do.** A short look can list the opponent's checks and captures after your move; their threats take longer. Ten seconds is a first guess, not a tested figure. Rule of thumb, not tested here: with little time keep the look and play the simpler move; do not start a calculation you cannot finish. Next: four positions at your limit, with no hints or engine line."
     },
     {
       "type": "item",
@@ -72,7 +72,7 @@
     {
       "type": "reflect",
       "kind": "review",
-      "prompt": "Four positions cannot show a pattern; use them as a first look. Name what happened.",
+      "prompt": "Four positions cannot show a pattern; use them as a first look. Name what happened. Without an untimed score on the same positions you cannot say time caused a mistake; the weekly set below adds one. A second set of four follows: keep your limit for it too, and treat a yes/no answer you guessed as a miss.",
       "fields": [
         {
           "id": "wrong",
@@ -104,7 +104,8 @@
     {
       "type": "practice",
       "tags": [
-        "node.CAL.DEFENSE"
+        "node.CAL.DEFENSE",
+        "cue.3"
       ],
       "n": 4,
       "silent": true

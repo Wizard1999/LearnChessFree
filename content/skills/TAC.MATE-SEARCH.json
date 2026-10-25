@@ -1,0 +1,97 @@
+{
+  "id": "TAC.MATE-SEARCH",
+  "title": "Searching for a forced mate",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "gap 1 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a forced mate is found by listing, not by hoping: every check first, then every quiet move after which each reply of the defender allows mate, and that 'no forced mate here' is a valid answer.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told 'mate in two' with a check as the first move, lists the defender's replies (capture the checker, block, step away) and finds the mating answer to each.",
+      "prereqs": [
+        "FND.MATE1.D2",
+        "TAC.MATE-PATTERNS.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions lists every check and every quiet move that might leave no defence, finds the mate in two when it exists, and answers 'no forced mate in two' by naming the refutation of each candidate.",
+      "prereqs": [
+        "TAC.MATE-SEARCH.D1",
+        "CAL.CANDIDATES.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds mates in three, including a quiet first move, and tests each defender reply (a counter-check, the capture of the mating piece, a move that makes a flight square) before claiming the mate; recognises strong attacks where no mate exists.",
+      "prereqs": [
+        "TAC.MATE-SEARCH.D2",
+        "CAL.VISUALIZE.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, the opportunity log shows forced mates found when they were available, and no mate-looking attack played that the defender could simply refuse; the search is run for the opponent's threats as well as for the own attack.",
+      "prereqs": [
+        "TAC.MATE-SEARCH.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "If every check fails there is no mate (quiet first moves are skipped).",
+    "A move that threatens mate is as good as a mate.",
+    "A queen next to the king means mate is near.",
+    "Listing only the attacker's moves is enough (the defender's counter-check or capture of the mating piece is forgotten)."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 1 (the gap this node closes; mate in one or two was folded into TAC.MATE-PATTERNS D2)",
+    "sources/sheets/emlasker_common-sense.md §4.14 (a king commands up to nine squares: the flight-square count)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27 (combination types around a castled king)",
+    "The search order and the no-mate answer are our own design; no synthesis sheet states a search procedure"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3; the procedure is ours, not from a sheet; items must be validated by the engine (mate-in-N claims)"
+  },
+  "conditions": [
+    "A first move that gives check is a mate in two only if every legal reply (capturing the checker, blocking, or moving the king) can be answered by a mating move; list the replies from the rules instead of guessing them.",
+    "A quiet first move works only if it is not a check, leaves the defender no check or capture that wins the key attacking piece, and threatens mate against every reply; count the king's flight squares before and after the move.",
+    "Search in a fixed order: all checks, then captures next to the king, then quiet moves that remove a flight square or a defender; answer 'no forced mate' only after the list is used up.",
+    "The defender's best replies are the forcing ones: a check, the capture of the attacking piece, or an interposition that makes a mate threat of its own; they must be listed before the mate is claimed."
+  ],
+  "condition_sources": [
+    "rules; EML 4.14 (b) for the flight-square count",
+    "rules; ours",
+    "ours (a search order; a hypothesis until tested with learners)",
+    "rules; ours"
+  ],
+  "contrasts": [
+    "A queen check that looks like a mate in two, but the defender can capture the checking queen with a pawn or interpose a piece that also covers the mating square.",
+    "A quiet move that threatens mate in one, but allows a counter-check that wins the threatening piece, so the threat is fictitious.",
+    "The same attack with one more defender that covers the key square, so the quiet move no longer leaves the king without a defence.",
+    "A position with a heavy attack and a queen next to the king but no forced mate: the correct answer is 'no mate' and a different plan."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours; SAF.FICTITIOUS",
+    "CAP CI-27 (g): no failing look-alike in the book, so we supply it",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.DOUBLE-CHECK.D1",
+    "TAC.NONE.D2",
+    "SAF.FICTITIOUS.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.DOUBLE-CHECK.D1": "double-check mates are a family worth testing first in the list of checks",
+    "TAC.NONE.D2": "'no forced mate' is the mate-search form of 'no tactic here'",
+    "SAF.FICTITIOUS.D1": "a mate threat the defender can answer by a counter-check is a fictitious threat"
+  }
+}

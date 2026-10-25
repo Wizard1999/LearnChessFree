@@ -262,7 +262,7 @@
    "cue": 2,
    "task": "find_move",
    "position": "PB5-62",
-   "prompt": "Same chain, White to move after ...c5. Find a move that gives the base d4 a second defender.",
+   "prompt": "Same chain, White to move after ...c5. Find a move that gives d4 a second defender and stays within 40 centipawns of the engine's best.",
    "answer": {
     "moves": [
      "c2c3",
@@ -312,6 +312,24 @@
       ]
      },
      "statement": "c3 and Nf3 are within 40 centipawns of the engine's best move."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "g1e2",
+      "cp": 40
+     },
+     "statement": "Ne2 is at least 40 centipawns worse than the best move."
+    },
+    {
+     "id": "C6",
+     "type": "move_loses",
+     "params": {
+      "move": "c1e3",
+      "cp": 40
+     },
+     "statement": "Be3 is at least 40 centipawns worse than the best move."
     }
    ],
    "tags": [
@@ -324,10 +342,14 @@
    "hints": [
     "Count what defends d4 now.",
     "A pawn or a piece can add the second defender.",
-    "Two natural moves do it: one pawn move, one knight move."
+    "Two moves do it and stay within 40: one pawn move and one knight move to f3."
    ],
    "explain": "d4 has one defender now (the queen). Both c3 and Nf3 add a second, and both are within 40 centipawns of the engine's best. The family plan for the chain's owner: keep the base defended while playing on the wing the chain points to.",
    "orientation": "white",
+   "feedback_by_move": {
+    "g1e2": "Ne2 also adds a defender, but it is more than 40 centipawns below the best move, so this task does not accept it.",
+    "c1e3": "Be3 also adds a defender, but it is more than 40 centipawns below the best move, so this task does not accept it."
+   },
    "source": {
     "kind": "lichess_game",
     "id": "eflsn7xy"
@@ -343,7 +365,7 @@
    "cue": 2,
    "task": "find_move",
    "position": "PB5-63",
-   "prompt": "Game C (a tournament game from 1916). Black to move. Again the chain: find the pawn move that attacks the base of White's chain.",
+   "prompt": "Game C (a tournament game from 1916). Black to move. White's chain is c3-d4-e5. Find the pawn move that attacks the chain at d4.",
    "answer": {
     "moves": [
      "c7c5"
@@ -370,6 +392,31 @@
       ]
      },
      "statement": "c5 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "chain_base",
+      "color": "white",
+      "squares": [
+       "c3"
+      ]
+     },
+     "statement": "White's c3 is the base of its chain: it protects d4 and no pawn protects it."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "white",
+      "squares": [
+       "d4",
+       "e5"
+      ]
+     },
+     "statement": "White's d4 and e5 pawns are each protected by a pawn: the chain is c3-d4-e5."
     }
    ],
    "tags": [
@@ -384,7 +431,7 @@
     "Which pawn can attack d4?",
     "The c-pawn."
    ],
-   "explain": "The same lever as in Game A, in a game played about a century earlier: ...c5 attacks the base d4, and the engine ranks it first here. The structure, not the date or the move order, tells you the plan.",
+   "explain": "...c5 attacks d4, the middle link. White's c3 pawn already protects d4, so the base of this chain is c3 (Black goes for it later with ...Qa5 and ...dxc3). The engine ranks c5 first here. The structure, not the date or the move order, tells you the plan.",
    "orientation": "black",
    "source": {
     "kind": "public_domain_book",
@@ -403,11 +450,11 @@
    "position": "PB5-64",
    "prompt": "Game A (an online game from January 2013, both players rated about 2100). White to move. White's chain still stands. In the game White played g4 here. Which plan class does g4 belong to?",
    "answer": {
-    "class": "play on the wing the chain points to",
+    "class": "play on the wing White's chain points to",
     "options": [
-     "hit the base of the chain",
-     "hit the head of the chain",
-     "play on the wing the chain points to",
+     "hit the base of White's chain",
+     "hit the head of White's chain",
+     "play on the wing White's chain points to",
      "gain space on the other wing",
      "no family plan applies"
     ]
@@ -458,7 +505,7 @@
     "The head e5 points toward the kingside.",
     "g4 pushes pawns on that wing."
    ],
-   "explain": "The chain d4-e5 points toward the kingside, and g4 starts pawn play on that wing; the engine ranks g4 first here. The label 'play on the wing the chain points to' is the lesson's name for this plan, a rule of thumb rather than a theorem.",
+   "explain": "The chain d4-e5 points toward the kingside, and g4 starts pawn play on that wing; the engine ranks g4 first here. The label 'play on the wing White's chain points to' is the lesson's name for this plan, a rule of thumb rather than a theorem.",
    "orientation": "white",
    "source": {
     "kind": "lichess_game",
@@ -479,9 +526,9 @@
    "answer": {
     "class": "gain space on the other wing",
     "options": [
-     "hit the base of the chain",
-     "hit the head of the chain",
-     "play on the wing the chain points to",
+     "hit the base of White's chain",
+     "hit the head of White's chain",
+     "play on the wing White's chain points to",
      "gain space on the other wing",
      "no family plan applies"
     ]
@@ -530,7 +577,7 @@
     "lang.en"
    ],
    "hints": [
-    "Black's chain points toward the queenside.",
+    "White's chain points toward the kingside. Which wing is c4 on?",
     "c4 does not attack d4. It cramps White on the wing where Black has pawns.",
     "A family holds more than one plan."
    ],
@@ -747,11 +794,11 @@
    "position": "PB5-68",
    "prompt": "Game C (a tournament game from 1916). White to move. White's chain stands. In the game White played Qg4 here. Which plan class does it belong to?",
    "answer": {
-    "class": "play on the wing the chain points to",
+    "class": "play on the wing White's chain points to",
     "options": [
-     "hit the base of the chain",
-     "hit the head of the chain",
-     "play on the wing the chain points to",
+     "hit the base of White's chain",
+     "hit the head of White's chain",
+     "play on the wing White's chain points to",
      "gain space on the other wing",
      "no family plan applies"
     ]
@@ -826,11 +873,11 @@
    "position": "PB5-69",
    "prompt": "Game A (an online game from January 2013, both players rated about 2100). Black to move. In the game Black played Nc6 here. Which plan class does it belong to?",
    "answer": {
-    "class": "hit the base of the chain",
+    "class": "hit the base of White's chain",
     "options": [
-     "hit the base of the chain",
-     "hit the head of the chain",
-     "play on the wing the chain points to",
+     "hit the base of White's chain",
+     "hit the head of White's chain",
+     "play on the wing White's chain points to",
      "gain space on the other wing",
      "no family plan applies"
     ]
@@ -858,6 +905,32 @@
       ]
      },
      "statement": "Nc6, Bd7 and Qb6 are within 40 centipawns of the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "chain_base",
+      "color": "white",
+      "squares": [
+       "b2"
+      ]
+     },
+     "statement": "White's b2 is the base of its chain: it protects c3 and no pawn protects it."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "white",
+      "squares": [
+       "c3",
+       "d4",
+       "e5"
+      ]
+     },
+     "statement": "White's c3, d4 and e5 pawns are each protected by a pawn: the chain is b2-c3-d4-e5."
     }
    ],
    "tags": [
@@ -870,9 +943,9 @@
    "hints": [
     "Count the black attackers of d4 after the move.",
     "Two: the pawn and the knight.",
-    "The knight joins the attack on the base."
+    "The knight joins the pawn in attacking d4."
    ],
-   "explain": "After Nc6 the base d4 is attacked twice (the c5 pawn and the knight). That is 'hit the base', carried out with a piece instead of a pawn. Bd7 and Qb6 are also within 40 centipawns, so the plan label does not pick one move.",
+   "explain": "After Nc6 the pawn on d4, a middle link of the chain b2-c3-d4-e5, is attacked twice (the c5 pawn and the knight). The base of this chain is b2, so this is pressure on the chain on its way to the base: the plan this lesson labels 'hit the base', pressed with a piece as well as a pawn. Bd7 and Qb6 are also within 40 centipawns, so the plan label does not pick one move.",
    "orientation": "black",
    "source": {
     "kind": "lichess_game",
@@ -893,9 +966,9 @@
    "answer": {
     "class": "no family plan applies",
     "options": [
-     "hit the base of the chain",
-     "hit the head of the chain",
-     "play on the wing the chain points to",
+     "hit the base of White's chain",
+     "hit the head of White's chain",
+     "play on the wing White's chain points to",
      "gain space on the other wing",
      "no family plan applies"
     ]

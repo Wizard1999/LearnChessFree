@@ -1,0 +1,237 @@
+{
+  "id": "L-CAL-VISUALIZE-1",
+  "title": "Track the line: what moved, what is gone, what is attacked",
+  "skill": "CAL.VISUALIZE",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Writes what moved, what left the board and what is attacked after a two-ply line, with no piece moved",
+    "Names the loose pieces at the end of a capture and recapture, or a check and its answer",
+    "Notices when a capture removes a defender or opens a line",
+    "Runs a five-minute paper trace away from the app"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Calculating is not taking a mental photograph. It is **updating a short list** after every move: *what moved, what left the board, what is attacked now.* Start small: one candidate and one reply, so two plies, with the board in front of you and nothing moved. Then ask one question: **which piece is attacked now, and does anything defend it?**"
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp1r2pp/4pn2/4n3/4P3/2N4P/PP1RK1P1/3R4 b - - 5 19",
+      "caption": "Black to move. Follow the two moves without touching a piece, and update the list after each one. A piece is loose when it is attacked and nothing defends it.",
+      "line": [
+        {
+          "move": "d7d2",
+          "say": "Rxd2+: the d7 rook, which defended d8, leaves and takes White's rook with check."
+        },
+        {
+          "move": "d1d2",
+          "say": "Rxd2: White retakes. Black's rook is gone. White's d2 rook now faces the undefended d8 rook down an open file."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "d2"
+        },
+        {
+          "from": "d1",
+          "to": "d2"
+        }
+      ],
+      "highlight": [
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d7d2"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d7",
+            "includes": [
+              "d8"
+            ]
+          },
+          "statement": "The rook on d7 defends the rook on d8."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Before the moves exactly one black piece defends d8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "d7d2",
+              "d1d2"
+            ]
+          },
+          "statement": "After the two moves no black piece defends the rook on d8."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "d7d2",
+              "d1d2"
+            ]
+          },
+          "statement": "After the two moves one white piece attacks it."
+        },
+        {
+          "id": "C6",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "d8"
+            ],
+            "after_moves": [
+              "d7d2",
+              "d1d2"
+            ]
+          },
+          "statement": "Black's only loose piece is the rook on d8."
+        },
+        {
+          "id": "C7",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [],
+            "after_moves": [
+              "d7d2",
+              "d1d2"
+            ]
+          },
+          "statement": "White has no loose piece."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc1-1"
+    },
+    {
+      "type": "card",
+      "text": "**Where tracking breaks.** A capture does two things: the capturing piece lands somewhere new, and the captured piece stops attacking and defending. A capture can also open a line behind it (a discovered attack). So ask again after every capture: *who defended what, and what is open now?* Two plies is a first size, a rule of thumb. Accuracy after the first capture matters more than length."
+    },
+    {
+      "type": "contrast",
+      "title": "Same two moves, one pawn moved",
+      "prompt": "In the first position the pawn stands on g6: after the rooks come off, the bishop on f5 still has a defender, so nothing is loose. In the second, the pawn is back on g7. Same two moves, one change. Predict, then check.",
+      "working": "IBc1-2",
+      "failing": "IBc1-3",
+      "irrelevant": "IBc1-4"
+    },
+    {
+      "type": "item",
+      "item": "IBc1-4"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Tracking covers routes too. On paper, write every square a knight lands on when it travels from a1 to h8 on an empty board, then count. Counting by eye is where an extra move hides.",
+      "fields": [
+        {
+          "id": "moves",
+          "label": "Fewest knight moves from a1 to h8:",
+          "type": "number",
+          "answer": 6,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints and shows the answer squares after a miss. The next three are silent: no hints, no engine. The plan is to offer hints only on request once you solve unlabeled items without them (planned, not built yet). Before you start, say how many of the three you expect to get right."
+    },
+    {
+      "type": "item",
+      "item": "IBc1-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc1-7",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "One smaller drill. You study a position for a few seconds, then some pieces vanish, and you tap the squares a piece can reach. It trains the same habit in a simpler form: remembering what stands where, including the pieces that block a line."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.VISUALIZE",
+        "mode.visualise"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Trace card: five minutes, away from the app.** Take a position from your own game or a book diagram. Choose one candidate and the reply you expect. On paper write three lines: *moved*, *gone*, *attacked now (defended?)*. Two plies only. Then set the position up and play the two moves to check. Mark each line right or wrong. The line that fails tells you what to watch next time."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan two trace cards for this week. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "Positions will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "diagrams in a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "right",
+          "label": "After the week: lines that matched the board, out of 6 (two cards, three lines each):",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.VISUALIZE)",
+    "sources/sheets/capablanca_chess-fundamentals.md section 4, CI-17 (d), recalled idea only [S]",
+    "sources/sheets/emlasker_common-sense.md section 5, item 3 (counting slip) [S]",
+    "positions: Lichess standard rated games 2013-01 (CC0); one authored one-feature edit (pawn g7 to g6)"
+  ]
+}

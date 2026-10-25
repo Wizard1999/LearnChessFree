@@ -152,11 +152,11 @@
   },
   {
    "id": "PB2-16",
-   "fen": "2k5/ppr5/N7/8/8/8/4PPP1/6K1 w - - 0 1",
+   "fen": "2k5/1pr5/N7/p7/8/8/PP6/3K4 w - - 0 1",
    "family": "FAM-B2-DE-A",
    "provenance": {
     "kind": "authored",
-    "ref": "authored for batch b2 (found by a template search with the engine: a white piece attacked, with a capture that is better than any retreat)",
+    "ref": "authored for batch b2 (template search with the engine, then edited by hand: black pawn on a5 and white pawns on a2 and b2, so that every square the knight can reach is attacked; checked by loose_pieces claims)",
     "licence": "project"
    }
   },
@@ -172,7 +172,7 @@
   },
   {
    "id": "PB2-18",
-   "fen": "2k5/ppp5/N7/8/8/8/4PPP1/6K1 w - - 0 1",
+   "fen": "2k5/1pp5/N7/p7/8/8/PP6/3K4 w - - 0 1",
    "family": "FAM-B2-DE-SAVE",
    "provenance": {
     "kind": "authored",
@@ -182,21 +182,21 @@
   },
   {
    "id": "PB2-19",
-   "fen": "2k5/1p6/N2p4/p7/8/8/4PPP1/6K1 w - - 0 1",
+   "fen": "2k5/1p6/N7/p7/8/8/PP6/3K4 w - - 0 1",
    "family": "FAM-B2-DE-NONE",
    "provenance": {
     "kind": "authored",
-    "ref": "authored for batch b2 (variation of FAM-B2-DE-A with black pawns on a5 and d6 and no rook)",
+    "ref": "one-feature edit of the desperado position FAM-B2-DE-A (the rook on c7 removed)",
     "licence": "project"
    }
   },
   {
    "id": "PB2-20",
-   "fen": "5k2/3p1rp1/7N/8/8/8/P3P3/7K w - - 0 1",
+   "fen": "5k2/5rp1/7N/5p2/8/8/PP2P3/7K w - - 0 1",
    "family": "FAM-B2-DE-G",
    "provenance": {
     "kind": "authored",
-    "ref": "authored for batch b2 (found by a template search with the engine: a white piece attacked, with a capture that is better than any retreat)",
+    "ref": "authored for batch b2 (template search with the engine, then edited by hand: black pawn on f5 and white pawns on a2, b2 and e2, so that every square the knight can reach is attacked; checked by the engine)",
     "licence": "project"
    }
   },
@@ -405,8 +405,8 @@
     "reviewer": null
    },
    "feedback_by_move": {
-    "f7f8q": "Qf8+ is check, but the tablebase says the queen promotion only draws here.",
-    "f7f8r": "Rf8+ is check, but the tablebase says the rook promotion only draws here."
+    "f7f8q": "Qf8 is not check here, and the tablebase says the queen promotion only draws.",
+    "f7f8r": "Rf8 is not check here, and the tablebase says the rook promotion only draws."
    },
    "contrast_group": "CG-B2-UP-FORK",
    "source": {
@@ -486,7 +486,7 @@
     "Which promotion piece could attack h6 from g8?",
     "A knight on g8 attacks h6. Promote to a knight."
    ],
-   "explain": "The knight on g8 gives check to the king on h6, and every flight square is covered by the white king, the bishop or the knight itself. A queen on g8 would not give check, and the tablebase shows the queen promotion only draws.",
+   "explain": "The knight on g8 gives check to the king on h6, and every flight square is covered by the white king or the bishop. A queen on g8 would not give check, and the tablebase shows the queen promotion only draws.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -947,7 +947,7 @@
     "reviewer": null
    },
    "feedback_by_move": {
-    "h2h1q": "Qh1 is check, but the tablebase says the queen promotion only draws here."
+    "h2h1q": "Qh1 is not check (the queen does not attack the king on f2), and the tablebase says the queen promotion only draws here."
    },
    "source": {
     "kind": "lichess_puzzle",
@@ -1592,9 +1592,9 @@
    "cue": 3,
    "task": "classify_position",
    "position": "PB2-14",
-   "prompt": "White is behind in material. Is there a perpetual check that holds the draw?",
+   "prompt": "White to move. Which description is right?",
    "answer": {
-    "class": "No"
+    "class": "White is clearly worse"
    },
    "claims": [
     {
@@ -1628,7 +1628,7 @@
     "lang.en"
    ],
    "hints": [
-    "Pick the checks White has. For each, count the king's squares.",
+    "List White's checks. For each, count the squares the king can use.",
     "Compare with the position where the king had one square.",
     "The g7 square is free now."
    ],
@@ -1639,8 +1639,9 @@
     "reviewer": null
    },
    "options": [
-    "Yes",
-    "No"
+    "White can force a draw",
+    "White is clearly worse",
+    "White is clearly better"
    ]
   },
   {
@@ -1815,9 +1816,9 @@
      "type": "move_loses",
      "params": {
       "move": "a6b4",
-      "cp": 500
+      "cp": 700
      },
-     "statement": "Nb4 (a retreat) loses at least 500 centipawns compared with the best move.",
+     "statement": "Nb4 (a retreat) loses at least 700 centipawns compared with the best move.",
      "id": "C6"
     },
     {
@@ -1837,6 +1838,42 @@
      },
      "statement": "Nb8 (a retreat) loses at least 700 centipawns compared with the best move.",
      "id": "C8"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "b4"
+      ],
+      "after_move": "a6b4"
+     },
+     "statement": "After Nb4 the knight on b4 is attacked (by the pawn on a5) and no white piece defends it.",
+     "id": "C9"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c5"
+      ],
+      "after_move": "a6c5"
+     },
+     "statement": "After Nc5 the knight on c5 is attacked (by the rook) and no white piece defends it.",
+     "id": "C10"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "b8"
+      ],
+      "after_move": "a6b8"
+     },
+     "statement": "After Nb8 the knight on b8 is attacked (by the king) and no white piece defends it.",
+     "id": "C11"
     }
    ],
    "tags": [
@@ -2001,20 +2038,19 @@
      "type": "best_move_in",
      "params": {
       "moves": [
-       "a6b4",
        "a6c5"
       ]
      },
-     "statement": "Nb4 and Nc5 are the engine's first choices.",
+     "statement": "Nc5 is the engine's first choice.",
      "id": "C1"
     },
     {
      "type": "move_loses",
      "params": {
       "move": "a6c7",
-      "cp": 200
+      "cp": 400
      },
-     "statement": "Nxc7 loses at least 200 centipawns compared with the best move.",
+     "statement": "Nxc7 loses at least 400 centipawns compared with the best move.",
      "id": "C2"
     },
     {
@@ -2053,7 +2089,7 @@
     "Count what Nxc7 would win and what it would cost.",
     "A pawn counts for less than a knight (counting values are a rule of thumb). Try a retreat."
    ],
-   "explain": "With a pawn on c7 the knight can be saved: Nb4 and Nc5 are the engine's first choices, and Nxc7 gives a knight for a pawn. The desperado idea applies only when the piece is lost anyway.",
+   "explain": "With a pawn on c7 the knight can be saved: Nc5 is the engine's first choice, and Nxc7 only trades the knight for a pawn. The desperado idea applies only when the piece is lost anyway.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2232,27 +2268,27 @@
      "type": "move_loses",
      "params": {
       "move": "h6g4",
-      "cp": 550
+      "cp": 1000
      },
-     "statement": "Ng4 (a retreat) loses at least 550 centipawns compared with the best move.",
+     "statement": "Ng4 (a retreat) loses at least 1000 centipawns compared with the best move.",
      "id": "C6"
     },
     {
      "type": "move_loses",
      "params": {
       "move": "h6f5",
-      "cp": 600
+      "cp": 1000
      },
-     "statement": "Nf5 (a retreat) loses at least 600 centipawns compared with the best move.",
+     "statement": "Nxf5 (a different capture) loses at least 1000 centipawns compared with the best move.",
      "id": "C7"
     },
     {
      "type": "move_loses",
      "params": {
       "move": "h6g8",
-      "cp": 650
+      "cp": 1000
      },
-     "statement": "Ng8 (a retreat) loses at least 650 centipawns compared with the best move.",
+     "statement": "Ng8 (a retreat) loses at least 1000 centipawns compared with the best move.",
      "id": "C8"
     }
    ],
@@ -2271,7 +2307,7 @@
     "Look at what the attacked piece can capture.",
     "The knight on h6 can take the rook on f7."
    ],
-   "explain": "The pawn on g7 attacks the knight and every retreat loses it. Nxf7 wins a rook for the knight. The engine rates all the retreats far below it.",
+   "explain": "The pawn on g7 attacks the knight and every square it can reach is attacked. Nxf7 wins a rook for the knight. Nxf5 wins only a pawn for the knight, and the retreats lose it for nothing; the engine rates them all far below Nxf7.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2279,7 +2315,7 @@
    },
    "feedback_by_move": {
     "h6g4": "Ng4 is a retreat, but the engine rates it far below Nxf7: the piece is lost anyway.",
-    "h6f5": "Nf5 is a retreat, but the engine rates it far below Nxf7: the piece is lost anyway.",
+    "h6f5": "Nxf5 is a different capture, but the engine rates it far below Nxf7: the piece is lost anyway.",
     "h6g8": "Ng8 is a retreat, but the engine rates it far below Nxf7: the piece is lost anyway."
    }
   },
@@ -2870,6 +2906,17 @@
      },
      "statement": "The queen sacrifice Qe8 loses a great deal.",
      "id": "C3"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 0,
+      "after_move": "e4e8"
+     },
+     "statement": "The rook on f8 blocks Qe8, so it is not check.",
+     "id": "C4"
     }
    ],
    "tags": [
@@ -2882,11 +2929,11 @@
     "lang.en"
    ],
    "hints": [
-    "Which black piece now covers the back rank?",
-    "Try the queen check on e8. What takes it?",
-    "There is no forcing win here."
+    "Look at the queen move to e8. Is it check now?",
+    "If Black takes the queen, what happens? Does Black have to take?",
+    "Qe8 is no longer check, so Black can decline the queen, for example with Bxf2+ or gxf5."
    ],
-   "explain": "The rook on f8 covers e8, so Qe8 does not end in mate and loses a great deal (engine). The engine rates the position as roughly equal; there is no combination to find here.",
+   "explain": "With the rook on f8, Qe8 is not check, so Black does not have to take the queen. If Black takes, Rxe8 is mate, but Black can decline: Bxf2+ and gxf5 both win material for Black (engine). The engine rates the position as roughly equal and finds no line that wins more than a pawn for White.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2904,7 +2951,7 @@
    "cue": 3,
    "task": "classify_position",
    "position": "PB2-29",
-   "prompt": "White to move. Is there a combination that wins here?",
+   "prompt": "White to move. Is there a forced win here?",
    "answer": {
     "class": "No"
    },
@@ -2952,7 +2999,7 @@
     "lang.en"
    ],
    "hints": [
-    "Play the queen sacrifice to its last position. Is it mate?",
+    "Look at the forcing moves first: checks, then captures. For each, play the line to the last position.",
     "Where can the black king go after Rf8+?",
     "The g-pawn has moved and left g7 free."
    ],

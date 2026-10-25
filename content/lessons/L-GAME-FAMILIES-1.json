@@ -6,14 +6,14 @@
   "minutes": 12,
   "outcomes": [
     "Explains that games are grouped by pawn structure, not by the opening's name, and that games in a family share plans",
-    "In three games with the French Advance chain, names the plan each side follows: hit the base, play on the wing the chain points to, or take space on the other wing",
+    "In three games with the French Advance chain, names the plan each side follows: hit the base, play on the wing White's chain points to, or take space on the other wing (the queenside, for Black)",
     "Checks that the chain is still there before applying the family's plan",
     "Says 'no family plan applies' when the structure has gone or never existed"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "**Games with the same pawn structure tend to share plans.** Group games by their pawns, not by the opening's name. Here White's d4 and e5 face Black's d5 and e6. Each pawn is protected by the one behind it: a chain, base at the back.\n**Rule of thumb:** the chain's owner plays on the wing the chain points to (here the kingside), and the other side attacks the base."
+      "text": "**Games with the same pawn structure tend to share plans.** Group games by their pawns, not the opening's name. Here White's d4 and e5 face Black's d5 and e6. Each pawn but the last is protected by the one behind: a chain, head e5 in front, base d4 behind.\n**Rule of thumb:** the owner plays where the chain points (here the kingside); the other side attacks the base."
     },
     {
       "type": "board",
@@ -155,11 +155,11 @@
     {
       "type": "board",
       "fen": "rnbqkbnr/pp3ppp/4p3/2ppP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 0 4",
-      "caption": "Game A, after 3...c5: the fight over the base d4, move by move.",
+      "caption": "Game A, after 3...c5: the fight over d4, move by move.",
       "line": [
         {
           "move": "c2c3",
-          "say": "White adds a defender to the base d4."
+          "say": "White adds a defender to d4. The chain now runs b2-c3-d4-e5, so its base is b2."
         },
         {
           "move": "b8c6",
@@ -242,6 +242,21 @@
             ]
           },
           "statement": "After the recapture the pawns d4 and f4 both protect e5, and no pawn protects either of them."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_set",
+          "params": {
+            "kind": "chain_base",
+            "color": "white",
+            "squares": [
+              "b2"
+            ],
+            "after_moves": [
+              "c2c3"
+            ]
+          },
+          "statement": "After 4.c3 the white chain is b2-c3-d4-e5: b2 protects c3 and no pawn protects b2."
         }
       ]
     },
@@ -251,7 +266,7 @@
     },
     {
       "type": "card",
-      "text": "**The plan holds while the structure holds.** If the base falls, the head is exchanged, or a lever opens the position, the family plans stop fitting; read the position on its own. Ask first: is the chain still there? A family holds more than one plan: Black can hit the base with ...c5, hit the head with ...f6, or take space with ...c4. Which fits depends on the pieces."
+      "text": "**The plan holds while the structure holds.** If the base falls, the head is exchanged, or a lever opens the position, the plans stop fitting; read the position on its own. Ask first: is the chain still there? A family holds more than one plan: Black can hit the chain at d4 with ...c5, hit the head with ...f6, or take space with ...c4. Which fits depends on the pieces."
     },
     {
       "type": "item",
@@ -262,12 +277,16 @@
       "item": "IB5-65"
     },
     {
-      "type": "contrast",
-      "title": "Does the chain plan apply?",
-      "prompt": "Three positions, one question: does the plan 'hit the base of the chain with a pawn' apply? Predict each, then check.",
-      "working": "IB5-66",
-      "failing": "IB5-67",
-      "irrelevant": "IB5-68"
+      "type": "item",
+      "item": "IB5-66"
+    },
+    {
+      "type": "item",
+      "item": "IB5-67"
+    },
+    {
+      "type": "item",
+      "item": "IB5-68"
     },
     {
       "type": "item",

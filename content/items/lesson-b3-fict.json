@@ -89,6 +89,16 @@
     "ref": "Lichess 2013-01 game position (CC0), game id s3cbzikh",
     "licence": "project"
    }
+  },
+  {
+   "id": "PB3-410",
+   "fen": "r4k2/pp3ppp/4n3/6B1/8/8/PP3PPP/4R1K1 w - - 0 1",
+   "family": "FAM-B3-FIC-PINEND",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -748,6 +758,64 @@
     "The pawn on g6 attacks your knight, but the queen on c2 pins it to the king on h7."
    ],
    "explain": "The pawn on g6 attacks the knight on h5 and nothing defends the knight, but the pawn is pinned to the king on h7 by the queen on c2 and may not capture. The threat is fictitious while the pin lasts.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-410",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB3-410",
+   "prompt": "Black's king has just stepped from e8 to f8; before that, the rook on e1 pinned the knight on e6 to it. The knight attacks White's bishop on g5, which nothing defends. Is the threat to take it real now? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "g5"
+      ]
+     },
+     "statement": "The bishop on g5 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "e6g5",
+      "null_move_first": true,
+      "min": 3
+     },
+     "statement": "If White does nothing, Black's Nxg5 wins the bishop and the engine line keeps the extra piece."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-FIC-PINEND",
+    "lang.en",
+    "task.predict_outcome",
+    "tier.2",
+    "mode.threat"
+   ],
+   "hints": [
+    "Is the knight still pinned? Look at where Black's king stands now.",
+    "The rook on e1 aims up the e-file. What stands behind the knight on that file now?",
+    "Nothing is behind the knight any more, so it may move and take the bishop."
+   ],
+   "explain": "With the king off the e-file the knight is no longer pinned, so Nxg5 wins a bishop. A fictitious threat becomes real when its reason goes away.",
    "review": {
     "status": "needs-human",
     "reviewer": null

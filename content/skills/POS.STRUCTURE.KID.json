@@ -1,0 +1,85 @@
+{
+  "id": "POS.STRUCTURE.KID",
+  "title": "The King's Indian chain and its pawn breaks",
+  "strand": "S5",
+  "tier": 5,
+  "origin": "gap 3 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "States the app's working definition (pawns on c4, d5 and e4 against pawns on d6, e5 and g6; colours may be reversed) and the main idea: the centre is locked, so each side attacks on its own wing and the two plans are a race.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the structure, names each side's pawn break and target: Black's ...f5 against e4 and the kingside pawn advance, White's c4-c5 against the d6 base, and which wing each plan uses.",
+      "prereqs": [
+        "POS.STRUCTURE.CHAIN.D1",
+        "POS.BREAKS.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions decides whether to start the break now, prepare it, or stop the opponent's break, by comparing the speed of the two attacks.",
+      "prereqs": [
+        "POS.STRUCTURE.KID.D1",
+        "ATK.PAWNSTORM.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how one-feature changes (the f-pawn already on f3, a knight on e8 or f6, the c-file closed or opened) change the race, and checks the verdict with the engine.",
+      "prereqs": [
+        "POS.STRUCTURE.KID.D2",
+        "POS.PLAN.RACE.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The king's-side pawn storm always works because the centre is locked.",
+    "The side with the slower break can ignore the other wing.",
+    "The bishop on g7 is a good piece because it is fianchettoed."
+  ],
+  "sources": [
+    "docs/exercises-positional.md §5 (the named-structure rule); this structure is NOT yet in tools/positional/gen_struct.py, so its definition below is new and must be added there before any item uses it",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 30 (pawn chain: attack the base, two theatres of war)",
+    "docs/skill-graph.md section 6, gap 3",
+    "The plans are recalled [R] and need a strong-player review"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5; definition and plans are ours; the chain-base idea is Nimzowitsch's"
+  },
+  "conditions": [
+    "Working definition (new, the app's own, not claimed to match any book): one side has pawns on c4, d5 and e4, the other has pawns on d6, e5 and g6; the colours may be reversed.",
+    "Attack the base of the chain, not its head: the c4-c5 break hits d6, the base of the chain d6-e5, and the two sides play on opposite wings.",
+    "Each side's attack is a race on its own wing: the side whose break arrives first with its pieces behind it usually decides, and the slower side must stop the other's break before hurrying its own.",
+    "The pawns d6 and e5 stand on the colour of the g7 bishop, so that bishop is limited until a break or a trade opens its diagonal."
+  ],
+  "condition_sources": [
+    "ours; not yet implemented in gen_struct.py",
+    "Nimz #30 (b); ours [R]",
+    "MAP11 §3 (POS.PLAN.RACE, Z-B); ours [R]",
+    "rules (square colours); POS.GOODBAD; ours"
+  ],
+  "contrasts": [
+    "The kingside break is played before the pieces and the king are ready: it loses time or weakens e5 and g6.",
+    "The queenside break c4-c5 is played when the opponent's kingside attack is already faster: the break is a move too slow.",
+    "The d-pawns have been exchanged, so no chain exists (a Benoni or open-centre position): the plans above do not apply."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours [R]",
+    "ours [R]",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "POS.GOODBAD.D2",
+    "DEF.SHELTER.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.GOODBAD.D2": "the g7 bishop behind its own pawns is a good-bishop-or-bad-bishop question",
+    "DEF.SHELTER.D1": "pawn advances toward the king loosen its cover on both sides"
+  }
+}

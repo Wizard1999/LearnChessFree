@@ -1,0 +1,90 @@
+{
+  "id": "END.ROOK-PAWN",
+  "title": "Rook-pawn special cases",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "gap 2 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains why the rook pawn draws more often than other pawns: the defending king can sit in the corner, the attacking king has only one side to shelter on, and the edge pawn cannot be supported from both sides; names the exceptions.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the pawn is on the a- or h-file, predicts win or draw in king-and-pawn, king-bishop-and-pawn (by the bishop's colour) and king-knight-and-pawn endings from the defending king's distance to the corner.",
+      "prereqs": [
+        "END.KPK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled endings tells the rook-pawn draw from the win with a bishop or a knight, using the defending king's distance to the corner, the bishop's colour and the pawn's rank, including the knight-and-pawn-on-the-seventh draw.",
+      "prereqs": [
+        "END.ROOK-PAWN.D1",
+        "END.KPK.D2",
+        "END.KNIGHT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Applies the rook-pawn rule in rook endings (the Lucena bridge fails on the edge) and verifies each claim against the tablebase; predicts what a second pawn or a different bishop changes.",
+      "prereqs": [
+        "END.ROOK-PAWN.D2",
+        "END.ROOK-BASICS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The rook pawn is the weakest pawn, so any ending with it is a draw.",
+    "A wrong-coloured bishop always draws, wherever the defending king is.",
+    "An extra piece plus a rook pawn always wins.",
+    "If a rook-ending technique wins with the b-pawn it wins with the a-pawn."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 2 (rook-pawn special cases missing)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K23 (rook-pawn exception: the defender who reaches the corner draws), K27 (wrong bishop)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-14 (wrong-colour rook pawn)",
+    "docs/curriculum-map-v1.1.md §4 (wrong-bishop pair verified)",
+    "tablebase checks run for this node on 2026-10-25 (positions in condition_sources); the wrong bishop itself is END.WRONG-BISHOP"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4; every condition has a tablebase-checked instance; the general statements are recalled"
+  },
+  "conditions": [
+    "King and rook pawn against king is a draw if the defending king can reach the corner in front of the pawn in time; with the defending king too far from the corner it is a win.",
+    "With a bishop, a bishop that controls the pawn's queening square wins in the positions checked; a bishop of the other colour draws when the defending king reaches the corner and wins when that king is cut off from it.",
+    "With a knight the extra piece usually wins while the pawn is still on the fourth or fifth rank, even against a king in the corner, but not when the pawn is on the seventh rank and the defending king is shut in the corner in front of it.",
+    "In rook endings the rook pawn draws more often because the attacking king cannot build the Lucena bridge on the edge: the arrangement that wins with the b-pawn has a drawn counterpart on the a-file."
+  ],
+  "condition_sources": [
+    "EDL K23 (b); [V] tablebase 2026-10-25: k7/8/1K6/P7/8/8/8/8 w draws, 3k4/8/1K6/P7/8/8/8/8 w wins",
+    "EDL K27 (b); CAP CI-14 (b); MAP11 §4 (k7/8/8/8/P7/8/8/2B1K3 w draws, k7/8/8/8/P7/8/8/3BK3 w wins); [V] tablebase 2026-10-25: 2k5/8/8/8/P7/8/8/2B1K3 w draws, 7k/8/8/8/P7/8/8/2B1K3 w wins",
+    "ours; [V] tablebase 2026-10-25: 7k/8/8/8/P7/8/8/1NK5 w and k7/8/8/P7/8/8/8/1NK5 w win; k7/P7/1K6/8/8/8/8/1N6 w, k7/P7/1K6/8/8/8/8/4N3 w and k7/P7/1K6/8/8/8/8/3N4 w draw (three knight squares probed; the general statement is recalled, not proved)",
+    "ours; MAP11 §4 (1K1k4/1P6/8/8/8/8/r7/2R5 w wins); [V] tablebase 2026-10-25: K1k5/P7/8/8/8/8/r7/1R6 w draws"
+  ],
+  "contrasts": [
+    "The same king-and-pawn position with the defending king on d8 instead of a8: the pawn wins.",
+    "A wrong-coloured bishop with the defending king cut off far from the corner: there is no wrong-bishop draw, White wins.",
+    "Knight and pawn on the seventh against a king in the corner looks like a free win, but it is a draw in the positions probed.",
+    "A pawn on the b- to g-file: the corner rule does not apply, and opposition and key squares decide (END.KPK)."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours; [V] tablebase 2026-10-25 (first pair of condition 1)",
+    "ours; [V] tablebase 2026-10-25 (second pair of condition 2)",
+    "ours; [V] tablebase 2026-10-25 (condition 3)",
+    "EDL K23 (c)"
+  ],
+  "soft_prereqs": [
+    "END.KEYSQ.D1",
+    "TAC.STALEMATE-TRICK.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.KEYSQ.D1": "the corner rule is the rim-file exception to the key-square rule",
+    "TAC.STALEMATE-TRICK.D1": "most rook-pawn draws are held by stalemate or by the cornered king"
+  }
+}

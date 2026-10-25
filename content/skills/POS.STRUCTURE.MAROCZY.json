@@ -1,0 +1,83 @@
+{
+  "id": "POS.STRUCTURE.MAROCZY",
+  "title": "The Maroczy bind",
+  "strand": "S5",
+  "tier": 4,
+  "origin": "gap 3 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "States the app's working definition (pawns on c4 and e4 and no d-pawn, against pawns on d6 and g6 and no c-pawn; colours may be reversed) and what the bind does: it restrains ...d5 and ...b5 and gives space, at the cost of the hole on d4.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the structure, states the owner's plans (keep c4 and e4, restrain the breaks, trade the active pieces of the cramped side) and the cramped side's plans (trade pieces, prepare one break, use the d4 hole).",
+      "prereqs": [
+        "POS.SPACE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions decides whether the bind is held or released, spots which pawn break is ready, and says which trades help the owner and which help the cramped side.",
+      "prereqs": [
+        "POS.STRUCTURE.MAROCZY.D1",
+        "POS.BREAKS.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts one-feature changes (a knight on d4 that can or cannot be traded, a break prepared or not, queens off) and checks the verdict with the engine.",
+      "prereqs": [
+        "POS.STRUCTURE.MAROCZY.D2",
+        "POS.OUTPOST.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The bind wins by itself because space is always an advantage.",
+    "The side with less space must break at once.",
+    "More trades always help the owner of the bind."
+  ],
+  "sources": [
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py (exact pawn squares)",
+    "docs/skill-graph.md section 6, gap 3",
+    "The sheets name no Maroczy plan; the plans below are recalled [R] and need a strong-player review"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4; plans recalled, definition and hole claim from the app's rules"
+  },
+  "conditions": [
+    "Working definition (the app's own, not claimed to match any book): pawns on c4 and e4 and none on the d-file, against pawns on d6 and g6 and none on the c-file; the colours may be reversed.",
+    "The bind works while both breaks are held back: the owner keeps c4 and e4 and watches the squares b5 and d5; the more pieces come off, the more room the cramped side gets.",
+    "The cramped side trades pieces and prepares one break, ...b5 or ...d5, and plays it when the pieces behind it are ready, not on a timetable; d5 is attacked by two pawns, so the break needs two defenders in place.",
+    "The owner's cost is the hole on d4: no White pawn can attack it, so an enemy piece there can only be removed by a piece trade."
+  ],
+  "condition_sources": [
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py",
+    "ours [R]; needs review",
+    "rules (two pawn attackers on d5); ours [R]",
+    "rules (the hole definition of docs/exercises-positional.md §5); POS.WEAKSQ"
+  ],
+  "contrasts": [
+    "...d5 is played before the pieces are ready: both c4 and e4 attack d5 and the pawn is simply lost.",
+    "The owner trades into an ending where the bind has no pieces to restrain: the space is no longer worth anything.",
+    "The same pieces but the first side still has a d-pawn (d4 with e4): the structure is a different one (for example an open Sicilian)."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules; ours",
+    "ours [R]",
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py"
+  ],
+  "soft_prereqs": [
+    "POS.CENTER.CONTROL.D2",
+    "POS.WEAKSQ.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.CENTER.CONTROL.D2": "the bind is control of d5 and b5 by pawns instead of pieces",
+    "POS.WEAKSQ.D2": "the hole on d4 is the owner's price"
+  }
+}

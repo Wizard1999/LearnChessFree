@@ -13,12 +13,12 @@
   "steps": [
     {
       "type": "card",
-      "text": "A **desperado** is a piece that is lost anyway. Instead of simply retreating or being captured for nothing, it captures as much as it can first. When one of your pieces is attacked and has no safe square, ask what it can take on the way out. Retreating would not save it, so whatever it captures is a gain."
+      "text": "A **desperado** is a piece that will be lost whatever you do. Before it goes, let it capture as much as it can. When one of your pieces is attacked and every square it can reach is attacked too, ask what it can take on the way out. It cannot be saved, so each capture cuts the loss."
     },
     {
       "type": "board",
-      "fen": "1rk5/1pp2p2/N7/8/8/8/PP2P3/2K5 w - - 0 1",
-      "caption": "White to move. The knight on a6 is attacked by the pawn on b7 and cannot be saved.",
+      "fen": "1rk5/1p6/N2p4/p7/8/8/PP2P3/2K5 w - - 0 1",
+      "caption": "White to move. The pawn on b7 attacks the knight, and Black attacks every square the knight can reach.",
       "line": [
         {
           "move": "a6b8",
@@ -85,18 +85,18 @@
           "type": "move_loses",
           "params": {
             "move": "a6b4",
-            "cp": 350
+            "cp": 700
           },
-          "statement": "Nb4 (a retreat) loses at least 350 centipawns compared with the best move.",
+          "statement": "Nb4 (a retreat) loses at least 700 centipawns compared with the best move.",
           "id": "C6"
         },
         {
           "type": "move_loses",
           "params": {
             "move": "a6c5",
-            "cp": 400
+            "cp": 600
           },
-          "statement": "Nc5 (a retreat) loses at least 400 centipawns compared with the best move.",
+          "statement": "Nc5 (a retreat) loses at least 600 centipawns compared with the best move.",
           "id": "C7"
         },
         {
@@ -105,8 +105,44 @@
             "move": "a6c7",
             "cp": 600
           },
-          "statement": "Nxc7 (a different capture) loses at least 600 centipawns compared with the best move.",
+          "statement": "Nc7 (a retreat) loses at least 600 centipawns compared with the best move.",
           "id": "C8"
+        },
+        {
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "b4"
+            ],
+            "after_move": "a6b4"
+          },
+          "statement": "After Nb4 the knight on b4 is attacked (by the pawn on a5) and no white piece defends it.",
+          "id": "C9"
+        },
+        {
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "c5"
+            ],
+            "after_move": "a6c5"
+          },
+          "statement": "After Nc5 the knight on c5 is attacked (by the pawn on d6) and no white piece defends it.",
+          "id": "C10"
+        },
+        {
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "c7"
+            ],
+            "after_move": "a6c7"
+          },
+          "statement": "After Nc7 the knight on c7 is attacked (by the king) and no white piece defends it.",
+          "id": "C11"
         }
       ],
       "arrows": [
@@ -134,7 +170,7 @@
     },
     {
       "type": "card",
-      "text": "Two checks before you sell a piece.\n**Is it really lost?** If it has a safe square or a defender, saving it may be better.\n**What does each capture allow?** Count the recaptures, and compare the result with losing the piece for nothing.\n*Rule of thumb:* counting values (1, 3, 3, 5, 9) is a rule of thumb. A capture that opens a mating line can matter more."
+      "text": "Two checks before you sell a piece.\n**Is it really lost?** If it has a safe square, saving it may be better. A defender does not help against a pawn.\n**What does each capture allow?** Count the recaptures, and compare the result with losing the piece for nothing.\n*Rule of thumb:* counting values (1, 3, 3, 5, 9) are only a guide. A capture that opens a mating line can matter more."
     },
     {
       "type": "contrast",
@@ -167,7 +203,7 @@
     {
       "type": "practice",
       "tags": [
-        "theme.hangingPiece",
+        "theme.desperado",
         "cue.3"
       ],
       "n": 4,

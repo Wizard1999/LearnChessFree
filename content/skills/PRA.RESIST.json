@@ -1,0 +1,93 @@
+{
+  "id": "PRA.RESIST",
+  "title": "Practical resistance when worse",
+  "strand": "S10",
+  "tier": 4,
+  "origin": "gap 5 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains that when worse the aim is the line that is hardest for the opponent, not the slowest loss; lists the resources (counter-chances, a stalemate or fortress set-up, a perpetual check, a trap that costs nothing); and says that resigning is a decision with conditions.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a worse position, lists the opponent's problems and the own resources and picks the move that sets the most problems among the moves that do not lose faster.",
+      "prereqs": [
+        "DEF.RESOURCES.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions finds the stalemate, fortress or perpetual-check resource when it exists, avoids the quickest-losing line and the trap that costs material, and says 'no resource here' when there is none.",
+      "prereqs": [
+        "PRA.RESIST.D1",
+        "TAC.STALEMATE-TRICK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks a claimed swindle or fortress against the opponent's best reply (engine or tablebase) and uses the checklist to decide whether to play on or resign, with the reason written down.",
+      "prereqs": [
+        "PRA.RESIST.D2",
+        "DEF.DIAGNOSE.D2",
+        "TAC.PERPETUAL.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, the log of worse positions shows the line chosen, the resources tried and the play-on or resign decision with its reason; over ten such positions the rate of saved or prolonged games is reported, including the games where playing on cost time or accuracy.",
+      "prereqs": [
+        "PRA.RESIST.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Playing on always pays, because the opponent may blunder.",
+    "A lost game should be resigned at once.",
+    "Any trap is worth setting.",
+    "The slowest loss is the best resistance."
+  ],
+  "sources": [
+    "docs/skill-graph.md section 6, gap 5 (no swindle or resourcefulness node; DEF.RESOURCES only partly covers it)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C21 (d), §6 item 11 (advice to resign instead of studying huge disadvantages; the sheet marks it 'not adoptable')",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G6: he kept playing a lost game in the hope of a trap, and the opponent avoided it)",
+    "The sources disagree, none gives evidence, and the working rule below is our hypothesis [H]; the D4 log is how the rule gets tested on the learner's own games",
+    "Habit node: defined by D4 evidence like LOOP.V1 and SELF.1; items alone cannot test it out"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4; hypothesis-level, the sources conflict"
+  },
+  "conditions": [
+    "Choose by problems set, not by length of loss: among the moves that do not lose faster, prefer the one after which the opponent must find a unique or non-obvious move.",
+    "A trap is worth setting only if declining it costs you nothing: the trap move must be at least as good as the alternatives; a trap that loses faster when declined is not resistance.",
+    "Stalemate and fortress resources need exact conditions (no legal move for the side not to move and no spare tempo for the attacker; the fortress squares covered); check them with the rules and, for seven pieces or fewer, the tablebase before relying on them.",
+    "Resigning: the sources disagree. One older master advises resigning instead of studying hopeless positions, another records playing on in a lost game for a trap that failed, and modern coaching stresses resilience and swindles; none has evidence. Working rule: play on while any resource from the checklist exists, the clock and the opponent allow it and the position still teaches you something; resign when no resource is left and the rest only repeats a known loss. Log the decisions and the results."
+  ],
+  "condition_sources": [
+    "ours [H]",
+    "ours [I]; CAP CI-51 (b) (G6: the hoped-for trap was avoided)",
+    "rules; TAC.STALEMATE-TRICK and END.FORTRESS conditions; ours",
+    "ZB C21 (d), §6 item 11; CAP CI-51 (b); the rule is ours [H]"
+  ],
+  "contrasts": [
+    "A swindle attempt whose refutation is the obvious move: it loses faster than the sound defence and costs material.",
+    "A claimed stalemate trick where the opponent has a spare move or a different promotion: it looks like a resource and is not.",
+    "A slightly worse position that is still equal in practice: this is ordinary defence (DEF.RESOURCES), not resistance in a lost game."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours [I]",
+    "TAC.STALEMATE-TRICK D3 (spare moves, promotion choice)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "PRA.RECOVER.D2",
+    "PRA.PRESSURE.D1"
+  ],
+  "soft_prereq_notes": {
+    "PRA.RECOVER.D2": "accepting a bad position without tilting is the habit this node needs",
+    "PRA.PRESSURE.D1": "resistance is usually needed under time pressure"
+  }
+}

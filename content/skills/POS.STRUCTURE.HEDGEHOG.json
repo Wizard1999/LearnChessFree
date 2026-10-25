@@ -1,0 +1,85 @@
+{
+  "id": "POS.STRUCTURE.HEDGEHOG",
+  "title": "The hedgehog",
+  "strand": "S5",
+  "tier": 5,
+  "origin": "gap 3 of docs/skill-graph.md section 6 (closed 2026-10-25)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "States the app's working definition (pawns on b6, d6 and e6 and no c-pawn, against pawns on c4 and e4 and no d-pawn; colours may be reversed) and the idea: a compact set-up behind the sixth rank, waiting for the moment of a break.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the structure, states the cramped side's plan (keep the compact set-up, keep the pieces flexible, wait for ...b5 or ...d5) and the space side's plans (keep the space and prevent the breaks, or strike first).",
+      "prereqs": [
+        "POS.STRUCTURE.MAROCZY.D1",
+        "POS.BREAKS.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions decides whether a break is ready, whether to keep waiting, and whether the space side should prevent the break or attack.",
+      "prereqs": [
+        "POS.STRUCTURE.HEDGEHOG.D1",
+        "DEF.WAIT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts one-feature changes (a trade of central pieces, a break prepared or not, a space-gaining pawn advance) and checks the verdict with the engine, knowing that engines often rate such positions near equal.",
+      "prereqs": [
+        "POS.STRUCTURE.HEDGEHOG.D2",
+        "POS.PROPHYLAXIS.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The hedgehog is just a passive, cramped position.",
+    "Waiting is always a plan.",
+    "The space side only has to keep still."
+  ],
+  "sources": [
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py (exact pawn squares)",
+    "docs/skill-graph.md section 6, gap 3",
+    "sources/sheets/capablanca_chess-fundamentals.md §5 item 17 (the hedgehog is named there from outside knowledge as a counter-example to 'backward pawns lose', flagged CHECK)",
+    "Plans below are recalled [R] and need a strong-player review; no sheet describes them"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5; plans recalled, no sheet support, needs a strong-player review"
+  },
+  "conditions": [
+    "Working definition (the app's own, not claimed to match any book): one side has pawns on b6, d6 and e6 and none on the c-file, the other has pawns on c4 and e4 and none on the d-file; the colours may be reversed.",
+    "The cramped side keeps pieces back and the pawns compact so that no target appears; waiting is a plan only while the opponent cannot make progress without a concession.",
+    "The break (...b5 or ...d5) is timed by the opponent's piece placement: play it when the squares it uses are covered; played too early it loses a pawn or opens the position for the space side.",
+    "The space side risks overextension, since every advance leaves a weakness behind it, and the structure is the standard case where a backward pawn is a trade-off and not a fault."
+  ],
+  "condition_sources": [
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py",
+    "ours [R]; DEF.WAIT",
+    "ours [R]",
+    "CAP §5 item 17 (flag); ours [R]"
+  ],
+  "contrasts": [
+    "The cramped side breaks before the pieces are placed: d5 is attacked by c4 and e4, and the pawn is lost.",
+    "The cramped side waits while the space side prepares an advance that removes the break: waiting has stopped being a plan.",
+    "The same pawn squares but a Black c-pawn is still on the board: this is not the hedgehog."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules; ours",
+    "ours [R]",
+    "docs/exercises-positional.md §5; tools/positional/gen_struct.py"
+  ],
+  "soft_prereqs": [
+    "POS.EXCHANGE.D2",
+    "POS.RESTRAINT.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.EXCHANGE.D2": "which trades relieve the cramped side",
+    "POS.RESTRAINT.D1": "the space side's job is restraint of the two breaks"
+  }
+}
