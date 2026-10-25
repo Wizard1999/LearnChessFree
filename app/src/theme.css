@@ -1,0 +1,84 @@
+/* Design tokens (docs/design-doctrine-v1.md section 4 and 14; contrast figures recomputed in docs/design-direction.md).
+   Components use these names. The older names (--bg, --muted, --line, --accent-text, --warn) are aliases kept so existing
+   rules keep working; new rules should use the doctrine names. Board-state colours are separate tokens so the brand accent
+   can change without changing what a highlight means. */
+:root {
+  color-scheme: light;
+  --canvas: #f4f1e9;
+  --surface: #fffdf7;
+  --text: #202730;
+  --text-secondary: #535e68;
+  --accent: #a73725;
+  --accent-hover: #862b1d;
+  --on-accent: #ffffff;
+  --success: #24644b;
+  --warning: #80580f;
+  --error: #9d2942;
+  --focus: #1559a6;
+  --divider: #d8d1c5;            /* decorative only: never the sole boundary of a control */
+  --control-boundary: #7a817e;   /* 3.5:1 on canvas, 3.9:1 on surface */
+  --ok-bg: #e4efe8;
+  --no-bg: #f6e6e1;
+  --chip: #ece7da;
+
+  /* board (default: warm neutral); presets below */
+  --board-light: #e4d9c4;
+  --board-dark: #95836b;
+  --board-coord: #202730;
+  --board-last: rgba(224, 168, 40, 0.5);
+  --board-selected: rgba(21, 89, 166, 0.38);
+  --board-dest: rgba(32, 39, 48, 0.34);
+  --board-hint: rgba(255, 213, 0, 0.38);
+  --board-pick: rgba(21, 89, 166, 0.5);
+
+  --radius-control: 8px;
+  --radius-panel: 12px;
+  --space-unit: 4px;
+  --font-ui: 'Source Sans 3 Variable', 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-editorial: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-moves: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+
+  /* aliases for rules written before the tokens existed */
+  --bg: var(--canvas);
+  --muted: var(--text-secondary);
+  --line: var(--divider);
+  --accent-text: var(--on-accent);
+  --warn: var(--warning);
+}
+
+/* dark: follows the system unless the learner chose a theme; an explicit choice always wins */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --canvas: #171c22; --surface: #212832; --text: #f4f1e9; --text-secondary: #b7c0ca;
+    --accent: #f09a7b; --accent-hover: #f7af96; --on-accent: #171c22;
+    --success: #8ccbaa; --warning: #e6c376; --error: #f3a1ae; --focus: #8abeff;
+    --divider: #3c4651; --control-boundary: #929ca6;
+    --ok-bg: #1f3329; --no-bg: #3a2723; --chip: #2b333d;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --canvas: #171c22; --surface: #212832; --text: #f4f1e9; --text-secondary: #b7c0ca;
+  --accent: #f09a7b; --accent-hover: #f7af96; --on-accent: #171c22;
+  --success: #8ccbaa; --warning: #e6c376; --error: #f3a1ae; --focus: #8abeff;
+  --divider: #3c4651; --control-boundary: #929ca6;
+  --ok-bg: #1f3329; --no-bg: #3a2723; --chip: #2b333d;
+}
+
+/* board presets (Settings, Appearance) */
+:root[data-board='sage'] { --board-light: #e5ddca; --board-dark: #7c8a78; }
+:root[data-board='contrast'] { --board-light: #f5f5f0; --board-dark: #566170; --board-coord: #111111; --board-last: rgba(255, 190, 0, 0.62); --board-dest: rgba(0, 0, 0, 0.5); }
+
+/* text size (Settings, Appearance) */
+:root[data-text='large'] { font-size: 112.5%; }
+:root[data-text='larger'] { font-size: 125%; }
+
+/* keyboard focus is always visible and never colour-only (a 3px ring with an offset) */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+/* motion: honour the system setting and the in-app choice */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+:root[data-motion='reduce'] *, :root[data-motion='reduce'] *::before, :root[data-motion='reduce'] *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }

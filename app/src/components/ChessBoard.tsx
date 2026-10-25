@@ -6,6 +6,7 @@ import type { Key } from 'chessground/types'
 import type { DrawShape } from 'chessground/draw'
 import 'chessground/assets/chessground.base.css'
 import 'chessground/assets/chessground.brown.css'
+import { prefersReducedMotion } from '../lib/appearance'
 import 'chessground/assets/chessground.cburnett.css'
 
 export interface BoardShape { from: string; to?: string; brush?: 'green' | 'red' | 'blue' | 'yellow' }
@@ -60,7 +61,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       lastMove: lastMove ? (lastMove as Key[]) : undefined,
       coordinates: true,
       viewOnly: !movable && !picker && !edit,
-      animation: { enabled: true, duration: 180 },
+      animation: { enabled: !prefersReducedMotion(), duration: 180 },
       highlight: { lastMove: true, check: true, custom: hl },
       draggable: { enabled: !!movable || !!edit, deleteOnDropOff: !!edit },
       selectable: { enabled: !!movable || !!picker || !!edit },

@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 57%** (46 of 83 tasks done, in-progress tasks count half). Updated 2026-10-25T10:11+00:00 UTC.
+**Overall: 58%** (47 of 83 tasks done, in-progress tasks count half). Updated 2026-10-25T10:15+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -11,7 +11,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 16/19 | 84% |
 | Phase 3: Curriculum graph | 2/4 | 50% |
-| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 1/9 | 11% |
+| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/9 | 22% |
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 6/13 | 50% |
 | Phase 6: Data | 1/3 | 33% |
@@ -94,7 +94,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`)
 - [x] Read the doctrine, verify its contrast figures, write my response and plan
-- [ ] Tokens and look: palette (light and dark), self-hosted fonts, board and piece theme, reduced motion
+- [x] Tokens and look: palette (light and dark), self-hosted fonts, board theme, appearance settings, reduced motion
 - [ ] Lesson and practice workspace layout (board beside the teaching panel)
 - [ ] Home, first visit and navigation (Continue, Review, five primary destinations)
 - [ ] Course page as a chapter list with evocative and literal titles

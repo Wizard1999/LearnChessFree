@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
 import { exportAll, importAll, resetAll } from '../db'
+import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function Settings() {
   const [msg, setMsg] = useState<string | null>(null)
   const [loop, setLoop] = useState<LoopState>(EMPTY_LOOP)
+  const [look, setLook] = useState<Appearance>(loadAppearance())
+  const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = { ...look, [k]: v }; setLook(n); saveAppearance(n) }
   useEffect(() => { void loadLoop().then(setLoop) }, [])
 
   async function doExport() {
@@ -43,6 +46,23 @@ export function Settings() {
           <button type="button" onClick={() => void doReset()}>Delete everything</button>
         </div>
         {msg && <p role="status">{msg}</p>}
+      </section>
+      <section className="card">
+        <h2>Appearance</h2>
+        <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches.</p>
+        {([
+          ['theme', 'Theme', [['system', 'Same as my device'], ['light', 'Light'], ['dark', 'Dark']]],
+          ['board', 'Board colours', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast']]],
+          ['text', 'Text size', [['standard', 'Standard'], ['large', 'Large'], ['larger', 'Larger']]],
+          ['motion', 'Motion', [['system', 'Same as my device'], ['reduce', 'Reduce motion']]],
+        ] as [keyof Appearance, string, [string, string][]][]).map(([key, label, opts]) => (
+          <fieldset key={key} className="appearance">
+            <legend className="small muted">{label}</legend>
+            <div className="options">{opts.map(([v, text]) => (
+              <button key={v} type="button" className={look[key] === v ? 'chip on' : 'chip'} aria-pressed={look[key] === v} onClick={() => choose(key, v as never)}>{text}</button>
+            ))}</div>
+          </fieldset>
+        ))}
       </section>
       <section className="card">
         <h2>Thinking prompts</h2>
