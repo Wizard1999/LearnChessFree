@@ -1,0 +1,73 @@
+{
+  "id": "TAC.XRAY",
+  "title": "X-ray and batteries",
+  "strand": "S3",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a piece can attack or defend a square 'through' another piece of its own side once the front piece captures or moves.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told there is an x-ray, finds the capture sequence in which the rear piece joins in.",
+      "prereqs": [
+        "TAC.SKEWER.D1",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed exchange positions, counts attackers and defenders including the pieces behind others, and finds the winning sequence.",
+      "prereqs": [
+        "TAC.XRAY.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how the count changes when a front piece is pinned, removed or exchanged, and verifies the sequence.",
+      "prereqs": [
+        "TAC.XRAY.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Pieces lined up on a file count as one attacker."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K3 (a piece's own capture can unmask an attack by another piece, changing the tally); §7 row K3",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 27 (a second rook takes over the file with tempo)",
+    "docs/curriculum-map-v1.md §2 S3 (T3-4)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "The rear piece is of the same or a compatible type on the same line and the front piece will leave by capture or move.",
+    "The count is taken in cheapest-first order and either side may stop."
+  ],
+  "condition_sources": [
+    "EDL K3",
+    "EDL K2 (d)"
+  ],
+  "contrasts": [
+    "The front piece cannot capture because it is pinned, so the battery never forms.",
+    "The rear piece is worth more than the target, so joining the exchange loses.",
+    "A lone piece on the file with nothing behind it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz #26",
+    "EDL K2",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "POS.OPENFILE.D3"
+  ],
+  "soft_prereq_notes": {
+    "POS.OPENFILE.D3": "doubling rooks on a file is the usual battery"
+  }
+}

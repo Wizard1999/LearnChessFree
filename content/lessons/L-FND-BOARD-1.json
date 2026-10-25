@@ -1,0 +1,113 @@
+{
+  "id": "L-FND-BOARD-1",
+  "title": "The board and its square names",
+  "skill": "FND.BOARD",
+  "depth": "D1",
+  "minutes": 7,
+  "outcomes": [
+    "Names any square from its file and rank",
+    "Finds a named square on the board, from White's side or Black's",
+    "Reads a simple written move such as Nf3 or Bc4 and plays it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A chessboard has 64 squares. The columns are called **files** and are named with the letters **a** to **h**, left to right as White sees the board. The rows are called **ranks** and are numbered **1** to **8**, starting at White's side. Every square has a name: its file letter, then its rank number. The white king starts on **e1**."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "Watch the white pawn travel from e2 to e4. Every square keeps its name.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "The pawn on e2 moves to e4."
+        },
+        {
+          "move": "e7e5",
+          "say": "Black's pawn on e7 moves to e5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "e2",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e2e4"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-1"
+    },
+    {
+      "type": "item",
+      "item": "IA0-2"
+    },
+    {
+      "type": "card",
+      "text": "To write a move down, use the piece's letter and the square it goes to: **K** king, **Q** queen, **R** rook, **B** bishop, **N** knight. Pawns have no letter, so a pawn move is just the square: **e4**. A capture adds an **x**: **Nxe5** means the knight captures on e5."
+    },
+    {
+      "type": "item",
+      "item": "IA0-3"
+    },
+    {
+      "type": "item",
+      "item": "IA0-4"
+    },
+    {
+      "type": "contrast",
+      "title": "Same board, other side",
+      "prompt": "Predict first: we turn the board around so you see it from Black's side. Does the name of the rook's square change?",
+      "working": "IA0-5",
+      "failing": "IA0-6"
+    },
+    {
+      "type": "item",
+      "item": "IA0-7"
+    },
+    {
+      "type": "item",
+      "item": "IA0-8"
+    },
+    {
+      "type": "item",
+      "item": "IA0-9"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.BOARD",
+        "kind.generated"
+      ],
+      "n": 8
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "How sure are you that you can name any square quickly, without counting? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1",
+    "sources/sheets/capablanca_chess-fundamentals.md (explanation economy only)"
+  ]
+}

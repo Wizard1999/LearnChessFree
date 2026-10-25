@@ -1,0 +1,73 @@
+{
+  "id": "TAC.DOUBLE-CHECK",
+  "title": "Double check",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why a double check can only be answered by a king move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the double check', finds the move that gives it and lists the king's only legal replies.",
+      "prereqs": [
+        "TAC.DISCOVER.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the double check that mates or wins material and says 'no double check' where none exists.",
+      "prereqs": [
+        "TAC.DOUBLE-CHECK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Combines a double check with a discovered see-saw or a queen sacrifice, and verifies that every king flight loses.",
+      "prereqs": [
+        "TAC.DOUBLE-CHECK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Interposing or capturing can answer a double check.",
+    "A double check always mates."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 29 (double check leaves only flight; he calls it purely tactical)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "Both checks arise from one move (a discovered check plus the moving piece's own check); only a king move is legal.",
+    "It decides the game when every flight square is covered or leads to a worse position."
+  ],
+  "condition_sources": [
+    "Nimz #29",
+    "ours"
+  ],
+  "contrasts": [
+    "The king has a safe flight square, and the double check merely drives it to a better square.",
+    "A single check with a blockable line mistaken for a double check.",
+    "A double check available in a position where the king has an immediate mating threat of its own is not the point."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "FND.PIECE.KING.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.PIECE.KING.D1": "the king's flight squares decide whether a double check mates"
+  },
+  "note": "Listed T1-2 in the map; placed at tier 2 with the other basic motifs."
+}

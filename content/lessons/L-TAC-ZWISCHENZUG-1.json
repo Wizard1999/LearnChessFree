@@ -1,0 +1,154 @@
+{
+  "id": "L-TAC-ZWISCHENZUG-1",
+  "title": "In-between moves: a check or capture first",
+  "skill": "TAC.ZWISCHENZUG",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Asks, before a capture or recapture, whether a check or capture can be played first",
+    "Finds the in-between check or capture when told one exists",
+    "Re-counts the exchange to see that the original capture still wins what was expected",
+    "Recognises a position where the plain recapture is simply best"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An **in-between move** (German: *Zwischenzug*) is a forcing move you play *before* the reply your opponent expects, such as the recapture. It is usually a **check**, which the opponent must answer, or a **capture**.\nThe question to ask before any capture or recapture: **is there a check or capture I can play first, and does my original capture still work afterwards?**"
+    },
+    {
+      "type": "board",
+      "fen": "2k5/8/b7/1R6/3r4/1KP3P1/8/8 w - - 0 48",
+      "caption": "White to move. The pawn on c3 attacks the rook on d4, and Black's bishop on a6 attacks the white rook on b5. The expected move is to take on d4.",
+      "line": [
+        {
+          "move": "b5c5",
+          "say": "The attacked rook moves with check along the c-file. Black has to answer the check first."
+        },
+        {
+          "move": "c8d7",
+          "say": "The king steps aside. The white rook has left b5, so the bishop can no longer take it there."
+        },
+        {
+          "move": "c3d4",
+          "say": "Now the pawn takes the rook on d4. Along the engine line White gains at least five points of material."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "c5"
+        },
+        {
+          "from": "c3",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b5c5"
+            ]
+          },
+          "statement": "The engine's best move is Rc5+ (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "b5c5",
+            "min": 5
+          },
+          "statement": "Along the engine line White gains at least five points of material."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "c3d4",
+            "cp": 600
+          },
+          "statement": "Taking at once with cxd4 is at least 600 centipawns worse (engine)."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "b5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Black's bishop on a6 attacks the rook on b5."
+        },
+        {
+          "id": "C5",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The pawn on c3 attacks the rook on d4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB1-001"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the in-between move forces a reply, and afterwards the capture you wanted still wins what you expected. **Rule of thumb:** look at checks first, because the reply is forced.\n**When it fails:** for example when a pawn defends the target, so the follow-up capture wins nothing. After the forcing move, count the exchange again, and ask whether the opponent has an in-between move of their own."
+    },
+    {
+      "type": "contrast",
+      "title": "Same exchange, one change",
+      "prompt": "The black rook on d8 and the white rook on d1 face each other on the d-file. In the next position a white pawn stands on f4 instead of f2. Predict, then check.",
+      "working": "IB1-001",
+      "failing": "IB1-002",
+      "irrelevant": "IB1-003"
+    },
+    {
+      "type": "item",
+      "item": "IB1-003"
+    },
+    {
+      "type": "item",
+      "item": "IL-weqbi",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-004",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.intermezzo",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, what did you expect your opponent to do next, and did you check that your capture still worked after your forcing move? (The practice puzzles carry Lichess's automatic theme label, which is not always an exact fit for this lesson.)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.ZWISCHENZUG.json (outcomes, conditions, contrasts; the node notes that no synthesis sheet covers this motif)",
+    "docs/curriculum-map-v1.1.md",
+    "items IB1-001..004 (authored, content/items/lesson-b1.json); Lichess puzzle database (CC0): IRoyX (board), weqbi"
+  ]
+}

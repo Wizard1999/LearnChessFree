@@ -1,0 +1,197 @@
+{
+  "id": "L-TAC-STALEMATE-TRICK-1",
+  "title": "Stalemate as a rescue",
+  "skill": "TAC.STALEMATE-TRICK",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Finds the sacrifice that forces a stalemate when told to look for one",
+    "Counts the legal moves left to the side that would be stalemated",
+    "Sees that a spare pawn move, or a king with room to move, ends the trick",
+    "As the stronger side, avoids the move that stalemates"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **stalemate** the side to move has no legal move and is not in check. The game is a **draw**: neither side wins.\nSo a side that is clearly losing can sometimes save the game by giving up a piece, usually with check, so that the capture leaves it with no legal move. The stronger side must check, before each quiet move, that the opponent still has a legal move."
+    },
+    {
+      "type": "board",
+      "fen": "K1k5/7r/3Q4/8/8/8/8/8 b - - 0 1",
+      "caption": "Black to move. White has a queen, Black only a rook, and Black's king on c8 has no free square.",
+      "line": [
+        {
+          "move": "h7a7",
+          "say": "The rook goes to a7 with check, next to the white king."
+        },
+        {
+          "move": "a8a7",
+          "say": "The white king takes the rook. Black has no legal move and is not in check: stalemate, a draw."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h7",
+          "to": "a7"
+        }
+      ],
+      "highlight": [
+        "c8",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "With best play the position is a draw for Black (tablebase)."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "h7a7"
+          },
+          "statement": "After Ra7+ the position is a draw (tablebase)."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "h7c7"
+          },
+          "statement": "Rc7 loses (tablebase)."
+        },
+        {
+          "id": "C4",
+          "type": "mobility",
+          "params": {
+            "square": "c8",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The black king has no legal move even now."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "a8",
+            "color": "black",
+            "count": 1,
+            "after_move": "h7a7"
+          },
+          "statement": "The rook on a7 gives check to the king on a8."
+        },
+        {
+          "id": "C6",
+          "type": "mobility",
+          "params": {
+            "square": "c8",
+            "mode": "legal",
+            "count": 0,
+            "after_moves": [
+              "h7a7",
+              "a8a7"
+            ]
+          },
+          "statement": "After Kxa7 the black king still has no legal move."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "c8",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "h7a7",
+              "a8a7"
+            ]
+          },
+          "statement": "After Kxa7 nothing attacks the black king."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB1-020"
+    },
+    {
+      "type": "item",
+      "item": "IB1-021"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the capture is forced, and afterwards your side has no legal move and is not in check. That usually needs your king boxed in, often on the edge or in a corner, and no pawn or piece able to move.\n**Check:** if your side has any legal move left, there is no stalemate. Count your own legal moves after the capture."
+    },
+    {
+      "type": "contrast",
+      "title": "Same sacrifice, one change",
+      "prompt": "Same position, one change: Black has an extra pawn on a7. Predict, then check.",
+      "working": "IB1-022",
+      "failing": "IB1-024",
+      "irrelevant": "IB1-025"
+    },
+    {
+      "type": "item",
+      "item": "IB1-035"
+    },
+    {
+      "type": "item",
+      "item": "IB1-025"
+    },
+    {
+      "type": "item",
+      "item": "IB1-026",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-111",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-032",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-030",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-028",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.stalemate-trap",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "When you were losing, did you check whether giving up a piece would leave your side with no legal move? When you were winning, did you count the opponent's legal moves before each quiet move? Where did you nearly stalemate a won position, or miss a draw?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.STALEMATE-TRICK.json (outcomes, conditions, contrasts)",
+    "sources/sheets/capablanca_chess-fundamentals.md CI-15 (queen against rook trap) and edlasker_chess-strategy.md K29: ideas only, original wording",
+    "docs/curriculum-map-v1.1.md",
+    "items IB1-020..032 and IB1-035 (authored, content/items/lesson-b1.json, tablebase-checked); IA3-111 (content/items/lesson-end-*.json, reused)"
+  ]
+}

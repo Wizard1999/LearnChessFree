@@ -1,0 +1,172 @@
+{
+  "id": "L-GAME-TAXONOMY-1",
+  "title": "Five kinds of mistake, and the question behind each label",
+  "skill": "GAME.TAXONOMY",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the five boxes for a mistake (not seen, seen but miscalculated, misjudged, time pressure, out of book) with an example of each",
+    "Gives a tentative box for a mistake from a player's note and writes the question that would confirm it",
+    "Answers 'cannot tell yet' when there is no note, and 'no box applies' for a slip of the hand or a sound move",
+    "Keeps a pattern tag on the board apart from a cause in the player's head"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**A mistake has a cause, and the cause decides what to practise.** Five boxes:\n**Not seen:** you never looked at their reply.\n**Seen but miscalculated:** you looked and the count was wrong.\n**Misjudged:** the count was right, your verdict on the position was not.\n**Time pressure:** the clock decided.\n**Out of book:** the position or plan was new to you.\nA box is a guess to test, not a verdict."
+    },
+    {
+      "type": "board",
+      "fen": "2r2rk1/pp3pp1/7p/q1nN1Q2/8/4P3/Pb2NPPP/1R3K1R b - - 3 17",
+      "caption": "Black to move takes a pawn. The board shows what happened and what it cost. It does not show why the player did it.",
+      "line": [
+        {
+          "move": "a5a2",
+          "say": "Black takes the pawn on a2 with the queen."
+        },
+        {
+          "move": "d5e7",
+          "say": "White's knight checks. It attacks the king and the rook on c8."
+        },
+        {
+          "move": "g8h8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "e7c8",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "e7"
+        },
+        {
+          "from": "e7",
+          "to": "c8"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "a5a2",
+            "cp": 300
+          },
+          "statement": "Qxa2 is at least 300 centipawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e7",
+            "squares": [
+              "c6",
+              "c8",
+              "d5",
+              "f5",
+              "g6",
+              "g8"
+            ],
+            "after_moves": [
+              "a5a2",
+              "d5e7"
+            ]
+          },
+          "statement": "After Qxa2 Ne7+ the knight attacks the king on g8 and the rook on c8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB5-2"
+    },
+    {
+      "type": "item",
+      "item": "IB5-3"
+    },
+    {
+      "type": "card",
+      "text": "**One question per box.** Not seen: did I check what their last move attacked? Miscalculated: which line did I count, and where did it fail? Misjudged: what did I think the position was like afterwards, and why? Time pressure: how much time was left? Out of book: had I met this position before?\n**Rule of thumb:** if you cannot answer the question, write it down and leave the box empty."
+    },
+    {
+      "type": "item",
+      "item": "IB5-4"
+    },
+    {
+      "type": "contrast",
+      "title": "Same board, three situations",
+      "prompt": "The board is the one you saw at the start; the same pawn was taken. What differs is what you know about the player. Choose a box (or none), then check.",
+      "working": "IB5-1",
+      "failing": "IB5-5",
+      "irrelevant": "IB5-6"
+    },
+    {
+      "type": "item",
+      "item": "IB5-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB5-10",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** In My games, each big drop shows six buttons under 'What was behind it?': the five boxes and 'something else'. The Progress page counts what you pressed. Planned: after ten drops you have labelled yourself (ten is a first guess), the buttons will wait for your typed guess first. Until then, write your question beside every label."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.GAME.TAXONOMY",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Take one mistake from your last game (use My games if you have imported it). Write a tentative box and the question that would confirm it. Do not write a verdict.",
+      "fields": [
+        {
+          "id": "move",
+          "label": "The mistake (game, move):"
+        },
+        {
+          "id": "box",
+          "label": "Tentative box:",
+          "options": [
+            "not seen",
+            "seen but miscalculated",
+            "misjudged",
+            "time pressure",
+            "out of book",
+            "cannot tell yet",
+            "no box applies"
+          ]
+        },
+        {
+          "id": "question",
+          "label": "The question that would confirm it:"
+        },
+        {
+          "id": "where",
+          "label": "Where I could look to answer it (clock time, opening explorer, my notes):"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/council-synthesis.md CD-12 (small taxonomy, assigned tentatively with questions to the learner)",
+    "docs/curriculum-map-v1.1.md (GAME.TAXONOMY); content/skills/GAME.TAXONOMY.json",
+    "app/src/pages/Games.tsx and app/src/pages/Progress.tsx (the six cause buttons and the tally), read for this lesson",
+    "positions: Lichess puzzle database and Lichess January 2013 games (CC0); all notes are invented for practice"
+  ]
+}

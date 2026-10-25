@@ -1,0 +1,137 @@
+{
+  "id": "L-TAC-PIN-1",
+  "title": "Pins: cannot move, or should not move",
+  "skill": "TAC.PIN",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Tells an absolute pin (no legal move) from a relative pin (legal but costly)",
+    "Wins a pinned piece by attacking it again",
+    "Checks that something valuable really stands behind the pinned piece",
+    "Tells a pin from a fork"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **pin** attacks a piece that cannot, or should not, move, because a more valuable piece stands behind it on the same line.\nIn an **absolute** pin the piece behind is the king, so moving the pinned piece is illegal. A pinned piece is easy prey: it cannot run away from a second attacker."
+    },
+    {
+      "type": "board",
+      "fen": "r3k3/ppp2ppp/4bn2/8/5P2/2NB4/PPP3PP/4R1K1 w - - 0 1",
+      "caption": "White to move. The black bishop on e6 stands between the rook and the king.",
+      "line": [
+        {
+          "move": "f4f5",
+          "say": "The pawn attacks the bishop. It is pinned and cannot leave the e-file."
+        },
+        {
+          "move": "e8f8",
+          "say": "Black moves the king, but the bishop is still attacked."
+        },
+        {
+          "move": "f5e6",
+          "say": "The pawn takes the bishop. White has won a bishop for a pawn at least."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e6"
+        },
+        {
+          "from": "f4",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "f4f5",
+            "min": 3
+          },
+          "statement": "f5 wins the bishop along the engine line."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The rook on e1 attacks the bishop."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-033"
+    },
+    {
+      "type": "item",
+      "item": "IA1-034"
+    },
+    {
+      "type": "card",
+      "text": "Two kinds of pin.\n**Absolute:** the king is behind. The pinned piece has no legal move.\n**Relative:** something valuable, but not the king, is behind. The piece may legally move, but then it loses what stood behind it.\n'Cannot move' and 'should not move' differ. A **fork** is one piece attacking two targets; a pin needs a line with something behind."
+    },
+    {
+      "type": "item",
+      "item": "IA1-037"
+    },
+    {
+      "type": "item",
+      "item": "IA1-038"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the piece really pinned?",
+      "prompt": "In the second position the king stands on d8.",
+      "working": "IA1-034",
+      "failing": "IA1-035",
+      "irrelevant": "IA1-036"
+    },
+    {
+      "type": "card",
+      "text": "Some pins win nothing at once. A pinned piece stays tied to its square and is a poor defender, which can shape play for many moves. Whether that matters is judged case by case, and later strategy lessons return to it."
+    },
+    {
+      "type": "item",
+      "item": "IA1-039",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-040",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.pin",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part is least clear: telling an absolute pin from a relative one, or checking that something valuable really stands behind the pinned piece?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 26 pin anatomy; idea 28 unpinning)",
+    "docs/inference-01-puzzle-theme-difficulty.md (pins sit above forks in puzzle difficulty)",
+    "docs/curriculum-map-v1.1.md"
+  ]
+}

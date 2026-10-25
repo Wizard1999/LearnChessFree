@@ -1,0 +1,185 @@
+{
+ "id": "L-END-OPPOSITION-1",
+ "title": "Opposition: one tempo between a win and a draw",
+ "skill": "END.OPPOSITION",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Takes the opposition in a king-and-pawn ending when it is the move that wins",
+  "Predicts win or draw for king and pawn against king, and sees that one tempo or one king square can flip it",
+  "Names three cases where 'the side not to move wins' fails: king level with the pawn, a king already on a key square, a rook pawn"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**King and pawn against a king** is often decided by one tempo. When the kings face each other with exactly one square between them, the side that has to move must give way. That is the **opposition**. Watch one pawn win in one position and only draw in a look-alike."
+  },
+  {
+   "type": "board",
+   "fen": "8/4k3/8/4K3/4P3/8/8/8 b - - 0 1",
+   "caption": "Black to move. Every Black move loses; one line is shown.",
+   "line": [
+    {
+     "move": "e7d7",
+     "say": "Black has to leave the facing square. Here the king goes to d7."
+    },
+    {
+     "move": "e5f6",
+     "say": "White's king moves forward to f6."
+    },
+    {
+     "move": "d7d8",
+     "say": "Black's king steps back."
+    },
+    {
+     "move": "f6f7",
+     "say": "White's king steps to f7."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black's king goes to c7."
+    },
+    {
+     "move": "e4e5",
+     "say": "Now the pawn can advance."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "With Black to move, Black loses."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7d7"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7d8"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7e8"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7f7"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7f8"
+     }
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "d7"
+    },
+    {
+     "from": "e5",
+     "to": "f6"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "e7"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IA3-201"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb:** the side that is *not* to move holds the opposition, and holding it wins. It is a heuristic with exceptions. You will meet three: a king that is only **level with** the pawn, a king already **two ranks in front** of the pawn, and a **rook pawn**. Predict each one first."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn, the move changes",
+   "prompt": "Black to move wins for White. Change one thing: White to move. Does the result survive? Predict, then check.",
+   "working": "IA3-202",
+   "failing": "IA3-203",
+   "irrelevant": "IA3-204"
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn, wrong king square",
+   "prompt": "Back to Black to move. Put White's king on d5 instead of e5. Is it still a win? Predict, then check.",
+   "working": "IA3-202",
+   "failing": "IA3-205",
+   "irrelevant": "IA3-206"
+  },
+  {
+   "type": "item",
+   "item": "IA3-207"
+  },
+  {
+   "type": "item",
+   "item": "IA3-208"
+  },
+  {
+   "type": "item",
+   "item": "IA3-209"
+  },
+  {
+   "type": "item",
+   "item": "IA3-210"
+  },
+  {
+   "type": "item",
+   "item": "IA3-213"
+  },
+  {
+   "type": "item",
+   "item": "IA3-214"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OPPOSITION",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each prediction: did you ask who was to move, or where each king stood? Which of the two did you check first, and which did you forget?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-06, CI-07, CI-13: ideas only; wording of the opposition not used)",
+  "sources/sheets/edlasker_chess-strategy.md (K23: key squares as the cleaner rule)",
+  "sources/sheets/emlasker_common-sense.md (4.19: opposition as a consequence of who must move)",
+  "docs/curriculum-map-v1.1.md section 4 (tablebase checks)",
+  "All positions: own constructions, every result from the Lichess tablebase service"
+ ]
+}

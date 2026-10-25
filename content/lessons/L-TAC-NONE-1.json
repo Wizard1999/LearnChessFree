@@ -1,0 +1,120 @@
+{
+  "id": "L-TAC-NONE-1",
+  "title": "Is there a tactic at all?",
+  "skill": "TAC.NONE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Checks that the piece making a tactic can survive before playing it",
+    "Tells a real tactic from a pattern whose key square is covered or undefended",
+    "Says when a position is quiet and no tactic exists"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Before you play a clever-looking move, check that a tactic exists at all. Many positions have none.\nList your **checks, captures and threats**. For each, ask what your opponent's best reply is, above all whether the piece you moved can simply be taken."
+    },
+    {
+      "type": "board",
+      "fen": "8/7p/p7/4rpk1/1Pp5/P4P2/3K4/3R4 w - - 0 40",
+      "caption": "White to move. A pawn can fork the king and the rook, but look at the square.",
+      "line": [
+        {
+          "move": "f3f4",
+          "say": "The pawn gives check and attacks the rook."
+        },
+        {
+          "move": "g5f4",
+          "say": "The king takes the pawn. Nothing defended f4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "f4"
+        },
+        {
+          "from": "f4",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "f3f4",
+            "max": 0
+          },
+          "statement": "f4+ gains nothing along the engine line: the king takes the pawn."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f4",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece defends f4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-076"
+    },
+    {
+      "type": "card",
+      "text": "A pattern on the board is not a tactic until it passes three checks.\n**Can the piece I move be taken?** A covered square ruins a fork.\n**Does the target really fall** after the best reply?\n**Is a quiet move better?** If no forcing move works, improve your worst piece."
+    },
+    {
+      "type": "contrast",
+      "title": "The pattern is there, the tactic is not",
+      "prompt": "A black pawn stands on c6 in the second position.",
+      "working": "IA1-076",
+      "failing": "IA1-077",
+      "irrelevant": "IA1-078"
+    },
+    {
+      "type": "item",
+      "item": "IA1-079",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-080",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-081",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.TAC.NONE",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each position, did you expect a tactic to exist? How often were you right?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/council-synthesis.md CD-2 (no-tactic positions) and the Bilalic set-effect finding",
+    "docs/inference-01-puzzle-theme-difficulty.md (quiet and defensive moves are the hardest puzzle types)",
+    "docs/curriculum-map-v1.md S3 (TAC.NONE)"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "POS.PLAN.PIECES",
+  "title": "Allocating pieces to the plan",
+  "strand": "S5",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains deciding where the main blow falls, which pieces can be spared for it, and the minimum number needed for defence.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a position with a target, names the pieces for the attack, the pieces to keep for defence, and the order of arrival.",
+      "prereqs": [
+        "POS.PLAN.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, avoids sending every piece to the attack and keeps defenders that also serve the plan.",
+      "prereqs": [
+        "POS.PLAN.PIECES.D1",
+        "POS.GOODBAD.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the effect of a miscount of defenders, and mixes short-range and long-range pieces in the order of arrival.",
+      "prereqs": [
+        "POS.PLAN.PIECES.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "All pieces should rush to the attack."
+  ],
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C10, C32; §7 row C10"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "There is a definite target (the king, a weak pawn).",
+    "Defenders that also serve the centre are preferred (knight on f3 and bishop on g2)."
+  ],
+  "condition_sources": [
+    "ZB C10 (c)",
+    "ZB C10 (b)"
+  ],
+  "contrasts": [
+    "Reserving only the 'necessary' defenders when the count of defenders is wrong.",
+    "Short-range pieces brought in first are driven off before the plan matures.",
+    "No definite target yet, so no allocation question."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ZB C10 (d)",
+    "ZB C10 (b)",
+    "ZB C10 (c)"
+  ],
+  "soft_prereqs": [
+    "ATK.CASTLED.D1"
+  ],
+  "soft_prereq_notes": {
+    "ATK.CASTLED.D1": "piece allocation is clearest in a king attack"
+  }
+}

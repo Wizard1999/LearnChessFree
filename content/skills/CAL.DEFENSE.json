@@ -1,0 +1,75 @@
+{
+  "id": "CAL.DEFENSE",
+  "title": "The opponent's best resource",
+  "strand": "S4",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that analysis is not finished until the opponent has had his best reply, including quiet and defensive moves.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a given line, lists the opponent's check, capture, threat and best defensive move at each step.",
+      "prereqs": [
+        "CAL.TREE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, finds the refutation when the first-choice line has a hidden defensive resource, and accepts the line when none exists.",
+      "prereqs": [
+        "CAL.DEFENSE.D1",
+        "SAF.THREAT.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "In positions where several natural defences look alike, tests each and finds the only move that holds; predicts how a small change makes a second defence work.",
+      "prereqs": [
+        "CAL.DEFENSE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "If I can't see a defence, there is none.",
+    "The opponent will play the move my line expects."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S4 (Kotov, Aagaard, Ramesh, Dvoretsky, Rowson, Heisman, all [R] in the map)",
+    "docs/council-synthesis.md Round 3 (Dvoretsky: look for the opponent's best resource)",
+    "sources/sheets/emlasker_common-sense.md §4.16 (find the only defence; do not trust an unverified perpetual)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G2)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Applies to every line chosen for a critical decision.",
+    "Several natural defences look similar and only one holds."
+  ],
+  "condition_sources": [
+    "CNC Round 3",
+    "EML 4.16 (c)"
+  ],
+  "contrasts": [
+    "A combination judged unsound without noticing the quiet follow-up that makes it work (the champion's own game).",
+    "Assuming the opponent's reply is the one the line needs.",
+    "Forced mate lines where all defences are enumerated."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-51 G2",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.ZWISCHENZUG.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.ZWISCHENZUG.D1": "the opponent's in-between moves are part of his best resource"
+  }
+}

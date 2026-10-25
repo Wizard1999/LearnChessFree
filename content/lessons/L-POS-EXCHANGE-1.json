@@ -1,0 +1,98 @@
+{
+  "id": "L-POS-EXCHANGE-1",
+  "title": "Trades: which piece goes, which stays",
+  "skill": "POS.EXCHANGE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Compares the pieces you give up and keep before trading",
+    "Chooses the trade that removes the enemy's most active piece",
+    "Checks the recapture before capturing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A trade changes two things: **the piece you give up** and **the piece you keep.** Before trading, ask what the enemy piece is doing for him (holding an outpost, attacking, defending) and what your recapture will look like.\nTrading just because you can does neither job."
+    },
+    {
+      "type": "board",
+      "fen": "r3k2r/1p2n3/p1n1qpp1/2Np1b1p/1b1Pp3/1P2P1P1/PB1NBP1P/R2QK2R b KQkq - 3 17",
+      "caption": "Black to move. Which trade is best?",
+      "line": [
+        {
+          "move": "b4c5",
+          "say": "The bishop takes the knight on c5."
+        },
+        {
+          "move": "d4c5",
+          "say": "White recaptures with the pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b4",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b4c5"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "b4d2",
+            "cp": 100
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-45"
+    },
+    {
+      "type": "card",
+      "text": "When two trades are possible, compare them. **Rule of thumb:** give up the piece that matters less, keep the one that fits your pawns and plans, and prefer the trade that removes his most active piece. Always look at the recapture before you take."
+    },
+    {
+      "type": "contrast",
+      "title": "Same target, a different piece takes",
+      "prompt": "Black could also take the knight with the bishop. Is 1...Bxd5 as good as 1...Nxd5? Predict first, then check.",
+      "working": "IA2-45",
+      "failing": "IA2-46"
+    },
+    {
+      "type": "item",
+      "item": "IA2-47"
+    },
+    {
+      "type": "item",
+      "item": "IA2-48"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you compared the trades: which of your pieces did you want to keep, and why?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 21: motives for exchanging; 'only these motives' NOT taught as written)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C13: trade a badly placed piece for his best)",
+    "sources/sheets/emlasker_common-sense.md (4.6: exchange policy)"
+  ]
+}

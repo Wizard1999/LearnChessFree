@@ -1,0 +1,191 @@
+{
+  "id": "L-FND-COUNT-1",
+  "title": "Is this piece safe? Loose pieces and counting",
+  "skill": "SAF.COUNT",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Spots loose pieces (attacked and not defended) on either side",
+    "Counts attackers and defenders of a square",
+    "Decides whether to start captures on a square by adding up the swaps, cheapest piece first"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A piece is **attacked** when an enemy piece could capture it. It is **defended** when a friendly piece could take back on that square. A piece that is attacked and **not defended** is **loose** (also called **hanging**): it can be taken for free. Spotting loose pieces, yours and theirs, is the first safety habit."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/1pn1p2p/3b4/8/1Q3N2/PP3PPP/3R2K1 w - - 0 1",
+      "caption": "The queen attacks the pawn on b6 and the bishop on d5. Only one of them is loose.",
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "b6"
+        },
+        {
+          "from": "b3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "b6",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "b6"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-56"
+    },
+    {
+      "type": "item",
+      "item": "IA0-57"
+    },
+    {
+      "type": "card",
+      "text": "When several pieces fight over one square, count. List the attackers and the defenders. Start captures with your cheapest attacker. Add up what each side takes and gives, and stop when the next swap would lose more than it wins. More attackers than defenders is not always enough."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4pp1/1p5p/2n5/3P4/B7/P5PP/6K1 w - - 0 1",
+      "caption": "Two attackers, one defender, and the pawn goes first. Count the swaps.",
+      "line": [
+        {
+          "move": "d4c5",
+          "say": "The pawn takes the knight: +3."
+        },
+        {
+          "move": "b6c5",
+          "say": "The pawn takes the pawn: -1."
+        },
+        {
+          "move": "a3c5",
+          "say": "The bishop takes the pawn: +1."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "c5"
+        },
+        {
+          "from": "a3",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 2
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "black",
+            "count": 1
+          }
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4c5",
+            "min": 3
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-59"
+    },
+    {
+      "type": "item",
+      "item": "IA0-60"
+    },
+    {
+      "type": "contrast",
+      "title": "Same count, different pieces",
+      "prompt": "Again two attackers and one defender. This time the target is a pawn and the first attacker is a knight. Predict first: does the count still win?",
+      "working": "IA0-61",
+      "failing": "IA0-62"
+    },
+    {
+      "type": "item",
+      "item": "IA0-63"
+    },
+    {
+      "type": "item",
+      "item": "IA0-64"
+    },
+    {
+      "type": "item",
+      "item": "IA0-65"
+    },
+    {
+      "type": "item",
+      "item": "IA0-58"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.LOOSE",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.COUNT",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "When you answered the counting questions, did you add the swaps up, or go by a feeling? How sure were you? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 2",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "sources/sheets/edlasker_chess-strategy.md (K2 counting, K3 spoilers)"
+  ]
+}

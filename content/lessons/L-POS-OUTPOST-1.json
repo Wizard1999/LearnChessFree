@@ -1,0 +1,105 @@
+{
+  "id": "L-POS-OUTPOST-1",
+  "title": "Outposts: a square no pawn can reach",
+  "skill": "POS.OUTPOST",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Names the conditions of an outpost: protected, not attackable by a pawn",
+    "Checks the neighbouring pawns before planting a knight",
+    "Explains why a square a pawn can challenge is not an outpost"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An **outpost** is a square deep in the enemy half that no enemy pawn can ever attack. A piece planted there, usually a knight, is hard to remove and cramps everything around it. A pawn of yours one file over and one rank behind keeps it protected: e4 behind a knight on d5."
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/ppp2ppp/2n5/4p3/4P3/3P2P1/PP3PBP/3R2K1 b - - 0 1",
+      "caption": "Black to move. Watch the knight.",
+      "line": [
+        {
+          "move": "c6d4",
+          "say": "The knight jumps to d4. The pawn on e5 protects it."
+        },
+        {
+          "move": "g1f1",
+          "say": "White has no pawn that can attack d4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c6d4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6d4"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "max": -50
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-8"
+    },
+    {
+      "type": "card",
+      "text": "Before you plant a piece, check three things.\n**Is it protected,** ideally by a pawn?\n**Can an enemy pawn attack the square?** Pawns never move backward, so look at the pawns still standing on the neighbouring files.\n**Is there something to aim at?**\nIf a pawn can chase the piece away, you only lose time."
+    },
+    {
+      "type": "contrast",
+      "title": "Same knight, one pawn different",
+      "prompt": "Only one Black pawn differs between the two positions. Can a Black pawn drive the knight away from d5? Predict first, then check.",
+      "working": "IA2-9",
+      "failing": "IA2-10"
+    },
+    {
+      "type": "item",
+      "item": "IA2-11"
+    },
+    {
+      "type": "item",
+      "item": "IA2-12"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you looked at the pawns: did you expect the knight on d5 to be safe? Which pawn did you check first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 10: the outpost, e4 v e3 pair)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C26 knight, C28 hole; contrast family E)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-41 hole and knights)",
+    "sources/sheets/emlasker_common-sense.md (4.9 weak point / strong point)"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "id": "END.TEMPO",
+  "title": "Spare moves and knight parity",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains spare moves (tempo reserves) in endings and knight parity: a knight reaches a given square only in an odd or only in an even number of moves.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Counts the spare moves for both sides in a locked pawn ending and says who must give way.",
+      "prereqs": [
+        "END.ZUGZWANG.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, uses knight parity to decide whether a knight can lose a move while a bishop can, and decides when to keep a pawn move in reserve.",
+      "prereqs": [
+        "END.TEMPO.D1",
+        "FND.PIECE.KNIGHT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the result of a mutual-zugzwang ending from the count and verifies it by the tablebase check.",
+      "prereqs": [
+        "END.TEMPO.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Having the move is good."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K25; §7 row K25",
+    "docs/curriculum-map-v1.1.md §3 (END.TEMPO T4-5)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Fixed pawns and few pieces.",
+    "A knight cannot lose a move because of its parity, whereas a bishop can."
+  ],
+  "condition_sources": [
+    "EDL K25 (c)",
+    "EDL K25 (b)"
+  ],
+  "contrasts": [
+    "With pieces on the board such positions are infrequent, so the count rarely applies.",
+    "'having the move is good'.",
+    "An open position where pieces can pass the move."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K25 (d)",
+    "EDL K25 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

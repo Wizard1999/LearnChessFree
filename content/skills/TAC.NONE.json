@@ -1,0 +1,84 @@
+{
+  "id": "TAC.NONE",
+  "title": "Is there a tactic at all?",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that many positions in real games contain no tactic, and states what to do then (a safe developing move or a plan).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a themed set where each position may or may not contain the named tactic, answers yes or no and finds the move when yes.",
+      "prereqs": [
+        "TAC.FORK.D2",
+        "TAC.PIN.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed unlabeled sets where about four in ten positions have no tactic and some contain a familiar pattern that fails, answers 'none' correctly and finds the actual best move when a different tactic exists.",
+      "prereqs": [
+        "TAC.NONE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Calculates a familiar pattern to its refutation, states the fault (a covered forking square, a luft), and finds the better move that the familiar answer hides.",
+      "prereqs": [
+        "TAC.NONE.D2",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, the opportunity log shows both the missed-tactic rate and the false-alarm rate, reported with the sample size, over ten games.",
+      "prereqs": [
+        "TAC.NONE.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Every position contains a tactic if I look hard enough.",
+    "If I see a pattern I know, it must work."
+  ],
+  "sources": [
+    "docs/council-synthesis.md Round 2 and CD-2 (transfer sets include no-tactic positions; Detection Workbook; Bilalic familiar-answer effect)",
+    "docs/first-hours.md session 5 (I-QUIET-001 distractor)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C14 (can I take it? items)",
+    "sources/sheets/emlasker_common-sense.md §4.15-4.16",
+    "docs/curriculum-map-v1.md §2 S3 (TAC.NONE runs through every tier)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Transfer, not fluency, is what counts: only unlabeled items with no-tactic and failing-pattern positions test it.",
+    "A familiar solution can block a better one, even for experts."
+  ],
+  "condition_sources": [
+    "CNC CD-2",
+    "CNC Round 2 (Bilalic)"
+  ],
+  "contrasts": [
+    "The full mating pattern is on the board, but a defender covers a flight square.",
+    "Hunting for a tactic in a position where a quiet developing move is best.",
+    "A position where the side to move is in check, so the only question is how to answer."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML 4.14",
+    "FH session 5",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "LOOP.V2.D2"
+  ],
+  "soft_prereq_notes": {
+    "LOOP.V2.D2": "the forcing-move list is the quick test for whether anything exists"
+  },
+  "note": "Map: runs through every tier. Modelled as one node at tier 3 that unlabeled sets from every tactic node point at."
+}

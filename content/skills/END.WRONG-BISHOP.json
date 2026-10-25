@@ -1,0 +1,69 @@
+{
+  "id": "END.WRONG-BISHOP",
+  "title": "The wrong-coloured bishop",
+  "strand": "S7",
+  "tier": 5,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why a rook pawn with a bishop that does not control the queening corner can draw: the defending king in the corner holds.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told the bishop's colour and the pawn's file, predicts win or draw.",
+      "prereqs": [
+        "END.MINOR.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled endings, tells win from draw for the family (pawn on a or h, bishop colour, defender king distance) and finds the king route.",
+      "prereqs": [
+        "END.WRONG-BISHOP.D1",
+        "END.KPK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies each claim with the tablebase and predicts the effect of a second pawn or a different file.",
+      "prereqs": [
+        "END.WRONG-BISHOP.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "An extra bishop always wins."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-14; §8 item 9",
+    "sources/sheets/edlasker_chess-strategy.md §4 K27; §8 item 17",
+    "docs/curriculum-map-v1.1.md §4 (wrong and right-coloured bishop positions verified)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5"
+  },
+  "conditions": [
+    "A rook pawn; the bishop does not control the queening square; the defender's king can reach the corner.",
+    "The right-coloured bishop wins (verified win in 29)."
+  ],
+  "condition_sources": [
+    "CAP CI-14 (c); EDL K27 (b)",
+    "MAP11 §4"
+  ],
+  "contrasts": [
+    "The same set-up with the right-coloured bishop, or with a non-rook pawn.",
+    "Thinking an extra bishop always wins.",
+    "A pawn not on the edge."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL §8 item 17",
+    "CAP CI-14 (g)",
+    "EDL §8 item 17"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

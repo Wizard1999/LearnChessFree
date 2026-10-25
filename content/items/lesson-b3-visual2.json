@@ -1,0 +1,306 @@
+{
+ "positions": [
+  {
+   "id": "PB3-601",
+   "fen": "6k1/6pp/5n2/4p3/8/8/1B3PPP/3R2K1 w - - 0 1",
+   "family": "FAM-B3-VIS-STUDY1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-602",
+   "fen": "2r2rk1/pb3ppp/1p3n2/4N3/2B5/8/PP3PPP/2R2RK1 w - - 0 1",
+   "family": "FAM-B3-VIS-STUDY2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-603",
+   "fen": "6k1/5ppp/5n2/1p1r4/8/3P1N2/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-B3-VIS-STUDY3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IB3-601",
+   "skill": "FND.VISUAL.D1",
+   "cue": 2,
+   "task": "select_squares",
+   "position": "PB3-601",
+   "prompt": "Study the position until the timer ends. Then the black pawn on e5 disappears. Tap every square the white bishop on b2 attacks.",
+   "answer": {
+    "from": "b2",
+    "squares": [
+     "a1",
+     "a3",
+     "c1",
+     "c3",
+     "d4",
+     "e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "b2",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on b2."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on e5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b2",
+      "squares": [
+       "a1",
+       "a3",
+       "c1",
+       "c3",
+       "d4",
+       "e5"
+      ]
+     },
+     "statement": "The bishop attacks exactly these six squares."
+    }
+   ],
+   "tags": [
+    "node.FND.VISUAL",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-VIS-STUDY1",
+    "lang.en",
+    "task.select_squares",
+    "tier.3",
+    "mode.visualise",
+    "mode.study",
+    "mode.bishop"
+   ],
+   "hints": [
+    "A bishop has up to four diagonal directions. Which of them leave the board at once from b2?",
+    "The long diagonal runs towards the black side. Where does the first piece stand on it?",
+    "a1, a3 and c1 are one step away. The long diagonal gives c3, d4 and e5."
+   ],
+   "explain": "From b2 three diagonals end after one square (a1, a3, c1). The long one runs c3, d4, e5 and stops there, because a black pawn stands on e5: the bishop attacks that pawn's square and nothing behind it.",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "display": {
+    "study_seconds": 8,
+    "hide": [
+     "e5"
+    ],
+    "reveal": "after_answer"
+   }
+  },
+  {
+   "id": "IB3-602",
+   "skill": "FND.VISUAL.D1",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PB3-602",
+   "prompt": "Tap every square the white knight on e5 attacks (a square holding its own piece counts too).",
+   "answer": {
+    "from": "e5",
+    "squares": [
+     "c4",
+     "c6",
+     "d3",
+     "d7",
+     "f3",
+     "f7",
+     "g4",
+     "g6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "N"
+     },
+     "statement": "A white knight stands on e5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "B"
+     },
+     "statement": "The white bishop stands on c4, one of the knight's squares."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e5",
+      "squares": [
+       "c4",
+       "c6",
+       "d3",
+       "d7",
+       "f3",
+       "f7",
+       "g4",
+       "g6"
+      ]
+     },
+     "statement": "The knight attacks exactly these eight squares."
+    }
+   ],
+   "tags": [
+    "node.FND.VISUAL",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-VIS-STUDY2",
+    "lang.en",
+    "task.select_squares",
+    "tier.3",
+    "mode.visualise",
+    "mode.knight",
+    "mode.silent"
+   ],
+   "hints": [
+    "A knight on e5 has eight jumps. Does any of them leave the board?",
+    "Think of the two squares two files away and one rank up or down, then the two squares one file away and two ranks up or down.",
+    "c4, c6, d3, d7, f3, f7, g4, g6."
+   ],
+   "explain": "A knight in the middle of the board attacks eight squares whatever stands around it. From e5 they are c4, c6, d3, d7, f3, f7, g4 and g6; the bishop on c4 and the pawn on f7 stand on two of them.",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-603",
+   "skill": "FND.VISUAL.D1",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PB3-603",
+   "prompt": "Study the position until the timer ends. Then the white pawn on d3 and the black pawn on b5 disappear. Tap every square the black rook on d5 attacked (a square holding its own piece counts too).",
+   "answer": {
+    "from": "d5",
+    "squares": [
+     "b5",
+     "c5",
+     "d3",
+     "d4",
+     "d6",
+     "d7",
+     "d8",
+     "e5",
+     "f5",
+     "g5",
+     "h5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "r"
+     },
+     "statement": "A black rook stands on d5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d3",
+      "piece": "P"
+     },
+     "statement": "A white pawn stands on d3."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "b5",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on b5."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d5",
+      "squares": [
+       "b5",
+       "c5",
+       "d3",
+       "d4",
+       "d6",
+       "d7",
+       "d8",
+       "e5",
+       "f5",
+       "g5",
+       "h5"
+      ]
+     },
+     "statement": "The rook attacks exactly these eleven squares."
+    }
+   ],
+   "tags": [
+    "node.FND.VISUAL",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-VIS-STUDY3",
+    "lang.en",
+    "task.select_squares",
+    "tier.3",
+    "mode.visualise",
+    "mode.study",
+    "mode.rook",
+    "mode.silent"
+   ],
+   "hints": [
+    "A rook moves along its rank and its file. Which pieces stand on those two lines?",
+    "Down the d-file the rook stops at the first piece; to the left it stops at its own pawn, which it still defends.",
+    "Up: d6, d7, d8. Down: d4, d3. Left: c5, b5. Right: e5, f5, g5, h5."
+   ],
+   "explain": "A rook attacks along its file and rank up to the first piece in each direction: d6, d7, d8 above; d4 and d3 below, where the white pawn stops it; c5 and b5 on the left, where its own pawn stops it; e5 to h5 on the right.",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "display": {
+    "study_seconds": 8,
+    "hide": [
+     "d3",
+     "b5"
+    ],
+    "reveal": "after_answer"
+   }
+  }
+ ]
+}

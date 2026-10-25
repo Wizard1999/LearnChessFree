@@ -1,0 +1,75 @@
+{
+  "id": "END.MINOR",
+  "title": "Minor-piece endings",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that bishop against knight depends on the pawn structure: the bishop is better with pawns on both wings, the knight is at least equal in locked one-wing structures.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Predicts which side stands better in minor-piece endings that differ by one feature (pawns on both wings, a passed pawn, locked structure).",
+      "prereqs": [
+        "POS.GOODBAD.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled endings, picks the plan (king to the centre, create a passed pawn on the other wing) and the evaluation band, and separates same-coloured and opposite-coloured bishop endings.",
+      "prereqs": [
+        "END.MINOR.D1",
+        "POS.BISHOPS.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "States the tendencies and their exceptions for opposite-coloured bishops (usually drawn, but two distant passers or pawns on both wings can win).",
+      "prereqs": [
+        "END.MINOR.D2",
+        "END.KING-ACTIVE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The bishop is always better.",
+    "Opposite-coloured bishops always draw."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-17, CI-19; §5 items 7, 26; §8 item 8",
+    "sources/sheets/edlasker_chess-strategy.md §4 K27",
+    "sources/sheets/emlasker_common-sense.md §4.20"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Pawns on both wings favour the bishop, more so with unbalanced wings and passed pawns.",
+    "Same-coloured bishops: an extra pawn usually wins by exchanging into a won pawn ending."
+  ],
+  "condition_sources": [
+    "CAP CI-17 (c)",
+    "EDL K27 (b)"
+  ],
+  "contrasts": [
+    "A locked one-wing structure where the knight is at least equal.",
+    "Opposite-coloured bishops 'always draw' (two connected passers win; Capablanca wins G9 anyway).",
+    "Swapping far-flank pawns that does not change the structure."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 8",
+    "EDL K27 (d); CAP §5 item 26",
+    "CAP §8 item 8"
+  ],
+  "soft_prereqs": [
+    "POS.PASSED.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.PASSED.D2": "the passed pawn decides most minor-piece endings"
+  }
+}

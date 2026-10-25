@@ -1,0 +1,93 @@
+{
+  "id": "TAC.FORK",
+  "title": "Forks (double attacks)",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "States that one move can attack two valuable things so that only one can be saved, and says what must be true for the fork to win material (the forking square is safe; no single reply meets both threats).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the fork', finds the knight, queen, pawn or king fork in a simple position.",
+      "prereqs": [
+        "FND.ATTACK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Finds an available fork in a mixed set where no theme is named, answers 'no fork' where there is none, and does not play a fork-looking move that fails.",
+      "prereqs": [
+        "TAC.FORK.D1",
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks whether a fork really wins material: recapture on the forking square, a check that saves both targets, a target that captures the forker; predicts which one-feature change turns a working fork into a failing one.",
+      "prereqs": [
+        "TAC.FORK.D2",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, takes available forks and avoids leaving a fork for the opponent; the opportunity log shows the rate of available forks taken over ten games.",
+      "prereqs": [
+        "TAC.FORK.D3"
+      ]
+    },
+    "D5": {
+      "outcome": "Builds a working / failing / irrelevant trio for the fork and explains the deciding feature to a peer; repairs a faulty fork exercise.",
+      "prereqs": [
+        "TAC.FORK.D4"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A fork always wins material (ignores a defended forking square or a trapped forking piece).",
+    "Only knights fork.",
+    "Two attacked pieces that protect each other are forked."
+  ],
+  "sources": [
+    "docs/first-hours.md session 5 (cue ladder in miniature; I-FORK-001/002/003)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C26 (a knight's attack cannot be returned except by a knight), §8 idea 11",
+    "sources/sheets/edlasker_chess-strategy.md §4 K3 (ways the count lies)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "The forking square is safe: it is not attacked by something cheaper, or the capture there costs the capturer more.",
+    "No single reply parries both threats: no capture of the forker, no interposition, no check that gains the tempo.",
+    "A knight cannot be captured by the piece it attacks unless that piece is a knight, so a knight fork on a queen, rook or king cannot be answered by taking the forker with the target."
+  ],
+  "condition_sources": [
+    "FH session 5, I-FORK-003 idea",
+    "rules; ours",
+    "ZB C26 (b)"
+  ],
+  "contrasts": [
+    "Same fork shape with the king one square over, so the forking square is covered and the knight is lost for a pawn.",
+    "Both forked pieces are defended and worth less than the forker, so the 'fork' wins only an exchange or nothing.",
+    "Two pieces are attacked but only one is worth capturing and the other protects it; the move has no extra effect."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 5, I-FORK-003",
+    "EDL K3",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "SAF.THREAT.D1",
+    "FND.PIECE.KNIGHT.D1"
+  ],
+  "soft_prereq_notes": {
+    "SAF.THREAT.D1": "what the last move attacks often points to the fork square",
+    "FND.PIECE.KNIGHT.D1": "knight forks need the knight's geometry"
+  }
+}

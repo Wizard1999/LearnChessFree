@@ -1,0 +1,74 @@
+{
+  "id": "CAL.CANDIDATES",
+  "title": "Candidate moves: list and prune",
+  "strand": "S4",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why moves are listed before they are analysed and why a candidate is dropped only for a concrete reason.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Writes a list of two to four candidates for a given position, starting with the forcing moves and including one quiet move, each with a one-line purpose.",
+      "prereqs": [
+        "LOOP.V2.D2",
+        "CAL.VISUALIZE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, produces a list that contains the best move in at least 8 of 10, with no more than four moves.",
+      "prereqs": [
+        "CAL.CANDIDATES.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Prunes a list to one move by naming a concrete refutation for each dropped candidate, and notices when a new candidate appears only after the first move is played.",
+      "prereqs": [
+        "CAL.CANDIDATES.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The first move that comes to mind is the candidate and the rest is padding.",
+    "A move is dropped because it looks bad, not because a refutation was found."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S4 (Kotov, Aagaard, Ramesh, Dvoretsky, Rowson, Heisman, all [R] in the map)",
+    "docs/council-synthesis.md Round 3 and CD-3 (candidate lists, analysis tree)",
+    "sources/sheets/emlasker_common-sense.md §4.11 (three kinds of move) and §4.13 (plans rather than trees)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Not a forced position; more than one plan is plausible.",
+    "Forcing moves are listed first; quiet moves are included because positional moves are neither threats nor parries."
+  ],
+  "condition_sources": [
+    "CNC CD-3",
+    "Nimz #32"
+  ],
+  "contrasts": [
+    "A list of near-duplicates (the same idea in two move orders).",
+    "Dropping a candidate by feel and later finding it was the only move.",
+    "A forced reply to a check, where there is nothing to list."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "CNC CD-3",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.NONE.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.NONE.D1": "'nothing forcing' is a legitimate result of the search"
+  }
+}

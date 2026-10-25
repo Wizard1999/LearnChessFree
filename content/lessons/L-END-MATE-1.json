@@ -1,0 +1,166 @@
+{
+  "id": "L-END-MATE-1",
+  "title": "Mating a lone king: queen, rook, and the stalemate trap",
+  "skill": "END.MATE-KQ",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Mates a bare king with queen or rook and king without stalemating it",
+    "Recognises checkmate, stalemate and neither at a glance",
+    "Checks, before every non-mating move, that the lone king still has a legal move and that the piece is safe"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "To mate a bare king, a queen or rook alone is not enough: push the king to an edge and bring your own king close. Before every move that is not mate, ask one question: **can Black still make a legal move?** If Black has no legal move and is not in check, the game is a draw, however much material you have."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/7k/3Q4/8/5K2/8/8 w - - 0 1",
+      "caption": "White to move: mate in three. The checks Qg5+ and Qh5+ only draw.",
+      "line": [
+        {
+          "move": "d5g8",
+          "say": "A quiet queen move, a knight's move from the king, with no check."
+        },
+        {
+          "move": "h6h5",
+          "say": "Black's king steps to h5."
+        },
+        {
+          "move": "g8g7",
+          "say": "Another quiet queen move. The white king stays on f3."
+        },
+        {
+          "move": "h5h4",
+          "say": "Black's king steps to h4."
+        },
+        {
+          "move": "g7g4",
+          "say": "The white king guards g4, so the queen mates."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "d5g8",
+            "n": 3
+          }
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d5g5"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d5h5"
+          }
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "g8"
+        },
+        {
+          "from": "g8",
+          "to": "g7"
+        },
+        {
+          "from": "g7",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "h6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA3-101"
+    },
+    {
+      "type": "card",
+      "text": "**Three checks before every move.** 1. If it is not mate, can Black's king still move? 2. Can the king capture your piece for free? 3. Is your own king close enough to protect the final check? A move that takes the last square without giving check is stalemate. Now one look-alike: the same queen move, one king step apart."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen move, one king step apart",
+      "prompt": "White plays Qg6 in both. Black's king is on h7 or on h8. Predict the result each time, then check.",
+      "working": "IA3-106",
+      "failing": "IA3-107",
+      "irrelevant": "IA3-108"
+    },
+    {
+      "type": "item",
+      "item": "IA3-102"
+    },
+    {
+      "type": "item",
+      "item": "IA3-103"
+    },
+    {
+      "type": "item",
+      "item": "IA3-109"
+    },
+    {
+      "type": "item",
+      "item": "IA3-110"
+    },
+    {
+      "type": "item",
+      "item": "IA3-111"
+    },
+    {
+      "type": "item",
+      "item": "IA3-112"
+    },
+    {
+      "type": "item",
+      "item": "IA3-113"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-STALEMATE-AVOID",
+        "cue.2"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which of your checks (Black's legal moves, the safety of your piece, your king's distance) did you skip before a move? What will you check first next time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-01, CI-03: ideas only)",
+    "sources/sheets/edlasker_chess-strategy.md (K22: what can mate a bare king)",
+    "docs/reconciliation-pasted-curriculum.md (END.MATE-STALEMATE-AVOID as an explicit D2 item)",
+    "All positions: own constructions; results from the Lichess tablebase service"
+  ],
+  "also": [
+    "END.MATE-STALEMATE-AVOID"
+  ]
+}

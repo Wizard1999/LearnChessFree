@@ -1,0 +1,74 @@
+{
+  "id": "TAC.ZWISCHENZUG",
+  "title": "In-between moves",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains an in-between move as a forcing move played before the expected recapture or reply.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'there is an in-between move', finds the check or capture that changes the outcome of an exchange.",
+      "prereqs": [
+        "LOOP.V2.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the in-between move in exchange sequences, and does not rely on a recapture that the opponent can sidestep.",
+      "prereqs": [
+        "TAC.ZWISCHENZUG.D1",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Re-counts an exchange allowing for the opponent's best in-between move; predicts which side gains when a check is available.",
+      "prereqs": [
+        "TAC.ZWISCHENZUG.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "After a capture the recapture is automatic."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S3 (T3-4)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-49 (recapture traps)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K3 (an own capture can unmask another attack)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The in-between move creates a threat larger than the recapture and leaves the original capture available.",
+    "It is most often a check, because the reply is forced."
+  ],
+  "condition_sources": [
+    "ours",
+    "ours"
+  ],
+  "contrasts": [
+    "After the in-between check the target escapes with a tempo, so the original capture is gone.",
+    "The in-between move is itself answered by a stronger in-between move.",
+    "An exchange with no check or threat available to either side."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.DOUBLE-CHECK.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.DOUBLE-CHECK.D1": "an in-between check can be a double check"
+  },
+  "note": "No synthesis sheet covers this motif; conditions are ours and must be engine-checked at authoring."
+}

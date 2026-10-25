@@ -1,0 +1,147 @@
+{
+  "id": "L-LOOP-V4-1",
+  "title": "Compare the positions, not your first idea",
+  "skill": "LOOP.V4",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Compares the positions two candidate moves lead to, using a short checklist",
+    "Notices that a tie in material is where comparison starts",
+    "Recognises when there is nothing to compare",
+    "Writes down what decided a comparison"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "After you follow your candidate lines, compare **the positions they end in**, not the moves you like. Ask of each end position:\n**1. Material? 2. Is a king exposed? 3. Is any piece loose or attacked by something cheaper? 4. Whose pieces are more active?**\nThe order is a suggestion. The first idea is only a candidate."
+    },
+    {
+      "type": "board",
+      "fen": "r3kb1r/ppp1qppp/8/8/2BnNp2/3P1b1P/PPP2PP1/R2QK2R w KQkq - 0 12",
+      "caption": "Black's bishop has taken on f3. White can retake with the pawn or with the queen. Compare the two end positions.",
+      "line": [
+        {
+          "move": "g2f3",
+          "say": "gxf3 retakes with the pawn. The engine rates this recapture best."
+        },
+        {
+          "move": "f7f5",
+          "say": "Black continues. The queen recapture would have been rated far worse."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g2",
+          "to": "f3"
+        },
+        {
+          "from": "d1",
+          "to": "f3"
+        }
+      ],
+      "highlight": [
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2f3"
+            ]
+          },
+          "statement": "gxf3 is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "d1f3",
+            "cp": 300
+          },
+          "statement": "Qxf3 is far worse."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "d1f3"
+          },
+          "statement": "Qxf3 is also a legal recapture."
+        },
+        {
+          "id": "C4",
+          "type": "legal_move",
+          "params": {
+            "move": "g2f3"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-26"
+    },
+    {
+      "type": "card",
+      "text": "**A tie in material is where comparing starts.** When two moves win the same material, look at the other three questions. And when the piece you like recaptures, picture the position first: the natural recapture is sometimes the worst one.\nIf a position has one legal move, there is nothing to compare."
+    },
+    {
+      "type": "contrast",
+      "title": "Same material, different positions",
+      "prompt": "Each position offers two ways to recapture. Predict which is better, then check.",
+      "working": "IA5-23",
+      "failing": "IA5-24",
+      "irrelevant": "IA5-25"
+    },
+    {
+      "type": "item",
+      "item": "IA5-27"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** There is no checklist panel in this lesson; the checklist is the card above, and hints are offered on each item. A silent item switches hints and the engine off. The plan is to offer hints only on request once you solve cue-3 items without them. Next item is silent."
+    },
+    {
+      "type": "item",
+      "item": "IA5-28",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Look back at the silent item. Write down the two end positions you compared, in a few words each, and say which of the four questions decided it.",
+      "fields": [
+        {
+          "id": "position_a",
+          "label": "Position after my first candidate:"
+        },
+        {
+          "id": "position_b",
+          "label": "Position after my second candidate:"
+        },
+        {
+          "id": "decided",
+          "label": "What decided it?",
+          "options": [
+            "material",
+            "king exposure",
+            "loose or attacked pieces",
+            "piece activity",
+            "I did not compare"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S2 (LOOP.V4), S4 (CAL.COMPARE)",
+    "docs/council-synthesis.md CD-3; Bilalic, McLeod and Gobet 2008 (a familiar idea can block a better one) [V, secondary]",
+    "positions: Lichess 2013-01 sample games (CC0)"
+  ]
+}

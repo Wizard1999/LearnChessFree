@@ -1,0 +1,757 @@
+{
+ "positions": [
+  {
+   "id": "PB3-401",
+   "fen": "2r3k1/pp3ppp/5n2/8/2B5/1P6/P4PPP/R5K1 w - - 0 1",
+   "family": "FAM-B3-FIC-DEF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-402",
+   "fen": "r3k3/pp3ppp/4n3/6B1/8/8/PP3PPP/4R1K1 w - - 0 1",
+   "family": "FAM-B3-FIC-PIN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-403",
+   "fen": "4r1k1/pp3pp1/4b2p/8/2N5/8/PP3PPP/3R2K1 w - - 0 1",
+   "family": "FAM-B3-FIC-CONTR-W",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-404",
+   "fen": "4r1k1/pp3pp1/4b2p/8/2N5/8/PP3PPP/4R1K1 w - - 0 1",
+   "family": "FAM-B3-FIC-CONTR-F",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-405",
+   "fen": "4r1k1/pp1b1pp1/7p/8/2N5/8/PP3PPP/3R2K1 w - - 0 1",
+   "family": "FAM-B3-FIC-CONTR-I",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch b3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-406",
+   "fen": "3q3k/1ppb1pp1/p4b1p/4p3/4P3/2PrB2P/PP2QPPN/4R1K1 b - - 9 24",
+   "family": "FAM-B3-FIC-S-REAL1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Lichess 2013-01 game position (CC0), game id oujkk13p",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-407",
+   "fen": "r1b2rk1/pp1n1ppp/4p3/2p1P3/3B4/P1NP4/1P2KPPP/R6R w - - 0 15",
+   "family": "FAM-B3-FIC-S-REAL2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Lichess 2013-01 game position (CC0), game id v9rips8o",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-408",
+   "fen": "r2qr1k1/pp3ppp/2pb4/8/5P2/P1N1B1P1/1PPQ3P/R4RK1 b - - 0 15",
+   "family": "FAM-B3-FIC-S-NONE1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Lichess 2013-01 game position (CC0), game id pekgev2v",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PB3-409",
+   "fen": "1r3r2/1b1qbp1k/6pp/p2p3N/2pP4/2P1BP2/P1Q3PP/R4RK1 w - - 0 26",
+   "family": "FAM-B3-FIC-S-NONE2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Lichess 2013-01 game position (CC0), game id s3cbzikh",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IB3-401",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PB3-401",
+   "prompt": "Black's rook on c8 attacks White's bishop on c4. Is the threat to take it real? Choose the description that fits.",
+   "answer": {
+    "class": "fictitious: the piece is defended and the attacker has a higher counting value",
+    "options": [
+     "real: it wins material",
+     "fictitious: the piece is defended and the attacker has a higher counting value",
+     "fictitious: the attacker is pinned",
+     "fictitious: the capture lets the other side win something bigger"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the rook, attacks the bishop."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the pawn on b3, defends the bishop."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No white piece is loose."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "c8c4",
+      "null_move_first": true,
+      "max": -2
+     },
+     "statement": "If Black takes the bishop, the engine line leaves Black at least 2 behind."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-B3-FIC-DEF",
+    "lang.en",
+    "task.classify_position",
+    "tier.2",
+    "mode.threat",
+    "mode.classify"
+   ],
+   "hints": [
+    "Count what attacks the bishop and what defends it.",
+    "If the rook takes the bishop, can White take the rook back? Compare a rook with a bishop (counting values 5 and 3).",
+    "The pawn on b3 defends the bishop."
+   ],
+   "explain": "The pawn on b3 defends the bishop. If the rook takes it, the pawn takes the rook: Black gives up a rook for a bishop. The attacker has a higher counting value than the piece it attacks, so the threat is not real.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-402",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PB3-402",
+   "prompt": "Black's knight on e6 attacks White's bishop on g5, which nothing defends. Is the threat to take it real? Choose the description that fits.",
+   "answer": {
+    "class": "fictitious: the attacker is pinned",
+    "options": [
+     "real: it wins material",
+     "fictitious: the piece is defended and the attacker has a higher counting value",
+     "fictitious: the attacker is pinned",
+     "fictitious: the capture lets the other side win something bigger"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "g5"
+      ]
+     },
+     "statement": "The bishop on g5 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e6",
+      "includes": [
+       "g5"
+      ]
+     },
+     "statement": "The knight on e6 attacks g5."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "e6",
+      "mode": "legal",
+      "count": 0
+     },
+     "statement": "The knight has no legal move: it is pinned."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The white rook on e1 attacks the knight, with the black king behind it."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-B3-FIC-PIN",
+    "lang.en",
+    "task.classify_position",
+    "tier.2",
+    "mode.threat",
+    "mode.classify"
+   ],
+   "hints": [
+    "Is the knight free to move? Look at what stands behind it on the e-file.",
+    "The rook on e1 aims through the knight at the king on e8.",
+    "A piece that is pinned to its king may not move, so it may not capture."
+   ],
+   "explain": "The knight cannot capture, because moving it would expose its own king to the rook on e1. The attack is fictitious while the pin lasts. If the king steps off the e-file the pin ends and the threat becomes real.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-403",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB3-403",
+   "prompt": "White's knight on c4 is not defended. Black has just moved. Does Black threaten to win the knight? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c4"
+      ]
+     },
+     "statement": "The knight on c4 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The bishop on e6 attacks it."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "e6c4",
+      "null_move_first": true,
+      "min": 3
+     },
+     "statement": "If Black takes the knight, the engine line leaves Black 3 ahead."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-FIC-CONTR-W",
+    "lang.en",
+    "task.predict_outcome",
+    "tier.2",
+    "mode.threat"
+   ],
+   "hints": [
+    "What attacks the knight? What would happen after Bxc4?",
+    "Nothing defends the knight, and White's rook is not on the e-file.",
+    "The bishop can take the knight for nothing."
+   ],
+   "explain": "The bishop on e6 attacks the knight and nothing defends it. Bxc4 wins a knight for nothing, so the threat is real.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B3-FIC"
+  },
+  {
+   "id": "IB3-404",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB3-404",
+   "prompt": "White's knight on c4 is not defended. Black has just moved. Does Black threaten to win the knight? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c4"
+      ]
+     },
+     "statement": "The knight on c4 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The white rook on e1 attacks the bishop on e6."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e8",
+      "piece": "r"
+     },
+     "statement": "A black rook stands behind the bishop on e8."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "e6c4",
+      "null_move_first": true,
+      "max": -2
+     },
+     "statement": "If Black takes the knight, the engine line leaves Black at least 2 behind."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-FIC-CONTR-F",
+    "lang.en",
+    "task.predict_outcome",
+    "tier.2",
+    "mode.threat"
+   ],
+   "hints": [
+    "The knight is loose. Before you say yes, ask what Black's bishop is doing on e6.",
+    "Look at the e-file: the rook on e1, the bishop on e6, the rook on e8.",
+    "If the bishop leaves the e-file, the rooks face each other."
+   ],
+   "explain": "The bishop is in the way of the e-file. If it takes the knight, the rook on e1 takes the undefended rook on e8. The capture loses more than it wins, so the threat is fictitious while the rook stays on e1.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B3-FIC"
+  },
+  {
+   "id": "IB3-405",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB3-405",
+   "prompt": "White's knight on c4 is not defended. Black has just moved. Does Black threaten to win the knight? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No white piece is loose: nothing of White's is attacked."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks the knight."
+    },
+    {
+     "id": "C3",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If White passed, Black could not win material."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-B3-FIC-CONTR-I",
+    "lang.en",
+    "task.predict_outcome",
+    "tier.2",
+    "mode.threat"
+   ],
+   "hints": [
+    "Which black pieces attack the knight?",
+    "Check each black piece in turn: bishop, rook, king.",
+    "None of them reaches c4."
+   ],
+   "explain": "Nothing attacks the knight, and if White passed Black still could not win anything. There is no threat at all, which is a different answer from a threat that fails.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B3-FIC"
+  },
+  {
+   "id": "IB3-406",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PB3-406",
+   "prompt": "White has just moved. Anything to worry about? Show the threat by moving a White piece, or say there is none.",
+   "answer": {
+    "threat_move": "e2d3"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "d3"
+      ]
+     },
+     "statement": "The rook on d3 is attacked and nothing defends it; nothing else is loose."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d3",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One enemy piece attacks d3."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "e2d3",
+      "null_move_first": true,
+      "min": 5
+     },
+     "statement": "If the side to move passed, the capture would leave the enemy at least 5 ahead."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-FIC-S-REAL1",
+    "lang.en",
+    "task.threat_detection",
+    "tier.2",
+    "mode.threat",
+    "mode.silent"
+   ],
+   "hints": [
+    "Is any of your pieces attacked? By what?",
+    "Count the defenders of the attacked piece.",
+    "The rook on d3 is attacked by the queen and nothing defends it."
+   ],
+   "explain": "The rook on d3 is attacked by the queen on e2 and nothing defends it, so Qxd3 would win a whole rook. The threat is real.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-407",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PB3-407",
+   "prompt": "Black has just moved. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "threat_move": "c5d4"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "statement": "The bishop on d4 is attacked and nothing defends it; nothing else is loose."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One enemy piece attacks d4."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "c5d4",
+      "null_move_first": true,
+      "min": 3
+     },
+     "statement": "If the side to move passed, the capture would leave the enemy at least 3 ahead."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-FIC-S-REAL2",
+    "lang.en",
+    "task.threat_detection",
+    "tier.2",
+    "mode.threat",
+    "mode.silent"
+   ],
+   "hints": [
+    "Is any of your pieces attacked? By what?",
+    "Count the defenders of the attacked piece, and compare the attacker with the piece.",
+    "A pawn attacks your bishop on d4 and nothing defends it."
+   ],
+   "explain": "The bishop on d4 is attacked by the pawn on c5 and nothing defends it. A pawn takes a bishop and gains two points even when it can be recaptured, and here nothing recaptures. The threat is real.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-408",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PB3-408",
+   "prompt": "White has just moved. Anything to worry about? Show the threat by moving a White piece, or say there is none.",
+   "answer": {
+    "outcome": "none"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "None of the side's pieces is loose."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "1 enemy piece attacks d6."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "1 piece defends d6."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "d2d6",
+      "null_move_first": true,
+      "max": -2
+     },
+     "statement": "If the side to move passed, the capture would leave the capturing side at least 2 behind."
+    },
+    {
+     "id": "C5",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If the side to move passed, the other side could not win material."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-FIC-S-NONE1",
+    "lang.en",
+    "task.threat_detection",
+    "tier.2",
+    "mode.threat",
+    "mode.silent"
+   ],
+   "hints": [
+    "Is any of your pieces attacked? By what?",
+    "Is the attacked piece defended? How does the attacker's counting value compare with the piece's?",
+    "The queen on d2 attacks your bishop on d6, which your queen defends."
+   ],
+   "explain": "The white queen attacks the bishop on d6, but the black queen defends it. Qxd6 Qxd6 would cost White the queen for a bishop. The attacker has a higher counting value than the piece, so there is nothing to worry about.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IB3-409",
+   "skill": "SAF.FICTITIOUS.D1",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PB3-409",
+   "prompt": "Black has just moved. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "outcome": "none"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "h5"
+      ]
+     },
+     "statement": "The piece on h5 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g6",
+      "includes": [
+       "h5"
+      ]
+     },
+     "statement": "The piece on g6 attacks h5."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "g6",
+      "mode": "legal",
+      "count": 0
+     },
+     "statement": "The piece on g6 has no legal move: it is pinned."
+    },
+    {
+     "id": "C4",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If the side to move passed, the other side could not win material."
+    }
+   ],
+   "tags": [
+    "node.SAF.FICTITIOUS",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-B3-FIC-S-NONE2",
+    "lang.en",
+    "task.threat_detection",
+    "tier.2",
+    "mode.threat",
+    "mode.silent"
+   ],
+   "hints": [
+    "Is any of your pieces attacked? By what? Is it free to capture?",
+    "Look at the line behind the attacker.",
+    "The pawn on g6 attacks your knight, but the queen on c2 pins it to the king on h7."
+   ],
+   "explain": "The pawn on g6 attacks the knight on h5 and nothing defends the knight, but the pawn is pinned to the king on h7 by the queen on c2 and may not capture. The threat is fictitious while the pin lasts.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+  "id": "L-SAF-COUNT-1",
+  "title": "Counting attackers and defenders",
+  "skill": "SAF.COUNT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts attackers and defenders of a square and says who wins material",
+    "Captures with the cheapest piece first",
+    "Spots a pinned defender that cannot recapture",
+    "Notices when one defender has two jobs"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Before you capture on a square, **count**. List every piece that can capture there for each side, with its value. The side that starts captures with its **cheapest** piece first, and either side may stop whenever carrying on would lose material.\nThen compare: what do I win, and what do I lose?"
+    },
+    {
+      "type": "board",
+      "fen": "5rk1/pp3ppp/2np4/4p3/3P4/5N2/PPP2PPP/4R1K1 w - - 0 1",
+      "caption": "White to move. Three white pieces attack e5 and two black pieces defend it.",
+      "line": [
+        {
+          "move": "d4e5",
+          "say": "The pawn captures first, the cheapest of the three attackers."
+        },
+        {
+          "move": "d6e5",
+          "say": "A black pawn recaptures."
+        },
+        {
+          "move": "f3e5",
+          "say": "The knight takes the pawn on e5."
+        },
+        {
+          "move": "c6e5",
+          "say": "Black's knight takes the knight."
+        },
+        {
+          "move": "e1e5",
+          "say": "The rook takes the knight. White has won two pawns and a knight for a pawn and a knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "e5"
+        },
+        {
+          "from": "f3",
+          "to": "e5"
+        },
+        {
+          "from": "e1",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 3
+          },
+          "statement": "Three white pieces attack e5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces defend e5."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4e5",
+            "min": 1
+          },
+          "statement": "The capture sequence on e5 wins a pawn for White along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-009"
+    },
+    {
+      "type": "item",
+      "item": "IA1-010"
+    },
+    {
+      "type": "card",
+      "text": "A count is only as good as its pieces.\n**Order matters.** With the same numbers, a cheap piece that captures first can win what an expensive one would lose.\n**Every counted piece must really be able to capture.** A pinned piece cannot recapture if that would expose its king, and a piece with two jobs may be needed elsewhere."
+    },
+    {
+      "type": "contrast",
+      "title": "Same numbers, different first capture",
+      "prompt": "Black's e5 pawn is attacked twice and defended once in both positions.",
+      "working": "IA1-011",
+      "failing": "IA1-012",
+      "irrelevant": "IA1-013"
+    },
+    {
+      "type": "contrast",
+      "title": "The count lies",
+      "prompt": "Count first. Then ask whether each counted defender can really capture.",
+      "working": "IA1-014",
+      "failing": "IA1-015"
+    },
+    {
+      "type": "item",
+      "item": "IA1-016",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-017",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.COUNT"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part of counting felt least certain: the values, the order, or checking that each defender can really capture?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K2 count by value, K3 three ways the count lies)",
+    "docs/curriculum-map-v1.1.md section 3 (SAF.COUNT)",
+    "docs/council-synthesis.md CD-4"
+  ]
+}

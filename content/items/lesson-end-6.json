@@ -1,0 +1,926 @@
+{
+ "positions": [
+  {
+   "id": "PA3-601",
+   "fen": "8/8/8/3Kp3/4Pk2/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kd5 Pe4 v Kf4 Pe5, White to move: mutual zugzwang, White loses",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-602",
+   "fen": "8/8/8/3Kp3/4Pk2/8/8/8 b - - 0 1",
+   "family": "FAM-END-ZZ",
+   "provenance": {
+    "kind": "authored",
+    "ref": "same with Black to move: Black loses",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-603",
+   "fen": "8/8/8/3pK3/2kP4/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ",
+   "provenance": {
+    "kind": "authored",
+    "ref": "pZw mirrored left-right: still a loss for the side to move",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-604",
+   "fen": "8/8/8/4p3/2K1Pk2/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ-ONE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kc4 v Kf4: only Kd5 wins",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-605",
+   "fen": "8/8/8/2K1p3/4Pk2/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ-ONE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kc5 v Kf4: Kd5 wins (the direct approach)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-606",
+   "fen": "8/8/8/2K1p3/4P1k1/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ-TRI",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kc5 v Kg4: only Kd6 wins (a tempo-losing detour)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-607",
+   "fen": "8/8/6k1/3Kp3/4P3/8/8/8 w - - 0 1",
+   "family": "FAM-END-ZZ-TEMPO",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kd5 v Kg6, White to move: win",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PA3-608",
+   "fen": "8/8/6k1/3Kp3/4P3/8/8/8 b - - 0 1",
+   "family": "FAM-END-ZZ-TEMPO",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Kd5 v Kg6, Black to move: draw",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IA3-601",
+   "skill": "END.ZUGZWANG.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PA3-604",
+   "prompt": "White to move. One king move puts Black in zugzwang and wins. Find it.",
+   "answer": {
+    "moves": [
+     "c4d5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c4d5"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c4d3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c4c3"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c4c5"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c4b3"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c4b4"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c4b5"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.1",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Which square for the white king makes both kings attack the other's pawn?",
+    "After your move, it must be Black who has to move, and every Black move must lose.",
+    "Kd5."
+   ],
+   "explain": "Kd5 puts the kings on d5 and f4 with Black to move, a mutual zugzwang: every Black move loses. The tablebase shows Kd5 is the only winning move; Kd3 draws and the other king moves lose.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c4d3": "Kd3 only draws: Black keeps the move and the balance.",
+    "c4c3": "Moving away loses: Black's king takes the e4 pawn.",
+    "c4c5": "Kc5 loses, as the tablebase shows."
+   }
+  },
+  {
+   "id": "IA3-602",
+   "skill": "END.ZUGZWANG.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PA3-601",
+   "prompt": "White to move. Each king attacks the other side's pawn. What is the result with best play?",
+   "answer": {
+    "outcome": "Black wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c6"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5d6"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5e6"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.2",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Which White moves are possible, and what does each leave behind?",
+    "If White's king leaves d5, Black's king takes the pawn on e4; the pawn cannot move.",
+    "Every White move loses."
+   ],
+   "explain": "White has only king moves, the pawn on e4 is blocked, and the tablebase shows all five White moves lose: this is a mutual zugzwang.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-END-ZZ-MOVE"
+  },
+  {
+   "id": "IA3-603",
+   "skill": "END.ZUGZWANG.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PA3-602",
+   "prompt": "The same position, but now it is Black's move. What is the result with best play?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f4e3"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f4f3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f4g3"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f4g4"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f4g5"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.2",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Compare with the last position: only the side to move has changed.",
+    "Black's pawn on e5 is blocked and his king must move.",
+    "Every Black move loses."
+   ],
+   "explain": "With Black to move the tablebase again shows every legal move loses: the side that has to move is the one that loses.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-END-ZZ-MOVE"
+  },
+  {
+   "id": "IA3-604",
+   "skill": "END.ZUGZWANG.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PA3-603",
+   "prompt": "The whole picture turned left-right. White to move. What is the result with best play?",
+   "answer": {
+    "outcome": "Black wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.2",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Which parts of the picture are the same?",
+    "Each king still attacks the other side's pawn.",
+    "Same result."
+   ],
+   "explain": "Turning the picture left-right changes nothing: the tablebase again gives a win to the side that does not have to move.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-END-ZZ-MOVE"
+  },
+  {
+   "id": "IA3-605",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PA3-605",
+   "prompt": "White's king is on c5, one step from d5. White to move. What is the result with best play?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c5d5"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b4"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b5"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b6"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5c4"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5c6"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5d6"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.2",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Can White reach the zugzwang with Black to move?",
+    "Kd5 would do it.",
+    "White wins."
+   ],
+   "explain": "From c5 White steps to d5 and reaches the zugzwang with Black to move; the tablebase gives White the win, and Kd5 is the only winning move.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-END-ZZ-KING"
+  },
+  {
+   "id": "IA3-606",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PA3-606",
+   "prompt": "Black's king is on g4 now, not f4. White's king is on c5. White plays Kd5. What is the result with best play?",
+   "answer": {
+    "outcome": "Black wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5d5"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.2",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Where is Black's king compared with the mutual zugzwang?",
+    "After Kd5, Black plays Kf4.",
+    "Then it is White who has to move: White loses."
+   ],
+   "explain": "With Black's king on g4, Kd5 lets Black step to f4, which gives the zugzwang with White to move. The tablebase shows Kd5 loses here.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-END-ZZ-KING"
+  },
+  {
+   "id": "IA3-607",
+   "skill": "END.TRIANGULATION.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PA3-606",
+   "prompt": "White to move. Only one move wins, and it is not Kd5. Find it.",
+   "answer": {
+    "moves": [
+     "c5d6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c5d6"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5d5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c5c4"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b4"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b5"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5b6"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c5c6"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.3",
+    "node.END.TRIANGULATION"
+   ],
+   "hints": [
+    "Black's king can reach f4 in one move. What must be true when it gets there?",
+    "White's king needs to reach d5 one move later than the direct route, so that Black's king arrives first.",
+    "Kd6, then Kd5."
+   ],
+   "explain": "Kd6 loses a move: White's king reaches d5 a move later, after Black's king has settled on f4, and it is Black who must move. The tablebase shows Kd6 is the only winning move; Kd5 loses and Kc4 draws.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c5d5": "Kd5 lets Black step to f4, and then White is the one to move: loss.",
+    "c5c4": "Kc4 draws: it does not change who has to move at the key moment."
+   }
+  },
+  {
+   "id": "IA3-608",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PA3-607",
+   "prompt": "White to move. What is the result with best play?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5e5"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5e6"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.3",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Black's king is far from his own pawn.",
+    "White's king can take it.",
+    "White wins."
+   ],
+   "explain": "Black's king is far from his e5 pawn, and the tablebase gives White the win; both Kxe5 and Ke6 win.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IA3-609",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PA3-608",
+   "prompt": "The same position, but Black to move. What is the result with best play?",
+   "answer": {
+    "outcome": "Draw",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g6f6"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g6f7"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g6g5"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g6g7"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g6h5"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g6h6"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g6h7"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.3",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Only the side to move has changed.",
+    "Black has two moves that guard e5.",
+    "Draw."
+   ],
+   "explain": "With Black to move the tablebase gives a draw: Kf6 and Kf7 are the only drawing moves, and the other five Black moves lose.",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IA3-610",
+   "skill": "END.TRIANGULATION.D2",
+   "cue": 4,
+   "task": "play_out",
+   "position": "PA3-606",
+   "prompt": "You are White. Win: lose a move with the king first, then take the zugzwang position with Black to move.",
+   "answer": {
+    "goal": "win",
+    "max_moves": 45
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The goal (win) is achievable: the tablebase result for the side to move is a win."
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.4",
+    "node.END.TRIANGULATION"
+   ],
+   "hints": [
+    "Do not go straight to d5.",
+    "Kd6 first, then see where Black's king stands.",
+    "After Kd6 Kf4, play Kd5."
+   ],
+   "explain": "The tablebase says White wins from here; Kd6 is the only winning first move.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IA3-611",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 4,
+   "task": "play_out",
+   "position": "PA3-608",
+   "prompt": "You are Black. Hold the draw: guard the e5 pawn before White's king reaches it.",
+   "answer": {
+    "goal": "hold",
+    "max_moves": 40
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The goal (hold) is achievable: the tablebase result for the side to move is a draw."
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.zugzwang",
+    "kind.authored",
+    "tier.3",
+    "lang.en",
+    "set.zz-core",
+    "cue.4",
+    "node.END.ZUGZWANG"
+   ],
+   "hints": [
+    "Which Black moves keep a king next to the e5 pawn?",
+    "Kf6 or Kf7.",
+    "Then keep your king on a square that guards e5."
+   ],
+   "explain": "The tablebase says Black draws from here; Kf6 and Kf7 are the only drawing first moves.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

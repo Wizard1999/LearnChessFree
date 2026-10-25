@@ -1,0 +1,66 @@
+{
+  "id": "END.MATE-KR",
+  "title": "Mate with king and rook",
+  "strand": "S7",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a king and a rook can force checkmate against a lone king, and that a rook alone cannot.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Gives checkmate in one with king and rook against the lone king, on the edge of the board.",
+      "prereqs": [
+        "FND.MATE1.D1",
+        "FND.PIECE.ROOK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Finds mate in two with king and rook, using a waiting move or a cut-off, without stalemating and without leaving the rook to be captured.",
+      "prereqs": [
+        "END.MATE-KR.D1",
+        "FND.STALEMATE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Mates from a given starting position within the move budget against an engine opponent, without stalemate and without losing the rook.",
+      "prereqs": [
+        "END.MATE-KR.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The rook alone is enough to give mate.",
+    "A rook placed next to the enemy king is safe."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "King and rook force mate on the edge: the rook cuts the king off, the own king comes up, and the last check is given along the edge.",
+    "Keep the rook safe: next to the enemy king it needs the support of your own king."
+  ],
+  "condition_sources": [
+    "ours",
+    "rules"
+  ],
+  "contrasts": [
+    "A rook placed next to the enemy king without support is captured.",
+    "Which edge the mate happens on does not matter, only that it is an edge."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "ours"
+  ]
+}

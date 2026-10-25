@@ -1,0 +1,118 @@
+{
+  "id": "L-SELF-3-1",
+  "title": "Diagnose: which kind of mistake, and how do you know?",
+  "skill": "SELF.3",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Names four kinds of mistake: not seen, seen but miscalculated, misjudged, time pressure",
+    "Labels a mistake tentatively from the player's own note",
+    "Reads an error log and tests a diagnosis against it",
+    "Says honestly that a diagnosis can be wrong"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When you lose material, ask which box it belongs in.\n**Not seen:** you never looked at the reply.\n**Seen but miscalculated:** you looked and the count was wrong.\n**Misjudged:** the count was right, your verdict on the position was wrong.\n**Time pressure:** the clock decided.\nThe label is tentative: only the player knows what happened."
+    },
+    {
+      "type": "item",
+      "item": "IA5-62"
+    },
+    {
+      "type": "item",
+      "item": "IA5-63"
+    },
+    {
+      "type": "card",
+      "text": "Different boxes may need different practice: not seen suggests a scan habit; miscalculated suggests practice with lines and counting; misjudged suggests comparing positions; time pressure suggests a clock plan. This pairing is a hypothesis to test, not a proven rule."
+    },
+    {
+      "type": "item",
+      "item": "IA5-64"
+    },
+    {
+      "type": "item",
+      "item": "IA5-65",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**An error log** lists each mistake with the game, the clock and a box. A diagnosis is a claim the log can test. Fictional log of 8 errors, clock left in brackets: 1 not seen (9:40); 2 miscalculated (7:15); 3 not seen (8:05); 4 time pressure (0:48); 5 not seen (6:30); 6 misjudged (9:10); 7 time pressure (0:35); 8 not seen (7:50)."
+    },
+    {
+      "type": "reflect",
+      "kind": "diagnose",
+      "prompt": "Test two diagnoses against this log: 'I lose because I run low on time' and 'most of my mistakes are things I never looked at'.",
+      "fields": [
+        {
+          "id": "over5",
+          "label": "How many of the 8 errors happened with more than 5 minutes left?",
+          "type": "number",
+          "answer": 6,
+          "tolerance": 0
+        },
+        {
+          "id": "common",
+          "label": "Which box is most common?",
+          "options": [
+            "not seen",
+            "seen but miscalculated",
+            "misjudged",
+            "time pressure"
+          ],
+          "answer": "not seen"
+        },
+        {
+          "id": "time_dx",
+          "label": "Does the log support 'I lose because I run low on time'?",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "answer": "no"
+        },
+        {
+          "id": "my_test",
+          "label": "In your own games, what would you check to test a diagnosis? (one line)"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The app supplies the four boxes and the log layout. The plan is that after you have filled in the log for five games you name the boxes yourself and the app stops showing them (a first guess). The log is plain text you can keep outside the app; exporting it is planned."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Start your own log. After your next game add up to three mistakes. Silent practice: do it with the app closed, then bring the log back.",
+      "fields": [
+        {
+          "id": "g1",
+          "label": "Mistake 1: move, clock left, box"
+        },
+        {
+          "id": "g2",
+          "label": "Mistake 2: move, clock left, box"
+        },
+        {
+          "id": "g3",
+          "label": "Mistake 3: move, clock left, box"
+        },
+        {
+          "id": "unsure",
+          "label": "Which of these labels am I least sure of?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S9 (GAME.TAXONOMY) and S11 (SELF.3 diagnose)",
+    "docs/council-synthesis.md CD-12 (tentative taxonomy: Silman, Rowson, Heisman recalled [R])",
+    "arithmetic checked in the build script; positions: Lichess puzzles (CC0)"
+  ]
+}

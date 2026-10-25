@@ -1,0 +1,75 @@
+{
+  "id": "POS.BISHOPS",
+  "title": "The bishop pair",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why two bishops cover both colours of squares and when that matters (open lines, enemy knights without stations).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a given open position, chooses whether to keep the pair or trade a bishop for a knight and gives the structural reason.",
+      "prereqs": [
+        "POS.GOODBAD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled mixed positions, decides to keep or give up the pair, and does not apply 'never trade bishop for knight' blindly.",
+      "prereqs": [
+        "POS.BISHOPS.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how locking the centre or an unassailable knight post lowers the value of the pair, and decides a trade with the exchange rules.",
+      "prereqs": [
+        "POS.BISHOPS.D2",
+        "POS.EXCHANGE.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Two bishops always beat two knights.",
+    "Trading a bishop for a knight early is always a mistake."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 44; §7 row 44",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-16, CI-17; §5 items 6-7",
+    "sources/sheets/emlasker_common-sense.md §4.6, §4.20 and §5 item 2",
+    "sources/sheets/edlasker_chess-strategy.md §4 K5"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Open or semi-open lines and enemy knights without stations.",
+    "The long-range bishop is not traded for a knight early without compensation: the knight's power is limited to a circle."
+  ],
+  "condition_sources": [
+    "Nimz #44 (c)",
+    "EML 4.6 (b)"
+  ],
+  "contrasts": [
+    "A closed position or an unassailable centrally posted knight lowers the pair's value.",
+    "'always a mistake' to trade a bishop for a pinned knight; this is routine in many structures.",
+    "A trade that is forced anyway."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz #44 (b)",
+    "EML §5 item 2",
+    "EML §8 item 13"
+  ],
+  "soft_prereqs": [
+    "FND.PIECE.KNIGHT.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.PIECE.KNIGHT.D1": "the bishop-pair question is a comparison with the knight"
+  }
+}

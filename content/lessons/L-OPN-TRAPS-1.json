@@ -1,0 +1,180 @@
+{
+  "id": "L-OPN-TRAPS-1",
+  "title": "Sure material, or a trap?",
+  "skill": "OPN.TRAPS",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Told that a position is a trap, finds the poisoned capture and its refutation",
+    "Asks what a capture opens and what the opponent can do next before taking material",
+    "Takes material that is loose and safe, and declines a capture that has a concrete refutation",
+    "Says why a position with nothing to take is not a trap question"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In the opening, a capture that wins material is usually right. For a club player, material in hand beats a vague plan: that is a **rule of thumb**. A **trap** is a capture or recapture that loses more than it wins. Before you take, ask two questions. What does my capture open or take away? What can the opponent do next with a check, a capture or a threat?"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqk2r/ppp1nppp/3P4/2b5/8/5N2/PPP1PPPP/RNBQKB1R w KQkq - 1 5",
+      "caption": "White to move. The pawn on d6 can take the knight on e7.",
+      "line": [
+        {
+          "move": "d6e7",
+          "say": "The pawn takes a knight. If Black recaptures, White has won a piece for a pawn."
+        },
+        {
+          "move": "c5f2",
+          "say": "Black answers with a check and gives up the bishop."
+        },
+        {
+          "move": "e1f2",
+          "say": "The king takes the bishop. It no longer guards the queen."
+        },
+        {
+          "move": "d8d1",
+          "say": "The black queen takes the white queen along the open d-file."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "e7"
+        },
+        {
+          "from": "d8",
+          "to": "d1"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "e7",
+        "f2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "d6e7",
+            "cp": 400
+          },
+          "statement": "dxe7 is at least 400 centipawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 1,
+            "after_move": "d6e7"
+          },
+          "statement": "After dxe7 the black queen attacks the white queen on d1."
+        },
+        {
+          "id": "C3",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "d1",
+              "e7"
+            ],
+            "after_moves": [
+              "d6e7",
+              "c5f2",
+              "e1f2"
+            ]
+          },
+          "statement": "After Bxf2+ Kxf2 the white queen on d1 is loose: attacked and not defended."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB4-10"
+    },
+    {
+      "type": "item",
+      "item": "IB4-11"
+    },
+    {
+      "type": "item",
+      "item": "IA4-044"
+    },
+    {
+      "type": "card",
+      "text": "In the Openings sample at 1100-1300, 99 of the 198 games that reached the first board (1.d4 e5 2.dxe5 Bc5 3.Nf3 d6 4.exd6 Ne7) continued dxe7; White scored 22% (wins plus half the draws). After e3 (36 games) White scored 53%. Results show how players scored, not what a move is worth. **The rule holds** when the material is loose and the capture opens nothing."
+    },
+    {
+      "type": "contrast",
+      "title": "Is the capture free?",
+      "prompt": "Each position offers a capture, or none. Predict whether it is sure material, bait, or not on offer. Then check.",
+      "working": "IB4-12",
+      "failing": "IB4-13",
+      "irrelevant": "IA4-043"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each item can show three hints; a silent item turns hints and the engine off. The two questions above are yours to run: the app has no trap detector and no panel for this lesson. Next: three silent items. One of them has nothing to take."
+    },
+    {
+      "type": "item",
+      "item": "IB4-15",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.TRAPS",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Open the Openings page and set the band to 1100-1300. Play 1.d4 e5 2.dxe5 Bc5 3.Nf3 d6 4.exd6 Ne7 and read \"What gets played next\". Then write your own two questions and one capture from your own games to check first.",
+      "fields": [
+        {
+          "id": "share",
+          "label": "Percent of games that now continue 5.dxe7 at 1100-1300:",
+          "type": "number",
+          "answer": 50,
+          "tolerance": 1
+        },
+        {
+          "id": "questions",
+          "label": "My two questions before a capture:"
+        },
+        {
+          "id": "own",
+          "label": "A capture from my own games that I would now check first:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.1.md section 3 (OPN.TRAPS)",
+    "sources/sheets/capablanca_chess-fundamentals.md CI-49 (ideas and conditions only, original wording)",
+    "Openings page data: app/public/openings (Lichess games, CC0), 1100-1300 band, see docs/openings-data.md",
+    "positions: authored by replaying legal moves from the start; engine checks at depth 16 (content/items/lesson-b4.json)"
+  ]
+}

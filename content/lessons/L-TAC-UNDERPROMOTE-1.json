@@ -1,0 +1,179 @@
+{
+  "id": "L-TAC-UNDERPROMOTE-1",
+  "title": "Underpromotion: when a knight or rook beats the queen",
+  "skill": "TAC.UNDERPROMOTE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the promotion to a knight that gives check and attacks a second piece",
+    "Chooses a rook or a knight where a queen would stalemate",
+    "Checks the queen promotion first and says why it fails",
+    "Says when the queen is simply right"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When a pawn reaches the last rank, you choose its new piece. The queen is the usual choice because it is strongest. Sometimes another piece is better. A **knight** can give check and attack a second piece at once. A **rook** can win where a queen would leave the opponent with no legal move and no check: **stalemate**, a draw. Choosing a weaker piece on purpose is **underpromotion**."
+    },
+    {
+      "type": "board",
+      "fen": "K7/1P1q3p/k7/8/8/6P1/7P/8 w - - 0 54",
+      "caption": "White to move. Black has a queen on d7; the pawn on b7 is about to promote.",
+      "line": [
+        {
+          "move": "b7b8n",
+          "say": "Underpromotion: a knight. It gives check to the king on a6 and attacks the queen on d7."
+        },
+        {
+          "move": "a6b5",
+          "say": "The king must move. Nothing can capture the knight on b8."
+        },
+        {
+          "move": "b8d7",
+          "say": "The knight takes the queen. The tablebase says White wins this position."
+        }
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "b7b8n"
+          },
+          "statement": "b8=N is legal.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "b8",
+            "includes": [
+              "a6",
+              "d7"
+            ],
+            "after_move": "b7b8n"
+          },
+          "statement": "A knight on b8 attacks a6 (the king) and d7 (the queen).",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "b8",
+            "color": "black",
+            "count": 0,
+            "after_move": "b7b8n"
+          },
+          "statement": "No black piece can capture a knight on b8, so the king must move.",
+          "id": "C3"
+        },
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White wins this position (tablebase).",
+          "id": "C4"
+        },
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "win",
+            "move": "b7b8n"
+          },
+          "statement": "Promoting to a knight keeps the win (tablebase).",
+          "id": "C5"
+        },
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "b7b8q"
+          },
+          "statement": "Promoting to a queen loses (tablebase).",
+          "id": "C6"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b7",
+          "to": "b8"
+        },
+        {
+          "from": "b8",
+          "to": "a6"
+        },
+        {
+          "from": "b8",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "a6",
+        "d7"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB2-1"
+    },
+    {
+      "type": "item",
+      "item": "IB2-3"
+    },
+    {
+      "type": "card",
+      "text": "Check the queen first. Ask two questions.\n**Does the queen promotion fail?** It might stalemate, or it might be captured at once.\n**Does a knight on that square give check and attack a second piece?** As with any fork (*L-TAC-FORK-1*), ask whether the knight can be captured and whether the second target is worth taking.\n*Rule of thumb:* the queen is the default. These questions find the exceptions."
+    },
+    {
+      "type": "item",
+      "item": "IB2-2"
+    },
+    {
+      "type": "contrast",
+      "title": "Does the knight still fork?",
+      "prompt": "In the second position Black's rook has moved from d7 to b7. In the third, no pawn can promote. Predict, then check.",
+      "working": "IB2-1",
+      "failing": "IB2-4",
+      "irrelevant": "IB2-5"
+    },
+    {
+      "type": "item",
+      "item": "IB2-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.underPromotion",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part is least clear: seeing the knight fork, seeing the stalemate, or deciding that the queen is simply right?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S3 (T4-5)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K29 (stalemate resources) [S]; no synthesis sheet covers underpromotion, so the conditions are ours [I]",
+    "docs/first-hours.md session 3 (promotion shown, not tested)",
+    "positions: Lichess puzzles oSj8l, GsnZP, 2Qu17, LLAbQ (CC0) with authored one-feature edits; results from the Lichess tablebase service (cached in library/cache)"
+  ]
+}

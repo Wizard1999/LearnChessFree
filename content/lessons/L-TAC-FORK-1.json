@@ -1,0 +1,105 @@
+{
+  "id": "L-TAC-FORK-1",
+  "title": "Forks: one move, two targets",
+  "skill": "TAC.FORK",
+  "depth": "D1",
+  "minutes": 8,
+  "outcomes": [
+    "Explains why a fork wins material",
+    "Finds a knight fork that wins a queen when told to look for one",
+    "Checks whether a fork actually works before playing it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **fork** is one move that attacks two things at once. Your opponent can answer only one threat, so you usually win the other piece.\nAny piece can fork. Knights are the hardest to spot, because their jump attacks squares a bishop or rook line would not."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/5ppp/q7/3N4/8/7P/5PP1/6K1 w - - 0 1",
+      "caption": "White to move. Watch what the knight does.",
+      "line": [
+        {
+          "move": "d5c7",
+          "say": "The knight jumps to c7 and attacks the king and the queen."
+        },
+        {
+          "move": "e8d7",
+          "say": "The king must step aside."
+        },
+        {
+          "move": "c7a6",
+          "say": "The knight takes the queen. White is a whole queen ahead."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "c7"
+        },
+        {
+          "from": "c7",
+          "to": "a6"
+        },
+        {
+          "from": "c7",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "a6",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d5c7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d5c7",
+            "min": 8
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "I-FORK-001"
+    },
+    {
+      "type": "card",
+      "text": "Not every fork works. Before you jump, ask two questions:\n**Can the forking piece be captured?**\n**Is the second target worth taking?**\nIf the forking piece can simply be taken, the fork costs you the piece."
+    },
+    {
+      "type": "contrast",
+      "title": "Same idea, one change",
+      "prompt": "Black's king now stands on d8. Does Nc7 still win the queen? Predict first, then check.",
+      "working": "I-FORK-001",
+      "failing": "I-FORK-003"
+    },
+    {
+      "type": "item",
+      "item": "I-FORK-002"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you found the move: how sure were you that a fork existed? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md",
+    "sources/sheets/znosko-borovsky_middle-game.md (one-feature-change minimal pairs)",
+    "docs/curriculum-map-v1.md S3"
+  ]
+}

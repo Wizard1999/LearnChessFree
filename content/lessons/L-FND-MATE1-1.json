@@ -1,0 +1,158 @@
+{
+  "id": "L-FND-MATE1-1",
+  "title": "Checkmate in one: four patterns",
+  "skill": "FND.MATE1",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Finds a checkmate in one in the common patterns: back rank, queen next to the king, two rooks, queen with a bishop, knight",
+    "Checks every exit before calling a check checkmate",
+    "Says 'no mate' when there is none"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Checkmate** means the king is attacked and cannot escape: there is no safe square, nothing that can capture the attacker, and no way to block it. A **mate in one** does all of that with one move. A few shapes appear again and again. The first is the **back-rank mate**."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "caption": "The rook checks along the back rank. The king's own pawns block its escape.",
+      "line": [
+        {
+          "move": "a1a8",
+          "say": "The rook slides to the eighth rank. It is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a1",
+          "to": "a8"
+        },
+        {
+          "from": "a8",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "f7",
+        "g7",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "a1a8",
+            "n": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-114"
+    },
+    {
+      "type": "card",
+      "text": "Before you call a check mate, check every exit: can the king step anywhere, can the checking piece be captured, can the check be blocked? A back-rank mate needs the king's own pawns to stand in front of it, with no square for the king to run to."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one pawn moved",
+      "prompt": "Black's h-pawn stands on h6 instead of h7. Predict first: is there still a mate in one?",
+      "working": "IA0-115",
+      "failing": "IA0-116"
+    },
+    {
+      "type": "board",
+      "fen": "R5k1/5pp1/7p/8/8/8/8/6K1 b - - 0 1",
+      "caption": "After Ra8+ the king simply steps to h7. A pawn move gave it a square to run to.",
+      "line": [
+        {
+          "move": "g8h7",
+          "say": "The king escapes to h7. It was check, not checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g8",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_destinations",
+          "params": {
+            "from": "g8",
+            "to": [
+              "h7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Three more shapes. A **queen next to the king** is safe when your own king or another piece protects her. **Two rooks** can take turns: one holds a rank, the other gives check. A **knight's check** cannot be blocked, so it mates a king that has no square."
+    },
+    {
+      "type": "item",
+      "item": "IA0-117"
+    },
+    {
+      "type": "item",
+      "item": "IA0-118"
+    },
+    {
+      "type": "item",
+      "item": "IA0-119"
+    },
+    {
+      "type": "item",
+      "item": "IA0-120"
+    },
+    {
+      "type": "item",
+      "item": "IA0-121"
+    },
+    {
+      "type": "item",
+      "item": "IA0-122"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.MATE1",
+        "kind.generated"
+      ],
+      "n": 8
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the last three questions you were not told whether a mate existed. How sure were you of each answer? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 2",
+    "docs/council-synthesis.md CD-1",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-27 mating types around the castled king; held as pattern families)"
+  ]
+}

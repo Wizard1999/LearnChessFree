@@ -1,0 +1,77 @@
+{
+  "id": "TAC.DISCOVER",
+  "title": "Discovered attacks and checks",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes a discovered attack (moving one piece uncovers a line of another) and says why the moving piece is free to make a second threat.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the discovered check or attack', finds the masking-piece move that uncovers it and says what the moved piece attacks.",
+      "prereqs": [
+        "FND.CHECK.D1",
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the discovered attack that wins material or mates, and does not play it when the opponent's reply captures the uncovering piece or blocks the line.",
+      "prereqs": [
+        "TAC.DISCOVER.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Chooses the best move for the masking piece (capture, strongest threat, or the move that sets up a see-saw) and checks that the uncovered line cannot be interposed.",
+      "prereqs": [
+        "TAC.DISCOVER.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The moving piece must have a harmless job; it can attack or capture anything.",
+    "A discovered check always wins material."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 29; §7 row 29",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "A discovered check is a pin in which the pinned piece has changed sides: the masking piece can capture anything, attack anything or relocate, and cannot be recaptured because the opponent is in check.",
+    "It works best against a king with few flight squares.",
+    "The see-saw: a piece that checks from one square and discovers a check from another wins material with every swing because the king has only one move."
+  ],
+  "condition_sources": [
+    "Nimz #29 (b)",
+    "Nimz #29 (c)",
+    "Nimz #29 (b)"
+  ],
+  "contrasts": [
+    "A discovered attack on a non-king target, which the opponent answers with a counter-threat or by moving the target with a gain of tempo.",
+    "The discovered line can be interposed by a piece that also attacks the masking piece.",
+    "The masking piece's departure uncovers a line to a square where nothing of the opponent stands."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.PIN.D1",
+    "TAC.FORK.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.PIN.D1": "a discovered check is a pin in which the pinned piece has changed sides (Nimz #29)",
+    "TAC.FORK.D1": "the masking piece usually makes a second threat, as in a fork"
+  }
+}

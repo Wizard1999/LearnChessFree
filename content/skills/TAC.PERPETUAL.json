@@ -1,0 +1,76 @@
+{
+  "id": "TAC.PERPETUAL",
+  "title": "Perpetual check",
+  "strand": "S3",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains perpetual check as a sequence of checks the king cannot escape and that repeats the position.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the perpetual', finds the checking sequence and shows the repetition.",
+      "prereqs": [
+        "FND.DRAWS.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the perpetual for the worse side, and tests the king's escape squares before relying on it.",
+      "prereqs": [
+        "TAC.PERPETUAL.D1",
+        "LOOP.V2.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Decides whether to take the perpetual or play on, verifying the king cannot escape the checks and that a better winning try does not exist; predicts how one extra defender or flight square breaks it.",
+      "prereqs": [
+        "TAC.PERPETUAL.D2",
+        "CAL.DEFENSE.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A series of checks is a perpetual without testing where the king can go.",
+    "A perpetual is always the best result for the worse side, and the better side should always accept it."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.16 (does the perpetual exist? the champion's own error); §8 idea 9",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 13 (two rooks on the seventh; rook and knight apparatus)",
+    "sources/sheets/capablanca_chess-fundamentals.md §5 item 21 (engines often show taking the repetition)",
+    "docs/curriculum-map-v1.md §2 S3 (T3-4)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "The king has no escape from the checks, the checking piece cannot be blocked or captured, and checks repeat.",
+    "Two rooks on the seventh rank keep checking if the guarding rook stays as the sentinel."
+  ],
+  "condition_sources": [
+    "EML 4.16; Nimz #13",
+    "Nimz #13 (b)"
+  ],
+  "contrasts": [
+    "The checking sequence ends when the king reaches a square the checker cannot follow, so no perpetual exists.",
+    "The perpetual exists but the stronger side can avoid it by interposing or by a tactic.",
+    "A position where the worse side has a better practical try than a draw."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML 4.16 (the champion's miscalculation idea)",
+    "Nimz #13 (g)",
+    "CAP §5 item 21"
+  ],
+  "soft_prereqs": [
+    "POS.SEVENTH.D3"
+  ],
+  "soft_prereq_notes": {
+    "POS.SEVENTH.D3": "two rooks on the seventh give a perpetual check"
+  }
+}

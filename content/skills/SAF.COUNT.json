@@ -1,0 +1,70 @@
+{
+  "id": "SAF.COUNT",
+  "title": "Counting attackers and defenders",
+  "strand": "S2",
+  "tier": 1,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a piece is defended by the pieces that could recapture on its square, and that attackers and defenders can be counted.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Counts the attackers and the defenders of a given square (direct attacks only, kings included).",
+      "prereqs": [
+        "SAF.LOOSE.D1",
+        "FND.VALUE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Decides whether to take a defended piece by comparing what is won and what may be lost, capturing with the cheapest attacker first.",
+      "prereqs": [
+        "SAF.COUNT.D1",
+        "FND.CAPTURE.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "States when the simple count cannot be trusted: a pinned defender, an overloaded defender, or a piece standing behind another on the same line.",
+      "prereqs": [
+        "SAF.COUNT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The side with more attackers than defenders always wins the exchange.",
+    "The order of captures does not matter.",
+    "A defender that is pinned or overloaded still counts as a defender."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "Count the attackers and the defenders of the square, then play the captures out with the cheapest piece first and stop when the next capture loses.",
+    "The simple count is only valid when no attacker or defender is pinned or overloaded and no piece stands behind another on the same line."
+  ],
+  "condition_sources": [
+    "MAP11",
+    "MAP11"
+  ],
+  "contrasts": [
+    "More attackers than defenders does not win material when the first capture is made by a piece worth more than what it takes.",
+    "A pinned or overloaded defender still counts in the simple count, which is why those cases are taught later.",
+    "Pieces that neither attack nor defend the square do not change the count."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "MAP11",
+    "rules"
+  ]
+}

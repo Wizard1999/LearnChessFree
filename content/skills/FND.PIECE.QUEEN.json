@@ -1,0 +1,64 @@
+{
+  "id": "FND.PIECE.QUEEN",
+  "title": "How the queen moves",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that the queen moves like a rook and a bishop together.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'queen', marks every square the queen can move to, stopping in front of its own pieces and at the first enemy piece on each line.",
+      "prereqs": [
+        "FND.PIECE.ROOK.D1",
+        "FND.PIECE.BISHOP.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a busy position where the piece is not named, marks every square the queen can reach.",
+      "prereqs": [
+        "FND.PIECE.QUEEN.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Without a board, says whether the queen reaches a square in one move or needs two, and names a square from which it attacks two lines at once.",
+      "prereqs": [
+        "FND.PIECE.QUEEN.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The queen can also move like a knight.",
+    "Because it is the strongest piece, the queen can safely take anything."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "The queen has the moves of a rook and a bishop from the same square.",
+    "Each of its eight lines is blocked separately: a blocker on one line does not affect the others."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "The queen does not jump like a knight.",
+    "A piece blocking the rank does not stop the queen using the file and the diagonals."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

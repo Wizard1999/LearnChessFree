@@ -1,0 +1,84 @@
+{
+  "id": "POS.OPENFILE",
+  "title": "Open files",
+  "strand": "S5",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that an open file matters only if a rook can use it to reach an entry square on the seventh or eighth rank or attack a target.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told to use the open file, names the target pawn and the entry square and places the rook accordingly.",
+      "prereqs": [
+        "POS.ACTIVITY.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled middlegame positions, decides whether a file helps by naming its entry square and checking the square is not covered; decides whether opening a file helps him or the opponent.",
+      "prereqs": [
+        "POS.OPENFILE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Chooses among the three ways past an obstructing pawn (batter, lever, sacrifice) by checking whether the pawn is protected, and counts attackers against defenders on it; uses a closed file as a jumping-off place when direct entry is shut.",
+      "prereqs": [
+        "POS.OPENFILE.D2",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, rook placements are recorded with the target and entry square named in the review log.",
+      "prereqs": [
+        "POS.OPENFILE.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Occupying an open file is a goal in itself.",
+    "Any open file is good for whoever has a rook available."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 6-9; §7 rows 6-9; §8 items 4-5",
+    "sources/sheets/edlasker_chess-strategy.md §4 K20 (open files, the seventh rank, being first), K12",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C27; §8 contrast G",
+    "docs/curriculum-map-v1.1.md §3 (POS.OPENFILE.SWITCH folded in)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "Rooks present and an objective exists (a pawn to attack or an entry square).",
+    "The file is genuinely open and the entry squares are not controlled.",
+    "A pawn-protected obstruction is undermined with a lever; an unprotected one is besieged with more attackers than defenders; sacrifice only after the quiet methods and only for the entry."
+  ],
+  "condition_sources": [
+    "Nimz #6 (c)",
+    "EDL K20 (c)",
+    "Nimz #8"
+  ],
+  "contrasts": [
+    "An open file whose entry squares are covered by a bishop, so winning the exchange gains nothing.",
+    "Opening a file that the opponent's rook can reach first.",
+    "A closed file that will not open."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K20 (d), diagram 13",
+    "ZB §8 contrast G",
+    "Nimz §8 item 4"
+  ],
+  "soft_prereqs": [
+    "TAC.BACKRANK.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.BACKRANK.D1": "the eighth-rank entry square is where a file pays off"
+  },
+  "note": "Merged: POS.OPENFILE.SWITCH (restricted advance along a closed file, Nimz #9) is folded into D3 per MAP11 §3."
+}

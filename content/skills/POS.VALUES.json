@@ -1,0 +1,77 @@
+{
+  "id": "POS.VALUES",
+  "title": "Piece values depend on the position",
+  "strand": "S5",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "States the usual point scale as a starting estimate and gives two reasons it changes (mobility, structure).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a position with pieces of unequal mobility, decides which of two pieces to keep and gives the positional reason.",
+      "prereqs": [
+        "FND.VALUE.D1",
+        "POS.ACTIVITY.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, judges trades such as an exchange sacrifice or bishop against rook with pawns using position-dependent values, including a rook that has no file to enter.",
+      "prereqs": [
+        "POS.VALUES.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how one feature (a file opening, pieces coming off, a locked structure) changes the value of a piece, and does not use numeric force tables from the sources.",
+      "prereqs": [
+        "POS.VALUES.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "3-3-5-9 are constant values.",
+    "A rook is always worth more than a minor piece."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-16; §5 item 6",
+    "sources/sheets/edlasker_chess-strategy.md §4 K5; §5 item 1",
+    "sources/sheets/emlasker_common-sense.md §4.20",
+    "sources/sheets/znosko-borovsky_middle-game.md §5 item 1 (numeric force values: do not use)",
+    "docs/curriculum-map-v1.1.md §3 (POS.VALUES: T0 D1 and T4)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "In ordinary open or semi-open positions the usual ordering holds; mobility is the main driver of value.",
+    "Comparisons are pairwise, not a single table."
+  ],
+  "condition_sources": [
+    "EDL K5 (c)",
+    "CAP CI-16 (b)"
+  ],
+  "contrasts": [
+    "A rook with no open file to enter gains nothing from winning the exchange.",
+    "Queen and knight may beat queen and bishop.",
+    "Using the force table with pawn units from the Z-B text."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K5 (d)",
+    "CAP CI-16 (d)",
+    "ZB §5 item 1"
+  ],
+  "soft_prereqs": [
+    "POS.EXCHANGE.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.EXCHANGE.D2": "trade decisions use the changed values"
+  },
+  "note": "Map: T0 D1 and T4. D1 as a warning appears at T0 through FND.VALUE; this node is the T4 contrast family."
+}

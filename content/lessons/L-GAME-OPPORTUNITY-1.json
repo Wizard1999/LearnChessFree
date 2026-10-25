@@ -1,0 +1,164 @@
+{
+  "id": "L-GAME-OPPORTUNITY-1",
+  "title": "The opportunity log: chances available, chances used",
+  "skill": "GAME.OPPORTUNITY",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Explains what an opportunity log counts: for each idea, chances available and chances used",
+    "From the tagged moments of one game, states for two ideas how many chances were available and how many were used",
+    "Counts a chance only if a move that works was there at the time",
+    "Writes each entry with its sample size and calls a small sample 'worth checking'"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**An opportunity log** counts, for each idea, how often a chance was available in your games and how often you used it: 'forks: three available, two used.'\nA chance counts only if a move that works was there at the time.\nThe log shows where to look. It does not say why a chance was missed: that is the question of the error boxes."
+    },
+    {
+      "type": "item",
+      "item": "IB5-21"
+    },
+    {
+      "type": "item",
+      "item": "IB5-22"
+    },
+    {
+      "type": "item",
+      "item": "IB5-23"
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Fill in White's log for the three moments you just tagged (one real game, moves 19 to 22).",
+      "fields": [
+        {
+          "id": "loose_av",
+          "label": "Loose pieces: chances available",
+          "type": "number",
+          "answer": 2,
+          "tolerance": 0
+        },
+        {
+          "id": "loose_used",
+          "label": "Loose pieces: chances used",
+          "type": "number",
+          "answer": 1,
+          "tolerance": 0
+        },
+        {
+          "id": "fork_av",
+          "label": "Forks: chances available",
+          "type": "number",
+          "answer": 1,
+          "tolerance": 0
+        },
+        {
+          "id": "fork_used",
+          "label": "Forks: chances used",
+          "type": "number",
+          "answer": 0,
+          "tolerance": 0
+        },
+        {
+          "id": "fair",
+          "label": "Which sentence is fair?",
+          "options": [
+            "White is good at loose pieces and bad at forks.",
+            "Two chances and one chance are far too few to say; worth checking, not a verdict.",
+            "White never misses a fork."
+          ],
+          "answer": "Two chances and one chance are far too few to say; worth checking, not a verdict."
+        },
+        {
+          "id": "lines",
+          "label": "Write the two log lines as you would keep them, with sample sizes:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When a chance counts.** A legal move that works was there at the time, and the engine agrees: not a line you can only see afterwards. A chance that stays on the board counts once. A fork that fails (the forking piece can be taken) does not count.\n**Rule of thumb:** fewer than about ten chances for an idea is 'worth checking', never 'you are bad at forks'."
+    },
+    {
+      "type": "contrast",
+      "title": "Is it a chance for the log?",
+      "prompt": "Three positions about forks, one change at a time. Predict whether each belongs in White's log, then check.",
+      "working": "IB5-24",
+      "failing": "IB5-25",
+      "irrelevant": "IB5-26"
+    },
+    {
+      "type": "item",
+      "item": "IB5-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB5-29",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** After the engine run, My games names the tactics behind your biggest drops: ones the engine preferred, and ones your move allowed. It does not count the chances you used, so the 'used' column is a paper log for now. Planned: the app keeps the whole table. Keep one line per game: idea, available, used."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.GAME.OPPORTUNITY",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "After your next game, pick two ideas (for example forks and loose pieces). Replay the game and count, for each idea, the chances there were and the chances you used. Write the sample size.",
+      "fields": [
+        {
+          "id": "idea1",
+          "label": "Idea 1:"
+        },
+        {
+          "id": "av1",
+          "label": "Chances available",
+          "type": "number"
+        },
+        {
+          "id": "used1",
+          "label": "Chances used",
+          "type": "number"
+        },
+        {
+          "id": "idea2",
+          "label": "Idea 2:"
+        },
+        {
+          "id": "av2",
+          "label": "Chances available",
+          "type": "number"
+        },
+        {
+          "id": "used2",
+          "label": "Chances used",
+          "type": "number"
+        },
+        {
+          "id": "sentence",
+          "label": "Write both entries with their sample sizes:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "03-product-design.md (opportunities by concept; 'worth checking, not you are bad at pins')",
+    "docs/council-synthesis.md CD-12; content/skills/GAME.OPPORTUNITY.json",
+    "app/src/pages/Games.tsx and app/src/lib/opportunities.ts (what the page counts), read for this lesson",
+    "games: Lichess January 2013 (CC0), games 7dn33ypj and m45sueue; the 'used' counts come from the move lists, the 'available' judgements from engine claims"
+  ]
+}

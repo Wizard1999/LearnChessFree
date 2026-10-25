@@ -1,0 +1,77 @@
+{
+  "id": "TAC.REMOVE-DEFENDER",
+  "title": "Removing the defender",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a piece defended by one other piece can be won by taking, blocking, pinning or deflecting its only defender first.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'remove the defender', finds the capture or attack that eliminates the sole defender and wins the target.",
+      "prereqs": [
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the removal that wins material, and does not play it when the defender's job passes to another piece or the removal costs more than it wins.",
+      "prereqs": [
+        "TAC.REMOVE-DEFENDER.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Recounts the square after the removal (recaptures, new defenders, check on recapture) and predicts how adding one defender changes the result.",
+      "prereqs": [
+        "TAC.REMOVE-DEFENDER.D2",
+        "TAC.PIN.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Capturing the defender always wins the defended piece.",
+    "A defender can only be removed by capture."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K3 (the count lies: defender capturable by a cheaper piece, forced away, pinned); §7 row K3",
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 21, 27 (destroying a defender; exchange on the pinning square)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C16 (taking with the key defender)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The defender's job is not taken over by another piece after it leaves.",
+    "After the removal, the count on the target square favours the attacker, including the recapture sequence.",
+    "A defender in the wide sense includes a piece guarding a file entry, an outpost or the castled king."
+  ],
+  "condition_sources": [
+    "EDL K3 (c)",
+    "EDL K2-K3",
+    "Nimz #21 (b)"
+  ],
+  "contrasts": [
+    "Capturing with the very piece that is holding the king-side together removes your own best defender.",
+    "A second defender recaptures, so the removal gains nothing.",
+    "The 'defender' captured guards a square that has nothing of value on it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ZB C16 (Pillsbury-Tarrasch idea)",
+    "EDL K3",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.DISCOVER.D2"
+  ],
+  "soft_prereq_notes": {
+    "TAC.DISCOVER.D2": "a discovered attack can remove a defender with tempo"
+  }
+}

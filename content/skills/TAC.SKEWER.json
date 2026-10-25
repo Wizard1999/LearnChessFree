@@ -1,0 +1,73 @@
+{
+  "id": "TAC.SKEWER",
+  "title": "Skewers",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes a skewer (a line attack on a valuable front piece that must move, exposing a piece behind it) and says how it differs from a pin.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the skewer', finds the check or attack along a line that wins the piece behind.",
+      "prereqs": [
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets with no theme named, finds the skewer when it exists, and does not play it when the front piece can interpose or the rear piece is defended.",
+      "prereqs": [
+        "TAC.SKEWER.D1",
+        "FND.VALUE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks that the skewered piece cannot capture the attacker or give a stronger check first, and counts what the capture of the rear piece nets.",
+      "prereqs": [
+        "TAC.SKEWER.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A skewer is just a pin.",
+    "A skewer wins the rear piece even when it is defended and cheaper than the attacker."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S3 (listed T1-2; no synthesis sheet covers the skewer, so conditions are ours)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 26 (pin anatomy, for the contrast)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "The front piece is at least as valuable as the rear piece or is the king, so it must move first.",
+    "The front piece cannot capture the attacker, interpose, or reply with a check that gains time."
+  ],
+  "condition_sources": [
+    "ours",
+    "ours; no sheet source"
+  ],
+  "contrasts": [
+    "The rear piece is defended and worth less than the attacking piece, so the skewer nets only an exchange.",
+    "The front piece moves with check, so the rear piece escapes.",
+    "The rear piece is worth more than the front piece, which is a pin, and the correct plan is different."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours",
+    "Nimz #26"
+  ],
+  "soft_prereqs": [
+    "TAC.PIN.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.PIN.D1": "the skewer is the pin reversed, and the two are best taught as a contrast pair"
+  }
+}

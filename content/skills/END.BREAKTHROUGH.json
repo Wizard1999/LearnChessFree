@@ -1,0 +1,70 @@
+{
+  "id": "END.BREAKTHROUGH",
+  "title": "Pawn breakthrough",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains the breakthrough: sacrificing a pawn or two to create a passed pawn when several pawns face each other.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Finds the breakthrough move in a 3-against-3 pawn skeleton when it exists.",
+      "prereqs": [
+        "POS.PASSED.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled pawn endings, tells when a breakthrough wins, draws or loses, depending on who is nearer to queening and who has the move.",
+      "prereqs": [
+        "END.BREAKTHROUGH.D1",
+        "END.SQUARE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies the breakthrough by counting and predicts how one extra tempo for the defender changes the result.",
+      "prereqs": [
+        "END.BREAKTHROUGH.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The breakthrough always works if there are more pawns."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-10; §7 row 14",
+    "docs/curriculum-map-v1.md §2 S7 (Chesscademy 'Opposition and Breakthrough', title only)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The attacker's pawns are further advanced; with the other side to move the same position is drawn."
+  ],
+  "condition_sources": [
+    "CAP CI-10 (c)-(d)"
+  ],
+  "contrasts": [
+    "The same skeleton with the wrong side to move.",
+    "Believing the breakthrough always works.",
+    "Pawns not in contact."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-10 (d)",
+    "CAP CI-10 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "END.KPK.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.KPK.D1": "the resulting passed pawn is a K+P problem"
+  }
+}

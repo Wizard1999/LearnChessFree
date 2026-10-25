@@ -1,0 +1,115 @@
+{
+  "id": "L-TAC-SKEWER-1",
+  "title": "Skewers: the king moves, the piece behind falls",
+  "skill": "TAC.SKEWER",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Finds a skewer when told to look for one",
+    "Checks that the front piece cannot capture the attacker",
+    "Checks that taking the piece behind gains material",
+    "Says when a check lines up nothing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **skewer** is a pin in reverse. You attack a valuable piece that has to move, and the piece behind it on the same line is left to be captured.\nThe commonest form is a check: the king must step aside, and what stood behind it falls."
+    },
+    {
+      "type": "board",
+      "fen": "8/2k5/ppb1p3/4P3/1PKP4/8/N7/8 b - - 0 41",
+      "caption": "Black to move. The white king stands in front of the knight on a2.",
+      "line": [
+        {
+          "move": "c6d5",
+          "say": "The bishop checks the king along the diagonal. The knight stands behind it."
+        },
+        {
+          "move": "c4d3",
+          "say": "The king must move out of check."
+        },
+        {
+          "move": "d5a2",
+          "say": "The bishop takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "d5"
+        },
+        {
+          "from": "d5",
+          "to": "a2"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "a2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "c6d5",
+            "min": 3
+          },
+          "statement": "...Bd5+ followed by ...Bxa2 wins the knight."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-041"
+    },
+    {
+      "type": "item",
+      "item": "IA1-042"
+    },
+    {
+      "type": "card",
+      "text": "Before you skewer, ask:\n**Can the front piece capture my piece?** A king next to your bishop takes it unless it is defended.\n**Does taking the piece behind gain material?** If it is defended and its counting value is no higher than your attacker's, you only trade.\nThen check that nothing can step in between."
+    },
+    {
+      "type": "contrast",
+      "title": "The skewering piece can be taken",
+      "prompt": "Only the white rook has moved: from d1 to g1.",
+      "working": "IA1-041",
+      "failing": "IA1-043",
+      "irrelevant": "IA1-044"
+    },
+    {
+      "type": "item",
+      "item": "IA1-045",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-046",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.skewer",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you played a check, how sure were you that the piece behind the king could be won? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S3 (TAC.SKEWER)",
+    "docs/inference-01-puzzle-theme-difficulty.md",
+    "Lichess puzzle database (CC0): 1HtCL, WIhp1, 5S982, 91ZxU as seed positions"
+  ]
+}

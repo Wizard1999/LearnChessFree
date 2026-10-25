@@ -1,0 +1,77 @@
+{
+  "id": "POS.PAWNWEAK",
+  "title": "Pawn weaknesses",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Names isolated, doubled, backward and passed pawns in a position and says why each can be a weakness or a strength.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Marks each pawn's type and the squares and pieces that make it a target.",
+      "prereqs": [
+        "FND.PIECE.PAWN.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, rates a pawn as a real weakness, harmless, or compensated, and chooses the plan; applies the stop-square condition for a backward pawn.",
+      "prereqs": [
+        "POS.PAWNWEAK.D1",
+        "POS.WEAKSQ.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how one feature (a neighbouring pawn, an open file, the bishop pair, the phase of the game) flips the verdict, and fixes then out-counts a backward pawn.",
+      "prereqs": [
+        "POS.PAWNWEAK.D2",
+        "SAF.COUNT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A weakness is a weakness in every phase.",
+    "Doubled pawns are always weak.",
+    "Every pawn behind its neighbours is backward and a target."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K16, K19, K26; §5 item 16",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-37, CI-44; §5 item 17",
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 39, 42",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C28; §5 item 6"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "A backward pawn is a target when it cannot advance (the stop square is controlled), lies on a semi-open file, and the attacker's pieces have access.",
+    "Whether doubled or isolated pawns weaken depends on phase and piece activity; the bishop pair or an open file can compensate."
+  ],
+  "condition_sources": [
+    "EDL K16 (c)",
+    "EDL K26 (b)-(c)"
+  ],
+  "contrasts": [
+    "A backward pawn that can advance safely, or whose stop square the opponent cannot reach, is not a target.",
+    "Backward pawns and holes 'invariably lead to disaster' (absolute wording; Sicilian and Hedgehog structures live with them).",
+    "The same weakness on a file the attacker cannot reach."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL §5 item 16",
+    "CAP §5 item 17",
+    "EDL §8 item 10"
+  ],
+  "soft_prereqs": [
+    "POS.PASSED.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.PASSED.D1": "the passed pawn is the opposite of a weakness"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "id": "END.QUEEN-PAWN",
+  "title": "Queen against an advanced pawn",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a queen normally beats a far-advanced pawn, and that stalemate rescues a rook or bishop pawn on the seventh when the stronger king is far.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Classifies queen-against-pawn positions as win or draw, with the pawn's file and the king distances.",
+      "prereqs": [
+        "TAC.STALEMATE-TRICK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, finds the drawing stalemate resource for the weaker side and the winning approach for the stronger side.",
+      "prereqs": [
+        "END.QUEEN-PAWN.D1",
+        "END.KPK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies a classification with the tablebase and predicts how one king step changes it.",
+      "prereqs": [
+        "END.QUEEN-PAWN.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The queen always wins."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K29; §7 row K29",
+    "docs/curriculum-map-v1.1.md §4 (backlog: Q vs rook; queen vs pawn not yet run)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "The pawn is on the seventh with the weaker king near the queening square and the stronger king far away."
+  ],
+  "condition_sources": [
+    "EDL K29 (c)"
+  ],
+  "contrasts": [
+    "A rook or bishop pawn on the seventh draws by stalemate when the stronger king is far, while a knight pawn loses.",
+    "'the queen always wins'.",
+    "A pawn not yet near the seventh."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K29 (b)",
+    "EDL K29 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "END.SQUARE.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.SQUARE.D1": "the pawn's distance to the corner"
+  }
+}

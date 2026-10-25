@@ -1,0 +1,68 @@
+{
+  "id": "FND.CAPTURE",
+  "title": "Capturing and attack",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that you capture by moving onto an enemy piece, which leaves the board, and that a piece is attacked when the enemy could capture it next move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'capture something safe', finds a capture that wins an undefended piece, and names which of its pieces attack a given enemy piece.",
+      "prereqs": [
+        "FND.PIECE.QUEEN.D1",
+        "FND.PIECE.KNIGHT.D1",
+        "FND.PIECE.PAWN.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions tells a free piece from a defended one, and does not count a nearby enemy piece as a defender when it cannot capture on that square.",
+      "prereqs": [
+        "FND.CAPTURE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Plays out a chain of captures and recaptures on one square in the head and says the net result in points.",
+      "prereqs": [
+        "FND.CAPTURE.D2",
+        "FND.VALUE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Capturing is compulsory.",
+    "A capture you can make is always a good capture.",
+    "A king can be captured."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "Capturing is landing on an enemy piece; the captured piece leaves the board.",
+    "A capture wins material when the piece is undefended, or when what you take is worth more than what you can lose back."
+  ],
+  "condition_sources": [
+    "rules",
+    "FH session 2"
+  ],
+  "contrasts": [
+    "The same capture is free when the piece is undefended and loses material when it is defended and the capturing piece is worth more.",
+    "A nearby enemy piece that cannot capture on the square does not defend it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 2",
+    "FH session 2"
+  ]
+}

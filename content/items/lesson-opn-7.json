@@ -1,0 +1,329 @@
+{
+  "positions": [
+    {
+      "id": "PA4-121",
+      "fen": "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4",
+      "family": "FAM-A4-SAMPLE-QGD",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position (the sample game for this lesson is the well-known line called the Elephant Trap; moves are facts): 1.d4 d5 2.c4 e6 3.Nc3 Nf6",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PA4-122",
+      "fen": "r1bqkb1r/pppn1ppp/5n2/3p2B1/3P4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 6",
+      "family": "FAM-A4-SAMPLE-QGD",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position (the sample game for this lesson is the well-known line called the Elephant Trap; moves are facts): 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PA4-123",
+      "fen": "r1bqkb1r/pppn1ppp/8/3n2B1/3P4/8/PP2PPPP/R2QKBNR w KQkq - 0 7",
+      "family": "FAM-A4-SAMPLE-QGD",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position (the sample game for this lesson is the well-known line called the Elephant Trap; moves are facts): ... 6.Nxd5 Nxd5",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PA4-124",
+      "fen": "r1bqk2r/ppppbppp/2n2n2/8/4P3/4Q2P/PPP2PP1/RNB1KBNR w KQkq - 1 6",
+      "family": "FAM-A4-LASKERGAME",
+      "provenance": {
+        "kind": "public_domain_book",
+        "ref": "A beginner's game from Edward Lasker, Chess Strategy (1915), Ch. IV, sources/raw/edlasker_chess-strategy_gutenberg5614.txt lines 1311-1416; position after 5.h3 Be7, replayed with python-chess",
+        "licence": "PD-US (moves are facts)"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IA4-121",
+      "skill": "GAME.OWN.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PA4-121",
+      "prompt": "Sample game, move 4. White played Bg5. Which band: routine, slip or blunder?",
+      "answer": {
+        "class": "routine",
+        "options": [
+          "routine",
+          "slip",
+          "blunder"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1g5",
+              "c4d5",
+              "g1f3",
+              "c1f4",
+              "e2e3"
+            ]
+          },
+          "statement": "Bg5, cxd5, Nf3, Bf4 and e3 are within 40 centipawns of the best move."
+        }
+      ],
+      "tags": [
+        "node.GAME.OWN",
+        "cue.2",
+        "tier.3",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "How many different moves here would you be happy to play?",
+        "If many moves are about as good, the move is routine."
+      ],
+      "explain": "Five different moves, Bg5 among them, are within 40 centipawns of the engine's best at depth 16. Choosing between them is a matter of plan, not a point where one move is needed.",
+      "contrast_group": "CG-A4-BANDS",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "authored",
+        "id": "elephant-trap-line"
+      }
+    },
+    {
+      "id": "IA4-122",
+      "skill": "GAME.OWN.D2",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PA4-122",
+      "prompt": "Sample game, move 6. White played Nxd5, taking a pawn. Which band: routine, slip or blunder?",
+      "answer": {
+        "class": "blunder",
+        "options": [
+          "routine",
+          "slip",
+          "blunder"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "c3d5",
+            "cp": 300
+          },
+          "statement": "Nxd5 is at least 300 centipawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3d5",
+            "max": -2
+          },
+          "statement": "Along the engine's best line White's net material change is -2 or worse."
+        }
+      ],
+      "tags": [
+        "node.GAME.OWN",
+        "cue.2",
+        "tier.3",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "What does Black's reply ...Nxd5 attack?",
+        "Count the material at the end of the exchanges that follow."
+      ],
+      "explain": "The capture wins a pawn for a moment, but along the engine's best line White ends a piece down for a pawn, and the engine rates Nxd5 at least 300 centipawns below its best move at depth 16.",
+      "contrast_group": "CG-A4-BANDS",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IA4-123",
+      "skill": "GAME.OWN.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PA4-122",
+      "prompt": "Same position, move 6. Now find a safe, useful move for White.",
+      "answer": {
+        "moves": [
+          "e2e3",
+          "g1f3",
+          "d1c2",
+          "g5h4",
+          "a2a3",
+          "a1c1"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e2e3",
+              "g1f3",
+              "d1c2",
+              "g5h4",
+              "a2a3",
+              "a1c1"
+            ]
+          },
+          "statement": "e3, Nf3, Qc2, Bh4, a3 and Rc1 are within 40 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c3d5",
+            "cp": 300
+          },
+          "statement": "Nxd5 is at least 300 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.GAME.OWN",
+        "cue.3",
+        "tier.3",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Several quiet moves work. Which one avoids the pawn grab?",
+        "Develop or support the centre."
+      ],
+      "explain": "Quiet moves such as e3, Nf3 and Qc2 are within 40 centipawns of the engine's best at depth 16. The pawn grab Nxd5 is far below them.",
+      "feedback_by_move": {
+        "c3d5": "It takes a pawn but loses a piece for it: the engine rates it at least 300 centipawns below the quiet moves."
+      },
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IA4-124",
+      "skill": "GAME.OWN.D2",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PA4-124",
+      "prompt": "Second sample game (a beginner's game from a 1915 book), move 6. White played a3, a second rook-pawn move. Which band: routine, slip or blunder?",
+      "answer": {
+        "class": "slip",
+        "options": [
+          "routine",
+          "slip",
+          "blunder"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "a2a3",
+            "cp": 50
+          },
+          "statement": "a3 is at least 50 centipawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1d3",
+              "g1f3",
+              "c2c4",
+              "b1c3",
+              "e4e5",
+              "b1d2",
+              "f1b5",
+              "f1c4",
+              "a2a3"
+            ],
+            "within_cp": 150
+          },
+          "statement": "a3 is no more than 150 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.GAME.OWN",
+        "cue.2",
+        "tier.3",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Is a3 a disaster, or just slower than the alternatives?",
+        "Compare it with the developing moves available."
+      ],
+      "explain": "At depth 16 the engine rates a3 between 50 and 150 centipawns below White's best moves: it costs real time without losing material at once. That is a slip.",
+      "contrast_group": "CG-A4-BANDS",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-125",
+      "skill": "GAME.OWN.D3",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PA4-123",
+      "prompt": "Sample game. After 6.Nxd5 Nxd5, it is White's move. Is the game still open, or already decided?",
+      "answer": {
+        "class": "already decided",
+        "options": [
+          "still open",
+          "already decided"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "max": -300
+          },
+          "statement": "The position is at least 300 centipawns in Black's favour at depth 16."
+        }
+      ],
+      "tags": [
+        "node.GAME.OWN",
+        "cue.2",
+        "tier.3",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Look at the pinned queen on d8 and at the check on b4.",
+        "Try to find a move that does not lose material."
+      ],
+      "explain": "Whatever White plays, the engine rates the position at least three pawns in Black's favour at depth 16. The critical moment was the move before, the capture on d5.",
+      "contrast_group": "CG-A4-BANDS",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "id": "END.PAWN-FLANK",
+  "title": "Pawn endings: act on the stronger flank",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that with pawns on both wings one acts at once on the side where one is stronger, pushes the unopposed pawn, and sometimes gives a pawn to win another.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a pawn ending with pawns on both wings, selects the first move among pushing the free pawn, stopping an advance, and marching the king.",
+      "prereqs": [
+        "END.PAWN-RACE.D2",
+        "END.KING-ACTIVE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled endings, counts exactly and chooses between stopping a counter-advance and ignoring it.",
+      "prereqs": [
+        "END.PAWN-FLANK.D1",
+        "END.KING-ACTIVE.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts when stopping the enemy advance is right (his king far away) and when it loses time.",
+      "prereqs": [
+        "END.PAWN-FLANK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Push the free pawn whenever there is one."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-08, CI-09; §7 row 13; §8 item 7",
+    "docs/curriculum-map-v1.1.md §3 (END.PAWN-FLANK T3)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The attacker's king is active and the defender's pawns can be forced into known drawn or won patterns.",
+    "Stopping a counter-advance is usually right when the enemy king is far away."
+  ],
+  "condition_sources": [
+    "CAP CI-08 (c)",
+    "CAP CI-09 (b)"
+  ],
+  "contrasts": [
+    "Stopping an advance when the king is far away and the stronger flank is lost.",
+    "Pushing the free pawn without counting.",
+    "Pushing a pawn that is blocked anyway."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 7",
+    "CAP CI-08 (g)",
+    "CAP §8 item 7"
+  ],
+  "soft_prereqs": [
+    "POS.MAJORITY.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.MAJORITY.D1": "choosing the wing is choosing the majority"
+  },
+  "note": "Build our own positions and verify; the book's diagrams are missing."
+}

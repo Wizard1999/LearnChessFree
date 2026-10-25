@@ -1,0 +1,75 @@
+{
+  "id": "END.ZUGZWANG",
+  "title": "Zugzwang",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains zugzwang: a position in which any move worsens the position of the player who must move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told it is zugzwang, finds the key move and the spare tempo.",
+      "prereqs": [
+        "END.OPPOSITION.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled king-and-pawn positions with locked pawns, predicts win, draw or loss for each side to move, including positions where a spare pawn move means the idea does not apply.",
+      "prereqs": [
+        "END.ZUGZWANG.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Uses corresponding squares and a tempo-losing detour to change who is to move, and applies zugzwang to simple piece endings.",
+      "prereqs": [
+        "END.ZUGZWANG.D2",
+        "END.KEYSQ.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Every blocked position is a zugzwang.",
+    "The side with the move is always better."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 11",
+    "sources/sheets/emlasker_common-sense.md §4.19; §8 item 11",
+    "sources/sheets/edlasker_chess-strategy.md §4 K25",
+    "docs/curriculum-map-v1.1.md §3 (END.ZUGZWANG T3 D1 / T4 D3, merged)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Little room to manoeuvre, blocked pawns, no pieces whose moves could pass the turn.",
+    "A defender whose piece has only one job is the usual victim."
+  ],
+  "condition_sources": [
+    "EML 4.19 (c)",
+    "Nimz #11 (b)"
+  ],
+  "contrasts": [
+    "A nearly identical placement where a spare pawn move exists, so the idea does not apply.",
+    "Calling any blocked position a zugzwang.",
+    "Open play where the kings simply race."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML §8 item 11",
+    "Nimz #11 (g)",
+    "EML §8 item 11"
+  ],
+  "soft_prereqs": [
+    "END.KPK.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.KPK.D1": "K+P v K is where zugzwang is first felt"
+  }
+}

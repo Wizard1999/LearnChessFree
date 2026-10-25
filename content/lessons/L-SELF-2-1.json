@@ -1,0 +1,111 @@
+{
+  "id": "L-SELF-2-1",
+  "title": "Explain it, and say how sure you are",
+  "skill": "SELF.2",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Commits to an answer and a confidence before seeing feedback",
+    "Reads a small calibration table",
+    "Explains in two sentences why a move works and compares with checked facts"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Explain, and say how sure you are.** Before you see an answer, commit to it and rate your confidence: low, medium or high. Afterwards compare. Over many answers you can see whether your 'high' is right more often than your 'low'. That match is called *calibration*. It is a habit to try; evidence for it in chess is thin."
+    },
+    {
+      "type": "contrast",
+      "title": "Confidence and evidence",
+      "prompt": "Answer each position and mark your confidence (low, medium or high) before you check. Then compare confidence with the result.",
+      "working": "IA5-57",
+      "failing": "IA5-58",
+      "irrelevant": "IA5-59",
+      "ask_confidence": true
+    },
+    {
+      "type": "card",
+      "text": "Look at your three answers. A confident wrong answer (the trap) teaches more than a lucky right one. If your 'high' answers are wrong about one time in four or more, treat 'high' as 'check once more'. That cut-off is a guess, not a measured threshold."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Count from the table the app shows after the contrast, or from your own answers. This is for you, not a grade.",
+      "fields": [
+        {
+          "id": "high_total",
+          "label": "Answers marked high:",
+          "type": "number"
+        },
+        {
+          "id": "high_right",
+          "label": "Of those, how many were right:",
+          "type": "number"
+        },
+        {
+          "id": "low_total",
+          "label": "Answers marked low or medium:",
+          "type": "number"
+        },
+        {
+          "id": "low_right",
+          "label": "Of those, how many were right:",
+          "type": "number"
+        },
+        {
+          "id": "pattern",
+          "label": "What pattern do you see, if any?"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Now it shows your confidence table straight after the contrast and gives feedback after each item. In the next two items, a silent session, feedback waits until you have answered both. The plan is to show the table only on request after five sessions (a first guess)."
+    },
+    {
+      "type": "item",
+      "item": "IA5-60",
+      "silent": true,
+      "ask_confidence": true
+    },
+    {
+      "type": "item",
+      "item": "IA5-61",
+      "silent": true,
+      "ask_confidence": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Teach-back. Pick one of the positions from this lesson. In two sentences, explain to a beginner why the best move works. Then compare your sentences with the checked explanation shown for the item and note what you missed.",
+      "fields": [
+        {
+          "id": "explanation",
+          "label": "My two sentences:"
+        },
+        {
+          "id": "missed",
+          "label": "What the checked explanation had that I left out:"
+        },
+        {
+          "id": "sure_before",
+          "label": "How sure was I before checking?",
+          "options": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S11 (SELF.2 explain)",
+    "docs/council-synthesis.md CD-11 (confidence calibration; Chi on self-explanation, recalled [R]); Guardian study ch. 18 (user's document: rehearsal without help, checking one's own answers)",
+    "positions: Lichess puzzles and games (CC0)"
+  ]
+}

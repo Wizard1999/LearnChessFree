@@ -1,0 +1,161 @@
+{
+  "id": "L-SAF-DEFEND-OPTIONS-1",
+  "title": "Five ways to meet an attack",
+  "skill": "SAF.DEFEND-OPTIONS",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Names the five ways to answer an attack: move, defend, capture, block, counterattack",
+    "Saves an attacked piece by a named way, and by any way when none is named",
+    "Checks that the chosen way still works against that attacker, and that it leaves nothing else loose",
+    "Says why defending fails against a cheaper attacker and why a far-away move is no answer"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When one of your pieces is attacked and nothing defends it, you have five kinds of answer.\n**Move** it. **Defend** it. **Capture** the attacker. **Block** the line (only against a bishop, rook or queen). **Counterattack** with a bigger threat of your own.\nList them before you choose. A counterattack works only if your threat is bigger than theirs, so as a rule of thumb look at the first four first."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/p4ppp/8/8/3N4/8/5PPP/2B3K1 w - - 0 1",
+      "caption": "White to move. The black rook attacks the knight on d4 and nothing defends it. Two of the five answers are open here.",
+      "line": [
+        {
+          "move": "c1e3",
+          "say": "Defend it: the bishop now guards d4."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black makes a quiet move. Rxd4 Bxd4 would give a rook for a knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d8",
+          "to": "d4"
+        },
+        {
+          "from": "c1",
+          "to": "e3"
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "d4"
+            ]
+          },
+          "statement": "The knight on d4 is attacked and nothing defends it."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "c1e3",
+            "min": 0
+          },
+          "statement": "After Be3 the engine line does not lose material for White."
+        },
+        {
+          "id": "C3",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "b3",
+              "b5",
+              "c2",
+              "c6",
+              "e2",
+              "e6",
+              "f3",
+              "f5"
+            ]
+          },
+          "statement": "The knight could also move to eight squares."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB3-301"
+    },
+    {
+      "type": "item",
+      "item": "IB3-302"
+    },
+    {
+      "type": "item",
+      "item": "IB3-303"
+    },
+    {
+      "type": "item",
+      "item": "IB3-304"
+    },
+    {
+      "type": "card",
+      "text": "An answer must pass two checks.\n**Does it stop the attack?** A defender fails when the attacker has a lower counting value (a rule of thumb): a pawn takes a defended knight and you only win the pawn back. A move far from both pieces does nothing unless it makes a bigger threat.\n**Does it leave something else loose?** A defender that moves can leave the piece it guarded loose."
+    },
+    {
+      "type": "contrast",
+      "title": "Same defence, one change",
+      "prompt": "The knight on d4 is attacked, and White tries a defence. Predict, then check.",
+      "working": "IB3-310",
+      "failing": "IB3-311",
+      "irrelevant": "IB3-312"
+    },
+    {
+      "type": "item",
+      "item": "IB3-312"
+    },
+    {
+      "type": "item",
+      "item": "IB3-305"
+    },
+    {
+      "type": "item",
+      "item": "IB3-306"
+    },
+    {
+      "type": "item",
+      "item": "IB3-307",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-308",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-313",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-309",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When your piece was attacked, which of the five ways did you check first, and which did you forget to check? Did any answer you liked turn out to leave something else loose?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAF.DEFEND-OPTIONS.json (conditions, contrasts, misconceptions)",
+    "docs/curriculum-map-v1.1.md (ways to meet an attack)",
+    "positions: Lichess 2013-01 games (CC0), see item provenance; contrast positions authored"
+  ]
+}

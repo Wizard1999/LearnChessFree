@@ -1,0 +1,72 @@
+{
+  "id": "TAC.DEFLECT",
+  "title": "Deflection",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains deflection as forcing a defending piece away from its post by capture, check or threat.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'deflect the defender', finds the move that drags the defender from the key square.",
+      "prereqs": [
+        "TAC.REMOVE-DEFENDER.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the deflection that wins material or mates, and does not play it when the defender can decline or the offered piece can be left alone.",
+      "prereqs": [
+        "TAC.DEFLECT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies the declined line: what happens if the defender ignores the offer, and predicts how the position changes when the deflected piece has an alternative post.",
+      "prereqs": [
+        "TAC.DEFLECT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The defender must accept the deflecting capture."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K3",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-29 (sacrifices that open the king's cover; imitate only with the follow-up checked)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Accepting is forced, or declining loses something else.",
+    "The key square or duty becomes undefended the moment the defender leaves."
+  ],
+  "condition_sources": [
+    "ours",
+    "EDL K3 (ii)"
+  ],
+  "contrasts": [
+    "The defender declines the offered piece and keeps guarding.",
+    "Another piece takes over the duty after the deflection.",
+    "Deflecting a piece that was not guarding anything important."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-29 (g): sacrifice imitated without checking the follow-up",
+    "EDL K3",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.FORK.D2"
+  ],
+  "soft_prereq_notes": {
+    "TAC.FORK.D2": "deflecting a defender often opens a fork"
+  }
+}

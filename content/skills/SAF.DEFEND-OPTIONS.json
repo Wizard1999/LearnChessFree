@@ -1,0 +1,67 @@
+{
+  "id": "SAF.DEFEND-OPTIONS",
+  "title": "Ways to meet an attack",
+  "strand": "S2",
+  "tier": 1,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Names the ways to answer an attack on a piece: move it, defend it, block the line, capture the attacker, or counterattack.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'save the piece', finds at least one move that does it.",
+      "prereqs": [
+        "SAF.LOOSE.D1",
+        "FND.CHECK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "With one of its pieces attacked and no announcement, lists the ways to save it and picks one that leaves nothing else loose.",
+      "prereqs": [
+        "SAF.DEFEND-OPTIONS.D1",
+        "SAF.COUNT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Compares the options by what each leaves behind (loose pieces, new threats) and chooses the safest.",
+      "prereqs": [
+        "SAF.DEFEND-OPTIONS.D2",
+        "SAF.THREAT.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The only way to save an attacked piece is to move it.",
+    "Defending a piece is enough even when the attacker is worth less than the defended piece."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "When a piece is attacked, list the options: move it, defend it, capture the attacker, block the line, counterattack.",
+    "An option is good only if it leaves no other piece loose."
+  ],
+  "condition_sources": [
+    "MAP11",
+    "ours"
+  ],
+  "contrasts": [
+    "Defending a piece with a more valuable piece does not help when the attacker is worth less than the piece being defended.",
+    "Moves far from both the attacked piece and the attacker are not ways to save it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours"
+  ]
+}

@@ -1,0 +1,209 @@
+{
+  "id": "L-FND-QUEENKING-1",
+  "title": "The queen and the king",
+  "skill": "FND.PIECE.QUEEN",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Taps every square a queen can reach",
+    "Knows the king may never step onto an attacked square or next to the enemy king",
+    "Tells which of the pieces on the board can reach or capture on a square"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **queen** is the strongest piece. She moves like a rook and a bishop combined: any distance along a rank, a file or a diagonal. She cannot jump, and she captures the same way: by landing on an enemy piece."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/8/5p2/2p5/1P1Q4/8/3P4/6K1 w - - 0 1",
+      "caption": "Eight directions. Two white pawns and two black pawns decide where each line stops.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "d8"
+        },
+        {
+          "from": "d4",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "a1",
+        "b2",
+        "c3",
+        "c4",
+        "c5",
+        "d3",
+        "d5",
+        "d6",
+        "d7",
+        "d8",
+        "e3",
+        "e4",
+        "e5",
+        "f2",
+        "f4",
+        "f6",
+        "g4",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "a1",
+              "b2",
+              "c3",
+              "c4",
+              "c5",
+              "d3",
+              "d5",
+              "d6",
+              "d7",
+              "d8",
+              "e3",
+              "e4",
+              "e5",
+              "f2",
+              "f4",
+              "f6",
+              "g4",
+              "h4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-22"
+    },
+    {
+      "type": "card",
+      "text": "The **king** moves one square in any direction. He is the piece you must never lose, so there is one extra rule: **a king may never move onto a square the enemy attacks** (a square where an enemy piece could capture). That also means two kings can never stand on neighbouring squares."
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/7r/4K3/8/8/8 w - - 0 1",
+      "caption": "The black rook attacks the whole fifth rank. The king cannot step onto it.",
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d3",
+        "d4",
+        "e3",
+        "f3",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "d3",
+              "d4",
+              "e3",
+              "f3",
+              "f4"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-23"
+    },
+    {
+      "type": "item",
+      "item": "IA0-24"
+    },
+    {
+      "type": "card",
+      "text": "The king can capture too, but only if the piece is not guarded. A piece is **guarded** (or defended) when a friendly piece could recapture on its square. Ask before you capture: which enemy pieces attack the square I am about to land on?"
+    },
+    {
+      "type": "contrast",
+      "title": "Same capture, one change",
+      "prompt": "A black pawn appears on c6. Predict first: can the king still take the knight?",
+      "working": "IA0-25",
+      "failing": "IA0-26"
+    },
+    {
+      "type": "item",
+      "item": "IA0-27"
+    },
+    {
+      "type": "item",
+      "item": "IA0-28"
+    },
+    {
+      "type": "item",
+      "item": "IA0-29"
+    },
+    {
+      "type": "item",
+      "item": "IA0-30"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.QUEEN",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KING",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "tier.0",
+        "cue.3",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the mixed round, you were asked questions without being told the topic. How sure were you of your answers? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ],
+  "also": [
+    "FND.PIECE.KING"
+  ]
+}

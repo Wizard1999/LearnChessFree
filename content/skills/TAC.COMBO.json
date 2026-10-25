@@ -1,0 +1,77 @@
+{
+  "id": "TAC.COMBO",
+  "title": "Multi-motif combinations",
+  "strand": "S3",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains a combination as a chain of forcing moves, each justified by the one after it, and says why the whole chain must be checked and not only its first move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given that a combination exists, finds a two-motif sequence (for example a deflection followed by a mating pattern).",
+      "prereqs": [
+        "TAC.REMOVE-DEFENDER.D2",
+        "TAC.MATE-PATTERNS.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, finds a three-move combination when one exists and says there is none when the apparent combination fails at the last step.",
+      "prereqs": [
+        "TAC.COMBO.D1",
+        "CAL.TREE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks each branch of the combination including the declined lines and the quiet defensive reply, and predicts which one-feature change breaks it.",
+      "prereqs": [
+        "TAC.COMBO.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A combination that works against passive defence works against the best defence.",
+    "A complicated combination is better than a simple winning move."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-29, CI-32 (the simple winning move may be preferable); CI-51 (G2: a combination judged unsound without its quiet follow-up)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C14, C33",
+    "docs/curriculum-map-v1.md §2 S3 (T4-5)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Each step is forced or clearly best, and the final position is checked for the opponent's quiet replies.",
+    "The complicated course is highly risky until one has wide experience, and the simple winning move may be preferable."
+  ],
+  "condition_sources": [
+    "CAP CI-51 (G2)",
+    "CAP CI-32 (d)"
+  ],
+  "contrasts": [
+    "The combination works against one defence, but a quiet follow-up for the defender refutes it.",
+    "A simple winning move exists and the combination adds only risk.",
+    "A quiet position with no forcing resources for either side."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-51 (G2)",
+    "CAP CI-32 (d)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.DECOY.D2",
+    "TAC.DEFLECT.D2"
+  ],
+  "soft_prereq_notes": {
+    "TAC.DECOY.D2": "decoy and deflection are the commonest links in a chain",
+    "TAC.DEFLECT.D2": "deflection drags away the defender that the chain depends on"
+  }
+}

@@ -1,0 +1,224 @@
+{
+  "id": "L-TAC-PERPETUAL-1",
+  "title": "Perpetual check: the draw you can force",
+  "skill": "TAC.PERPETUAL",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the check that starts a perpetual when the side to move is behind",
+    "Plays the checking line until the position repeats",
+    "Counts the king's flight squares and checks that the queen cannot be captured",
+    "Does not take a perpetual when a better move exists"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **perpetual check** is a series of checks that the king cannot escape, so the same position keeps returning. When a position occurs three times, a player can claim a draw (see *L-FND-SPECIAL-1*). When you are worse, a perpetual can save half a point. It works only if the king has nowhere to hide, so **test the king's squares** before you rely on it."
+    },
+    {
+      "type": "board",
+      "fen": "8/5p1k/5p1p/7Q/8/2q5/8/5K2 w - - 0 1",
+      "caption": "White to move. Black is ahead (a queen and three pawns against a queen), so White looks for checks.",
+      "line": [
+        {
+          "move": "h5f7",
+          "say": "The queen takes a pawn with check. The king has only one legal move."
+        },
+        {
+          "move": "h7h8",
+          "say": "Forced: g8 and g7 are covered by the queen."
+        },
+        {
+          "move": "f7f8",
+          "say": "Check again. The king has one square again."
+        },
+        {
+          "move": "h8h7",
+          "say": "Forced. The queen can go back to f7."
+        },
+        {
+          "move": "f8f7",
+          "say": "The position after the first check is back, for the second time. A third time allows a draw claim."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h5f7"
+            ]
+          },
+          "statement": "Qxf7+ is the engine's first choice.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -30,
+            "max": 30
+          },
+          "statement": "The engine rates the position as equal (depth 16).",
+          "id": "C2"
+        },
+        {
+          "type": "mobility",
+          "params": {
+            "square": "h7",
+            "mode": "legal",
+            "count": 1,
+            "after_move": "h5f7"
+          },
+          "statement": "After Qxf7+ the king on h7 has exactly one legal move.",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 0,
+            "after_move": "h5f7"
+          },
+          "statement": "No black piece attacks the queen on f7.",
+          "id": "C4"
+        },
+        {
+          "type": "mobility",
+          "params": {
+            "square": "h8",
+            "mode": "legal",
+            "count": 1,
+            "after_moves": [
+              "h5f7",
+              "h7h8",
+              "f7f8"
+            ]
+          },
+          "statement": "After Qxf7+ Kh8 Qf8+ the king on h8 again has exactly one legal move (h7).",
+          "id": "C5"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "f7",
+            "piece": "Q",
+            "after_moves": [
+              "h5f7",
+              "h7h8",
+              "f7f8",
+              "h8h7",
+              "f8f7"
+            ]
+          },
+          "statement": "After five moves the queen is on f7 again.",
+          "id": "C6"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "h7",
+            "piece": "k",
+            "after_moves": [
+              "h5f7",
+              "h7h8",
+              "f7f8",
+              "h8h7",
+              "f8f7"
+            ]
+          },
+          "statement": "And the black king is on h7 again.",
+          "id": "C7"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "f7"
+        },
+        {
+          "from": "f7",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "h7",
+        "h8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB2-9"
+    },
+    {
+      "type": "item",
+      "item": "IB2-10"
+    },
+    {
+      "type": "card",
+      "text": "Three tests before you rely on a perpetual.\n**Where can the king go?** Count its flight squares after each check.\n**Can the checker be captured, or the check blocked?**\n**Is the draw really your best result?** If another move wins, or the perpetual is not there, a draw may be a mistake. *Rule of thumb:* take the perpetual only when the alternatives are worse."
+    },
+    {
+      "type": "contrast",
+      "title": "Does the perpetual still hold?",
+      "prompt": "First position: the perpetual works. Second: a black rook now guards f8. Third: White has an extra knight. Predict, then check.",
+      "working": "IB2-9",
+      "failing": "IB2-11",
+      "irrelevant": "IB2-12"
+    },
+    {
+      "type": "item",
+      "item": "IB2-13",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-14",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-15",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.defensiveMove",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you played a check in the silent items, did you count the king's squares, or did the checks just look promising? Write what you did.",
+      "fields": [
+        {
+          "id": "counted",
+          "label": "Did you count the king's legal moves after the check?",
+          "options": [
+            "yes, every time",
+            "sometimes",
+            "no"
+          ]
+        },
+        {
+          "id": "surprise",
+          "label": "What surprised you, if anything? (one line)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.16 (does the perpetual exist?) [S]",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 13 (repeated checks) [S]",
+    "docs/lessons-t0.md (repetition rule, taught on a card in L-FND-SPECIAL-1)",
+    "positions: authored; found by a random search with the engine (Black ahead in material, White to move, a repeating series of queen checks), then checked by the validator; engine evidence at depth 16-18, not proof"
+  ]
+}

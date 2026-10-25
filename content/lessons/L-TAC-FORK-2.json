@@ -1,0 +1,130 @@
+{
+  "id": "L-TAC-FORK-2",
+  "title": "Forks with pawns and queens, and when they fail",
+  "skill": "TAC.FORK",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds pawn forks and queen forks",
+    "Checks whether the forking piece can be captured",
+    "Checks whether taking the second target gains material",
+    "Says when a check or attack is not a winning fork"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Any piece can fork. A **pawn** fork is the hardest to meet, because the forked pieces have a higher counting value than the pawn. A **queen** can fork a king and a loose piece with one check.\nLook for two targets that one piece could attack from a single safe square."
+    },
+    {
+      "type": "board",
+      "fen": "8/5p2/p3r1k1/1pR4p/5P2/6K1/PP6/8 w - - 1 40",
+      "caption": "White to move. Which pawn move hits two pieces?",
+      "line": [
+        {
+          "move": "f4f5",
+          "say": "The pawn gives check and attacks the rook on e6 as well."
+        },
+        {
+          "move": "g6f6",
+          "say": "The king steps aside. The rook is still attacked."
+        },
+        {
+          "move": "f5e6",
+          "say": "The pawn takes the rook. White has won a rook for a pawn at least."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f4",
+          "to": "f5"
+        },
+        {
+          "from": "f5",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f4f5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "f4f5",
+            "min": 4
+          },
+          "statement": "f5+ wins the rook for a pawn along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-024"
+    },
+    {
+      "type": "item",
+      "item": "IA1-025"
+    },
+    {
+      "type": "card",
+      "text": "Not every fork works. Before you play one, ask:\n**Can the forking piece be captured?** By a piece, or even by one of its own targets.\n**Does taking the second target gain material?** If it is defended and the forking piece has the higher counting value, the fork wins nothing.\nThen check what your opponent can do instead."
+    },
+    {
+      "type": "contrast",
+      "title": "The forking piece can be taken",
+      "prompt": "Only the white rook has moved: from c2 to c1.",
+      "working": "IA1-026",
+      "failing": "IA1-027",
+      "irrelevant": "IA1-028"
+    },
+    {
+      "type": "contrast",
+      "title": "The second target is defended",
+      "prompt": "Black's king stands next to the bishop.",
+      "working": "IA1-029",
+      "failing": "IA1-030"
+    },
+    {
+      "type": "item",
+      "item": "IA1-031",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-032",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.fork",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you answered, how sure were you that a fork existed, and did you check the forking square first? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md",
+    "sources/sheets/znosko-borovsky_middle-game.md (idea 11: which piece can capture the forking knight)",
+    "docs/curriculum-map-v1.md S3",
+    "Lichess puzzle database (CC0): oYnsP, 1UwyD, 9Au7Y, W10Ql, HPJAK as seed positions"
+  ]
+}

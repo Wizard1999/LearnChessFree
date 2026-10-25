@@ -1,0 +1,99 @@
+{
+  "id": "L-DEF-WAIT-1",
+  "title": "Defence by waiting: when it works",
+  "skill": "DEF.WAIT",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Holds a good set-up instead of changing it without a reason",
+    "Recognises when the opponent has a way forward and waiting stops working",
+    "Switches plan at the right moment"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Defence by economy:** when the opponent has no clear way forward, do not change your set-up without a reason. Needless pawn moves, king walks and rook shuffles give him free tempi. Hold the best post you have and make him commit first.\n**Rule of thumb** in the middlegame; the ending below is exact."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/5r2/3KP3/8/8/8/R7 b - - 0 1",
+      "caption": "Black to move. White's pawn cannot advance safely yet.",
+      "line": [
+        {
+          "move": "f6g6",
+          "say": "Black waits: the rook stays on the sixth rank."
+        },
+        {
+          "move": "e5e6",
+          "say": "White commits the pawn."
+        },
+        {
+          "move": "g6g2",
+          "say": "Black changes plan."
+        }
+      ],
+      "highlight": [
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Exact result from the tablebase: a draw."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "f6g6"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-40"
+    },
+    {
+      "type": "card",
+      "text": "Waiting is right only while the opponent has no way forward. Ask: **can he improve his position by force? If not, keep the best set-up.** If he can, waiting is just passive, and you must change plan. In the next position only the pawn has moved."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, the pawn one step further",
+      "prompt": "White has pushed the pawn to e6. Does the waiting move Rg6 still keep the draw? Predict first, then check.",
+      "working": "IA2-40",
+      "failing": "IA2-41"
+    },
+    {
+      "type": "item",
+      "item": "IA2-42"
+    },
+    {
+      "type": "item",
+      "item": "IA2-43"
+    },
+    {
+      "type": "item",
+      "item": "IA2-44"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "What felt unclear: knowing when the opponent still has no way forward, or choosing the waiting move?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md (4.15: do not change your position voluntarily; superfluous defensive moves)",
+    "sources/sheets/capablanca_chess-fundamentals.md (section 5 item 25: passive defence is not always wrong)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C21-C22: diagnose before you defend)"
+  ]
+}

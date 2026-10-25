@@ -1,0 +1,63 @@
+{
+  "id": "FND.VALUE",
+  "title": "Piece values",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says the usual point values: pawn 1, knight 3, bishop 3, rook 5, queen 9; the king is never traded.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given two pieces, says which is worth more and by how much, and adds up the material on each side.",
+      "prereqs": [
+        "FND.PIECE.QUEEN.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Judges a trade, for example a rook for a bishop and a pawn, as winning, equal or losing material without the values shown.",
+      "prereqs": [
+        "FND.VALUE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Gives a position where a piece is worth more or less than its usual points and says why, treating the values as a guide and not a law.",
+      "prereqs": [
+        "FND.VALUE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The point values are exact laws, the same in every position.",
+    "Counting pieces instead of their values."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "Pawn 1, knight 3, bishop 3, rook 5 and queen 9 are a rule of thumb for comparing trades.",
+    "A trade is good when you receive more points than you give."
+  ],
+  "condition_sources": [
+    "FH session 2",
+    "rules"
+  ],
+  "contrasts": [
+    "Giving a rook for a bishop and a pawn is 5 for 4 and loses a point although three pieces change hands.",
+    "The colour of the pieces does not change their values."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

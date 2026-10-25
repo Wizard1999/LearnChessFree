@@ -1,0 +1,65 @@
+{
+  "id": "FND.STALEMATE",
+  "title": "Stalemate",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that stalemate is a draw: the side to move is not in check but has no legal move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Tells checkmate from stalemate when told it is one of the two.",
+      "prereqs": [
+        "FND.CHECK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions names check, checkmate, stalemate or ongoing, and notices before moving when its own move would stalemate the enemy.",
+      "prereqs": [
+        "FND.STALEMATE.D1",
+        "FND.CHECK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "In a won ending chooses the move that wins instead of stalemating, and knows that stalemate can save a lost game.",
+      "prereqs": [
+        "FND.STALEMATE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Stalemate is a win for the side that moved last.",
+    "Stalemate is the same as checkmate.",
+    "Having a big material lead means stalemate cannot happen."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "Stalemate: the side to move is not in check and has no legal move; the game is drawn.",
+    "Before a move that boxes the king in, count the legal moves it has left."
+  ],
+  "condition_sources": [
+    "rules",
+    "FH session 2"
+  ],
+  "contrasts": [
+    "Same material, one move different: the king is attacked (mate, a win) or not attacked (stalemate, a draw).",
+    "How much extra material the stronger side has does not prevent stalemate."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 2",
+    "rules"
+  ]
+}

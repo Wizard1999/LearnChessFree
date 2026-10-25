@@ -1,0 +1,74 @@
+{
+  "id": "POS.BLOCKADE",
+  "title": "Blockading a passed pawn",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains blockading as placing a supported piece on the square in front of a passed pawn so it cannot advance and its own pieces stay cramped.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Chooses the blockading square and piece (a knight is the best default) for a given passed pawn.",
+      "prereqs": [
+        "POS.PASSED.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, decides among blockading, watching from a distance or attacking the pawn, and supports the blockader.",
+      "prereqs": [
+        "POS.BLOCKADE.D1",
+        "POS.OUTPOST.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how the blockader's quality and elasticity change the plan, and when to exchange a strong blockader for a weaker one; knows a far-advanced passer may be better watched.",
+      "prereqs": [
+        "POS.BLOCKADE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The blockade is obligatory for every passed pawn.",
+    "Blockade with whichever piece is nearest."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 15-17; §5 item 9; §8 items 9-10",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C29",
+    "docs/curriculum-map-v1.1.md §3 (POS.BLOCKADE: a default, not a duty)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The blockading piece is well supported; the pawn is dangerous or central.",
+    "Minor pieces make the best blockaders; the queen leaves at the first attack; the king is poor in the middlegame and useful in the endgame."
+  ],
+  "condition_sources": [
+    "Nimz #15 (c)",
+    "Nimz #16 (b)"
+  ],
+  "contrasts": [
+    "A queen or king blockader that is exposed to attack.",
+    "'the blockade is obligatory' overreaches; a far-advanced passer may be better watched and a blockader can be overloaded.",
+    "A passed pawn that is already harmless."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz §8 item 9",
+    "Nimz §5 item 9",
+    "Nimz §8 item 9"
+  ],
+  "soft_prereqs": [
+    "POS.WEAKSQ.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.WEAKSQ.D2": "the blockading square is a weak square for the pawn's owner"
+  }
+}

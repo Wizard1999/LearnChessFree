@@ -1,0 +1,76 @@
+{
+  "id": "ATK.CASTLED",
+  "title": "Attacking the castled king",
+  "strand": "S6",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a castled king's defence is its pawn cover and the pieces near it, and that an attack needs attackers to match the defenders.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Counts the attackers who can reach and the defenders who can answer around a castled king, and names the weakened squares.",
+      "prereqs": [
+        "ATK.SUPERIORITY.D2",
+        "DEF.SHELTER.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, chooses among bringing one more piece (opening a file), exchanging a defender, or not attacking, and recognises when the pawn cover has been loosened.",
+      "prereqs": [
+        "ATK.CASTLED.D1",
+        "TAC.MATE-PATTERNS.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how a defender's bishop or knight covering the holes refutes the attack, and checks the declined lines.",
+      "prereqs": [
+        "ATK.CASTLED.D2",
+        "SAF.COUNT.FUTURE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A sacrifice near the king always works.",
+    "Counting attackers is enough; the quality of the defenders does not matter."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-28, CI-29; §8 item 14",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C28, C30, C32, C33; §8 exercise 10",
+    "sources/sheets/edlasker_chess-strategy.md §4 K17"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "In a king attack the number of attackers needed is compared with the defenders available; with exactly enough on both sides, moving any defender tips the balance.",
+    "The weak point is the pawn cover in front of the king, as after the king's knight pawn has advanced a square."
+  ],
+  "condition_sources": [
+    "ZB C32 (b)",
+    "CAP CI-27 (c)"
+  ],
+  "contrasts": [
+    "The same pawn move, but a defender piece covers the key squares.",
+    "Counting defenders without checking which can really be removed.",
+    "A queenside pawn move that does not affect the king."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 14",
+    "ZB C32 (d)",
+    "CAP §8 item 14"
+  ],
+  "soft_prereqs": [
+    "TAC.BACKRANK.D2"
+  ],
+  "soft_prereq_notes": {
+    "TAC.BACKRANK.D2": "the back-rank weakness is the simplest castled-king attack"
+  }
+}

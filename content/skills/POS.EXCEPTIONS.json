@@ -1,0 +1,75 @@
+{
+  "id": "POS.EXCEPTIONS",
+  "title": "When the rule fails",
+  "strand": "S5",
+  "tier": 6,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "States a positional rule, then names a feature whose change makes it fail.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a familiar rule (knights before bishops; do not move a piece twice), finds a position where the exception applies and says which feature licenses it.",
+      "prereqs": [
+        "OPN.NONDEV.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled one-feature minimal pairs, decides whether the rule applies and says why, and builds a minimal pair of his own for a rule.",
+      "prereqs": [
+        "POS.EXCEPTIONS.D1",
+        "POS.IMBALANCES.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts which rules survive a one-feature change and labels the rest as defaults with conditions.",
+      "prereqs": [
+        "POS.EXCEPTIONS.D2",
+        "POS.REASSESS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A rule is either always true or useless.",
+    "One exception cancels the rule."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.5; §5 item 1; §6 item 5",
+    "sources/sheets/capablanca_chess-fundamentals.md §5 items 4, 6-8",
+    "sources/sheets/nimzowitsch_my-system.md §6 (dogmatism as pedagogy)",
+    "docs/council-synthesis.md CD-4 (exceptions from Tier 3)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=6"
+  },
+  "conditions": [
+    "A settled structure with known targets, a piece with a role in a coming attack, a pawn that needs support when advanced."
+  ],
+  "condition_sources": [
+    "EML 4.5 (c)"
+  ],
+  "contrasts": [
+    "Learning the rule as absolute and then being unable to find the 'ugly' good move.",
+    "Abandoning the rule after one exception.",
+    "An exception to a rule that does not govern the position."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML 4.5 (g)",
+    "EML 4.5 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "OPN.TEMPO.D3"
+  ],
+  "soft_prereq_notes": {
+    "OPN.TEMPO.D3": "tempo-count exceptions are the first rules learners see fail"
+  },
+  "note": "CD-4: exceptions and dynamic play are introduced from Tier 3 as D0-D1; tier 6 is where unlabeled use enters."
+}

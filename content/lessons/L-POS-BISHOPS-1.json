@@ -1,0 +1,92 @@
+{
+  "id": "L-POS-BISHOPS-1",
+  "title": "Bishops: squares, pairs and trades",
+  "skill": "POS.BISHOPS",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts a bishop's squares to judge how active it is",
+    "Sees how a shut-in bishop leaves its pawns undefended",
+    "Decides when giving up a bishop wins something concrete"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A bishop is worth what its diagonals allow. Count the squares it can reach and ask what it attacks. A bishop shut in behind its own pawns has little to do.\n**Rule of thumb:** pawns on the colour of your own bishop make it harder to use. Two bishops together cover both colours, which helps most when the position is open."
+    },
+    {
+      "type": "board",
+      "fen": "2b5/pp1k1p1p/2p1p1p1/3p4/3P4/2P1PN2/PP2KPPP/8 b - - 0 1",
+      "caption": "Black to move. Look at the bishop on c8.",
+      "line": [
+        {
+          "move": "d7e7",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "f3d2",
+          "say": "White makes a quiet move."
+        },
+        {
+          "move": "c8d7",
+          "say": "The bishop finally reaches d7."
+        }
+      ],
+      "highlight": [
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "c8",
+            "to": []
+          },
+          "statement": "The bishop on c8 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-17"
+    },
+    {
+      "type": "card",
+      "text": "A bishop that cannot move cannot defend anything. In the next position White can use that.\nAsk of each bishop: **how many squares does it have, and does it guard what needs guarding?** Count the squares before you decide which minor piece to keep."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawns, a different bishop",
+      "prompt": "Black's bishop is the dark-squared one on f8. Does Ng5 still win material? Predict first, then check.",
+      "working": "IA2-18",
+      "failing": "IA2-19"
+    },
+    {
+      "type": "card",
+      "text": "Two bishops are not always worth keeping. When trading one for a knight wins something concrete, such as a pawn that knight alone defended, take the gain. Before you give up a bishop, count: **who defends the pawn, and what is left after the trade?**"
+    },
+    {
+      "type": "contrast",
+      "title": "Same trade, one defender more",
+      "prompt": "Black has an extra pawn on d6 that also defends e5. Does Bxc6 still win a pawn? Predict first, then check.",
+      "working": "IA2-20",
+      "failing": "IA2-21"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "What felt unclear: telling a good bishop from a bad one, or deciding when to give up a bishop?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 44: the two bishops)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-16-18: bishop v knight, pawn colour; rule 1 NOT used)",
+    "sources/sheets/emlasker_common-sense.md (4.6, 4.20: bishop v knight, exchange policy)",
+    "sources/sheets/edlasker_chess-strategy.md (K5: mobility is value)"
+  ]
+}

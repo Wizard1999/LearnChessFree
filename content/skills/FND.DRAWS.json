@@ -1,0 +1,78 @@
+{
+  "id": "FND.DRAWS",
+  "title": "Ways a game is drawn",
+  "strand": "S1",
+  "tier": 1,
+  "origin": "map-v1 (FND.SPECIAL: draws; the id FND.DRAWS is ours because the foundation ids split SPECIAL into castle/en passant/promote only)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Lists the ways a game can end drawn (stalemate, agreement, repetition, fifty-move rule, insufficient material) and says which of them the player can claim and which are automatic.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a short sequence on the board, says when a position has occurred for the third time and what must be true (same side to move, same rights) for it to count.",
+      "prereqs": [
+        "FND.STALEMATE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed endings, classifies each as won, drawn by insufficient material, or still playable, including positions that look drawn but are not (king, bishop and knight against a king, which is a win).",
+      "prereqs": [
+        "FND.DRAWS.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Plans a game ending: counts the fifty-move clock in a rook ending, says what resets it, and decides whether to avoid or seek a repetition.",
+      "prereqs": [
+        "FND.DRAWS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A position repeated three times is always a draw, whoever is to move.",
+    "King and two knights against a bare king is a draw by the rules (it is not automatic; mate cannot be forced).",
+    "The fifty-move count restarts on every check."
+  ],
+  "sources": [
+    "docs/first-hours.md session 3 (draws)",
+    "sources/sheets/capablanca_chess-fundamentals.md §5 items 11, 14 (two knights; wording of the fifty-move rule)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K22",
+    "docs/curriculum-map-v1.1.md §4 (tablebase checks for 2N, B+N)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "Repetition needs the same position with the same side to move and the same castling and en passant rights.",
+    "The fifty-move count resets on a capture or a pawn move, not on a check.",
+    "Insufficient-material draws apply only when no sequence of legal moves could produce mate (bare kings, king and one minor piece against a king)."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules; Cap §5 item 14 notes the book's wording is not the modern rule",
+    "rules"
+  ],
+  "contrasts": [
+    "King and two knights against a bare king cannot be forced to mate (tablebase-verified draw) yet the game is not drawn automatically by the rules; the book's claim that a defender's pawn changes this is unverified.",
+    "Three occurrences with the other side to move do not count as the same position.",
+    "A pawn exchange 40 moves in resets the clock, so counting from the start of the game is meaningless."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-05, flagged CHECK; MAP11 §4",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "END.MATE-STALEMATE-AVOID.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.MATE-STALEMATE-AVOID.D1": "stalemate and repetition appear together in drawn endings"
+  }
+}

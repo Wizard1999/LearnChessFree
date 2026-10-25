@@ -1,0 +1,82 @@
+{
+  "id": "LOOP.V2",
+  "title": "Thinking Loop v2: checks, captures, threats",
+  "strand": "S2",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "States the order in which forcing moves are examined (checks, captures, direct threats) for both sides and why forcing moves go first.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Lists every check, capture and direct threat for the side to move, and for the opponent in the position after a quiet move.",
+      "prereqs": [
+        "LOOP.V1.D2",
+        "SAF.COUNT.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, finds the forcing move that works when one exists, and says that no forcing move helps when none does.",
+      "prereqs": [
+        "LOOP.V2.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Examines the opponent's best forcing reply to each forcing candidate (a check answered by a check, a capture met by an in-between move) before choosing.",
+      "prereqs": [
+        "LOOP.V2.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, a sampled log shows forcing moves of both sides listed before the move in critical positions, with prompts off.",
+      "prereqs": [
+        "LOOP.V2.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Only my own forcing moves matter; the opponent's can wait.",
+    "A capture that wins material on the first move is always correct."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S2; docs/council-synthesis.md CD-3 (one versioned Thinking Loop)",
+    "docs/first-hours.md session 4 (threat check as loop v1)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K2-K3 (count and the ways it lies)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "Used when the position is not quiet or when the opponent's last move was forcing.",
+    "A capture is examined with the count of attackers and defenders, not by the first gain alone."
+  ],
+  "condition_sources": [
+    "MAP1 S2; Heisman per CNC Round 3",
+    "EDL K2-K3"
+  ],
+  "contrasts": [
+    "A first-move capture whose recapture comes with check, leaving the capturer worse.",
+    "Listing only forcing moves for the side to move and missing the opponent's check in reply.",
+    "A quiet position with no checks or captures available for either side; the list is empty."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K3: illusory defender / forced-away defender",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.FORK.D1",
+    "TAC.PIN.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.FORK.D1": "knowing forks lets the threat list include double attacks",
+    "TAC.PIN.D1": "knowing pins lets the capture list drop captures by pinned pieces"
+  }
+}

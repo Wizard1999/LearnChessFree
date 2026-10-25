@@ -1,0 +1,64 @@
+{
+  "id": "FND.PIECE.BISHOP",
+  "title": "How the bishop moves",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a bishop slides any distance along a diagonal, cannot jump, and always stays on the same colour of square.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'bishop', marks every square a bishop can move to: it stops in front of its own pieces and may take the first enemy piece on its diagonal.",
+      "prereqs": [
+        "FND.BOARD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a busy position where the piece is not named, marks every square the piece on a given square can reach.",
+      "prereqs": [
+        "FND.PIECE.BISHOP.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Without a board, says whether a bishop can ever reach a given square (colour), and whether it gets there in one move or two.",
+      "prereqs": [
+        "FND.PIECE.BISHOP.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A bishop can change the colour of the squares it stands on.",
+    "The bishop can jump over pieces.",
+    "A bishop can step one square straight forward like a pawn."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "The bishop moves along diagonals for any number of free squares and stays on one colour of square.",
+    "It stops in front of its own piece and may take the first enemy piece on a diagonal."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "A piece on the diagonal blocks the squares behind it.",
+    "Pieces on the same rank or file as the bishop do not affect its moves."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

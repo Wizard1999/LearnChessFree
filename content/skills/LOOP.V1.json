@@ -1,0 +1,78 @@
+{
+  "id": "LOOP.V1",
+  "title": "Thinking Loop v1: safety scan",
+  "strand": "S2",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says in own words the two questions asked before every move (what did their last move threaten; is any of my pieces attacked without enough defence) and why the order matters.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "With prompts on, answers both questions before choosing a move in ten consecutive positions, naming the threat or saying there is none.",
+      "prereqs": [
+        "SAF.LOOSE.D1",
+        "SAF.THREAT.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "With prompts off, in mixed positions (some with a threat, some without), plays a move that neither ignores a real threat nor wastes a move on a non-threat in at least 8 of 10.",
+      "prereqs": [
+        "LOOP.V1.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Keeps the scan when an attacking move is tempting (items built so the attack fails to a one-move reply) and when the position feels safe.",
+      "prereqs": [
+        "LOOP.V1.D2",
+        "SAF.THREAT.D2",
+        "SAF.LOOSE.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games with prompts off, loses no piece to a one-move threat across ten consecutive games, as shown by the unprompted-behaviour ledger.",
+      "prereqs": [
+        "LOOP.V1.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The scan is only needed when the position looks dangerous.",
+    "Checking my own pieces is enough; the opponent's last move can be ignored."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S2; docs/council-synthesis.md CD-3 (one versioned Thinking Loop)",
+    "docs/first-hours.md session 4 (threat check as loop v1)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G1: threat never seen), CI-24 (danger of a safe position)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "Applies at every move; cost is a few seconds; pays most when the last move created a threat or left a piece loose.",
+    "The scan answers what is attacked now; it does not replace calculation of forcing lines."
+  ],
+  "condition_sources": [
+    "MAP1 S2",
+    "CNC CD-3: v1 is the first version of the loop"
+  ],
+  "contrasts": [
+    "Running the scan only when 'it feels dangerous'; the champion's oversight in a quiet position shows the habit must be unconditional.",
+    "Scanning one's own pieces but not the square the opponent's last move now attacks.",
+    "Positions where nothing is attacked on either side; the routine should end quickly with 'no threat'."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-51",
+    "ours",
+    "FH session 4"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

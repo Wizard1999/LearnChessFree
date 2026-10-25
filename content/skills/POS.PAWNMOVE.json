@@ -1,0 +1,68 @@
+{
+  "id": "POS.PAWNMOVE",
+  "title": "What does this pawn move leave behind?",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that pawns cannot go back, so every pawn move changes which squares and pawns are guarded for the rest of the game.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a given pawn move, marks the squares it no longer guards and the pawns it leaves unprotected.",
+      "prereqs": [
+        "POS.WEAKSQ.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, judges whether a pawn move is safe given which enemy pieces can use the weakened squares, including harmless moves.",
+      "prereqs": [
+        "POS.PAWNMOVE.D1",
+        "POS.PAWNWEAK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts consequences in front of a castled king, and how the same missing pawn matters differently in the middlegame and in the ending.",
+      "prereqs": [
+        "POS.PAWNMOVE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Pawn moves near the king are safer than piece moves.",
+    "Make a luft early as a precaution."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K9, K17, K19; §8 items 9, 11",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C28",
+    "docs/curriculum-map-v1.1.md §3 (POS.PAWNMOVE T3-4)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The opponent has pieces that can reach the weakened squares (a bishop of the right colour, a knight, a queen)."
+  ],
+  "condition_sources": [
+    "EDL K17 (c)"
+  ],
+  "contrasts": [
+    "The pawn move is fine when it forces off the opponent's attackers, or is needed (h3 against a pin, a forced luft).",
+    "'pawn moves in front of the king always weaken' is absolute; fianchetto structures use them deliberately.",
+    "The relevant enemy attackers are absent."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K17 (d)",
+    "EDL §5 item 11",
+    "EDL §8 item 9"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

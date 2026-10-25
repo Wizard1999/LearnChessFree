@@ -1,0 +1,129 @@
+{
+  "id": "L-FND-SPECIAL-1",
+  "title": "En passant, promotion and draws",
+  "skill": "FND.ENPASSANT",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Captures en passant, and knows it must be done at once",
+    "Promotes a pawn and checks the promotion square first",
+    "Names the ways a game ends in a draw and spots a draw by lack of material"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**En passant** means 'in passing'. When an enemy pawn jumps two squares and lands right beside your pawn, you may capture it as if it had moved only one square. You must do it on the very next move, or the chance is gone."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+      "caption": "Black's pawn jumped from d7 to d5. White captures it as if it had stopped on d6.",
+      "line": [
+        {
+          "move": "e5d6",
+          "say": "The pawn captures en passant: it lands on d6 and the pawn on d5 is removed."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d6"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "d6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-85"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawns, a move later",
+      "prompt": "White did not take at once. Predict first: can White still capture en passant a move later?",
+      "working": "IA0-86",
+      "failing": "IA0-87"
+    },
+    {
+      "type": "card",
+      "text": "A pawn that reaches the last rank is **promoted**: you choose a queen, rook, bishop or knight. It can promote by moving straight ahead or by capturing diagonally. Before you push, check the promotion square. If an enemy piece attacks it, the new piece can be captured at once."
+    },
+    {
+      "type": "item",
+      "item": "IA0-88"
+    },
+    {
+      "type": "card",
+      "text": "A game is a **draw** when: a player has no legal move and is not in check (stalemate); the same position occurs three times (repetition); fifty moves pass without a capture or a pawn move; there are not enough pieces to checkmate; or both players agree. Do not assume that an extra piece always wins."
+    },
+    {
+      "type": "contrast",
+      "title": "An extra piece is not always enough",
+      "prompt": "Both sides have just a king and White has one extra piece. Predict first: can White win with a rook? With a knight?",
+      "working": "IA0-89",
+      "failing": "IA0-90"
+    },
+    {
+      "type": "item",
+      "item": "IA0-91"
+    },
+    {
+      "type": "item",
+      "item": "IA0-92"
+    },
+    {
+      "type": "item",
+      "item": "IA0-93"
+    },
+    {
+      "type": "item",
+      "item": "IA0-94"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.ENPASSANT",
+        "kind.generated"
+      ],
+      "n": 4
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PROMOTE",
+        "kind.generated"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which special rule would you be most likely to forget in a real game: castling conditions, en passant, promotion squares, or the draw rules?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 3",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "sources/sheets/capablanca_chess-fundamentals.md (draw by stalemate; mating material)"
+  ],
+  "also": [
+    "FND.PROMOTE",
+    "FND.DRAWS",
+    "FND.SPECIAL"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "POS.DYNAMIC",
+  "title": "Dynamic play",
+  "strand": "S5",
+  "tier": 6,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that dynamic factors (initiative, piece activity, tempo) can outweigh static features such as a damaged pawn structure.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a position with a damaged pawn structure, counts the activity that compensates and states whether it is enough.",
+      "prereqs": [
+        "POS.EXCEPTIONS.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, judges when activity outweighs structure and labels the verdict practical or sound.",
+      "prereqs": [
+        "POS.DYNAMIC.D1",
+        "INI.INITIATIVE.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how a single tempo flips a dynamic verdict, and rejects 'damaged structure means worse' without a count.",
+      "prereqs": [
+        "POS.DYNAMIC.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A damaged pawn structure means an inferior position."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §5 item 1, §9 (modern view)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 47; §7 row 47 (label practical, not sound)",
+    "docs/curriculum-map-v1.md §2 S5 (POS.DYNAMIC T6)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=6"
+  },
+  "conditions": [
+    "Piece activity and initiative compensate for the structure (the textbook error in the 1895 Ruy Lopez verdict).",
+    "A sacrifice for a blockade is practical, not proven sound, until verified."
+  ],
+  "condition_sources": [
+    "EML §5 item 1",
+    "Nimz #47"
+  ],
+  "contrasts": [
+    "An early structural damage verdict that the engine reverses through activity.",
+    "Treating a positional sacrifice as sound without checking.",
+    "A closed position where activity cannot be realised."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML §5 item 1",
+    "Nimz #47 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "ATK.SUPERIORITY.D3"
+  ],
+  "soft_prereq_notes": {
+    "ATK.SUPERIORITY.D3": "dynamic play is attack with a count"
+  }
+}

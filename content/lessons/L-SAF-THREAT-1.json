@@ -1,0 +1,116 @@
+{
+  "id": "L-SAF-THREAT-1",
+  "title": "What did their last move threaten?",
+  "skill": "SAF.THREAT",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Names what an opponent's last move threatens: a capture, a mate, or a fork",
+    "Tells a real threat from an attack that fails after the recapture",
+    "Says when the last move threatens nothing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "After your opponent moves, ask first: **what does that move threaten?** Imagine they get a second move in a row. Could they win a piece, give mate, or fork? Look at what their piece now attacks and what it has just uncovered.\nIf the answer is 'nothing', you are free to follow your own plan."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/pp1r1ppp/2n5/8/8/8/PP3PPP/2B1R1K1 b - - 0 1",
+      "caption": "Black to move. White has just played ...Re1. What is the threat?",
+      "line": [
+        {
+          "move": "a7a6",
+          "say": "Black ignores the threat and plays an unrelated move."
+        },
+        {
+          "move": "e1e8",
+          "say": "...Re8 is checkmate: the pawns shut the king in and nothing covers e8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e1e8",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "White threatens Re8 mate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No black piece covers e8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-018"
+    },
+    {
+      "type": "item",
+      "item": "IA1-021"
+    },
+    {
+      "type": "card",
+      "text": "A threat is real only if carrying it out works. Ask:\n**What would they take or attack?**\n**After my recapture, do they gain?** A rook that takes a pawn-defended bishop loses material.\n**Can they really play it?** A covered square or an escape square for my king can cancel it.\nSometimes the honest answer is: no threat."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one change",
+      "prompt": "Black's rook stands on e8 again. A white knight now stands on f3 instead of c3.",
+      "working": "IA1-018",
+      "failing": "IA1-019",
+      "irrelevant": "IA1-020"
+    },
+    {
+      "type": "item",
+      "item": "IA1-022",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-023",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.THREAT",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you looked, did you expect Black's last move to threaten something? Were you right?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C14 real and fictitious threats; exercise idea 5)",
+    "docs/curriculum-map-v1.1.md section 3 (real vs fictitious threats feed SAF.THREAT)",
+    "docs/council-synthesis.md CD-3"
+  ]
+}

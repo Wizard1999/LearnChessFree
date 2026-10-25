@@ -1,0 +1,117 @@
+{
+  "id": "L-TAC-TRAPPED-1",
+  "title": "Trapped pieces, and pieces that are only cut off",
+  "skill": "TAC.TRAPPED",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Counts the escape squares of an attacked piece and says which are covered",
+    "Wins a trapped piece by attacking it",
+    "Tells a trapped piece from one that is only cut off"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A piece is **trapped** when it is attacked, or can be attacked, and every square it can go to loses it. Knights on the rim and bishops that grabbed a pawn are the usual victims.\nTo trap a piece, count its escape squares and ask which of them you cover."
+    },
+    {
+      "type": "board",
+      "fen": "2r3k1/1p3ppp/p1p5/n7/8/3P4/PPP2PPP/2BR2K1 w - - 0 1",
+      "caption": "White to move. The black knight stands on the rim.",
+      "line": [
+        {
+          "move": "b2b4",
+          "say": "The pawn attacks the knight. Its squares b3 and c4 are covered and b7 and c6 are taken."
+        },
+        {
+          "move": "c8e8",
+          "say": "Black makes some other move."
+        },
+        {
+          "move": "b4a5",
+          "say": "The pawn takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b2",
+          "to": "b4"
+        },
+        {
+          "from": "b4",
+          "to": "a5"
+        }
+      ],
+      "highlight": [
+        "a5",
+        "b3",
+        "c4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "b2b4",
+            "min": 3
+          },
+          "statement": "b4 wins the knight along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-070"
+    },
+    {
+      "type": "item",
+      "item": "IA1-071"
+    },
+    {
+      "type": "card",
+      "text": "Trapped is not the same as cut off. A piece that is **cut off** from the action still has a safe square, so you cannot win it. Before you attack, ask:\n**Which squares can it reach?**\n**Which of them do I cover?**\n**Can it capture something, or can its friends help?**"
+    },
+    {
+      "type": "contrast",
+      "title": "Trapped or only cut off?",
+      "prompt": "In the second position the white pawn stands on d2, not d3.",
+      "working": "IA1-071",
+      "failing": "IA1-072"
+    },
+    {
+      "type": "item",
+      "item": "IA1-073"
+    },
+    {
+      "type": "item",
+      "item": "IA1-074",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-075",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.trappedPiece",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you counted escape squares, did you check each one for a defender or a counter-attack, or only whether it was empty?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.1.md (TAC.TRAPPED with POS.OUTOFPLAY as the contrast)",
+    "docs/inference-01-puzzle-theme-difficulty.md (trappedPiece median about 1640)"
+  ]
+}

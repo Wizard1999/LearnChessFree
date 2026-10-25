@@ -1,0 +1,188 @@
+{
+  "id": "L-SELF-7-1",
+  "title": "Investigate: a claim, a test that could fail, and the limits written down",
+  "skill": "SELF.7",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Turns a claim with a source and a year into a question a test could answer, with a result that would show it false",
+    "Chooses a tool (engine, tablebase, Openings page, own games) and says what it can and cannot show",
+    "Plans the limits and a failing look-alike to write beside a conclusion",
+    "Tells a research question from one that a tablebase lookup answers"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An **investigation** starts with a claim you can name, with its source and year: a book, a video, or a 'rule of thumb' in these lessons. Turn it into a question a test could answer. What would I see if the claim is true, and what would show it false? Pick a tool, write its **limits**, and look for a **failing look-alike**. Checking an old claim counts as research; a novelty is not required."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Choose a claim to investigate: something you have read, heard or been taught. Write only the claim for now.",
+      "fields": [
+        {
+          "id": "claim",
+          "label": "The claim:"
+        },
+        {
+          "id": "source",
+          "label": "Where it comes from (author or title):"
+        },
+        {
+          "id": "year",
+          "label": "Year:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A worked question.** After 1.e4 e5 2.Nf3 Nc6 3.d4 exd4: does a line that scores well on the Openings page have to be sound? *If yes,* 4.Nxd4 should score clearly better than 4.Ng5. *Data* (September 2026 sample of online games, band 1300-1500): after 4.Nxd4 (10,125 games) White won 53% and drew 4%; after 4.Ng5 (2,519 games) White won 53% and drew 2%. Counting a draw as half a win, both score 54.7%. The prediction failed. Now ask the engine."
+    },
+    {
+      "type": "item",
+      "item": "IB7-8"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/8/3pP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 4",
+      "caption": "White to move after 3...exd4. Written beside this result: tool Stockfish, depth 16, one position; data from the Openings page, September 2026 sample, band 1300-1500. At depth 16 the engine ranks 4.Nxd4 first and rates 4.Ng5 at least 1.5 pawns lower. Failing look-alike: 4.Ng5 is a common move (14% of games here) that wins as often as 4.Nxd4 (53% each), yet it is the move the engine rates lower.",
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f3d4"
+          },
+          "statement": "Nxd4 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3d4"
+            ]
+          },
+          "statement": "Nxd4 is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "f3g5",
+            "cp": 150
+          },
+          "statement": "Ng5 is at least 1.5 pawns lower than the best move."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What each tool can and cannot show.** *Openings page:* what players of a band chose and how those games ended (one month, online); not why, and not strength. *Engine:* a fixed-depth rating of one position; not what people will do. *Your games:* real mistakes, but few. *Tablebase* (seven pieces or fewer; none in this app): exact for each position, so one position is a lookup, not research; a claim about many positions takes many lookups. Write tool, sample, depth and band beside every result."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, two kinds of question",
+      "prompt": "The first board has a question the engine can answer. Predict for the second: does a good score on the Openings page answer it?",
+      "working": "IB7-8",
+      "failing": "IB7-9",
+      "irrelevant": "IB7-10"
+    },
+    {
+      "type": "card",
+      "text": "A conclusion is worth keeping when the test could have failed, the result sits beside its tool, sample, depth and band, and one **failing look-alike** is named. It breaks when you keep only the cases that agree, when the sample is tiny (a **rule of thumb**: under about 30 games in a band is noise; the Openings page hides such results), or when a lookup would have answered. A result that contradicts the source is a finding."
+    },
+    {
+      "type": "item",
+      "item": "IB7-10"
+    },
+    {
+      "type": "item",
+      "item": "IB7-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB7-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.PUNISH",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Design the test for your claim. Write what would show it false before you run anything. Notes are saved only on this device and the app sends them nowhere, so show your design to one person and ask them to break it.",
+      "fields": [
+        {
+          "id": "claim",
+          "label": "My claim (copy it from earlier):"
+        },
+        {
+          "id": "true_see",
+          "label": "If the claim is true I should see:"
+        },
+        {
+          "id": "false_see",
+          "label": "If the claim is false I should see:"
+        },
+        {
+          "id": "tool",
+          "label": "My tool:",
+          "options": [
+            "Openings page",
+            "My games",
+            "Contrast lab",
+            "engine (in the app only through My games or the Contrast lab)",
+            "tablebase (outside the app: the app has none)"
+          ]
+        },
+        {
+          "id": "test",
+          "label": "The test (which positions or games, which band or depth):"
+        },
+        {
+          "id": "fail",
+          "label": "A result that would show the claim is wrong:"
+        },
+        {
+          "id": "limits",
+          "label": "Limits I will write beside the result:"
+        },
+        {
+          "id": "lookalike",
+          "label": "A failing look-alike I will look for:"
+        },
+        {
+          "id": "reviewer",
+          "label": "Who will read my conclusion and try to break it?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S11 (SELF.7 investigate); content/skills/SELF.7.json (conditions, contrasts, misconception)",
+    "docs/reconciliation-pasted-curriculum.md section 2 (Dvoretsky Endgame Analysis as a model; not re-read here)",
+    "app/public/openings/core.json (September 2026 sample, Blitz+Rapid+Classical, band 1300-1500; numbers asserted in the build script), docs/openings-data.md (biases and limits), app/src/pages/Openings.tsx (results hidden below 30 games), Games.tsx, Lab.tsx: [V, read]",
+    "engine claims at depth 16 (validate.py); the tablebase claims come from the Lichess tablebase service via validate.py"
+  ]
+}

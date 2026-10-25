@@ -1,0 +1,194 @@
+{
+  "id": "L-FND-VISUAL-1",
+  "title": "Seeing the board without the pieces",
+  "skill": "FND.VISUAL",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Names the colour of a square from its name",
+    "Gives the squares a knight reaches in one and in two jumps, and says when a square cannot be reached",
+    "Names the squares of a long diagonal",
+    "Plans a short routine of their own to train board vision without a board"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A way to train board vision: hold a position as **a list of pieces and the squares they attack**. Train the small parts first. **Colour from the name:** a1 is dark; add the file number (a=1 to h=8) and the rank, and an even sum is dark. Say the answer **before** you look at the board; looking is how you check, not how you answer."
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/8/8/8/8/1N5K w - - 0 1",
+      "caption": "A knight on b1. The lit squares are its first jump. Watch the colours of the squares it lands on.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "From the light square b1 the knight jumps to c3, a dark square."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black makes a waiting move with the king."
+        },
+        {
+          "move": "c3e4",
+          "say": "From c3 it jumps to e4, light again. A knight changes colour on every jump."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b1",
+          "to": "c3"
+        }
+      ],
+      "highlight": [
+        "a3",
+        "c3",
+        "d2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_attacks",
+          "params": {
+            "square": "b1",
+            "squares": [
+              "a3",
+              "c3",
+              "d2"
+            ]
+          },
+          "statement": "The knight on b1 attacks exactly a3, c3 and d2."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "c3",
+            "includes": [
+              "e4"
+            ],
+            "after_move": "b1c3"
+          },
+          "statement": "From c3 the knight attacks e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB3-201"
+    },
+    {
+      "type": "item",
+      "item": "IB3-204"
+    },
+    {
+      "type": "item",
+      "item": "IB3-205"
+    },
+    {
+      "type": "card",
+      "text": "This is easiest while the line is **short** and you **re-anchor** after each move by saying what is attacked now. A slip to watch for as lines get longer: counting a piece that was captured a move ago. **Rule of thumb:** after every capture, say the new list of pieces aloud before going on. A knight always changes square colour, which rules out half the squares at once."
+    },
+    {
+      "type": "contrast",
+      "title": "Can the knight get there?",
+      "prompt": "Count the jumps in your head first. Predict, then check.",
+      "working": "IB3-207",
+      "failing": "IB3-208",
+      "irrelevant": "IB3-209"
+    },
+    {
+      "type": "item",
+      "item": "IB3-211"
+    },
+    {
+      "type": "item",
+      "item": "IB3-212"
+    },
+    {
+      "type": "item",
+      "item": "IB3-601"
+    },
+    {
+      "type": "item",
+      "item": "IA5-16"
+    },
+    {
+      "type": "item",
+      "item": "IA5-17"
+    },
+    {
+      "type": "item",
+      "item": "IB3-203",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-206",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-210",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-213",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-602",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-603",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.VISUAL"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Choose a two-minute drill you can do without a board, away from the app: for example name the colour of ten squares from a list, or name the squares a knight reaches in two jumps from each corner. Score it today as a baseline.",
+      "fields": [
+        {
+          "id": "drill",
+          "label": "My drill:",
+          "options": [
+            "colours of ten squares",
+            "knight in two jumps from each corner",
+            "the squares of a diagonal",
+            "other"
+          ]
+        },
+        {
+          "id": "baseline",
+          "label": "Right out of ten today:",
+          "type": "number"
+        },
+        {
+          "id": "check",
+          "label": "I will repeat it on (date):"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.VISUAL.json (conditions, contrasts, misconceptions)",
+    "sources/sheets/emlasker_common-sense.md section 5 item 3 (knight-count slip), used for the idea only",
+    "docs/content-schema.md (display study_seconds/hide drill)",
+    "content/items/lesson-b3-visual2.json (study_seconds/hide drill, authored for batch b3)"
+  ]
+}

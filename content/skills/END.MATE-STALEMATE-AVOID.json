@@ -1,0 +1,70 @@
+{
+  "id": "END.MATE-STALEMATE-AVOID",
+  "title": "Mating without stalemating",
+  "strand": "S7",
+  "tier": 1,
+  "origin": "reconciliation",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a mating attempt can end in stalemate when the lone king has no legal move and is not in check, and what the geometry looks like (king on the edge or in a corner).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given the final moves of a queen or rook mate, picks the move that restricts the king but leaves it a legal move, and rejects the one move in the set that stalemates.",
+      "prereqs": [
+        "END.MATE-KQ.D1",
+        "FND.STALEMATE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed king-and-queen and king-and-rook positions near the edge, mates without stalemating in at least 9 of 10, including when the quickest-looking move stalemates.",
+      "prereqs": [
+        "END.MATE-STALEMATE-AVOID.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Lists every stalemating move for the stronger side in a given position and states the pattern (the queen a knight's move from the cornered king).",
+      "prereqs": [
+        "END.MATE-STALEMATE-AVOID.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The mate is finished when the king is in the corner.",
+    "Stalemate is a win for the side with no move."
+  ],
+  "sources": [
+    "docs/reconciliation-pasted-curriculum.md §1 row 3, §5 (END.MATE-STALEMATE-AVOID, T1)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-01-CI-03, CI-15; §8 item 2",
+    "docs/first-hours.md session 2 (I-STALE-001)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "The lone king is not in check and has no legal move after the last move; the stronger side must leave a legal reply.",
+    "Make the first moves with the queen to cut the king's mobility, then use the king."
+  ],
+  "condition_sources": [
+    "rules",
+    "CAP CI-03 (b)"
+  ],
+  "contrasts": [
+    "A queen move that restricts the king but leaves a legal reply, compared with one that leaves none.",
+    "The same material one move different: mate or stalemate.",
+    "A move on the far side with no effect on the king's squares."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 2",
+    "FH session 2, I-STALE-001",
+    "CAP §8 item 2"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

@@ -1,0 +1,186 @@
+{
+ "id": "L-END-OUTSIDE-1",
+ "title": "The outside passed pawn: a decoy for the enemy king",
+ "skill": "END.OUTSIDE-PASSER",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Explains how an outside passed pawn drags the enemy king away so that the other king can win pawns",
+  "Predicts win or draw when the same king-and-pawn skeleton has the passed pawn on the a-file, the b-file, the d-file or the kingside",
+  "Finds the king-first plan: the pawn push alone can throw the win away"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A passed pawn far from the kings is an **outside passed pawn**. Its job is to be a decoy: the enemy king has to run after it, and then your king walks to the other wing and takes pawns. The same pawn standing near the kings does much less. Watch the pawn and the king work together."
+  },
+  {
+   "type": "board",
+   "fen": "8/5pp1/4k3/8/3K4/P7/5P2/8 w - - 0 1",
+   "caption": "White to move wins, and only with Kc5. One line is shown.",
+   "line": [
+    {
+     "move": "d4c5",
+     "say": "White's king goes towards the queenside, not towards the pawns."
+    },
+    {
+     "move": "e6d7",
+     "say": "Black's king steps to d7."
+    },
+    {
+     "move": "c5b6",
+     "say": "White's king goes on to b6."
+    },
+    {
+     "move": "g7g5",
+     "say": "Black pushes a pawn."
+    },
+    {
+     "move": "b6c5",
+     "say": "White's king returns to c5."
+    },
+    {
+     "move": "d7e6",
+     "say": "Black's king goes back to e6."
+    },
+    {
+     "move": "a3a4",
+     "say": "Now the outside pawn advances."
+    },
+    {
+     "move": "g5g4",
+     "say": "Black pushes the pawn again."
+    },
+    {
+     "move": "a4a5",
+     "say": "The a-pawn advances again."
+    },
+    {
+     "move": "e6d7",
+     "say": "Black's king heads for the a-pawn."
+    },
+    {
+     "move": "c5d5",
+     "say": "White's king heads for the kingside."
+    },
+    {
+     "move": "d7c7",
+     "say": "Black's king keeps going."
+    },
+    {
+     "move": "d5e5",
+     "say": "White's king keeps going."
+    },
+    {
+     "move": "c7b7",
+     "say": "Black's king is nearly at the a-pawn."
+    },
+    {
+     "move": "e5f6",
+     "say": "White's king reaches f6, next to f7."
+    },
+    {
+     "move": "b7a6",
+     "say": "Black's king reaches the a-pawn's file."
+    },
+    {
+     "move": "f6f7",
+     "say": "White's king takes the f7 pawn."
+    },
+    {
+     "move": "a6a5",
+     "say": "Black's king takes the a-pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d4c5"
+     }
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a3",
+     "to": "a8"
+    },
+    {
+     "from": "d4",
+     "to": "c5"
+    }
+   ],
+   "highlight": [
+    "a3",
+    "f7",
+    "g7"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IA3-501"
+  },
+  {
+   "type": "card",
+   "text": "**Where the pawn stands decides.** Count the pawns first: here they are equal. What matters is how far the passed pawn is from the kings, and who has the move. A pawn on the a-file pulls the king further than one on the b-file; a pawn near the kings, or on the kingside, is not an outside pawn at all. Predict each look-alike."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn, nearer the kings",
+   "prompt": "The a-pawn wins here. What if the passed pawn stands on the d-file, beside the kings? Predict, then check.",
+   "working": "IA3-502",
+   "failing": "IA3-503",
+   "irrelevant": "IA3-504"
+  },
+  {
+   "type": "item",
+   "item": "IA3-505"
+  },
+  {
+   "type": "item",
+   "item": "IA3-506"
+  },
+  {
+   "type": "item",
+   "item": "IA3-508"
+  },
+  {
+   "type": "item",
+   "item": "IA3-511"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OUTSIDE-PASSER",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which one-file or one-move change surprised you most (b-file instead of a-file, or Black to move)? What would you check first next time: the pawn's file or the move?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/edlasker_chess-strategy.md (K24: a distant passed pawn pulls the king away; majorities)",
+  "sources/sheets/nimzowitsch_my-system.md (idea 19: the remote passed pawn as a decoy; conditional)",
+  "sources/sheets/emlasker_common-sense.md (4.18: passed pawns and points of vantage)",
+  "docs/curriculum-map-v1.1.md (END.OUTSIDE-PASSER, END.BREAKTHROUGH, POS.MAJORITY)",
+  "All positions: own constructions; results from the Lichess tablebase service"
+ ]
+}

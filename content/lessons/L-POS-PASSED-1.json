@@ -1,0 +1,101 @@
+{
+  "id": "L-POS-PASSED-1",
+  "title": "Passed pawns: blockade early, if you can arrive in time",
+  "skill": "POS.PASSED",
+  "depth": "D1",
+  "minutes": 8,
+  "outcomes": [
+    "Names the blockade square in front of a passed pawn",
+    "Checks whether the blockader can arrive in time",
+    "Predicts win or draw when the defending king is in front or cut off"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **passed pawn** has no enemy pawn in front of it or on the files beside it, so only pieces can stop it. The usual way is a **blockade:** put a piece on the square in front of the pawn. In endings the king is the best blockader.\n**Rule of thumb:** blockade early, with a piece that cannot easily be chased away."
+    },
+    {
+      "type": "board",
+      "fen": "2k5/8/8/5P2/8/6K1/r7/5R2 w - - 0 1",
+      "caption": "White to move. The Black king is far from the pawn.",
+      "line": [
+        {
+          "move": "f5f6",
+          "say": "The pawn advances."
+        },
+        {
+          "move": "c8d7",
+          "say": "The Black king hurries towards it."
+        },
+        {
+          "move": "f6f7",
+          "say": "The pawn is one step from queening."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "Exact result from the tablebase: White wins."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "move": "f5f6",
+            "result": "win"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-31"
+    },
+    {
+      "type": "card",
+      "text": "The blockade is a strong default, not a duty: it works only if the blockader gets in front of the pawn in time. Ask: **can my blockader reach the square in time, and is it safe there?** In the next pair of positions only Black's king has moved."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, the king in time or too late",
+      "prompt": "Only Black's king differs. Does the blockade still hold when the king stands on c8 instead of f8? Predict first, then check.",
+      "working": "IA2-32",
+      "failing": "IA2-33"
+    },
+    {
+      "type": "item",
+      "item": "IA2-34"
+    },
+    {
+      "type": "item",
+      "item": "IA2-35"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you looked at the tablebase: what did you check first, the pawn's rank or the king's distance?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 15-16: blockade, quality of the blockader; 'obligatory' NOT taught as written)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C29: passed pawn)",
+    "sources/sheets/emlasker_common-sense.md (4.18: passed pawns)"
+  ]
+}

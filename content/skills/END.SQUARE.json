@@ -1,0 +1,68 @@
+{
+  "id": "END.SQUARE",
+  "title": "The rule of the square",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a lone passed pawn is caught by the king if the king can step into the pawn's square, and that this is a count, not a guess.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Draws the square for a pawn and says whether the king catches it when it is his move and when it is the pawn's move.",
+      "prereqs": [
+        "END.PAWN-RACE.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, counts the race for pawns that start on their home rank (with the double step) and for those that do not, including whose move it is.",
+      "prereqs": [
+        "END.SQUARE.D1",
+        "FND.PROMOTE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts races with an intermediate check or a king forced to block his own pawn, and predicts the change.",
+      "prereqs": [
+        "END.SQUARE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The first to queen wins the race.",
+    "The five-move bound applies to every pawn."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K24; §7 row K24",
+    "sources/sheets/emlasker_common-sense.md §4.18 (d)",
+    "sources/sheets/capablanca_chess-fundamentals.md §7 row 11"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Count each side's moves separately: pawn races, king raids, whether a king catches a passed pawn."
+  ],
+  "condition_sources": [
+    "EDL K24 (b)"
+  ],
+  "contrasts": [
+    "The first side to queen loses the new queen to the other pawn's capture or check.",
+    "A pawn that starts from its home rank gains a move (double step) that the count has to include.",
+    "A position where rooks are on the board and the king raid is not available."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-11",
+    "EML 4.18 (d)",
+    "EDL §8 item 15"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

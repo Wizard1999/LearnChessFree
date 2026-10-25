@@ -1,0 +1,552 @@
+{
+  "positions": [
+    {
+      "id": "P-ROOK-001",
+      "fen": "4k3/3p4/8/8/1P1R4/8/8/6K1 w - - 0 1",
+      "family": "FAM-MOVE-ROOK",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: rook with own pawn blocking and an enemy pawn to capture",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-BISH-001",
+      "fen": "4k3/8/8/8/3B4/8/1P6/4K3 w - - 0 1",
+      "family": "FAM-MOVE-BISHOP",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: bishop blocked by own pawn on one diagonal",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-KNIGHT-001",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "family": "FAM-MOVE-KNIGHT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "starting position",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-PAWN-001",
+      "fen": "4k3/8/8/3pnp2/4P3/8/8/4K3 w - - 0 1",
+      "family": "FAM-MOVE-PAWN",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: pawn blocked straight ahead, two captures available",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-CAP-FREE",
+      "fen": "4k3/p7/8/4n3/8/2B5/P7/4K3 w - - 0 1",
+      "family": "FAM-CAPTURE-FREE",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: undefended knight",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-CAP-DEF",
+      "fen": "4k3/8/3p4/4p3/8/2B5/8/4K3 w - - 0 1",
+      "family": "FAM-CAPTURE-DEFENDED",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: pawn defended by a pawn (bishop takes, then is recaptured)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-MATE-BACKRANK",
+      "fen": "6k1/5ppp/8/8/8/8/8/R5K1 w - - 0 1",
+      "family": "FAM-MATE1-BACKRANK",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: classic back-rank mate",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-STALE-001",
+      "fen": "7k/5Q2/6K1/8/8/8/8/8 b - - 0 1",
+      "family": "FAM-STALEMATE",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: king and queen stalemate",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-CASTLE-OK",
+      "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+      "family": "FAM-CASTLE-OK",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: both castles legal",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-CASTLE-THRU",
+      "fen": "4k3/8/8/8/8/5r2/8/4K2R w K - 0 1",
+      "family": "FAM-CASTLE-ILLEGAL",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: king would pass through an attacked square (f1)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-EP-001",
+      "fen": "4k3/8/8/3pP3/8/8/8/4K3 w - d6 0 1",
+      "family": "FAM-ENPASSANT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: en passant available",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-THREAT-001",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 4 3",
+      "family": "FAM-THREAT-SCHOLAR",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Scholar's-mate setup, Black to move",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-THREAT-002",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 5 4",
+      "family": "FAM-THREAT-SCHOLAR",
+      "provenance": {
+        "kind": "authored",
+        "ref": "after 3...Nf6?? (the threat is ignored)",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "I-ROOK-001",
+      "skill": "FND.PIECE.ROOK.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "P-ROOK-001",
+      "prompt": "Tap every square the white rook can move to.",
+      "answer": {
+        "squares": [
+          "c4",
+          "d1",
+          "d2",
+          "d3",
+          "d5",
+          "d6",
+          "d7",
+          "e4",
+          "f4",
+          "g4",
+          "h4"
+        ],
+        "from": "d4"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "c4",
+              "d1",
+              "d2",
+              "d3",
+              "d5",
+              "d6",
+              "d7",
+              "e4",
+              "f4",
+              "g4",
+              "h4"
+            ]
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-BISH-001",
+      "skill": "FND.PIECE.BISHOP.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "P-BISH-001",
+      "prompt": "Tap every square the white bishop can move to.",
+      "answer": {
+        "squares": [
+          "a7",
+          "b6",
+          "c3",
+          "c5",
+          "e3",
+          "e5",
+          "f2",
+          "f6",
+          "g1",
+          "g7",
+          "h8"
+        ],
+        "from": "d4"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "a7",
+              "b6",
+              "c3",
+              "c5",
+              "e3",
+              "e5",
+              "f2",
+              "f6",
+              "g1",
+              "g7",
+              "h8"
+            ]
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-KNIGHT-001",
+      "skill": "FND.PIECE.KNIGHT.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "P-KNIGHT-001",
+      "prompt": "Tap every square the knight on b1 can move to.",
+      "answer": {
+        "squares": [
+          "a3",
+          "c3"
+        ],
+        "from": "b1"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "b1",
+            "to": [
+              "a3",
+              "c3"
+            ]
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-PAWN-001",
+      "skill": "FND.PIECE.PAWN.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "P-PAWN-001",
+      "prompt": "Tap every square the white pawn can move to. (Careful: pawns capture differently than they move.)",
+      "answer": {
+        "squares": [
+          "d5",
+          "f5"
+        ],
+        "from": "e4"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "d5",
+              "f5"
+            ]
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-CAP-001",
+      "skill": "FND.CAPTURE.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "P-CAP-FREE",
+      "prompt": "Can White win material safely? Find the move.",
+      "answer": {
+        "moves": [
+          "c3e5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3e5",
+            "min": 3
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-CAP-002",
+      "skill": "FND.CAPTURE.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-CAP-DEF",
+      "prompt": "Should White take the pawn on e5 with the bishop? Predict, then check.",
+      "answer": {
+        "outcome": "no"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3e5",
+            "max": -2
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-MATE-001",
+      "skill": "FND.MATE1.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "P-MATE-BACKRANK",
+      "prompt": "Find checkmate in one.",
+      "answer": {
+        "moves": [
+          "a1a8"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "a1a8",
+            "n": 1
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-STALE-001",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 1,
+      "task": "classify_position",
+      "position": "P-STALE-001",
+      "prompt": "Black to move. Is this checkmate, stalemate, or neither?",
+      "answer": {
+        "class": "stalemate"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": [],
+      "options": [
+        "checkmate",
+        "stalemate",
+        "neither"
+      ]
+    },
+    {
+      "id": "I-CASTLE-001",
+      "skill": "FND.CASTLE.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "P-CASTLE-OK",
+      "prompt": "Castle kingside.",
+      "answer": {
+        "moves": [
+          "e1g1"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-CASTLE-002",
+      "skill": "FND.CASTLE.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-CASTLE-THRU",
+      "prompt": "Can White castle kingside here? Predict, then check.",
+      "answer": {
+        "outcome": "no"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-EP-001",
+      "skill": "FND.ENPASSANT.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "P-EP-001",
+      "prompt": "White just saw ...d7-d5. Capture en passant.",
+      "answer": {
+        "moves": [
+          "e5d6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-THREAT-001",
+      "skill": "SAF.THREAT.D2",
+      "cue": 3,
+      "task": "threat_detection",
+      "position": "P-THREAT-001",
+      "prompt": "Black to move. What is White threatening? (Name the move.)",
+      "answer": {
+        "threat_move": "h5f7"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h5f7",
+            "n": 1,
+            "null_move_first": true
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": []
+    },
+    {
+      "id": "I-THREAT-002",
+      "skill": "SAF.THREAT.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-THREAT-002",
+      "prompt": "Black has just played ...Nf6. Does White have a forced win? Predict, then check.",
+      "answer": {
+        "outcome": "yes"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h5f7",
+            "n": 1
+          }
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [],
+      "hints": [],
+      "options": [
+        "yes",
+        "no"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "POS.PASSED",
+  "title": "Passed pawns",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a passed pawn has no enemy pawn in front on its own or the adjacent files, and that it is strong only if it can be supported and is not blockaded.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Identifies passed pawns for both sides, and counts the moves a passed pawn needs against the distance of the enemy king.",
+      "prereqs": [
+        "END.PAWN-RACE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, decides whether to push, support or hold back a passed pawn, and notices which enemy piece it ties down.",
+      "prereqs": [
+        "POS.PASSED.D1",
+        "POS.WEAKSQ.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the effect of one-feature changes (a protected pawn, the quality of the blockader, a rook behind it) and says when pushing a passed pawn is premature.",
+      "prereqs": [
+        "POS.PASSED.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A passed pawn must advance.",
+    "A passed pawn is always strong."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.18 (points of vantage, tie-down)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-39; §5 item 19",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C29",
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 14-20"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The pawn's whole path consists of squares the opponent cannot cheaply contest, so he must commit a man to watch it.",
+    "A passed pawn gains strength as pieces come off, but blockade, rook-pawns and activity matter."
+  ],
+  "condition_sources": [
+    "EML 4.18 (b)-(c)",
+    "CAP CI-39; CAP §5 item 19"
+  ],
+  "contrasts": [
+    "An isolated passed pawn can be a weakness rather than a strength.",
+    "Pushing the passer mechanically without asking what it ties down or whether the king can support it.",
+    "A passed pawn in a position decided by a king attack."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ZB C29 (d)",
+    "EML 4.18 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "END.SQUARE.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.SQUARE.D1": "counting whether the king catches the pawn"
+  }
+}

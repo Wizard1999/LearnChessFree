@@ -1,0 +1,192 @@
+{
+  "positions": [
+    {
+      "id": "P-FORK-001",
+      "fen": "4k3/5ppp/q7/3N4/8/7P/5PP1/6K1 w - - 0 1",
+      "family": "FAM-NFORK-KQ",
+      "provenance": {
+        "kind": "authored",
+        "ref": "design spike 2026-10-24 [revised: luft added after validator found a back-rank mate]",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-FORK-002",
+      "fen": "3k4/ppp5/7q/4N3/8/P7/1PP5/1K6 w - - 0 1",
+      "family": "FAM-NFORK-KQ",
+      "provenance": {
+        "kind": "authored",
+        "ref": "mirror of P-FORK-001 (left-right) [revised: luft added after validator found a back-rank mate]",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-FORK-003",
+      "fen": "3k4/5ppp/q7/3N4/8/7P/5PP1/6K1 w - - 0 1",
+      "family": "FAM-NFORK-KQ-BROKEN",
+      "provenance": {
+        "kind": "authored",
+        "ref": "P-FORK-001 with the black king moved to d8 (contrast pair) [revised: luft added after validator found a back-rank mate]",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-QUIET-001",
+      "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/2B1P3/2NP1N2/PPP2PPP/R1BQ1RK1 w - - 0 7",
+      "family": "FAM-QUIET-ITALIAN",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Giuoco Pianissimo after 6...O-O",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "I-FORK-001",
+      "skill": "TAC.FORK.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "P-FORK-001",
+      "prompt": "Find the fork.",
+      "answer": {
+        "moves": [
+          "d5c7"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d5c7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d5c7",
+            "min": 8
+          },
+          "statement": "Nc7+ wins the queen and keeps the knight."
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [
+        "theme.fork",
+        "node.TAC.FORK"
+      ],
+      "hints": [
+        "Look for a move that gives check.",
+        "Can one piece attack the king and something valuable at the same time?",
+        "A knight's jump can reach a square that attacks both."
+      ],
+      "explain": "Nc7+ attacks the king and the queen at once. The king must move, and the knight then takes the queen. The engine line nets White +9 and keeps the knight."
+    },
+    {
+      "id": "I-FORK-002",
+      "skill": "TAC.FORK.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-FORK-002",
+      "prompt": "White to move. Is there a tactic? If so, find it.",
+      "answer": {
+        "moves": [
+          "e5f7"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5f7",
+            "min": 8
+          },
+          "statement": "Nf7+ wins the queen and keeps the knight."
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [
+        "theme.fork",
+        "node.TAC.FORK"
+      ],
+      "hints": [
+        "Is there a check available?",
+        "Which black pieces could one white piece attack together?",
+        "Think about where the knight on e5 can jump."
+      ],
+      "explain": "Nf7+ attacks the king and the queen at once. After the king moves, the knight takes the queen (net +9 in the engine line)."
+    },
+    {
+      "id": "I-FORK-003",
+      "skill": "TAC.FORK.D3",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-FORK-003",
+      "prompt": "Does Nc7 still win the queen? Predict, then check.",
+      "answer": {
+        "outcome": "no"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "d5c7",
+            "max": -2
+          },
+          "statement": "Nc7 loses the knight: the king on d8 captures it, so the idea fails."
+        }
+      ],
+      "review": {
+        "status": "machine-only"
+      },
+      "tags": [
+        "theme.fork",
+        "node.TAC.FORK"
+      ],
+      "hints": [
+        "Where is Black's king compared with the square c7?",
+        "Can the king capture the knight after it lands?"
+      ],
+      "explain": "With the king on d8, a knight landing on c7 is next to it and simply gets captured. In the engine line White loses the knight for nothing (net -3)."
+    },
+    {
+      "id": "I-QUIET-001",
+      "skill": "TAC.NONE.D2",
+      "cue": 3,
+      "task": "classify_position",
+      "position": "P-QUIET-001",
+      "prompt": "White to move. Is there a tactic, or is this a quiet improving move?",
+      "answer": {
+        "class": "quiet"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "quiet_position",
+          "params": {
+            "max": 1
+          },
+          "statement": "No line wins more than a pawn for White."
+        }
+      ],
+      "review": {
+        "status": "needs-human"
+      },
+      "tags": [
+        "kind.quiet"
+      ],
+      "options": [
+        "tactic",
+        "quiet"
+      ]
+    }
+  ]
+}

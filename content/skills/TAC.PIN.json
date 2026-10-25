@@ -1,0 +1,85 @@
+{
+  "id": "TAC.PIN",
+  "title": "Pins",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes a pin (a piece that cannot move, or should not, because a more valuable piece stands behind it on the same line) and the difference between a pin against the king and a pin against another piece.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the pin', finds the move that pins a piece and says what is pinned to what.",
+      "prereqs": [
+        "FND.ATTACK.D1",
+        "FND.CHECK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets with no theme named, finds the pin that wins material or a tempo, notices that an enemy defender is pinned so its protection is imaginary, and answers 'no pin' where there is none.",
+      "prereqs": [
+        "TAC.PIN.D1",
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Judges whether a pin is real: a piece that may legally slide along the line, recapture options, a king escape; wins the pinned piece by adding attackers or attacking it with a pawn; predicts how one extra defender changes the result.",
+      "prereqs": [
+        "TAC.PIN.D2",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, uses pins and deals with enemy pins (breaks the pin or tolerates it on purpose), shown by the opportunity log over ten games.",
+      "prereqs": [
+        "TAC.PIN.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Any pin wins a piece.",
+    "A pinned piece cannot move at all (a half-pinned piece may slide along the pinning line; a piece pinned to a non-king may legally move).",
+    "A pinned defender still protects the square it guards."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 26-28; §7 rows 26-28; §8 items 13-14",
+    "sources/sheets/edlasker_chess-strategy.md §4 K3 (pinned defender)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "The pin is genuine: the piece behind is the king or worth more, and there is no tactical escape.",
+    "A piece pinned to the king cannot capture, so its protection of a square is imaginary and a piece may stand where only that pinned piece guards it; for a pin against a lesser piece the protection is real only if giving up the rear piece pays.",
+    "Win a pinned piece by multiplying attackers; the best attacker is a pawn because the pinned piece cannot flee."
+  ],
+  "condition_sources": [
+    "Nimz #26 (c)",
+    "Nimz #26 (b); rules",
+    "Nimz #26 (b)"
+  ],
+  "contrasts": [
+    "A half-pin: the pinned piece slides along the pin line, so it is not wholly pinned.",
+    "A pin against a non-king piece where moving the pinned piece costs less than the loss assumed, or recapture is available.",
+    "Two pieces share a line but the front one is worth more than the rear one, which is a skewer rather than a pin."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz #26 (b)",
+    "Nimz #26 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "SAF.LOOSE.D2"
+  ],
+  "soft_prereq_notes": {
+    "SAF.LOOSE.D2": "a loose piece is the natural target of a pin"
+  }
+}

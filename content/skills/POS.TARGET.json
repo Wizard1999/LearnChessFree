@@ -1,0 +1,70 @@
+{
+  "id": "POS.TARGET",
+  "title": "Choose a target that cannot move",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that an attack should aim at something that cannot step aside (a pinned piece, a fixed pawn).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Finds the target in a given position (a fixed backward pawn, a pinned piece) and the squares to attack it from.",
+      "prereqs": [
+        "POS.PAWNWEAK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, chooses between harassing a movable piece with pawns (losing time) and fixing a target; recognises when a chase pays.",
+      "prereqs": [
+        "POS.TARGET.D1",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts attackers against defenders on the fixed target and sees when a pawn break can free it.",
+      "prereqs": [
+        "POS.TARGET.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Kicking a piece with a pawn always gains time."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K15, K16; §7 row K15; §8 item 8",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 12 (pick one objective)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The target really cannot evade, or the chase does not weaken the pawn skeleton or send pieces offside."
+  ],
+  "condition_sources": [
+    "EDL K15 (b), (d)"
+  ],
+  "contrasts": [
+    "The pawn kick lets the piece retreat to an equal square and leaves a backward pawn.",
+    "Chasing a piece to gain space or put it offside is accepted dynamic play, so 'never chase' is wrong.",
+    "A piece with no good squares anyway."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL §8 item 8, diagrams 90-91",
+    "EDL §5 item 12",
+    "EDL §8 item 8"
+  ],
+  "soft_prereqs": [
+    "POS.WEAKSQ.D2"
+  ],
+  "soft_prereq_notes": {
+    "POS.WEAKSQ.D2": "the square in front of a fixed target decides the siege"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "id": "L-TAC-MATEPATTERNS-1",
+  "title": "Named mates and the conditions behind them",
+  "skill": "TAC.MATE-PATTERNS",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds smothered mate, Arabian mate and the queen-and-bishop mate on h7",
+    "States the conditions each mate needs",
+    "Tells a mate from a check when one condition is missing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Some mates have names because they recur. Each name is a short list of conditions: where the king stands, what blocks its squares, and which piece protects the checker.\nLearn the conditions, not only the picture. If one condition is missing, it is just a check."
+    },
+    {
+      "type": "board",
+      "fen": "6rk/pppb2pp/8/4N3/8/8/PP3PPP/R5K1 w - - 0 1",
+      "caption": "White to move. The black king is shut in by its own rook and pawns.",
+      "line": [
+        {
+          "move": "e5f7",
+          "say": "The knight gives check and nothing can capture it. This is smothered mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "h8",
+        "g8",
+        "g7",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e5f7",
+            "n": 1
+          },
+          "statement": "Nf7 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "It is White's move and the game is going on."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-082"
+    },
+    {
+      "type": "item",
+      "item": "IA1-084"
+    },
+    {
+      "type": "card",
+      "text": "Every named mate answers the same questions about the checking move.\n**Can the king move?** Count its free neighbours.\n**Can the checker be captured?** By which piece?\n**Can the check be blocked?** (A knight check cannot.)\nA missing condition turns the mate into a check."
+    },
+    {
+      "type": "contrast",
+      "title": "The pattern with one piece moved",
+      "prompt": "In the second position Black's rook stands on e8, not g8.",
+      "working": "IA1-082",
+      "failing": "IA1-083"
+    },
+    {
+      "type": "contrast",
+      "title": "The checker must be protected",
+      "prompt": "In the second position the white knight stands on d5, not f6.",
+      "working": "IA1-084",
+      "failing": "IA1-085"
+    },
+    {
+      "type": "item",
+      "item": "IA1-086"
+    },
+    {
+      "type": "item",
+      "item": "IA1-087"
+    },
+    {
+      "type": "item",
+      "item": "IA1-088",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-089",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.TAC.MATE-PATTERNS",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "When you saw a mating picture, how sure were you that every condition held? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S3 (TAC.MATE-PATTERNS)",
+    "docs/curriculum-map-v1.1.md section 3",
+    "sources/sheets/edlasker_chess-strategy.md (K22: simple mates need the king)"
+  ]
+}

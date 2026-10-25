@@ -1,0 +1,65 @@
+{
+  "id": "FND.CHECK",
+  "title": "Check",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a king is in check when an enemy piece attacks it, and that the ways out are to move the king, capture the checking piece, or block the line (a knight check cannot be blocked).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'the king is in check', finds the way out (move, capture or block), or says 'checkmate' when there is none.",
+      "prereqs": [
+        "FND.CAPTURE.D1",
+        "FND.PIECE.KING.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a mixed set, says for each position whether the side to move is in check, in checkmate, or neither.",
+      "prereqs": [
+        "FND.CHECK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Lists every legal move in a position where the king is in check and says why each other move is illegal; recognises a double check, where only the king can move.",
+      "prereqs": [
+        "FND.CHECK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "You must call 'check' aloud for it to count.",
+    "A king in check can always simply step away.",
+    "Any check can be blocked."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "A king in check must get out at once: move it, capture the checking piece, or block the line.",
+    "A knight check or a double check cannot be answered by blocking; for a double check only the king can move."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "Capturing the checking piece does not help when a second piece also gives check (double check).",
+    "A piece far from the king and from the checking line does not change the answer to a check."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

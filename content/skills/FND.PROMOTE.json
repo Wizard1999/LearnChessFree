@@ -1,0 +1,66 @@
+{
+  "id": "FND.PROMOTE",
+  "title": "Promotion",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a pawn reaching the last rank must become a queen, rook, bishop or knight, never a king or a pawn.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Promotes a pawn to a queen when told, and capture-promotes when straight ahead is blocked.",
+      "prereqs": [
+        "FND.PIECE.PAWN.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Decides whether a pawn can promote on this move, straight ahead or by capture.",
+      "prereqs": [
+        "FND.PROMOTE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Chooses a promotion other than the queen when the queen would stalemate in a won ending, or when another piece gives checkmate.",
+      "prereqs": [
+        "FND.PROMOTE.D2",
+        "FND.STALEMATE.D1",
+        "FND.CHECK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A pawn must always become a queen.",
+    "You can only promote to a piece you have lost.",
+    "A pawn can become a king."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "A pawn reaching the last rank becomes a queen, rook, bishop or knight at once, as part of the move.",
+    "The queen is usually best, but check whether the promotion gives stalemate or whether another piece gives checkmate."
+  ],
+  "condition_sources": [
+    "rules",
+    "ours"
+  ],
+  "contrasts": [
+    "Promoting to a queen can stalemate the enemy king where a rook would win.",
+    "The pieces you already have do not limit what you may promote to."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "rules"
+  ]
+}

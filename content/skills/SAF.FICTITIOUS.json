@@ -1,0 +1,78 @@
+{
+  "id": "SAF.FICTITIOUS",
+  "title": "Real and fictitious threats",
+  "strand": "S2",
+  "tier": 2,
+  "origin": "map-v1.1 (idea named in MAP11 §3 without an id; the id SAF.FICTITIOUS is ours)",
+  "invented_by_us": true,
+  "depths": {
+    "D0": {
+      "outcome": "Explains the difference between a capture that gains something after best play and one that only looks possible, and gives one reason a capture can be fictitious (pin, discovered line, recapture).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In positions where a piece is attacked, says whether the attack is real and states the reason when it is not.",
+      "prereqs": [
+        "SAF.THREAT.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In a mixed set that includes harmless moves, says for each of the opponent's last moves whether it threatens anything, without being told to look for a bluff.",
+      "prereqs": [
+        "SAF.FICTITIOUS.D1",
+        "TAC.PIN.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds the quiet move that makes the opponent's real threat fictitious (removing the checking line or the pinned target) and says what it costs in tempo; rejects it when the threat could not be carried out anyway.",
+      "prereqs": [
+        "SAF.FICTITIOUS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Any attacked piece is threatened.",
+    "A threat that cannot be executed now can be ignored for good (the position changes and the same capture may work three moves later).",
+    "A preparatory move to disarm a threat is always a wasted tempo."
+  ],
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C14-C15, §7 rows C14-C15",
+    "docs/curriculum-map-v1.1.md §3 (real vs fictitious threats, T2-3)",
+    "docs/first-hours.md session 4 (positions with no threat)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "A threat is real if carrying it out gains something against best defence; it is fictitious if the capture loses to a pin, discovered line or recapture.",
+    "A fictitious threat still ties the opponent and becomes real the moment it is forgotten.",
+    "A move that removes the opponent's counterplay first pays only when his threat is genuine and he can execute it."
+  ],
+  "condition_sources": [
+    "ZB C14",
+    "ZB C14 (b)",
+    "ZB C15 (c)-(d)"
+  ],
+  "contrasts": [
+    "A piece left en prise is safe for a few moves; later the same capture works because the position changed.",
+    "Spending a tempo to disarm a threat that did not exist (prophylaxis as passivity).",
+    "A position with nothing attacked; the correct answer is that there is no threat."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ZB C14 (d)",
+    "ZB C15 (d)",
+    "FH session 4"
+  ],
+  "soft_prereqs": [
+    "SAF.LOOSE.D2"
+  ],
+  "soft_prereq_notes": {
+    "SAF.LOOSE.D2": "whether a piece is loose changes which threats are real"
+  }
+}

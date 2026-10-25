@@ -1,0 +1,145 @@
+{
+  "id": "L-LOOP-V2-1",
+  "title": "Checks, captures, threats: look at the forcing moves first",
+  "skill": "LOOP.V2",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Lists checks, captures and threats before other candidates",
+    "Counts the opponent's legal replies to a check",
+    "Tests whether a check is safe (is the checking square defended?)",
+    "Knows that a forcing move is a first look, not a guarantee"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When you choose a move, look first at the **forcing moves**: checks, captures, and threats (a move that attacks something so the opponent must answer). They limit the replies, so you can see further with less work.\nPut forcing moves at the top of your list. They are where to look first, not proof that one works."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/1b2np1p/p3p1p1/1p2P3/4N3/7Q/Pqn2PPP/RB2R1K1 w - - 0 20",
+      "caption": "White to move. Checks first.",
+      "line": [
+        {
+          "move": "e4f6",
+          "say": "Nf6+ is check. Black must answer it."
+        },
+        {
+          "move": "g8g7",
+          "say": "If the king goes to g7..."
+        },
+        {
+          "move": "h3h7",
+          "say": "...Qxh7 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "f6"
+        },
+        {
+          "from": "f6",
+          "to": "g8"
+        },
+        {
+          "from": "h3",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4f6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e4f6",
+            "n": 2
+          },
+          "statement": "Nf6+ forces checkmate in two."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-8"
+    },
+    {
+      "type": "card",
+      "text": "**Forcing is not the same as good.** Three ways a forcing move goes wrong: the checking piece can be captured, the capture can lose more than it wins, or the threat can be answered by a bigger threat.\nBefore you play a check, ask: **can the opponent take the checking piece?**"
+    },
+    {
+      "type": "contrast",
+      "title": "Same check, one change",
+      "prompt": "The first position is a forced win by a check. In the second, the rook has moved. Predict, then check.",
+      "working": "IA5-9",
+      "failing": "IA5-10",
+      "irrelevant": "IA5-11"
+    },
+    {
+      "type": "item",
+      "item": "IA5-12"
+    },
+    {
+      "type": "item",
+      "item": "IA5-13"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Here the heading 'forcing moves first' is printed above the board. In mixed practice it is hidden; you can ask for it and the app notes that you did. The plan: stop showing it once you solve five mixed items in a row without it (five is a first guess). Next item is silent: no heading, hints or engine."
+    },
+    {
+      "type": "item",
+      "item": "IA5-14",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think back to the silent item. Before you chose, what did you expect to find first: a check, a capture, a threat, or nothing forcing at all? Write it down, then say whether you actually listed them before choosing.",
+      "fields": [
+        {
+          "id": "expected",
+          "label": "I expected to find first:",
+          "options": [
+            "a check",
+            "a capture",
+            "a threat",
+            "nothing forcing"
+          ]
+        },
+        {
+          "id": "listed",
+          "label": "Did you list the forcing moves before choosing?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "surprise",
+          "label": "What surprised you, if anything? (one line)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S2 (LOOP.V2)",
+    "docs/council-synthesis.md CD-3 (checks/captures/threats order: Heisman, Kotov, recalled [R])",
+    "positions: Lichess puzzles and 2013-01 games (CC0); authored one-feature edit"
+  ]
+}

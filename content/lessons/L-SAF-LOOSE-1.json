@@ -1,0 +1,128 @@
+{
+  "id": "L-SAF-LOOSE-1",
+  "title": "Loose pieces: what can be taken for free?",
+  "skill": "SAF.LOOSE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Names the loose pieces of either side",
+    "Takes a loose piece, the one with the higher counting value first",
+    "Checks for a far-away defender before calling a piece free",
+    "Says when there is nothing to take"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Remember: a piece is **loose** when an enemy piece attacks it and none of its own side defends it. The enemy can take it for free. Lichess calls such a piece a hanging piece.\nTwo habits stop most beginner losses. Look at their pieces for loose ones. Then look at your own, after every move your opponent makes."
+    },
+    {
+      "type": "board",
+      "fen": "2r2bk1/ppp2ppp/8/3n4/8/5N2/PPP1BPPP/3R2K1 w - - 0 1",
+      "caption": "White to move. Which black piece is loose?",
+      "line": [
+        {
+          "move": "d1d5",
+          "say": "The rook takes the knight. No black piece defends d5, so nothing recaptures."
+        },
+        {
+          "move": "c8e8",
+          "say": "Black has lost a whole knight for nothing."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "d5"
+            ]
+          },
+          "statement": "Only the knight on d5 is loose."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d1d5",
+            "min": 3
+          },
+          "statement": "Rxd5 wins the knight."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-001"
+    },
+    {
+      "type": "item",
+      "item": "IA1-002"
+    },
+    {
+      "type": "item",
+      "item": "IA1-003"
+    },
+    {
+      "type": "card",
+      "text": "A loose piece is free only on conditions.\n**Count every defender**, including pieces that guard from far away along a file or diagonal.\n**Ask what the capture costs.** A piece that has a defender is not free: if the defender can recapture, you may lose more than you win."
+    },
+    {
+      "type": "contrast",
+      "title": "Same attack, one change",
+      "prompt": "Only the position of White's rook changes.",
+      "working": "IA1-004",
+      "failing": "IA1-005",
+      "irrelevant": "IA1-006"
+    },
+    {
+      "type": "item",
+      "item": "IA1-007",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-008",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.hangingPiece",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.LOOSE"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you decided a piece was free, what did you check first? Did you ever miss a defender that stood far away?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K2, K3: count and its spoilers)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C14: real and fictitious threats)",
+    "docs/curriculum-map-v1.md S2 SAF.LOOSE"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "L-LOOP-V5-1",
+  "title": "How deep? Spend calculation where it pays",
+  "skill": "LOOP.V5",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Follows a forcing line to a quiet position before judging it",
+    "Tells critical moments from routine ones",
+    "Gives reasons to stop a line",
+    "Records how deep a line went and whether it was worth it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Depth is a **budget**, not a virtue. Habits to try:\n**Go deep** when every move in the line is a check, capture or threat: the replies are few.\n**Stop** when the position is quiet and you can compare it, when you have found a refutation, or when the clock says so.\n**Spend more** at critical moments, less at routine ones."
+    },
+    {
+      "type": "board",
+      "fen": "r4r1k/1p1b3p/2pp1Pp1/8/p1BbP3/8/PPP5/1K1R3R w - - 2 25",
+      "caption": "White to move. Every move in the winning line is a check or a capture.",
+      "line": [
+        {
+          "move": "h1h7",
+          "say": "Rxh7+ gives up a rook. A short look stops here."
+        },
+        {
+          "move": "h8h7",
+          "say": "The king must take."
+        },
+        {
+          "move": "d1h1",
+          "say": "Rh1+ is check again."
+        },
+        {
+          "move": "d7h3",
+          "say": "The bishop blocks."
+        },
+        {
+          "move": "h1h3",
+          "say": "Rxh3 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h1",
+          "to": "h7"
+        },
+        {
+          "from": "d1",
+          "to": "h1"
+        }
+      ],
+      "highlight": [
+        "h7",
+        "h3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h1h7",
+            "n": 3
+          },
+          "statement": "Rxh7+ forces checkmate in three."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h1h7"
+            ]
+          },
+          "statement": "Rxh7+ is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-31"
+    },
+    {
+      "type": "item",
+      "item": "IA5-33"
+    },
+    {
+      "type": "card",
+      "text": "**Four stop signs:** the position is quiet; you found a refutation; no line changes the material (the moment is routine); time. And **two warning signs** that you stopped too early: your line ends on a capture, or on a check.\nDepth allocation is a habit to try; nobody has measured the best split."
+    },
+    {
+      "type": "contrast",
+      "title": "Go deep, stop early, or stop",
+      "prompt": "Judge each: should the calculation go deep, would stopping early mislead, or is the moment routine? Predict, then check.",
+      "working": "IA5-30",
+      "failing": "IA5-29",
+      "irrelevant": "IA5-34"
+    },
+    {
+      "type": "item",
+      "item": "IA5-32"
+    },
+    {
+      "type": "item",
+      "item": "IA5-35"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** There is no checklist panel in this lesson; the checklist is the card above, and hints are offered on each item. A silent item switches hints and the engine off. The plan is to offer hints only on request once you solve cue-3 items without them. Next item is silent."
+    },
+    {
+      "type": "item",
+      "item": "IA5-36",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Depth log for the silent item. Write how many plies your longest line had and whether the depth was worth it. This record is for you; it is not scored.",
+      "fields": [
+        {
+          "id": "plies",
+          "label": "Longest line I followed (plies):",
+          "type": "number"
+        },
+        {
+          "id": "worth_it",
+          "label": "Was that depth worth it?",
+          "options": [
+            "yes",
+            "no",
+            "not sure"
+          ]
+        },
+        {
+          "id": "stop_reason",
+          "label": "I stopped because:",
+          "options": [
+            "the position was quiet",
+            "I found a refutation",
+            "I ran out of time",
+            "I did not stop on purpose"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.DEPTH), S2 (LOOP.V5)",
+    "docs/council-synthesis.md CD-3 (depth allocation, Rowson/Heisman/Aagaard recalled [R])",
+    "positions: Lichess puzzles and games (CC0)"
+  ]
+}

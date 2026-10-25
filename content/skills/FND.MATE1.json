@@ -1,0 +1,65 @@
+{
+  "id": "FND.MATE1",
+  "title": "Checkmate in one move",
+  "strand": "S1",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that checkmate is a check from which there is no escape, and that it ends the game.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'mate in one', finds the mating move (every one, if there are several) in simple positions: back rank, queen next to the king, rook on the edge.",
+      "prereqs": [
+        "FND.CHECK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions decides whether a mate in one exists, finds it when it does, and says 'none' when it does not.",
+      "prereqs": [
+        "FND.MATE1.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds mates in one that need a closer look (a discovered check, a promotion, a smothered king) by testing each check for escape, capture and block.",
+      "prereqs": [
+        "FND.MATE1.D2",
+        "FND.PROMOTE.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Any check the king can escape from is mate.",
+    "A check that the enemy can answer by capturing the checking piece is mate.",
+    "You need the queen to give mate."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "A check is mate when the king has no free square, the checking piece cannot be captured, and the line cannot be blocked.",
+    "Before playing a check, test the three escapes one at a time: king move, capture, block."
+  ],
+  "condition_sources": [
+    "rules",
+    "ours"
+  ],
+  "contrasts": [
+    "A check that leaves the king a free square (a luft) is not mate even when it looks like a back-rank mate.",
+    "Pieces far from the king and from the checking line do not change whether it is mate."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 2",
+    "rules"
+  ]
+}

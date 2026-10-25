@@ -1,0 +1,77 @@
+{
+  "id": "TAC.BACKRANK",
+  "title": "Back-rank mates",
+  "strand": "S3",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why a king behind its own unmoved pawns can be mated on its first rank by a single rook or queen check.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the back-rank mate', finds it, including with a preceding capture or exchange that removes a guard.",
+      "prereqs": [
+        "FND.MATE1.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the back-rank mate for either side, and spots when his own back rank is the weakness, with no theme named.",
+      "prereqs": [
+        "TAC.BACKRANK.D1",
+        "SAF.THREAT.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts the defenders of the back rank, finds the exchange or deflection that removes the last one, and decides whether to make air for the king now or later.",
+      "prereqs": [
+        "TAC.BACKRANK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Making air for the king (a luft) early is always wise.",
+    "A back-rank mate needs a rook; a queen or two minor pieces can finish too."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 7, 21 (queen checks on the eighth; exchanges that win by back-rank mate)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K6 (d), K17 (b) (a luft is correct once a mate threat shows, not before)",
+    "sources/sheets/emlasker_common-sense.md §4.14 (squares that must be covered)",
+    "docs/curriculum-map-v1.1.md §3 (TAC.BACKRANK emphasis)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "The king is boxed by its own pawns with no flight square and no piece guards the first rank.",
+    "The checking piece cannot be captured, and the check cannot be blocked.",
+    "A series of exchanges can remove the last guard and end in the mate."
+  ],
+  "condition_sources": [
+    "EML 4.14",
+    "EML 4.14 (b)",
+    "Nimz #21 (f)"
+  ],
+  "contrasts": [
+    "The defender has a flight square, an interposition or a guarding rook, so the 'mate' is only a check.",
+    "Making a luft as a precaution long before a mate threat exists costs time and loosens the king's cover.",
+    "A castled king with a luft already open or a pawn moved is not subject to this mate."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML 4.14",
+    "EDL K17 (b); K6 (d)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "FND.CASTLE.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.CASTLE.D1": "castling is how the king gets boxed in"
+  }
+}

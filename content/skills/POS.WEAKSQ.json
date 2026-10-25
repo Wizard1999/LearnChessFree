@@ -1,0 +1,77 @@
+{
+  "id": "POS.WEAKSQ",
+  "title": "Weak squares and holes",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains a weak square as one that no pawn of that side can ever cover again, which helps the opponent only if a piece can reach and hold it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Marks the squares in front of one side's pawns that none of its pawns can still guard and names the piece that could use each.",
+      "prereqs": [
+        "POS.ACTIVITY.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, judges whether a hole is usable (reachable and supported) or only apparent, and picks the move that creates or avoids one.",
+      "prereqs": [
+        "POS.WEAKSQ.D1",
+        "FND.PIECE.PAWN.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts which pawn advance creates holes in a castled position, and which minor piece placement fixes it.",
+      "prereqs": [
+        "POS.WEAKSQ.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A weak square is a fixed property of the square.",
+    "Any hole is a strong point for the opponent whatever pieces are left."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.9 (weak point / strong point); §7 row 'Weak point'",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-41 (the hole); fn 7",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C28, C32; §8 contrast D",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 15"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "No enemy pawn or minor piece can challenge the square.",
+    "A hole is a square in front of the pawns that no pawn can cover again; advancing the g-pawn creates two.",
+    "Weak for one side is strong for the other."
+  ],
+  "condition_sources": [
+    "EML 4.9 (c)",
+    "ZB C28 (b)",
+    "ZB C32 (b)"
+  ],
+  "contrasts": [
+    "A square that looks weak but can be challenged by an enemy pawn in one move.",
+    "The same pawn move, but the defender's bishop or knight covers both holes.",
+    "A deep hole with no access to targets, or one the opponent's pieces cannot reach."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML §8 item 5",
+    "ZB §8 contrast D",
+    "EML §8 item 5; CAP §8 item 17"
+  ],
+  "soft_prereqs": [
+    "TAC.FORK.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.FORK.D1": "knight forks land on holes"
+  }
+}

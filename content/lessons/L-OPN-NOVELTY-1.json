@@ -1,0 +1,209 @@
+{
+  "id": "L-OPN-NOVELTY-1",
+  "title": "A new move you can explain",
+  "skill": "OPN.NOVELTY",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Explains a novelty as a sound move that leaves known play where it is new to the opponent, and why the engine's first choice need not be one",
+    "Finds an improvement on a known move and writes a justification with its engine settings",
+    "Says what the app can and cannot verify about a \"new\" move",
+    "Tells when an improvement is not worth preparing (a tiny gap, or a line the opponent never reaches)"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **novelty** is a move that leaves known play where it is at least as good as the old move, and is new to the person you play. 'Known' means known to someone: a book, a database, your opponent. Two tests: is it new where it matters, and can you say why it works? The engine's first choice is often already known."
+    },
+    {
+      "type": "item",
+      "item": "IB4-30"
+    },
+    {
+      "type": "item",
+      "item": "IB4-31"
+    },
+    {
+      "type": "card",
+      "text": "**What this app can check, and what it cannot.** It can check that a move is sound under recorded settings: here Stockfish 19 Lite, depth 16, one thread. It cannot check that a move is new to theory: the Openings page holds online games, not master games. So 'new' here means rare at your opponent's rating. An engine result is evidence under those limits, not proof."
+    },
+    {
+      "type": "item",
+      "item": "IB4-32"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+      "caption": "Black to move. A known line: the usual recapture is 5...Nxd5. Here is an improvement with its reason.",
+      "line": [
+        {
+          "move": "c6a5",
+          "say": "Na5 attacks the bishop. The knight on f6 stays where it is."
+        },
+        {
+          "move": "c4b5",
+          "say": "Bb5+ checks and keeps the bishop."
+        },
+        {
+          "move": "c7c6",
+          "say": "c6 blocks the check and attacks the bishop again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "a5"
+        },
+        {
+          "from": "a5",
+          "to": "c4"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6a5",
+              "c6d4",
+              "b7b5"
+            ],
+            "within_cp": 70
+          },
+          "statement": "Na5, Nd4 and b5 are each within 70 centipawns of the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f6d5",
+            "cp": 80
+          },
+          "statement": "The usual recapture Nxd5 is at least 80 centipawns worse than the best move."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1,
+            "after_move": "c6a5"
+          },
+          "statement": "After Na5 the knight attacks the bishop on c4."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "A **verified justification** has three lines. The concrete reason: a capture, check or threat that the old move allows and yours stops. The evidence with its settings: engine, depth, centipawn gap. What remains unproven: deeper lines, untested replies. **Rule of thumb:** a gap of a few centipawns is not an improvement. If you cannot write the first line, you have an engine move, not a novelty."
+    },
+    {
+      "type": "contrast",
+      "title": "An improvement, or not?",
+      "prompt": "Predict whether each position gives you something worth preparing. Then check.",
+      "working": "IB4-30",
+      "failing": "IB4-33",
+      "irrelevant": "IA4-063"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each item can show three hints; a silent item turns hints and the engine off. To test a move of your own, paste a game that contains it into My games and read the engine's evaluation at that move. The app does not suggest novelties. Next: three silent items."
+    },
+    {
+      "type": "item",
+      "item": "IB4-34",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-35",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-36",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.NOVELTY",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Would a prepared 6.Nxf7 hurt anyone you play? Open the Openings page, play 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5, and read the percent for 5...Nxd5 in two bands.",
+      "fields": [
+        {
+          "id": "low",
+          "label": "Percent playing 5...Nxd5 at 1100-1300:",
+          "type": "number",
+          "answer": 56,
+          "tolerance": 1
+        },
+        {
+          "id": "high",
+          "label": "Percent playing 5...Nxd5 at 1900-2100:",
+          "type": "number",
+          "answer": 9,
+          "tolerance": 1
+        },
+        {
+          "id": "who",
+          "label": "In which band does preparing for 5...Nxd5 pay most, and why?"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Write a novelty note for one line of your own. If a field stays empty, the note is not finished.",
+      "fields": [
+        {
+          "id": "position",
+          "label": "Position and the known move:"
+        },
+        {
+          "id": "mine",
+          "label": "My move:"
+        },
+        {
+          "id": "reason",
+          "label": "The concrete reason (a capture, check or threat):"
+        },
+        {
+          "id": "evidence",
+          "label": "Evidence and settings (engine, depth, centipawn gap):"
+        },
+        {
+          "id": "unproven",
+          "label": "What remains unproven:"
+        },
+        {
+          "id": "reach",
+          "label": "How often does my opponent reach this position (Openings page, his band)?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md section 2 S8 (OPN.NOVELTY T6-7; thin sources in the five sheets)",
+    "docs/council-synthesis.md CD-7",
+    "Openings page data: app/public/openings (Lichess games, CC0), see docs/openings-data.md",
+    "positions: authored by replaying legal moves from the start; engine checks at depth 16 (content/items/lesson-b4.json)"
+  ]
+}

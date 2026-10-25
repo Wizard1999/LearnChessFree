@@ -1,0 +1,106 @@
+{
+  "id": "L-POS-PAWNWEAK-1",
+  "title": "Weak pawns: targets only if you can attack them",
+  "skill": "POS.PAWNWEAK",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Tests whether a weak pawn can be protected by a pawn before attacking it",
+    "Counts attackers and defenders on a backward pawn",
+    "Recognises a pawn that looks weak but is not a target"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Isolated, doubled and backward pawns are called weak, but a weakness is only a **target** if you can attack it. Ask three things:\n**Can a pawn of his protect it?**\n**Can my pieces reach it,** for example along an open file?\n**Do I attack it more often than he defends it?**\nA pawn that fails these tests is just a pawn."
+    },
+    {
+      "type": "board",
+      "fen": "3r1rk1/p4ppp/2npp3/2p5/4P3/2N5/PPPR1PPP/3R2K1 w - - 0 1",
+      "caption": "White to move. Black's d-pawn cannot be protected by a pawn.",
+      "line": [
+        {
+          "move": "d2d6",
+          "say": "The rook takes the backward pawn."
+        },
+        {
+          "move": "c6d4",
+          "say": "Black counterattacks."
+        },
+        {
+          "move": "d6d8",
+          "say": "White trades rooks first."
+        },
+        {
+          "move": "f8d8",
+          "say": "Black recaptures. White is a pawn up."
+        }
+      ],
+      "highlight": [
+        "d6"
+      ],
+      "arrows": [
+        {
+          "from": "d2",
+          "to": "d6"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "black",
+            "count": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d2d6",
+            "min": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-13"
+    },
+    {
+      "type": "card",
+      "text": "A backward pawn is a target when **no pawn can protect it,** **your pieces can reach it** and **you outnumber its defenders.** If a neighbouring pawn can protect it, attacking wins nothing and can lose material. Doubled and isolated pawns follow the same test: weakness is a reason to look, not a reason to attack."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one neighbour different",
+      "prompt": "Black's c-pawn stands on c7 instead of c5. Does Rxd6 still win a pawn? Predict first, then check.",
+      "working": "IA2-13",
+      "failing": "IA2-14"
+    },
+    {
+      "type": "item",
+      "item": "IA2-15"
+    },
+    {
+      "type": "item",
+      "item": "IA2-16"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you counted: how sure were you that the d6 pawn could be won? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K16 backward pawn target, K26 doubled/isolated not weak by definition)",
+    "sources/sheets/nimzowitsch_my-system.md (ideas 39, 42: doubled pawns, isolani)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-37, CI-44)"
+  ]
+}

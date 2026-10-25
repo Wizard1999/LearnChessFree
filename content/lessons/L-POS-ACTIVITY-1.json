@@ -1,0 +1,118 @@
+{
+  "id": "L-POS-ACTIVITY-1",
+  "title": "Active and passive pieces",
+  "skill": "POS.ACTIVITY",
+  "depth": "D1",
+  "minutes": 8,
+  "outcomes": [
+    "Counts the squares a piece can reach to judge how active it is",
+    "Finds the worst-placed piece and improves it",
+    "Places a rook behind a passed pawn rather than in front"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A piece is worth what it can do: the squares it can reach and what it attacks. Count them. Before starting something new, find your worst-placed piece and improve it.\n**Rule of thumb:** once your minor pieces and queen are out, clear the back rank so your rooks protect each other (connect them)."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5ppp/8/8/8/8/PP1P1PPP/2B3K1 w - - 0 1",
+      "caption": "White to move. The bishop on c1 is boxed in.",
+      "line": [
+        {
+          "move": "b2b3",
+          "say": "The pawn steps aside to open a diagonal."
+        },
+        {
+          "move": "g8f8",
+          "say": "Black makes a waiting move."
+        },
+        {
+          "move": "c1b2",
+          "say": "The bishop is out."
+        }
+      ],
+      "highlight": [
+        "c1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "c1",
+            "to": []
+          },
+          "statement": "The bishop on c1 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "5k2/5ppp/8/8/8/1P6/PB1P1PPP/6K1 w - - 0 1",
+      "caption": "The same bishop on b2 has a long diagonal.",
+      "arrows": [
+        {
+          "from": "b2",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "b2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "b2",
+            "to": [
+              "a1",
+              "a3",
+              "c1",
+              "c3",
+              "d4",
+              "e5",
+              "f6",
+              "g7"
+            ]
+          },
+          "statement": "The bishop on b2 has eight squares."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-27"
+    },
+    {
+      "type": "card",
+      "text": "Count the squares, then ask what the piece can do from them. A knight on the rim has few squares. A rook is most active with open lines to enter, and **behind a passed pawn,** its own or the enemy's, rather than in front of it. In the next two positions only the rook's place differs."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, behind or in front",
+      "prompt": "Only White's rook differs between the two positions. In which one can White win? Predict first, then check.",
+      "working": "IA2-29",
+      "failing": "IA2-30"
+    },
+    {
+      "type": "item",
+      "item": "IA2-28"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you counted squares: which of your own pieces would you have called the worst placed in the last position?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K5: mobility is the value of a piece)",
+    "sources/sheets/nimzowitsch_my-system.md (idea 24: aggressive v passive piece, rook behind the passed pawn)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C05 audit, C13 badly placed piece)"
+  ]
+}

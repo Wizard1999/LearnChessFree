@@ -1,0 +1,168 @@
+{
+  "id": "L-LOOP-V1-1",
+  "title": "The safety scan: look before you move",
+  "skill": "LOOP.V1",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Names the two scan questions and runs them before a move",
+    "Finds loose pieces on both sides of the board",
+    "Explains why a defended piece can still be unsafe",
+    "Runs the scan without being prompted in a silent item"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **safety scan** is the two questions from the threat lesson, run on every move in about ten seconds.\n**1. What did my opponent's last move threaten or open?**\n**2. Is any of my pieces loose, or attacked by something cheaper?**\nThis is a habit to try, not a law. It catches obvious dangers, not deep ones."
+    },
+    {
+      "type": "item",
+      "item": "IA5-1"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp2pp1/3bpn1p/6B1/2PPB3/5N2/PP3PPP/R2Q1RK1 w - - 0 11",
+      "caption": "White to move. Run the scan before anything else.",
+      "line": [
+        {
+          "move": "g5f6",
+          "say": "The bishop on e4 is attacked by the knight and nothing defends it. Bxf6 takes that attacker."
+        },
+        {
+          "move": "d8f6",
+          "say": "Black recaptures with the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f6"
+        },
+        {
+          "from": "f6",
+          "to": "e4"
+        },
+        {
+          "from": "h6",
+          "to": "g5"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g5f6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "e4"
+            ]
+          },
+          "statement": "The bishop on e4 is loose."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One Black piece attacks the bishop on e4."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One Black piece attacks the bishop on g5 (the h6 pawn)."
+        },
+        {
+          "id": "C5",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5f6"
+            ]
+          },
+          "statement": "Bxf6 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-2"
+    },
+    {
+      "type": "card",
+      "text": "**Defended is not the same as safe.** A defended piece that a *cheaper* piece attacks can still be lost: the cheaper piece takes, you retake, and you gave up more than you won.\nAsk: **is it attacked, and what would the trade cost me?**\nThe scan also works the other way. Your opponent's loose pieces are chances."
+    },
+    {
+      "type": "contrast",
+      "title": "Same square, different attacker",
+      "prompt": "A rook attacks a defended knight. Then a pawn does. Predict, for each, whether White must react.",
+      "working": "IA5-3",
+      "failing": "IA5-4",
+      "irrelevant": "IA5-5"
+    },
+    {
+      "type": "item",
+      "item": "IA5-6"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Here the two scan questions sit beside the board. In mixed practice they are hidden; you can open them and the app notes that you did. The plan: stop showing them once you solve five mixed items in a row with them closed (five is a first guess). Next item is silent: no prompts, hints or engine."
+    },
+    {
+      "type": "item",
+      "item": "IA5-7",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "That item was silent. Before you moved, did you run the two scan questions without being told to? Answer honestly: this record is for you, not a grade.",
+      "fields": [
+        {
+          "id": "ran_scan",
+          "label": "Did you run the scan before moving?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "scan_found",
+          "label": "What did the scan show? (one line)"
+        },
+        {
+          "id": "next_game",
+          "label": "In your next real game, on which moves will you run the scan on purpose?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S2 (LOOP.V1)",
+    "docs/council-synthesis.md CD-3 (Heisman-style safety first; Kotov, Aagaard routines, recalled [R])",
+    "positions: Lichess 2013-01 CC0 sample games and authored pairs"
+  ]
+}

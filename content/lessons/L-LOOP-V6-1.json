@@ -1,0 +1,188 @@
+{
+  "id": "L-LOOP-V6-1",
+  "title": "Cross out, then check from the other side",
+  "skill": "LOOP.V6",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Crosses out candidates one at a time with one concrete reply each",
+    "Checks the surviving move from the opponent's seat, in a different order from the one that found it",
+    "Finds a quiet refutation that a search of captures and checks misses",
+    "Says when elimination does not apply (a single legal move) and where verification is worth its time"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Two steps, in this order. **Eliminate:** for each candidate, look for one concrete reply that refutes it: a capture, a check, a threat. Cross out what falls. **Verify:** for the survivor, change seats. In the position after your move, list the opponent's checks, captures and threats, then find his best reply. Do not re-walk your own line in the same order: it tends to repeat the same blind spot."
+    },
+    {
+      "type": "board",
+      "fen": "r3r1k1/p3Qp1p/6p1/4P3/2b5/8/Pq4PP/1R2R1K1 w - - 2 29",
+      "caption": "White to move. Four candidates are on the table; this is how one of them is crossed out.",
+      "line": [
+        {
+          "move": "e7f7",
+          "say": "Qxf7+ takes a pawn with check. It looks strong."
+        },
+        {
+          "move": "c4f7",
+          "say": "The bishop on c4 takes the queen. One reply crossed the candidate out."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "f7"
+        },
+        {
+          "from": "c4",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "e7f7",
+            "cp": 300
+          },
+          "statement": "Qxf7+ is at least 300 centipawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 2,
+            "after_move": "e7f7"
+          },
+          "statement": "After Qxf7+ the queen on f7 is attacked by 2 black pieces."
+        },
+        {
+          "id": "C3",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "a2",
+              "f7"
+            ],
+            "after_move": "e7f7"
+          },
+          "statement": "After Qxf7+ the queen on f7 is loose."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB4-39"
+    },
+    {
+      "type": "item",
+      "item": "IB4-37"
+    },
+    {
+      "type": "card",
+      "text": "**Verifying is not recalculating.** You found the line from your side, so walking it again in the same order shows the same things. Switch sides and change the order: his checks first, then his captures, then his quiet threats. **Rule of thumb:** spend it where a mistake is costly and cannot be taken back. A position with one legal move has nothing to cross out."
+    },
+    {
+      "type": "item",
+      "item": "IB4-38"
+    },
+    {
+      "type": "card",
+      "text": "**Some refutations are quiet.** A search of captures and checks crosses out the easy candidates. A candidate that survives that search may still fail to a quiet move: one that captures nothing and gives no check but makes a threat or traps a piece. That is why the survivor gets its own look from the other side. Next: find a quiet refutation."
+    },
+    {
+      "type": "item",
+      "item": "IB4-42"
+    },
+    {
+      "type": "card",
+      "text": "**Test the escape squares before you trust a perpetual.** A run of checks is a perpetual only if the king has no way out and nothing can capture or block the checker. List the king's squares first, then ask whether the checks can repeat. One extra escape square ends it."
+    },
+    {
+      "type": "item",
+      "item": "IB4-49"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the perpetual real?",
+      "prompt": "Predict, then check: does the repeated check force a draw, does it fail, or is there nothing to cross out?",
+      "working": "IB4-50",
+      "failing": "IB4-52",
+      "irrelevant": "IB4-44"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** There is no checklist panel for this level. Each item offers hints; a silent item turns hints and the engine off. The routine is yours: before a critical move in your own games, write what you crossed out and what you checked from his side. My games lets you mark critical moments first. Next: three silent items."
+    },
+    {
+      "type": "item",
+      "item": "IB4-46",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-47",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB4-45",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.LOOP.V6",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Log for the last silent item, and then for one critical move in a game of your own. This record is for you; it is not scored.",
+      "fields": [
+        {
+          "id": "crossed",
+          "label": "Candidates I crossed out, and the reply that refuted each:"
+        },
+        {
+          "id": "survivor",
+          "label": "The survivor, and what I checked from the other side:"
+        },
+        {
+          "id": "order",
+          "label": "Did I check in a different order from the one I found the move in?",
+          "options": [
+            "yes",
+            "no",
+            "not sure"
+          ]
+        },
+        {
+          "id": "unchecked",
+          "label": "What I did not check:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md section 2 S2 (LOOP.V6)",
+    "docs/council-synthesis.md CD-3, Round 3 (elimination, recalled [R]); sources/sheets/emlasker_common-sense.md 4.16 (ideas only)",
+    "docs/lessons-loop-self.md (independence design)",
+    "positions: Lichess puzzle database (CC0), puzzle ids in the item sources; engine checks at depth 16 (content/items/lesson-b4.json)"
+  ]
+}

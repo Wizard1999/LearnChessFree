@@ -1,0 +1,75 @@
+{
+  "id": "POS.OUTPOST",
+  "title": "Outposts",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains an outpost as a piece on an advanced square that no enemy pawn can attack, usually supported by a pawn, with an open file or key squares behind it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Places a knight on a named outpost square and names the pawn that supports it and the squares it eyes.",
+      "prereqs": [
+        "POS.WEAKSQ.D1",
+        "FND.PIECE.KNIGHT.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, says whether a square is a real outpost for a named piece by checking the supporting pawn and that no enemy pawn can expel the piece.",
+      "prereqs": [
+        "POS.OUTPOST.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the effect of one-feature changes (the supporting pawn on e3 instead of e4; a lever that can dislodge the knight) and decides whether to trade the outpost piece.",
+      "prereqs": [
+        "POS.OUTPOST.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A knight on the fifth rank is automatically an outpost.",
+    "An outpost is strong whatever the pawn structure behind it."
+  ],
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 10; §7 row 10; §8 item 6",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-41",
+    "sources/sheets/emlasker_common-sense.md §4.9",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C26; §8 contrast E"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "A protecting pawn is present, there is an open file or squares behind, and the opponent cannot kick the piece with a pawn without damage.",
+    "Its strength comes from its hinterland: remove the supporting pawn or the open file and it loses its point."
+  ],
+  "condition_sources": [
+    "Nimz #10 (c)",
+    "Nimz #10 (b)"
+  ],
+  "contrasts": [
+    "Knight on d5 with the supporting pawn on e3 instead of e4, so the square is no longer a weakness for the enemy.",
+    "The enemy can expel the knight with a pawn lever.",
+    "The outpost has no useful targets from its square."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "Nimz #10 (d), (f)",
+    "ZB §8 contrast E",
+    "ZB §8 contrast E"
+  ],
+  "soft_prereqs": [
+    "POS.CENTER.CONTROL.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.CENTER.CONTROL.D1": "an outpost chain starts from the centre"
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "id": "L-OPN-NONDEV-1",
+  "title": "Moves that help and moves that wait",
+  "skill": "OPN.NONDEV",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Tells a developing move from a time-wasting move by asking what new work the piece will do",
+    "Explains the cost of an early queen trip and of rook-pawn moves by what the opponent does with the time",
+    "Recognises when a quiet pawn move is not a waste because nothing can be punished"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **developing move** brings a piece to a square where it has work to do. A **wasted move** repeats work already done or does none: moving the same piece again, pushing a rook pawn, taking the queen for an early walk. Wasted moves are not banned. They cost time, and time matters when your opponent can use it to attack."
+    },
+    {
+      "type": "item",
+      "item": "IA4-021"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/8/4P3/4Q3/PPP2PPP/RNB1KBNR w KQkq - 3 5",
+      "caption": "The game went on like this. Count the developed pieces for each side after each pair of moves.",
+      "line": [
+        {
+          "move": "h2h3",
+          "say": "A rook-pawn move. No piece comes out."
+        },
+        {
+          "move": "f8e7",
+          "say": "Black develops a bishop."
+        },
+        {
+          "move": "a2a3",
+          "say": "Another rook-pawn move."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles. Both knights, the bishop and the king are in play."
+        },
+        {
+          "move": "f1c4",
+          "say": "At last a bishop comes out."
+        },
+        {
+          "move": "f8e8",
+          "say": "Black's rook faces the white king along the e-file."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "h2h3",
+            "cp": 50
+          }
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 30
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA4-022"
+    },
+    {
+      "type": "card",
+      "text": "A wasted move is punished only when the opponent has something to hit. Here White's king is still on e1 and no minor piece has moved. Black can open the centre."
+    },
+    {
+      "type": "item",
+      "item": "IA4-023"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqr1k1/ppppbppp/2n2n2/8/2B1P3/PQ5P/1PP2PP1/RNB1K1NR b KQ - 4 8",
+      "caption": "Black strikes.",
+      "line": [
+        {
+          "move": "d7d5",
+          "say": "The pawn attacks the bishop."
+        },
+        {
+          "move": "c4d5",
+          "say": "White takes the pawn."
+        },
+        {
+          "move": "f6d5",
+          "say": "Black takes the bishop."
+        },
+        {
+          "move": "b3d5",
+          "say": "White takes the knight."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black trades queens."
+        },
+        {
+          "move": "e4d5",
+          "say": "White recaptures. The e-file is open."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d7d5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA4-024"
+    },
+    {
+      "type": "contrast",
+      "title": "Does the extra move cost anything?",
+      "prompt": "A rook-pawn move: predict the cost, then check.",
+      "working": "IA4-022",
+      "failing": "IA4-025",
+      "irrelevant": "IA4-026"
+    },
+    {
+      "type": "item",
+      "item": "IA4-027"
+    },
+    {
+      "type": "item",
+      "item": "IA4-028"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.NONDEV"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Think of your last game. Name one of your first ten moves that did no new work. What did your opponent do with the extra move?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/raw/edlasker_chess-strategy_gutenberg5614.txt (beginner game, Ch. IV)",
+    "sources/sheets/emlasker_common-sense.md (4.2, 4.3, 4.5)",
+    "sources/sheets/edlasker_chess-strategy.md (K6)",
+    "docs/curriculum-map-v1.1.md (OPN.NONDEV)"
+  ]
+}

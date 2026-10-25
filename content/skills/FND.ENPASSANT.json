@@ -1,0 +1,66 @@
+{
+  "id": "FND.ENPASSANT",
+  "title": "En passant",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes en passant: when an enemy pawn moves two squares past your pawn you may capture it on the very next move as if it had moved one square.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'capture en passant', does it, for both colours.",
+      "prereqs": [
+        "FND.PIECE.PAWN.D1",
+        "FND.CAPTURE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Decides whether en passant is possible right now, and lists a pawn's moves including the en passant capture.",
+      "prereqs": [
+        "FND.ENPASSANT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Notices when an en passant capture would expose its own king, and decides whether the capture is legal.",
+      "prereqs": [
+        "FND.ENPASSANT.D2",
+        "FND.CHECK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "En passant can be played any time later.",
+    "Any pawn standing beside an enemy pawn can capture it en passant.",
+    "The capturing pawn lands on the square of the pawn it captures."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "It is possible only on the move right after an enemy pawn advanced two squares and landed beside your pawn.",
+    "The capturing pawn goes to the square the enemy pawn passed over, and the enemy pawn is removed."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "A pawn that reached the square beside yours earlier, or by single steps, cannot be captured en passant.",
+    "What the enemy moved before the last move does not matter; only the last move counts."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

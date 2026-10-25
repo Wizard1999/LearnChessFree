@@ -1,0 +1,201 @@
+{
+  "id": "L-SAF-COUNT-FUTURE-1",
+  "title": "Counting what can arrive",
+  "skill": "SAF.COUNT.FUTURE",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Lists the pieces each side can bring to a pawn's square with one move, and counts again",
+    "Uses the two counts as a first estimate of whether a pawn push, or a pawn already attacked, holds",
+    "Rejects an arrival that is not effective: a piece with no moves, or one a cheaper piece attacks on its landing square",
+    "Says that a target which can step away is not decided by the count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Counting the attackers and defenders of a square tells you the position **now**. A pawn you push, or one that stays where it is, is also reached by pieces that **arrive**.\nSo count twice. First count what attacks and defends the square. Then list the pieces of each side that can move to a square from which they attack or defend it, one move each, and count again."
+    },
+    {
+      "type": "board",
+      "fen": "1r4k1/pp2nppp/8/8/3P4/8/1P3PPP/1N1R2K1 w - - 0 1",
+      "caption": "White to move and about to push d4-d5. Watch the count on d5 change as pieces arrive.",
+      "line": [
+        {
+          "move": "d4d5",
+          "say": "The pawn goes to d5. The knight on e7 attacks it, the rook on d1 defends it: one against one."
+        },
+        {
+          "move": "b8d8",
+          "say": "Black brings a second attacker: the rook moves to d8."
+        },
+        {
+          "move": "b1c3",
+          "say": "White brings a second defender: the knight moves to c3. Two against two."
+        },
+        {
+          "move": "e7d5",
+          "say": "Black takes first with the knight, its cheaper attacker."
+        },
+        {
+          "move": "c3d5",
+          "say": "The knight takes the knight."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black could take again with the rook."
+        },
+        {
+          "move": "d1d5",
+          "say": "The rook takes the rook. Black took a pawn and a knight; White took a knight and a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "d5"
+        },
+        {
+          "from": "d1",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1,
+            "after_move": "d4d5"
+          },
+          "statement": "After the push one black piece, the knight, attacks d5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1,
+            "after_move": "d4d5"
+          },
+          "statement": "After the push one white piece, the rook, defends d5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "d4d5",
+              "b8d8"
+            ]
+          },
+          "statement": "Black can bring the rook to d8: two attackers."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "d4d5",
+              "b8d8",
+              "b1c3"
+            ]
+          },
+          "statement": "White can answer with Nc3: two defenders."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4d5",
+            "min": 0
+          },
+          "statement": "Along the engine line White does not lose the pawn."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB3-504"
+    },
+    {
+      "type": "item",
+      "item": "IB3-505"
+    },
+    {
+      "type": "card",
+      "text": "Three conditions for the second count.\n**The target stays.** A piece whose side is to move can step away.\n**The arrival is effective.** Not boxed in, and not attacked on its landing square by a piece of lower counting value.\n**It arrives in time.** **Rule of thumb:** two-move arrivals usually come too late.\nTreat the count as a first estimate: a bigger threat can pull a defender away."
+    },
+    {
+      "type": "contrast",
+      "title": "Same push, one change",
+      "prompt": "White plans d4-d5 in all three positions. Predict whether Black can win the pawn, then check.",
+      "working": "IB3-501",
+      "failing": "IB3-502",
+      "irrelevant": "IB3-503"
+    },
+    {
+      "type": "item",
+      "item": "IB3-506"
+    },
+    {
+      "type": "item",
+      "item": "IB3-507"
+    },
+    {
+      "type": "item",
+      "item": "IB3-508",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-509",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-515",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-510",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.COUNT.FUTURE",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Think of a pawn push you made or declined in a recent game. Before the move, did you list what each side could bring to the square? Which piece would you have forgotten: one far away, one boxed in, or one a pawn could chase off?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAF.COUNT.FUTURE.json (conditions, contrasts, misconceptions)",
+    "sources/sheets/edlasker_chess-strategy.md section 4 (K3, K4), idea only, original wording",
+    "docs/lessons-tactics.md (L-SAF-COUNT-1 comes first)",
+    "positions: authored for batch b3 (content/items/lesson-b3-future.json)"
+  ]
+}

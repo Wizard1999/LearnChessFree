@@ -1,0 +1,122 @@
+{
+  "id": "L-TAC-BACKRANK-1",
+  "title": "Back-rank mate, and luft as the cure",
+  "skill": "TAC.BACKRANK",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds a back-rank mate",
+    "Tells a mate from a check when the king has luft or a guard covers the square",
+    "Sees the back-rank threat against his own king",
+    "Gives his own king luft with a pawn move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **back-rank mate** is a check along the first or last rank against a king that is shut in by its own pawns. It works when three things hold: the king has **no escape square**, nothing can **capture** the checking piece, and nothing can **block** the line.\nTake one away and it is only a check."
+    },
+    {
+      "type": "board",
+      "fen": "2b1r1k1/pp3ppp/8/8/5B2/1PN5/PB3PPP/6K1 b - - 0 1",
+      "caption": "Black to move. Black's rook stands on the open e-file.",
+      "line": [
+        {
+          "move": "e8e1",
+          "say": "The rook checks along the back rank. The pawns cover the king's escape squares."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1
+          },
+          "statement": "...Re1 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece covers e1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-054"
+    },
+    {
+      "type": "item",
+      "item": "IA1-055"
+    },
+    {
+      "type": "card",
+      "text": "The cure is **luft** (German for air): an escape square for the king. A pawn move in front of the king, such as h3 or h6, is usually enough. A piece that guards the back rank works too.\nLook at your own back rank as well as your opponent's."
+    },
+    {
+      "type": "item",
+      "item": "IA1-056"
+    },
+    {
+      "type": "contrast",
+      "title": "One pawn move changes everything",
+      "prompt": "The h-pawn stands on h6 in the second position.",
+      "working": "IA1-054",
+      "failing": "IA1-057",
+      "irrelevant": "IA1-058"
+    },
+    {
+      "type": "item",
+      "item": "IA1-059",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-060",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-061",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.backRankMate",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you check a back rank, which of the three conditions do you check last: escape squares, capture, or block?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (back-rank mate through exchanges, seventh and eighth ranks)",
+    "docs/inference-01-puzzle-theme-difficulty.md (backRankMate median about 990)",
+    "docs/curriculum-map-v1.md S3"
+  ]
+}

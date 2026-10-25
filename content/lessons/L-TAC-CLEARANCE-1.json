@@ -1,0 +1,159 @@
+{
+  "id": "L-TAC-CLEARANCE-1",
+  "title": "Clearance: step aside with a threat",
+  "skill": "TAC.CLEARANCE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Finds the vacating move that carries a threat when told to clear a line",
+    "Checks what the cleared piece attacks once the line is open",
+    "Rejects a vacating move that has no threat, or that opens a line leading nowhere"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **clearance** is a move that takes a piece off a square or a line so that another piece can use it. It usually works only when the vacating move **carries a threat of its own**, such as a check or a capture: the opponent must answer it and has no time to cover what you opened.\nOpening a line is not enough by itself."
+    },
+    {
+      "type": "board",
+      "fen": "5rk1/R7/7R/8/3P4/4n1P1/5n1P/6K1 b - - 2 31",
+      "caption": "Black to move. The knight on f2 stands on the f-file between the rook on f8 and the first rank. The knight on e3 covers f1 and g2.",
+      "line": [
+        {
+          "move": "f2h3",
+          "say": "The knight moves with check and leaves f2 at the same moment. The f-file opens for the rook."
+        },
+        {
+          "move": "h6h3",
+          "say": "White takes the knight. (If the king steps to h1 instead, Rf1 is mate as well.)"
+        },
+        {
+          "move": "f8f1",
+          "say": "The rook goes down the open file. Rf1 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f2",
+          "to": "h3"
+        },
+        {
+          "from": "f8",
+          "to": "f1"
+        }
+      ],
+      "highlight": [
+        "f2",
+        "f1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f2h3"
+            ]
+          },
+          "statement": "The engine's best move is Nh3+ (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "f2h3",
+            "n": 2
+          },
+          "statement": "Nh3+ forces checkmate in 2 or fewer against the engine's best defence."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f8",
+            "excludes": [
+              "f1"
+            ]
+          },
+          "statement": "While the knight stands on f2, the rook on f8 does not reach f1."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f8",
+            "includes": [
+              "f1"
+            ],
+            "after_move": "f2h3"
+          },
+          "statement": "After the knight has left f2, the rook on f8 attacks f1."
+        },
+        {
+          "id": "C5",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e3",
+            "includes": [
+              "f1",
+              "g2"
+            ]
+          },
+          "statement": "The knight on e3 covers f1 and g2."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB1-005"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the vacating move makes a threat, and the cleared line leads somewhere that matters, such as a square the queen can use.\n**When it fails:** the target square is defended, or the line is blocked further on, or the piece behind is not on the line at all. **Rule of thumb:** a vacating move with no threat gives the opponent time to close the line again."
+    },
+    {
+      "type": "contrast",
+      "title": "Same clearance, one change",
+      "prompt": "Same position, one change: the pawn on h6 is gone. Predict, then check.",
+      "working": "IB1-005",
+      "failing": "IB1-006",
+      "irrelevant": "IB1-009"
+    },
+    {
+      "type": "item",
+      "item": "IB1-009"
+    },
+    {
+      "type": "item",
+      "item": "IL-dXQcx",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-008",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.clearance",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, which of your pieces did you see as being in the way, and did you check that the vacating move made a threat? (The practice puzzles carry Lichess's automatic theme label, which is not always an exact fit for this lesson.)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.CLEARANCE.json (outcomes, conditions, contrasts; the node notes that no synthesis sheet covers this motif)",
+    "docs/curriculum-map-v1.1.md",
+    "items IB1-005..009 (authored, content/items/lesson-b1.json); Lichess puzzle database (CC0): Osaq4 (board), dXQcx"
+  ]
+}

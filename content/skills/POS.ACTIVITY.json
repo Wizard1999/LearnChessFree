@@ -1,0 +1,83 @@
+{
+  "id": "POS.ACTIVITY",
+  "title": "Piece activity",
+  "strand": "S5",
+  "tier": 2,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains piece activity as the number of useful squares a piece reaches and the lines it controls, not how far forward it stands.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Picks the more active of two placements of the same piece and points out the squares or lines that make it so.",
+      "prereqs": [
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled quiet positions, picks the move that most improves the worst-placed piece ahead of pawn pushes, in at least 7 of 10.",
+      "prereqs": [
+        "POS.ACTIVITY.D1",
+        "FND.VALUE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how a one-feature change (a pawn that opens a line, a trade that frees a rook) shifts the activity balance, and explains why an advanced piece can be less active than a retreated one.",
+      "prereqs": [
+        "POS.ACTIVITY.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, names the worst-placed piece before quiet moves, and the choices are shown in the review log.",
+      "prereqs": [
+        "POS.ACTIVITY.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A piece further forward is more active.",
+    "Activity means making threats on every move."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S5 (POS.ACTIVITY T2)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K5 (mobility is the value of a piece); §7 row K5",
+    "sources/sheets/emlasker_common-sense.md §4.7 (pawns that work vs pawns that merely need protection)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C25-C26"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=2"
+  },
+  "conditions": [
+    "Mobility is the main criterion of a piece's worth in ordinary open or semi-open positions.",
+    "Central squares touch more of the board, so a piece there exerts more; the edge limits it.",
+    "A pawn move needs a purpose; a pawn that only needs protection is not working."
+  ],
+  "condition_sources": [
+    "EDL K5 (b)-(c)",
+    "ZB C25",
+    "EML 4.7"
+  ],
+  "contrasts": [
+    "A rook that wins the exchange but has no open file to enter gains no activity.",
+    "A knight on the rim after two moves has fewer squares than one on a central square.",
+    "A position decided by a forced tactic, where activity is moot."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K5 (d), diagram 13",
+    "ZB C03 (f)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "OPN.PRINCIPLES.D1"
+  ],
+  "soft_prereq_notes": {
+    "OPN.PRINCIPLES.D1": "development is the first form of activity"
+  }
+}

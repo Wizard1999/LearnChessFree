@@ -1,0 +1,133 @@
+{
+  "id": "L-CAL-DEFENSE-1",
+  "title": "The opponent's best reply",
+  "skill": "CAL.DEFENSE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Looks for the opponent's checks, captures and threats against a planned move",
+    "Finds the refutation of a tempting capture",
+    "Knows the check costs time and when to run it",
+    "Tests a first idea against the best reply, not the hoped-for one"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Analysis is not finished until the opponent has had a say. For the move you like, **switch sides**: what would you play as your opponent? Look at their checks, captures and threats first, then at the move that fixes their biggest problem.\nA line is only as good as the opponent's *best* answer, not the one you hope for."
+    },
+    {
+      "type": "board",
+      "fen": "r3r1k1/p1pq1ppp/2n5/5n2/BN1p4/3P1Q2/1PP2PPP/R1B1R1K1 b - - 0 17",
+      "caption": "White has just taken a bishop with Nxb4. It looks like a free piece. Black to move.",
+      "line": [
+        {
+          "move": "e8e1",
+          "say": "Rxe1 is checkmate. White never looked at Black's checks."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1
+          },
+          "statement": "Rxe1 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e8e1"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-37"
+    },
+    {
+      "type": "item",
+      "item": "IA5-38"
+    },
+    {
+      "type": "card",
+      "text": "**Limits.** Running this on every move is too slow. Run it when you are about to commit: a capture, a sacrifice, an attack, or any move that gives the opponent a check. And a perfect opponent is not guaranteed: the goal is to avoid being surprised, not to assume the worst forever."
+    },
+    {
+      "type": "contrast",
+      "title": "Check the reply, then decide",
+      "prompt": "Three situations: a capture that works, one that fails, and one that needs no search. Predict, then check.",
+      "working": "IA5-40",
+      "failing": "IA5-41",
+      "irrelevant": "IA5-42"
+    },
+    {
+      "type": "item",
+      "item": "IA5-39"
+    },
+    {
+      "type": "item",
+      "item": "IA5-43"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** There is no checklist panel in this lesson; the checklist is the card above, and hints are offered on each item. A silent item switches hints and the engine off. The plan is to offer hints only on request once you solve cue-3 items without them. Next item is silent."
+    },
+    {
+      "type": "item",
+      "item": "IA5-44",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "In the silent item, did you look for your opponent's best reply before you chose? Say what you looked at, in order.",
+      "fields": [
+        {
+          "id": "looked",
+          "label": "Did you check their reply before moving?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "checked_first",
+          "label": "What did you look at first?",
+          "options": [
+            "their checks",
+            "their captures",
+            "their threats",
+            "I did not look"
+          ]
+        },
+        {
+          "id": "found",
+          "label": "What did you find? (one line)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.DEFENSE)",
+    "docs/council-synthesis.md CD-3, CD-12 (opponent's resources: Dvoretsky, recalled [R])",
+    "positions: Lichess puzzles (CC0)"
+  ]
+}

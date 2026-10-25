@@ -1,0 +1,921 @@
+{
+  "positions": [
+    {
+      "id": "PB7-1",
+      "fen": "2bk1b1r/1pp1p1p1/3p3p/5p2/qn2nP2/3BPN1P/PBPPQ1P1/R3RK2 b - - 6 12",
+      "family": "FAM-B7-FORKLA",
+      "provenance": {
+        "kind": "lichess_puzzle",
+        "ref": "Lichess puzzle Hp6R3 (before the first move), mirrored left-right, castling rights dropped",
+        "licence": "CC0"
+      }
+    },
+    {
+      "id": "PB7-2",
+      "fen": "2bk1b1r/1pp1p1p1/3p3p/5p2/qn2nP2/3BPN1P/PBPPQPP1/R3RK2 b - - 6 12",
+      "family": "FAM-B7-FORKLA",
+      "provenance": {
+        "kind": "authored",
+        "ref": "PB7-1 with a white pawn added on the square that covers the forking square (one-feature edit, mirrored)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-3",
+      "fen": "2bk1b1r/1pp1p1p1/3p3p/5p2/qn2nP2/3BPN1P/PBPP2P1/R2QRK2 b - - 6 12",
+      "family": "FAM-B7-FORKLA",
+      "provenance": {
+        "kind": "authored",
+        "ref": "PB7-1 with the white queen moved from the forked square to a quiet square (one-feature edit, mirrored)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-4",
+      "fen": "8/8/5NP1/2k1K3/8/6r1/8/8 w - - 1 50",
+      "family": "FAM-B7-KNPFORK",
+      "provenance": {
+        "kind": "lichess_puzzle",
+        "ref": "Lichess puzzle oSH1C (before the first move), mirrored left-right",
+        "licence": "CC0"
+      }
+    },
+    {
+      "id": "PB7-5",
+      "fen": "8/8/5NP1/2k1K3/8/r7/8/8 w - - 1 50",
+      "family": "FAM-B7-KNPFORK",
+      "provenance": {
+        "kind": "authored",
+        "ref": "PB7-4 with the black rook moved from b3 to h3 (one-feature edit, mirrored)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-6",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/8/3pP3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 4",
+      "family": "FAM-B7-SCOTCH",
+      "provenance": {
+        "kind": "authored",
+        "ref": "start position, 1.e4 e5 2.Nf3 Nc6 3.d4 exd4, played by script",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-7",
+      "fen": "rnbqk1nr/pppp1ppp/8/2b1p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+      "family": "FAM-B7-BC5",
+      "provenance": {
+        "kind": "authored",
+        "ref": "start position, 1.e4 e5 2.Nf3 Bc5, played by script",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-8",
+      "fen": "8/1ppk4/8/4K3/8/7P/2P5/8 w - - 0 1",
+      "family": "FAM-B7-LOOKUP1",
+      "provenance": {
+        "kind": "authored",
+        "ref": "left-right mirror of a pawn ending from the K+P strand (6 pieces)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PB7-9",
+      "fen": "4k3/pp6/8/3K4/8/8/PP6/8 w - - 0 1",
+      "family": "FAM-B7-LOOKUP2",
+      "provenance": {
+        "kind": "authored",
+        "ref": "left-right mirror of a pawn ending from the K+P strand (6 pieces)",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IB7-1",
+      "skill": "SELF.5.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "PB7-1",
+      "prompt": "Black to move. Find the knight fork.",
+      "answer": {
+        "moves": [
+          "e4g3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4g3"
+          },
+          "statement": "The fork move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4g3"
+            ]
+          },
+          "statement": "The fork is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4g3",
+            "min": 5
+          },
+          "statement": "The fork wins at least five points of material along the engine's best line."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f1",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move the knight attacks the white king."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "e2",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move the knight attacks the white queen."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece attacks the knight's square, so it cannot be taken."
+        }
+      ],
+      "tags": [
+        "node.SELF.5",
+        "cue.1",
+        "tier.5",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "Look for a square from which one knight attacks two white pieces.",
+        "A knight on that square would attack both the king and the queen.",
+        "Play the knight to g3, with check."
+      ],
+      "explain": "The knight attacks the king and the queen at once, and nothing white attacks its square. Along the engine's best line Black wins at least five points of material (counting values: pawn 1, minor piece 3, rook 5, queen 9).",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-FORK"
+    },
+    {
+      "id": "IB7-2",
+      "skill": "SELF.5.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-2",
+      "prompt": "Black to move. A white pawn now stands on f2. Does ...Ng3+ still win material? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4g3"
+          },
+          "statement": "The knight move is still legal."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4g3",
+            "max": -1
+          },
+          "statement": "Along the engine's best line Black loses at least one point of material."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One white piece attacks the fork square."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "e4g3",
+            "cp": 150
+          },
+          "statement": "The knight move is at least 1.5 pawns below the best move on the engine's scale."
+        }
+      ],
+      "tags": [
+        "node.SELF.5",
+        "cue.2",
+        "tier.5",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "Which white piece could take a knight on the fork square?",
+        "The new pawn attacks that square.",
+        "A knight that is captured for a pawn gains nothing."
+      ],
+      "explain": "The pawn on f2 attacks g3, so the knight can be taken: along the engine's best line Black loses material, and the move is at least 1.5 pawns below the best move. The fork pattern is on the board, but the idea does not work here. A check made only of positions like the first one cannot tell skill from habit.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-FORK"
+    },
+    {
+      "id": "IB7-3",
+      "skill": "SELF.5.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-3",
+      "prompt": "Black to move. The white queen stands on d1 instead of e2. Does ...Ng3+ win material? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4g3"
+          },
+          "statement": "The knight check is legal."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4g3",
+            "max": 0
+          },
+          "statement": "Along the engine's best line the knight check wins no material."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e4g3",
+            "cp": 150
+          },
+          "statement": "The knight check is at least 1.5 pawns below the best move on the engine's scale."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f1",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move the knight is still giving check."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 0,
+            "after_move": "e4g3"
+          },
+          "statement": "After the move no black piece attacks the queen."
+        }
+      ],
+      "tags": [
+        "node.SELF.5",
+        "cue.2",
+        "tier.5",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "What does the knight attack after the move?",
+        "The queen is no longer on the square the knight attacks.",
+        "A check that attacks nothing else wins nothing by itself."
+      ],
+      "explain": "The knight still gives check, but it attacks no second piece: along the engine's best line it wins no material, and it is at least 1.5 pawns below the best move. Some positions in a fair check should contain no tactic for the practised idea at all.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-FORK"
+    },
+    {
+      "id": "IB7-4",
+      "skill": "SELF.6.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "PB7-4",
+      "prompt": "White to move. Find the knight fork.",
+      "answer": {
+        "moves": [
+          "f6e4"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6e4"
+          },
+          "statement": "The fork move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6e4"
+            ]
+          },
+          "statement": "The fork is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6e4",
+            "min": 4
+          },
+          "statement": "The fork wins at least four points of material along the engine's best line."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight gives check."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight attacks the rook."
+        }
+      ],
+      "tags": [
+        "node.SELF.6",
+        "cue.1",
+        "tier.6",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "Look for a knight move that attacks two black pieces.",
+        "A knight on that square gives check and attacks the rook.",
+        "Play the knight to e4, with check."
+      ],
+      "explain": "The knight gives check and attacks the rook at the same time, and along the engine's best line White wins at least four points of material.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-NAMED"
+    },
+    {
+      "id": "IB7-5",
+      "skill": "SELF.6.D1",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PB7-4",
+      "prompt": "White to move. Find the best move.",
+      "answer": {
+        "moves": [
+          "f6e4"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6e4"
+          },
+          "statement": "The fork move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6e4"
+            ]
+          },
+          "statement": "The fork is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6e4",
+            "min": 4
+          },
+          "statement": "The fork wins at least four points of material along the engine's best line."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight gives check."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight attacks the rook."
+        }
+      ],
+      "tags": [
+        "node.SELF.6",
+        "cue.3",
+        "tier.6",
+        "lang.en",
+        "kind.authored",
+        "theme.fork",
+        "mode.silent"
+      ],
+      "hints": [
+        "Which black pieces are not defended by anything?",
+        "One knight move attacks the king and a rook.",
+        "Play the knight to e4, with check."
+      ],
+      "explain": "The same fork as in the named version, with nothing in the prompt to point at it. Straight after the named version this shows little, because you have just seen the answer; the evidence comes from a position you have not seen, without hints.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-NAMED"
+    },
+    {
+      "id": "IB7-6",
+      "skill": "SELF.6.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-4",
+      "prompt": "You solved the version of this position whose prompt said \"Find the knight fork\". Does solving that version show that you can find a fork when nobody names it? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6e4"
+          },
+          "statement": "The fork move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6e4"
+            ]
+          },
+          "statement": "The fork is the engine's best move, in either version."
+        }
+      ],
+      "tags": [
+        "node.SELF.6",
+        "cue.2",
+        "tier.6",
+        "lang.en",
+        "kind.authored"
+      ],
+      "hints": [
+        "Compare the two prompts word by word.",
+        "What did the first prompt tell you that a game never does?",
+        "A prompt that names the idea makes the exercise a cued one."
+      ],
+      "explain": "The position and the answer are the same, but the first prompt named the idea, so it showed that you can follow the prompt. The independence record on the Progress page counts only first attempts at exercises that do not name the idea (cue 3 or higher).",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-NAMED"
+    },
+    {
+      "id": "IB7-7",
+      "skill": "SELF.6.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-5",
+      "prompt": "White to move. Black's rook stands on a3, not g3. Does Ne4+ win material? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6e4"
+          },
+          "statement": "The knight check is legal."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6e4",
+            "max": 0
+          },
+          "statement": "Along the engine's best line the knight check wins no material."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight gives check."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "a3",
+            "color": "white",
+            "count": 0,
+            "after_move": "f6e4"
+          },
+          "statement": "After the move the knight does not attack the rook."
+        }
+      ],
+      "tags": [
+        "node.SELF.6",
+        "cue.2",
+        "tier.6",
+        "lang.en",
+        "kind.authored",
+        "theme.fork"
+      ],
+      "hints": [
+        "What does the knight attack after the move?",
+        "Is the rook on one of those squares?",
+        "A check that attacks nothing else wins nothing by itself."
+      ],
+      "explain": "The knight still gives check but attacks nothing else, and along the engine's best line it wins no material. Being unprompted also means seeing that the idea does not apply.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-NAMED"
+    },
+    {
+      "id": "IB7-8",
+      "skill": "SELF.7.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PB7-6",
+      "prompt": "White to move after 1.e4 e5 2.Nf3 Nc6 3.d4 exd4. At 1300-1500 the Openings page shows White winning 53% of games after both 4.Nxd4 and 4.Ng5. Which move does the engine rate higher?",
+      "answer": {
+        "class": "4.Nxd4",
+        "options": [
+          "4.Nxd4",
+          "4.Ng5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f3d4"
+          },
+          "statement": "Nxd4 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3d4"
+            ]
+          },
+          "statement": "Nxd4 is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "f3g5",
+            "cp": 150
+          },
+          "statement": "Ng5 is at least 1.5 pawns lower than the best move on the engine's scale."
+        }
+      ],
+      "tags": [
+        "node.SELF.7",
+        "cue.2",
+        "tier.7",
+        "lang.en",
+        "kind.authored",
+        "mode.engine-vs-data"
+      ],
+      "hints": [
+        "Count material after 3...exd4.",
+        "Black has just captured a pawn. One of the two moves wins it back.",
+        "4.Nxd4 wins the pawn back."
+      ],
+      "explain": "At depth 16 the engine ranks 4.Nxd4 first and rates 4.Ng5 at least 1.5 pawns lower. The Openings page counts how games ended, which depends on the players; the engine rates the position. The two can disagree.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-TOOLS",
+      "feedback_by_move": {
+        "f3g5": "The engine rates 4.Ng5 at least 1.5 pawns below its best move, even though the Openings page shows the same White win share (53%) for it as for 4.Nxd4 at this band."
+      }
+    },
+    {
+      "id": "IB7-9",
+      "skill": "SELF.7.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PB7-6",
+      "prompt": "At 1300-1500 the Openings page shows White winning 53% of games after 4.Ng5 (and drawing 2%). Does that result show that 4.Ng5 is sound? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3d4"
+            ]
+          },
+          "statement": "Nxd4 is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f3g5",
+            "cp": 150
+          },
+          "statement": "Ng5 is at least 1.5 pawns lower than the best move on the engine's scale."
+        }
+      ],
+      "tags": [
+        "node.SELF.7",
+        "cue.2",
+        "tier.7",
+        "lang.en",
+        "kind.authored",
+        "mode.engine-vs-data"
+      ],
+      "hints": [
+        "What does a result on the Openings page measure?",
+        "It measures how games ended, not how good the move is.",
+        "Compare it with the engine's rating of the same move."
+      ],
+      "explain": "The result says how often White won with this move among players of that band. The engine rates 4.Ng5 at least 1.5 pawns below its best move, so the result does not show soundness. A guess to test next: how often did Black find the best reply? The page lists Black's replies and how they scored.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-TOOLS"
+    },
+    {
+      "id": "IB7-10",
+      "skill": "SELF.7.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PB7-8",
+      "prompt": "White to move. The question is: does White win with best play? Which kind of evidence settles it exactly?",
+      "answer": {
+        "class": "Tablebase lookup, source recorded",
+        "options": [
+          "Tablebase lookup, source recorded",
+          "Engine test, depth and build recorded",
+          "Openings page results, band and sample recorded"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White wins this position with best play (exact, six pieces)."
+        }
+      ],
+      "tags": [
+        "node.SELF.7",
+        "cue.2",
+        "tier.7",
+        "lang.en",
+        "kind.authored",
+        "mode.tool-choice"
+      ],
+      "hints": [
+        "How many pieces are on the board?",
+        "With seven pieces or fewer an exact table exists.",
+        "This is a lookup, not a research question."
+      ],
+      "explain": "With seven pieces or fewer a tablebase gives the exact result, and it says White wins here. So a question about this one position is a lookup, not research. An engine result is evidence under recorded limits, and the Openings page covers only opening moves. This app has no tablebase lookup yet.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-TOOLS"
+    },
+    {
+      "id": "IB7-11",
+      "skill": "SELF.7.D1",
+      "cue": 3,
+      "task": "classify_position",
+      "position": "PB7-7",
+      "prompt": "White to move after 1.e4 e5 2.Nf3 Bc5. At 1300-1500 the Openings page shows White winning 50% of games after both 3.Bc4 and 3.Nxe5. The question: is 3.Bc4 as sound as the best move? Which kind of evidence answers it?",
+      "answer": {
+        "class": "Engine test, depth and build recorded",
+        "options": [
+          "Tablebase lookup, source recorded",
+          "Engine test, depth and build recorded",
+          "Openings page results, band and sample recorded"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ]
+          },
+          "statement": "Nxe5 is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f1c4",
+            "cp": 90
+          },
+          "statement": "Bc4 is at least 0.9 pawns lower than the best move on the engine's scale."
+        }
+      ],
+      "tags": [
+        "node.SELF.7",
+        "cue.3",
+        "tier.7",
+        "lang.en",
+        "kind.authored",
+        "mode.silent",
+        "mode.tool-choice"
+      ],
+      "hints": [
+        "Ask what each kind of evidence measures.",
+        "Results measure how games ended. Which evidence rates a position?",
+        "An engine rates positions; the depth and the build go beside the result."
+      ],
+      "explain": "The results say how players of that band did with each move; they cannot say which move is sounder. An engine test can: at depth 16 it ranks 3.Nxe5 first and rates 3.Bc4 at least 0.9 pawns lower. That is evidence under recorded limits (one engine, one depth), not a proof.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-TOOLS"
+    },
+    {
+      "id": "IB7-12",
+      "skill": "SELF.7.D1",
+      "cue": 3,
+      "task": "classify_position",
+      "position": "PB7-9",
+      "prompt": "White to move. The question: is this a draw with best play? Which kind of evidence answers it?",
+      "answer": {
+        "class": "Tablebase lookup, source recorded",
+        "options": [
+          "Tablebase lookup, source recorded",
+          "Engine test, depth and build recorded",
+          "Openings page results, band and sample recorded"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "This position is a draw with best play (exact, six pieces)."
+        }
+      ],
+      "tags": [
+        "node.SELF.7",
+        "cue.3",
+        "tier.7",
+        "lang.en",
+        "kind.authored",
+        "mode.silent",
+        "mode.tool-choice"
+      ],
+      "hints": [
+        "Count the pieces.",
+        "With seven pieces or fewer an exact table exists.",
+        "A tablebase lookup."
+      ],
+      "explain": "Six pieces: a tablebase gives the exact result, and it says draw. A question about one position that a lookup answers is not a research question. This app has no tablebase lookup yet.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-B7-TOOLS"
+    }
+  ]
+}

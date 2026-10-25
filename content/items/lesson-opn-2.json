@@ -1,0 +1,550 @@
+{
+  "positions": [
+    {
+      "id": "PA4-021",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/8/4P3/4Q3/PPP2PPP/RNB1KBNR w KQkq - 3 5",
+      "family": "FAM-A4-LASKERGAME",
+      "provenance": {
+        "kind": "public_domain_book",
+        "ref": "A beginner's game from Edward Lasker, Chess Strategy (1915), Ch. IV, sources/raw/edlasker_chess-strategy_gutenberg5614.txt lines 1311-1416; moves replayed with python-chess; position after ply 8",
+        "licence": "PD-US (moves are facts)"
+      }
+    },
+    {
+      "id": "PA4-022",
+      "fen": "r1bqk2r/ppppbppp/2n2n2/8/4P3/4Q2P/PPP2PP1/RNB1KBNR w KQkq - 1 6",
+      "family": "FAM-A4-LASKERGAME",
+      "provenance": {
+        "kind": "public_domain_book",
+        "ref": "A beginner's game from Edward Lasker, Chess Strategy (1915), Ch. IV, sources/raw/edlasker_chess-strategy_gutenberg5614.txt lines 1311-1416; moves replayed with python-chess; position after ply 10",
+        "licence": "PD-US (moves are facts)"
+      }
+    },
+    {
+      "id": "PA4-023",
+      "fen": "r1bqr1k1/ppppbppp/2n2n2/8/2B1P3/PQ5P/1PP2PP1/RNB1K1NR b KQ - 4 8",
+      "family": "FAM-A4-LASKERGAME",
+      "provenance": {
+        "kind": "public_domain_book",
+        "ref": "A beginner's game from Edward Lasker, Chess Strategy (1915), Ch. IV, sources/raw/edlasker_chess-strategy_gutenberg5614.txt lines 1311-1416; moves replayed with python-chess; position after ply 15",
+        "licence": "PD-US (moves are facts)"
+      }
+    },
+    {
+      "id": "PA4-024",
+      "fen": "r1b1r1k1/ppp1bppp/2n5/3P4/8/P6P/1PP2PP1/RNB1K1NR b KQ - 0 11",
+      "family": "FAM-A4-LASKERGAME",
+      "provenance": {
+        "kind": "public_domain_book",
+        "ref": "A beginner's game from Edward Lasker, Chess Strategy (1915), Ch. IV, sources/raw/edlasker_chess-strategy_gutenberg5614.txt lines 1311-1416; moves replayed with python-chess; position after ply 21",
+        "licence": "PD-US (moves are facts)"
+      }
+    },
+    {
+      "id": "PA4-025",
+      "fen": "r1bqk1nr/pppp1ppp/2n5/2b1p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "family": "FAM-A4-GIUOCO",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position: 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PA4-026",
+      "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+      "family": "FAM-A4-OPEN",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position: 1.e4 e5 2.Nf3",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PA4-027",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "family": "FAM-A4-RUY",
+      "provenance": {
+        "kind": "authored",
+        "ref": "legal moves from the starting position: 1.e4 e5 2.Nf3 Nc6 3.Bb5",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IA4-021",
+      "skill": "OPN.NONDEV.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "PA4-021",
+      "prompt": "From a beginner's game printed in a 1915 book. White's queen has already moved twice. White to move: bring out a piece.",
+      "answer": {
+        "moves": [
+          "b1c3",
+          "f1d3",
+          "c1d2",
+          "g1f3",
+          "f1b5",
+          "f1e2",
+          "f1c4",
+          "b1d2"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1c3",
+              "f1d3",
+              "c1d2",
+              "g1f3",
+              "f1b5",
+              "f1e2",
+              "f1c4",
+              "b1d2"
+            ]
+          },
+          "statement": "Eight piece moves are within 40 centipawns of the best one at depth 16."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "h2h3",
+            "cp": 50
+          },
+          "statement": "h3 is at least 50 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.1",
+        "tier.1",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Count the white pieces that have left the first rank. Which minor pieces are still at home?",
+        "A knight or a bishop has useful squares. A pawn push does not bring a piece out.",
+        "Any knight or bishop move to a central square works; the rook pawn does not."
+      ],
+      "explain": "Each listed move puts a knight or bishop to work. In the game White played the rook-pawn move h3 instead; at depth 16 the engine rates it at least 50 centipawns below the best piece moves.",
+      "feedback_by_move": {
+        "h2h3": "A rook-pawn move brings no piece out. At depth 16 the engine rates it at least 50 centipawns below the best developing moves."
+      },
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-022",
+      "skill": "OPN.NONDEV.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PA4-022",
+      "prompt": "The same game, one move later. White has played h3 and Black has developed a bishop. White to move: choose a developing move.",
+      "answer": {
+        "moves": [
+          "f1d3",
+          "g1f3",
+          "b1c3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1d3",
+              "g1f3",
+              "b1c3"
+            ],
+            "within_cp": 60
+          },
+          "statement": "Bd3, Nf3 and Nc3 are all within 60 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "a2a3",
+            "cp": 60
+          },
+          "statement": "a3 is at least 60 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.2",
+        "tier.1",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Black has three pieces in play. White has none yet.",
+        "Which minor piece can take a central square without being attacked?",
+        "A bishop to d3 or a knight to f3 or c3."
+      ],
+      "explain": "A developing move puts a knight or bishop on a good square. In the game White chose a3, a second rook-pawn move; the engine rates it at least 60 centipawns below the best choices at depth 16.",
+      "feedback_by_move": {
+        "a2a3": "Another rook-pawn move: no piece comes out. The engine rates it at least 60 centipawns below the best moves at depth 16."
+      },
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-023",
+      "skill": "OPN.NONDEV.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PA4-023",
+      "prompt": "Black to move. White has moved the queen three times and a rook pawn twice; White's king is still on e1. Is there a strike in the centre?",
+      "answer": {
+        "moves": [
+          "d7d5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d7d5"
+            ]
+          },
+          "statement": "d5 is the engine's first choice by a wide margin."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.2",
+        "tier.1",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Which of White's pieces could a pawn attack and drive off?",
+        "Black's rook already stands on the e-file. A pawn move can open lines toward the white king.",
+        "A central pawn push to the fourth rank attacks the bishop."
+      ],
+      "explain": "The pawn move d5 attacks the bishop on c4 and opens lines toward the white king. At depth 16 the engine ranks it first by a wide margin.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-024",
+      "skill": "OPN.NONDEV.D2",
+      "cue": 1,
+      "task": "find_move",
+      "position": "PA4-024",
+      "prompt": "Black to move. After the exchanges on d5, White has recaptured with the e-pawn. Find a forced mate in two.",
+      "answer": {
+        "moves": [
+          "e7b4"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e7b4",
+            "n": 2
+          },
+          "statement": "Bb4+ leads to a forced mate in two."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e7b4"
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.1",
+        "tier.1",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Look at the file in front of the white king.",
+        "The bishop can give check and, by leaving the e-file, uncover the rook at the same time.",
+        "Bishop from e7 to b4."
+      ],
+      "explain": "Bb4+ is check from the bishop, and the bishop has left the e-file, so the rook checks as well. The engine finds mate in two.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-025",
+      "skill": "OPN.NONDEV.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PA4-022",
+      "prompt": "White plays 6.a3 here. Does that cost real time, or very little? Predict, then check.",
+      "answer": {
+        "outcome": "costs real time",
+        "options": [
+          "costs very little",
+          "costs real time"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "a2a3",
+            "cp": 60
+          },
+          "statement": "6.a3 is at least 60 centipawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1d3",
+              "g1f3",
+              "c2c4",
+              "b1c3",
+              "e4e5",
+              "b1d2",
+              "f1b5",
+              "f1c4",
+              "a2a3"
+            ],
+            "within_cp": 120
+          },
+          "statement": "6.a3 is no more than 120 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.2",
+        "tier.1",
+        "kind.game",
+        "theme.opening"
+      ],
+      "hints": [
+        "Compare the number of pieces each side has developed.",
+        "Where is White's king, and which file could open?"
+      ],
+      "explain": "At depth 16 the engine rates 6.a3 between 60 and 120 centipawns below White's best moves. Black has three pieces out and White has none, so the lost move counts.",
+      "contrast_group": "CG-A4-RPAWN",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "source": {
+        "kind": "public_domain_book",
+        "id": "edlasker-chess-strategy-1915-beginner-game"
+      }
+    },
+    {
+      "id": "IA4-026",
+      "skill": "OPN.NONDEV.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PA4-025",
+      "prompt": "White to move in a quiet Italian position. White plays 4.a4. Does that cost real time, or very little? Predict, then check.",
+      "answer": {
+        "outcome": "costs very little",
+        "options": [
+          "costs very little",
+          "costs real time"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c2c3",
+              "e1g1",
+              "d2d3",
+              "a2a4"
+            ]
+          },
+          "statement": "a4 is within 40 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "quiet_position",
+          "params": {
+            "max": 1
+          },
+          "statement": "No line wins more than one pawn for the side to move."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.2",
+        "tier.1",
+        "kind.authored",
+        "theme.opening"
+      ],
+      "hints": [
+        "Is anything of White's attacked? Can Black open lines at once?",
+        "Compare how many pieces each side has out."
+      ],
+      "explain": "At depth 16 the engine puts 4.a4 within 10 centipawns of the best moves, and no line wins more than a pawn for either side's move here. A spare move costs little when nothing sharp can be punished.",
+      "contrast_group": "CG-A4-RPAWN",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IA4-027",
+      "skill": "OPN.NONDEV.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PA4-026",
+      "prompt": "Black to move after 1.e4 e5 2.Nf3. Bring out a knight.",
+      "answer": {
+        "moves": [
+          "b8c6",
+          "g8f6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8c6",
+              "g8f6"
+            ]
+          },
+          "statement": "Nc6 and Nf6 are within 40 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "d8f6",
+            "cp": 80
+          },
+          "statement": "Qf6 is at least 80 centipawns worse than the best move."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "d8e7",
+            "cp": 50
+          },
+          "statement": "Qe7 is at least 50 centipawns worse than the best move."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.2",
+        "tier.1",
+        "kind.authored",
+        "theme.opening"
+      ],
+      "hints": [
+        "Which pieces have not moved yet, and which of them has useful squares?",
+        "The queen can reach f6 or e7. Is that the first piece to bring out?",
+        "A knight to c6 or f6."
+      ],
+      "explain": "A knight move develops with a purpose. At depth 16 the engine rates the early queen moves Qf6 and Qe7 at least 80 and 50 centipawns lower than the knight moves.",
+      "feedback_by_move": {
+        "d8f6": "An early queen trip: at depth 16 the engine rates it at least 80 centipawns below Nc6 or Nf6.",
+        "d8e7": "The queen blocks the bishop and comes out before the knights; the engine rates it at least 50 centipawns lower at depth 16."
+      },
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IA4-028",
+      "skill": "OPN.NONDEV.D3",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "PA4-027",
+      "prompt": "Black plays 3...a6, a rook-pawn move. Is it a waste of time here? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g8f6",
+              "a7a6"
+            ]
+          },
+          "statement": "3...a6 is within 40 centipawns of the best move (Nf6)."
+        }
+      ],
+      "tags": [
+        "node.OPN.NONDEV",
+        "cue.3",
+        "tier.1",
+        "kind.authored",
+        "theme.opening"
+      ],
+      "hints": [
+        "What does the a-pawn attack after the move?",
+        "Does White have to answer it?"
+      ],
+      "explain": "The pawn on a6 attacks the bishop on b5, so White must decide what to do with it. At depth 16 the engine puts 3...a6 within 10 centipawns of the top move, Nf6.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    }
+  ]
+}

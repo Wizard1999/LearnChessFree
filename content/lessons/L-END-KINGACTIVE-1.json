@@ -1,0 +1,152 @@
+{
+ "id": "L-END-KINGACTIVE-1",
+ "title": "The king as a fighter: pawn endings the active king decides",
+ "skill": "END.KING-ACTIVE",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Chooses a king move over a pawn move when the king can reach the enemy pawns first",
+  "Counts the two kings' distances to the pawns that matter and predicts win or draw",
+  "Sees that one step of king activity, for either side, can flip the result"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In the ending the king stops being a target and becomes a **fighting piece**. A king that reaches the enemy pawns first can win what pawn moves cannot. The question to ask is a count: how many king steps does each side need to reach the pawns that matter? Look at the kings, not at the pawns."
+  },
+  {
+   "type": "board",
+   "fen": "2k5/6pp/8/4K3/8/8/6PP/8 w - - 0 1",
+   "caption": "White to move wins, but only with Ke6. One line is shown.",
+   "line": [
+    {
+     "move": "e5e6",
+     "say": "The king goes forward, not a pawn."
+    },
+    {
+     "move": "c8d8",
+     "say": "Black's king comes back."
+    },
+    {
+     "move": "e6f7",
+     "say": "White's king steps to f7, next to the pawns."
+    },
+    {
+     "move": "g7g5",
+     "say": "Black pushes a pawn."
+    },
+    {
+     "move": "g2g4",
+     "say": "White pushes a pawn."
+    },
+    {
+     "move": "d8d7",
+     "say": "Black's king keeps coming."
+    },
+    {
+     "move": "f7f6",
+     "say": "White's king attacks the pawn on g5."
+    },
+    {
+     "move": "d7e8",
+     "say": "Black's king is still a step too far."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5e6"
+     }
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "e6"
+    },
+    {
+     "from": "e6",
+     "to": "f7"
+    }
+   ],
+   "highlight": [
+    "g7",
+    "h7"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IA3-401"
+  },
+  {
+   "type": "card",
+   "text": "**It is a race, so one step matters.** King activity wins when your king reaches the enemy pawns before the other king can defend them. If your king is one step slower, or the defender's king one step nearer, a win can become a draw. Predict what changes in the look-alikes."
+  },
+  {
+   "type": "contrast",
+   "title": "One step less active",
+   "prompt": "White's king on e4 wins. What if it is on e3, one rank back? Predict, then check.",
+   "working": "IA3-402",
+   "failing": "IA3-403",
+   "irrelevant": "IA3-404"
+  },
+  {
+   "type": "contrast",
+   "title": "One step nearer for Black",
+   "prompt": "Ke5 against Kc8 wins with the right king move. What if Black's king is on d8? Predict, then check.",
+   "working": "IA3-405",
+   "failing": "IA3-406"
+  },
+  {
+   "type": "item",
+   "item": "IA3-407"
+  },
+  {
+   "type": "item",
+   "item": "IA3-408"
+  },
+  {
+   "type": "item",
+   "item": "IA3-409"
+  },
+  {
+   "type": "item",
+   "item": "IA3-410"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KING-ACTIVE",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you answered: did you count the two kings' steps to the pawns, or did you look at the pawn moves first? Which gave you the right answer more often?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-07, CI-26: king activity in endings)",
+  "sources/sheets/emlasker_common-sense.md (4.17: the king becomes a fighter)",
+  "sources/sheets/nimzowitsch_my-system.md (idea 22: centralise the king; he notes a tactical exception)",
+  "docs/curriculum-map-v1.1.md (END.KING-ACTIVE)",
+  "All positions: own constructions; results from the Lichess tablebase service"
+ ]
+}

@@ -1,0 +1,191 @@
+{
+  "id": "L-LOOP-V3-1",
+  "title": "Candidates and short lines",
+  "skill": "LOOP.V3",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Writes a short candidate list (forcing moves first)",
+    "Follows each candidate for about three plies and drops the ones that fail",
+    "Holds a position in the head well enough to list a piece's legal moves with pieces hidden",
+    "Knows what a short line can miss"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Do not play the first good-looking move. Make a short **candidate list**: two to four moves, forcing moves first. Then follow each for about three **plies** (a ply is one move by one side): your move, the opponent's best reply, your next move. Drop candidates that clearly fail. Two to four is a habit to try, not a rule."
+    },
+    {
+      "type": "board",
+      "fen": "2k1r2r/p1p2p2/1p5p/8/2b4N/PQ3B2/3q2P1/3R1K1R w - - 0 29",
+      "caption": "White is in check. The candidate list is short: White has exactly four legal moves.",
+      "line": [
+        {
+          "move": "b3c4",
+          "say": "Qxc4 captures the checking bishop."
+        },
+        {
+          "move": "d2d1",
+          "say": "Black takes the rook with check."
+        },
+        {
+          "move": "f3d1",
+          "say": "Bxd1 takes the queen. Three plies show White clearly ahead."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "c4"
+        },
+        {
+          "from": "d2",
+          "to": "d1"
+        },
+        {
+          "from": "f3",
+          "to": "d1"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          },
+          "statement": "White is in check."
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "b3c4",
+              "b3d3",
+              "f1g1",
+              "f3e2"
+            ]
+          },
+          "statement": "White has exactly four legal moves: Kg1, Be2, Qxc4 and Qd3."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b3c4"
+            ]
+          },
+          "statement": "Qxc4 is the engine's best move."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "f1g1",
+            "cp": 400
+          },
+          "statement": "Kg1 is far worse."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "b3d3",
+            "cp": 400
+          },
+          "statement": "Qd3 is far worse."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "b3c4",
+            "min": 5
+          },
+          "statement": "Qxc4 nets White at least five points of material along the engine's line."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA5-15"
+    },
+    {
+      "type": "card",
+      "text": "To follow a line you must hold the board in your head. **Drill:** you study a position for 15 seconds, then some pieces vanish from the board. You must still say where a piece can go. This is a training exercise for seeing lines, not a chess rule."
+    },
+    {
+      "type": "item",
+      "item": "IA5-16"
+    },
+    {
+      "type": "item",
+      "item": "IA5-17"
+    },
+    {
+      "type": "card",
+      "text": "**Short lines have limits.** Three plies are enough when every move is forcing. They can mislead when a sacrifice pays off later: a line that looks bad at ply three can be mate at ply five. And in quiet positions the candidates may not separate at all.\nAsk: **is the last move of my line quiet or forcing?**"
+    },
+    {
+      "type": "contrast",
+      "title": "Same method, three situations",
+      "prompt": "Judge each position by a short look first. Predict, then check.",
+      "working": "IA5-18",
+      "failing": "IA5-19",
+      "irrelevant": "IA5-20"
+    },
+    {
+      "type": "item",
+      "item": "IA5-21"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Here a candidate-list box sits beside the board. In mixed practice it is hidden; you can open it and the app notes that you did. The plan: stop showing it once you solve five mixed items in a row without it (five is a first guess). Next item is silent: you keep your list and lines in your head."
+    },
+    {
+      "type": "item",
+      "item": "IA5-22",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you moved in the silent item, how sure were you? Then write your candidate list and the lines you followed, from memory.",
+      "fields": [
+        {
+          "id": "confidence",
+          "label": "How sure were you before moving?",
+          "options": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        {
+          "id": "candidates",
+          "label": "My candidate moves were:"
+        },
+        {
+          "id": "deepest",
+          "label": "The longest line I followed was (plies):",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S4 (CAL.VISUALIZE, CAL.CANDIDATES) and S2 (LOOP.V3)",
+    "docs/council-synthesis.md CD-3 (Kotov and Aagaard candidate routines, recalled [R])",
+    "positions: Lichess puzzles and games (CC0)"
+  ]
+}

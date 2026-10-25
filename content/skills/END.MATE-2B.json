@@ -1,0 +1,66 @@
+{
+  "id": "END.MATE-2B",
+  "title": "Mate with two bishops",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains the two-bishop mate: drive the king to the edge and into a corner, bring the king to the sixth rank, and use a waiting bishop move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Mates with two bishops against a bare king in a given position within 25 moves.",
+      "prereqs": [
+        "END.MATE-MATERIAL.D1",
+        "END.MATE-STALEMATE-AVOID.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, mates without stalemating and without losing a bishop, choosing the waiting move correctly.",
+      "prereqs": [
+        "END.MATE-2B.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies the move count against the tablebase and finds the quickest method.",
+      "prereqs": [
+        "END.MATE-2B.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Place the bishops anywhere; they will drive the king."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-02; §7 row 3",
+    "docs/curriculum-map-v1.1.md §3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Both bishops restrict the king; the king must be driven to the edge and into a corner, and the attacker's king reaches the sixth rank; White must mark time with a bishop move."
+  ],
+  "condition_sources": [
+    "CAP CI-02 (b)"
+  ],
+  "contrasts": [
+    "Placing the bishops without a plan, or forgetting to bring the king up.",
+    "Drifting into stalemate.",
+    "Bishops on the same colour (which cannot mate)."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-02 (g)",
+    "CAP CI-02 (d)",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

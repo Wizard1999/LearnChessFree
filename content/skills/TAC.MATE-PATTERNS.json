@@ -1,0 +1,77 @@
+{
+  "id": "TAC.MATE-PATTERNS",
+  "title": "Mating patterns",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains what must be true for a check to be mate: the king's squares are covered or blocked, the checker cannot be taken, the check cannot be blocked.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told the family (back-rank, smothered, corner knight with a queen, two bishops on adjacent diagonals, queen next to the king), finds the mate in one or two.",
+      "prereqs": [
+        "TAC.BACKRANK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, finds mate in one or two when it exists and says 'no mate' where it does not.",
+      "prereqs": [
+        "TAC.MATE-PATTERNS.D1",
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Given a pattern on the board, says which single piece or pawn, if removed, breaks it, and verifies a sacrifice leading to the pattern against the declined lines.",
+      "prereqs": [
+        "TAC.MATE-PATTERNS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A queen sacrifice near the king always works.",
+    "A pattern learned from a diagram works in any position that looks similar."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27 (combination types around a castled king), CI-49 (a Legal-type trap, outside knowledge); §7 row 28",
+    "sources/sheets/emlasker_common-sense.md §4.14 (command up to nine squares)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C33 (attack types)",
+    "docs/curriculum-map-v1.md §2 S3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Every flight square is covered or blocked, the checker is immune to capture, and the line cannot be intercepted.",
+    "A queen, rook or minor-piece sacrifice works when it opens the king's cover and the co-ordinated pieces cover the weak point."
+  ],
+  "condition_sources": [
+    "EML 4.14 (b)",
+    "CAP CI-27 (b)"
+  ],
+  "contrasts": [
+    "The pattern is nearly there but one flight square is open, so the check is not mate.",
+    "The sacrifice is the same but a defender covers the key square.",
+    "A position with a mating pattern for the other side only."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EML 4.14",
+    "CAP CI-27 (g): no failing look-alike in the book, so we supply it",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.DOUBLE-CHECK.D1",
+    "TAC.DECOY.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.DOUBLE-CHECK.D1": "double-check mates are a pattern family",
+    "TAC.DECOY.D1": "decoy sacrifices lead into the patterns"
+  }
+}

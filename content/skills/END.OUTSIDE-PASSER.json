@@ -1,0 +1,70 @@
+{
+  "id": "END.OUTSIDE-PASSER",
+  "title": "The outside passed pawn",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a distant passed pawn drags the opposing king away, putting the other king two files nearer the remaining pawns.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Identifies the outside passed pawn and shows the king route that wins the other pawns.",
+      "prereqs": [
+        "END.SQUARE.D1",
+        "POS.PASSED.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled pawn endings, decides whether the outside passer wins, using counting and the opposition, and when the passer is too close to the kings.",
+      "prereqs": [
+        "END.OUTSIDE-PASSER.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the effect of one-feature changes (the passer one file closer; a king one step further) and verifies with counting.",
+      "prereqs": [
+        "END.OUTSIDE-PASSER.D2",
+        "END.KING-ACTIVE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Any passed pawn on the edge wins."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K24; §8 item 15",
+    "sources/sheets/emlasker_common-sense.md §4.18",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 19",
+    "docs/curriculum-map-v1.md §2 S7"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The passed pawn is far enough from the kings that the defending king must leave the other pawns."
+  ],
+  "condition_sources": [
+    "EDL K24 (b)"
+  ],
+  "contrasts": [
+    "A passed pawn too close to the kings, so the defender's king stops it and still guards.",
+    "Pushing the passer without king support.",
+    "Active rooks where the king raid is not available."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL §8 item 15",
+    "CAP CI-19 (g)",
+    "EDL §8 item 15"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {},
+  "note": "Verify each family by tablebase before items are authored."
+}

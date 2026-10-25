@@ -1,0 +1,169 @@
+{
+  "id": "L-FND-ATTACK-1",
+  "title": "Which squares does a piece attack?",
+  "skill": "FND.ATTACK",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Taps every square a rook, bishop, knight or pawn attacks when other pieces stand in the way",
+    "Stops a line at the first piece it meets and keeps the squares behind it out",
+    "Knows a pawn attacks diagonally ahead, even when blocked, and not straight ahead",
+    "Says a defended piece is still attacked"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A piece **attacks** a square when it could capture an enemy piece standing there (pins aside; see the next card). If the square holds a piece of its own side, we say the piece **defends** it.\nAn attacked square need not hold anything yet. And the squares a piece attacks are not always the squares it moves to."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/4p3/8/8/8/1P2R3/8/6K1 w - - 0 1",
+      "caption": "White to move. The lit squares are the squares the rook on e3 attacks.",
+      "line": [
+        {
+          "move": "e3e7",
+          "say": "The rook can take the pawn on e7. It is the first piece on the file; e8 behind it was never attacked."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "b3",
+        "c3",
+        "d3",
+        "e1",
+        "e2",
+        "e4",
+        "e5",
+        "e6",
+        "e7",
+        "f3",
+        "g3",
+        "h3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e3",
+            "squares": [
+              "b3",
+              "c3",
+              "d3",
+              "e1",
+              "e2",
+              "e4",
+              "e5",
+              "e6",
+              "e7",
+              "f3",
+              "g3",
+              "h3"
+            ]
+          },
+          "statement": "These twelve squares are exactly the rook's attacked squares."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e7",
+            "piece": "p"
+          },
+          "statement": "A black pawn stands on e7."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e3e7"
+          },
+          "statement": "The rook can capture the pawn on e7."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB3-1"
+    },
+    {
+      "type": "item",
+      "item": "IB3-2"
+    },
+    {
+      "type": "item",
+      "item": "IB3-3"
+    },
+    {
+      "type": "item",
+      "item": "IB3-4"
+    },
+    {
+      "type": "card",
+      "text": "A check before you trust 'attacks'.\n**Lines:** a rook, bishop or queen attacks up to and including the first piece it meets. Squares behind it are not attacked until it leaves.\n**Pawns:** two squares diagonally ahead, even when blocked; never the square straight ahead.\n**Pinned pieces** still attack their squares. A defended piece is still attacked."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "White's d4 pawn and a black knight. Predict, then check.",
+      "working": "IB3-7",
+      "failing": "IB3-8",
+      "irrelevant": "IB3-9"
+    },
+    {
+      "type": "item",
+      "item": "IB3-5"
+    },
+    {
+      "type": "item",
+      "item": "IB3-6"
+    },
+    {
+      "type": "item",
+      "item": "IB3-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA0-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA0-30",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.ATTACK",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which rule did you reach for last: the line stops at the first piece, or the pawn attacks diagonally? Which one would you check first next time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.ATTACK.json (conditions and contrasts)",
+    "docs/first-hours.md sessions 1-2 (rook, pawn and capture items)",
+    "docs/lessons-t0.md (lesson order: after L-FND-CAPTURE-1)"
+  ]
+}

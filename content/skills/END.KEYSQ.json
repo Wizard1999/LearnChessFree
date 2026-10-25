@@ -1,0 +1,67 @@
+{
+  "id": "END.KEYSQ",
+  "title": "Key squares",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains key squares: if the attacking king reaches one, the pawn queens whoever is to move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a pawn on a rank, marks its key squares.",
+      "prereqs": [
+        "END.KPK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled K+P positions, predicts the result with the key-square rule, including the rook-pawn exception and who is to move.",
+      "prereqs": [
+        "END.KEYSQ.D1",
+        "END.OPPOSITION.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Compares the key-square and opposition methods on the same position, and explains why the sixth-rank rule is a special case.",
+      "prereqs": [
+        "END.KEYSQ.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "King directly in front of the pawn means it cannot be won (a rule of thumb)."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §7 row 6 (replace the rule of thumb with key squares)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K23; §5 item 8",
+    "docs/curriculum-map-v1.1.md §3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Key squares as the primary rule; the sixth-rank threshold is a special case."
+  ],
+  "condition_sources": [
+    "EDL §7 row K23, flagged CHECK"
+  ],
+  "contrasts": [
+    "The 'king directly in front means no win' rule of thumb treated as exact.",
+    "The sixth-rank opposition rule misses cases the key-square rule handles.",
+    "A position with additional pieces, where key squares alone do not decide."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §5 item 9",
+    "EDL §5 item 8",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

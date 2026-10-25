@@ -1,0 +1,329 @@
+{
+  "id": "L-GAME-FAMILIES-1",
+  "title": "Games with the same pawn structure share plans",
+  "skill": "GAME.FAMILIES",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Explains that games are grouped by pawn structure, not by the opening's name, and that games in a family share plans",
+    "In three games with the French Advance chain, names the plan each side follows: hit the base, play on the wing the chain points to, or take space on the other wing",
+    "Checks that the chain is still there before applying the family's plan",
+    "Says 'no family plan applies' when the structure has gone or never existed"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Games with the same pawn structure tend to share plans.** Group games by their pawns, not by the opening's name. Here White's d4 and e5 face Black's d5 and e6. Each pawn is protected by the one behind it: a chain, base at the back.\n**Rule of thumb:** the chain's owner plays on the wing the chain points to (here the kingside), and the other side attacks the base."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "The French Advance chain forms. Watch which pawns protect which.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White takes the centre."
+        },
+        {
+          "move": "e7e6",
+          "say": "Black prepares ...d5."
+        },
+        {
+          "move": "d2d4",
+          "say": "A second centre pawn."
+        },
+        {
+          "move": "d7d5",
+          "say": "Black challenges the centre."
+        },
+        {
+          "move": "e4e5",
+          "say": "White advances. The pawns d4 and e5 now form a chain."
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e5",
+        "d5",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "protected",
+            "color": "white",
+            "squares": [
+              "e5"
+            ],
+            "after_moves": [
+              "e2e4",
+              "e7e6",
+              "d2d4",
+              "d7d5",
+              "e4e5"
+            ]
+          },
+          "statement": "White's e5 pawn is protected by the d4 pawn."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "chain_base",
+            "color": "white",
+            "squares": [
+              "d4"
+            ],
+            "after_moves": [
+              "e2e4",
+              "e7e6",
+              "d2d4",
+              "d7d5",
+              "e4e5"
+            ]
+          },
+          "statement": "White's d4 pawn is the base of the chain: it protects e5 and no pawn protects it."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "protected",
+            "color": "black",
+            "squares": [
+              "d5",
+              "e6"
+            ],
+            "after_moves": [
+              "e2e4",
+              "e7e6",
+              "d2d4",
+              "d7d5",
+              "e4e5"
+            ]
+          },
+          "statement": "Black's d5 and e6 pawns are protected by pawns: a chain pointing the other way."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e6",
+              "d2d4",
+              "d7d5",
+              "e4e5",
+              "c7c5"
+            ]
+          },
+          "statement": "After ...c5 a black pawn attacks d4, the base."
+        },
+        {
+          "id": "C5",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e6",
+              "d2d4",
+              "d7d5",
+              "e4e5",
+              "f7f6"
+            ]
+          },
+          "statement": "After ...f6 a black pawn attacks e5, the head."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB5-61"
+    },
+    {
+      "type": "item",
+      "item": "IB5-62"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pp3ppp/4p3/2ppP3/3P4/8/PPP2PPP/RNBQKBNR w KQkq - 0 4",
+      "caption": "Game A, after 3...c5: the fight over the base d4, move by move.",
+      "line": [
+        {
+          "move": "c2c3",
+          "say": "White adds a defender to the base d4."
+        },
+        {
+          "move": "b8c6",
+          "say": "Black adds an attacker: the knight."
+        },
+        {
+          "move": "f2f4",
+          "say": "White advances a pawn on the kingside, where the chain points."
+        },
+        {
+          "move": "d8b6",
+          "say": "Black's queen joins the queenside."
+        },
+        {
+          "move": "g1f3",
+          "say": "A third defender of d4."
+        },
+        {
+          "move": "c5d4",
+          "say": "Black captures on d4: the pawns are exchanged."
+        },
+        {
+          "move": "c3d4",
+          "say": "White recaptures. The chain stands again, with a second protector on f4."
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "c2c3",
+              "b8c6"
+            ]
+          },
+          "statement": "After 4...Nc6 two black pieces attack d4."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 3,
+            "after_moves": [
+              "c2c3",
+              "b8c6",
+              "f2f4",
+              "d8b6",
+              "g1f3"
+            ]
+          },
+          "statement": "After 6.Nf3 three white pieces defend d4."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "chain_base",
+            "color": "white",
+            "squares": [
+              "d4",
+              "f4"
+            ],
+            "after_moves": [
+              "c2c3",
+              "b8c6",
+              "f2f4",
+              "d8b6",
+              "g1f3",
+              "c5d4",
+              "c3d4"
+            ]
+          },
+          "statement": "After the recapture the pawns d4 and f4 both protect e5, and no pawn protects either of them."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB5-63"
+    },
+    {
+      "type": "card",
+      "text": "**The plan holds while the structure holds.** If the base falls, the head is exchanged, or a lever opens the position, the family plans stop fitting; read the position on its own. Ask first: is the chain still there? A family holds more than one plan: Black can hit the base with ...c5, hit the head with ...f6, or take space with ...c4. Which fits depends on the pieces."
+    },
+    {
+      "type": "item",
+      "item": "IB5-64"
+    },
+    {
+      "type": "item",
+      "item": "IB5-65"
+    },
+    {
+      "type": "contrast",
+      "title": "Does the chain plan apply?",
+      "prompt": "Three positions, one question: does the plan 'hit the base of the chain with a pawn' apply? Predict each, then check.",
+      "working": "IB5-66",
+      "failing": "IB5-67",
+      "irrelevant": "IB5-68"
+    },
+    {
+      "type": "item",
+      "item": "IB5-69",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB5-71",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The app does not group games by pawn structure yet (planned). The Openings explorer lists openings by name and shows transpositions, and My games shows your own games move by move. Until then, sort games on paper: write the pawns of the structure first, the opening's name second, and the plan for each side beside the structure."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.GAME.FAMILIES",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Choose a structure that your own games reach (for example the one your favourite opening produces). Name it by its pawns, not by the opening.",
+      "fields": [
+        {
+          "id": "pawns",
+          "label": "The pawns that make the structure:"
+        },
+        {
+          "id": "plan_w",
+          "label": "White's usual plan:"
+        },
+        {
+          "id": "plan_b",
+          "label": "Black's usual plan:"
+        },
+        {
+          "id": "left",
+          "label": "In one of my games, the move at which the structure was left (or 'still there'):"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/council-synthesis.md CD-8 (games curated into families by structure); content/skills/GAME.FAMILIES.json",
+    "sources/sheets/nimzowitsch_my-system.md section 4 idea 30 (chain: attack the base); sources/sheets/capablanca_chess-fundamentals.md section 7 row 55 (Part II games, moves are facts)",
+    "games: Lichess January 2013 (CC0) games eflsn7xy, fyltgu5w; Capablanca, Chess Fundamentals (1921), Part II, Game 6 (PD-US, move table only, converted from descriptive notation and checked legal move by move)",
+    "plan names are this lesson's own labels [I]; the claims verify pawn facts and that the plan moves are sound by the engine at depth 16"
+  ]
+}

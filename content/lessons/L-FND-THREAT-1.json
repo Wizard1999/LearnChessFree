@@ -1,0 +1,110 @@
+{
+  "id": "L-FND-THREAT-1",
+  "title": "Before every move: two questions",
+  "skill": "LOOP.V1",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Names what the opponent's last move threatens, including a checkmate threat",
+    "Finds one's own loose pieces, and knows when there is nothing to fix",
+    "Plays the first games with a simple routine and marks a moment of doubt"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Before every move, ask two questions. **1. What does my opponent's last move threaten?** (a capture, a check, a checkmate). **2. Is any of my pieces loose?** (attacked, and not defended). Only then choose your own move. Strong players do this all the time; beginners lose most games by skipping it."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 4 3",
+      "caption": "White's queen and bishop aim at f7. If Black ignores this and develops a knight, Qxf7 is checkmate.",
+      "line": [
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight and ignores the threat."
+        },
+        {
+          "move": "h5f7",
+          "say": "Queen takes f7: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "f7"
+        },
+        {
+          "from": "c4",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h5f7",
+            "n": 1,
+            "null_move_first": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-106"
+    },
+    {
+      "type": "item",
+      "item": "IA0-107"
+    },
+    {
+      "type": "contrast",
+      "title": "The same attack, one defender more",
+      "prompt": "Black's knight went to h6, not f6. Predict first: does Qxf7 still win for White?",
+      "working": "IA0-108",
+      "failing": "IA0-109"
+    },
+    {
+      "type": "card",
+      "text": "The second question looks at your own side. After each opponent move, scan your pieces: is any of them attacked and not defended? If nothing is loose and nothing is threatened, you are free to follow your opening habits."
+    },
+    {
+      "type": "item",
+      "item": "IA0-110"
+    },
+    {
+      "type": "item",
+      "item": "IA0-111"
+    },
+    {
+      "type": "item",
+      "item": "IA0-112"
+    },
+    {
+      "type": "item",
+      "item": "IA0-113"
+    },
+    {
+      "type": "card",
+      "text": "Now play your first games. Play simply: take the centre, bring your pieces out, castle, and ask the two questions before every move. Do not worry about winning. The goal is to notice. After a game, mark **one moment where you were unsure** and what you expected your opponent to do."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "After your first game: mark one move where you were unsure. What did you think your opponent would do there? You will compare your answer with what the game shows."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md sessions 3-4 (the threat check, first games, reflection)",
+    "docs/council-synthesis.md CD-3, CD-12",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-51: failing to see the opponent's threat)"
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "id": "L-POS-DEVELOPMENT-1",
+  "title": "Development: a lead you can spend",
+  "skill": "OPN.TEMPO",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts developed pieces on both sides before attacking",
+    "Explains why a sacrifice works against an undeveloped army and fails against a developed one",
+    "Decides when castling is urgent and when it can wait"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Development is a lead you can spend. When your pieces are out and the enemy's are still at home, lines open in your favour and his king has few helpers, so a sacrifice that opens them can win.\nBefore you attack, **count the pieces in play on both sides.** The same sacrifice that wins against an undeveloped army loses against a developed one."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/p3pppp/2pp4/1p6/2B1P1b1/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+      "caption": "White to move. Black has played ...Bg4 and ...b5 but left the other pieces at home.",
+      "line": [
+        {
+          "move": "c4f7",
+          "say": "Bxf7+ strikes at the king, which has no developed helpers."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king must take."
+        },
+        {
+          "move": "f3g5",
+          "say": "Check again: the king is dragged into the open."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c4f7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4f7"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c4f7",
+            "min": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-22"
+    },
+    {
+      "type": "card",
+      "text": "The attack is licensed by the lead, not by the sacrifice. Ask: **how many Black pieces are developed, and can his king find a safe square?** If he has a developed defender and a flight square, the sacrifice only loses a piece. A lead also fades: use it before the opponent catches up."
+    },
+    {
+      "type": "contrast",
+      "title": "Same sacrifice, one more defender",
+      "prompt": "Black has also played ...Nf6. Does Bxf7+ still work? Predict first, then check.",
+      "working": "IA2-22",
+      "failing": "IA2-23"
+    },
+    {
+      "type": "item",
+      "item": "IA2-24"
+    },
+    {
+      "type": "card",
+      "text": "Castling early gets the king safe and brings a rook into play. It matters most when the centre can open. When the centre is closed, castling can wait a move or two. Ask: **can the opponent open the centre now?**"
+    },
+    {
+      "type": "contrast",
+      "title": "Same king, a different centre",
+      "prompt": "White's pawn is on e3 instead of e4. Is castling still the only good move? Predict first, then check.",
+      "working": "IA2-25",
+      "failing": "IA2-26"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you counted the developed pieces: how sure were you that the sacrifice worked? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K6-K7: lost move, lead licenses attack, deficit voids it; K32 castling timing)",
+    "sources/sheets/emlasker_common-sense.md (4.2, 4.8: mobilise first, attack needs superiority)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C19, contrast family A: development lead)",
+    "sources/sheets/nimzowitsch_my-system.md (idea 1, 5)"
+  ]
+}

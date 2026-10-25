@@ -1,0 +1,181 @@
+{
+  "id": "L-END-MATEKQ-1",
+  "title": "King and queen against king: shrink the box",
+  "skill": "END.MATE-KQ",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Uses the queen a knight's jump away to shrink the lone king's room",
+    "Finds a mate in one without stalemating, and a quiet move that forces mate in two",
+    "Plays king and queen against king to checkmate"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A lone king can be checkmated with a king and a queen. Use the queen to shrink the box the king can move in, bring your own king closer, and give the final check next to an edge. The queen works best a **knight's jump** away from the king: it covers many squares and the king cannot capture her."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/8/3k4/1Q6/8/8/K7 b - - 0 1",
+      "caption": "The queen on b4 is a knight's jump from the king on d5. Most of the king's room is gone.",
+      "arrows": [
+        {
+          "from": "b4",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "e5",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d5",
+            "to": [
+              "c6",
+              "e5",
+              "e6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Same king, the queen moves away",
+      "prompt": "The queen goes from c4 to a8, far from the king. Predict first: does the king have more squares or fewer?",
+      "working": "IA0-123",
+      "failing": "IA0-124"
+    },
+    {
+      "type": "card",
+      "text": "Two things to check before each move. Is the queen safe, so the king cannot capture her? And, if your move is not mate, can Black still make a legal move? If Black has no legal move and is not in check, the game is a draw by stalemate, however much you are ahead."
+    },
+    {
+      "type": "item",
+      "item": "IA0-125"
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/1K1Q4/8/8/8/8/8 b - - 1 1",
+      "caption": "Qd6 would leave Black without a move, and the king is not in check: stalemate.",
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "a6"
+        }
+      ],
+      "highlight": [
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/1K6/8/8/6Q1/8/8 b - - 1 1",
+      "caption": "Qg3 is stalemate too. A quiet queen move that covers the king's last squares is dangerous.",
+      "arrows": [
+        {
+          "from": "g3",
+          "to": "a3"
+        }
+      ],
+      "highlight": [
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/3K4/8/8/5Q2/8/8 b - - 0 1",
+      "caption": "A quiet queen move can win by force. After Qf3 the black king has just one square.",
+      "line": [
+        {
+          "move": "e8d8",
+          "say": "The king has only one square, d8."
+        },
+        {
+          "move": "f3a8",
+          "say": "Qa8 is checkmate: the white king covers c7, d7 and e7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "f8"
+        },
+        {
+          "from": "f3",
+          "to": "a8"
+        }
+      ],
+      "highlight": [
+        "d8",
+        "f8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e8",
+            "to": [
+              "d8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-126"
+    },
+    {
+      "type": "item",
+      "item": "IA0-127"
+    },
+    {
+      "type": "item",
+      "item": "IA0-128"
+    },
+    {
+      "type": "item",
+      "item": "IA0-129"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "While you played it out: was there a moment when you were not sure whether your move would stalemate? How did you check?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 4",
+    "docs/council-synthesis.md CD-1",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-03: queen mate, restrict mobility, avoid stalemate)",
+    "content/lessons/L-END-MATE-1.json is the follow-up that drills the stalemate trap"
+  ]
+}

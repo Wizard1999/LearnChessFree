@@ -1,0 +1,76 @@
+{
+  "id": "GAME.GUESS",
+  "title": "Guess the move",
+  "strand": "S9",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains guess-the-move: commit to a move or plan before the game continues, scored by agreement on the plan class and by soundness.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "At five stopping points in a model game, names the plan class for each side before seeing the sequel.",
+      "prereqs": [
+        "POS.PLAN.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Chooses a move at each unlabeled stop, and the choice is sound (engine-checked) at least 60 percent of the time.",
+      "prereqs": [
+        "GAME.GUESS.D1",
+        "CAL.CANDIDATES.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Explains disagreement with the played move and whether his own choice was sound too.",
+      "prereqs": [
+        "GAME.GUESS.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Reading a great game teaches the moves."
+  ],
+  "sources": [
+    "docs/council-synthesis.md Round 8, CD-8",
+    "sources/sheets/edlasker_chess-strategy.md §7 row 'Predict-then-compare' (the translator's method)",
+    "sources/sheets/capablanca_chess-fundamentals.md §8 item 20",
+    "sources/sheets/znosko-borovsky_middle-game.md §8 exercises 1, 14"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Study each critical diagram, form your own opinion, then compare with the sequel (the translator's method).",
+    "Scored by agreement on plan class and by whether the choice is sound, not by the engine's top move.",
+    "Moves of a game are facts; the commentary is original."
+  ],
+  "condition_sources": [
+    "EDL §6; §7 row 'Predict-then-compare'",
+    "CNC CD-8",
+    "CNC CD-8"
+  ],
+  "contrasts": [
+    "Reading the game without committing, which is rereading and has low utility.",
+    "Scoring by the engine's first move, which penalises sound alternatives.",
+    "Stops at forced moves such as obvious recaptures."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CNC Round 8 (Dunlosky)",
+    "CNC CD-8",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "LOOP.V3.D1"
+  ],
+  "soft_prereq_notes": {
+    "LOOP.V3.D1": "the learner's own candidate list is what is compared"
+  }
+}

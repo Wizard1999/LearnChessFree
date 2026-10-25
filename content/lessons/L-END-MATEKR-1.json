@@ -1,0 +1,90 @@
+{
+  "id": "L-END-MATEKR-1",
+  "title": "King and rook against king: cut off and close in",
+  "skill": "END.MATE-KR",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Uses the rook to cut the lone king off along a file",
+    "Brings the king up close, then finishes with a rook check on the edge",
+    "Knows a check next to the king fails if the rook is unprotected"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A rook alone cannot mate: the lone king can chase it. So cut the king off with the rook along a file or a rank, then bring your own king up close, so that it covers the squares the black king would run to. The rook then gives the final check on the edge."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/8/4k3/8/8/8/K2R4 b - - 0 1",
+      "caption": "The rook on d1 holds the whole d-file. The black king cannot cross it.",
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e6",
+        "f4",
+        "f5",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e5",
+            "to": [
+              "e4",
+              "e6",
+              "f4",
+              "f5",
+              "f6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-130"
+    },
+    {
+      "type": "item",
+      "item": "IA0-131"
+    },
+    {
+      "type": "item",
+      "item": "IA0-132"
+    },
+    {
+      "type": "contrast",
+      "title": "Two ways to use the rook",
+      "prompt": "In this position White can also check at once with the rook, Rg8+. Predict first: does that work as well as bringing the king, Ke6?",
+      "working": "IA0-133",
+      "failing": "IA0-134"
+    },
+    {
+      "type": "item",
+      "item": "IA0-135"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Did you manage the king-and-rook ending without stalemate and without losing the rook? How sure are you of the method now? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 4",
+    "docs/council-synthesis.md CD-1",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-01: rook mate, drive the king to the edge, king and rook cooperate)",
+    "content/lessons/L-END-MATE-1.json is the follow-up that drills the stalemate trap"
+  ]
+}

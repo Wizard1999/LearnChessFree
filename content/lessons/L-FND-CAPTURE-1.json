@@ -1,0 +1,169 @@
+{
+  "id": "L-FND-CAPTURE-1",
+  "title": "Taking pieces, and what pieces are worth",
+  "skill": "FND.CAPTURE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Gives a rough point value to each piece and uses it to compare trades",
+    "Checks whether a capture is guarded before taking",
+    "Knows that points are a guide, and that checkmate beats them"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You **capture** by moving onto an enemy piece and taking it off the board. Captures are never forced. To compare trades, players use rough **points**: pawn 1, knight 3, bishop 3, rook 5, queen 9. The king has no points because it cannot be captured; it is checkmated instead. These numbers are a first guide, not a law."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4ppp/8/4n3/8/2B5/P4PPP/6K1 w - - 0 1",
+      "caption": "The bishop takes a knight that nothing guards. White is 3 points ahead.",
+      "line": [
+        {
+          "move": "c3e5",
+          "say": "The bishop takes the knight on e5."
+        },
+        {
+          "move": "g7g6",
+          "say": "Black has no piece that can take the bishop back."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3e5",
+            "min": 3
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 0
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-48"
+    },
+    {
+      "type": "card",
+      "text": "Before you take, ask: **is the piece guarded?** A piece is guarded (or defended) when a friend could take back on that square. If it is guarded, compare what you give up with what you win. If you win more than you lose, the capture can still be good."
+    },
+    {
+      "type": "contrast",
+      "title": "Same capture, one change",
+      "prompt": "Now the piece on e5 is a pawn, and another pawn guards it. Predict first: is it still a good capture?",
+      "working": "IA0-49",
+      "failing": "IA0-50"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4pp1/4r2p/8/3N4/8/P4PPP/6K1 w - - 0 1",
+      "caption": "A guarded rook can still be worth taking with a knight. Add up the swap.",
+      "line": [
+        {
+          "move": "d4e6",
+          "say": "The knight takes the rook: White gains 5."
+        },
+        {
+          "move": "f7e6",
+          "say": "The pawn takes the knight: White loses 3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4e6",
+            "min": 2
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-51"
+    },
+    {
+      "type": "item",
+      "item": "IA0-52"
+    },
+    {
+      "type": "item",
+      "item": "IA0-53"
+    },
+    {
+      "type": "item",
+      "item": "IA0-54"
+    },
+    {
+      "type": "card",
+      "text": "The points are a guide, not the whole truth. The next position shows one way they can mislead: checkmate ends the game, whatever the points say. Later you will meet other cases where a piece is worth more or less than its number."
+    },
+    {
+      "type": "item",
+      "item": "IA0-55"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CAPTURE",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before answering each 'take it or not' question: what did you check first, and in what order?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 2",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "sources/sheets/edlasker_chess-strategy.md (values are conditional; one-line rule plus its spoilers)",
+    "sources/sheets/capablanca_chess-fundamentals.md (values as comparisons, not a table)"
+  ],
+  "also": [
+    "FND.VALUE"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "id": "SAF.THREAT",
+  "title": "What does their last move threaten?",
+  "strand": "S2",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that before moving you ask what the opponent's last move threatens: a capture, a check, a mate.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'what does the opponent threaten?', names the capture or the mate that is threatened.",
+      "prereqs": [
+        "SAF.LOOSE.D1",
+        "FND.MATE1.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions finds the opponent's threat when there is one and says 'none' when there is none.",
+      "prereqs": [
+        "SAF.THREAT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds double threats, and checks that a reply stops the threat without creating a new weakness.",
+      "prereqs": [
+        "SAF.THREAT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Only captures count as threats; checks and mates do not.",
+    "If the last move attacks nothing, there is no threat."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "After the opponent's move ask: what could they capture, check or mate next move if I did nothing?",
+    "Sometimes the answer is 'nothing': say so."
+  ],
+  "condition_sources": [
+    "FH session 4",
+    "FH session 4"
+  ],
+  "contrasts": [
+    "A quiet-looking developing move can threaten mate in one.",
+    "A move that attacks nothing of yours is not a threat; do not invent a reply to it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 4",
+    "FH session 4"
+  ]
+}

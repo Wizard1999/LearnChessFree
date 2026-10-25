@@ -1,0 +1,176 @@
+{
+  "id": "L-TAC-COMBO-1",
+  "title": "Combinations: a chain of forcing moves, checked to the end",
+  "skill": "TAC.COMBO",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the links of a short combination (for example removing a defender, then a mating pattern)",
+    "Finds a two-motif sequence when told a combination exists",
+    "Plays the sequence to the last position and checks the opponent's replies",
+    "Says when an apparent combination fails at the last step"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **combination** is a chain of forcing moves in which each move is justified by the next. It usually joins ideas you already know: a fork (*L-TAC-FORK-1*), a pin (*L-TAC-PIN-1*) or removing a defender (*L-TAC-REMOVE-DEFENDER-1*), ending in a mating pattern or a won piece. The first move may look bad. The last move pays for it."
+    },
+    {
+      "type": "board",
+      "fen": "2r4k/pp4pp/8/3p4/PP4b1/3Bq3/2Q3PK/5R2 w - - 6 32",
+      "caption": "White to move. The black rook on c8 guards the back rank.",
+      "line": [
+        {
+          "move": "c2c8",
+          "say": "Qxc8+: the queen takes the rook that guards f8. This removes a defender."
+        },
+        {
+          "move": "g4c8",
+          "say": "Black takes the queen. Any other reply also loses to mate in two (engine)."
+        },
+        {
+          "move": "f1f8",
+          "say": "Rf8#: nothing guards f8 now. A back-rank mate ends the chain."
+        }
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "A black piece (the rook on c8) attacks f8 at the start.",
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "c2c8",
+              "g4c8"
+            ]
+          },
+          "statement": "After Qxc8+ Bxc8 nothing black attacks f8.",
+          "id": "C2"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "c2c8",
+            "n": 2
+          },
+          "statement": "Qxc8+ forces checkmate in two.",
+          "id": "C3"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c2c8"
+            ]
+          },
+          "statement": "Qxc8+ is the engine's first choice.",
+          "id": "C4"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c2",
+          "to": "c8"
+        },
+        {
+          "from": "f1",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "c8",
+        "f8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-2wHbg-c1"
+    },
+    {
+      "type": "item",
+      "item": "IL-r5O0I-c1"
+    },
+    {
+      "type": "card",
+      "text": "Check the whole chain, not only the first move. Play it to the last position and ask what the opponent can do there, including quiet replies and declined captures.\nA combination that beats weak defence can fail against the best defence. *Rule of thumb:* if a simple move wins, play it; a complicated course adds risk."
+    },
+    {
+      "type": "contrast",
+      "title": "Play the chain to the end",
+      "prompt": "The first position is a combination that works. In the second, the h-pawn has moved to h6. In the third, Black's rook stands on f8. Predict, then check.",
+      "working": "IL-DU6E9-c1",
+      "failing": "IB2-27",
+      "irrelevant": "IB2-28"
+    },
+    {
+      "type": "item",
+      "item": "IL-sHh65",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-u6vRg",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-29",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.sacrifice",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you found a sacrifice, did you play the line to the last position before you trusted it? Which step is the easiest to skip: the last position, or the opponent's other replies?",
+      "fields": [
+        {
+          "id": "played_out",
+          "label": "Did you play the chain to the last position?",
+          "options": [
+            "yes, every time",
+            "sometimes",
+            "no"
+          ]
+        },
+        {
+          "id": "skip",
+          "label": "Which step is easiest to skip?",
+          "options": [
+            "the last position",
+            "the other replies",
+            "neither"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-27, CI-29, CI-32 (the simple winning move may be preferable); CI-51 (a combination judged without its quiet follow-up) [S]",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C14, C33 [S]",
+    "docs/curriculum-map-v1.md §2 S3 (T4-5); lessons L-TAC-FORK-1, L-TAC-PIN-1, L-TAC-REMOVE-DEFENDER-1",
+    "positions: Lichess puzzles (CC0), shipped sacrifice/deflection items, and authored one-feature edits of puzzles DU6E9 and td6uO; engine evidence at depth 16"
+  ]
+}

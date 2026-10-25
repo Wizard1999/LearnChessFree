@@ -1,0 +1,77 @@
+{
+  "id": "FND.ATTACK",
+  "title": "Attacked and defended squares",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a piece attacks the squares it could capture on, which is not always the set of squares it can move to (pawns capture diagonally; a blocker ends a line).",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Taps every square a named piece attacks in a position with blockers, first with squares lit, then with no aid.",
+      "prereqs": [
+        "FND.CAPTURE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions with no aid, says whether a named square is attacked by White, by Black, by both or by neither, and names the attacking pieces; also marks which of a side's pieces are attacked.",
+      "prereqs": [
+        "FND.ATTACK.D1",
+        "FND.PIECE.PAWN.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how the set of attacked squares changes after a given move (a line opens or closes, a pawn captures, a king steps), including squares newly attacked behind the moved piece.",
+      "prereqs": [
+        "FND.ATTACK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A pawn attacks the square straight ahead of it.",
+    "A piece attacks only squares it could legally move to (so a pinned piece or a pawn's capture squares seem not to count).",
+    "A defended piece is not attacked."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S1 (FND.ATTACK)",
+    "docs/first-hours.md sessions 1-2 (rook/pawn/capture items)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C25-C26 (board geometry, knight)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "A line piece attacks along its ray only up to and including the first piece in the way; the square behind a blocker is not attacked until the blocker leaves.",
+    "A pawn attacks the two squares diagonally ahead, which are different from the squares it moves to.",
+    "A pinned piece still attacks its squares for the purpose of what the enemy king may not step on."
+  ],
+  "condition_sources": [
+    "rules",
+    "FH session 1, item I-PAWN-001 idea",
+    "rules"
+  ],
+  "contrasts": [
+    "The pawn's move squares are mistaken for its attack squares (pawn blocked ahead, yet it still attacks two diagonal squares).",
+    "A king 'safe' square that a pinned enemy piece still attacks is illegal for the king.",
+    "A piece that attacks a square but is itself behind a blocker of the same colour makes no difference to what is attacked now."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 1",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "FND.VALUE.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.VALUE.D1": "value comparisons give a reason why an attacked piece matters"
+  }
+}

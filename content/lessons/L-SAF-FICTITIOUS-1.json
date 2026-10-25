@@ -1,0 +1,133 @@
+{
+  "id": "L-SAF-FICTITIOUS-1",
+  "title": "Real threats and fictitious ones",
+  "skill": "SAF.FICTITIOUS",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Says whether an attack on a piece is a real threat",
+    "Names the reason when it is not: a defender, a pinned attacker, or a bigger loss behind the capture",
+    "Says that a fictitious threat can become real when the reason goes away",
+    "Says 'no threat' when nothing is attacked at all"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An attacked piece is not always in danger. A threat is **real** if the capture gains something against best defence. It is **fictitious** if the capture fails. Three common reasons: the piece is defended and the attacker has a higher counting value; the attacker is **pinned to its king** and may not capture; the capture would let you win something bigger.\nAsk before you react: **what happens after the capture?**"
+    },
+    {
+      "type": "board",
+      "fen": "2r3k1/pp3ppp/5n2/8/2B5/1P6/P4PPP/R5K1 b - - 0 1",
+      "caption": "Black to move. Black's rook attacks the bishop on c4. Is it a threat?",
+      "line": [
+        {
+          "move": "c8c4",
+          "say": "Suppose Black takes the bishop."
+        },
+        {
+          "move": "b3c4",
+          "say": "The pawn takes back. Black has given a rook for a bishop (counting values 5 and 3)."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c8",
+          "to": "c4"
+        }
+      ],
+      "highlight": [
+        "c4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One black piece attacks the bishop."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One white piece defends the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c8c4",
+            "max": -2
+          },
+          "statement": "If Black takes, the engine line leaves Black at least 2 behind."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB3-401"
+    },
+    {
+      "type": "item",
+      "item": "IB3-402"
+    },
+    {
+      "type": "card",
+      "text": "A fictitious threat is fictitious **for a reason**, and the reason can end. A pin lifts when the king steps away. A defender can be driven off or traded. Forget it, and the threat may be real a few moves later.\nThe other mistake is spending a move on a threat that is not there. **Rule of thumb:** check the capture first; react only if it works."
+    },
+    {
+      "type": "contrast",
+      "title": "Is the knight really in danger?",
+      "prompt": "One loose knight, one change at a time. Predict, then check.",
+      "working": "IB3-403",
+      "failing": "IB3-404",
+      "irrelevant": "IB3-405"
+    },
+    {
+      "type": "item",
+      "item": "IB3-405"
+    },
+    {
+      "type": "item",
+      "item": "IB3-406",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-408",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-407",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB3-409",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of the last attack on one of your pieces in a game. Did you check what would happen after the capture, or did you react to the attack itself? Write which reason, if any, made it fictitious."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAF.FICTITIOUS.json (conditions, contrasts, misconceptions)",
+    "sources/sheets/znosko-borovsky_middle-game.md C14-C15 (idea only, original wording)",
+    "docs/lessons-tactics.md (L-SAF-THREAT-1 comes first)",
+    "positions: authored; Lichess 2013-01 games (CC0)"
+  ]
+}

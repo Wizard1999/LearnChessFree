@@ -1,0 +1,158 @@
+{
+  "id": "L-TAC-REMOVE-DEFENDER-1",
+  "title": "Attacking the defender: remove, deflect, decoy, overload",
+  "skill": "TAC.REMOVE-DEFENDER",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Finds the capture that removes the only defender",
+    "Tells removal, deflection, decoy and overload apart",
+    "Counts the defenders and their jobs before attacking one",
+    "Says when a second defender or a capturing piece defeats the idea"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A defended piece is only safe while its defender can do its job. Attack the defender and the piece falls. There are four ways: **remove** it by capturing it, **deflect** it by forcing it to move, **decoy** it by luring it to a bad square, **overload** it by giving it two jobs."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/4q1p1/6Pp/p7/4Q3/2BRK3/bP3r2/7R b - - 0 32",
+      "caption": "Black to move. The white queen on e4 is defended by the king on e3.",
+      "line": [
+        {
+          "move": "f2e2",
+          "say": "The rook offers itself with check."
+        },
+        {
+          "move": "e3e2",
+          "say": "The king takes the rook and leaves e3."
+        },
+        {
+          "move": "e7e4",
+          "say": "The queen takes the queen with check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f2",
+          "to": "e2"
+        },
+        {
+          "from": "e7",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "f2e2",
+            "min": 4
+          },
+          "statement": "...Re2+ followed by ...Qxe4+ wins material along the engine line."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "Only the king on e3 defends the queen on e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-062"
+    },
+    {
+      "type": "item",
+      "item": "IA1-063"
+    },
+    {
+      "type": "item",
+      "item": "IA1-064"
+    },
+    {
+      "type": "item",
+      "item": "IA1-065"
+    },
+    {
+      "type": "card",
+      "text": "Before you attack a defender, count.\n**Is it the only defender?** A second defender ends the idea.\n**What are all its jobs?** An overloaded piece cannot keep two.\n**What stands on the square after the exchanges?** Recount before you commit."
+    },
+    {
+      "type": "contrast",
+      "title": "A second defender",
+      "prompt": "A white pawn on f2 now guards g3 as well.",
+      "working": "IA1-062",
+      "failing": "IA1-066"
+    },
+    {
+      "type": "item",
+      "item": "IA1-067"
+    },
+    {
+      "type": "item",
+      "item": "IA1-068",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA1-069",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.capturingDefender",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.deflection",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.attraction",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When a piece looked defended, did you list every job of the defender before you attacked it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K3: three ways the count lies)",
+    "sources/sheets/nimzowitsch_my-system.md (idea 27: exchange on the pinning square)",
+    "docs/curriculum-map-v1.md S3",
+    "Lichess puzzle database (CC0): UULzT, x4ly6, D9ufo, lTEq0, PKmeH as seed positions"
+  ],
+  "also": [
+    "TAC.DEFLECT",
+    "TAC.DECOY",
+    "TAC.OVERLOAD"
+  ]
+}

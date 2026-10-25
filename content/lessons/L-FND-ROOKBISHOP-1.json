@@ -1,0 +1,192 @@
+{
+  "id": "L-FND-ROOKBISHOP-1",
+  "title": "The rook and the bishop",
+  "skill": "FND.PIECE.ROOK",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Taps every square a rook or bishop can reach, including captures and blocked lines",
+    "Predicts whether a line is blocked before moving",
+    "Tells which of two pieces can reach a square when nobody names the piece"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **rook** moves in straight lines: along a rank (sideways) or a file (up and down), as far as it likes. It cannot jump over pieces. To **capture**, it lands on an enemy piece and takes it off the board. It can never land on a square holding its own piece."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/3p4/8/8/1P1R4/8/8/6K1 w - - 0 1",
+      "caption": "The rook slides until something is in the way. It can take the black pawn on d7, but not go past it.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "d1",
+        "d2",
+        "d3",
+        "d5",
+        "d6",
+        "d7",
+        "e4",
+        "f4",
+        "g4",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "c4",
+              "d1",
+              "d2",
+              "d3",
+              "d5",
+              "d6",
+              "d7",
+              "e4",
+              "f4",
+              "g4",
+              "h4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-10"
+    },
+    {
+      "type": "card",
+      "text": "The **bishop** moves in diagonals, as far as it likes, and cannot jump. A bishop stays on one colour of square for the whole game: one bishop travels on light squares, the other on dark squares. Captures work just like the rook's."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/5p2/8/3B4/8/1P6/4K3 w - - 0 1",
+      "caption": "Four diagonals, but the white pawn on b2 shortens one of them.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "a7",
+        "b6",
+        "c3",
+        "c5",
+        "e3",
+        "e5",
+        "f2",
+        "f6",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "a7",
+              "b6",
+              "c3",
+              "c5",
+              "e3",
+              "e5",
+              "f2",
+              "f6",
+              "g1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-11"
+    },
+    {
+      "type": "card",
+      "text": "Before you move a rook or bishop to a square, ask three questions. Is the square on one of my piece's lines? Is anything standing between? Whose piece, if any, is on the square? Empty or enemy: allowed. Your own piece: not allowed."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one change",
+      "prompt": "A black pawn appears on d6. Predict first: can the rook still reach d8?",
+      "working": "IA0-12",
+      "failing": "IA0-13"
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishop, one change",
+      "prompt": "The pawn on f6 changes colour. Predict first: can the bishop still go to f6?",
+      "working": "IA0-14",
+      "failing": "IA0-15"
+    },
+    {
+      "type": "item",
+      "item": "IA0-16"
+    },
+    {
+      "type": "item",
+      "item": "IA0-17"
+    },
+    {
+      "type": "item",
+      "item": "IA0-18"
+    },
+    {
+      "type": "item",
+      "item": "IA0-19"
+    },
+    {
+      "type": "item",
+      "item": "IA0-20"
+    },
+    {
+      "type": "item",
+      "item": "IA0-21"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.ROOK",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.BISHOP",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the mixed round, which answers were guesses? Rate how sure you were overall. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ],
+  "also": [
+    "FND.PIECE.BISHOP"
+  ]
+}

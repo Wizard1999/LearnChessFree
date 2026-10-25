@@ -1,0 +1,67 @@
+{
+  "id": "DEF.SHELTER",
+  "title": "Pawn cover in front of the king",
+  "strand": "S6",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains the pawn cover in front of a castled king and that a pawn push loosens it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a given castled position and a pawn move, names the squares the move weakens and the enemy pieces that can use them.",
+      "prereqs": [
+        "POS.PAWNMOVE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, tells dangerous pawn moves from harmless ones near the king.",
+      "prereqs": [
+        "DEF.SHELTER.D1",
+        "POS.WEAKSQ.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how a defender's piece (a bishop on g2, a knight) covering the weakened squares changes the verdict.",
+      "prereqs": [
+        "DEF.SHELTER.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Every pawn move near the king is a weakness."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-28; §7 row 30; §8 item 14",
+    "sources/sheets/edlasker_chess-strategy.md §4 K17",
+    "docs/curriculum-map-v1.1.md §3 (DEF.SHELTER T3-4)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The king is castled on that side and the opponent's queen, rook and knight can reach the weakened squares."
+  ],
+  "condition_sources": [
+    "CAP CI-28 (b)"
+  ],
+  "contrasts": [
+    "The same pawn move, but a defender piece covers the key squares.",
+    "'every pawn move near the king is a weakness'.",
+    "A queenside pawn move."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 14",
+    "CAP CI-28 (g)",
+    "CAP §8 item 14"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

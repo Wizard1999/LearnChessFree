@@ -1,0 +1,167 @@
+{
+  "id": "L-PRA-PRESSURE-1",
+  "title": "Deciding when the clock is short",
+  "skill": "PRA.PRESSURE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Records his pace on one item and sets a half-time limit from it",
+    "Says what a ten-second look can find (checks, captures, threats)",
+    "Solves a short set at half time and names the loop step he skipped",
+    "Writes a weekly half-time set with a first target to test"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When the clock runs short, mistakes change. A pattern players and coaches report, not measured here: with little time you check the opponent's reply less and lean on the first idea. You can test this on yourself. Start a timer now and solve the next position at your usual pace; this is your baseline."
+    },
+    {
+      "type": "item",
+      "item": "IA5-44",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Write the seconds you took. Half of that is your limit for each position in the half-time set. The app does not run a countdown: use a timer and stop when it rings. One item is only a rough baseline.",
+      "fields": [
+        {
+          "id": "base_s",
+          "label": "Seconds I took on the item:",
+          "type": "number"
+        },
+        {
+          "id": "half_s",
+          "label": "Half of that, my limit per position:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "What a ten-second look finds",
+      "prompt": "You have about ten seconds. The look is one question: after my move, what can the opponent do with a check, a capture or a threat? In the first position the capture was safe. Predict what the look finds in this one, then check.",
+      "working": "IB6-14",
+      "failing": "IB6-15",
+      "irrelevant": "IA5-25"
+    },
+    {
+      "type": "card",
+      "text": "**What a short look can do.** Ten seconds is enough to list the opponent's checks, captures and threats after your move. Rule of thumb, not tested here: with little time keep the look and play the simpler move; do not start a long calculation you cannot finish. Next: four positions, each at your limit, with no hints and no engine line."
+    },
+    {
+      "type": "item",
+      "item": "IA5-43",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA5-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA5-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-13",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Four positions cannot show a pattern; use them as a first look. Name what happened.",
+      "fields": [
+        {
+          "id": "wrong",
+          "label": "Positions I got wrong or rushed (of four):",
+          "type": "number"
+        },
+        {
+          "id": "step",
+          "label": "The step I skipped most:",
+          "options": [
+            "safety scan",
+            "forcing moves first (checks, captures, threats)",
+            "candidates and short lines",
+            "the opponent's best reply",
+            "none: I made no mistake"
+          ]
+        },
+        {
+          "id": "limit",
+          "label": "Did I stay within my limit?",
+          "options": [
+            "yes",
+            "mostly",
+            "no"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.DEFENSE"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The app takes hints and the engine line away but has no countdown: the limit is yours. On find-the-move items an engine check follows a move outside the list; do not count that wait. It does not read your game clocks. Nothing here shows half-time sets carry over. When you can name the step you skip, drop this page."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one half-time set for this week. A first target to test (from the skill node): at half time, score at least 80% of what you score at your usual pace on the same kind of positions.",
+      "fields": [
+        {
+          "id": "when",
+          "label": "When I will do it:"
+        },
+        {
+          "id": "n",
+          "label": "Positions in the set:",
+          "type": "number"
+        },
+        {
+          "id": "usual_ok",
+          "label": "Correct at my usual pace (do this set first, untimed):",
+          "type": "number"
+        },
+        {
+          "id": "half_ok",
+          "label": "Correct at half time:",
+          "type": "number"
+        },
+        {
+          "id": "skip",
+          "label": "The step I skipped most:",
+          "options": [
+            "safety scan",
+            "forcing moves first (checks, captures, threats)",
+            "candidates and short lines",
+            "the opponent's best reply",
+            "none"
+          ]
+        },
+        {
+          "id": "rule",
+          "label": "If I have less than 30 seconds in a game I will:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S10 (PRA.PRESSURE); skill node PRA.PRESSURE (conditions, contrasts, misconception)",
+    "docs/council-synthesis.md CD-14, Round 14 (error taxonomy under time: coaches' reports, recalled [R]; no data of our own)",
+    "the 80% target is the skill node's D2 outcome, used here as a first target [H]; items reused from L-CAL-DEFENSE-1, L-LOOP-V1-1, L-LOOP-V2-1, L-LOOP-V4-1; IB6-14 and IB6-15 repeat the diagrams of IA5-40 and IA5-41 with corrected wording and claim order (the originals are in content/items/lesson-loop-2.json and are still used by L-CAL-DEFENSE-1); IB6-13 is a Lichess 2013-01 game position (CC0)"
+  ]
+}

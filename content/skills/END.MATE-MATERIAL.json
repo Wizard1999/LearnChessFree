@@ -1,0 +1,72 @@
+{
+  "id": "END.MATE-MATERIAL",
+  "title": "Which material can force mate",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "States which bare-king mates can be forced (queen, rook, two bishops, bishop and knight) and which cannot (two knights), and why corners matter.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Classifies ten material combinations as 'can force mate' or 'cannot' and gives the corner needed for bishop and knight.",
+      "prereqs": [
+        "END.MATE-KQ.D2",
+        "END.MATE-KR.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, classifies the ending (including a defender's spare pawn move, queen against a single piece, rook against a minor piece) as win, draw or still playable.",
+      "prereqs": [
+        "END.MATE-MATERIAL.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Explains the corner parity for bishop and knight and verifies the claim with the tablebase.",
+      "prereqs": [
+        "END.MATE-MATERIAL.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Two knights mate by force.",
+    "A rook beats a bishop."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K22; §8 item 18",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-05; §5 items 11, 13",
+    "docs/curriculum-map-v1.1.md §3, §4 (verified: K+2N draw; K+B+N win)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "No pawns (or a defender's spare pawn move); control the four squares around the corner; bishop and knight mate only in the corner of the bishop's colour."
+  ],
+  "condition_sources": [
+    "EDL K22 (b)-(c)"
+  ],
+  "contrasts": [
+    "Two knights against a bare king (a draw; with a defender's pawn mate can be forced).",
+    "A rook against a bishop wins; the defender sheltering in an opposite-colour corner holds.",
+    "Which wing the pieces stand on."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-05; MAP11 §4",
+    "EDL K22 (b), (g)",
+    "CAP §8 item 10"
+  ],
+  "soft_prereqs": [
+    "END.MATE-STALEMATE-AVOID.D1"
+  ],
+  "soft_prereq_notes": {
+    "END.MATE-STALEMATE-AVOID.D1": "stalemate is the reason some material cannot force mate"
+  }
+}

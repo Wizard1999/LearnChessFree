@@ -1,0 +1,75 @@
+{
+  "id": "SAF.COUNT.FUTURE",
+  "title": "Counting what can arrive",
+  "strand": "S2",
+  "tier": 3,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that the count on a square can change when more pieces can reach it, and that a target which can move away is a different problem from one that cannot.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a stationary target (a pawn that could be pushed or attacked), lists the extra attackers and defenders each side can bring in two moves and states whether the push is safe.",
+      "prereqs": [
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, decides whether to push, support or retreat by comparing arriving reserves, and checks that each would-be defender is not pinned or attackable by a cheaper piece.",
+      "prereqs": [
+        "SAF.COUNT.FUTURE.D1",
+        "CAL.CANDIDATES.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds the case where the apparently safe push fails because a single tempo move brings in a third attacker, and names the tempo.",
+      "prereqs": [
+        "SAF.COUNT.FUTURE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Counting only the pieces already attacking a square.",
+    "Equal counts mean equal chances."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K4, K3, K15; §7 row K4",
+    "docs/curriculum-map-v1.1.md §3 (SAF.COUNT.FUTURE, T3)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The target stays where it is and reinforcements have access to the square.",
+    "Each counted reinforcement must be effective: not pinned, not chased away by a cheaper piece.",
+    "The count is only the default; a defender can be forced away by a bigger threat."
+  ],
+  "condition_sources": [
+    "EDL K4 (c)",
+    "EDL K3-K4",
+    "EDL K3"
+  ],
+  "contrasts": [
+    "The arrival count favours the pusher, but one of the arriving defenders is attackable by a cheaper piece.",
+    "Counting arrivals against a piece that can simply step off the square.",
+    "A square no one can reach in the time available."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K4 (d), K3",
+    "EDL K15 (b)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "TAC.OVERLOAD.D1"
+  ],
+  "soft_prereq_notes": {
+    "TAC.OVERLOAD.D1": "a defender forced away is the main way a future count fails"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "LOOP.V5",
+  "title": "Thinking Loop v5: depth allocation and best defence",
+  "strand": "S2",
+  "tier": 5,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why the deepest thought goes to critical, forcing, irreversible decisions and why routine moves get little.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a position, says which candidate deserves the deepest calculation and gives the reason (forcing, irreversible, unique).",
+      "prereqs": [
+        "LOOP.V4.D2",
+        "CAL.DEPTH.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Within a stated time budget on a set of positions, spends longer on the critical ones and shorter on routine ones, as shown by the time log.",
+      "prereqs": [
+        "LOOP.V5.D1",
+        "CAL.DEPTH.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Before accepting a line, checks the opponent's best defence at each leaf including quiet defensive moves, and finds the refutation in positions where the first-choice line has one.",
+      "prereqs": [
+        "LOOP.V5.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, a depth-versus-worth log shows time and depth following the importance of the move; the share of long thinks on routine moves falls over ten games.",
+      "prereqs": [
+        "LOOP.V5.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Thinking longer always improves the move.",
+    "Analysis ends when my line works; the opponent's reply is his problem."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S2; docs/council-synthesis.md CD-3 (one versioned Thinking Loop)",
+    "docs/first-hours.md session 4 (threat check as loop v1)",
+    "docs/council-synthesis.md Round 3 (the skill is allocating depth), Round 12",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G2: a combination judged unsound without the quiet follow-up)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5"
+  },
+  "conditions": [
+    "Depth is spent where the position is critical, forcing or irreversible.",
+    "A line is not finished until the defender has had his say."
+  ],
+  "condition_sources": [
+    "CNC Round 3",
+    "CNC Round 3 Dvoretsky; EML §4.16"
+  ],
+  "contrasts": [
+    "Stopping at the first line that works; the master rejected a combination as unsound and let it be played because he missed a quiet follow-up.",
+    "A deep think on a move with an obvious only-reply.",
+    "A quiet maneuvering position with no critical decision in sight."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-51 G2",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "PRA.PHASEBUDGET.D2"
+  ],
+  "soft_prereq_notes": {
+    "PRA.PHASEBUDGET.D2": "depth allocation is a time allocation"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "id": "END.OPPOSITION",
+  "title": "Opposition (basic: T1-2 depth only)",
+  "strand": "S7",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes the opposition: the two kings face each other on a file or rank with one square between them, and the side that does not have to move holds the opposition.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a king-and-pawn ending, when told to find the winning (or drawing) move, finds the move that takes (or keeps) the opposition.",
+      "prereqs": [
+        "END.PAWN-RACE.D1",
+        "FND.STALEMATE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a king-and-pawn ending with no hint, decides whether the side with the pawn wins or only draws, and finds the only move that keeps the win or the draw.",
+      "prereqs": [
+        "END.OPPOSITION.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Names two situations the basic rule does not cover (a pawn still on its starting rank, a rook pawn) and checks such positions with the tablebase lab instead of trusting the rule.",
+      "prereqs": [
+        "END.OPPOSITION.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The opposition means moving next to the enemy king (kings can never touch).",
+    "Having the opposition means it is your move; it is the side NOT to move that has it.",
+    "The opposition always decides a king-and-pawn ending."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "The side that does not have to move holds the opposition; in a king-and-pawn ending it often decides who wins.",
+    "The basic rule is a default for pure king-and-pawn endings; confirm any position with the tablebase."
+  ],
+  "condition_sources": [
+    "ours",
+    "MAP11"
+  ],
+  "contrasts": [
+    "A king-and-pawn position can look like a win and be a draw when one king step gives the defender the opposition.",
+    "Which side of the board the ending is on does not matter: a mirror image gives the same result."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "MAP11",
+    "rules"
+  ]
+}

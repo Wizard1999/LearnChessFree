@@ -1,0 +1,74 @@
+{
+  "id": "TAC.STALEMATE-TRICK",
+  "title": "Stalemate as a resource",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a side that is clearly losing can sometimes draw by leaving its opponent a position with no legal move and no check.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'find the stalemate', finds the move that stalemates, or the sacrifice that forces it.",
+      "prereqs": [
+        "FND.STALEMATE.D1",
+        "END.MATE-STALEMATE-AVOID.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed endings, finds the drawing resource for the weaker side and avoids the stalemate when winning, with no theme named.",
+      "prereqs": [
+        "TAC.STALEMATE-TRICK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks the conditions (spare moves, promotion choice, pawn tempo) and predicts how adding a spare pawn move or changing the promoted piece removes the stalemate.",
+      "prereqs": [
+        "TAC.STALEMATE-TRICK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A stalemate is a win for the side that has no move.",
+    "Having more material makes a stalemate impossible."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-15, CI-03; §7 row 5 (use the Q v R trap as the first example)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K29 (Q v advanced pawn; stalemate as the saving device)",
+    "docs/curriculum-map-v1.1.md §3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The defending king has no legal move and is not in check, and no other defending piece can move.",
+    "It arises most often with the defender's king on the edge or in a corner."
+  ],
+  "condition_sources": [
+    "rules",
+    "CAP CI-15; EDL K29"
+  ],
+  "contrasts": [
+    "The defender has a spare pawn or piece move, so no stalemate arises.",
+    "Promoting to a queen stalemates; promoting to a rook wins (or the reverse), so the choice of piece decides.",
+    "A lone king in the middle of the board with room to move."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K25: spare moves",
+    "EDL K29",
+    "CAP CI-03"
+  ],
+  "soft_prereqs": [
+    "FND.PROMOTE.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.PROMOTE.D1": "the choice of promoted piece decides many stalemate cases"
+  }
+}

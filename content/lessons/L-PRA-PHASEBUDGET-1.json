@@ -1,0 +1,267 @@
+{
+  "id": "L-PRA-PHASEBUDGET-1",
+  "title": "Budget by phase, from your own record",
+  "skill": "PRA.PHASEBUDGET",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Turns a time control into seconds for the opening, the middlegame, the endgame and a reserve",
+    "Explains why a critical moment, not the phase name, decides where extra clock goes",
+    "Reads move numbers off the biggest drops in his own games and tallies them by phase",
+    "Writes a phase budget that allows for the opening he actually plays"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Each phase asks for different thinking. In the opening you mostly recall, until the opponent leaves your preparation. In the middlegame you choose plans. In the endgame a few moves can decide the game. So the shares differ. But **where your critical decisions fall is a fact about your own games**: read it from the record, not from a guess."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Time control 10+5 and 40 moves: 600 seconds plus 40 × 5 is 800 seconds in all. Try this split: reserve 10%, opening 15%, middlegame 55%, endgame 20%. Work out the seconds before you read on.",
+      "fields": [
+        {
+          "id": "open_s",
+          "label": "Seconds for the opening:",
+          "type": "number",
+          "answer": 120,
+          "tolerance": 0
+        },
+        {
+          "id": "mid_s",
+          "label": "Seconds for the middlegame:",
+          "type": "number",
+          "answer": 440,
+          "tolerance": 0
+        },
+        {
+          "id": "end_s",
+          "label": "Seconds for the endgame:",
+          "type": "number",
+          "answer": 160,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Mark the boundaries from the record.** Rules of thumb to try: the opening ends at the first move you did not know from your preparation; the endgame starts when queens are off or few pieces remain. Your own opening matters: a line you know costs little until the opponent leaves it, a sharp line can need clock early. A critical decision can fall in any phase."
+    },
+    {
+      "type": "board",
+      "fen": "r3k2r/ppp2ppp/2nb1n2/7q/3P2b1/4BN1P/PP2BPP1/RN1QK2R w KQkq - 1 10",
+      "caption": "White to move, move 10. The h3 pawn can take the bishop on g4. This is the opening, and already a critical moment.",
+      "line": [
+        {
+          "move": "h3g4",
+          "say": "hxg4 takes the bishop on g4. It looks like a free piece."
+        },
+        {
+          "move": "h5h1",
+          "say": "Qxh1+ takes the rook on h1 with check: the h-file is open."
+        },
+        {
+          "move": "e2f1",
+          "say": "Bf1 blocks the check. White has given a rook for a bishop."
+        },
+        {
+          "move": "f6g4",
+          "say": "Nxg4 takes the pawn as well."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "h3g4",
+            "cp": 400
+          },
+          "statement": "hxg4 is rated at least four pawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "h3g4",
+            "max": -3
+          },
+          "statement": "Along the engine line hxg4 ends with White three or more points down."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1g1",
+              "d1d2",
+              "b1c3"
+            ]
+          },
+          "statement": "O-O, Qd2 and Nc3 are the engine's top moves, within 40 centipawns of each other."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h3",
+          "to": "g4"
+        },
+        {
+          "from": "h5",
+          "to": "h1"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "h1"
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Which position needs the extra?",
+      "prompt": "The first position was from move 8 and the usual share was enough. This one is from move 19: does it need extra clock (critical) or the usual share (routine)? Predict, then check. The stage alone does not decide it: the move 10 board you saw earlier was critical too.",
+      "working": "IA5-34",
+      "failing": "IA5-31",
+      "irrelevant": "IB6-7"
+    },
+    {
+      "type": "card",
+      "text": "**No record, no phase budget.** A **drop** is a move after which the engine's score for you fell by a pawn or more. Count where yours fell, using first-guess boundaries: moves 1 to 12, 13 to 30, 31 on. Test moving extra clock to the phase with most drops; recheck after ten games. A tactic in the first ten moves needs the safety scan and a look at the reply."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "An invented example, not data. One player's ten biggest drops in five games happened at moves 6, 9, 14, 17, 18, 22, 23, 27, 33 and 41. Count them by phase: moves 1 to 12, 13 to 30, and 31 on. The middlegame spans 18 moves and the opening 12, so compare counts with care.",
+      "fields": [
+        {
+          "id": "n_open",
+          "label": "Drops in moves 1 to 12:",
+          "type": "number",
+          "answer": 2,
+          "tolerance": 0
+        },
+        {
+          "id": "n_mid",
+          "label": "Drops in moves 13 to 30:",
+          "type": "number",
+          "answer": 6,
+          "tolerance": 0
+        },
+        {
+          "id": "pct_mid",
+          "label": "Percent of the ten that fell in moves 13 to 30:",
+          "type": "number",
+          "answer": 60,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB6-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.LOOP.V5",
+        "cue.2"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** *My games* lists your biggest drops with their move numbers, so you can make the tally above by hand. It does not sort them by phase, and it does not record your clock; a time-per-move record is planned. After ten games with your own tally you can set the shares yourself and revise them without this page."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Use the biggest drops from your analysed games. If you have none yet, leave the counts at zero and treat the shares as a guess to revise.",
+      "fields": [
+        {
+          "id": "games",
+          "label": "Games I tallied:",
+          "type": "number"
+        },
+        {
+          "id": "d_open",
+          "label": "Drops in moves 1 to 12:",
+          "type": "number"
+        },
+        {
+          "id": "d_mid",
+          "label": "Drops in moves 13 to 30:",
+          "type": "number"
+        },
+        {
+          "id": "d_end",
+          "label": "Drops in moves 31 and later:",
+          "type": "number"
+        },
+        {
+          "id": "most",
+          "label": "The phase with most drops:",
+          "options": [
+            "opening",
+            "middlegame",
+            "endgame",
+            "no data yet"
+          ]
+        },
+        {
+          "id": "control",
+          "label": "My usual time control:"
+        },
+        {
+          "id": "open_pct",
+          "label": "Opening share, percent:",
+          "type": "number"
+        },
+        {
+          "id": "mid_pct",
+          "label": "Middlegame share, percent:",
+          "type": "number"
+        },
+        {
+          "id": "end_pct",
+          "label": "Endgame share, percent:",
+          "type": "number"
+        },
+        {
+          "id": "res_pct",
+          "label": "Reserve, percent:",
+          "type": "number"
+        },
+        {
+          "id": "opening",
+          "label": "The opening I play, for the clock:",
+          "options": [
+            "I know my lines well: a smaller opening share",
+            "my opening is sharp or new to me: a larger opening share",
+            "no change yet"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S10 (PRA.PHASEBUDGET); skill node PRA.PHASEBUDGET (conditions, contrasts, misconception)",
+    "docs/council-synthesis.md CD-14; app/src/pages/Games.tsx read: the biggest-drops list shows move numbers, no phase tally and no clock",
+    "arithmetic and the example tally asserted in the authoring script (invented numbers, labelled as such); the 10/15/55/20 split and the 12/30-move boundaries are first guesses [H]; positions: 2013-01 games (CC0), a tablebase-checked K+P position"
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "id": "L-POS-OPENFILE-1",
+  "title": "Open files: find the entry square",
+  "skill": "POS.OPENFILE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the entry square before placing a rook on an open file",
+    "Checks whether a pawn or minor piece covers the entry square",
+    "Counts attackers and defenders before capturing a blocking pawn"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An open file is a road, not a prize. A rook standing on it does nothing until it can **land** on a square in the enemy camp, best of all on the seventh rank, where pawns and the king are cramped.\nBefore you double rooks, ask: **which square will my rook land on, and can the enemy cover it?**"
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp3ppp/5n2/8/8/8/PP3PPP/2R2BK1 w - - 0 1",
+      "caption": "White to move. Follow the rook.",
+      "line": [
+        {
+          "move": "c1c7",
+          "say": "The rook lands on c7. No Black piece attacks that square."
+        },
+        {
+          "move": "g7g5",
+          "say": "Black makes room for his king."
+        },
+        {
+          "move": "c7b7",
+          "say": "The rook takes b7. White has won a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "c7"
+        },
+        {
+          "from": "c7",
+          "to": "b7"
+        }
+      ],
+      "highlight": [
+        "c7",
+        "b7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c1c7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "black",
+            "count": 0
+          }
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c1c7",
+            "min": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-1"
+    },
+    {
+      "type": "card",
+      "text": "The plan works when three things hold.\n**Your rook gets to the file first.**\n**The entry square is not guarded by a pawn or a minor piece.**\n**Something is waiting there:** undefended pawns, or a king with no room.\nIf the entry square is covered, landing there can cost you the rook."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one change",
+      "prompt": "Black's knight stands on e8 instead of h5. Does Rc7 still win a pawn? Predict first, then check.",
+      "working": "IA2-1",
+      "failing": "IA2-2",
+      "irrelevant": "IA2-3"
+    },
+    {
+      "type": "card",
+      "text": "Sometimes a pawn blocks the file. Count first: if it has fewer defenders than you have attackers, take it with your cheapest piece first.\nIf another pawn protects it, taking it may only lose material. Players then undermine it with a pawn lever or, rarely, give up material to open the file, but only when the landing square wins at once."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "Black's b-pawn stands on b7 instead of b6, so it protects c6. Does the knight capture still win a pawn? Predict first, then check.",
+      "working": "IA2-4",
+      "failing": "IA2-5"
+    },
+    {
+      "type": "item",
+      "item": "IA2-6"
+    },
+    {
+      "type": "item",
+      "item": "IA2-7"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you looked: what did you expect to be guarding the entry square in the last position? Was it a pawn, a minor piece, or nothing?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 6-8, 12: file, entry, seventh rank, obstructions)",
+    "sources/sheets/edlasker_chess-strategy.md (K20: a file with no entry square, K2-K3 counts)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C27: who benefits from the open line)",
+    "docs/council-synthesis.md CD-4"
+  ]
+}

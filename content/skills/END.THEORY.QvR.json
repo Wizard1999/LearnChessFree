@@ -1,0 +1,67 @@
+{
+  "id": "END.THEORY.QvR",
+  "title": "Queen against rook",
+  "strand": "S7",
+  "tier": 6,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains the queen-against-rook method: separate the rook from its king with forks, checks from a distance, and avoid stalemate traps.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a standard position, finds the check sequence that separates the rook from the king.",
+      "prereqs": [
+        "END.QUEEN-PAWN.D2",
+        "TAC.STALEMATE-TRICK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, wins queen against rook in the winning positions and identifies the fortress positions.",
+      "prereqs": [
+        "END.THEORY.QvR.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Plays out against the tablebase-backed opponent within a move budget.",
+      "prereqs": [
+        "END.THEORY.QvR.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The extra queen wins by itself."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-15; §5 items 14, 15; §8 item 11",
+    "sources/sheets/edlasker_chess-strategy.md §5 item 7",
+    "docs/curriculum-map-v1.1.md §3, §4 (backlog)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=6"
+  },
+  "conditions": [
+    "Long-range diagonal checks; keep queen and king on different lines."
+  ],
+  "condition_sources": [
+    "CAP CI-15 (b)"
+  ],
+  "contrasts": [
+    "Giving a check that stalemates.",
+    "The extra queen wins by itself (some fortress positions draw).",
+    "Queen against rook with several pawns."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-15 (g)",
+    "CAP §5 item 14",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

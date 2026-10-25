@@ -1,0 +1,125 @@
+{
+  "id": "L-PRA-CLOCK-1",
+  "title": "The clock is a budget",
+  "skill": "PRA.CLOCK",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Reads a time control such as 10+5 and works out total time and average time per move",
+    "Plans a reserve and a per-move average",
+    "Tells forced, equal-choice and tempting-move positions apart",
+    "Writes a time plan before a game and compares it afterwards"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A time control such as **10+5** gives each player 10 minutes at the start and adds 5 seconds after every move that player makes (the *increment*). If your clock reaches zero you usually lose the game on time.\nTime is a budget: **average time per move = time you have ÷ moves still to play.**"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Work these out before you read on. Time control 10+5, and you play 40 moves. How many seconds do you have in total, and how many seconds per move on average?",
+      "fields": [
+        {
+          "id": "total",
+          "label": "Total seconds available:",
+          "type": "number",
+          "answer": 800,
+          "tolerance": 0
+        },
+        {
+          "id": "per_move",
+          "label": "Average seconds per move:",
+          "type": "number",
+          "answer": 20,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Answers:** 10 minutes is 600 seconds. Increment: 40 × 5 = 200 seconds. Total 800 seconds, which is 20 seconds per move.\nAn average hides the point: **spend by position type.** Next you judge three kinds: one legal move, many moves about equal, and a position where a tempting move loses a lot."
+    },
+    {
+      "type": "contrast",
+      "title": "Where should the time go?",
+      "prompt": "Each position comes with 2:40 on the clock. Say what kind of position it is, then check. Think about how much clock each deserves.",
+      "working": "IA5-47",
+      "failing": "IA5-46",
+      "irrelevant": "IA5-45"
+    },
+    {
+      "type": "card",
+      "text": "**A budget with a reserve.** Keep some time for the end. Example: 5+0, reserve 60 seconds, 35 moves to play: (300 − 60) ÷ 35 is about 6.9 seconds per move. Forced moves can cost a second or two and bank time for the hard ones. These numbers are a first guess to test in your own games, not a law."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Two more sums. (1) Control 5+0, reserve 60 seconds, 35 moves: average seconds per move, to one decimal? (2) Control 3+2: how many seconds of increment have you gained after 30 moves?",
+      "fields": [
+        {
+          "id": "avg",
+          "label": "Average seconds per move:",
+          "type": "number",
+          "answer": 6.9,
+          "tolerance": 0.1
+        },
+        {
+          "id": "gained",
+          "label": "Seconds of increment gained:",
+          "type": "number",
+          "answer": 60,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Right now the app gives you the average and names the position types. From the next item on it gives nothing: you decide how much clock the position deserves. A time-per-move record and a post-game summary are planned; if they are built they will be shown to you and not scored."
+    },
+    {
+      "type": "item",
+      "item": "IA5-48",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Write a time plan for your next game before you start. After the game, compare the plan with what really happened; the gap is the information.",
+      "fields": [
+        {
+          "id": "control",
+          "label": "Time control:"
+        },
+        {
+          "id": "moves",
+          "label": "Moves I expect to play:",
+          "type": "number"
+        },
+        {
+          "id": "reserve",
+          "label": "Seconds I keep in reserve:",
+          "type": "number"
+        },
+        {
+          "id": "per_move",
+          "label": "Average seconds per move that leaves:",
+          "type": "number"
+        },
+        {
+          "id": "actual",
+          "label": "After the game: where did my time actually go?"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S10 (PRA.CLOCK, PRA.BUDGET)",
+    "docs/council-synthesis.md CD-14 (clock literacy; Heisman and Rowson on time use, recalled [R])",
+    "arithmetic checked in the build script; positions: Lichess puzzles and games (CC0)"
+  ]
+}

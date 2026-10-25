@@ -1,0 +1,234 @@
+{
+  "id": "L-END-WRONGBISHOP-1",
+  "title": "The wrong bishop, and two knights that cannot mate",
+  "skill": "END.WRONG-BISHOP",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Predicts win or draw for a rook pawn with a bishop, from the bishop's colour and the pawn's file",
+    "Names what can rescue a 'wrong bishop' win: another pawn file, or a defending king that cannot reach the corner",
+    "Knows that two knights cannot force mate against a bare king, and that a defender's pawn can change that"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A bishop and a **rook pawn** (a- or h-file) do not always win. If the bishop cannot control the pawn's queening corner, a defending king that reaches that corner can draw. The colour of the bishop and the file of the pawn decide. Watch what the same set-up does with a different bishop or a different pawn."
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/8/P7/8/8/2B1K3 w - - 0 1",
+      "caption": "White to move. The bishop travels on dark squares; a8 is light. One line is shown.",
+      "line": [
+        {
+          "move": "a4a5",
+          "say": "The pawn advances."
+        },
+        {
+          "move": "a8b8",
+          "say": "Black's king steps next to the corner."
+        },
+        {
+          "move": "a5a6",
+          "say": "The pawn goes to a6."
+        },
+        {
+          "move": "b8a8",
+          "say": "Black's king goes back to the corner."
+        },
+        {
+          "move": "e1d2",
+          "say": "White tries a king move."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "The position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "a4a5"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1a3"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1b2"
+          }
+        },
+        {
+          "id": "C5",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1d2"
+          }
+        },
+        {
+          "id": "C6",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1e3"
+          }
+        },
+        {
+          "id": "C7",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1f4"
+          }
+        },
+        {
+          "id": "C8",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1g5"
+          }
+        },
+        {
+          "id": "C9",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "c1h6"
+          }
+        },
+        {
+          "id": "C10",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e1d1"
+          }
+        },
+        {
+          "id": "C11",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e1d2"
+          }
+        },
+        {
+          "id": "C12",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e1e2"
+          }
+        },
+        {
+          "id": "C13",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e1f1"
+          }
+        },
+        {
+          "id": "C14",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e1f2"
+          }
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a4",
+          "to": "a8"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "c1"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA3-901"
+    },
+    {
+      "type": "card",
+      "text": "**What decides it:** (1) the bishop's colour against the queening square, (2) the pawn's file, (3) whether Black's king can reach the corner in time. Change any one of them and the result can flip. Predict each look-alike first."
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishop, other pawn",
+      "prompt": "The dark-squared bishop with a pawn on the b-file instead. Is it still a draw? Predict, then check.",
+      "working": "IA3-901",
+      "failing": "IA3-902"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, other bishop",
+      "prompt": "The a-pawn again, with a light-squared bishop. Is it still a draw? Predict, then check.",
+      "working": "IA3-901",
+      "failing": "IA3-903",
+      "irrelevant": "IA3-904"
+    },
+    {
+      "type": "item",
+      "item": "IA3-905"
+    },
+    {
+      "type": "item",
+      "item": "IA3-908"
+    },
+    {
+      "type": "item",
+      "item": "IA3-909"
+    },
+    {
+      "type": "item",
+      "item": "IA3-911"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.WRONG-BISHOP",
+        "cue.3"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before each prediction: which of the three conditions (bishop colour, pawn file, black king and the corner) did you check first? Which one would you have missed?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-05, CI-14)",
+    "sources/sheets/edlasker_chess-strategy.md (K22, K27)",
+    "docs/curriculum-map-v1.1.md section 4 (tablebase checks: wrong colour draws, right colour wins, 2N draw)",
+    "All positions: own constructions; results from the Lichess tablebase service"
+  ],
+  "also": [
+    "END.THEORY.2N"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "END.PAWN-RACE.QUEEN-FIRST",
+  "title": "Both sides queen: the first queen's move",
+  "strand": "S7",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that when both sides will queen, the first new queen may capture the other pawn or command its queening square.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Counts a two-pawn race and states who queens first and whether that queen controls the other's queening square.",
+      "prereqs": [
+        "END.PAWN-RACE.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled races, chooses the line that lands on the controlling square instead of grabbing material.",
+      "prereqs": [
+        "END.PAWN-RACE.QUEEN-FIRST.D1",
+        "FND.PROMOTE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts how a check or capture at the queening square changes the outcome.",
+      "prereqs": [
+        "END.PAWN-RACE.QUEEN-FIRST.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Counting the moves to queen settles the race."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-11; §7 row 12; §8 item 6",
+    "docs/curriculum-map-v1.1.md §3 (END.PAWN-RACE.QUEEN-FIRST T3)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Both pawns are free; the first new queen must command the other's queening square."
+  ],
+  "condition_sources": [
+    "CAP CI-11 (c)"
+  ],
+  "contrasts": [
+    "The same race where capturing the pawn loses the queen's control of the key square.",
+    "Counting moves but missing a check or a capture on the queening square.",
+    "An extra far-away king move that is not needed."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 6",
+    "CAP CI-11 (g)",
+    "CAP §8 item 6"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

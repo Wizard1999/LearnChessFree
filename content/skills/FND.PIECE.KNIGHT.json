@@ -1,0 +1,63 @@
+{
+  "id": "FND.PIECE.KNIGHT",
+  "title": "How the knight moves",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that the knight jumps in an L (two squares one way and one square at a right angle) and may jump over pieces.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'knight', marks every square the knight can jump to: it cannot land on its own pieces but may take an enemy piece there.",
+      "prereqs": [
+        "FND.BOARD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a busy position where the piece is not named, marks every square the knight can reach, including from the edge and the corner.",
+      "prereqs": [
+        "FND.PIECE.KNIGHT.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Finds the fewest knight jumps between two squares and names a route.",
+      "prereqs": [
+        "FND.PIECE.KNIGHT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A piece standing between the knight's start and landing square blocks it.",
+    "The knight always has eight moves, even on the edge or in the corner."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "The knight jumps two squares along a rank or file and one at a right angle; pieces in between do not matter.",
+    "It cannot land on its own piece but may take an enemy piece."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "On the edge or in a corner the knight has fewer than eight landing squares.",
+    "Pieces standing next to the knight do not block it."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

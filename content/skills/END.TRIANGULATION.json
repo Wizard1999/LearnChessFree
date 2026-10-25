@@ -1,0 +1,71 @@
+{
+  "id": "END.TRIANGULATION",
+  "title": "Triangulation",
+  "strand": "S7",
+  "tier": 5,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains triangulation as losing a tempo with the king by a detour of an odd number of moves, to change who is to move.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "In a given position, finds the three-square detour that changes the move.",
+      "prereqs": [
+        "END.TEMPO.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled king-and-pawn positions, recognises when the detour wins and when the defender can answer in kind.",
+      "prereqs": [
+        "END.TRIANGULATION.D1",
+        "END.OPPOSITION.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Predicts the result by counting tempi and verifies with the tablebase.",
+      "prereqs": [
+        "END.TRIANGULATION.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Opposition is a fixed pattern of squares (and the king cannot lose a tempo)."
+  ],
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.19 (a tempo-losing king manoeuvre costing an odd number of moves)",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 18 (tripartite manoeuvre as an extra lens; do not retire the opposition)",
+    "docs/curriculum-map-v1.1.md §3"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5"
+  },
+  "conditions": [
+    "The triangle squares are free and safe and the defender cannot lose a tempo himself."
+  ],
+  "condition_sources": [
+    "EML 4.19 (b); ours"
+  ],
+  "contrasts": [
+    "The defender has a spare move or can triangulate too.",
+    "Dropping the opposition for the tripartite manoeuvre; the opposition remains core.",
+    "A position where the move cannot matter."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "Nimz §5 item 6",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "END.KEYSQ.D2"
+  ],
+  "soft_prereq_notes": {
+    "END.KEYSQ.D2": "triangulation aims at a key square"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "TAC.TRAPPED",
+  "title": "Trapped pieces",
+  "strand": "S3",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a piece is trapped when every square it can go to is attacked or occupied and nothing can defend or free it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'trap the piece', finds the move that takes away the last escape square.",
+      "prereqs": [
+        "FND.ATTACK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed sets, finds the piece that can be won by trapping, and tells a really trapped piece from one that is cut off but can be freed.",
+      "prereqs": [
+        "TAC.TRAPPED.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts the ways out (capturing a guard, a counter-sacrifice, an interposition) before calling a piece trapped, and sees when the trapped piece can sell itself for a pawn or more.",
+      "prereqs": [
+        "TAC.TRAPPED.D2",
+        "SAF.COUNT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A piece with no safe move is lost.",
+    "A piece shut in behind its own pawns is trapped."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-35 (cutting off a piece from the scene of action); §7 row 38",
+    "docs/curriculum-map-v1.1.md §3 (TAC.TRAPPED with POS.OUTOFPLAY as the contrast)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K15 (an objective that cannot move away)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "All escape squares are covered and no counter-sacrifice or exchange frees the piece.",
+    "The trapping side can attack the piece again before it escapes."
+  ],
+  "condition_sources": [
+    "CAP CI-35 (c), (g)",
+    "ours"
+  ],
+  "contrasts": [
+    "A bishop shut in behind its own pawns is out of play, not trapped; a pawn lever frees it at a cost.",
+    "The trapped piece captures a guard on the way out and the trap collapses.",
+    "A piece with plenty of squares that merely stands badly."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-35; MAP11 §3 POS.OUTOFPLAY",
+    "CAP CI-35 (g)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "SAF.LOOSE.D2"
+  ],
+  "soft_prereq_notes": {
+    "SAF.LOOSE.D2": "the loose piece is the usual target"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "id": "L-FND-CHECK-1",
+  "title": "Check, checkmate and stalemate",
+  "skill": "FND.CHECK",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Gets out of check in one of the three ways, and sees when a way is impossible",
+    "Tells check, checkmate and stalemate apart",
+    "Gives mate without stalemating by accident"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When your king is attacked it is in **check**. You must fix it at once, in one of three ways: **move** the king, **block** the attack with a piece, or **capture** the piece that gives check. You may never make a move that leaves your own king in check."
+    },
+    {
+      "type": "board",
+      "fen": "R3r3/7k/8/8/2B5/8/8/4K3 w - - 0 1",
+      "caption": "White is in check. The king can step away, the bishop can block, or the rook can capture.",
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        },
+        {
+          "from": "a8",
+          "to": "e8"
+        },
+        {
+          "from": "c4",
+          "to": "e2"
+        }
+      ],
+      "highlight": [
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "a8e8",
+              "c4e2",
+              "c4e6",
+              "e1d1",
+              "e1d2",
+              "e1f1",
+              "e1f2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-66"
+    },
+    {
+      "type": "item",
+      "item": "IA0-67"
+    },
+    {
+      "type": "item",
+      "item": "IA0-68"
+    },
+    {
+      "type": "card",
+      "text": "If there is **no** way out of check, it is **checkmate**: the game ends and the player in check loses. If the player to move is **not** in check but has no legal move, it is **stalemate**: the game is a draw. The two look alike, but the results are opposite."
+    },
+    {
+      "type": "board",
+      "fen": "R5k1/5ppp/8/8/8/8/8/6K1 b - - 0 1",
+      "caption": "The rook checks along the back rank (the row where the pieces start). The king's own pawns block its escape. Checkmate.",
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8",
+        "f7",
+        "g7",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "checkmate"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-69"
+    },
+    {
+      "type": "item",
+      "item": "IA0-70"
+    },
+    {
+      "type": "contrast",
+      "title": "One square, opposite results",
+      "prompt": "The white queen moves from f8 to f7, one square down. Predict first: is the result still checkmate?",
+      "working": "IA0-71",
+      "failing": "IA0-72"
+    },
+    {
+      "type": "item",
+      "item": "IA0-73"
+    },
+    {
+      "type": "item",
+      "item": "IA0-74"
+    },
+    {
+      "type": "item",
+      "item": "IA0-75"
+    },
+    {
+      "type": "item",
+      "item": "IA0-76"
+    },
+    {
+      "type": "item",
+      "item": "IA0-77"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CHECK",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.STALEMATE",
+        "kind.generated"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the last four questions you were not told what to look for. How sure were you of each answer? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 2",
+    "docs/council-synthesis.md CD-1",
+    "sources/sheets/capablanca_chess-fundamentals.md (stalemate care in the elementary mates)"
+  ],
+  "also": [
+    "FND.STALEMATE"
+  ]
+}

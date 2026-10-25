@@ -1,0 +1,159 @@
+{
+  "id": "L-FND-KNIGHT-1",
+  "title": "The knight: the piece that jumps",
+  "skill": "FND.PIECE.KNIGHT",
+  "depth": "D1",
+  "minutes": 8,
+  "outcomes": [
+    "Taps every square a knight can jump to, including captures",
+    "Knows the knight is not blocked by pieces in between, unlike rooks and bishops",
+    "Tells which pieces can reach a square when nobody names the piece"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **knight** moves in an L: two squares along a rank or a file, then one square to the side. It is the only piece that **jumps over** other pieces. It lands on an empty square or captures an enemy piece, but never lands on its own piece. Every jump ends on a square of the opposite colour."
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/1pppp3/2PNP3/2PPPB2/8/7K w - - 0 1",
+      "caption": "The knight jumps over the ring of pawns. Seven landing squares are open.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "b5"
+        },
+        {
+          "from": "d4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "b3",
+        "b5",
+        "c2",
+        "c6",
+        "e2",
+        "e6",
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "b3",
+              "b5",
+              "c2",
+              "c6",
+              "e2",
+              "e6",
+              "f5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-31"
+    },
+    {
+      "type": "item",
+      "item": "IA0-32"
+    },
+    {
+      "type": "card",
+      "text": "Rooks, bishops and queens need a clear path. A knight does not: it only needs a landing square that is not held by its own piece. That is why, at the start of a game, a knight can move while most other pieces cannot."
+    },
+    {
+      "type": "contrast",
+      "title": "A crowd does not stop a knight",
+      "prompt": "Every back-rank piece is boxed in by pawns. Predict first: which of these can move at the start, the knight on b1 or the bishop on c1?",
+      "working": "IA0-33",
+      "failing": "IA0-34"
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/8/8/8/8/K5N1 w - - 0 1",
+      "caption": "To reach e5 from g1 the knight needs two jumps: first f3, then e5.",
+      "line": [
+        {
+          "move": "g1f3",
+          "say": "First jump: from g1 to f3."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black's king makes a move."
+        },
+        {
+          "move": "f3e5",
+          "say": "Second jump: from f3 to e5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g1",
+          "to": "f3"
+        },
+        {
+          "from": "f3",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "g1",
+            "to": [
+              "e2",
+              "f3",
+              "h3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-35"
+    },
+    {
+      "type": "item",
+      "item": "IA0-36"
+    },
+    {
+      "type": "item",
+      "item": "IA0-37"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KNIGHT",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the 'which pieces can reach' questions: did you picture the knight's L-shape or a path of squares? Which worked better?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ]
+}

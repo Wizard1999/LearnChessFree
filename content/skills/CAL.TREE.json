@@ -1,0 +1,74 @@
+{
+  "id": "CAL.TREE",
+  "title": "The analysis tree",
+  "strand": "S4",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains the analysis tree: each branch is examined once, its end-verdict noted, and only then is a move chosen.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Draws a tree for three candidates with two replies each to four plies and gives a one-word verdict at each end.",
+      "prereqs": [
+        "CAL.CANDIDATES.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, builds the tree without revisiting the same branch, and reaches the same verdict as the engine check on at least 7 of 10 positions.",
+      "prereqs": [
+        "CAL.TREE.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "In positions with many forcing replies, prunes by forcing moves first, notes transpositions, and records the result so a branch is not recomputed.",
+      "prereqs": [
+        "CAL.TREE.D2",
+        "CAL.VISUALIZE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Jumping between branches is a sign of thoroughness (it is the usual cause of missed lines).",
+    "A deeper tree is a better tree."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S4 (Kotov, Aagaard, Ramesh, Dvoretsky, Rowson, Heisman, all [R] in the map)",
+    "docs/council-synthesis.md Round 3 (Kotov: each branch once; Aagaard: avoid repeated rechecking)",
+    "sources/sheets/emlasker_common-sense.md §4.13 (analysis by plans, not trees; completeness claims suspect)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Used when the position is concrete enough that branches end in a clear verdict within about four plies.",
+    "Plan enumeration works when the number of strategic plans is small, but a claim that no other plan exists is rarely provable."
+  ],
+  "condition_sources": [
+    "ours",
+    "EML 4.13 (c)-(d)"
+  ],
+  "contrasts": [
+    "Rechecking the same branch in the same order (thinking inertia).",
+    "Declaring that the enumerated plans are all the plans, and missing an extra resource.",
+    "A quiet position where branches never end in a verdict."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CNC Round 3; Rowson",
+    "EML 4.13 (d)",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "FND.VISUAL.D3"
+  ],
+  "soft_prereq_notes": {
+    "FND.VISUAL.D3": "branches are held by visualisation"
+  }
+}

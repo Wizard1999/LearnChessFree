@@ -1,0 +1,180 @@
+{
+ "id": "L-END-ZUGZWANG-1",
+ "title": "Zugzwang: when having the move is a burden",
+ "skill": "END.ZUGZWANG",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Recognises a reciprocal zugzwang in a blocked king-and-pawn ending: whoever must move loses",
+  "Takes the position with the other side to move, directly or by losing a tempo with a king detour",
+  "Predicts how the result changes when a king stands one square away or the move changes"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**Zugzwang** means every move you have makes your position worse; you would rather pass. In some blocked pawn endings both sides are in zugzwang, so whoever has to move loses. Then the fight is about the move itself: the winner tries to reach that position with the other side to move."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/3Kp3/4Pk2/8/8/8 w - - 0 1",
+   "caption": "White to move. All five White moves lose; one line is shown.",
+   "line": [
+    {
+     "move": "d5c4",
+     "say": "White's king steps away."
+    },
+    {
+     "move": "f4e4",
+     "say": "Black's king takes the pawn on e4."
+    },
+    {
+     "move": "c4c3",
+     "say": "White's king follows."
+    },
+    {
+     "move": "e4e3",
+     "say": "Black's king goes on."
+    },
+    {
+     "move": "c3c2",
+     "say": "White's king keeps following."
+    },
+    {
+     "move": "e5e4",
+     "say": "Black's pawn is free to run."
+    },
+    {
+     "move": "c2d1",
+     "say": "White's king heads for the corner."
+    },
+    {
+     "move": "e3f2",
+     "say": "Black's king keeps close to the pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "With White to move, White loses."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c6"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5d6"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5e6"
+     }
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "e5"
+    },
+    {
+     "from": "f4",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "f4"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IA3-601"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** Mutual zugzwang needs blocked pawns and no spare moves: only the kings can move. Then the side to move loses. It is a heuristic about such positions, not a law: when a king stands one step away, or has a detour that loses a move (**triangulation**), the move can be won back. Predict what changes."
+  },
+  {
+   "type": "contrast",
+   "title": "The same pawns, the other side to move",
+   "prompt": "White to move loses here. What if it is Black's move instead? Predict, then check.",
+   "working": "IA3-602",
+   "failing": "IA3-603",
+   "irrelevant": "IA3-604"
+  },
+  {
+   "type": "contrast",
+   "title": "The same pawns, a king one step away",
+   "prompt": "White's king on c5 plays Kd5 and wins when Black's king is on f4. What if Black's king stands on g4? Predict the result of Kd5, then check.",
+   "working": "IA3-605",
+   "failing": "IA3-606"
+  },
+  {
+   "type": "item",
+   "item": "IA3-607"
+  },
+  {
+   "type": "item",
+   "item": "IA3-609"
+  },
+  {
+   "type": "item",
+   "item": "IA3-610"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.ZUGZWANG",
+    "cue.2"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you ask who has to move, or who gets there first? Which question helped you more in the position where Kd5 failed?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (idea 11: zugzwang; conditions)",
+  "sources/sheets/emlasker_common-sense.md (4.19: the move ceases to be a privilege)",
+  "sources/sheets/edlasker_chess-strategy.md (K25: spare moves and forced moves)",
+  "docs/curriculum-map-v1.1.md (END.ZUGZWANG, END.TRIANGULATION)",
+  "All positions: own constructions; the mutual zugzwang was found by an engine scan of all king squares and confirmed by the tablebase"
+ ]
+}

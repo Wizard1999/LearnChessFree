@@ -1,0 +1,112 @@
+{
+  "id": "L-FND-CASTLE-1",
+  "title": "Castling, and when you cannot",
+  "skill": "FND.CASTLE",
+  "depth": "D1",
+  "minutes": 8,
+  "outcomes": [
+    "Castles kingside and queenside",
+    "Knows the four conditions and which attacked squares matter",
+    "Spots when castling is not available"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Castling** is the one move where two pieces move at once. The king goes two squares toward a rook, and that rook jumps over to the king's other side. It tucks the king away and brings a rook into the game. You can castle toward the h-file (kingside) or toward the a-file (queenside)."
+    },
+    {
+      "type": "board",
+      "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
+      "caption": "White castles kingside: the king goes to g1 and the rook to f1. Black castles queenside.",
+      "line": [
+        {
+          "move": "e1g1",
+          "say": "The king goes to g1 and the rook jumps to f1."
+        },
+        {
+          "move": "e8c8",
+          "say": "Black castles the other way: king to c8, rook to d8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "g1"
+        },
+        {
+          "from": "h1",
+          "to": "f1"
+        }
+      ],
+      "highlight": [
+        "g1",
+        "f1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-78"
+    },
+    {
+      "type": "card",
+      "text": "You may castle only if: the king and that rook have never moved; every square between them is empty; the king is not in check; and the king does not pass over or land on an attacked square. The rook's own path does not have to be safe."
+    },
+    {
+      "type": "contrast",
+      "title": "Same castle, a rook arrives",
+      "prompt": "A black rook lands on f3. Predict first: can White still castle kingside?",
+      "working": "IA0-79",
+      "failing": "IA0-80",
+      "irrelevant": "IA0-81"
+    },
+    {
+      "type": "item",
+      "item": "IA0-82"
+    },
+    {
+      "type": "item",
+      "item": "IA0-83"
+    },
+    {
+      "type": "item",
+      "item": "IA0-84"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CASTLE",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which castling condition would you check last in a real game: moved pieces, empty squares, check, or attacked squares?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 3",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "id": "L-OPN-PUNISH-1",
+  "title": "Why a quick attack on f7 usually fails",
+  "skill": "OPN.PUNISH",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Explains why an early attack on f7 needs the defender to cooperate",
+    "Finds the safe reply to a Scholar's-mate setup and refuses the poisoned queen in Legal's trap",
+    "Plays the f7 sacrifice when the defender has recaptured with the knight, and avoids it when defending"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Early attacks aim at **f7**: at the start only the king guards that pawn. But an attack with two or three pieces usually fails if the defender develops with tempo, because the attacker has used moves that build nothing. Look at three traps and ask each time: what must the opponent do wrong for this to work?"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR b KQkq - 3 3",
+      "caption": "White has aimed the queen and bishop at f7 in two moves. Watch how Black answers.",
+      "line": [
+        {
+          "move": "g7g6",
+          "say": "The pawn attacks the queen."
+        },
+        {
+          "move": "h5f3",
+          "say": "The queen retreats and still eyes f7."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight and blocks the f-file."
+        },
+        {
+          "move": "g1e2",
+          "say": "White develops a knight."
+        },
+        {
+          "move": "f8g7",
+          "say": "Black's bishop comes out."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "h5f7",
+            "n": 1,
+            "null_move_first": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA4-041"
+    },
+    {
+      "type": "item",
+      "item": "IA4-042"
+    },
+    {
+      "type": "card",
+      "text": "**Bait.** A trap works only if the defender takes it. Before any capture ask: what does my capture open, and what does it take away from my king? In the next position Black can win a queen, and the engine prefers a quiet move."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/ppp2pp1/3p3p/4p3/2B1P1b1/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+      "caption": "A well-known old trap. Black's last move was ...h6.",
+      "line": [
+        {
+          "move": "f3e5",
+          "say": "White takes a pawn and offers the knight."
+        },
+        {
+          "move": "g4d1",
+          "say": "Black takes the queen."
+        },
+        {
+          "move": "c4f7",
+          "say": "Check."
+        },
+        {
+          "move": "e8e7",
+          "say": "The knight on e5 covers d7 and f7, so the king has one square."
+        },
+        {
+          "move": "c3d5",
+          "say": "Checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA4-044"
+    },
+    {
+      "type": "item",
+      "item": "IA4-045"
+    },
+    {
+      "type": "card",
+      "text": "**Both sides of a trap.** The Fried Liver is the same idea with a knight. If Black recaptures on d5 with the knight, White sacrifices on f7 and drags the king into the open. To play it you need Black's help. To avoid it you only have to decline."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+      "caption": "Black's fifth move decides whether the attack exists.",
+      "line": [
+        {
+          "move": "f6d5",
+          "say": "Black takes back with the knight."
+        },
+        {
+          "move": "g5f7",
+          "say": "White offers the knight on f7."
+        },
+        {
+          "move": "e8f7",
+          "say": "Black takes it."
+        },
+        {
+          "move": "d1f3",
+          "say": "Check: the king is pulled forward."
+        },
+        {
+          "move": "f7e6",
+          "say": "The king steps to e6."
+        },
+        {
+          "move": "b1c3",
+          "say": "White adds an attacker to d5."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "f6d5",
+            "cp": 60
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA4-046"
+    },
+    {
+      "type": "item",
+      "item": "IA4-047"
+    },
+    {
+      "type": "contrast",
+      "title": "Same sacrifice, different reply",
+      "prompt": "White's Nxf7 idea: predict whether it works in each position.",
+      "working": "IA4-046",
+      "failing": "IA4-048",
+      "irrelevant": "IA4-050"
+    },
+    {
+      "type": "item",
+      "item": "IA4-049"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.PUNISH",
+        "cue.3"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "For each trap in this lesson, what did the defender have to do wrong? Write the one move that avoids it, and the trap you are most likely to meet."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/council-synthesis.md CD-5, CD-7",
+    "sources/sheets/capablanca_chess-fundamentals.md (OPN.TRAPS, recapture traps)",
+    "sources/sheets/emlasker_common-sense.md (4.4, 4.8)",
+    "sources/sheets/edlasker_chess-strategy.md (K7)",
+    "opening names: library/data/chess-openings (CC0)"
+  ]
+}

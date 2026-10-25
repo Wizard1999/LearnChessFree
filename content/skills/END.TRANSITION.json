@@ -1,0 +1,69 @@
+{
+  "id": "END.TRANSITION",
+  "title": "Which ending to enter",
+  "strand": "S7",
+  "tier": 5,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains choosing which ending to enter: trade into a known win, avoid structures that lose the ending.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Given a material edge and a trade sequence, names the resulting ending and whether it wins.",
+      "prereqs": [
+        "POS.EXCHANGE.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, decides whether to simplify, keeping or avoiding the queen exchange, after checking the ending.",
+      "prereqs": [
+        "END.TRANSITION.D1",
+        "END.KPK.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies the chosen ending by the tablebase or by technique, and predicts how an extra pawn on the other wing changes the choice.",
+      "prereqs": [
+        "END.TRANSITION.D2",
+        "END.MINOR.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Exchanging is always safe.",
+    "Exchanges kill winning chances."
+  ],
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K21; §7 row K21",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C17-C18",
+    "docs/curriculum-map-v1.md §2 S7"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5"
+  },
+  "conditions": [
+    "The ending is known or calculable and the opponent has no counterplay."
+  ],
+  "condition_sources": [
+    "EDL K21 (c)"
+  ],
+  "contrasts": [
+    "An extra pawn in a rook ending, which is seldom enough.",
+    "Trading into a pawn ending that looks easy but loses the opposition.",
+    "A position where the trade is forced anyway."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "EDL K21 (d)",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

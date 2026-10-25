@@ -1,0 +1,70 @@
+{
+  "id": "FND.PIECE.KING",
+  "title": "How the king moves",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that the king moves one square in any direction and that it is the piece you must never lose.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'king', marks the squares a king can step to: free squares and enemy pieces it may safely take; never its own pieces, a square an enemy piece attacks, or a square next to the enemy king.",
+      "prereqs": [
+        "FND.BOARD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a busy position where the piece is not named, marks every square the king can step to.",
+      "prereqs": [
+        "FND.PIECE.KING.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts the king moves needed to reach a square and decides whether the king gets there in time, in a position with no hints.",
+      "prereqs": [
+        "FND.PIECE.KING.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The king can step next to the enemy king.",
+    "The king can capture any enemy piece next to it, even a defended one.",
+    "The king can move onto a square an enemy piece attacks."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "The king steps one square in any direction onto a free square or an enemy piece.",
+    "It may not step onto a square an enemy piece attacks, nor next to the enemy king, and it cannot take a piece that is defended."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "An enemy piece next to the king may look capturable but be defended, which makes the capture illegal.",
+    "A distant enemy piece that attacks none of the squares around the king does not change the king's moves."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ],
+  "soft_prereqs": [
+    "FND.CAPTURE.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.CAPTURE.D1": "the 'attacked square' rule is first met inside the king exercises; the full idea of attack follows with captures"
+  }
+}

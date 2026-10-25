@@ -1,0 +1,66 @@
+{
+  "id": "END.MATE-BN",
+  "title": "Mate with bishop and knight",
+  "strand": "S7",
+  "tier": 5,
+  "origin": "map-v1.1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that bishop and knight mate only in the corner of the bishop's colour, in two phases.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Drives the lone king to the edge and along it to the right corner in a given position.",
+      "prereqs": [
+        "END.MATE-2B.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, picks the correct corners and mates within the fifty-move limit using the standard method.",
+      "prereqs": [
+        "END.MATE-BN.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies the method against the tablebase and counts the moves.",
+      "prereqs": [
+        "END.MATE-BN.D2",
+        "FND.DRAWS.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Any corner will do."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-04; §7 row 4 (the book's method is laborious; add the standard shortcut from verified sources)",
+    "docs/curriculum-map-v1.1.md §4 (K+B+N v K verified a win)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=5"
+  },
+  "conditions": [
+    "Mate is possible only in corners of the bishop's colour; finish within the fifty-move count."
+  ],
+  "condition_sources": [
+    "CAP CI-04 (b)-(c)"
+  ],
+  "contrasts": [
+    "Driving the king to the wrong-colour corner.",
+    "Running out the fifty-move count.",
+    "Which wing the knight starts on."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP CI-04 (g)",
+    "CAP CI-04 (c)",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {}
+}

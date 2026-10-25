@@ -1,0 +1,151 @@
+{
+ "id": "L-END-ROOK-1",
+ "title": "Rook and pawn against rook: cut the king off",
+ "skill": "END.ROOK-ACTIVE",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Uses the rook to cut the enemy king off from the pawn along a file, and predicts win or draw from which side of the rook the king stands",
+  "Keeps the rook safe (not loose) and keeps the cut-off while the king and pawn advance",
+  "Sees that the same pieces draw when the defending king is on the pawn's side of the rook"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A rook can **cut the enemy king off** along a file: the king may not step onto any square the rook attacks. A king cut off on the far side of the rook cannot stand in front of the pawn, so your king and pawn can advance while your rook keeps the cut. Which side of the rook the defending king is on decides the result."
+  },
+  {
+   "type": "board",
+   "fen": "r7/8/6k1/8/2P5/2K5/8/4R3 w - - 0 1",
+   "caption": "White to move wins. The rook on e1 attacks the whole e-file. One line is shown.",
+   "line": [
+    {
+     "move": "c4c5",
+     "say": "The pawn steps forward."
+    },
+    {
+     "move": "g6f5",
+     "say": "Black's king comes as far as the f-file."
+    },
+    {
+     "move": "c3b4",
+     "say": "White's king heads up the board beside the pawn."
+    },
+    {
+     "move": "a8b8",
+     "say": "Black's rook checks along the b-file."
+    },
+    {
+     "move": "b4a5",
+     "say": "The king steps off the file."
+    },
+    {
+     "move": "b8a8",
+     "say": "Black's rook checks along the a-file."
+    },
+    {
+     "move": "a5b6",
+     "say": "The king steps off the file again."
+    },
+    {
+     "move": "a8b8",
+     "say": "Black's rook checks along the b-file again."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The white rook attacks e5, on the cut-off file."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "white",
+      "count": 1
+     }
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e1",
+    "g6"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IA3-701"
+  },
+  {
+   "type": "card",
+   "text": "**The cut-off needs the king on the far side.** The rook's file must separate Black's king from the pawn. If the king stands on the pawn's side, the same pieces are a draw. Your own rook must never stand where Black's rook can take it. Predict what changes when the king crosses over."
+  },
+  {
+   "type": "contrast",
+   "title": "Which side of the rook?",
+   "prompt": "White's rook on e1, the pawn on c4. Black's king is on g6. What if it stands on d6 instead? Predict, then check.",
+   "working": "IA3-702",
+   "failing": "IA3-703",
+   "irrelevant": "IA3-704"
+  },
+  {
+   "type": "item",
+   "item": "IA3-705"
+  },
+  {
+   "type": "item",
+   "item": "IA3-706"
+  },
+  {
+   "type": "item",
+   "item": "IA3-707"
+  },
+  {
+   "type": "item",
+   "item": "IA3-708"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.ROOK-ACTIVE",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Before you answered: did you first ask which side of the rook's file the black king was on? How sure were you before the check?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-21: a cut-off by files; CI-22: use the rook actively)",
+  "sources/sheets/edlasker_chess-strategy.md (K28: rook endings, activity over material)",
+  "sources/sheets/emlasker_common-sense.md (4.20: the rook is strong against the king, cutting off)",
+  "All positions: own constructions; results from the Lichess tablebase service"
+ ]
+}

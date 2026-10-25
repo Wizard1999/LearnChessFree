@@ -1,0 +1,263 @@
+{
+  "id": "L-PRA-BUDGET-1",
+  "title": "A budget, not an equal share",
+  "skill": "PRA.BUDGET",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Splits a 15-minute game into an opening share, a middlegame share, an endgame share and a reserve that add up to the whole",
+    "Works out how many long thinks a middlegame share allows once routine moves are paid for",
+    "Tells a routine, a critical and a forced position apart and says whether a flat share is enough",
+    "Writes a budget to try in his next game and names the clock record that will check it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **time budget** is a plan for where the clock goes: a share for each phase, a reserve for the end, and room to think longer on the few moves that matter. **The same time on every move is not a budget**: it pays as much for a forced reply as for a decision. Every number here is a first guess to test against your own clock."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "A 15+0 game gives each player 15 minutes and adds nothing. Say the reserve is 2 minutes, the opening 3 and the endgame 3. The middlegame is moves 13 to 30, which is 18 moves. Work these out before you read on.",
+      "fields": [
+        {
+          "id": "mid_min",
+          "label": "Minutes left for the middlegame:",
+          "type": "number",
+          "answer": 7,
+          "tolerance": 0
+        },
+        {
+          "id": "thinks",
+          "label": "If each middlegame move costs a routine 10 seconds, how many one-minute thinks fit in what is left of the middlegame share?",
+          "type": "number",
+          "answer": 4,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Pay for routine moves first.** Give routine moves a small price and keep the rest of the phase share for critical moments, such as a tempting capture that may cost material. Forced replies cost almost nothing. The prices (10 seconds, one minute) are a rule of thumb to adjust, not a measured optimum."
+    },
+    {
+      "type": "board",
+      "fen": "3r1r2/ppp1qpk1/6p1/n3P1N1/3Pp1PP/2P5/bP1QB3/2KR3R w - - 0 19",
+      "caption": "White to move. The pawn on e4 can be taken. Is this a routine move or a critical one?",
+      "line": [
+        {
+          "move": "g5e4",
+          "say": "Nxe4 takes a pawn. It looks free."
+        },
+        {
+          "move": "a5b3",
+          "say": "Nb3+ is check, and the knight also attacks the queen on d2."
+        },
+        {
+          "move": "c1c2",
+          "say": "The king must move, and the queen stays attacked."
+        },
+        {
+          "move": "b3d2",
+          "say": "Nxd2 takes the queen."
+        },
+        {
+          "move": "d1d2",
+          "say": "Rxd2 takes the knight back. White gave a queen for a knight and a pawn."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "g5e4",
+            "cp": 500
+          },
+          "statement": "Nxe4 is rated at least five pawns worse than the best move."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "g5e4",
+            "max": -5
+          },
+          "statement": "Along the engine line Nxe4 ends with White five or more points down."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d2f4"
+            ]
+          },
+          "statement": "Qf4 is the engine's best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "e4"
+        },
+        {
+          "from": "a5",
+          "to": "b3"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "d2"
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "How much of the budget does it deserve?",
+      "prompt": "The first position was routine: about 10 seconds was the right price. In this one, decide: is it critical, so it needs extra from the pool, or routine, so the usual price is enough? A forced move, with one legal move, gets almost nothing; you meet one in the next exercises. Predict, then check.",
+      "working": "IA5-33",
+      "failing": "IA5-32",
+      "irrelevant": "IA5-45"
+    },
+    {
+      "type": "card",
+      "text": "**When a budget works.** It works if you check it: compare your clock at move 12, move 30 and the end with the plan after each game. It fails when rigid: on a critical move, take the minute and pay it back from the share. It barely binds with a big increment (60+30 is about 120 seconds a move over 40 moves). Treat it as a rule of thumb."
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Sort each case. Does a time budget work, fail, or not apply? Choose, then save to see my answer. The answers are my judgement, not a measurement.",
+      "fields": [
+        {
+          "id": "a",
+          "label": "Every move gets 20 seconds, whatever the position.",
+          "options": [
+            "works",
+            "fails",
+            "does not apply"
+          ],
+          "answer": "fails"
+        },
+        {
+          "id": "b",
+          "label": "Routine moves cost about 10 seconds, a critical move may take a minute from the phase share, and the clock is written down at move 12, move 30 and the end.",
+          "options": [
+            "works",
+            "fails",
+            "does not apply"
+          ],
+          "answer": "works"
+        },
+        {
+          "id": "c",
+          "label": "The plan says 10 seconds a move, and you play a tempting capture in 10 seconds without looking at the reply.",
+          "options": [
+            "works",
+            "fails",
+            "does not apply"
+          ],
+          "answer": "fails"
+        },
+        {
+          "id": "d",
+          "label": "A 60+30 game of 40 moves, and you still have most of an hour on the clock.",
+          "options": [
+            "works",
+            "fails",
+            "does not apply"
+          ],
+          "answer": "does not apply"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB6-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.PRA.CLOCK"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The app does not time your games, and an imported game is not read for clock times. So the budget lives on paper: write your clock at move 12, move 30 and the end of each game. A time-per-move record is planned, not built. Once you can revise a budget from your notes, you do not need this page."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Write the budget you will try in your next game. The numbers must add up to your total.",
+      "fields": [
+        {
+          "id": "control",
+          "label": "Time control:"
+        },
+        {
+          "id": "total",
+          "label": "Total minutes on my clock:",
+          "type": "number"
+        },
+        {
+          "id": "reserve",
+          "label": "Reserve at the end, in minutes:",
+          "type": "number"
+        },
+        {
+          "id": "open_m",
+          "label": "Opening share, in minutes:",
+          "type": "number"
+        },
+        {
+          "id": "mid_m",
+          "label": "Middlegame share, in minutes:",
+          "type": "number"
+        },
+        {
+          "id": "end_m",
+          "label": "Endgame share, in minutes:",
+          "type": "number"
+        },
+        {
+          "id": "routine_s",
+          "label": "Seconds I allow a routine move:",
+          "type": "number"
+        },
+        {
+          "id": "log",
+          "label": "I will write down my clock at:",
+          "options": [
+            "move 12, move 30 and the end",
+            "other moves (write them in my notes)"
+          ]
+        },
+        {
+          "id": "change",
+          "label": "After three games I will change the budget if:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md S10 (PRA.BUDGET); skill node PRA.BUDGET (conditions, contrasts, misconception)",
+    "docs/council-synthesis.md CD-14 (budgeting at Tier 2; Heisman on time use, recalled [R])",
+    "arithmetic asserted in the authoring script; the 10-second price, the one-minute think and the 12/30-move boundaries are first guesses [H]; positions: Lichess puzzles and 2013-01 games (CC0)"
+  ]
+}

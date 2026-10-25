@@ -1,0 +1,68 @@
+{
+  "id": "END.PAWN-RACE",
+  "title": "Pawn races and the square",
+  "strand": "S7",
+  "tier": 1,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a pawn needs one move per rank to reach the last rank (two squares allowed on its first move) and that an enemy king may catch it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Decides whether a lone king can catch a running pawn by counting the pawn's moves and the king's moves.",
+      "prereqs": [
+        "FND.PROMOTE.D1",
+        "FND.PIECE.KING.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Decides who wins a race when both sides have a pawn about to run, counting moves and noting who is to move and whether the first new queen gives check.",
+      "prereqs": [
+        "END.PAWN-RACE.D1",
+        "FND.CHECK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Checks a race count against the finer points: promotion with check, capturing the other pawn on the way, a king that steps in front.",
+      "prereqs": [
+        "END.PAWN-RACE.D2",
+        "FND.CHECK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A king can never catch up with a pawn that has a head start.",
+    "Forgetting the pawn's two-square first move when counting.",
+    "The king must walk straight at the pawn; the diagonal route costs nothing less."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md",
+    "docs/curriculum-map-v1.1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "Count the pawn's moves to the last rank (two squares allowed on its first move) and the king's moves to the queening square; the side to move gets the first of those moves.",
+    "The result of a race is checked with the tablebase when all pieces fit (7 or fewer)."
+  ],
+  "condition_sources": [
+    "ours",
+    "MAP11"
+  ],
+  "contrasts": [
+    "A pawn with a head start is still caught when the king is inside its square.",
+    "A far-away friendly king that cannot help does not change the count."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours"
+  ]
+}

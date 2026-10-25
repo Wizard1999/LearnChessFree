@@ -1,0 +1,132 @@
+{
+  "id": "L-TAC-XRAY-1",
+  "title": "X-ray and batteries: the piece behind joins in",
+  "skill": "TAC.XRAY",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Counts attackers and defenders of a square including the pieces behind",
+    "Finds the capture sequence in which the rear piece joins in",
+    "Checks that the front piece is free to capture before counting on the battery",
+    "Tells a battery from a lone piece with nothing behind it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Two of your pieces on one line form a **battery**. The rear piece attacks, or defends, *through* the front one: once the front piece captures or moves away, the rear piece joins in. This is called an **x-ray**.\nWhen you count attackers and defenders, include the pieces behind. Two rooks on a file are two attackers, not one."
+    },
+    {
+      "type": "board",
+      "fen": "2r2rk1/pp3ppp/8/8/8/3Q4/PP3PPP/1B4K1 w - - 0 1",
+      "caption": "White to move. The bishop on b1 stands behind the queen on d3, on the same diagonal as h7.",
+      "line": [
+        {
+          "move": "d3h7",
+          "say": "Qxh7 is checkmate. The king cannot take the queen, because the bishop behind it guards h7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d3",
+          "to": "h7"
+        },
+        {
+          "from": "b1",
+          "to": "d3"
+        }
+      ],
+      "highlight": [
+        "b1",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d3h7",
+            "n": 1
+          },
+          "statement": "Qxh7 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Only the king attacks h7."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "b1",
+            "excludes": [
+              "h7"
+            ]
+          },
+          "statement": "Before the capture the bishop does not reach h7: the queen is in the way."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "b1",
+            "includes": [
+              "h7"
+            ],
+            "after_move": "d3h7"
+          },
+          "statement": "After the queen has gone to h7, the bishop guards it."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB1-016"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the front piece can capture and leave the line, and the piece behind moves along that line. **Rule of thumb:** count attackers and defenders including the pieces behind, cheapest capture first, and remember that either side may stop trading.\n**When it fails:** the front piece is pinned and cannot capture, or nothing stands behind it, so there is only one attacker."
+    },
+    {
+      "type": "contrast",
+      "title": "Same battery, one change",
+      "prompt": "Same position, one change: a black bishop stands on b5 instead of b7. Predict, then check.",
+      "working": "IB1-016",
+      "failing": "IB1-017",
+      "irrelevant": "IB1-018"
+    },
+    {
+      "type": "item",
+      "item": "IB1-018"
+    },
+    {
+      "type": "item",
+      "item": "IB1-033",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-019",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, how many attackers and how many defenders did you count on the key square, including the pieces behind? Did you check whether the front piece was free to capture?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.XRAY.json (outcomes, conditions, contrasts; ideas from the sheets edlasker_chess-strategy K3 and nimzowitsch_my-system idea 27, original wording)",
+    "docs/curriculum-map-v1.1.md",
+    "items IB1-016..019, IB1-033 (authored, content/items/lesson-b1.json); the board is an own construction"
+  ]
+}

@@ -1,0 +1,211 @@
+{
+  "id": "L-TAC-DESPERADO-1",
+  "title": "The desperado: sell a doomed piece dearly",
+  "skill": "TAC.DESPERADO",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Spots a piece that is lost anyway and has a capture available",
+    "Finds the capture that gets the most for it",
+    "Counts what the capture wins and what the recapture costs",
+    "Says when nothing can be sold: the piece can be saved, or it has nothing to take"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **desperado** is a piece that is lost anyway. Instead of simply retreating or being captured for nothing, it captures as much as it can first. When one of your pieces is attacked and has no safe square, ask what it can take on the way out. Retreating would not save it, so whatever it captures is a gain."
+    },
+    {
+      "type": "board",
+      "fen": "1rk5/1pp2p2/N7/8/8/8/PP2P3/2K5 w - - 0 1",
+      "caption": "White to move. The knight on a6 is attacked by the pawn on b7 and cannot be saved.",
+      "line": [
+        {
+          "move": "a6b8",
+          "say": "Nxb8: the doomed knight takes the rook before it falls."
+        },
+        {
+          "move": "c8b8",
+          "say": "The king recaptures. White gave a knight and won a rook."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a6b8"
+            ]
+          },
+          "statement": "Nxb8 is the engine's first choice.",
+          "id": "C1"
+        },
+        {
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "a6"
+            ]
+          },
+          "statement": "The knight on a6 is attacked and no white piece defends it.",
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "b7a6",
+            "min": 2,
+            "null_move_first": true
+          },
+          "statement": "If White simply passes, Black wins the knight (engine line).",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "b8",
+            "color": "black",
+            "count": 1,
+            "after_move": "a6b8"
+          },
+          "statement": "After Nxb8 the piece on b8 can be recaptured.",
+          "id": "C4"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "a6b8",
+            "min": 1
+          },
+          "statement": "Nxb8 gains material along the engine line.",
+          "id": "C5"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "a6b4",
+            "cp": 350
+          },
+          "statement": "Nb4 (a retreat) loses at least 350 centipawns compared with the best move.",
+          "id": "C6"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "a6c5",
+            "cp": 400
+          },
+          "statement": "Nc5 (a retreat) loses at least 400 centipawns compared with the best move.",
+          "id": "C7"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "a6c7",
+            "cp": 600
+          },
+          "statement": "Nxc7 (a different capture) loses at least 600 centipawns compared with the best move.",
+          "id": "C8"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a6",
+          "to": "b8"
+        },
+        {
+          "from": "b7",
+          "to": "a6"
+        }
+      ],
+      "highlight": [
+        "a6",
+        "b8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB2-16"
+    },
+    {
+      "type": "item",
+      "item": "IB2-17"
+    },
+    {
+      "type": "card",
+      "text": "Two checks before you sell a piece.\n**Is it really lost?** If it has a safe square or a defender, saving it may be better.\n**What does each capture allow?** Count the recaptures, and compare the result with losing the piece for nothing.\n*Rule of thumb:* counting values (1, 3, 3, 5, 9) is a rule of thumb. A capture that opens a mating line can matter more."
+    },
+    {
+      "type": "contrast",
+      "title": "Is the piece really lost?",
+      "prompt": "First: the knight is lost and can take a rook. Second: the rook is a pawn. Third: the knight has nothing to take. Predict, then check.",
+      "working": "IB2-16",
+      "failing": "IB2-18",
+      "irrelevant": "IB2-19"
+    },
+    {
+      "type": "item",
+      "item": "IB2-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-22",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-23",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.hangingPiece",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When a piece of yours was attacked, did you first ask whether it could be saved, and only then what it could take? Which question did you skip?",
+      "fields": [
+        {
+          "id": "saved",
+          "label": "Did you ask whether the piece could be saved?",
+          "options": [
+            "yes, every time",
+            "sometimes",
+            "no"
+          ]
+        },
+        {
+          "id": "took",
+          "label": "Did you ask what the piece could take?",
+          "options": [
+            "yes, every time",
+            "sometimes",
+            "no"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 21 (selling a doomed queen dearly); §7 row 21 [S]",
+    "docs/curriculum-map-v1.md §2 S3 (T3-4)",
+    "positions: authored; found by a template search with the engine (a white piece attacked, with a capture better than any retreat) and checked by the validator; engine evidence at depth 16"
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "id": "L-TAC-QUIET-MOVE-1",
+  "title": "The quiet move: no check, no capture, still decisive",
+  "skill": "TAC.QUIET-MOVE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Recognises a quiet move: no check, no capture, no direct threat, yet decisive",
+    "Finds the quiet move when told there is one",
+    "Checks the opponent's free replies (checks and captures) before trusting a quiet move",
+    "Prefers a forcing win when one exists"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Not every winning move is a check or a capture. A **quiet move** gives no check, takes nothing and makes no direct threat, yet it creates a threat the opponent cannot meet, or it removes their last defence. Look for one when the forcing moves have run out. It is a move to find, not one to play by habit."
+    },
+    {
+      "type": "board",
+      "fen": "3q1r1k/p1r2p1n/1pP1pb2/3p1Pp1/3P4/4B2Q/PP3KP1/4R3 w - - 0 31",
+      "caption": "White to move. Look for a move that is neither a check nor a capture.",
+      "line": [
+        {
+          "move": "e1h1",
+          "say": "Rh1: no check, no capture. The rook lines up behind the queen on the h-file."
+        },
+        {
+          "move": "e6f5",
+          "say": "Black has no defence that works; the engine finds this best."
+        },
+        {
+          "move": "h3h7",
+          "say": "The queen takes on h7 with checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e1h1"
+          },
+          "statement": "Rh1 is legal.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "h1",
+            "piece": "empty"
+          },
+          "statement": "The rook goes to an empty square: no capture.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "h8",
+            "color": "white",
+            "count": 0,
+            "after_move": "e1h1"
+          },
+          "statement": "No white piece attacks the king on h8 after Rh1: no check.",
+          "id": "C3"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "e1h1",
+            "n": 2
+          },
+          "statement": "Rh1 forces checkmate in two.",
+          "id": "C4"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1h1"
+            ]
+          },
+          "statement": "Rh1 is the engine's first choice.",
+          "id": "C5"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "h1"
+        },
+        {
+          "from": "h3",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7",
+        "h8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-HHPBB-c1"
+    },
+    {
+      "type": "item",
+      "item": "IL-ZJ3O0-c1"
+    },
+    {
+      "type": "card",
+      "text": "A quiet move gives the opponent a free move. Before you play one, ask:\n**Does the opponent have a check or a capture that wrecks it?**\n**Does a forcing line already win?** If so, play that; a showpiece is not a better move.\n*Rule of thumb:* look at checks, captures and threats first, then at quiet moves."
+    },
+    {
+      "type": "contrast",
+      "title": "Does the quiet move still work?",
+      "prompt": "The first position is a quiet move that wins. In the second, a pawn has moved so that Black gets a strong reply. In the third, a pawn gives White a forced mate. Predict, then check.",
+      "working": "IL-Ywbt1-c1",
+      "failing": "IB2-24",
+      "irrelevant": "IB2-25"
+    },
+    {
+      "type": "item",
+      "item": "IL-DeABD",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-bFMNK",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB2-26",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.quietMove",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you looked for the quiet move, did you first check what the opponent could do with a free move (a check or a capture)? Which of the two was easier to forget?",
+      "fields": [
+        {
+          "id": "checked",
+          "label": "Did you check the opponent's free replies before choosing?",
+          "options": [
+            "yes, every time",
+            "sometimes",
+            "no"
+          ]
+        },
+        {
+          "id": "forget",
+          "label": "Which was easier to forget?",
+          "options": [
+            "their checks",
+            "their captures",
+            "both equally"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S3 (T4-5)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G4: rejecting a slow correct move in search of a grand combination) [S]",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C14 (the threat is stronger than its fulfilment) [S]",
+    "positions: Lichess puzzles (CC0), shipped quiet-move items, and authored one-feature edits of puzzle Ywbt1; engine evidence at depth 16"
+  ]
+}

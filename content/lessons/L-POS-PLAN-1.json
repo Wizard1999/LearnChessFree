@@ -1,0 +1,101 @@
+{
+  "id": "L-POS-PLAN-1",
+  "title": "Plans: find the difference, check it is carryable",
+  "skill": "POS.PLAN",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Lists the differences between the two sides before choosing a plan",
+    "Sees that king position can outweigh an extra pawn",
+    "Checks whether the target of a plan is still there after one change"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A plan comes from the position, not from habit. List the **differences between the two sides**: material, king positions, open lines, weak squares. Ask which difference gives you something to aim at. Then check that the plan is **carryable:** do you have the pieces to execute it, and does the opponent have time to stop it?"
+    },
+    {
+      "type": "board",
+      "fen": "4k1r1/ppp2p1p/3bp3/8/4P2q/5N2/PPPQ1PPP/5RK1 b - - 0 1",
+      "caption": "Black to move. White is a pawn ahead. What are the differences?",
+      "line": [
+        {
+          "move": "g8g2",
+          "say": "Rxg2+: the rook and queen both aim at g2."
+        },
+        {
+          "move": "g1g2",
+          "say": "The king must take."
+        },
+        {
+          "move": "h4g4",
+          "say": "Check: the king is hunted and Black mates by force."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g8",
+          "to": "g2"
+        },
+        {
+          "from": "h4",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "g2",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "g8g2",
+            "n": 6
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-36"
+    },
+    {
+      "type": "card",
+      "text": "The same attack needs the same target. If the key difference changes, the plan can vanish: ask **what is it aimed at, and is that still there?** Material is only one difference; king safety and open lines can outweigh it. Change one thing in the position and check whether your plan survives."
+    },
+    {
+      "type": "contrast",
+      "title": "Same attack, the king has moved",
+      "prompt": "White's king stands on b1 instead of g1. Does the rook sacrifice on g2 still work? Predict first, then check.",
+      "working": "IA2-36",
+      "failing": "IA2-37"
+    },
+    {
+      "type": "item",
+      "item": "IA2-38"
+    },
+    {
+      "type": "item",
+      "item": "IA2-39"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you listed the differences: which one did you look at first, material or the kings?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C06-C07: character and the difference method; Paulsen-Morphy king pair)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-36: a plan must be carryable)",
+    "sources/sheets/edlasker_chess-strategy.md (K30: strategy needs tactical feasibility; K33 'unsound plan' NOT taught)"
+  ],
+  "also": [
+    "POS.PLAN.DIFF"
+  ]
+}

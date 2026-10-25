@@ -1,0 +1,67 @@
+{
+  "id": "FND.CASTLE",
+  "title": "Castling",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Describes castling: the king moves two squares towards a rook and the rook jumps to the other side of it, only if neither piece has moved.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'castle', castles on the right side, kingside or queenside, for both colours.",
+      "prereqs": [
+        "FND.PIECE.KING.D1",
+        "FND.PIECE.ROOK.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Decides whether castling is legal right now and says why not (right lost, piece in between, king in check, or a square the king crosses or lands on is attacked), knowing that an attacked rook or an attacked b-square does not stop it.",
+      "prereqs": [
+        "FND.CASTLE.D1",
+        "FND.CHECK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Says whether castling will still be possible after a few given moves, noticing which moves lose the right for good.",
+      "prereqs": [
+        "FND.CASTLE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "You may castle out of check.",
+    "You cannot castle if the rook is attacked.",
+    "A king or rook that has moved and come back may still castle.",
+    "Castling is allowed whenever the squares between are empty."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "Castling needs: neither king nor that rook has moved, the squares between them empty, the king not in check, and the squares the king crosses and lands on not attacked.",
+    "Only the squares the king uses matter for attacks; the rook, and on the queen side the square beside the rook, may be attacked."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "The king may not pass over an attacked square, even if it would land on a safe one.",
+    "An attacked rook, or an attacked b-square, does not stop queenside castling."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 3",
+    "rules"
+  ]
+}

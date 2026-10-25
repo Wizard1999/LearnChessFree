@@ -1,0 +1,168 @@
+{
+  "id": "L-TAC-INTERFERE-1",
+  "title": "Interference: cut the line between two pieces",
+  "skill": "TAC.INTERFERE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Finds the interposing move that cuts a defender from its target when told to interfere",
+    "Counts the protectors of the target before interposing",
+    "Checks that the interposing move really lands on the line between the two pieces"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Interference** puts a piece on the line between two enemy pieces, so that one of them no longer protects the other or no longer guards a square. The piece that lost its protector may become a **loose piece**: attacked and not defended.\nYour interposed piece should be safe, or its capture should cost the opponent more."
+    },
+    {
+      "type": "board",
+      "fen": "b1r5/P7/1R5p/1K6/5p2/4kP2/6P1/8 w - - 6 56",
+      "caption": "White to move. The black rook on c8 protects the bishop on a8 along the eighth rank.",
+      "line": [
+        {
+          "move": "b6b8",
+          "say": "The rook steps between them, attacks both, and is protected by the pawn on a7."
+        },
+        {
+          "move": "c8c7",
+          "say": "Black's rook moves away. The bishop on a8 is no longer protected."
+        },
+        {
+          "move": "b8a8",
+          "say": "The rook takes the bishop. Along the engine line White gains at least three points of material."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b6",
+          "to": "b8"
+        },
+        {
+          "from": "c8",
+          "to": "a8"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b6b8"
+            ]
+          },
+          "statement": "The engine's best move is Rb8 (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "b6b8",
+            "min": 3
+          },
+          "statement": "Along the engine line White gains at least three points of material."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "a8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook on c8 protects the bishop on a8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "a8",
+            "color": "black",
+            "count": 0,
+            "after_move": "b6b8"
+          },
+          "statement": "After Rb8 no black piece protects a8."
+        },
+        {
+          "id": "C5",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "b8",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The pawn on a7 protects b8."
+        },
+        {
+          "id": "C6",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "a8",
+              "c8"
+            ],
+            "after_move": "b6b8"
+          },
+          "statement": "After Rb8 the rook on c8 and the bishop on a8 are both loose."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB1-010"
+    },
+    {
+      "type": "card",
+      "text": "**Interference works** when the line you cut was the only defence of a piece, something attacks that piece afterwards, and your interposed piece is safe or forces the reply. **Rule of thumb:** count the defenders first. A second defender makes the cut worthless, and the move must really land on the line between the two pieces.\nAsk before you interpose: can the opponent simply capture my piece and gain?"
+    },
+    {
+      "type": "contrast",
+      "title": "Same interference, one change",
+      "prompt": "Same position, one change: Black's g-pawn is on g5 instead of g7. Predict, then check.",
+      "working": "IB1-010",
+      "failing": "IB1-011",
+      "irrelevant": "IB1-012"
+    },
+    {
+      "type": "item",
+      "item": "IB1-012"
+    },
+    {
+      "type": "item",
+      "item": "IB1-014",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-034",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.interference",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, which two enemy pieces did you see as connected, and how many protectors did you count before you chose? (The practice puzzles carry Lichess's automatic theme label, which is not always an exact fit for this lesson.)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.INTERFERE.json (outcomes, conditions, contrasts; the node notes that no synthesis sheet covers this motif)",
+    "docs/curriculum-map-v1.1.md",
+    "items IB1-010..015 and IB1-034 (authored, content/items/lesson-b1.json); Lichess puzzle database (CC0): nBvXf (board)"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "id": "FND.PIECE.ROOK",
+  "title": "How the rook moves",
+  "strand": "S1",
+  "tier": 0,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Says that a rook slides any distance along a rank or file and cannot jump over pieces.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'rook', marks every square a rook can move to: it stops in front of its own pieces and may take the first enemy piece in its way.",
+      "prereqs": [
+        "FND.BOARD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In a busy position where the piece is not named, marks every square the piece on a given square can reach.",
+      "prereqs": [
+        "FND.PIECE.ROOK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Without a board, says whether a rook can reach a far square in one move, and if not in how many, and notices when one blocker is all that stops it.",
+      "prereqs": [
+        "FND.PIECE.ROOK.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "The rook can jump over pieces.",
+    "The rook can land on a square held by its own piece.",
+    "The rook cannot capture a piece standing in its way."
+  ],
+  "sources": [
+    "docs/first-hours.md",
+    "docs/curriculum-map-v1.md"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=0"
+  },
+  "conditions": [
+    "The rook moves along a rank or a file for any number of free squares.",
+    "It stops in front of its own piece and may take the first enemy piece on its line, and then stops there."
+  ],
+  "condition_sources": [
+    "rules",
+    "rules"
+  ],
+  "contrasts": [
+    "A piece on the line blocks everything behind it: the squares behind it cannot be reached in one move.",
+    "Pieces that stand off the rook's rank and file do not change where the rook can go."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "rules",
+    "rules"
+  ]
+}

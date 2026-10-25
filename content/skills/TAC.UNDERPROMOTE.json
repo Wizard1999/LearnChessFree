@@ -1,0 +1,69 @@
+{
+  "id": "TAC.UNDERPROMOTE",
+  "title": "Underpromotion",
+  "strand": "S3",
+  "tier": 4,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why a pawn is sometimes promoted to a knight, rook or bishop instead of a queen.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "When told 'underpromote', finds the promotion that checks or forks, or the one that avoids a stalemate.",
+      "prereqs": [
+        "FND.PROMOTE.D1",
+        "TAC.FORK.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed endings, chooses the right promoted piece and says when the queen is correct.",
+      "prereqs": [
+        "TAC.UNDERPROMOTE.D1",
+        "TAC.STALEMATE-TRICK.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies by counting replies that the chosen piece wins or draws where the queen fails, and predicts how moving the enemy king changes the choice.",
+      "prereqs": [
+        "TAC.UNDERPROMOTE.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Promoting to a queen is always at least as good."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S3 (T4-5)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K29 (queen versus an advanced pawn; stalemate resources)",
+    "docs/first-hours.md session 3 (promotion shown, not tested)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "A queen would stalemate or lose to a tactic that the other piece avoids, or a knight promotion gives check with a fork."
+  ],
+  "condition_sources": [
+    "ours; EDL K29"
+  ],
+  "contrasts": [
+    "The queen promotion also wins, and the unusual promotion adds nothing.",
+    "Promoting to a knight gives an apparent fork that the king escapes.",
+    "A pawn that cannot reach the last rank."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "ours",
+    "ours"
+  ],
+  "soft_prereqs": [],
+  "soft_prereq_notes": {},
+  "note": "Tier 4 chosen from the map's T4-5 so that it can follow the stalemate resource; no D4/D5 because underpromotion is too rare in play to evidence. No synthesis sheet covers it; conditions are ours."
+}

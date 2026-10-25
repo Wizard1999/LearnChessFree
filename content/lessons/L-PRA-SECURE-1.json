@@ -1,0 +1,164 @@
+{
+  "id": "L-PRA-SECURE-1",
+  "title": "When you are ahead, look again",
+  "skill": "PRA.SECURE",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Names the pattern of relaxing when ahead: taking the first gain without asking about a threat or something stronger",
+    "Runs the safety scan and the opponent's-best-reply look before a capture when ahead",
+    "Tells a capture the scan clears from one it stops, and a hidden threat from a quiet position",
+    "Writes a ten-move routine for his next game when he is ahead"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Players often relax when they are ahead, and a classic slip follows: taking the first gain on offer without asking what the opponent threatens, or whether something stronger exists. **Feeling safe is a risk.** A habit to try: when you are ahead, run the safety scan and look at the opponent's best reply before every move, for ten moves in a row."
+    },
+    {
+      "type": "item",
+      "item": "IA5-38"
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/p4p2/2p3p1/4P2P/1P2Q1p1/2qB4/2P1K3/8 b - - 0 28",
+      "caption": "Black to move and far ahead. The pawn on h5 can be taken. Run the scan first.",
+      "line": [
+        {
+          "move": "g6h5",
+          "say": "gxh5 takes a pawn. It looks free."
+        },
+        {
+          "move": "e4h7",
+          "say": "Qh7 is checkmate: the pawn that blocked the queen and bishop has gone."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "max": -500
+          },
+          "statement": "The engine rates Black at least five pawns ahead."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "g6h5",
+            "cp": 90000
+          },
+          "statement": "gxh5 allows a forced mate."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a8e8",
+              "f8e8"
+            ]
+          },
+          "statement": "Rae8 and Rfe8 are the engine's top moves."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "h5"
+        },
+        {
+          "from": "e4",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "h7"
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When the scan fits.** Use it when you are ahead and tempted to relax or to grab. It costs seconds, and it does not mean refusing every gain: when the scan finds nothing, take what is offered. It adds little in a level, tense position, where you are already looking. \"Ahead\" is a rule of thumb: a piece or more, or a clearly better position."
+    },
+    {
+      "type": "contrast",
+      "title": "Same king, one pawn different",
+      "prompt": "White is far ahead in both positions, and the only difference is one pawn: h3 in the first, h2 in this one. Predict whether Qxh5 wins a pawn here, then check. A level position, where nobody is ahead, comes up in the exercises after this.",
+      "working": "IB6-2",
+      "failing": "IB6-1",
+      "irrelevant": "IB6-3"
+    },
+    {
+      "type": "item",
+      "item": "IB6-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB6-6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.DEFENSE"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The app cannot watch a game while you play, so it cannot tell when you are ahead: you set the flag, say so to yourself and run the scan. The first exercises came with hints; the silent ones come with none. Mark each scanned move with an S in your own notes, not on a tournament score sheet."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Write the routine for the next game in which you are ahead. Ten scanned moves in a row is a first guess for the habit.",
+      "fields": [
+        {
+          "id": "flag",
+          "label": "I will call myself \"ahead\" when:",
+          "options": [
+            "I am a piece or more up",
+            "I am a pawn or more up",
+            "my analysis says I am clearly better",
+            "other (write it in my notes)"
+          ]
+        },
+        {
+          "id": "q",
+          "label": "My two questions before each move are:"
+        },
+        {
+          "id": "n_scanned",
+          "label": "After the game: moves out of ten on which I really scanned:",
+          "type": "number"
+        },
+        {
+          "id": "moment",
+          "label": "The moment that gave me the \"safe\" feeling, if there was one:"
+        },
+        {
+          "id": "miss",
+          "label": "A gain I took without looking, if any:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/curriculum-map-v1.1.md section 3 (PRA.SECURE, a habit node); skill node PRA.SECURE (conditions, contrasts, misconception)",
+    "sources/sheets/capablanca_chess-fundamentals.md section 4 CI-24 and section 7 row 26 (relaxing when ahead; taking the first material without looking for better) [READ in the sheet]; the pattern is described there from games, not measured; wording is original",
+    "positions: 2013-01 Lichess games (CC0); IB6-2 is a one-feature edit of IB6-1 (checked in the build script); \"far ahead\" and \"level\" are engine ratings recorded in the claims"
+  ]
+}

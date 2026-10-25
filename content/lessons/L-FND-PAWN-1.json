@@ -1,0 +1,155 @@
+{
+  "id": "L-FND-PAWN-1",
+  "title": "The pawn: moves and captures are different",
+  "skill": "FND.PIECE.PAWN",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Taps every square a pawn can move to, including the two-square start and diagonal captures",
+    "Knows a pawn cannot capture straight ahead and is blocked by any piece in front of it",
+    "Knows what happens when a pawn reaches the last rank"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Pawns** move straight forward, one square at a time, and never backward. From their starting square they may move two squares if both are empty. But pawns **capture** differently: one square diagonally forward. A pawn cannot capture straight ahead, and any piece directly in front of it blocks it."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/3n4/4P3/6K1 w - - 0 1",
+      "caption": "Forward to e3 or e4, or a capture on d3. The pawn goes diagonally only to capture.",
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e4"
+        },
+        {
+          "from": "e2",
+          "to": "d3"
+        }
+      ],
+      "highlight": [
+        "d3",
+        "e3",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e2",
+            "to": [
+              "d3",
+              "e3",
+              "e4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-38"
+    },
+    {
+      "type": "item",
+      "item": "IA0-39"
+    },
+    {
+      "type": "item",
+      "item": "IA0-40"
+    },
+    {
+      "type": "card",
+      "text": "Two details cause most pawn mistakes. The two-square jump is only for a pawn's first move, and only if both squares are empty. And a pawn captures diagonally, never straight ahead. Before moving a pawn ask: has it moved yet? And is the square ahead empty?"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "The pawn moves up one square to e3. Predict first: can it still jump two squares?",
+      "working": "IA0-41",
+      "failing": "IA0-42"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, a different target",
+      "prompt": "The knight steps from the diagonal to straight ahead. Predict first: can the pawn still capture it?",
+      "working": "IA0-43",
+      "failing": "IA0-44"
+    },
+    {
+      "type": "item",
+      "item": "IA0-45"
+    },
+    {
+      "type": "item",
+      "item": "IA0-46"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/4P3/8/8/8/8/8/6K1 w - - 0 1",
+      "caption": "When a pawn reaches the last rank, it turns into a new piece. Here it becomes a queen.",
+      "line": [
+        {
+          "move": "e7e8q",
+          "say": "The pawn reaches e8 and becomes a queen."
+        },
+        {
+          "move": "g8h7",
+          "say": "Black's king moves."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e7e8q"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e7e8n"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-47"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.PAWN",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which pawn rule felt least clear: the two-square start, the diagonal capture, or the last rank? Write it down so the app can bring it back."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ]
+}

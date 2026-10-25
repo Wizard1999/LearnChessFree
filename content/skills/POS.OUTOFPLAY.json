@@ -1,0 +1,71 @@
+{
+  "id": "POS.OUTOFPLAY",
+  "title": "Pieces out of play",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains that a piece can be out of play (shut in or far from the action) without being capturable.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Finds the piece cut off from the action in a given position and says what cuts it off.",
+      "prereqs": [
+        "POS.GOODBAD.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, classifies a piece as out of play, able to get out, or really trapped, and plans either to keep an enemy piece cut off or to free his own.",
+      "prereqs": [
+        "POS.OUTOFPLAY.D1"
+      ]
+    },
+    "D3": {
+      "outcome": "Counts the cost of freeing a shut-in piece (a lever, an exchange) against the benefit of playing on the other wing while the enemy piece is idle.",
+      "prereqs": [
+        "POS.OUTOFPLAY.D2",
+        "TAC.TRAPPED.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A shut-in piece is a lost piece."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-35; §7 row 38; §8 item 16",
+    "docs/curriculum-map-v1.1.md §3 (POS.OUTOFPLAY as the contrast with TAC.TRAPPED)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C13"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The cut-off piece cannot be freed except at a cost."
+  ],
+  "condition_sources": [
+    "CAP CI-35 (c)"
+  ],
+  "contrasts": [
+    "The piece can be freed by a sacrifice or an exchange.",
+    "Treating a temporarily blocked piece as lost without checking the defender's counter-sacrifices.",
+    "A well-placed piece elsewhere."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "CAP §8 item 16",
+    "CAP CI-35 (g)",
+    "CAP §8 item 16"
+  ],
+  "soft_prereqs": [
+    "POS.EXCHANGE.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.EXCHANGE.D1": "trading off the guard of the exit frees the piece"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "id": "FND.SPECIAL",
+  "title": "Which special move applies",
+  "strand": "S1",
+  "tier": 1,
+  "origin": "foundation worker (combiner node added after a lesson and items asked for a mixed special-move check)",
+  "depths": {
+    "D0": {
+      "outcome": "Names the three special moves (castling, en passant, promotion) and what makes each one possible.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Told which special move to look for, finds it in a position.",
+      "prereqs": [
+        "FND.CASTLE.D1",
+        "FND.ENPASSANT.D1",
+        "FND.PROMOTE.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In mixed positions where nobody names the move, says which special move (if any) is available to the side to move.",
+      "prereqs": [
+        "FND.SPECIAL.D1"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A special move is always available when the pieces are in place.",
+    "Only one kind of special move can ever be on the board."
+  ],
+  "sources": [
+    "docs/first-hours.md session 3",
+    "docs/curriculum-map-v1.md §2 S1 (FND.SPECIAL split into castle/en passant/promote; this node is the mixed 'which one?' check added by the foundation worker)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=1"
+  },
+  "conditions": [
+    "Each special move has its own condition: castling needs unmoved king and rook with a clear, unattacked path; en passant needs a two-square advance on the previous move; promotion needs a pawn on the last rank.",
+    "A position can offer none of them, and the correct answer is then 'none'."
+  ],
+  "condition_sources": [
+    "rules",
+    "ours"
+  ],
+  "contrasts": [
+    "A position that looks like en passant but the double-step happened two moves ago.",
+    "The rest of the pieces, for deciding which special move is legal."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "FH session 3",
+    "ours"
+  ],
+  "invented_by_us": true
+}

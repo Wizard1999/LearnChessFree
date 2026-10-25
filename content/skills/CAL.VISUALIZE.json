@@ -1,0 +1,80 @@
+{
+  "id": "CAL.VISUALIZE",
+  "title": "Visualising a line",
+  "strand": "S4",
+  "tier": 3,
+  "origin": "map-v1",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why calculation means tracking the pieces and attacked squares, not a mental picture of the board.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "For a named candidate, states the position after the next two plies and which piece is then attacked, with the board visible but no pieces moved.",
+      "prereqs": [
+        "FND.VISUAL.D2"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled positions, decides whether a three-ply line loses a piece (including an uncovered attack) without moving pieces, in at least 7 of 10.",
+      "prereqs": [
+        "CAL.VISUALIZE.D1",
+        "SAF.COUNT.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Holds a five-ply forcing line with a capture and a check, then lists the legal replies and the attacked pieces at the end of it.",
+      "prereqs": [
+        "CAL.VISUALIZE.D2"
+      ]
+    },
+    "D4": {
+      "outcome": "In own games, writes down the position after the intended line and the expected reply for chosen moves, and the record matches the game in at least 8 of 10.",
+      "prereqs": [
+        "CAL.VISUALIZE.D3"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Visualising is seeing a clear picture; it is better built by tracking what moved and what is now attacked.",
+    "A longer line is better; accuracy past the first capture matters more than length."
+  ],
+  "sources": [
+    "docs/curriculum-map-v1.md §2 S4 (Kotov, Aagaard, Ramesh, Dvoretsky, Rowson, Heisman, all [R] in the map)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-17 (d) (calculation by visualising future positions is what counts)",
+    "sources/sheets/emlasker_common-sense.md §5 item 3 (counting slip)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "Lines are short and the learner re-anchors on attacked pieces after each move.",
+    "Captures and discovered attacks are the points where tracking fails."
+  ],
+  "condition_sources": [
+    "ours",
+    "ours; EML §5 item 3 for counts"
+  ],
+  "contrasts": [
+    "Forgetting which piece a capture removed, so the final position is wrong.",
+    "A knight route miscounted by one move (opposite corners need six).",
+    "A one-move tactic that needs no line tracking."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "ours",
+    "EML §5 item 3",
+    "ours"
+  ],
+  "soft_prereqs": [
+    "FND.PIECE.KNIGHT.D1"
+  ],
+  "soft_prereq_notes": {
+    "FND.PIECE.KNIGHT.D1": "knight routes are the hardest to track"
+  }
+}
