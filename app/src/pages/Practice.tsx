@@ -1,0 +1,81 @@
+import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { useContent } from '../lib/content'
+import { useAttempts } from '../lib/progress'
+import { interleave, pickFresh } from '../lib/select'
+import { ItemSequence } from '../components/LessonPlayer'
+import type { Item } from '../types'
+
+export function Practice() {
+  const content = useContent()
+  const attempts = useAttempts()
+  const [params, setParams] = useSearchParams()
+  const [silent, setSilent] = useState(false)
+  const [round, setRound] = useState(0)
+  const [finished, setFinished] = useState<number | null>(null)
+
+  const skill = params.get('skill') ?? ''
+  const tag = params.get('tag') ?? ''
+  const strand = params.get('strand') ?? ''
+  const n = Number(params.get('n') ?? 8)
+  const started = params.get('go') === '1'
+  const silentOn = silent || params.get('silent') === '1'
+
+  const skillKeys = useMemo(() => [...new Set(content.items.map(i => i.skill))].sort(), [content.items])
+  const tags = useMemo(() => [...new Set(content.items.flatMap(i => (i.tags ?? []).filter(t => t.startsWith('theme.') || t.startsWith('kind.'))))].sort(), [content.items])
+  const strands = useMemo(() => [...new Set(content.skills.map(s => s.strand))].sort(), [content.skills])
+
+  const items = useMemo<Item[]>(() => {
+    if (!started || !attempts) return []
+    let pool = content.items.filter(i => i.cue >= 3)
+    if (skill) pool = content.items.filter(i => i.skill === skill)
+    if (tag) pool = pool.filter(i => (i.tags ?? []).includes(tag))
+    if (strand) pool = pool.filter(i => content.skillById.get(i.skill.slice(0, i.skill.lastIndexOf('.')))?.strand === strand)
+    // interleave across skills so unlike ideas alternate
+    const bySkill = new Map<string, Item[]>()
+    for (const i of pool) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i])
+    const per = Math.max(1, Math.ceil(n / Math.max(1, bySkill.size)))
+    const lists = [...bySkill.entries()].map(([k, l]) => pickFresh(l, attempts, per, `practice:${round}:${k}`))
+    return interleave(lists).slice(0, n)
+  }, [started, attempts, content, skill, tag, strand, n, round])
+
+  const set = (k: string, v: string) => { const p = new URLSearchParams(params); if (v) p.set(k, v); else p.delete(k); p.delete('go'); setParams(p); setFinished(null) }
+  const go = () => { const p = new URLSearchParams(params); p.set('go', '1'); setParams(p); setRound(r => r + 1); setFinished(null) }
+
+  return (
+    <main className="page">
+      <h1>Practice</h1>
+      {!started && (
+        <section className="card">
+          <p className="lede">Choose a focus or leave everything on "mixed" to get positions where nobody tells you which idea applies. Fresh positions are preferred over ones you have seen.</p>
+          <div className="grid2">
+            <label className="field"><span className="small muted">Skill (optional)</span>
+              <select value={skill} onChange={e => set('skill', e.target.value)}><option value="">Mixed: all skills</option>{skillKeys.map(k => <option key={k} value={k}>{k}</option>)}</select></label>
+            <label className="field"><span className="small muted">Theme or kind (optional)</span>
+              <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+            <label className="field"><span className="small muted">Strand (optional)</span>
+              <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+            <label className="field"><span className="small muted">How many</span>
+              <select value={n} onChange={e => set('n', e.target.value)}>{[5, 8, 12, 20].map(x => <option key={x} value={x}>{x}</option>)}</select></label>
+          </div>
+          <label className="check"><input type="checkbox" checked={silentOn} onChange={e => { setSilent(e.target.checked); if (!e.target.checked && params.get('silent')) set('silent', '') }} /> <span><strong>Silent practice</strong>: no hints. This is how you check that you can do it on your own. (Answers and explanations still appear after each exercise.)</span></label>
+          <div className="row"><button type="button" className="primary" onClick={go}>Start</button></div>
+        </section>
+      )}
+      {started && finished === null && (
+        <>
+          <p><button type="button" onClick={() => { const p = new URLSearchParams(params); p.delete('go'); setParams(p) }}>← Change focus</button></p>
+          <ItemSequence items={items} source="practice" silent={silentOn} onComplete={r => setFinished(r.filter(x => x.correct).length)} intro={silentOn ? 'Silent practice' : 'Practice'} />
+        </>
+      )}
+      {started && finished !== null && (
+        <section className="card">
+          <h2>Set finished</h2>
+          <p>{finished} of {items.length} right on the first try without hints. That is one data point, not a verdict; what counts is how this looks over many sets.</p>
+          <div className="row"><button type="button" className="primary" onClick={go}>Another set</button>
+            <button type="button" onClick={() => { const p = new URLSearchParams(params); p.delete('go'); setParams(p); setFinished(null) }}>Change focus</button></div>
+        </section>
+      )}
+    </main>
+  )
+}
