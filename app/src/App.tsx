@@ -17,6 +17,7 @@ import { Lab } from './pages/Lab'
 import { Drill } from './pages/Drill'
 import { Roadmap } from './pages/Roadmap'
 import { SettingsDrawer } from './components/SettingsDrawer'
+import { BRAND } from './brand'
 
 const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/plan', 'My plan'], ['/progress', 'Progress'], ['/lab', 'Contrast lab'], ['/openings', 'Openings'], ['/games', 'My games'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
@@ -25,7 +26,7 @@ export default function App() {
   return (
     <ContentProvider>
       <header className="top">
-        <NavLink to="/" className="brand">Chess School</NavLink>
+        <NavLink to="/" className="brand">{BRAND.name}</NavLink>
         <nav aria-label="Main">
           {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
         </nav>

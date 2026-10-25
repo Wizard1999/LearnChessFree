@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 59%** (49 of 85 tasks done, in-progress tasks count half). Updated 2026-10-25T10:20+00:00 UTC.
+**Overall: 62%** (49 of 86 tasks done, in-progress tasks count half). Updated 2026-10-25T10:21+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -11,9 +11,9 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 18/21 | 86% |
 | Phase 3: Curriculum graph | 2/4 | 50% |
-| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/9 | 22% |
+| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 6/13 | 50% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 6/13 | 65% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 7: Release | 1/5 | 20% |
 | Phase 8: Evaluation | 0/3 | 0% |
@@ -34,7 +34,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 8 | 8 | 0 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7
+**Building now:** Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing); Tranche 2a: calculation (7 nodes); Tranche 2b: positional play remaining (about 30 nodes); Tranche 2c: attack, defence, sacrifice, initiative (17 nodes); Tranche 2d: endgames remaining (about 20 nodes)
 
 **Next up:** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Adversarial code review of the app and fixes
 
@@ -102,6 +102,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Course page as a chapter list with evocative and literal titles
 - [ ] Accessibility build: keyboard-operable board, live regions, skip link, text size, audit
 - [ ] Copy audit against the doctrine's voice table
+- [~] Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4)
 - [ ] Identity study: three comparable treatments to choose from (question Q10)
 - [ ] Usability rounds with real people (gate G11)
 
@@ -122,11 +123,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Openings and game study first set (8)
 - [x] Positional first set (10)
 - [x] Endgames first set (9)
-- [~] Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7
-- [ ] Tranche 2a: calculation (7 nodes)
-- [ ] Tranche 2b: positional play remaining (about 30 nodes)
-- [ ] Tranche 2c: attack, defence, sacrifice, initiative (17 nodes)
-- [ ] Tranche 2d: endgames remaining (about 20 nodes)
+- [~] Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written; review and fix pass finishing)
+- [~] Tranche 2a: calculation (7 nodes)
+- [~] Tranche 2b: positional play remaining (about 30 nodes)
+- [~] Tranche 2c: attack, defence, sacrifice, initiative (17 nodes)
+- [~] Tranche 2d: endgames remaining (about 20 nodes)
 - [ ] Review and fix pass on every tranche lesson
 - [ ] Read-through of all lessons for voice, order and consistency
 
