@@ -136,7 +136,7 @@ export function Course() {
             <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
             <ul className="plain legendlist">
               {([4, 3, 2, 1, 0] as Level[]).map(l => <li key={l}><Swatch level={l} /> <strong>{current.counts[l]}</strong> {l === 4 ? 'mastered' : l === 0 ? 'not started' : LEVEL_NAMES[l].toLowerCase()}</li>)}
-              {current.assumedCount > 0 && <li><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> <strong>{current.assumedCount}</strong> assumed, not yet shown</li>}
+              {current.assumedCount > 0 && <li><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> of these, <strong>{current.assumedCount}</strong> are only assumed (hatched), not yet shown</li>}
             </ul>
           </div>
           <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.assumedCount > 0 && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
@@ -208,7 +208,7 @@ export function Course() {
                   const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : undefined
                   return (
                     <li key={n.id}>
-                      <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
+                      <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{n.levelWithAssumed > n.level ? `${LEVEL_NAMES[n.level]}, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()}` : LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
                       {d && <p className="small muted">{n.workingDepth}: {d.outcome}</p>}
                       <div className="row">
                         {lessonsFor(n.id).filter(() => !n.lessonDone).slice(0, 1).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`}>Lesson</Link>)}

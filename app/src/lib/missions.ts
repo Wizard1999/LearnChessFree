@@ -152,7 +152,8 @@ export function skillsUpNext(mission: Mission, ctx: MissionContext, dismissed: R
       const d = n.workingDepth ? ctx.skillById.get(n.id)?.depths[n.workingDepth] : undefined
       return (d?.prereqs ?? []).every(p => p.startsWith(n.id + '.') || prereqMet(p, ctx.skillById, ctx.masteries, ctx.placement, k => (ctx.itemDepths.get(k.slice(0, k.lastIndexOf('.'))) ?? []).includes(k.slice(k.lastIndexOf('.') + 1)), s => ctx.lessonDone.has(s), s => ctx.hasLesson.has(s)))
     })
-  ok.sort((a, b) => Number(b.due) - Number(a.due) || Number(b.level >= 1) - Number(a.level >= 1) || a.tier - b.tier || a.level - b.level)
+  // refreshers first, then skills already started, then ones the learner has not claimed (assumed skills last: they are confirmed by practice, but they are not the first thing to do), by tier
+  ok.sort((a, b) => Number(b.due) - Number(a.due) || Number(b.level >= 1) - Number(a.level >= 1) || Number(a.levelWithAssumed > a.level) - Number(b.levelWithAssumed > b.level) || a.tier - b.tier || a.level - b.level)
   return ok.slice(0, limit)
 }
 
