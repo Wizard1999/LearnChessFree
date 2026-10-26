@@ -51,6 +51,7 @@ export function Roadmap() {
       )}
       <section className="card">
         <h2>The course, measured from the files</h2>
+        <p className="small muted">Status of review: positions and results are checked by software; the written explanations have not yet been reviewed by a strong player.</p>
         <p>{m.nodesWithLesson} of {m.skills} skill nodes have a lesson ({pct(m.nodesWithLesson, m.skills)}%), {m.nodesWithItems} have 10 or more exercises ({pct(m.nodesWithItems, m.skills)}%). {m.itemsShipped.toLocaleString()} machine-checked exercises ship; {m.itemsWaiting} more wait for validation. {m.lessons} lessons. {m.itemsHumanReviewed} items have been reviewed by a person so far; {m.itemsNeedHuman.toLocaleString()} are flagged for that review.
           {m.openings.games ? ` Opening statistics: ${m.openings.games.toLocaleString()} online games (${m.openings.month}).` : ''}</p>
         <table className="table small">

@@ -14,7 +14,6 @@ export function Library() {
         <h2>What is in this build</h2>
         <p>{manifest.lessons} lessons, {manifest.items} exercises, {manifest.skills} skill nodes. Built {new Date(manifest.built).toLocaleString()} (content hash {manifest.hash}).</p>
         <p className="small muted">Exercises by type: {byTask.map(([k, v]) => `${k} ${v}`).join(' · ')}. By source: {byKind.map(([k, v]) => `${k.replace('kind.', '')} ${v}`).join(' · ')}.</p>
-        <p className="small muted">Review status: {Object.entries(manifest.by_review).map(([k, v]) => `${k} ${v}`).join(' · ')}. "human-reviewed" stays at zero until a strong player signs items off.</p>
       </section>
       <section className="card">
         <h2>How every answer is checked</h2>
@@ -23,7 +22,7 @@ export function Library() {
           <li><strong>Engine and tablebases:</strong> claims such as "this wins a queen" or "this is a draw" are checked by Stockfish or by exact endgame tablebases ({engines.map(([k, v]) => `${k}: ${v} exercises`).join('; ') || 'none yet'}). Engine results are evidence under recorded limits, not proofs.</li>
           <li><strong>Pattern tags in game review</strong> (fork, pin, trapped piece and so on) come from structural detectors, not from a language model. Only detectors whose claims Stockfish confirmed at least 90% of the time on real games are shown, and a tag is a lead, not an explanation. Measured precision and the detectors we hide are in docs/detectors.md.</li>
           <li><strong>Only checked material ships.</strong> An exercise whose checks fail, or that was edited after being checked, is left out of the build.</li>
-          <li><strong>Explanations</strong> state only what a check establishes. They have not been reviewed by a strong human player unless an item says so; treat them as a careful draft.</li>
+          <li><strong>Explanations</strong> state only what a check establishes.</li>
         </ul>
       </section>
       <section className="card">

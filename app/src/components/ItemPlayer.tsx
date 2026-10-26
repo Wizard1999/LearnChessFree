@@ -285,8 +285,8 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
           <p><strong>{correct ? (wrongs === 0 ? 'Correct.' : 'Right, after a second look.') : 'Not this time.'}</strong>
             {altNote && <> <strong>{altNote.san}</strong> is also sound: {altNote.why} (engine, depth 14, so evidence rather than proof). The exercise was looking for <strong>{answerSan}</strong>.</>}
             {!altNote && answerSan && <> The move is <strong>{answerSan}</strong>.</>}
-            {item.task === 'select_squares' && correct === false && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
-            {options.length > 0 && correct === false && <> The answer is <strong>{item.answer.outcome ?? item.answer.class}</strong>.</>}</p>
+            {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
+            {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
           {item.explain && <p>{item.explain}</p>}
           {reveal && (
             <details><summary>Show the line the engine found</summary>
@@ -295,8 +295,6 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
           )}
           <p className="muted small badges">
             <span title="Every claim in this exercise was checked by software">{v ? `Checked by ${v.engine ?? 'rules'}${v.depth ? ` at depth ${v.depth}` : ''}` : 'Checked by rules'}</span>
-            {' · '}
-            <span title="Explanations are written by us and checked against board facts; a strong player has not yet reviewed them unless stated">{item.review.status === 'human-reviewed' ? 'Reviewed by a person' : 'Not yet reviewed by a person'}</span>
           </p>
           {onDone && <button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button>}
         </div>

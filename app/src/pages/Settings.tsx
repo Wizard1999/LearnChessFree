@@ -81,7 +81,7 @@ export function SettingsContent() {
         <h2>About</h2>
         <ul>
           <li>The program is free software (GPL-3.0-or-later). The chess engine is Stockfish; the board is Chessground.</li>
-          <li>Lessons are original text. Positions are checked by software (rules, engine, tablebases). A strong human reviewer has not yet checked the explanations unless an item says so.</li>
+          <li>Lessons are original text. Positions are checked by software (rules, engine, tablebases).</li>
           <li>Engine strength settings in the practice opponent are limits on the engine, not human ratings.</li>
         </ul>
       </section>

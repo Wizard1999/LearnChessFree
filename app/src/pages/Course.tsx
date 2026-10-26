@@ -309,7 +309,7 @@ export function Course() {
                     <li key={n.id}>
                       <Swatch level={n.levelWithAssumed} /> <strong>{n.title}</strong> <span className="muted small">· {LEVEL_NAMES[n.level]}{n.levelWithAssumed > n.level ? ' (assumed)' : ''}{n.due ? ' · refresher due' : ''}</span>
                       {d && <span className="small"> {d.outcome}</span>}
-                      {' '}{lessonsFor(n.id).map(l => <Link key={l.id} className="small" to={`/lesson/${l.id}`}>Lesson: {l.title}</Link>)}
+                      {' '}{lessonsFor(n.id).map(l => { const pr = progress?.find(x => x.lessonId === l.id); return <Link key={l.id} className="small" to={`/lesson/${l.id}`}>{pr?.done ? (pr.skipped ? '» skipped' : '✓ seen') : pr && pr.step > 0 ? '◐ started' : '○ not seen'} · Lesson: {l.title}</Link> })}
                       {n.workingDepth && <> <Link className="small" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practise</Link></>}
                       {!n.hasLesson && n.noExercises && <span className="muted small"> (nothing written yet)</span>}
                     </li>)

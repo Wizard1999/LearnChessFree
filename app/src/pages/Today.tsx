@@ -109,7 +109,7 @@ export function Today() {
             <li><strong>Test first, then learn.</strong> Most practice here does not tell you which idea to use, because in a real game nobody does. Lessons come with labelled examples; practice does not.</li>
             <li><strong>Help is allowed and counted.</strong> Hints and prompts are there when you need them. They lower the credit an answer earns, so what the app thinks you know stays honest.</li>
             <li><strong>You steer.</strong> You can say what you want to work on, and later make your own training plans and test whether they worked.</li>
-            <li><strong>Every position is checked by software</strong> (rules, a chess engine, endgame tablebases). A strong human player has not yet reviewed the explanations; the app says so on each exercise.</li>
+            <li><strong>Every position is checked by software</strong> (rules, a chess engine, endgame tablebases).</li>
             <li><strong>Your data stays on this device.</strong> Back it up or move it from Settings whenever you like.</li>
           </ul>
         </details>
