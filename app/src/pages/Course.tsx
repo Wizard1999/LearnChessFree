@@ -221,7 +221,7 @@ export function Course() {
           {!busy && (
             <section className="card">
               <h2>Skills up next for you</h2>
-              {upNext.length === 0 ? <p className="muted">Nothing is ready {isAll ? '' : 'in this mission '}yet. Finish an earlier skill, or pick a block to open it.</p> : (
+              {upNext.length === 0 ? <p className="muted">No skill has all its prerequisites shown yet {isAll ? '' : 'in this mission '}(nothing is locked: every lesson and exercise below is open to you now). The whole list is in the outline under the map.</p> : (
                 <ul className="plain upnext">{upNext.map(n => {
                   const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : undefined
                   return (
@@ -262,6 +262,32 @@ export function Course() {
           )}
         </div>
       </div>
+
+      <section className="card outline" aria-label={`${current.name} outline`}>
+        <h2>Outline: {current.name}</h2>
+        <p className="small muted">Everything in {isAll ? 'the course' : 'this mission'}, in teaching order, with nothing hidden or locked. Open any lesson or practise any skill at any time.</p>
+        {(isAll ? missions : [current]).map(m => (
+          <div key={m.strand}>
+            {isAll && <h3>{m.strand} · {m.name}</h3>}
+            {m.tiers.map(t => (
+              <div key={t.tier}>
+                <h4>Tier {t.tier} <span className="muted small">{t.gloss}</span></h4>
+                <ul className="plain outlinelist">{t.nodes.map(n => {
+                  const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : content.skillById.get(n.id)?.depths.D1
+                  return (
+                    <li key={n.id}>
+                      <Swatch level={n.levelWithAssumed} /> <strong>{n.title}</strong> <span className="muted small">· {LEVEL_NAMES[n.level]}{n.levelWithAssumed > n.level ? ' (assumed)' : ''}{n.due ? ' · refresher due' : ''}</span>
+                      {d && <span className="small"> {d.outcome}</span>}
+                      {' '}{lessonsFor(n.id).map(l => <Link key={l.id} className="small" to={`/lesson/${l.id}`}>Lesson: {l.title}</Link>)}
+                      {n.workingDepth && <> <Link className="small" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practise</Link></>}
+                      {!n.hasLesson && n.noExercises && <span className="muted small"> (nothing written yet)</span>}
+                    </li>)
+                })}</ul>
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
     </main>
   )
 }
