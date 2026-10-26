@@ -77,7 +77,7 @@ static class Launcher
         while (l.IsListening)
         {
             HttpListenerContext c;
-            try { c = l.GetContext(); } catch { return; }
+            try { c = l.GetContext(); } catch { if (!l.IsListening) return; continue; } // a dropped connection must not stop the server
             ThreadPool.QueueUserWorkItem(_ =>
             {
                 try
