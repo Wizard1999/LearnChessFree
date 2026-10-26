@@ -49,8 +49,9 @@ export function LessonIndex() {
               const p = byId.get(l.id)
               const status = p?.done ? (p.skipped ? 'Skipped' : 'Finished') : p && p.step > 0 ? `In progress (step ${p.step + 1} of ${l.steps.length})` : 'Not started'
               return (
-                <li key={l.id} className="row">
-                  <Link className="button primary" to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
+                <li key={l.id} className={`row lessonrow ${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
+                  <span className="statusmark" aria-hidden="true">{p?.done ? (p.skipped ? '»' : '✓') : p && p.step > 0 ? '◐' : '○'}</span>
+                  <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
                   <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {l.minutes ?? 8} min · {status}</span></span>
                   <span className="actions">
                     {!p?.done && <><button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, false)}>Mark finished</button> <button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, true)}>Skip</button></>}
