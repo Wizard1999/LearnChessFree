@@ -19,7 +19,7 @@ function Block({ n, selected, onPick, onHover }: { n: NodeProgress; selected: bo
   const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
     <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
-      data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} title={label} aria-pressed={selected} onClick={() => onPick(n.id)}
+      data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} aria-pressed={selected} onClick={() => onPick(n.id)}
       onMouseEnter={e => onHover(n, e.currentTarget)} onMouseLeave={() => onHover(null)} onFocus={e => onHover(n, e.currentTarget)} onBlur={() => onHover(null)} />
   )
 }
