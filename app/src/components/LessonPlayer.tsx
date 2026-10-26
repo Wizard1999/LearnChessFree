@@ -183,6 +183,7 @@ function ContrastStep({ step, onNext }: { step: Extract<LessonStep, { type: 'con
   const { itemById } = useContent()
   const working = itemById.get(step.working)
   const failing = itemById.get(step.failing)
+  const irrelevant = step.irrelevant ? itemById.get(step.irrelevant) : undefined
   const [stage, setStage] = useState<'working' | 'predict'>('working')
   if (!working || !failing) return <p className="warn">Missing contrast items.</p>
   // The arrow shows the move that works. For a find-the-move item that is its answer; for other tasks no single move is "the idea", and the first
@@ -194,12 +195,12 @@ function ContrastStep({ step, onNext }: { step: Extract<LessonStep, { type: 'con
       <h3>{step.title ?? 'Same idea, one change'}</h3>
       {stage === 'working' ? (
         <>
-          <p>Here the idea <strong>works</strong>.</p>
+          <p>Here the idea <strong>works</strong>.{working.task === 'predict_outcome' && working.answer.outcome ? <> The result: <strong>{working.answer.outcome}</strong>.</> : null}</p>
           <ChessBoard fen={working.fen} orientation={sideToMove(working.fen)} shapes={wMove ? [{ from: wMove.slice(0, 2), to: wMove.slice(2, 4) }] : []} label="The working position" />
           <div className="row"><button type="button" className="primary" onClick={() => setStage('predict')}>Now change one thing</button></div>
         </>
       ) : (
-        <ItemSequence items={[failing]} source="lesson" intro="Predict first" silent={step.silent} askConfidence={step.ask_confidence} onComplete={onNext} />
+        <ItemSequence items={[failing, ...(irrelevant ? [irrelevant] : [])]} source="lesson" intro="Predict first" silent={step.silent} askConfidence={step.ask_confidence} onComplete={onNext} />
       )}
       {stage === 'predict' && step.prompt && <p className="muted small">{step.prompt}</p>}
     </section>
