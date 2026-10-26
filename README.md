@@ -23,3 +23,6 @@ Status (2026-10-24): working app and content pipeline built; autonomous build in
 | `review/02-chess-verification-report.md` | Engine/tablebase check of the handoff's sample positions. Sample lessons are no longer needed. |
 | `review/scripts`, `review/evidence` | Reproducible validation scripts and raw outputs. |
 
+
+## Run it with one click (Windows)
+Download `desktop/ChessSchool.exe` from this repository and double-click it. Nothing to install: it opens Chess School in its own window and keeps your progress on your computer. Right-click the tray icon to quit. To rebuild it: `powershell -File desktop\build-exe.ps1`.
