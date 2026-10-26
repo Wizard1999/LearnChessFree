@@ -5,7 +5,7 @@ import { ChessBoard, type BoardShape } from './ChessBoard'
 import { LinePlayer } from './LinePlayer'
 import { PlayOut } from './PlayOut'
 import { LoopPanel } from './LoopPanel'
-import { getEngine } from '../engine'
+import { getEngine, resetEngine } from '../engine'
 import { isAlsoSound } from '../lib/altmove'
 import { db, type AttemptSource } from '../db'
 import { useContent } from '../lib/content'
@@ -150,11 +150,14 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
     try {
       const eng = getEngine()
       if (!bestLine.current) bestLine.current = eng.analyse(askFen, { depth: 14 }).then(l => l[0])
-      const [best, alt] = await Promise.all([bestLine.current, eng.analyse(askFen, { depth: 14, searchmoves: [uci] }).then(l => l[0])])
+      // An engine that never answers must not leave the learner waiting: after 15 seconds, restart it and judge the move by the stored answer.
+      let timer: ReturnType<typeof setTimeout> | undefined
+      const stuck = new Promise<never>((_, rej) => { timer = setTimeout(() => rej(new Error('engine timeout')), 15000) })
+      const [best, alt] = await Promise.race([Promise.all([bestLine.current, eng.analyse(askFen, { depth: 14, searchmoves: [uci] }).then(l => l[0])]), stuck]).finally(() => clearTimeout(timer))
       const v = isAlsoSound(best, alt)
       const san = tryMove(askFen, uci)?.san
       return v.fine && san ? { san, why: v.why } : null
-    } catch { return null }
+    } catch { resetEngine(); bestLine.current = null; return null }
   }
   function handleUci(uci: string) {
     if (lineMode) {

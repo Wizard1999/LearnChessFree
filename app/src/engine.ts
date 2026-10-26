@@ -108,6 +108,9 @@ export function getEngine(): Engine {
   return shared
 }
 
+/** Throw the shared engine away (a search that never answered): the next getEngine() starts a fresh one. */
+export function resetEngine() { try { shared?.terminate() } catch { /* already gone */ } shared = null }
+
 /** Score as pawns from White's point of view (mate shown as +/-M). */
 export function scoreText(line: EngineLine, whiteToMove: boolean): string {
   const sign = whiteToMove ? 1 : -1
