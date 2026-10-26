@@ -120,6 +120,14 @@ export function Course() {
     } // an inconclusive warm-up is shown but not saved: it must not replace what a placement assumed
     setWarmDone(r); setWarmOpen(false)
   }
+  const markLesson = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
+  const resetLesson = (id: string) => db.lessonProgress.delete(id)
+  const lessonIdsOf = (nodes: NodeProgress[]) => content.lessons.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
+  async function markAll(nodes: NodeProgress[], skipped: boolean, label: string) {
+    const ls = lessonIdsOf(nodes)
+    if (!window.confirm(`${label} ${ls.length} lessons? You can reset any of them later from the All lessons list.`)) return
+    for (const l of ls) if (!progress?.find(p => p.lessonId === l.id)?.done) await markLesson(l.id, l.steps.length, skipped)
+  }
   const dismiss = async (id: string) => { const n = [...dismissed, id]; setDismissed(n); await kvSet('upnext:dismissed', n) }
 
   const lessonsFor = (id: string) => content.lessons.filter(l => l.skill === id || l.also?.includes(id))
@@ -179,6 +187,7 @@ export function Course() {
               <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} />)}</div>
             </div>
           ))}
+          <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button></p>
           <Legend />
         </section>
 
@@ -265,6 +274,10 @@ export function Course() {
               <div className="row">
                 {lessonsFor(node.id).map(l => <Link key={l.id} className="button primary" to={`/lesson/${l.id}`}>Open lesson: {l.title}</Link>)}
               </div>
+              {lessonsFor(node.id).map(l => { const pr = progress?.find(p => p.lessonId === l.id); return (
+                <p key={l.id} className="small">{l.title}: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
+                  {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
+                  {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
               <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
                 <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
                   <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
