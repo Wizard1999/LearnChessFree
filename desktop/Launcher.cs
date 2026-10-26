@@ -32,13 +32,17 @@ static class Launcher
         var listener = new HttpListener();
         listener.Prefixes.Add(Url);
         try { listener.Start(); }
-        catch (Exception e) { MessageBox.Show("Port " + Port + " is in use, so Chess School cannot start.\n" + e.Message, "Chess School"); return; }
+        catch (Exception e)
+        {
+            // Something already answers on our address. If it is Chess School (another copy still running), just open it.
+            try { using (var w = new WebClient()) { w.Headers["User-Agent"] = "ChessSchoolLauncher"; if (w.DownloadString(Url).Contains("<title>Chess School")) { Open(); return; } } } catch { }
+            MessageBox.Show("Port " + Port + " is in use, so Chess School cannot start.\n" + e.Message, "Chess School"); return; }
         new Thread(() => Serve(listener, root)) { IsBackground = true }.Start();
         Open();
 
         var menu = new ContextMenu();
         menu.MenuItems.Add("Open Chess School", (s, a) => Open());
-        menu.MenuItems.Add("Quit", (s, a) => { Application.Exit(); });
+        menu.MenuItems.Add("Quit", (s, a) => { try { listener.Close(); } catch { } Environment.Exit(0); });
         var icon = new NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "Chess School (running)", ContextMenu = menu, Visible = true };
         icon.DoubleClick += (s, a) => Open();
         icon.ShowBalloonTip(3000, "Chess School", "Running. Right-click this icon to quit.", ToolTipIcon.Info);
