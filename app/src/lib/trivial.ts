@@ -18,5 +18,23 @@ export function autoTrivial(attempts: Attempt[]): Set<string> {
 
 const KEY = 'trivial:manual'
 export const loadTrivial = () => kvGet<string[]>(KEY, [])
-export async function addTrivial(key: string) { const cur = await loadTrivial(); if (!cur.includes(key)) await kvSet(KEY, [...cur, key]) }
+export async function addTrivial(key: string) { const cur = await loadTrivial(); if (!cur.includes(key)) await kvSet(KEY, [...cur, key]); await kvSet('trivial:never', (await kvGet<string[]>('trivial:never', [])).filter(k => k !== key)) }
 export const clearTrivial = () => kvSet(KEY, [])
+
+// "Show it again" overrides the automatic signal (which would otherwise mark the skill trivial again at once). Marking it too easy again clears the override.
+const NEVER = 'trivial:never'
+export const loadNever = () => kvGet<string[]>(NEVER, [])
+export async function showAgain(key: string) {
+  await kvSet(KEY, (await loadTrivial()).filter(k => k !== key))
+  const n = await loadNever(); if (!n.includes(key)) await kvSet(NEVER, [...n, key])
+}
+export async function markTrivialAgain(key: string) {
+  await kvSet(NEVER, (await loadNever()).filter(k => k !== key))
+  await addTrivial(key)
+}
+/** Skill-depths currently left out of mixed practice. */
+export function effectiveTrivial(attempts: Attempt[], manual: string[], never: string[]): Set<string> {
+  const out = new Set([...autoTrivial(attempts), ...manual])
+  for (const k of never) out.delete(k)
+  return out
+}

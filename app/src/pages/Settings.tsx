@@ -2,12 +2,20 @@ import { useEffect, useState } from 'react'
 import { exportAll, importAll, resetAll } from '../db'
 import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
 import { useStorageStatus } from '../lib/persist'
+import { effectiveTrivial, loadNever, loadTrivial, showAgain } from '../lib/trivial'
+import { useAttempts } from '../lib/progress'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function SettingsContent() {
   const [msg, setMsg] = useState<string | null>(null)
   const [loop, setLoop] = useState<LoopState>(EMPTY_LOOP)
   const storage = useStorageStatus()
+  const attempts = useAttempts()
+  const [manual, setManual] = useState<string[]>([])
+  const [never, setNever] = useState<string[]>([])
+  const refreshTrivial = () => { void loadTrivial().then(setManual); void loadNever().then(setNever) }
+  useEffect(refreshTrivial, [])
+  const trivial = [...effectiveTrivial(attempts ?? [], manual, never)].sort()
   const [look, setLook] = useState<Appearance>(loadAppearance())
   const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = { ...look, [k]: v }; setLook(n); saveAppearance(n) }
   useEffect(() => { void loadLoop().then(setLoop) }, [])
@@ -68,6 +76,11 @@ export function SettingsContent() {
           <button type="button" onClick={() => void doReset()}>Delete everything</button>
         </div>
         {msg && <p role="status">{msg}</p>}
+      </section>
+      <section className="card">
+        <h2>Skills left out of practice</h2>
+        <p className="small muted">Skills you marked "too easy", or answered quickly and correctly five times in a row, are left out of mixed practice. Put any of them back; you can mark it too easy again later.</p>
+        {trivial.length === 0 ? <p className="muted small">None.</p> : <ul className="plain small">{trivial.map(k => <li key={k}>{k} <button type="button" className="link" onClick={() => void showAgain(k).then(refreshTrivial)}>Show it again</button></li>)}</ul>}
       </section>
       <section className="card">
         <h2>Thinking prompts</h2>
