@@ -1,8 +1,8 @@
-import { masteryMap } from '../lib/progress'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useContent } from '../lib/content'
-import { useAttempts } from '../lib/progress'
+import { masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
+import { isDue } from '../lib/schedule'
 import { interleave, pickFresh } from '../lib/select'
 import { ItemSequence } from '../components/LessonPlayer'
 import type { Item } from '../types'
@@ -10,11 +10,13 @@ import type { Item } from '../types'
 export function Practice() {
   const content = useContent()
   const attempts = useAttempts()
+  const progress = useLessonProgress()
   const [params, setParams] = useSearchParams()
   const [silent, setSilent] = useState(false)
   const [round, setRound] = useState(0)
   const [finished, setFinished] = useState<number | null>(null)
 
+  const everything = params.get('all') === '1' // default: only skills the learner has met
   const skill = params.get('skill') ?? ''
   const tag = params.get('tag') ?? ''
   const strand = params.get('strand') ?? ''
@@ -29,6 +31,14 @@ export function Practice() {
   const items = useMemo<Item[]>(() => {
     if (!started || !attempts) return []
     let pool = content.items.filter(i => i.cue >= 3)
+    // Mixed practice draws only from skills the learner has met: a lesson seen, or any answers given. Never empty: a brand-new learner gets everything.
+    if (!skill && !everything && progress) {
+      const met = new Set<string>()
+      for (const l of content.lessons) if (progress.some(p => p.lessonId === l.id)) for (const n of [l.skill, ...(l.also ?? [])]) met.add(n)
+      for (const a of attempts) met.add(a.skillKey.slice(0, a.skillKey.lastIndexOf('.')))
+      const known = pool.filter(i => met.has(i.skill.slice(0, i.skill.lastIndexOf('.'))))
+      if (known.length >= 4) pool = known
+    }
     if (skill) pool = content.items.filter(i => i.skill === skill)
     if (tag) pool = pool.filter(i => (i.tags ?? []).includes(tag))
     if (strand) pool = pool.filter(i => content.skillById.get(i.skill.slice(0, i.skill.lastIndexOf('.')))?.strand === strand)
@@ -41,11 +51,12 @@ export function Practice() {
     if (!mixed) return interleave(lists).slice(0, n)
     // Mixed practice also brings back skills the learner has already mastered, the longest-unseen first: a miss there counts against the level, so mastery has to be kept.
     const m = masteryMap(attempts, Date.now(), content.cuedOnly)
-    const back = [...m.entries()].filter(([, v]) => v.state === 'reliable' || v.state === 'refresh').sort((a, b) => (a[1].lastTs ?? 0) - (b[1].lastTs ?? 0)).slice(0, Math.max(1, Math.ceil(n / 4)))
+    const byKey = new Map<string, typeof attempts>(); for (const a of attempts) byKey.set(a.skillKey, [...(byKey.get(a.skillKey) ?? []), a])
+    const back = [...m.entries()].filter(([k, v]) => (v.state === 'reliable' || v.state === 'refresh') && isDue(byKey.get(k) ?? [], Date.now(), content.cuedOnly.has(k) ? 1 : 2)).sort((a, b) => (a[1].lastTs ?? 0) - (b[1].lastTs ?? 0)).slice(0, Math.max(1, Math.ceil(n / 4)))
     const review = back.flatMap(([k]) => pickFresh(content.items.filter(i => i.skill === k && i.cue >= 3), attempts, 1, `practice:${round}:back:${k}`))
     const ids = new Set(review.map(i => i.id))
     return interleave([review, ...lists.map(l => l.filter(i => !ids.has(i.id)))]).slice(0, n)
-  }, [started, attempts, content, skill, tag, strand, n, round])
+  }, [started, attempts, progress, everything, content, skill, tag, strand, n, round])
 
   const set = (k: string, v: string) => { const p = new URLSearchParams(params); if (v) p.set(k, v); else p.delete(k); p.delete('go'); setParams(p); setFinished(null) }
   const go = () => { const p = new URLSearchParams(params); p.set('go', '1'); setParams(p); setRound(r => r + 1); setFinished(null) }
@@ -63,6 +74,8 @@ export function Practice() {
               <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
             <label className="field"><span className="small muted">Strand (optional)</span>
               <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+            <label className="field"><span className="small muted">Which skills</span>
+              <select value={everything ? '1' : ''} onChange={e => set('all', e.target.value)}><option value="">Only skills I have met</option><option value="1">Everything</option></select></label>
             <label className="field"><span className="small muted">How many</span>
               <select value={n} onChange={e => set('n', e.target.value)}>{[5, 8, 12, 20].map(x => <option key={x} value={x}>{x}</option>)}</select></label>
           </div>
