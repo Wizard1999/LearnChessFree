@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 62%** (54 of 93 tasks done, in-progress tasks count half). Updated 2026-10-25T20:06+00:00 UTC.
+**Overall: 60%** (54 of 97 tasks done, in-progress tasks count half). Updated 2026-10-26T08:35+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -13,7 +13,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 7/15 | 63% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 7/19 | 50% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
@@ -136,6 +136,10 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Review and fix pass on the unreviewed tranche lessons (p1, p2, a1, e1, g1, g2, g3) and the remaining batches c2, p3-p6, a2, a3, e2-e4 (paused: weekly usage limit)
 - [ ] Contrast step: show the baseline result and ask the irrelevant item, as the lesson cards promise (review finding on the g2 lessons)
 - [ ] Read-through of all lessons for voice, order and consistency
+- [ ] Course: famous games analysed (each game verified move by move; original commentary)
+- [ ] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)
+- [ ] Advanced club-style courses; an overlap check in the curriculum tools so no two lessons teach the same thing
+- [ ] Readability pass: text size, fewer nested boxes, stronger secondary text
 
 ## Phase 6: Data
 - [x] Opening statistics from 4.75 million Lichess games in eight rating bands

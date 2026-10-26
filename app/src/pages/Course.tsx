@@ -78,6 +78,8 @@ export function Course() {
   const upNext = useMemo(() => (ctx ? skillsUpNext(current, ctx, dismissedSet, isAll ? 8 : 6) : []), [ctx, current, dismissedSet, isAll])
   const plan = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, lastChallenge, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
 
+  // The 12-hour gap is advice (spaced review works better), never a lock: the learner can always run a challenge now.
+  const planNow = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, null, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
   if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
 
   const showLessons = params.get('view') === 'lessons'
@@ -93,10 +95,11 @@ export function Course() {
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
   function startChallenge() {
-    if (!plan?.unlocked) return
-    const items = interleave(plan.picks.map(p => p.items))
+    const chosen = plan?.unlocked ? plan : planNow?.unlocked ? planNow : null
+    if (!chosen) return
+    const items = interleave(chosen.picks.map(p => p.items))
     setResult(null)
-    setRun({ plan, items, before: Object.fromEntries(plan.picks.map(p => [p.node.id, p.node.level])) })
+    setRun({ plan: chosen, items, before: Object.fromEntries(chosen.picks.map(p => [p.node.id, p.node.level])) })
   }
   async function finishChallenge(results: ItemResult[]) {
     if (!run || !ctx) return
@@ -211,7 +214,7 @@ export function Course() {
               <section className="card challenge">
                 <h2>Mastery challenge{isAll ? ' across every mission' : ''}</h2>
                 <p>Strengthen skills you have already practised: six unlabelled questions on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
-                {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <p className="muted small">{plan?.reason}</p>}
+                {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <><p className="muted small">{plan?.reason}</p>{planNow?.unlocked && <div className="row"><button type="button" onClick={startChallenge}>Start anyway</button><span className="muted small">Nothing is locked; the wait is only advice.</span></div>}</>}
                 <details><summary className="small">How a challenge changes your levels</summary>
                   <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
               </section>
