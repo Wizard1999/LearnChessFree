@@ -18,11 +18,14 @@ import { Drill } from './pages/Drill'
 import { Roadmap } from './pages/Roadmap'
 import { SettingsDrawer } from './components/SettingsDrawer'
 import { BRAND } from './brand'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { useLocation } from 'react-router-dom'
 
 const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/plan', 'My plan'], ['/progress', 'Progress'], ['/lab', 'Contrast lab'], ['/openings', 'Openings'], ['/games', 'My games'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const loc = useLocation()
   return (
     <ContentProvider>
       <header className="top">
@@ -33,6 +36,7 @@ export default function App() {
         <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>
       </header>
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <ErrorBoundary resetKey={loc.pathname}>
       <Routes>
         <Route path="/" element={<Today />} />
         <Route path="/course" element={<RequireFullContent><Course /></RequireFullContent>} />
@@ -51,6 +55,7 @@ export default function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<main className="page"><h1>Not found</h1></main>} />
       </Routes>
+      </ErrorBoundary>
     </ContentProvider>
   )
 }
