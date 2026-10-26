@@ -1,0 +1,67 @@
+import { useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { db } from '../db'
+import { useContent } from '../lib/content'
+import { lessonSort, useLessonProgress } from '../lib/progress'
+import { STRAND_NAMES } from '../lib/missions'
+
+type Filter = 'all' | 'todo' | 'done'
+
+/** Every lesson on one page: find it, open it, or mark it finished, skipped or unstarted. Nothing is locked. */
+export function LessonIndex() {
+  const content = useContent()
+  const progress = useLessonProgress()
+  const [q, setQ] = useState('')
+  const [filter, setFilter] = useState<Filter>('all')
+  const byId = useMemo(() => new Map((progress ?? []).map(p => [p.lessonId, p])), [progress])
+  const groups = useMemo(() => {
+    const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
+    const m = new Map<string, typeof sorted>()
+    for (const l of sorted) {
+      const sk = content.skillById.get(l.skill)
+      const text = `${l.title} ${sk?.title ?? ''} ${l.skill}`.toLowerCase()
+      const done = byId.get(l.id)?.done
+      if (q && !text.includes(q.toLowerCase())) continue
+      if (filter === 'done' && !done) continue
+      if (filter === 'todo' && done) continue
+      const strand = sk?.strand ?? '?'
+      m.set(strand, [...(m.get(strand) ?? []), l])
+    }
+    return [...m.entries()].sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
+  }, [content, byId, q, filter])
+  const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
+  const mark = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
+  const reset = (id: string) => db.lessonProgress.delete(id)
+
+  return (
+    <section aria-label="Lesson index">
+      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. Open any of them at any time. Marking a lesson finished or skipped only changes this list and the course map; it does not count as evidence that you know the skill.</p>
+      <div className="row filters">
+        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
+        {(['all', 'todo', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Finished or skipped'}</button>)}
+      </div>
+      {groups.length === 0 && <p className="muted">No lessons match.</p>}
+      {groups.map(([strand, ls]) => (
+        <div key={strand} className="card">
+          <h2>{strand} · {STRAND_NAMES[strand] ?? strand}</h2>
+          <ul className="plain lessonindex">
+            {ls.map(l => {
+              const p = byId.get(l.id)
+              const status = p?.done ? (p.skipped ? 'Skipped' : 'Finished') : p && p.step > 0 ? `In progress (step ${p.step + 1} of ${l.steps.length})` : 'Not started'
+              return (
+                <li key={l.id} className="row">
+                  <Link className="button primary" to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
+                  <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {l.minutes ?? 8} min · {status}</span></span>
+                  <span className="actions">
+                    {!p?.done && <><button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, false)}>Mark finished</button> <button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, true)}>Skip</button></>}
+                    {(p?.done || (p && p.step > 0)) && <button type="button" className="link" onClick={() => void reset(l.id)}>Reset</button>}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      ))}
+    </section>
+  )
+}

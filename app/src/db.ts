@@ -23,7 +23,7 @@ export interface Attempt {
   alt?: boolean
 }
 export interface Reflection { id?: number; kind: string; lessonId?: string; data: Record<string, string>; ts: number }
-export interface LessonProgress { lessonId: string; step: number; done: boolean; ts: number }
+export interface LessonProgress { lessonId: string; step: number; done: boolean; ts: number; /** Marked done by the learner without doing it. */ skipped?: boolean }
 export interface GameRec { id?: number; source: string; white: string; black: string; result: string; date?: string; pgn: string; ts: number; analysis?: unknown; me?: 'white' | 'black' }
 export interface KV { key: string; value: unknown }
 

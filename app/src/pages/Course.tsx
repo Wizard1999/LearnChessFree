@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
+import { LessonIndex } from './LessonIndex'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
@@ -79,6 +80,16 @@ export function Course() {
 
   if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
 
+  const showLessons = params.get('view') === 'lessons'
+  const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'map') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
+  const tabs = (
+    <div className="row filters" role="group" aria-label="Course views">
+      <button type="button" className={!showLessons ? 'chip on' : 'chip'} aria-pressed={!showLessons} onClick={() => setTab('map')}>Map</button>
+      <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
+    </div>
+  )
+  if (showLessons) return <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main>
+
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
   function startChallenge() {
@@ -116,6 +127,7 @@ export function Course() {
   return (
     <main className="page wide">
       <h1>Course map</h1>
+      {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
 
       {!busy && (
@@ -247,6 +259,9 @@ export function Course() {
               <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
               {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
               {node.cuedTop && <p className="small muted">The deepest exercises for this skill are ones that name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
+              <div className="row">
+                {lessonsFor(node.id).map(l => <Link key={l.id} className="button primary" to={`/lesson/${l.id}`}>Open lesson: {l.title}</Link>)}
+              </div>
               <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
                 <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
                   <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
