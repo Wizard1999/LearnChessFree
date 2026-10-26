@@ -1,3 +1,4 @@
+import { masteryMap } from '../lib/progress'
 import { useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useContent } from '../lib/content'
@@ -36,7 +37,14 @@ export function Practice() {
     for (const i of pool) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i])
     const per = Math.max(1, Math.ceil(n / Math.max(1, bySkill.size)))
     const lists = [...bySkill.entries()].map(([k, l]) => pickFresh(l, attempts, per, `practice:${round}:${k}`))
-    return interleave(lists).slice(0, n)
+    const mixed = !skill && !tag && !strand
+    if (!mixed) return interleave(lists).slice(0, n)
+    // Mixed practice also brings back skills the learner has already mastered, the longest-unseen first: a miss there counts against the level, so mastery has to be kept.
+    const m = masteryMap(attempts, Date.now(), content.cuedOnly)
+    const back = [...m.entries()].filter(([, v]) => v.state === 'reliable' || v.state === 'refresh').sort((a, b) => (a[1].lastTs ?? 0) - (b[1].lastTs ?? 0)).slice(0, Math.max(1, Math.ceil(n / 4)))
+    const review = back.flatMap(([k]) => pickFresh(content.items.filter(i => i.skill === k && i.cue >= 3), attempts, 1, `practice:${round}:back:${k}`))
+    const ids = new Set(review.map(i => i.id))
+    return interleave([review, ...lists.map(l => l.filter(i => !ids.has(i.id)))]).slice(0, n)
   }, [started, attempts, content, skill, tag, strand, n, round])
 
   const set = (k: string, v: string) => { const p = new URLSearchParams(params); if (v) p.set(k, v); else p.delete(k); p.delete('go'); setParams(p); setFinished(null) }
