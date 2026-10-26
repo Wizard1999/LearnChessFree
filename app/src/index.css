@@ -194,3 +194,10 @@ button.primary:hover:not(:disabled), .button.primary:hover { background: var(--i
 .checks { list-style: none; padding-left: 0; }
 .checks li span { color: var(--success); font-weight: 700; }
 progress { accent-color: var(--success); vertical-align: middle; width: 8rem; }
+
+/* Move-by-move steps use the same arrangement as exercises: words and controls left, board right */
+@media (min-width: 1000px) {
+  .lineplayer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 520px); column-gap: 1.5rem; align-items: start; }
+  .lineplayer > .board-wrap { grid-column: 2; grid-row: 1 / span 6; }
+  .lineplayer > *:not(.board-wrap) { grid-column: 1; }
+}
