@@ -275,6 +275,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
           {!silent && hints.length > 0 && hintsShown < hints.length && (
             <button type="button" onClick={() => setHintsShown(h => h + 1)}>Hint ({hintsShown}/{hints.length})</button>
           )}
+          <button type="button" onClick={() => { setBoardKey(k => k + 1); setMessage(null) }}>Reset the board</button>
           <button type="button" onClick={() => finish(false)}>Show me the answer</button>
         </div>
       )}

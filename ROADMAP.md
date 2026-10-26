@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 60%** (57 of 102 tasks done, in-progress tasks count half). Updated 2026-10-26T18:09+00:00 UTC.
+**Overall: 61%** (59 of 104 tasks done, in-progress tasks count half). Updated 2026-10-26T18:39+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -13,7 +13,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 7/19 | 50% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 9/21 | 55% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 3/5 | 60% |
 | Phase 7: Release | 1/6 | 17% |
@@ -139,8 +139,10 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Read-through of all lessons for voice, order and consistency
 - [ ] Course: famous games analysed (each game verified move by move; original commentary)
 - [ ] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)
-- [ ] Advanced club-style courses; an overlap check in the curriculum tools so no two lessons teach the same thing
-- [ ] Readability pass: text size, fewer nested boxes, stronger secondary text
+- [x] Overlap check in the curriculum tools (tools/check_overlap.py; found 3 duplicate lesson pairs, listed in docs/review-findings-pending.md)
+- [ ] Resolve the 3 duplicate lesson pairs
+- [ ] Advanced club-style courses
+- [x] Readability pass: text size, fewer nested boxes, stronger secondary text (first round; review on real screens)
 
 ## Phase 6: Data
 - [x] Opening statistics from 4.75 million Lichess games in eight rating bands

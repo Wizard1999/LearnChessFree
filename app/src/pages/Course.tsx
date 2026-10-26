@@ -127,11 +127,15 @@ export function Course() {
   const markLesson = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
   const resetLesson = (id: string) => db.lessonProgress.delete(id)
   const lessonIdsOf = (nodes: NodeProgress[]) => content.lessons.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
+  const [bulk, setBulk] = useState<string[] | null>(null) // lessons changed by the last mark-all, so it can be undone
   async function markAll(nodes: NodeProgress[], skipped: boolean, label: string) {
     const ls = lessonIdsOf(nodes)
-    if (!window.confirm(`${label} ${ls.length} lessons? You can reset any of them later from the All lessons list.`)) return
-    for (const l of ls) if (!progress?.find(p => p.lessonId === l.id)?.done) await markLesson(l.id, l.steps.length, skipped)
+    if (!window.confirm(`${label} ${ls.length} lessons? You can undo this right after, or reset any lesson later.`)) return
+    const changed: string[] = []
+    for (const l of ls) if (!progress?.find(p => p.lessonId === l.id)?.done) { await markLesson(l.id, l.steps.length, skipped); changed.push(l.id) }
+    setBulk(changed)
   }
+  async function undoBulk() { for (const id of bulk ?? []) await resetLesson(id); setBulk(null) }
   const dismiss = async (id: string) => { const n = [...dismissed, id]; setDismissed(n); await kvSet('upnext:dismissed', n) }
 
   const lessonsFor = (id: string) => content.lessons.filter(l => l.skill === id || l.also?.includes(id))
@@ -169,6 +173,8 @@ export function Course() {
         <section className="card missionpanel" aria-label={`${current.name} progress`}>
           {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all missions</button>}
           <h2>{current.name}</h2>
+          {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
+            <div className="completebanner" role="status"><strong>✓ {isAll ? 'Course' : 'Mission'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is on the Progress page.</div>) : null })()}
           <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'MISSION PROGRESS'}</p>
           <div className="donutrow">
             <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
@@ -191,7 +197,7 @@ export function Course() {
               <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
-          <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button></p>
+          <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
         </section>
 

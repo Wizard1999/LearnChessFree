@@ -42,3 +42,9 @@ Written 25 October 2026. The review agents for the new lesson batches ran into t
   Suggested: IBg2-29 prompt: 'White to move. Find a winning move. (Nine win.)' (the same form as the shipped cue-3 item IA3-707). Keep hints 1 to 3 as they are.
 - **[low] L-END-ROOK-PAWN-1 step 2 (vocabulary).** 'Rook pawn' is used without being named as a term: card 1 says 'A rook pawn has only one neighbouring file' right after 'Pawns on the a- and h-files are special'. The board caption uses 'The tablebase' with no definition in this lesson.  
   Suggested: Card 1 text: "Pawns on the a- and h-files are called *rook pawns*, and they are special. A rook pawn has only one neighbouring file, so the attacking king can come at it from one side only, and the defending king can wait in the corner in front of it. Watch what a king in the corner can do, then predict." (58 words). Board caption: 'White to move. Black's king is in the corner on a8. The tablebase (a list of exact results) gives a draw. One line is shown.'
+
+## Overlaps found by tools/check_overlap.py (26 October 2026)
+Two lessons cover the same skill and depth in each pair. One of each pair should be merged into the other or retargeted to a different skill; decide after reading both:
+- END.MATE-KQ.D1: L-END-MATE-1 and L-END-MATEKQ-1
+- SAF.COUNT.D1: L-FND-COUNT-1 and L-SAF-COUNT-1
+- LOOP.V1.D1: L-FND-THREAT-1 and L-LOOP-V1-1
