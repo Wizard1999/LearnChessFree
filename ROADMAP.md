@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 57%** (54 of 102 tasks done, in-progress tasks count half). Updated 2026-10-26T17:59+00:00 UTC.
+**Overall: 60%** (57 of 102 tasks done, in-progress tasks count half). Updated 2026-10-26T18:09+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -15,7 +15,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 7/19 | 50% |
 | Phase 6: Data | 1/3 | 33% |
-| Phase 6b: Motivation (local, no server) | 0/5 | 0% |
+| Phase 6b: Motivation (local, no server) | 3/5 | 60% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
@@ -148,11 +148,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Difficulty calibration from real learner data (needs learners)
 
 ## Phase 6b: Motivation (local, no server)
-- [ ] Badges and points for finishing sections, avatars, in the style of Khan Academy
-- [ ] A completion board listing finished sections (local to the device until there is an optional account, question Q11)
-- [ ] Certificate and special rank for 100% of the curriculum
+- [x] Evidence-based badges (Foundations, Mission complete, 20 in a row) on the Progress page; no points, avatars or shared board (decision D21)
+- [x] Printable certificate listing the skills shown, and one for the whole curriculum
 - [ ] Spoken lessons with AI voices (the lesson scripts are already plain text)
 - [ ] A "seen" marker on every skill and lesson everywhere, separate from mastery
+
+- [x] Trivial-skill signals: five quick correct answers in a row, or a Too easy button, leave a skill out of mixed practice
 
 ## Phase 7: Release
 - [x] Public GitHub repository (Wizard1999/LearnChessFree): first commits pushed

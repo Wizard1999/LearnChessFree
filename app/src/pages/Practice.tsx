@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useContent } from '../lib/content'
 import { masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
 import { isDue } from '../lib/schedule'
+import { autoTrivial, loadTrivial } from '../lib/trivial'
 import { interleave, pickFresh } from '../lib/select'
 import { ItemSequence } from '../components/LessonPlayer'
 import type { Item } from '../types'
@@ -16,6 +17,8 @@ export function Practice() {
   const [round, setRound] = useState(0)
   const [finished, setFinished] = useState<number | null>(null)
 
+  const [manualTrivial, setManualTrivial] = useState<string[]>([])
+  useEffect(() => { void loadTrivial().then(setManualTrivial) }, [])
   const everything = params.get('all') === '1' // default: only skills the learner has met
   const skill = params.get('skill') ?? ''
   const tag = params.get('tag') ?? ''
@@ -30,7 +33,9 @@ export function Practice() {
 
   const items = useMemo<Item[]>(() => {
     if (!started || !attempts) return []
-    let pool = content.items.filter(i => i.cue >= 3)
+    // Skills the learner has shown they find trivial are left out of mixed practice (a chosen skill is always honoured).
+    const trivial = new Set([...autoTrivial(attempts), ...manualTrivial])
+    let pool = content.items.filter(i => i.cue >= 3 && (skill || !trivial.has(i.skill)))
     // Mixed practice draws only from skills the learner has met: a lesson seen, or any answers given. Never empty: a brand-new learner gets everything.
     if (!skill && !everything && progress) {
       const met = new Set<string>()
@@ -56,7 +61,7 @@ export function Practice() {
     const review = back.flatMap(([k]) => pickFresh(content.items.filter(i => i.skill === k && i.cue >= 3), attempts, 1, `practice:${round}:back:${k}`))
     const ids = new Set(review.map(i => i.id))
     return interleave([review, ...lists.map(l => l.filter(i => !ids.has(i.id)))]).slice(0, n)
-  }, [started, attempts, progress, everything, content, skill, tag, strand, n, round])
+  }, [started, attempts, progress, manualTrivial, everything, content, skill, tag, strand, n, round])
 
   const set = (k: string, v: string) => { const p = new URLSearchParams(params); if (v) p.set(k, v); else p.delete(k); p.delete('go'); setParams(p); setFinished(null) }
   const go = () => { const p = new URLSearchParams(params); p.set('go', '1'); setParams(p); setRound(r => r + 1); setFinished(null) }

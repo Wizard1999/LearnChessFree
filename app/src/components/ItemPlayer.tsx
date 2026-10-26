@@ -6,6 +6,7 @@ import { LinePlayer } from './LinePlayer'
 import { PlayOut } from './PlayOut'
 import { LoopPanel } from './LoopPanel'
 import { getEngine, resetEngine } from '../engine'
+import { addTrivial } from '../lib/trivial'
 import { isAlsoSound } from '../lib/altmove'
 import { db, type AttemptSource } from '../db'
 import { useContent } from '../lib/content'
@@ -68,6 +69,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const [loopOpened, setLoopOpened] = useState(false)
   const [checking, setChecking] = useState(false)
   const [altNote, setAltNote] = useState<{ san: string; why: string } | null>(null)
+  const [trivialMarked, setTrivialMarked] = useState(false)
   const bestLine = useRef<Promise<import('../engine').EngineLine | undefined> | null>(null)
   useEffect(() => { void loadLoop().then(setLoopState) }, [])
   const mixed = source === 'practice' || source === 'daily' || source === 'review'
@@ -288,6 +290,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
             {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
             {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
           {item.explain && <p>{item.explain}</p>}
+          {item.cue >= 3 && correct && <p className="small"><button type="button" className="link" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
           {reveal && (
             <details><summary>Show the line the engine found</summary>
               <LinePlayer fen={askFen} line={reveal} orientation={orientation} title={`Engine line${v?.depth ? ` (depth ${v.depth})` : ''}: evidence, not an explanation`} />

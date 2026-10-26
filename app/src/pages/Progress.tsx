@@ -5,6 +5,7 @@ import { db } from '../db'
 import { useContent } from '../lib/content'
 import { describeMastery } from '../lib/mastery'
 import { independence, masteryMap, useAttempts } from '../lib/progress'
+import { Achievements } from './Achievements'
 
 const DAY = 86400000
 const pct = (x: number | null) => (x === null ? '—' : `${Math.round(x * 100)}%`)
@@ -75,6 +76,7 @@ export function Progress() {
           </section>
         </>
       )}
+      <Achievements />
     </main>
   )
 }
