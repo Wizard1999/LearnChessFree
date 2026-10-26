@@ -18,13 +18,13 @@ function Block({ n, selected, onPick }: { n: NodeProgress; selected: boolean; on
   const credited = n.levelWithAssumed > n.level // the fill includes credit that is only assumed
   const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
-    <button type="button" className={`blk${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
+    <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
       data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} title={label} aria-pressed={selected} onClick={() => onPick(n.id)} />
   )
 }
 
 function Swatch({ level }: { level: Level }) {
-  return <span className="blk swatch" style={{ ['--fill' as string]: `${FILL[level]}%` }} aria-hidden="true" />
+  return <span className={`blk swatch lv${level}`} style={{ ['--fill' as string]: `${FILL[level]}%` }} aria-hidden="true" />
 }
 
 function Donut({ percent, assumed = percent, label = 'progress' }: { percent: number; assumed?: number; label?: string }) {
