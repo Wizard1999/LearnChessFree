@@ -14,12 +14,13 @@ import { splitSkillKey, type Skill } from '../types'
 
 const FILL = [0, 25, 50, 75, 100]
 
-function Block({ n, selected, onPick }: { n: NodeProgress; selected: boolean; onPick: (id: string) => void }) {
+function Block({ n, selected, onPick, onHover }: { n: NodeProgress; selected: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
   const credited = n.levelWithAssumed > n.level // the fill includes credit that is only assumed
   const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
     <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
-      data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} title={label} aria-pressed={selected} onClick={() => onPick(n.id)} />
+      data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} title={label} aria-pressed={selected} onClick={() => onPick(n.id)}
+      onMouseEnter={e => onHover(n, e.currentTarget)} onMouseLeave={() => onHover(null)} onFocus={e => onHover(n, e.currentTarget)} onBlur={() => onHover(null)} />
   )
 }
 
@@ -63,6 +64,9 @@ export function Course() {
   const [run, setRun] = useState<{ plan: ChallengePlan; items: ChallengePlan['picks'][number]['items']; before: Record<string, Level> } | null>(null)
   const [result, setResult] = useState<{ node: NodeProgress; rights: number; before: Level; after: Level }[] | null>(null)
   const [warmOpen, setWarmOpen] = useState(false)
+  const [hover, setHover] = useState<{ n: NodeProgress; x: number; y: number } | null>(null)
+  const hoverNode = (n: NodeProgress | null, el?: HTMLElement) => { if (!n || !el) { setHover(null); return } const r = el.getBoundingClientRect(); setHover({ n, x: Math.min(r.left, window.innerWidth - 340), y: r.bottom + 6 }) }
+  useEffect(() => { if (!picked) return; const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setPicked(null) }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k) }, [picked])
   const [warmDone, setWarmDone] = useState<StrandWarmup | null>(null)
 
   useEffect(() => { void kvGet<string[]>('upnext:dismissed', []).then(setDismissed); void kvGet<number | null>('challenge:last', null).then(setLastChallenge) }, [])
@@ -178,13 +182,13 @@ export function Course() {
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
               <div className="small"><button type="button" className="link" onClick={() => setView(m.strand)}><strong>{m.strand} · {m.name}</strong></button> <span className="muted">{m.percent}% · {m.counts[4]} mastered of {m.nodes.length}</span></div>
-              <div className="blocks">{m.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} />)}</div>
+              <div className="blocks">{m.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
           {showBreakdown && !isAll && current.tiers.map(t => (
             <div key={t.tier} className="tierrow">
               <div className="small"><strong>Tier {t.tier}</strong> <span className="muted">{t.gloss}</span></div>
-              <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} />)}</div>
+              <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button></p>
@@ -266,7 +270,8 @@ export function Course() {
           )}
 
           {node && sk && !busy && (
-            <section className="card skilldetail" aria-label={`${node.title} detail`}>
+            <section className="card skilldetail detaildrawer" role="dialog" aria-label={`${node.title} detail`}>
+              <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
               <h2>{node.title}</h2>
               <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
               {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
@@ -319,6 +324,14 @@ export function Course() {
           </div>
         ))}
       </section>
+      {hover && !picked && (() => { const d = content.skillById.get(hover.n.id)?.depths[hover.n.workingDepth ?? 'D1']; const ls = lessonsFor(hover.n.id); return (
+        <div className="blocktip" role="tooltip" style={{ left: hover.x, top: hover.y }}>
+          <strong>{hover.n.title}</strong>
+          <div className="small">{LEVEL_NAMES[hover.n.level]}{hover.n.levelWithAssumed > hover.n.level ? ` (assumed up to ${LEVEL_NAMES[hover.n.levelWithAssumed].toLowerCase()})` : ''}{hover.n.due ? ' · refresher due' : ''} · {hover.n.strand}</div>
+          {d && <div className="small muted">{d.outcome}</div>}
+          <div className="small">{ls.length === 0 ? 'No lesson yet' : ls.map(l => { const pr = progress?.find(x => x.lessonId === l.id); return `${pr?.done ? '✓' : pr && pr.step > 0 ? '◐' : '○'} ${l.title}` }).join(' · ')}</div>
+          <div className="small muted">Click for details</div>
+        </div>) })()}
     </main>
   )
 }
