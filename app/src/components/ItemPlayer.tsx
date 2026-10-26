@@ -275,7 +275,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
           {!silent && hints.length > 0 && hintsShown < hints.length && (
             <button type="button" onClick={() => setHintsShown(h => h + 1)}>Hint ({hintsShown}/{hints.length})</button>
           )}
-          {wrongs >= 2 && <button type="button" onClick={() => finish(false)}>Show me the answer</button>}
+          <button type="button" onClick={() => finish(false)}>Show me the answer</button>
         </div>
       )}
       {hintsShown > 0 && phase === 'answer' && (
@@ -290,6 +290,9 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
             {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
             {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
           {item.explain && <p>{item.explain}</p>}
+          {item.claims.filter(c => c.statement).length > 0 && (
+            <ul className="checks small">{item.claims.filter(c => c.statement).slice(0, 5).map(c => <li key={c.id}><span aria-hidden="true">✓</span> {c.statement}</li>)}</ul>
+          )}
           {item.cue >= 3 && correct && <p className="small"><button type="button" className="link" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
           {reveal && (
             <details><summary>Show the line the engine found</summary>

@@ -14,7 +14,7 @@ export function LessonPage() {
       <p className="small muted"><Link to="/course">Course</Link> › {sk?.title ?? lesson.skill} › {lesson.depth}</p>
       <h1>{lesson.title}</h1>
       <p className="muted small">About {lesson.minutes ?? 8} minutes</p>
-      <p className="small"><button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.steps.length, done: true, ts: Date.now(), skipped: true })}>Skip this lesson</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.steps.length, done: true, ts: Date.now() })}>Mark finished</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.delete(lesson.id).then(() => location.reload())}>Reset</button> · <Link to="/course?view=lessons">All lessons</Link></p>
+      <p className="small"><button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.steps.length, done: true, ts: Date.now(), skipped: true })}>Skip this lesson</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.steps.length, done: true, ts: Date.now() })}>Mark finished</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.delete(lesson.id).then(() => location.reload())}>Reset</button> · <Link to="/course">All lessons</Link></p>
       <LessonPlayer key={lesson.id} lesson={lesson} />
     </main>
   )

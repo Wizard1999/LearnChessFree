@@ -56,7 +56,7 @@ export function Course() {
   const { content, attempts, progress, placement, ctx, missions, overall } = useMissionData()
   const [params, setParams] = useSearchParams()
   const view = params.get('mission') ?? 'all'
-  const setView = (v: string) => { const p = new URLSearchParams(params); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
+  const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
   const [showBreakdown, setShowBreakdown] = useState(true)
   const [dismissed, setDismissed] = useState<string[]>([])
@@ -86,12 +86,12 @@ export function Course() {
   const planNow = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, null, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
   if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
 
-  const showLessons = params.get('view') === 'lessons'
-  const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'map') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
+  const showLessons = params.get('view') !== 'map' // the list of lessons is the default view; the map is the second
+  const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'lessons') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
   const tabs = (
     <div className="row filters" role="group" aria-label="Course views">
-      <button type="button" className={!showLessons ? 'chip on' : 'chip'} aria-pressed={!showLessons} onClick={() => setTab('map')}>Map</button>
       <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
+      <button type="button" className={!showLessons ? 'chip on' : 'chip'} aria-pressed={!showLessons} onClick={() => setTab('map')}>Map</button>
     </div>
   )
   if (showLessons) return <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main>

@@ -44,6 +44,8 @@ export function LessonIndex() {
       {groups.map(([strand, ls]) => (
         <div key={strand} className="card">
           <h2>{strand} · {STRAND_NAMES[strand] ?? strand}</h2>
+          {(() => { const all = content.lessons.filter(l => content.skillById.get(l.skill)?.strand === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
+            <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
           <ul className="plain lessonindex">
             {ls.map(l => {
               const p = byId.get(l.id)

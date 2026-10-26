@@ -108,7 +108,7 @@ export function Placement() {
             <p className="muted small">This is a rough starting point from a handful of positions, not a rating. {(attempts?.length ?? 0) > 0 ? '' : 'Your history starts here.'}</p>
           </>
         )}
-        <div className="row"><Link className="button primary" to="/">See today's plan</Link><Link className="button" to="/course">Open the course map</Link></div>
+        <div className="row"><Link className="button primary" to="/">See today's plan</Link><Link className="button" to="/course?view=map">Open the course map</Link></div>
       </section>
     </main>
   )
