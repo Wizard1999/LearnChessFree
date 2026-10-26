@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 61%** (59 of 104 tasks done, in-progress tasks count half). Updated 2026-10-26T18:39+00:00 UTC.
+**Overall: 62%** (60 of 104 tasks done, in-progress tasks count half). Updated 2026-10-26T18:43+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -15,7 +15,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 9/21 | 55% |
 | Phase 6: Data | 1/3 | 33% |
-| Phase 6b: Motivation (local, no server) | 3/5 | 60% |
+| Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
@@ -153,7 +153,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Evidence-based badges (Foundations, Mission complete, 20 in a row) on the Progress page; no points, avatars or shared board (decision D21)
 - [x] Printable certificate listing the skills shown, and one for the whole curriculum
 - [ ] Spoken lessons with AI voices (the lesson scripts are already plain text)
-- [ ] A "seen" marker on every skill and lesson everywhere, separate from mastery
+- [x] A "seen" marker on every skill and lesson (map dot, outline, lesson index), separate from mastery
 
 - [x] Trivial-skill signals: five quick correct answers in a row, or a Too easy button, leave a skill out of mixed practice
 

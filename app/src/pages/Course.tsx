@@ -14,12 +14,12 @@ import { splitSkillKey, type Skill } from '../types'
 
 const FILL = [0, 25, 50, 75, 100]
 
-function Block({ n, selected, onPick, onHover }: { n: NodeProgress; selected: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
+function Block({ n, selected, seen, onPick, onHover }: { n: NodeProgress; selected: boolean; seen: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
   const credited = n.levelWithAssumed > n.level // the fill includes credit that is only assumed
   const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
     <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
-      data-lesson={n.lessonDone ? '1' : undefined} aria-label={label} aria-pressed={selected} onClick={() => onPick(n.id)}
+      data-lesson={n.lessonDone ? '1' : undefined} data-seen={seen && !n.lessonDone ? '1' : undefined} aria-label={label} aria-pressed={selected} onClick={() => onPick(n.id)}
       onMouseEnter={e => onHover(n, e.currentTarget)} onMouseLeave={() => onHover(null)} onFocus={e => onHover(n, e.currentTarget)} onBlur={() => onHover(null)} />
   )
 }
@@ -46,7 +46,7 @@ function Legend() {
     <details className="legend small">
       <summary>How to read the blocks</summary>
       <ul className="plain">{([0, 1, 2, 3, 4] as Level[]).map(l => <li key={l}><Swatch level={l} /> <strong>{LEVEL_NAMES[l]}</strong> <span className="muted">{LEVEL_HELP[l]}</span></li>)}
-        <li><span className="blk swatch" data-lesson="1" style={{ ['--fill' as string]: '0%' }} aria-hidden="true" /> A dot: you have finished this skill's lesson.</li>
+        <li><span className="blk swatch" data-lesson="1" style={{ ['--fill' as string]: '0%' }} aria-hidden="true" /> A filled dot: you have finished this skill's lesson. A hollow dot: you have opened it but not finished.</li>
         <li><span className="blk swatch due" style={{ ['--fill' as string]: '75%' }} aria-hidden="true" /> A dashed edge: a refresher is due. <span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> Hatched: assumed from your placement or a warm-up, not yet shown.</li></ul>
     </details>
   )
@@ -138,6 +138,7 @@ export function Course() {
   async function undoBulk() { for (const id of bulk ?? []) await resetLesson(id); setBulk(null) }
   const dismiss = async (id: string) => { const n = [...dismissed, id]; setDismissed(n); await kvSet('upnext:dismissed', n) }
 
+  const lessonSeen = (id: string) => content.lessons.some(l => (l.skill === id || l.also?.includes(id)) && progress?.some(p => p.lessonId === l.id)) // a lesson opened, even if not finished
   const lessonsFor = (id: string) => content.lessons.filter(l => l.skill === id || l.also?.includes(id))
   const sk = node ? content.skillById.get(node.id) : undefined
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
@@ -188,13 +189,13 @@ export function Course() {
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
               <div className="small"><button type="button" className="link" onClick={() => setView(m.strand)}><strong>{m.strand} · {m.name}</strong></button> <span className="muted">{m.percent}% · {m.counts[4]} mastered of {m.nodes.length}</span></div>
-              <div className="blocks">{m.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} onHover={hoverNode} />)}</div>
+              <div className="blocks">{m.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} seen={lessonSeen(n.id)} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
           {showBreakdown && !isAll && current.tiers.map(t => (
             <div key={t.tier} className="tierrow">
               <div className="small"><strong>Tier {t.tier}</strong> <span className="muted">{t.gloss}</span></div>
-              <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} onPick={pick} onHover={hoverNode} />)}</div>
+              <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} seen={lessonSeen(n.id)} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
