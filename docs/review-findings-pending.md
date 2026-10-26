@@ -48,3 +48,6 @@ Two lessons cover the same skill and depth in each pair. One of each pair should
 - END.MATE-KQ.D1: L-END-MATE-1 and L-END-MATEKQ-1
 - SAF.COUNT.D1: L-FND-COUNT-1 and L-SAF-COUNT-1
 - LOOP.V1.D1: L-FND-THREAT-1 and L-LOOP-V1-1
+
+## Coverage audit (tools/coverage_audit.py, 26 October 2026)
+Keyword audit of a recalled topic list against the skill graph and lesson titles. 20 of about 100 topics had no keyword match; several are keyword misses (for example Zwischenzug and queen versus rook exist under other names). Real gaps to read by hand: famous and classic game study (no skills at all), error-log and notebook habits, opening-preparation workflow, blindfold calculation by that name, "good and bad bishop" and "knight versus bishop" as named skills, overprotection, and square of the pawn by name. The topic list is mine, from memory; replace it with real syllabus topic lists when Andrew names sources.
