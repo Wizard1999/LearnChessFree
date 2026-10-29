@@ -49,3 +49,13 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 
 ## Decisions I made autonomously (so you can veto them)
 Logged in `DECISIONS-LOG.md` as I go; veto any by telling me.
+
+## Added 29 October 2026 (evening)
+| ID | Type | Question or gate | Why it matters | Default if you do not answer |
+|---|---|---|---|---|
+| G16 | G | Hand-check four texts the rights script refused: Capablanca *Chess Fundamentals* (the Gutenberg file carries a 1949 notice; the 1921 body should be public domain), Young *Chess Generalship* (contains an "all rights reserved" line), Fishburne *Checkmates for Three Pieces* and *for Four Pieces* (no year found). Open each on Gutenberg, read its notice, and tell me which may be stored | The fetch script is deliberately strict | They stay out of the library |
+| Q16 | Q | Do you want the older URL `andrewvalentine.net/learnchessfree` retired or redirected to `/scholarmate`? Two copies exist | Two URLs for one app confuse testers and split feedback | I leave both |
+| Q17 | Q | Analysis page: the missing features are a board editor with a piece palette, tablebase lookup (needs a call to an outside service), and comments on moves. Which do you want, and is the outside service acceptable for tablebases? | Local-first rule versus completeness | Board editor first, no outside calls |
+| Q18 | Q | The credit reads "Created by Andrew Valentine". Do you also want a link from it (your site), an "About" page, and a line on the printable certificate? | Visibility of the credit | Masthead, footer, NOTICE only |
+| Q19 | Q | The exe tray and file icon are the shield. Do you want a signed installer later (certificate costs money) or keep the portable exe with the SmartScreen note? | Windows warns on unsigned programs | Portable exe, no signing |
+| G17 | G | Look at the Collegiate look in light and dark after the coral accent change and say whether crimson (light) should also match the default red | Colour consistency | Unchanged |
