@@ -16,15 +16,16 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
   const R = layout.radius + 40
   const navigate = useNavigate()
+  const [hov, setHov] = useState<string | null>(null)
   const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null)
   const hideTimer = useRef<number | undefined>(undefined)
   const showTip = (id: string, el: Element) => {
-    window.clearTimeout(hideTimer.current)
+    window.clearTimeout(hideTimer.current); setHov(id)
     const box = svg.current?.parentElement?.getBoundingClientRect(), r = el.getBoundingClientRect()
     if (!box) return
     setTip({ id, x: Math.min(Math.max(8, r.right - box.left + 10), box.width - 310), y: Math.min(Math.max(8, r.top - box.top - 10), box.height - 220) })
   }
-  const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => setTip(null), 220) }
+  const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null) }, 220) }
   const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
   const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
   const [view, setView] = useState({ x: 0, y: 0, k: 3 })
@@ -138,8 +139,17 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
               {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
               <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
-              <title>{p?.title ?? n.id}</title>
               {(picked === n.id || view.k >= 2.4 || next) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+            </g>
+          )
+        })}
+        {/* top layer: the hovered and the chosen skill are redrawn last, fully visible, with a readable label, whatever is dimmed or crowded around them */}
+        {[...new Set([picked, hov].filter((x): x is string => !!x))].map(id => {
+          const n = byId.get(id); if (!n) return null
+          return (
+            <g key={`top-${id}`} transform={`translate(${n.x},${n.y})`} className={`maptop${id === picked ? ' sel' : ''}`} pointerEvents="none">
+              <circle r={27} className="topring" fill="none" />
+              <text className="toplabel" y={52} textAnchor="middle">{progress.get(id)?.title ?? id}</text>
             </g>
           )
         })}

@@ -20,6 +20,6 @@ for key, rec in sorted(cat.items()):
         shutil.copyfile(src, out / "files" / f"{key}.txt")
     books.append({"id": key, "title": rec["title"], "author": rec["author"].replace("‏", ""), "year": rec.get("year"), "language": rec.get("language", ""),
                   "source_url": rec["source_url"], "file": None if big else f"files/{key}.txt", "size": rec["size"], "rights": rec["rights"],
-                  "subjects": t.get("subjects", ["unsorted"]), "level": t.get("level", "Reference"), "blurb": t.get("blurb", "")})
+                  "subjects": t.get("subjects") or rec.get("subjects") or ["unsorted"], "level": t.get("level") or rec.get("level") or "Reference", "blurb": t.get("blurb") or f"{rec['title']}, {rec['author']}. Uncorrected OCR text from the Internet Archive; read it with that in mind."})
 (out / "catalog.json").write_text(json.dumps({"books": books}, indent=1, ensure_ascii=False), encoding="utf8")
 print(f"library: {len(books)} books shipped, {sum(b['size'] for b in books if b['file']) // 1024} KB")
