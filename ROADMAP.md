@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 55%** (61 of 118 tasks done, in-progress tasks count half). Updated 2026-10-29T03:28+00:00 UTC.
+**Overall: 55%** (62 of 119 tasks done, in-progress tasks count half). Updated 2026-10-29T03:28+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -13,7 +13,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 10/23 | 54% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 56% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 0/7 | 0% |
@@ -142,7 +142,8 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Course: famous games analysed (each game verified move by move; original commentary)
 - [ ] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)
 - [x] Overlap check in the curriculum tools (tools/check_overlap.py; found 3 duplicate lesson pairs, listed in docs/review-findings-pending.md)
-- [ ] Resolve the 3 duplicate lesson pairs
+- [ ] Resolve every overlap reported by tools/check_overlap.py (listed in docs/overlaps-to-resolve.md): nothing is taught twice, lessons link instead
+- [x] Lesson pages show Connected lessons (builds on, uses, leads to, seen in a course), derived from the skill graph
 - [x] Coverage audit script (tools/coverage_audit.py) and a by-level misconceptions note (docs/misconceptions-by-level.md); both from recall, to be replaced by real syllabi and learner data
 - [ ] Check that every listed misconception has a practice exercise; write the missing ones
 - [ ] Advanced club-style courses
