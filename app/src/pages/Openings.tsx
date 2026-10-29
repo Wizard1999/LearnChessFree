@@ -1,3 +1,4 @@
+import { MastersCard } from '../components/MastersCard'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChessBoard } from '../components/ChessBoard'
@@ -153,6 +154,7 @@ export function Openings() {
             )}
             {kids.length > 10 && <p className="muted small">{kids.length - 10} more moves are stored; widen the filter to see them in the tree.</p>}
           </section>
+          {g.nodes.get(curId) && <MastersCard epd={g.nodes.get(curId)!.e} />}
           {others.length > 0 && (
             <section className="card">
               <h2>⇄ Other ways to get here</h2>
