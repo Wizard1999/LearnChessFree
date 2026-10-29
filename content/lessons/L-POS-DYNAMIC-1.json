@@ -1,0 +1,174 @@
+{
+  "id": "L-POS-DYNAMIC-1",
+  "title": "Dynamic play: count the activity, not only the pawns",
+  "skill": "POS.DYNAMIC",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Lists the damaged pawns (isolated, doubled, backward) of both sides",
+    "Counts the activity that may pay for them: open files and the moves of the main pieces",
+    "States whether the activity is enough, and labels the verdict as an engine rating, not a proof",
+    "Does not assume that damaged pawns mean a worse position without a count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Damaged pawns (isolated, doubled, backward) are a long-term cost, but not an automatic verdict. Active pieces, open files and the initiative can pay for them. So keep two lists: his damage and your activity. A verdict from this count is a *practical* judgement; the engine's rating in this app is evidence under stated limits, not a proof."
+    },
+    {
+      "type": "board",
+      "fen": "r2qkbnr/ppp2pp1/2n3p1/3p4/3P4/2P2P2/PP2N1PP/RNBQ1RK1 b kq - 0 9",
+      "caption": "Black to move. Black has 2 damaged pawns (g6, g7); White has none. Count Black's activity before judging: the queen on d8 has 8 legal moves; the knight on c6 has 6 legal moves; open files: e.",
+      "line": [
+        {
+          "move": "d8d7",
+          "say": "The engine's first choice at depth 16. The rating puts Black no worse than 0.2 pawns behind: the count favours the activity, not the pawns."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d8",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "g6",
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "isolated",
+            "color": "black",
+            "squares": []
+          },
+          "statement": "Black's isolated pawns: none."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "g6",
+              "g7"
+            ]
+          },
+          "statement": "Black's doubled pawns: g6, g7."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "black",
+            "squares": []
+          },
+          "statement": "Black's backward pawns: none."
+        },
+        {
+          "id": "C4",
+          "type": "open_files",
+          "params": {
+            "open": [
+              "e"
+            ]
+          },
+          "statement": "The open files are: e."
+        },
+        {
+          "id": "C5",
+          "type": "mobility",
+          "params": {
+            "square": "d8",
+            "mode": "legal",
+            "count": 8
+          },
+          "statement": "Black's queen on d8 has 8 legal moves."
+        },
+        {
+          "id": "C6",
+          "type": "mobility",
+          "params": {
+            "square": "c6",
+            "mode": "legal",
+            "count": 6
+          },
+          "statement": "Black's knight on c6 has 6 legal moves."
+        },
+        {
+          "id": "C7",
+          "type": "eval_range",
+          "params": {
+            "min": -100000,
+            "max": 20
+          },
+          "statement": "The engine rates the position at most +0.2 pawns for White, so Black is no worse than 0.2 pawns behind."
+        },
+        {
+          "id": "C8",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d8d7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 Qd7 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6-31"
+    },
+    {
+      "type": "card",
+      "text": "Activity pays only while it can be used. A closed centre, a trade of your active pieces or one lost tempo can turn the count. *Rule of thumb:* damaged pawns without activity are a real problem; damaged pawns with open lines may not be. If neither side has damaged pawns, there is nothing to count. Compare the three positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "Paid for, not paid for, nothing to weigh",
+      "prompt": "Predict which statement fits each position. In the second, a Black queen has moved from c6 to a8; the third is a different position. Then name the one change that flipped the verdict between the first two.",
+      "working": "IBp6-28",
+      "failing": "IBp6-29",
+      "irrelevant": "IBp6-30"
+    },
+    {
+      "type": "item",
+      "item": "IBp6-32",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6-33",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.DYNAMIC",
+        "tpl.p6-dy-prac"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in one of your games find a moment when your pawns were damaged. Write your activity list (open files, active pieces, threats) and decide whether it paid for the pawns."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.DYNAMIC.json",
+    "sources/sheets/emlasker_common-sense.md §5 item 1, §9 [R]; sources/sheets/nimzowitsch_my-system.md §4 idea 47 [R]",
+    "docs/curriculum-map-v1.md §2 S5 (POS.DYNAMIC T6)",
+    "content/items/lesson-p6.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

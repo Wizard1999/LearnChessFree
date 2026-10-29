@@ -1,0 +1,154 @@
+{
+  "id": "L-POS-OVERPROTECT-1",
+  "title": "Over-protection: when a point deserves a second defender",
+  "skill": "POS.OVERPROTECT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts the attackers and defenders of a pawn and says whether a further defender is a developing move or only a lost tempo",
+    "Names the point that deserves extra defenders and a piece that can bring one while developing",
+    "Declines to add a defender to an ordinary pawn, or to a pawn nobody attacks",
+    "Labels the idea as practical, not proven"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Over-protecting** means giving an important point more defenders than the attack on it needs. The idea comes from a master's writing and is *practical, not proven*. The point should be strong, central and under lasting pressure. The hope is that the defenders stay close to the point and keep their moves. For an ordinary pawn it is simply a lost tempo. In the examples here the extra defender is also a developing move, so the engine's agreement does not show that over-protection itself helps."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2pnbppp/p2p1n2/1p2p3/3PP3/1BP2N1P/PP3PP1/RNBQR1K1 w - - 1 11",
+      "caption": "White to move. The pawn on e4 is attacked once, by the knight on f6, and defended once, by the rook on e1.",
+      "line": [
+        {
+          "move": "b1d2",
+          "say": "A second defender of e4 arrives, and the knight can reach f1 and g3 later."
+        },
+        {
+          "move": "c8b7",
+          "say": "Black develops."
+        },
+        {
+          "move": "b3c2",
+          "say": "The bishop defends e4 as well, and the pawn on e4 is defended three times."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One Black piece attacks e4."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One White piece defends e4."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "white",
+            "count": 2,
+            "after_move": "b1d2"
+          },
+          "statement": "After Nbd2 two White pieces defend e4."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "white",
+            "count": 3,
+            "after_moves": [
+              "b1d2",
+              "c8b7",
+              "b3c2"
+            ]
+          },
+          "statement": "After Nbd2, ...Bb7 and Bc2 three White pieces defend e4."
+        },
+        {
+          "id": "C5",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1d2",
+              "b3c2"
+            ]
+          },
+          "statement": "Nbd2 and Bc2 are the engine's two best moves."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b1",
+          "to": "d2"
+        }
+      ],
+      "highlight": [
+        "e4"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-23"
+    },
+    {
+      "type": "card",
+      "text": "Ask three questions before adding a defender. Is the point strong and likely to stay under pressure? Does the defending piece keep useful moves where it stands? Is there a developing or active move that does the same job or more? As a *rule of thumb*, if the answer to the first is no, or if a developing or active move does the same job, leave the point alone."
+    },
+    {
+      "type": "contrast",
+      "title": "Same counts, different consequences",
+      "prompt": "In each position a move would add a second defender to a pawn. Predict whether it is among the engine's top moves, then check.",
+      "working": "IBp5-24",
+      "failing": "IBp5-25",
+      "irrelevant": "IBp5-26"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-28",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.OVERPROTECT"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "The master who proposed this idea mostly showed games he won, so those examples show it working and not how often it fails. The checks in this lesson are a handful of positions at one search depth. Name one point in your own games that you would try to over-protect, and one that you would not, and say why."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 34; §5 item 11; §8 item 19 (ideas only, original wording; practical, not proven)",
+    "docs/curriculum-map-v1.1.md §3 (POS.OVERPROTECT)",
+    "items IBp5 (OVERPROTECT): positions reached by ECO lines (library/data/chess-openings, CC0); counts are rules facts and engine verdicts are depth-16 checks [V]; that the defenders become active or passive is the master's claim [S] and a rule of thumb [I], not checked"
+  ]
+}

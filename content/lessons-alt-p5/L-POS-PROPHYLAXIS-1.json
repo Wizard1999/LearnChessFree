@@ -1,0 +1,176 @@
+{
+  "id": "L-POS-PROPHYLAXIS-1",
+  "title": "Prophylaxis: ask what he wants to play",
+  "skill": "POS.PROPHYLAXIS",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Explains prophylaxis as asking what the opponent wants to play, and says it is not passivity",
+    "Names the opponent's real freeing move and the move that prevents it",
+    "Leaves the move alone when the opponent has nothing real to prevent"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Prophylaxis** means asking, before you move: what does my opponent want to play? If that move would free his position or hurt yours, prevent it.\nIt is not passivity: a quiet move can be the most useful move on the board. Use it when his move is real and your own plan can wait."
+    },
+    {
+      "type": "board",
+      "fen": "2r2rk1/3nq1pp/1bp1p1b1/1p1pPp2/3B1P2/1P2P3/PQ1NB1PP/2R2RK1 w - - 2 21",
+      "caption": "White to move. Black's pawn on c6 could advance to c5.",
+      "line": [
+        {
+          "move": "b3b4",
+          "say": "b4: the pawn now attacks c5."
+        },
+        {
+          "move": "c8c7",
+          "say": "Black doubles on the c-file with the rook."
+        },
+        {
+          "move": "b2c3",
+          "say": "White's queen goes to c3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "c6",
+            "piece": "p"
+          },
+          "statement": "A black pawn stands on c6."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c5",
+            "piece": "empty"
+          },
+          "statement": "c5 is empty."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_move": "b3b4"
+          },
+          "statement": "After b4 one White pawn attacks c5."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d4b6",
+              "b3b4"
+            ]
+          },
+          "statement": "At depth 16 the engine puts Bxb6 and b4 within 40 centipawns of each other."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "d2f3",
+            "cp": 80
+          },
+          "statement": "Nf3 is at least 80 centipawns worse than the best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "b4"
+        },
+        {
+          "from": "c6",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-P1"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-P2"
+    },
+    {
+      "type": "card",
+      "text": "Prophylaxis pays when his freeing move is real and one useful move stops it. It wastes a tempo when he cannot carry the move out, or when you have something faster.\n**Rule of thumb:** find his best move first (imagine you pass). If passing would cost you nothing, carry on with your own plan."
+    },
+    {
+      "type": "contrast",
+      "title": "Prevent, or carry on?",
+      "prompt": "Predict which move is best in each position. In the second, Black has no d-pawn. The third is a different case.",
+      "working": "IBp5-P3",
+      "failing": "IBp5-P8",
+      "irrelevant": "IBp5-P7"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-P5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-P6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PROPHYLAXIS",
+        "tier.5"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before your next move in a game, write down what your opponent wants to play. Did you do that today? What did you find?",
+      "fields": [
+        {
+          "id": "did",
+          "label": "I asked what he wants to play:",
+          "options": [
+            "before every move today",
+            "before some moves",
+            "not yet"
+          ]
+        },
+        {
+          "id": "found",
+          "label": "Most often I found:",
+          "options": [
+            "a pawn break",
+            "a piece move",
+            "a threat to material",
+            "nothing"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 32-33)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C15)",
+    "sources/sheets/emlasker_common-sense.md (4.15)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.PROPHYLAXIS)",
+    "items: Lichess standard rated games, January 2013 sample (CC0); engine evaluations at depth 16"
+  ]
+}

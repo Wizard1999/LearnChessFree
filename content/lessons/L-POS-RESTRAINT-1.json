@@ -1,0 +1,143 @@
+{
+  "id": "L-POS-RESTRAINT-1",
+  "title": "Restraint: guard the square his pawn wants",
+  "skill": "POS.RESTRAINT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the square an enemy pawn would advance to and says which of your pieces attack it",
+    "Picks, from a piece's legal moves, the squares from which it would attack the break square",
+    "Tells apart a break that restraint can meet, one the opponent already supports, and a pawn that cannot advance",
+    "Does not spend a move watching a square when the engine's best move lies elsewhere"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Restraint** means stopping an enemy pawn break before it happens. Find the pawn and the square it would advance to. If one of your pieces attacks that square, the push costs him material or leaves the pawn weak. Nimzowitsch's order is a *rule of thumb*: restrain first, blockade next, destroy last. Free centre pawns have their own lesson, \"A free pawn in the centre: break it or restrain it\"."
+    },
+    {
+      "type": "board",
+      "fen": "r3k1nr/ppp1bppp/2np1q2/4p3/4P3/2P3P1/PP1PQPNP/RNB2RK1 b kq - 2 10",
+      "caption": "Black to move. White's pawn on c3 could advance to c4, and no Black piece attacks c4 yet.",
+      "line": [
+        {
+          "move": "f6e6",
+          "say": "The queen goes to e6, on the diagonal e6-d5-c4. Now c4 is attacked, so the push would cost White a pawn or more."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "e6"
+        },
+        {
+          "from": "e6",
+          "to": "c4"
+        }
+      ],
+      "highlight": [
+        "c3",
+        "c4",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "c3",
+            "piece": "P"
+          },
+          "statement": "White has a pawn on c3."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c4",
+            "piece": "empty"
+          },
+          "statement": "The square c4 in front of it is empty."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No Black piece attacks c4 now."
+        },
+        {
+          "id": "C4",
+          "type": "legal_move",
+          "params": {
+            "move": "f6e6"
+          },
+          "statement": "Qe6 is legal."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1,
+            "after_move": "f6e6"
+          },
+          "statement": "After Qe6, 1 Black piece attacks c4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6-4"
+    },
+    {
+      "type": "card",
+      "text": "Restraint costs a move, so first check that the break is **real**. Count the attackers of the break square for both sides (a *rule of thumb*, not a law). It fails when his advance is already supported, or when the pawn cannot move at all. Adding an attacker is also not automatically good: the engine's rating of the move still decides. Compare the three positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "Restrain, too late to restrain, nothing to restrain",
+      "prompt": "Predict which statement fits each position. In the second, the White bishop stands on d2 instead of f1; in the third, a White knight moved from f3 to b4. Then name the one change that flipped the verdict between the first two.",
+      "working": "IBp6-1",
+      "failing": "IBp6-2",
+      "irrelevant": "IBp6-3"
+    },
+    {
+      "type": "item",
+      "item": "IBp6-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6-6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.RESTRAINT",
+        "tpl.p6-rs-prac"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in one of your own games find an enemy pawn that could advance. Write the square it would go to, which of your pieces attack that square, and whether one move could add an attacker."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.RESTRAINT.json",
+    "sources/sheets/nimzowitsch_my-system.md §4 ideas 40-41 (restrain, blockade, destroy) [R]",
+    "content/lessons/L-POS-CENTER-MOBILE-1.json and L-POS-BLOCKADE-1.json (taught there, named here)",
+    "content/items/lesson-p6.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

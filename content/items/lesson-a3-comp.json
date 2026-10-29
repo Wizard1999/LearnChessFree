@@ -59,6 +59,26 @@
     "ref": "authored: 1.d4 Nf6 2.c4 e6 3.Nc3 Bb4 4.e3 O-O 5.Bd3 d5 6.Nf3 c5 7.O-O Nc6 (legal sequence)",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBa3-c7",
+   "fen": "r1bq1rk1/pp2bppp/2nppn2/8/4P3/P1N1BN1P/1P2BPP1/R2QK2R w KQ - 3 10",
+   "family": "FAM-A3-COMP-SMFADE2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: 1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 6.Be3 e6 7.a3 Nf6 8.h3 Be7 9.Be2 O-O (legal sequence)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-c8",
+   "fen": "r1bqkb1r/1p1pnppp/p1n1p3/8/2B1P3/2N2N2/PP3PPP/R1BQ1RK1 w kq - 2 8",
+   "family": "FAM-A3-COMP-SM",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: 1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 (legal sequence)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -82,7 +102,7 @@
      "id": "C1",
      "type": "eval_range",
      "params": {
-      "min": -60,
+      "min": -50,
       "max": 20
      }
     },
@@ -262,6 +282,73 @@
      "params": {
       "max": -100
      }
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "f3",
+      "piece": "empty"
+     },
+     "statement": "White's knight from f3 is gone."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "g6",
+      "piece": "n"
+     },
+     "statement": "Black has a knight on g6."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "g8",
+      "piece": "n"
+     },
+     "statement": "Black still has its other knight on g8."
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 4
+     },
+     "id": "C5",
+     "statement": "White has four queenside pawns."
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 4
+     },
+     "id": "C6",
+     "statement": "White has four kingside pawns."
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 4
+     },
+     "id": "C7",
+     "statement": "Black has four queenside pawns."
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 3
+     },
+     "id": "C8",
+     "statement": "Black has three kingside pawns."
     }
    ],
    "tags": [
@@ -280,7 +367,7 @@
     "Ask what the side that gave material has in return: pieces developed, lines open, the opponent's king still in the centre.",
     "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
    ],
-   "explain": "The engine at depth 16 rates White at least a full pawn behind, well outside the half-pawn line. White has practical chances at best: an opponent who has to find the accurate replies, not sound compensation.",
+   "explain": "White has given a knight for a pawn, so is about two points down; the engine at depth 16 rates White at least a full pawn behind, well outside the half-pawn line. White has practical chances at best.",
    "review": {
     "status": "needs-human",
     "reviewer": null
@@ -387,7 +474,7 @@
    "cue": 3,
    "task": "classify_position",
    "position": "PBa3-c5",
-   "prompt": "White to move. Count the material first, then pick the verdict on White's compensation.",
+   "prompt": "White to move. Count the material first, then pick the verdict on the position.",
    "answer": {
     "class": "Practical chances only",
     "options": [
@@ -546,6 +633,190 @@
     "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
    ],
    "explain": "Both sides still have all eight pawns, and the engine at depth 16 sees no edge for either. There is no material to compensate, so the idea does not apply.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Sound compensation",
+    "Practical chances only",
+    "Nothing was given up"
+   ]
+  },
+  {
+   "id": "IBa3-c7",
+   "skill": "INI.COMPENSATION.D1",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBa3-c7",
+   "prompt": "White to move. Count the material first, then pick the verdict on the position.",
+   "answer": {
+    "class": "Practical chances only",
+    "options": [
+     "Sound compensation",
+     "Practical chances only",
+     "Nothing was given up"
+    ]
+   },
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "max": -50
+     },
+     "id": "C1"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 2
+     },
+     "id": "C2"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 4
+     },
+     "id": "C3"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 3
+     },
+     "id": "C4"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 4
+     },
+     "id": "C5"
+    },
+    {
+     "id": "C6",
+     "type": "piece_on",
+     "params": {
+      "square": "g8",
+      "piece": "k"
+     },
+     "statement": "The black king has castled to g8."
+    }
+   ],
+   "tags": [
+    "theme.compensation",
+    "node.INI.COMPENSATION",
+    "tier.6",
+    "kind.decision",
+    "mode.gambit",
+    "family.SMFADE2",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Count the pawns and the pieces for both sides before you judge anything.",
+    "Ask what the side that gave material has in return: pieces developed, lines open, the opponent's king still in the centre.",
+    "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
+   ],
+   "explain": "White has one pawn fewer, and the engine at depth 16 rates White more than half a pawn behind. Black has castled. By this lesson's rule that is practical chances only: evidence at a fixed depth, not a proof.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Sound compensation",
+    "Practical chances only",
+    "Nothing was given up"
+   ]
+  },
+  {
+   "id": "IBa3-c8",
+   "skill": "INI.COMPENSATION.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PBa3-c8",
+   "prompt": "White to move. Count the material first, then pick the verdict on the position.",
+   "answer": {
+    "class": "Sound compensation",
+    "options": [
+     "Sound compensation",
+     "Practical chances only",
+     "Nothing was given up"
+    ]
+   },
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -50,
+      "max": 30
+     },
+     "id": "C1"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 2
+     },
+     "id": "C2"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 4
+     },
+     "id": "C3"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 3
+     },
+     "id": "C4"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 4
+     },
+     "id": "C5"
+    }
+   ],
+   "tags": [
+    "theme.compensation",
+    "node.INI.COMPENSATION",
+    "tier.6",
+    "kind.decision",
+    "mode.gambit",
+    "family.SM",
+    "cue.3",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Count the pawns and the pieces for both sides before you judge anything.",
+    "Ask what the side that gave material has in return: pieces developed, lines open, the opponent's king still in the centre.",
+    "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
+   ],
+   "explain": "White has one pawn fewer, and the engine at depth 16 rates the position within half a pawn of level. By this lesson's rule that is sound compensation: evidence at a fixed depth, not a proof.",
    "review": {
     "status": "needs-human",
     "reviewer": null

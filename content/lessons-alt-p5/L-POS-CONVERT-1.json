@@ -1,0 +1,150 @@
+{
+  "id": "L-POS-CONVERT-1",
+  "title": "Converting an advantage: take, exchange or keep the pressure",
+  "skill": "POS.CONVERT",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Sorts the candidate moves in a winning position into taking material, exchanging and a quiet move",
+    "Checks that a tempting capture or exchange does not hand back the advantage",
+    "Recognises when a clean capture or an exchange really is the best conversion"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A big lead still has to be turned into a win. There are three ways: **take material**, **exchange pieces**, or play a **quiet move** that keeps the opponent tied down. Each has a cost: a capture can open lines, an exchange can ease his position, a quiet move gives him time.\nBefore you grab, ask which move leaves him the fewest useful replies."
+    },
+    {
+      "type": "board",
+      "fen": "r2qr1k1/pp1nn1pp/5p2/3P2B1/2pQP3/6P1/PP3PBP/R4RK1 w - - 0 17",
+      "caption": "White is far ahead. Qxc4 wins a pawn at once; the quiet Be3 is also possible.",
+      "line": [
+        {
+          "move": "g5e3",
+          "say": "Be3: the bishop steps back and every piece stays on."
+        },
+        {
+          "move": "d7e5",
+          "say": "Black puts a knight on e5."
+        },
+        {
+          "move": "f2f4",
+          "say": "White plays f4."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 350
+          },
+          "statement": "At depth 16 White is at least 350 centipawns ahead."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5e3",
+              "g5f4"
+            ]
+          },
+          "statement": "The engine's best moves are Be3 and Bf4, equal at depth 16."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "d4c4",
+            "cp": 400
+          },
+          "statement": "Qxc4 is at least 400 centipawns worse than the best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "e3"
+        }
+      ],
+      "highlight": [
+        "c4"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-C1"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-C2"
+    },
+    {
+      "type": "card",
+      "text": "No kind of conversion is always right. **Rule of thumb:** with a crushing lead, take the quickest forced win or a clean capture; with a large but not yet decisive lead, keep the pressure and avoid trades that give the opponent air. Winning does not mean you may stop calculating: check the capture you want and the exchange you want before you play them."
+    },
+    {
+      "type": "contrast",
+      "title": "Three ways to convert",
+      "prompt": "In each position White or Black is far ahead. Predict first whether taking, exchanging or a quiet move is best. The third position is a different case.",
+      "working": "IBp5-C6",
+      "failing": "IBp5-C4",
+      "irrelevant": "IBp5-C7"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-C3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-C5",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.CONVERT",
+        "tier.5"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of a game where you were winning and it slipped. Which of the three ways did you use, and which would you choose now?",
+      "fields": [
+        {
+          "id": "used",
+          "label": "I used mostly:",
+          "options": [
+            "taking material",
+            "exchanging",
+            "a quiet move",
+            "I did not choose, I hurried"
+          ]
+        },
+        {
+          "id": "now",
+          "label": "Now I would check first:",
+          "options": [
+            "his counterplay",
+            "the capture I want",
+            "the exchange I want",
+            "nothing new"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C16-C19, section 8 contrast B)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.CONVERT)",
+    "items: Lichess standard rated games, January 2013 sample (CC0); engine evaluations at depth 16"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "L-POS-OVERPROTECT-1",
+  "title": "Over-protection: when more defence is the plan",
+  "skill": "POS.OVERPROTECT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Explains over-protection as giving a strategically important point more defence than the attack needs",
+    "Names the point and the piece that should over-protect it",
+    "Decides when over-protection helps and when it only wastes time"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Over-protection** means defending a strategically important point (a pawn that holds the centre, for instance) more often than the attack seems to need.\nThe rule of thumb says the defenders gain activity by working close to the point. It is practical advice, not proof: the famous examples come from won games. Use it only when the point is strong and will stay under pressure."
+    },
+    {
+      "type": "board",
+      "fen": "r1b2rk1/p2nqpbp/2p1p1p1/2ppP3/N1P5/1P1P1N2/PB2QPPP/R4RK1 b - - 2 13",
+      "caption": "Black to move. Black's pawn on d5 is attacked once and defended twice.",
+      "line": [
+        {
+          "move": "d7b6",
+          "say": "Nb6 adds a third defender to d5."
+        },
+        {
+          "move": "b2a3",
+          "say": "White plays Ba3."
+        },
+        {
+          "move": "b6a4",
+          "say": "Black takes the knight on a4."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One White piece attacks d5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two Black pieces defend d5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 3,
+            "after_move": "d7b6"
+          },
+          "statement": "After Nb6 three Black pieces defend d5."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d7b6"
+            ]
+          },
+          "statement": "At depth 16 the engine's best move is Nb6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "b6"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-O2"
+    },
+    {
+      "type": "card",
+      "text": "Over-protection fits when the point is strong, will be attacked, and the defenders become more active near it. It fails when nothing attacks the point (the extra defender costs a tempo) or when the defenders end up tied to a weak point.\n**Rule of thumb:** count attackers and defenders first. If the defence already holds and no pressure is coming, spend the move elsewhere."
+    },
+    {
+      "type": "contrast",
+      "title": "Pressure on the point, or none?",
+      "prompt": "Predict which move is best in each position. In the second, the attacker has left. The third is a different case.",
+      "working": "IBp5-O1",
+      "failing": "IBp5-O5",
+      "irrelevant": "IBp5-O6"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-O3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-O4",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.OVERPROTECT",
+        "tier.5"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Name a point in one of your own games that you wanted to hold. Was it strong, and was it under pressure?",
+      "fields": [
+        {
+          "id": "strong",
+          "label": "The point was:",
+          "options": [
+            "strong and attacked",
+            "strong but not attacked",
+            "weak but attacked",
+            "I am not sure"
+          ]
+        },
+        {
+          "id": "defenders",
+          "label": "My defenders were:",
+          "options": [
+            "more active near it",
+            "just standing guard",
+            "not applicable"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 34, section 5 item 11, section 8 item 19)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.OVERPROTECT)",
+    "items: Lichess standard rated games, January 2013 sample (CC0); one-feature edit checked with the engine at depth 16"
+  ]
+}

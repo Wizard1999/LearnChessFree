@@ -1,0 +1,139 @@
+{
+  "id": "L-POS-PLAN-RACE-1",
+  "title": "Racing plans: the count in a pawn race, and what it leaves out",
+  "skill": "POS.PLAN.RACE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts the moves each side's plan needs in a pawn race and says who arrives first",
+    "Remembers to ask who is on move",
+    "Checks whether a king can reach the pawn before trusting the count",
+    "Says that a count of moves does not apply when the pawns block each other",
+    "Reads the tablebase verdict shown after each item and compares it with his own count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When both sides have a plan, count the moves each needs and ask who is on move. The side that arrives first usually wins. In a pawn race, count the moves a pawn needs to reach the last rank. A forcing reply can break the count: a king stepping into the pawn's path, or a check when a pawn queens. After each item, the answer shows the tablebase result."
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/P6p/8/8/8/K7 w - - 0 1",
+      "caption": "White to move. Both kings stand behind their own pawns. White's pawn needs 3 moves, Black's needs 4.",
+      "line": [
+        {
+          "move": "a5a6",
+          "say": "White's pawn needs two more moves."
+        },
+        {
+          "move": "h8g7",
+          "say": "Black's king comes to the middle instead of pushing."
+        },
+        {
+          "move": "a6a7",
+          "say": "One more move."
+        },
+        {
+          "move": "g7f6",
+          "say": "The king approaches."
+        },
+        {
+          "move": "a7a8q",
+          "say": "White queens first."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "With best play White wins."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "a5",
+            "piece": "P"
+          },
+          "statement": "White's pawn is on a5."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "h5",
+            "piece": "p"
+          },
+          "statement": "Black's pawn is on h5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "a8"
+        }
+      ],
+      "highlight": [
+        "a5",
+        "h5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-1"
+    },
+    {
+      "type": "card",
+      "text": "The count is a *rule of thumb*. It fails when a king is close enough to reach the pawn, when the first queen comes with check, and when the pawns block each other and there is nothing to count. Count the king too (one square per move): count its moves to the pawn's path ahead of the pawn and compare. Then look for a check as a pawn queens. The answer shown after each item comes from a tablebase, a complete list of results for positions with few pieces."
+    },
+    {
+      "type": "contrast",
+      "title": "One count, one change",
+      "prompt": "Equal pawn counts in the first two positions; they differ by one Black king. In the third the pawns block each other. Predict the result for the side to move, then check.",
+      "working": "IBp5-2",
+      "failing": "IBp5-3",
+      "irrelevant": "IBp5-4"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PLAN.RACE"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of a game where you and your opponent both attacked on a wing. Count, on paper, the moves each of you needed and write who was on move. Which of his forcing moves (a check, a capture, a threat) could have changed your count?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C11, C23; sources/sheets/emlasker_common-sense.md §4.13 (ideas only, original wording)",
+    "docs/curriculum-map-v1.1.md §3 (POS.PLAN.RACE)",
+    "items IBp5 (RACE): positions constructed with python-chess (two kings, two pawns); every result is the Lichess tablebase's verdict for the side to move [V]; the pawn counts are arithmetic read off the diagram; the king-in-the-path remark is the standard rule of the square, a rule of thumb [R]; racing plans in middlegames with several pieces are not covered here and stay a paper exercise",
+    "scope note: covers the K+P form of the race count only; flank-attack races (the D1 outcome of POS.PLAN.RACE) are not yet covered, so the node stays partial"
+  ]
+}

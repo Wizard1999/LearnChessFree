@@ -1,0 +1,153 @@
+{
+  "id": "L-POS-MANEUVER-1",
+  "title": "Manoeuvring: a target, a pivot and a route",
+  "skill": "POS.MANEUVER",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the target (a weak pawn that no piece attacks yet)",
+    "Finds the first step (the pivot) of a two-move route to a square that attacks it",
+    "Does not start a route when the engine rates the first step clearly worse, or when a capture wins material at once",
+    "Tells aimless moves from moves with a route"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "To regroup against a weak pawn, name three things: the **target**, the **pivot** (a square your piece reaches first and passes through) and the **route** of each piece. Aimless shuffling is not manoeuvring: every move must bring a piece nearer a square that attacks the target. *Rule of thumb:* it works when the target can be attacked in two ways and your pieces have more room than his."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/pp1nbppp/3p1n2/2p1p3/4P3/3P3P/PPP2PPN/RNBQ1RK1 w - - 3 9",
+      "caption": "White to move. Black's pawn on d6 is backward, and no White piece attacks it. Target: d6.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "The knight goes to c3: the pivot. From here it can go on."
+        },
+        {
+          "move": "a8c8",
+          "say": "The opponent replies; the next square is still free."
+        },
+        {
+          "move": "c3b5",
+          "say": "The knight reaches b5 and attacks d6. Route: b1, c3, b5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b1",
+          "to": "c3"
+        },
+        {
+          "from": "c3",
+          "to": "b5"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "c3",
+        "b5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "black",
+            "includes": [
+              "d6"
+            ]
+          },
+          "statement": "Black's pawn on d6 is backward."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No White piece attacks d6 now."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b1c3",
+              "a8c8",
+              "c3b5"
+            ]
+          },
+          "statement": "In the line Nc3 Rc8 Nb5, 1 White piece attacks d6."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1c3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 Nc3 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6-48"
+    },
+    {
+      "type": "card",
+      "text": "A route needs time and safe squares. It fails when the pivot is controlled by the opponent, when he can use the time better, or when a tactic is on the board and no regrouping is needed. The app checks the squares and the engine's rating, not whether you have a plan. Compare the three positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "A route, no time for it, no route needed",
+      "prompt": "Predict which statement fits each position. In the second, a Black bishop has moved from a6 to c8; the third is a different position. Then name the one change that flipped the verdict between the first two.",
+      "working": "IBp6-46",
+      "failing": "IBp6-47",
+      "irrelevant": "IBp6-55"
+    },
+    {
+      "type": "item",
+      "item": "IBp6-49",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6-54",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.MANEUVER",
+        "tpl.p6-mn-prac"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in a quiet position from your own game write the target, the pivot square and the route of one piece in three moves. Then write what the opponent can do while you walk."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.MANEUVER.json",
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 46, §8 item 19 [R]",
+    "docs/curriculum-map-v1.1.md §3 (POS.MANEUVER T5-6)",
+    "content/lessons/L-POS-TWOWEAK-1.json (the second target, named there)",
+    "content/items/lesson-p6.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

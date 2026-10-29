@@ -1,0 +1,132 @@
+{
+  "id": "L-POS-EXCEPTIONS-1",
+  "title": "When the rule fails: test it with one change",
+  "skill": "POS.EXCEPTIONS",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "States a positional rule (rook to the open file, piece to an outpost) and the feature a position needs for it to hold",
+    "Compares a position where the rule gives a good move with one where a single change makes it fail",
+    "Says when the rule does not govern the position at all",
+    "Keeps a rule as a default with a condition, neither absolute nor discarded after one exception"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A rule of thumb is a default with conditions. \"Put a rook on an open file\" gives a good move in many positions and a poor one in others. To learn the condition, change one feature of a position that fits the rule and see whether the rule still gives a good move. One failure does not cancel the rule; it shows where its limit lies."
+    },
+    {
+      "type": "board",
+      "fen": "1r3rk1/p3bppp/4p3/2p1P3/8/2P1BR2/P1P3PP/5RK1 b - - 2 19",
+      "caption": "Black to move. The rule of thumb says: put a rook on an open file. Here it can be followed.",
+      "line": [
+        {
+          "move": "b8b2",
+          "say": "Rb2 follows the rule, and the engine rates it among its best moves. The rule works here."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b8",
+          "to": "b2"
+        }
+      ],
+      "highlight": [
+        "b2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "open_files",
+          "params": {
+            "open": [
+              "b",
+              "d"
+            ]
+          },
+          "statement": "The open files are: b, d."
+        },
+        {
+          "id": "C2",
+          "type": "moves_where",
+          "params": {
+            "property": "rook_to_open_file",
+            "moves": [
+              "b8b1",
+              "b8b2",
+              "b8b3",
+              "b8b4",
+              "b8b5",
+              "b8b6",
+              "b8b7",
+              "b8d8",
+              "f8d8"
+            ]
+          },
+          "statement": "The legal rook moves to an open file are: Rb1, Rb2, Rb3, Rb4, Rb5, Rb6, Rb7, Rbd8, Rfd8."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8b2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the accepted move (Rb2) is within 0.4 pawns of the best, and the best move is one of them."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6-40"
+    },
+    {
+      "type": "card",
+      "text": "Keep each default with its condition: *take the open file, unless leaving a square costs something else*. Before you follow a rule, name what it assumes. The pair below differs by one feature, so the feature that licenses the exception can be named; the third position is one where the rule does not apply at all."
+    },
+    {
+      "type": "contrast",
+      "title": "The rule holds, the rule fails, no rule to apply",
+      "prompt": "Predict which statement fits each position. In the second, a Black knight has moved from d7 to f4; the third is a different position. Then name the one change that flipped the verdict between the first two.",
+      "working": "IBp6-37",
+      "failing": "IBp6-38",
+      "irrelevant": "IBp6-39"
+    },
+    {
+      "type": "item",
+      "item": "IBp6-41",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6-45",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.EXCEPTIONS",
+        "tpl.p6-ex-prac"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): pick one rule you use, such as a knight to an outpost. Write a position where it works and then one change to the position that makes it fail. That pair is your own minimal pair."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.EXCEPTIONS.json",
+    "sources/sheets/emlasker_common-sense.md §4.5, §5 item 1, §6 item 5 [R]; sources/sheets/capablanca_chess-fundamentals.md §5 items 4, 6-8 [R]",
+    "content/lessons/L-POS-OPENFILE-1.json and L-POS-OUTPOST-1.json (the rules, taught there)",
+    "docs/council-synthesis.md CD-4",
+    "content/items/lesson-p6.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

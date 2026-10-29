@@ -1,0 +1,130 @@
+{
+  "id": "L-POS-VALUES-1",
+  "title": "Piece values: a starting estimate that the position changes",
+  "skill": "POS.VALUES",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "States the counting values 1, 3, 3, 5, 9 as a rule of thumb and names what changes them in a position",
+    "Counts the legal moves of two minor pieces and says which one is the more active",
+    "Chooses which minor piece to give up in a trade and supports the choice with a count",
+    "Says when the count of moves does not decide, using positions where the engine disagrees with it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The counting values 1, 3, 3, 5, 9 are a *rule of thumb* for adding up trades, not a fact about the pieces. A piece is worth what it can do: the squares it reaches, whether pawns block it, what it attacks. Before you trade one minor piece for another, count the legal moves of both. Fewer moves is a first reason to give that piece, and it often fails."
+    },
+    {
+      "type": "board",
+      "fen": "r2qkb1r/pp1b2pp/2n1pn2/1BppN3/3P1B2/2N5/PPP2PPP/R2QK2R w KQkq - 4 9",
+      "caption": "White to move. The bishop on b5 has 7 legal moves and the knight on e5 has 8. The count points to giving the bishop, and the engine rates that trade about as good as the alternatives.",
+      "line": [
+        {
+          "move": "b5c6",
+          "say": "The bishop, the piece with fewer moves, takes the knight on c6."
+        },
+        {
+          "move": "b7c6",
+          "say": "Black retakes with the pawn."
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles and keeps the knight."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "b5",
+            "mode": "legal",
+            "count": 7
+          },
+          "statement": "The bishop on b5 has 7 legal moves."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "e5",
+            "mode": "legal",
+            "count": 8
+          },
+          "statement": "The knight on e5 has 8 legal moves."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1g1",
+              "b5c6"
+            ]
+          },
+          "statement": "Castling and Bxc6 are both within 40 centipawns of the engine's best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "c6"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "e5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-29"
+    },
+    {
+      "type": "card",
+      "text": "The count is a *rule of thumb* and it can fail. It says little when both pieces have the same number of moves, when both trades leave an equal game, or when one capture forces a recapture that changes the position, so calculate any capture that comes with check. Before you trade, count the moves of both pieces, then ask what the trade does to the pawns and the king, and whether one of your pieces is already attacked."
+    },
+    {
+      "type": "contrast",
+      "title": "One count, three positions",
+      "prompt": "Predict the better trade in the first two positions and say whether the count of moves decides it in the third. Then check.",
+      "working": "IBp5-30",
+      "failing": "IBp5-31",
+      "irrelevant": "IBp5-32"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-33",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-34",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.VALUES"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, did you count the moves of both pieces before you chose? In which position did the count and the engine's verdict part ways, and what did you check that the count does not see? Write one sentence."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/authoring-guide.md (vocabulary: counting values are a rule of thumb)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-16; sources/sheets/edlasker_chess-strategy.md §4 K5 (ideas only, original wording; the numeric force table of Znosko-Borovsky is not used)",
+    "items IBp5 (VALUES): positions from Lichess standard rated games, January 2013 sample (CC0); every engine verdict is a depth-16 check, every move count a rules fact [V]; that fewer moves means 'give this piece' is a rule of thumb [I]",
+    "board position: lichess.org/xxtwru15 position after ply 16"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "id": "L-POS-VALUES-1",
+  "title": "Piece values: a starting estimate, not a fact",
+  "skill": "POS.VALUES",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "States the 1-3-3-5-9 scale as a counting rule of thumb and names two reasons a piece is worth more or less (room to move, pawns)",
+    "Given two possible trades, says which of his pieces to keep and checks the choice against the engine",
+    "Notices when a rook has no open file to use, so a point-count lead may be worth much less"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The 1-3-3-5-9 scale is a **counting rule of thumb**: a starting estimate that ignores where the pieces stand. Two things change a piece's real worth: the **room it has** (squares it can use) and the **pawns** around it, which block bishops and decide whether a rook gets a file.\nSo compare two specific pieces in this position rather than reading a table."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/ppp1nppp/2n5/6B1/1bBP2b1/2N2N2/PP3PPP/R2Q1RK1 b - - 4 10",
+      "caption": "Black to move. Two trades of a bishop for a knight are possible: Bxf3 or Bxc3.",
+      "line": [
+        {
+          "move": "g4f3",
+          "say": "Bxf3: Black trades the g4 bishop for the knight and keeps the b4 bishop."
+        },
+        {
+          "move": "d1f3",
+          "say": "White recaptures with the queen."
+        },
+        {
+          "move": "d8d4",
+          "say": "Black's queen takes the pawn on d4."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g4f3"
+          },
+          "statement": "Bxf3 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g4f3",
+              "h7h6",
+              "d8d7"
+            ]
+          },
+          "statement": "At depth 16 the engine's best move is Bxf3, with h6 and Qd7 within 40 centipawns."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "b4c3",
+            "cp": 60
+          },
+          "statement": "Bxc3 is at least 60 centipawns worse than the best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "f3"
+        },
+        {
+          "from": "b4",
+          "to": "c3"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "c3"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-V1"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-V2"
+    },
+    {
+      "type": "card",
+      "text": "**When the estimate holds:** in ordinary open or half-open positions the usual order holds, and room to move is what mostly pushes a piece's worth up or down. **When it fails:** a rook with no open file to enter, a bishop shut in by its own pawns, a knight on a strong square.\n**Rule of thumb:** compare the room of the two pieces before you trade. The engine shows the size of the gap, not the reason; the reason is yours to name."
+    },
+    {
+      "type": "contrast",
+      "title": "Counting: where it holds, where it fails",
+      "prompt": "Two positions, one trade choice and one point count. Predict first: in which does the usual order hold? The third is a different case.",
+      "working": "IBp5-V4",
+      "failing": "IBp5-V6",
+      "irrelevant": "IBp5-V5"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-V3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-V7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.VALUES",
+        "tier.4"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one of today's trades. Which piece did you keep, and what was your reason?",
+      "fields": [
+        {
+          "id": "reason",
+          "label": "My reason was mostly:",
+          "options": [
+            "room to move",
+            "pawn structure",
+            "bishop pair",
+            "I counted points only",
+            "not sure"
+          ]
+        },
+        {
+          "id": "after",
+          "label": "After the engine line I would say:",
+          "options": [
+            "my reason held",
+            "my reason was wrong",
+            "I cannot tell"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-16)",
+    "sources/sheets/edlasker_chess-strategy.md (K5)",
+    "sources/sheets/emlasker_common-sense.md (4.20)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.VALUES)",
+    "items: Lichess standard rated games, January 2013 sample (CC0); engine evaluations at depth 16"
+  ]
+}

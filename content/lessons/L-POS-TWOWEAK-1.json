@@ -1,0 +1,166 @@
+{
+  "id": "L-POS-TWOWEAK-1",
+  "title": "Two weaknesses: add a second target",
+  "skill": "POS.TWOWEAK",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the weak pawns (isolated or backward) of a side and the one you already attack",
+    "Finds a move that attacks a second weak pawn while the first stays attacked",
+    "Does not play the second-target move when the engine rates it clearly worse",
+    "Says when there is no weak pawn to attack"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "One weak pawn can usually be defended by tying a piece to it. A second weakness stretches the defence: his pieces cannot guard both. When you already attack one weak pawn, look for a move that attacks a second **without letting go of the first**. *Rule of thumb:* two targets need two ways of attacking them. Single targets: \"Weak pawns: targets only if you can attack them\"."
+    },
+    {
+      "type": "board",
+      "fen": "r1b2rk1/pp1p1p2/4p2Q/1q2P2P/2pP3b/P1P5/1P2B3/RNK3Nn b - - 0 21",
+      "caption": "Black to move. White has two weak pawns, on b2 (backward) and h5 (isolated). Black already attacks b2.",
+      "line": [
+        {
+          "move": "h1g3",
+          "say": "The knight moves and now attacks h5 too, while b2 stays attacked."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h1",
+          "to": "g3"
+        }
+      ],
+      "highlight": [
+        "b2",
+        "h5",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "white",
+            "includes": [
+              "b2"
+            ]
+          },
+          "statement": "White's pawn on b2 is backward."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "isolated",
+            "color": "white",
+            "includes": [
+              "h5"
+            ]
+          },
+          "statement": "White's pawn on h5 is isolated."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "b2",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "1 Black piece(s) attack b2 now."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No Black piece attacks h5 now."
+        },
+        {
+          "id": "C5",
+          "type": "legal_move",
+          "params": {
+            "move": "h1g3"
+          },
+          "statement": "Ng3 is legal."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "b2",
+            "color": "black",
+            "count": 1,
+            "after_move": "h1g3"
+          },
+          "statement": "After Ng3, 1 Black piece(s) attack b2."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "black",
+            "count": 1,
+            "after_move": "h1g3"
+          },
+          "statement": "After Ng3, 1 Black piece(s) attack h5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6-22"
+    },
+    {
+      "type": "card",
+      "text": "Creating weaknesses is not progress in itself. A second target helps only if you can really attack it and the siege on the first goes on. It fails when the extra move costs you more elsewhere, and it does not apply when no weak pawn exists. Compare the three positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "A second target, too costly, nothing to attack",
+      "prompt": "Predict which statement fits each position. In the second, a Black queen has moved from c7 to e6; the third is a different position. Then name the one change that flipped the verdict between the first two.",
+      "working": "IBp6-19",
+      "failing": "IBp6-20",
+      "irrelevant": "IBp6-21"
+    },
+    {
+      "type": "item",
+      "item": "IBp6-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6-24",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.TWOWEAK",
+        "tpl.p6-tw-prac"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): take a game where you attacked one weak pawn and the opponent defended it. Write which second weakness you could have created and which of your pieces would attack it."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.TWOWEAK.json",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-23, CI-33 [R]; sources/sheets/nimzowitsch_my-system.md §4 ideas 31, 46 [R]",
+    "content/lessons/L-POS-PAWNWEAK-1.json (single targets, named here)",
+    "content/items/lesson-p6.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

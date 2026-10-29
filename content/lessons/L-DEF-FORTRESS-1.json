@@ -1,0 +1,153 @@
+{
+  "id": "L-DEF-FORTRESS-1",
+  "title": "Ahead in material, still unable to win",
+  "skill": "DEF.FORTRESS",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Explains why an extra pawn does not win in the opposite-bishop family shown",
+    "Names the square the defending king must keep covering",
+    "Tells a held fortress from a broken one, and a position with nothing to defend"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **fortress** is a set-up the stronger side cannot break, even when it is ahead. Here both sides have a bishop, on opposite colours, and White has one extra pawn, yet White cannot win.\nIn these examples the defender has a king beside the square the pawn needs next and a bishop with safe waiting moves. The tablebase confirms each example; it does not prove the same holds for other pawns or bishop colours."
+    },
+    {
+      "type": "board",
+      "fen": "2k5/B5K1/1P6/8/8/8/8/5b2 b - - 0 1",
+      "caption": "Black to move. White has the extra pawn, on b6, with a bishop behind it on a7.",
+      "line": [
+        {
+          "move": "f1e2",
+          "say": "Black waits with the bishop. The king stays where it covers b7."
+        },
+        {
+          "move": "g7f7",
+          "say": "White's king walks toward the pawn."
+        },
+        {
+          "move": "e2d3",
+          "say": "Black waits again with the bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c8",
+          "to": "b7"
+        }
+      ],
+      "highlight": [
+        "b7",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "The tablebase shows the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "f1e2"
+          },
+          "statement": "Be2 keeps the draw (tablebase)."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "c8d7"
+          },
+          "statement": "Kd7 loses (tablebase)."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "c8",
+            "includes": [
+              "b7"
+            ]
+          },
+          "statement": "The king on c8 covers b7."
+        },
+        {
+          "id": "C5",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 1
+          },
+          "statement": "White has the only pawn on the board."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa3-f1"
+    },
+    {
+      "type": "item",
+      "item": "IBa3-f2"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds.** In these examples the draw holds while the black king stays next to the stop square (or on it) and the bishop has waiting moves; moving the king two files away, as in Kd7 or Kd8, loses by the tablebase.\n**Rule of thumb:** Before you trust a fortress, name the square the extra pawn needs and which of your pieces guards it; then check with a tablebase or engine rather than assuming."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pieces, one change",
+      "prompt": "White to move in each position. Can White win? Predict, then check.",
+      "working": "IBa3-f3",
+      "failing": "IBa3-f4",
+      "irrelevant": "IBa3-f5"
+    },
+    {
+      "type": "item",
+      "item": "IBa3-f6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-f7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-f8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.fortress",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part was hardest: seeing which square the pawn needs, seeing that only the king can guard it, or accepting that being ahead did not win?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/DEF.FORTRESS.json (conditions, contrasts)",
+    "docs/curriculum-map-v1.md S6 (DEF.FORTRESS)",
+    "positions: own constructions, every result from the Lichess tablebase (content/items/lesson-a3-fort.json)"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "L-DEF-TRADES-1",
+  "title": "Trade off the piece doing the damage",
+  "skill": "DEF.TRADES",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the most dangerous attacking piece and the exchange that removes it",
+    "Checks that an exchange removes an attacker the opponent cannot easily replace",
+    "Tells an exchange that fails, and a position that needs no exchange"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "When you are under attack, one **exchange** can do more than any quiet defensive move: it takes away the attacker's most dangerous piece.\nAsk two questions. Which enemy piece is doing the damage? Which of my pieces can trade for it?\nThe rest of the lesson is about when this works and when it does not."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/ppp2ppp/3b4/3N4/5n1q/5B2/PPP1QPPP/R4RK1 w - - 0 1",
+      "caption": "White to move. Black's knight and queen are aimed at the white king and queen.",
+      "line": [
+        {
+          "move": "d5f4",
+          "say": "The knight takes the knight on f4, the piece that attacks the queen on e2."
+        },
+        {
+          "move": "h4f4",
+          "say": "Black recaptures with the queen. One pair of knights is off the board."
+        },
+        {
+          "move": "g2g3",
+          "say": "White has traded off the knight that was aimed at the king and queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "f4",
+        "e2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d5f4"
+            ]
+          },
+          "statement": "Nxf4 is the engine's first choice."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "f4e2",
+            "n": 2,
+            "null_move_first": true
+          },
+          "statement": "If White passes, Black has a forced win of material or mate."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f4",
+            "includes": [
+              "e2",
+              "g2"
+            ]
+          },
+          "statement": "The knight on f4 attacks the queen on e2 and the pawn on g2."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "g2g3",
+            "cp": 200
+          },
+          "statement": "Ignoring the knight with g3 is at least two pawns worse."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa3-t1"
+    },
+    {
+      "type": "card",
+      "text": "**What to check.** The exchange works when (1) it removes an attacker the opponent cannot easily replace. Two other things to check before you trade: it must not strip a defender from your own king, and it must not leave a piece loose.\n**Rule of thumb:** fewer pieces help the defender. That holds only while the first condition does."
+    },
+    {
+      "type": "contrast",
+      "title": "Same attack, one change",
+      "prompt": "In each position White is to move. Predict whether the exchange on f4 answers the attack, then check.",
+      "working": "IBa3-t2",
+      "failing": "IBa3-t3",
+      "irrelevant": "IBa3-t4"
+    },
+    {
+      "type": "item",
+      "item": "IBa3-t5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-t6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-t7",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part was hardest: spotting the most dangerous attacker, checking the three conditions, or noticing that no exchange was needed?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/DEF.TRADES.json (conditions, contrasts)",
+    "docs/curriculum-map-v1.md S6 (DEF.TRADES)",
+    "positions: template constructions checked with the engine at depth 16 (content/items/lesson-a3-trades.json)"
+  ]
+}

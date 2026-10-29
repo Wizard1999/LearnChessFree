@@ -1,0 +1,145 @@
+{
+  "id": "L-INI-INITIATIVE-1",
+  "title": "Who is making the threats?",
+  "skill": "INI.INITIATIVE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Defines the initiative as the ability to make threats the opponent must answer",
+    "Says who has it in a position by listing both sides' threats",
+    "Does not assume the side to move, or the side playing White, has it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In this course a **threat** is a move that would win material or mate if the other side did nothing. The **initiative** belongs to the side whose moves carry threats the opponent must answer, while the opponent has none.\nTo find it, list the threats for both sides. The side to move does not automatically have it."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/ppp2ppp/2n5/2b5/8/2NB4/PPP1QPPP/R4RK1 w - - 0 1",
+      "caption": "White to move. Black has no threat; White has several.",
+      "line": [
+        {
+          "move": "e2h5",
+          "say": "Qh5 aims at h7, which the bishop on d3 also attacks."
+        },
+        {
+          "move": "f7f5",
+          "say": "Black plays f5, blocking the diagonal of the bishop on d3."
+        },
+        {
+          "move": "d3f5",
+          "say": "Bxf5 takes the pawn that blocked the diagonal."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "h5"
+        },
+        {
+          "from": "d3",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "quiet_position",
+          "params": {
+            "max": 0,
+            "null_move_first": true
+          },
+          "statement": "If White passes, Black cannot win material."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e2h5"
+            ]
+          },
+          "statement": "Qh5 is the engine's first choice."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e2h5"
+            ]
+          },
+          "statement": "After Qh5 two white pieces attack h7."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "min": 300
+          },
+          "statement": "The engine at depth 16 rates White at least three pawns better."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa3-i1"
+    },
+    {
+      "type": "card",
+      "text": "**Costs and limits.** Keeping the initiative means making a new threat soon; a move without one can hand it over. Cashing in turns the pressure into material.\n**Rule of thumb:** not every move needs a threat. When neither side has any threat, as in the drawn rook ending below, nobody has the initiative."
+    },
+    {
+      "type": "contrast",
+      "title": "Three different positions",
+      "prompt": "Compare these three positions. White is to move in each; decide who has the initiative, then check.",
+      "working": "IBa3-i2",
+      "failing": "IBa3-i3",
+      "irrelevant": "IBa3-i4"
+    },
+    {
+      "type": "item",
+      "item": "IBa3-i5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-i6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-i7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.initiative",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the silent items, did you list both sides' threats, or only your own? Write down which you did and one position where listing the opponent's threats changed your move."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/INI.INITIATIVE.json (conditions, contrasts)",
+    "sources/sheets/capablanca_chess-fundamentals.md CI-31 (idea only, original wording)",
+    "positions: template constructions checked with the engine at depth 16 and one tablebase draw (content/items/lesson-a3-init.json)"
+  ]
+}

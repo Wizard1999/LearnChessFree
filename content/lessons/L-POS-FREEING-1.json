@@ -1,0 +1,137 @@
+{
+  "id": "L-POS-FREEING-1",
+  "title": "Freeing moves: the break after the pieces",
+  "skill": "POS.FREEING",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Says which developing move should come before a planned pawn break in a given position",
+    "Checks the pieces behind a break (developed or still at home) before playing it",
+    "Tells a break that is ready from one that is premature when one piece has moved",
+    "Recognizes a position with no break at all"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **freeing move**, usually a pawn break, offers an exchange of pawns to open lines. It helps the side whose pieces can use the lines. So the same pawn move can be good in one position and bad in another. Before you play a break, count which of your pieces still stand at home, and which pieces of his guard the squares the break aims at."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/5ppp/p2ppn2/1p4B1/3NPP2/2N5/PPP3PP/R2QKB1R w KQkq - 0 8",
+      "caption": "White to move. Both White knights are developed.",
+      "line": [
+        {
+          "move": "e4e5",
+          "say": "The pawn attacks d6 and f6 and offers an exchange."
+        },
+        {
+          "move": "d6e5",
+          "say": "Black takes."
+        },
+        {
+          "move": "f4e5",
+          "say": "White retakes. The pawn on e5 now attacks the knight on f6."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4e5"
+            ]
+          },
+          "statement": "e5 is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e5",
+            "includes": [
+              "d6",
+              "f6"
+            ],
+            "after_move": "e4e5"
+          },
+          "statement": "After e5 the pawn attacks d6 and f6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e5",
+            "includes": [
+              "f6"
+            ],
+            "after_moves": [
+              "e4e5",
+              "d6e5",
+              "f4e5"
+            ]
+          },
+          "statement": "After the exchange the pawn on e5 attacks f6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "f6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-17"
+    },
+    {
+      "type": "card",
+      "text": "A break is ready when the pieces behind it are ready. As a *rule of thumb*, finish the development that stands next to the break before you push. Ask three questions: which of my pieces are still at home? Which of his pieces guard the squares the break opens? Does the move leave something loose? A break that opens lines for the opponent's developed pieces is premature."
+    },
+    {
+      "type": "contrast",
+      "title": "The same break, ready and premature",
+      "prompt": "In the first two positions White considers e4-e5; they differ by the position of one White knight. In the third, ask whether a break exists. Predict, then check.",
+      "working": "IBp5-18",
+      "failing": "IBp5-19",
+      "irrelevant": "IBp5-20"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-22",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.FREEING"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, before you chose, which pieces did you check that were still at home? Write the position where a single piece changed your answer."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md §4 idea 35; §8 item 15 (ideas only, original wording)",
+    "docs/curriculum-map-v1.1.md §3 (POS.FREEING)",
+    "items IBp5 (FREEING): positions reached by an ECO line (library/data/chess-openings, CC0) and one-piece edits of them; verdicts are engine checks at depth 16, 'ready' and 'premature' are labels for those verdicts [V]; the explanation in terms of pieces behind the break is a rule of thumb [I]"
+  ]
+}

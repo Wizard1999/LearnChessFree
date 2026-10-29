@@ -1,0 +1,367 @@
+{
+  "id": "L-INI-COMPENSATION-1",
+  "title": "Down material: what are you getting for it?",
+  "skill": "INI.COMPENSATION",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Counts material first, pawns and pieces for both sides",
+    "Labels a position where a side has given up material sound or practical using the engine at depth 16, and says it is evidence, not proof",
+    "Recognises a position where nothing was given up"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **gambit** gives up a pawn or more. It can be sound if it buys **compensation**: something durable such as a lead in development, open lines toward the king, a safer king or the initiative.\nName what you got, and how long it lasts. In this course 'sound' means the engine at depth 16 rates the side within half a pawn of level; 'practical chances only' means more than half a pawn behind but less than three; anything worse is simply bad."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqk1nr/pppp1ppp/2n5/b7/2BpP3/2P2N2/P4PPP/RNBQ1RK1 b kq - 1 7",
+      "caption": "Black to move. White is two pawns down (6 pawns against 8) and has castled; White gave one pawn on move four and another on move six.",
+      "line": [
+        {
+          "move": "g8e7",
+          "say": "Black develops the knight. The king is still on e8 and the bishop on c8 has not moved."
+        },
+        {
+          "move": "c3d4",
+          "say": "cxd4 wins a pawn back. The b- and c-files are now half-open for White's rooks."
+        },
+        {
+          "move": "d7d5",
+          "say": "Black strikes at once: the pawn on d5 attacks e4."
+        },
+        {
+          "move": "e4d5",
+          "say": "exd5 takes it. For a moment the pawn count is level."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "e8",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 30
+          },
+          "statement": "The engine at depth 16 rates the position within half a pawn of level."
+        },
+        {
+          "id": "C2",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 2
+          },
+          "statement": "White has two pawns on the queenside."
+        },
+        {
+          "id": "C3",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "kingside",
+            "count": 4
+          },
+          "statement": "White has four pawns on the kingside."
+        },
+        {
+          "id": "C4",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "queenside",
+            "count": 5
+          },
+          "statement": "Black has five pawns on the queenside."
+        },
+        {
+          "id": "C5",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "kingside",
+            "count": 3
+          },
+          "statement": "Black has three pawns on the kingside."
+        },
+        {
+          "id": "C6",
+          "type": "piece_on",
+          "params": {
+            "square": "e8",
+            "piece": "k"
+          },
+          "statement": "The black king is still on e8."
+        },
+        {
+          "id": "C7",
+          "type": "piece_on",
+          "params": {
+            "square": "c8",
+            "piece": "b"
+          },
+          "statement": "The black bishop is still on c8."
+        },
+        {
+          "id": "C8",
+          "type": "piece_on",
+          "params": {
+            "square": "g1",
+            "piece": "K"
+          },
+          "statement": "White has castled."
+        },
+        {
+          "id": "C9",
+          "type": "open_files",
+          "params": {
+            "half_open_white": [
+              "b",
+              "c"
+            ],
+            "after_moves": [
+              "g8e7",
+              "c3d4"
+            ]
+          },
+          "statement": "After cxd4 the b- and c-files are half-open for White."
+        },
+        {
+          "id": "C10",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g8e7",
+              "c3d4",
+              "d7d5"
+            ]
+          },
+          "statement": "After d5 one black pawn attacks e4."
+        },
+        {
+          "id": "C11",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 3,
+            "after_moves": [
+              "g8e7",
+              "c3d4",
+              "d7d5",
+              "e4d5"
+            ]
+          },
+          "statement": "After exd5 White has three queenside pawns."
+        },
+        {
+          "id": "C12",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "queenside",
+            "count": 3,
+            "after_moves": [
+              "g8e7",
+              "c3d4",
+              "d7d5",
+              "e4d5"
+            ]
+          },
+          "statement": "After exd5 Black has three queenside pawns."
+        },
+        {
+          "id": "C13",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "kingside",
+            "count": 3,
+            "after_moves": [
+              "g8e7",
+              "c3d4",
+              "d7d5",
+              "e4d5"
+            ]
+          },
+          "statement": "After exd5 White has three kingside pawns."
+        },
+        {
+          "id": "C14",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "kingside",
+            "count": 3,
+            "after_moves": [
+              "g8e7",
+              "c3d4",
+              "d7d5",
+              "e4d5"
+            ]
+          },
+          "statement": "After exd5 Black has three kingside pawns."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa3-c1"
+    },
+    {
+      "type": "card",
+      "text": "**Compensation runs on a clock.** A lead in development shrinks each time the opponent develops a piece or castles. Count the moves the opponent still needs to catch up, and ask whether you can make threats faster than that.\nThe next board shows a different gambit, also a pawn down, after slow moves by White."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/1p2bppp/p1nppn2/8/2B1PB2/P1N2N1P/1P3PP1/R2Q1RK1 w - - 0 11",
+      "caption": "White to move. White is a pawn down in a different gambit, after slow moves by White and normal development by Black.",
+      "line": [
+        {
+          "move": "c4a2",
+          "say": "The bishop retreats. Black has castled; the king is no longer in the centre."
+        },
+        {
+          "move": "b7b5",
+          "say": "Black gains space on the queenside."
+        },
+        {
+          "move": "d1e2",
+          "say": "White develops the queen, but the lead in development is gone."
+        }
+      ],
+      "arrows": [],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "max": -50
+          },
+          "statement": "The engine at depth 16 rates White more than half a pawn behind."
+        },
+        {
+          "id": "C2",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 2
+          },
+          "statement": "White has two pawns on the queenside."
+        },
+        {
+          "id": "C3",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "kingside",
+            "count": 4
+          },
+          "statement": "White has four pawns on the kingside."
+        },
+        {
+          "id": "C4",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "queenside",
+            "count": 3
+          },
+          "statement": "Black has three pawns on the queenside."
+        },
+        {
+          "id": "C5",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "kingside",
+            "count": 4
+          },
+          "statement": "Black has four pawns on the kingside."
+        },
+        {
+          "id": "C6",
+          "type": "piece_on",
+          "params": {
+            "square": "g8",
+            "piece": "k"
+          },
+          "statement": "The black king has castled to g8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa3-c7"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds.** The compensation is real if what you gave buys something that outlasts the opponent's next few moves. **It fails** when lines are closed, when the opponent has already developed, or when the engine rates you more than half a pawn behind.\n**Rule of thumb:** give material back only for something tangible. The engine verdict is evidence at one depth, not proof."
+    },
+    {
+      "type": "contrast",
+      "title": "Down material, different verdicts",
+      "prompt": "Count the material first: pawns and pieces for both sides. Decide whether the side that gave material has sound compensation, practical chances only, or nothing was given up. Predict, then check.",
+      "working": "IBa3-c2",
+      "failing": "IBa3-c3",
+      "irrelevant": "IBa3-c4"
+    },
+    {
+      "type": "item",
+      "item": "IBa3-c5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-c6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa3-c8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.compensation",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one silent item. How sure were you before the answer, and what did you count first: pawns, pieces, or the engine number? Write both."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/INI.COMPENSATION.json (conditions, contrasts)",
+    "sources/sheets/emlasker_common-sense.md 4.4 (idea only, original wording)",
+    "docs/council-synthesis.md CD-5",
+    "positions: legal opening move sequences and one shipped game position, engine at depth 16 (content/items/lesson-a3-comp.json)"
+  ]
+}

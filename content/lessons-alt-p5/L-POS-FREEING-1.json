@@ -1,0 +1,134 @@
+{
+  "id": "L-POS-FREEING-1",
+  "title": "Pawn breaks: real or illusory?",
+  "skill": "POS.FREEING",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Explains that a freeing pawn break is real only if the position can bear the lines it opens",
+    "Says which developing move should come before a break in a given structure",
+    "Compares development before a break and finds when the same break fails"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **freeing move**, usually a pawn break, opens lines for a cramped position. It is **real** if your pieces are ready for the lines it opens. It is **illusory** if it opens lines for the opponent first.\nBefore a break ask: whose pieces are better placed for the open lines?"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p1pnbppp/1p2pn2/8/2BP4/2N2N1P/PPP2PP1/R1BQR1K1 w - - 0 10",
+      "caption": "White to move. The break d5 is available.",
+      "line": [
+        {
+          "move": "d4d5",
+          "say": "The pawn comes into contact with Black's e6 pawn."
+        },
+        {
+          "move": "e6d5",
+          "say": "Black takes."
+        },
+        {
+          "move": "c3d5",
+          "say": "White recaptures with the knight."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d4d5"
+          },
+          "statement": "d5 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d4d5"
+            ]
+          },
+          "statement": "At depth 16 the engine's best move is d5."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "c1f4",
+            "cp": 60
+          },
+          "statement": "Bf4 is at least 60 centipawns worse than d5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-F3"
+    },
+    {
+      "type": "card",
+      "text": "Whether the break works depends on a comparison, not on the break. **Rule of thumb:** count developed pieces and who has the tempo lead, then ask what the break opens. The same break can be right in one position and wrong when one piece is a move behind. Next: the same structure with one change."
+    },
+    {
+      "type": "contrast",
+      "title": "The same break, one change",
+      "prompt": "In the first position White pushes d5. In the second, one White piece is still at home. Predict, then check. The third position is a different case.",
+      "working": "IBp5-F1",
+      "failing": "IBp5-F2",
+      "irrelevant": "IBp5-F6"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-F4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-F5",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.FREEING",
+        "tier.5"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which question is hardest for you before a break: who is better developed, or what the break opens?",
+      "fields": [
+        {
+          "id": "hard",
+          "label": "Hardest for me:",
+          "options": [
+            "counting development",
+            "seeing what lines open",
+            "telling a real break from a hopeful one"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 35, section 8 item 15)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.FREEING)",
+    "items: Lichess standard rated games, January 2013 sample (CC0); one-feature edits checked with the engine at depth 16"
+  ]
+}

@@ -1,0 +1,588 @@
+{
+ "positions": [
+  {
+   "id": "PBa3-h1",
+   "fen": "r4rk1/ppp1qppp/8/4b2n/8/3B1N2/PPP2PPP/R1Q1R1K1 b - - 1 1",
+   "family": "FAM-A3-TH-C",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position after Re1, engine-checked at depth 16",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h2",
+   "fen": "r2q1rk1/pppb1ppp/5n2/5N2/4B3/8/PPP1QPPP/R4RK1 b - - 0 1",
+   "family": "FAM-A3-TH-W",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position, colour-reversed copy of the worked board in L-INI-THREAT-1 (engine-checked at depth 16)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h3",
+   "fen": "r2q1rk1/pppb1ppp/5n2/5N2/4B3/8/PPP2PPP/R2Q1RK1 b - - 0 1",
+   "family": "FAM-A3-TH-F",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: colour-reversed copy of the position after the worked board, with the white queen on d1 instead of e2",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h4",
+   "fen": "r2q1rk1/ppp2ppp/8/5b2/5n2/2N2B2/PPP2PPP/R2Q1RK1 w - - 0 1",
+   "family": "FAM-A3-TH-I",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position without a target, engine-checked at depth 16",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h5",
+   "fen": "r4rk1/ppp2ppp/3q4/4b2n/8/3B1N2/PPPQ1PPP/R4RK1 w - - 0 1",
+   "family": "FAM-A3-TH-S1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position, engine-checked at depth 16",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h6",
+   "fen": "r4rk1/ppp2ppp/1bn2q2/3N4/8/8/PPP2PPP/R1B1QRK1 w - - 0 1",
+   "family": "FAM-A3-TH-S2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position, engine-checked at depth 16",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBa3-h7",
+   "fen": "r4rk1/ppp2ppp/8/8/5n1q/3B4/PPP2PPP/R1Q2RK1 w - - 0 1",
+   "family": "FAM-A3-TH-S3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: template position, engine-checked at depth 16",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBa3-h1",
+   "skill": "INI.THREAT.D1",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PBa3-h1",
+   "prompt": "Black to move. White's rook has just come to e1. What is White's held threat?",
+   "answer": {
+    "threat_move": "f3e5"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "f3e5",
+      "min": 3,
+      "null_move_first": true
+     },
+     "statement": "If Black passes, Nxe5 wins at least three points of material."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "Two white pieces attack e5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece defends e5."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.identify",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture White could make. How many white pieces attack the target, and how many black pieces defend it?",
+    "Ask which black piece must keep its post to stay safe, and what White gains if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves Black fewer useful replies?"
+   ],
+   "explain": "The bishop on e5 is attacked twice and defended once, so Nxe5 would win material if Black does nothing. White has not captured yet; the threat is held.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBa3-h2",
+   "skill": "INI.THREAT.D1",
+   "cue": 2,
+   "task": "select_squares",
+   "position": "PBa3-h1",
+   "prompt": "Black to move. Which black piece cannot leave its post without losing material?",
+   "answer": {
+    "squares": [
+     "e7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "At the moment no black piece is loose."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "e5"
+      ],
+      "after_move": "e7d8"
+     },
+     "statement": "If the queen leaves e7 for d8, the bishop on e5 is loose."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "Two white pieces attack e5."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.tied",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture White could make. How many white pieces attack the target, and how many black pieces defend it?",
+    "Ask which black piece must keep its post to stay safe, and what White gains if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves Black fewer useful replies?"
+   ],
+   "explain": "The queen on e7 is the only defender of the bishop on e5, which two white pieces attack. If the queen leaves, the bishop is loose. The held threat ties the queen to e7.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBa3-h3",
+   "skill": "INI.THREAT.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBa3-h2",
+   "prompt": "Black to move. The knight on f6 attacks the bishop on e4. Capture now, or keep the threat in hand? Predict, then check.",
+   "answer": {
+    "outcome": "Keep the threat in hand",
+    "options": [
+     "Keep the threat in hand",
+     "Capture now",
+     "No threat to hold"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8e8"
+      ]
+     },
+     "statement": "Re8 is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "f6e4",
+      "cp": 200
+     },
+     "statement": "Nxe4 at once is at least two pawns worse than Re8."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the queen, defends e4."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.contrast",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture you could make. How many of your pieces attack the target, and how many of the opponent's defend it?",
+    "Ask which enemy piece must keep its post to stay safe, and what you gain if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves the opponent fewer useful replies?"
+   ],
+   "explain": "The bishop is defended, so Nxe4 now only trades. Re8 adds a second attacker and keeps the queen tied to e2; the engine at depth 16 rates it at least two pawns better than the capture.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Keep the threat in hand",
+    "Capture now",
+    "No threat to hold"
+   ],
+   "contrast_group": "CG-A3-HELD"
+  },
+  {
+   "id": "IBa3-h4",
+   "skill": "INI.THREAT.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBa3-h3",
+   "prompt": "Black to move. The knight on f6 attacks the bishop on e4. Capture now, or keep the threat in hand? Predict, then check.",
+   "answer": {
+    "outcome": "Capture now",
+    "options": [
+     "Keep the threat in hand",
+     "Capture now",
+     "No threat to hold"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "e4"
+      ]
+     },
+     "statement": "The bishop on e4 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f6e4"
+      ]
+     },
+     "statement": "Nxe4 is the engine's first choice."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f8e8",
+      "cp": 200
+     },
+     "statement": "Re8 is at least two pawns worse than the capture."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.contrast",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture you could make. How many of your pieces attack the target, and how many of the opponent's defend it?",
+    "Ask which enemy piece must keep its post to stay safe, and what you gain if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves the opponent fewer useful replies?"
+   ],
+   "explain": "With the queen on d1 the bishop on e4 has no defender, so the capture gains material at once. Waiting with Re8 lets White fix it; the engine at depth 16 rates it at least two pawns worse.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Keep the threat in hand",
+    "Capture now",
+    "No threat to hold"
+   ],
+   "contrast_group": "CG-A3-HELD"
+  },
+  {
+   "id": "IBa3-h5",
+   "skill": "INI.THREAT.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBa3-h4",
+   "prompt": "White to move. Is there a threat to keep in hand, or a capture to make now? Predict, then check.",
+   "answer": {
+    "outcome": "No threat to hold",
+    "options": [
+     "Keep the threat in hand",
+     "Capture now",
+     "No threat to hold"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "quiet_position",
+     "params": {
+      "max": 0
+     },
+     "statement": "White's best line wins no material."
+    },
+    {
+     "id": "C2",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Black cannot win material either."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 80
+     },
+     "statement": "The engine at depth 16 rates the position within about half a pawn of level."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.contrast",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture White could make. How many white pieces attack the target, and how many black pieces defend it?",
+    "Ask which black piece must keep its post to stay safe, and what White gains if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves Black fewer useful replies?"
+   ],
+   "explain": "Nothing is attacked that White could win, so there is no threat to hold and no capture to make.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Keep the threat in hand",
+    "Capture now",
+    "No threat to hold"
+   ],
+   "contrast_group": "CG-A3-HELD"
+  },
+  {
+   "id": "IBa3-h6",
+   "skill": "INI.THREAT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBa3-h5",
+   "prompt": "White to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "d2g5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2g5"
+      ]
+     },
+     "statement": "Qg5 is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "f3e5",
+      "cp": 150
+     },
+     "statement": "Nxe5 at once is at least a pawn and a half worse."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.hold",
+    "cue.3",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture White could make. How many white pieces attack the target, and how many black pieces defend it?",
+    "Ask which black piece must keep its post to stay safe, and what White gains if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves Black fewer useful replies?"
+   ],
+   "explain": "Nxe5 would only trade a knight for a bishop. Qg5 adds pressure and keeps the capture available; the engine at depth 16 rates Nxe5 at least a pawn and a half lower.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "f3e5": "Nxe5 cashes in too early. The engine at depth 16 rates it at least a pawn and a half worse than Qg5."
+   }
+  },
+  {
+   "id": "IBa3-h7",
+   "skill": "INI.THREAT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBa3-h6",
+   "prompt": "White to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "d5f6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d5f6"
+      ]
+     },
+     "statement": "Nxf6+ is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "d5f6",
+      "min": 5
+     },
+     "statement": "Nxf6+ wins at least five points of material."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "c2c4",
+      "cp": 300
+     },
+     "statement": "c4 is at least three pawns worse."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.execute",
+    "cue.3",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Find the capture White could make. How many white pieces attack the target, and how many black pieces defend it?",
+    "Ask which black piece must keep its post to stay safe, and what White gains if that piece is forced to move.",
+    "Compare a capture now with a move that adds pressure first. Which one leaves Black fewer useful replies?"
+   ],
+   "explain": "The knight takes the queen with check, which wins material at once. Nothing is gained by waiting; c4 lets the chance go.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c2c4": "c4 keeps the threat in hand, but this threat gains material at once, so waiting only lets Black defend."
+   }
+  },
+  {
+   "id": "IBa3-h8",
+   "skill": "INI.THREAT.D1",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PBa3-h7",
+   "prompt": "White to move. What does Black threaten? Answer \"none\" if nothing is threatened.",
+   "answer": {
+    "threat_move": "none"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Black cannot win material."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 40
+     },
+     "statement": "The engine at depth 16 rates the position about level."
+    }
+   ],
+   "tags": [
+    "node.INI.THREAT",
+    "theme.quietMove",
+    "tier.5",
+    "mode.none",
+    "cue.3",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Look at the black queen and knight. What do they attack, and is any of it loose?",
+    "Ask: if White made a waiting move, could Black win material?",
+    "Count attackers and defenders on the squares near the white king."
+   ],
+   "explain": "If White passed, Black could not win material, so there is no threat to hold or to answer.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

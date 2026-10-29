@@ -1,0 +1,155 @@
+{
+  "id": "L-POS-PLAN-RACE-1",
+  "title": "Racing plans: count, then check for forcing moves",
+  "skill": "POS.PLAN.RACE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Explains comparing the number of moves each side's plan needs, and that forcing replies can break the count",
+    "Counts the moves of two mating plans and says who arrives first",
+    "Checks the opponent's threat before counting and defends when his plan is faster and yours is not forcing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **race** compares how many moves each side's plan needs. Count yours, count his, and see who arrives first. The count only works when the plans are clear and the moves cannot be interrupted.\nA move that the opponent must answer can stop his plan and decide the race. A shorter count is not a win by itself."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4ppp/2R5/1p4P1/3q4/7P/1N2r3/1K6 w - - 1 48",
+      "caption": "White to move. If White passed, Black would mate in 1. White's own forced mate takes 3 moves.",
+      "line": [
+        {
+          "move": "c6c8",
+          "say": "Rc8+ is check; Black must answer."
+        },
+        {
+          "move": "d4d8",
+          "say": "Black's queen blocks on d8."
+        },
+        {
+          "move": "c8d8",
+          "say": "Rxd8+ is check again."
+        },
+        {
+          "move": "e2e8",
+          "say": "Black's rook blocks on e8."
+        },
+        {
+          "move": "d8e8",
+          "say": "Rxe8 is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "c6c8",
+            "n": 3
+          },
+          "statement": "Rc8+ forces checkmate in 3."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "d4b2",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If White passed, Black would mate in 1 with Qb2."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "c8"
+        }
+      ],
+      "highlight": [
+        "b2"
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Use the position above. By plain counting, who is faster, and by how many moves?",
+      "fields": [
+        {
+          "id": "white",
+          "label": "White needs how many moves?",
+          "type": "number",
+          "answer": 3
+        },
+        {
+          "id": "black",
+          "label": "Black needs how many moves if White passes?",
+          "type": "number",
+          "answer": 1
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp5-R3"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb:** count only when the plans are mostly forcing and few options are left. Before you trust a count, list your own checks and the opponent's. If he has a forcing reply to every move of yours, his count wins; if every move of yours must be answered, yours does.\nThis lesson counts mating plans, where counts are exact. In pawn storms the counts are rough guides and are not checked here."
+    },
+    {
+      "type": "contrast",
+      "title": "Same count, different move order",
+      "prompt": "In the first position it is Black to move; in the second, the same position with White to move. Predict who wins the race in each. The third is a different case.",
+      "working": "IBp5-R1",
+      "failing": "IBp5-R2",
+      "irrelevant": "IBp5-R6"
+    },
+    {
+      "type": "item",
+      "item": "IBp5-R4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp5-R5",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PLAN.RACE",
+        "tier.5"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Next time you are attacking and he is too, will you list both sides' forcing moves before you count?",
+      "fields": [
+        {
+          "id": "plan",
+          "label": "Before counting I will list:",
+          "options": [
+            "my checks and captures",
+            "his checks and captures",
+            "both",
+            "I will just count"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C11, C23, section 5 item 13)",
+    "sources/sheets/emlasker_common-sense.md (4.13, section 8 item 14)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.PLAN.RACE)",
+    "items: Lichess puzzle database (CC0); mate lengths verified by the engine at depth 16"
+  ]
+}
