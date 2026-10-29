@@ -5,8 +5,8 @@ import type { Attempt } from '../db'
 
 const DAY = 86400000
 const T0 = 1_700_000_000_000
-const att = (over: Partial<Attempt>): Attempt => ({
-  itemId: 'i', skillKey: 'X.D1', cue: 3, family: 'F', correct: true, firstAttempt: true, hints: 0, timeMs: 1000, source: 'practice', ts: T0, unprompted: true, ...over,
+const att = (over: Partial<Attempt>): Attempt => ({ family: over.family ?? over.itemId ?? 'i', // families follow the item id unless a test sets one
+  itemId: 'i', skillKey: 'X.D1', cue: 3, correct: true, firstAttempt: true, hints: 0, timeMs: 1000, source: 'practice', ts: T0, unprompted: true, ...over,
 })
 
 describe('beta function', () => {
@@ -53,6 +53,13 @@ describe('mastery', () => {
   it('answers given inside a lesson count at cue 2 at most: the lesson has just named the idea', () => {
     const inLesson = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, cue: 3, source: 'lesson', ts: T0 + i }))
     expect(masteryOf(inLesson, { now: T0 + 100 }).state).toBe('introduced')
+  })
+  it('different exercises from one family count half', () => {
+    const fam = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, family: 'same', ts: T0 + i }))
+    const m = masteryOf(fam, { now: T0 + 100 })
+    expect(m.unlabeledWeight).toBeCloseTo(1 + 9 * 0.5, 9); expect(m.state).toBe('practising') // ten near-duplicates are not enough
+    const few = fam.slice(0, 5)
+    expect(masteryOf(few, { now: T0 + 100 }).unlabeledWeight).toBeCloseTo(1 + 4 * 0.5, 9)
   })
   it('a depth with only cued exercises can become reliable on cued evidence, and says so', () => {
     const cued = Array.from({ length: 10 }, (_, i) => att({ itemId: `i${i}`, cue: 1, ts: T0 + i }))

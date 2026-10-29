@@ -3,7 +3,7 @@ import type { Attempt } from '../db'
 import type { Skill } from '../types'
 import { evidenceAttempts, frontierFor, masteryMap, prereqMet, statusOf, type Placement } from './progress'
 
-const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: 'f', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
+const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: o.itemId ?? 'i', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
 
 describe('test-out attempts carry no penalty on unpractised skills', () => {
   it('drops wrong warm-up and placement answers when the skill was never practised', () => {

@@ -14,7 +14,7 @@ export const LEVEL_HELP = [
   'You have viewed the lesson or tried exercises, but the evidence is not yet reliable.',
   'The idea is reliable when it is named or cued (depth D1).',
   'The idea is reliable in unlabelled positions where nobody names it (depth D2).',
-  'Reliable at the deepest depth that has exercises, and not due for a refresher.',
+  'Reliable in the exercises at the deepest depth, and not due for a refresher. This is mastery in training: it is not yet shown in your own games.',
 ] as const
 export const STRAND_NAMES: Record<string, string> = {
   S1: 'Rules and board vision', S2: 'Safety and the thinking loop', S3: 'Tactics', S4: 'Calculation', S5: 'Positional play and planning',

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { ContentProvider, RequireFullContent } from './lib/content'
 import { Today } from './pages/Today'
@@ -21,17 +21,24 @@ import { BRAND } from './brand'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { useLocation } from 'react-router-dom'
 
-const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/plan', 'My plan'], ['/progress', 'Progress'], ['/lab', 'Contrast lab'], ['/openings', 'Openings'], ['/games', 'My games'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
+// Five places for a learner; the rest are tools, one click away under More.
+const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/progress', 'Progress']]
+const more: [string, string][] = [['/games', 'My games'], ['/openings', 'Openings'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const loc = useLocation()
+  const moreRef = useRef<HTMLDetailsElement>(null)
   return (
     <ContentProvider>
       <header className="top">
         <NavLink to="/" className="brand">{BRAND.name}</NavLink>
         <nav aria-label="Main">
           {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
+          <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a')) moreRef.current?.removeAttribute('open') }}>
+            <summary className={more.some(([to]) => loc.pathname.startsWith(to)) ? 'on' : ''}>More</summary>
+            <div className="morelist">{more.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}</div>
+          </details>
         </nav>
         <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>
       </header>

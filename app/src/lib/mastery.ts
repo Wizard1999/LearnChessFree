@@ -8,6 +8,7 @@ export const CUE_WEIGHT: Record<number, number> = { 1: 0.2, 2: 0.5, 3: 1, 4: 1.5
 export const RELIABLE_P = 0.8 // "reliable" = probably succeeds on >= 80% of fresh unlabeled items (a pilot decision, not a research result)
 export const RELIABLE_CERTAINTY = 0.85 // required posterior probability that the true rate is >= RELIABLE_P
 export const MIN_UNLABELED_WEIGHT = 5 // and at least this much weighted evidence at cue >= 3
+export const FAMILY_WEIGHT = 0.5 // a new exercise from a family already seen
 export const REPEAT_WEIGHT = 0.25 // a later presentation of an exercise already answered adds a quarter of the evidence: it shows memory of the position more than skill
 
 function lnGamma(x: number): number {
@@ -91,6 +92,7 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
   let last: number | null = null
   let lastEvidence: number | null = null // the refresher clock runs from the last first attempt that counts toward "reliable"
   const presented = new Map<string, number>()
+  const families = new Set<string>()
   for (const t of attempts) {
     last = last === null ? t.ts : Math.max(last, t.ts)
     if (!t.firstAttempt) continue
@@ -100,7 +102,10 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
     // The first time an exercise is answered counts in full; the second adds a quarter; later ones add nothing (they show memory of the position).
     const times = presented.get(t.itemId) ?? 0
     presented.set(t.itemId, times + 1)
-    const w = (cuedOnly ? 1 : (CUE_WEIGHT[cue] ?? 1)) * (times === 0 ? 1 : times === 1 ? REPEAT_WEIGHT : 0)
+    // A different exercise from a family already answered is a near-duplicate of that position: it counts half (an outside review flagged that same-family items overstate independence).
+    const sameFamily = times === 0 && families.has(t.family)
+    families.add(t.family)
+    const w = (cuedOnly ? 1 : (CUE_WEIGHT[cue] ?? 1)) * (times === 0 ? (sameFamily ? FAMILY_WEIGHT : 1) : times === 1 ? REPEAT_WEIGHT : 0)
     if (w === 0) continue
     if (counts) lastEvidence = lastEvidence === null ? t.ts : Math.max(lastEvidence, t.ts)
     n++
