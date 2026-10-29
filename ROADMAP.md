@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 53%** (64 of 129 tasks done, in-progress tasks count half). Updated 2026-10-29T08:58+00:00 UTC.
+**Overall: 53%** (65 of 130 tasks done, in-progress tasks count half). Updated 2026-10-29T09:07+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -16,7 +16,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 58% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
-| Phase 6e: Sources library (plan: docs/library-plan.md) | 1/8 | 12% |
+| Phase 6e: Sources library (plan: docs/library-plan.md) | 2/9 | 22% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
@@ -165,6 +165,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 6e: Sources library (plan: docs/library-plan.md)
 - [x] Plan: acquisition order, rights rule, catalog model, in-app Library design
+- [x] Candidate list of 80 sources recorded (library/candidates.csv; unverified leads from ChatGPT)
 - [ ] `tools/fetch_sources.py`: download every rights-clear candidate at once, record the evidence, refuse unclear ones
 - [ ] Acquire Tier 1 (the 10 registered books, Wikibooks Chess) and verify Tier 2 candidates one by one
 - [ ] `library/catalog.json` and `tools/build_library.py` (subjects, level, rights, used-in links)

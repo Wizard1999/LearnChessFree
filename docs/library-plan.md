@@ -38,3 +38,11 @@ The catalog ships to the app as `library.json`; the stored texts ship as plain t
 - Who tags subject and level? Default: me, labelled [I]; Andrew can override.
 - Wikibooks text is CC BY-SA: attribution and share-alike apply to that text only; the lesson wording stays original.
 - Nothing in copyright is ever stored or shown, however available it is online.
+
+## Candidate list received 29 October 2026
+Andrew pasted an 80-entry list compiled by ChatGPT (datasets, books, game collections, endgame studies, original-language works, problem collections, histories, periodicals), every entry with a link. It is stored as `library/candidates.csv` (columns: n, title, author, year, kind, subject, level, locator, status). **Status of the claims: [S: secondary, unverified].** None of it counts as cleared until `tools/fetch_sources.py` checks each edition's own notice and metadata and records the evidence. Notes:
+- Entries marked "held" are already in our registry (B1 to B10 and the Lichess data); "catalog only" or "reference only" entries are pointers: a downloadable copy still has to be located and inspected before anything is hosted.
+- The list's own caution is right and matches our rule: only the qualifying edition is public domain, never a later translation, annotation, introduction or illustration (for example Nimzowitsch's English *Praxis* is later than the 1929 German original). Lasker's *Manual* is in the list as a 1927 scan, but the registry already records a 1947 edition of it that was in copyright: check each scan's notice.
+- The CC0 claim for the cartoon chess pieces (no. 7) and every other modern item must be checked on its own page.
+- Several are in German, French or Italian. A new English translation of a public-domain original is our own work and can be shared; we cannot copy anyone else's translation.
+- Priority order proposed in the list (Lichess data, the beginner books, positional classics, annotated games, endgame studies, periodicals) agrees with the order in this plan; periodicals come last because they need chosen issues.
