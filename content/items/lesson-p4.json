@@ -2,11 +2,11 @@
  "positions": [
   {
    "id": "PBp4-1",
-   "fen": "2krr3/pppq2pp/1b3p2/3P4/P7/1P3Q2/1B3PPP/2RR2K1 b - - 0 18",
+   "fen": "1r2r1k1/1np1qpp1/pp2p3/4P1p1/1PPQ4/P1N3P1/5PKP/3RR3 b - - 0 21",
    "family": "FAM-Bp4-space-mob1",
    "provenance": {
     "kind": "lichess_game",
-    "ref": "lichess.org/nb70xtk2 ply 35 (Lichess standard rated games, January 2013 sample)",
+    "ref": "lichess.org/wr3ze6nm ply 41 (Lichess standard rated games, January 2013 sample)",
     "licence": "CC0"
    }
   },
@@ -255,8 +255,8 @@
    "fen": "r2q1rk1/pb2nppp/2n5/1BppP3/N7/2N5/PP3PPP/R2Q1RK1 b - - 1 13",
    "family": "FAM-Bp4-hang-f1",
    "provenance": {
-    "kind": "lichess_game",
-    "ref": "Lichess standard rated games, January 2013 sample",
+    "kind": "authored",
+    "ref": "edit of lichess.org/xfettnlg ply 25 (Lichess standard rated games, January 2013 sample): the White knight moved from f3 to a4",
     "licence": "CC0"
    }
   },
@@ -265,8 +265,8 @@
    "fen": "r2q1rk1/pb2nppp/2n5/1BppP3/8/5N2/PPN2PPP/R2Q1RK1 b - - 1 13",
    "family": "FAM-Bp4-hang-f2",
    "provenance": {
-    "kind": "lichess_game",
-    "ref": "Lichess standard rated games, January 2013 sample",
+    "kind": "authored",
+    "ref": "edit of lichess.org/xfettnlg ply 25 (Lichess standard rated games, January 2013 sample): the White knight moved from c3 to c2",
     "licence": "CC0"
    }
   },
@@ -275,8 +275,8 @@
    "fen": "r2q1rk1/pb2nppp/2nN4/1BppP3/8/2N5/PP3PPP/R2Q1RK1 b - - 1 13",
    "family": "FAM-Bp4-hang-f3",
    "provenance": {
-    "kind": "lichess_game",
-    "ref": "Lichess standard rated games, January 2013 sample",
+    "kind": "authored",
+    "ref": "edit of lichess.org/xfettnlg ply 25 (Lichess standard rated games, January 2013 sample): the White knight moved from f3 to d6",
     "licence": "CC0"
    }
   },
@@ -346,7 +346,7 @@
    "family": "FAM-Bp4-sw-sel2",
    "provenance": {
     "kind": "lichess_game",
-    "ref": "Lichess standard rated game 2013-01 (CC0)",
+    "ref": "lichess.org/dvj9k6ra ply 48 (Lichess standard rated games, January 2013 sample)",
     "licence": "CC0"
    }
   },
@@ -393,20 +393,20 @@
    "cue": 2,
    "task": "classify_position",
    "position": "PBp4-1",
-   "prompt": "Black to move. Which of these Black pieces has the fewest legal moves? Count the legal moves of each, not the squares it would like to reach.",
+   "prompt": "Black to move. For each Black piece, take the squares it attacks (not occupied by its own men) and remove the ones a White pawn attacks. Which piece has the fewest squares left?",
    "answer": {
-    "class": "The rook on d8",
+    "class": "The knight on b7",
     "options": [
-     "The bishop on b6",
-     "The queen on d7",
-     "The rook on d8",
+     "The knight on b7",
+     "The queen on e7",
+     "The rook on b8",
      "The rook on e8"
     ]
    },
    "options": [
-    "The bishop on b6",
-    "The queen on d7",
-    "The rook on d8",
+    "The knight on b7",
+    "The queen on e7",
+    "The rook on b8",
     "The rook on e8"
    ],
    "tags": [
@@ -421,77 +421,156 @@
     "kind.authored"
    ],
    "hints": [
-    "For each piece in the list, count the squares it can legally move to.",
-    "Pieces that White's pawns attack or that their own pieces block have fewer squares.",
-    "The piece with the fewest legal moves is on d8."
+    "For each piece, list the squares it attacks, then cross out any square a White pawn attacks.",
+    "A pawn attacks the two squares diagonally ahead of it: White's pawns on b4 and e5 matter here.",
+    "The knight on b7 attacks a5, c5, d6 and d8. Three of them are attacked by White pawns."
    ],
-   "explain": "The rook on d8 has 0 legal moves: the king, rook and queen next to it block it. This is a mobility count. White's pawns attack b5, c6 and e6, and none of those squares is a rook move here.",
+   "explain": "The knight on b7 has one square left, d8: a5 and c5 are attacked by the pawn on b4, and d6 by the pawn on e5. The queen and each rook have three safe squares. Here White's pawn space really takes squares away; in the next position it does not.",
    "claims": [
     {
-     "type": "mobility",
+     "type": "piece_attacks",
      "params": {
-      "square": "d8",
-      "mode": "legal",
-      "count": 0
+      "square": "b7",
+      "squares": [
+       "a5",
+       "c5",
+       "d6",
+       "d8"
+      ]
      },
-     "statement": "The rook on d8 has 0 legal move(s).",
+     "statement": "The black knight on b7 attacks a5, c5, d6 and d8.",
      "id": "C1"
     },
     {
      "type": "mobility",
      "params": {
-      "square": "b6",
-      "mode": "legal",
-      "count": 5
+      "square": "b7",
+      "mode": "squares",
+      "count": 4
      },
-     "statement": "The bishop on b6 has 5 legal move(s).",
+     "statement": "The knight on b7 attacks 4 squares not held by its own pieces.",
      "id": "C2"
     },
     {
-     "type": "mobility",
+     "type": "pawn_attackers",
      "params": {
-      "square": "e8",
-      "mode": "legal",
-      "count": 10
+      "square": "a5",
+      "color": "white",
+      "count": 1
      },
-     "statement": "The rook on e8 has 10 legal move(s).",
+     "statement": "1 white pawn(s) attack a5.",
      "id": "C3"
     },
     {
-     "type": "mobility",
+     "type": "pawn_attackers",
      "params": {
-      "square": "d7",
-      "mode": "legal",
-      "count": 11
+      "square": "c5",
+      "color": "white",
+      "count": 1
      },
-     "statement": "The queen on d7 has 11 legal move(s).",
+     "statement": "1 white pawn(s) attack c5.",
      "id": "C4"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "1 white pawn(s) attack d6.",
+     "id": "C5"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d8",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "0 white pawn(s) attack d8.",
+     "id": "C6"
     },
     {
      "type": "space",
      "params": {
       "color": "white",
       "mode": "pawn_attacks",
-      "count": 3,
+      "count": 6,
       "squares": [
+       "a5",
        "b5",
-       "c6",
-       "e6"
+       "c5",
+       "d5",
+       "d6",
+       "f6"
       ]
      },
-     "statement": "White's pawns attack 3 square(s) in the opponent's half: b5, c6 and e6.",
-     "id": "C5"
+     "statement": "White's pawns attack 6 squares in Black's half: a5, b5, c5, d5, d6 and f6.",
+     "id": "C7"
     },
     {
-     "type": "space",
+     "type": "piece_attacks",
      "params": {
-      "color": "black",
-      "mode": "pawn_attacks",
-      "count": 0,
-      "squares": []
+      "square": "b8",
+      "squares": [
+       "a8",
+       "b7",
+       "c8",
+       "d8",
+       "e8"
+      ]
      },
-     "statement": "Black's pawns attack 0 square(s) in the opponent's half: none.",
-     "id": "C6"
+     "statement": "The rook on b8 attacks a8, b7, c8, d8 and e8.",
+     "id": "C8"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "e8",
+      "squares": [
+       "b8",
+       "c8",
+       "d8",
+       "e7",
+       "f8",
+       "g8"
+      ]
+     },
+     "statement": "The rook on e8 attacks b8, c8, d8, e7, f8 and g8.",
+     "id": "C9"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "squares": [
+       "b4",
+       "c5",
+       "c7",
+       "d6",
+       "d7",
+       "d8",
+       "e6",
+       "e8",
+       "f6",
+       "f7",
+       "f8",
+       "g5"
+      ]
+     },
+     "statement": "The queen on e7 attacks b4, c5, c7, d6, d7, d8, e6, e8, f6, f7, f8 and g5.",
+     "id": "C10"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "1 white pawn attacks b4.",
+     "id": "C11"
     }
    ]
   },
@@ -2569,7 +2648,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBp4-25",
-   "prompt": "Black to move. Black has pawns on c5 and d5. Is the advance d4 within 0.4 pawns of the engine's best move (depth 16)? Predict, then check.",
+   "prompt": "Black to move. Black has pawns on c5 and d5, and a pawn on b6. Do c5 and d5 count as hanging pawns by the app's definition? Predict, then check.",
    "answer": {
     "outcome": "no",
     "options": [
@@ -2595,11 +2674,11 @@
    ],
    "contrast_group": "CG-Bp4-hang",
    "hints": [
-    "First decide whether c5 and d5 are hanging pawns by the app's definition.",
-    "Look at what the advance d4 attacks, and which White pieces can answer it.",
-    "By the app's definition a pawn on b6 gives the pair a neighbour, so these are not hanging pawns. Separately, the engine rates d4 at least 48 centipawns worse than its best move here."
+    "Recall the definition: two side-by-side pawns, alone on their files and flanks.",
+    "Look at the files next to c and d: is there a Black pawn on either?",
+    "A pawn on b6 gives the pair a neighbour, so by the app's definition these are not hanging pawns."
    ],
-   "explain": "Black's b6 pawn gives the pair a neighbour, so by the app's definition these are not hanging pawns. Separately, at depth 16 d4 is at least 48 centipawns (about half a pawn) worse than the best move here. The h7 pawn is also gone in this position, so more than one feature differs from the first.",
+   "explain": "Black's b6 pawn gives c5 and d5 a neighbour, so by the app's definition they are not hanging pawns. The missing h7 pawn does not change that. This half asks about the definition, not about the engine margin of d4.",
    "claims": [
     {
      "type": "pawn_set",
@@ -2610,15 +2689,6 @@
      },
      "statement": "Black's hanging pawns: none.",
      "id": "C1"
-    },
-    {
-     "type": "move_loses",
-     "params": {
-      "move": "d5d4",
-      "cp": 48
-     },
-     "statement": "At depth 16 d4 scores more than 0.4 pawns (48 centipawns or more) worse than the best move.",
-     "id": "C2"
     }
    ]
   },

@@ -126,7 +126,7 @@
    "family": "FAM-Be3-MBN-C",
    "provenance": {
     "kind": "generated",
-    "ref": "batch e3: engine scan, mate in six, unique first move",
+    "ref": "batch e3: engine scan, mate in six, two first moves (Kg4 and Bh3; tablebase)",
     "licence": "project"
    }
   },
@@ -229,6 +229,46 @@
     "ref": "batch e3: same as -50 with the black king on e8",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBe3-62",
+   "fen": "8/8/8/4N3/k7/2K5/8/5B2 w - - 0 1",
+   "family": "FAM-Be3-MBN-C",
+   "provenance": {
+    "kind": "generated",
+    "ref": "batch e3 fixer: bishop-and-knight win with the lone king on the a-file edge (tablebase: win)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBe3-60",
+   "fen": "8/1p6/5Kp1/6Pk/8/8/8/8 b - - 0 1",
+   "family": "FAM-Be3-REM-1",
+   "provenance": {
+    "kind": "generated",
+    "ref": "batch e3 fixer: one-feature edit of IE-REM-8 (Black king g4 to h5); tablebase: only b5 and b6 keep the win quickly",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBe3-61",
+   "fen": "8/8/5Kp1/6P1/6k1/8/8/8 b - - 0 1",
+   "family": "FAM-Be3-REM-1",
+   "provenance": {
+    "kind": "generated",
+    "ref": "batch e3 fixer: one-feature edit of IE-REM-8 (the b-pawn removed, so no passed pawn)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBe3-63",
+   "fen": "5k2/8/6PK/8/8/8/8/8 w - - 0 1",
+   "family": "FAM-Be3-TRI-2",
+   "provenance": {
+    "kind": "generated",
+    "ref": "batch e3 fixer: same position as shipped IE-TRI-19, re-used with an honest prompt (tablebase: only Kh7 keeps the win)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -270,11 +310,11 @@
     "contrast.CG-Be3-TRI-1"
    ],
    "hints": [
-    "Compare with the position where the black king stood on c8: what is different about Black's king?",
+    "Compare with the same placement with Black to move: only the side to move differs.",
     "Count how many safe squares Black's king can shuffle between.",
     "Ask whether White could pass the move; it cannot here, and the result is a draw."
    ],
-   "explain": "Draw (tablebase). Now look at the same placement with Black to move, in the next item.",
+   "explain": "Draw (tablebase). The placement is the same as in the previous item, but now White is the one who must move, and White cannot pass.",
    "orientation": "auto",
    "source": {
     "kind": "authored",
@@ -297,7 +337,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBe3-2",
-   "prompt": "Same placement as before, but Black is to move: pawns on d6 and d7, White king a6, Black king a8. With best play, is the result a win, a draw or a loss for Black?",
+   "prompt": "Pawns on d6 and d7 are locked; White's king is on a6, Black's king on a8. Black to move. With best play, is the result a win, a draw or a loss for Black?",
    "answer": {
     "outcome": "loss",
     "options": [
@@ -972,10 +1012,11 @@
    "cue": 1,
    "task": "find_move",
    "position": "PBe3-16",
-   "prompt": "White to move mates in 6. Find the first move.",
+   "prompt": "White to move mates in 6. Find a first move that does it (there are two).",
    "answer": {
     "moves": [
-     "h4g4"
+     "h4g4",
+     "f1h3"
     ]
    },
    "claims": [
@@ -997,12 +1038,29 @@
      "id": "C2"
     },
     {
+     "type": "legal_move",
+     "params": {
+      "move": "f1h3"
+     },
+     "statement": "The bishop move is legal.",
+     "id": "C3"
+    },
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "f1h3",
+      "n": 6
+     },
+     "statement": "The bishop move also starts a forced mate in 6.",
+     "id": "C4"
+    },
+    {
      "type": "tablebase",
      "params": {
       "result": "win"
      },
      "statement": "The position is a win for White.",
-     "id": "C3"
+     "id": "C5"
     }
    ],
    "tags": [
@@ -1019,9 +1077,9 @@
    "hints": [
     "The black king is on the edge; which of your pieces is not yet doing a job?",
     "The mate will come on the light corner h1 or next to it.",
-    "Move the king closer: it is Kg4."
+    "Two moves mate in six: the king step Kg4 or the bishop move Bh3."
    ],
-   "explain": "The move starts a forced mate in 6 (engine, depth 16).",
+   "explain": "Both Kg4 and Bh3 start a forced mate in 6 (engine and tablebase agree: the other moves are slower or give up the win).",
    "orientation": "auto",
    "source": {
     "kind": "authored",
@@ -1083,7 +1141,7 @@
     "idea.bishop-and-knight"
    ],
    "hints": [
-    "Count the squares the black king can reach.",
+    "Aim for the net: bishop and king cover the squares round the corner, the knight gives the check. Count the squares the black king can reach.",
     "One piece is far from the action.",
     "The king steps forward."
    ],
@@ -1149,7 +1207,7 @@
     "idea.bishop-and-knight"
    ],
    "hints": [
-    "Which piece must change its diagonal?",
+    "Aim for the net: bishop and king cover the squares round the corner, the knight gives the check. Which piece must change its diagonal?",
     "One bishop move keeps the king in the right corner area; others let it out.",
     "The bishop goes to h3."
    ],
@@ -1287,7 +1345,7 @@
    "cue": 3,
    "task": "predict_outcome",
    "position": "PBe3-31",
-   "prompt": "White to move. The pawns on e5 and e6 are locked and no pawn has a spare move. With best play, is the result a win, a draw or a loss for White?",
+   "prompt": "White to move. With best play, is the result a win, a draw or a loss for White?",
    "answer": {
     "outcome": "win",
     "options": [
@@ -1532,7 +1590,7 @@
    "hints": [
     "Which ending is left after both queens are gone?",
     "Where are the kings and the pawn?",
-    "Is the white king in front of the pawn?"
+    "Is the white king level with the pawn or ahead of it, on the sixth rank?"
    ],
    "explain": "Win (tablebase): after the trade the king-and-pawn ending is won, so the trade keeps the win.",
    "orientation": "auto",
@@ -1992,6 +2050,345 @@
    },
    "feedback_by_move": {
     "d1d8": "Qxd8+ lets the opponent off (tablebase)."
+   }
+  },
+  {
+   "id": "IBe3-62",
+   "skill": "END.MATE-BN.D2",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PBe3-62",
+   "prompt": "White to move. The bishop is light-squared, so the right corners are a8 and h1. Black's king stands on the edge, on a4. Which phase of the mate comes next?",
+   "answer": {
+    "class": "drive the king along the edge to the right corner",
+    "options": [
+     "push the lone king to an edge",
+     "drive the king along the edge to the right corner"
+    ]
+   },
+   "claims": [
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "a4",
+      "piece": "k"
+     },
+     "statement": "The black king is on a4, an edge square.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "f1",
+      "piece": "B"
+     },
+     "statement": "The bishop is on f1, a light square.",
+     "id": "C2"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The position is a win for White.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.END.MATE-BN",
+    "tier.5",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-Be3-MBN-C",
+    "lang.en",
+    "task.classify_position",
+    "theme.endgame",
+    "idea.bishop-and-knight",
+    "idea.two-phases"
+   ],
+   "hints": [
+    "Where is the lone king now: in the middle or on an edge?",
+    "Phase one is finished once the king stands on an edge.",
+    "Now the king must be driven along the edge, towards a8 (the corner of the bishop's colour)."
+   ],
+   "explain": "The king is already on the edge, so phase one is done. Phase two: drive it along the edge to a corner of the bishop's colour, here a8 (tablebase: the position is won).",
+   "orientation": "auto",
+   "source": {
+    "kind": "authored",
+    "id": "batch-e3"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "push the lone king to an edge",
+    "drive the king along the edge to the right corner"
+   ]
+  },
+  {
+   "id": "IBe3-60",
+   "skill": "END.REMOTE.D2",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBe3-60",
+   "prompt": "Black to move. Same pawns and white king as the first position, but Black's king stands on h5. Which advice fits this position?",
+   "answer": {
+    "class": "push the passed pawn now",
+    "options": [
+     "push the passed pawn now",
+     "move the king first",
+     "there is no passed pawn to push"
+    ]
+   },
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Black, to move, wins.",
+     "id": "C1"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "b7b5",
+      "result": "win"
+     },
+     "statement": "b5 keeps the win.",
+     "id": "C2"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "b7b6",
+      "result": "win"
+     },
+     "statement": "b6 keeps the win.",
+     "id": "C3"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "h5h4",
+      "result": "draw"
+     },
+     "statement": "Kh4 gives up the win: result draw.",
+     "id": "C4"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "black",
+      "squares": [
+       "b7"
+      ]
+     },
+     "statement": "The pawn on b7 is the only passed pawn of Black.",
+     "id": "C5"
+    }
+   ],
+   "tags": [
+    "node.END.REMOTE",
+    "tier.5",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-Be3-REM-1",
+    "lang.en",
+    "task.classify_position",
+    "theme.endgame",
+    "idea.remote-passed-pawn",
+    "contrast.CG-Be3-REM-1",
+    "role.failing"
+   ],
+   "hints": [
+    "The king is already next to the pawns on the other wing. What is left for it to do?",
+    "Count the king moves still needed on the kingside: is there any work left?",
+    "The king is in place, so the pawn can run: the push wins."
+   ],
+   "explain": "Here the king has already done its work (it stands on h5), so pushing the b-pawn is right: b5 or b6 keeps the win (tablebase). In the first position the king still had to come over first.",
+   "orientation": "auto",
+   "source": {
+    "kind": "authored",
+    "id": "batch-e3"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "push the passed pawn now",
+    "move the king first",
+    "there is no passed pawn to push"
+   ],
+   "contrast_group": "CG-Be3-REM-1"
+  },
+  {
+   "id": "IBe3-61",
+   "skill": "END.REMOTE.D2",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBe3-61",
+   "prompt": "Black to move. The first position with the b-pawn taken off the board. Which advice fits this position?",
+   "answer": {
+    "class": "there is no passed pawn to push",
+    "options": [
+     "push the passed pawn now",
+     "move the king first",
+     "there is no passed pawn to push"
+    ]
+   },
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": []
+     },
+     "statement": "White has no passed pawn.",
+     "id": "C1"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Black has no passed pawn either.",
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.END.REMOTE",
+    "tier.5",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-Be3-REM-1",
+    "lang.en",
+    "task.classify_position",
+    "theme.endgame",
+    "idea.remote-passed-pawn",
+    "contrast.CG-Be3-REM-1",
+    "role.irrelevant"
+   ],
+   "hints": [
+    "Look at each pawn: is there an enemy pawn ahead of it on the same file?",
+    "A passed pawn has no enemy pawn in front of it on its own or an adjacent file.",
+    "The g-pawns are locked head to head."
+   ],
+   "explain": "Neither side has a passed pawn: the g-pawns block each other, so there is nothing to push as a decoy.",
+   "orientation": "auto",
+   "source": {
+    "kind": "authored",
+    "id": "batch-e3"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "push the passed pawn now",
+    "move the king first",
+    "there is no passed pawn to push"
+   ],
+   "contrast_group": "CG-Be3-REM-1"
+  },
+  {
+   "id": "IBe3-63",
+   "skill": "END.TRIANGULATION.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PBe3-63",
+   "prompt": "White to move and wins, but only one move keeps the win. Find it.",
+   "answer": {
+    "moves": [
+     "h6h7"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "h6h7"
+     },
+     "statement": "The move is legal.",
+     "id": "C1"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The side to move wins.",
+     "id": "C2"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "h6h7",
+      "result": "win"
+     },
+     "statement": "Kh7 keeps the win.",
+     "id": "C3"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "g6g7",
+      "result": "draw"
+     },
+     "statement": "g7+ gives up the win: result draw.",
+     "id": "C4"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "h6g5",
+      "result": "draw"
+     },
+     "statement": "Kg5 gives up the win: result draw.",
+     "id": "C5"
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "move": "h6h5",
+      "result": "draw"
+     },
+     "statement": "Kh5 gives up the win: result draw.",
+     "id": "C6"
+    }
+   ],
+   "tags": [
+    "node.END.TRIANGULATION",
+    "tier.5",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-Be3-TRI-2",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame",
+    "idea.key-squares",
+    "kind.only-move"
+   ],
+   "hints": [
+    "Compare the two kings: whose king is closer to the pawn's path?",
+    "A pawn on the sixth rank has key squares on the seventh rank in front of it (f7, g7, h7). Can the king reach one at once?",
+    "The king goes in front of the pawn: it is Kh7."
+   ],
+   "explain": "Kh7 is the only move that keeps the win: the king steps in front of the pawn onto a key square. The tablebase shows that g7+, Kg5 and Kh5 all let the opponent off with a draw. No triangle is needed here: ask first whether the direct move already wins.",
+   "orientation": "auto",
+   "source": {
+    "kind": "authored",
+    "id": "batch-e3"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
    }
   }
  ]

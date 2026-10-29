@@ -6,7 +6,7 @@
  "minutes": 10,
  "outcomes": [
   "Explains triangulation: a king walk around three squares costs an odd number of moves and hands the move to the opponent",
-  "Finds the first step of a king triangle in a given king-and-pawn position",
+  "Finds the only winning first move in a king-and-pawn position and asks first whether the direct move already wins",
   "Tells a position where the triangle wins from look-alikes where the defender has a spare move or where the move does not matter"
  ],
  "steps": [
@@ -16,110 +16,62 @@
   },
   {
    "type": "board",
-   "fen": "2k5/3p4/K2P4/8/8/8/8/8 w - - 0 1",
-   "caption": "White to move. The pawns on d6 and d7 are locked. White's king walks a triangle: a6, a7, b6, back to a6.",
+   "fen": "k7/3p4/K2P4/8/8/8/8/8 b - - 0 1",
+   "caption": "Black to move, and Black loses: its king has one legal move. The same placement with White to move is only a draw (Ka5, Kb5 and Kb6 all let the win slip). Triangulation tries to reach a placement like this with the other side to move.",
    "line": [
     {
-     "move": "a6a7",
-     "say": "Step one: the king goes to a7. Black's king has only one legal move."
+     "move": "a8b8",
+     "say": "Black's only legal move: the king goes to b8."
     },
     {
-     "move": "c8d8",
-     "say": "Black's king goes to d8."
-    },
-    {
-     "move": "a7b6",
-     "say": "Step two: the king goes to b6, a square next to both a7 and a6."
-    },
-    {
-     "move": "d8c8",
-     "say": "Black's king goes back to c8."
-    },
-    {
-     "move": "b6a6",
-     "say": "Step three: White's king is back on a6. The placement is the starting one, but now Black must move."
+     "move": "a6b6",
+     "say": "Kb6 is the only winning reply for White. Ka5 and Kb5 would draw."
     }
    ],
    "arrows": [
     {
      "from": "a6",
-     "to": "a7"
-    },
-    {
-     "from": "a7",
      "to": "b6"
-    },
-    {
-     "from": "b6",
-     "to": "a6"
     }
    ],
    "highlight": [
     "a6",
-    "a7",
-    "b6"
+    "a8",
+    "b8"
    ],
    "claims": [
     {
      "id": "C1",
      "type": "tablebase",
      "params": {
-      "result": "win"
+      "result": "loss"
      },
-     "statement": "With White to move the tablebase result is a win."
+     "statement": "With Black to move the tablebase result is a loss for Black."
     },
     {
      "id": "C2",
-     "type": "tablebase",
+     "type": "mobility",
      "params": {
-      "move": "a6a7",
-      "result": "win"
+      "square": "a8",
+      "mode": "legal",
+      "count": 1
      },
-     "statement": "Ka7 keeps the win."
+     "statement": "The black king on a8 has exactly one legal move."
     },
     {
      "id": "C3",
      "type": "tablebase",
      "params": {
-      "move": "a6a5",
-      "result": "draw"
+      "move": "a8b8",
+      "result": "loss"
      },
-     "statement": "Ka5 gives up the win."
-    },
-    {
-     "id": "C4",
-     "type": "tablebase",
-     "params": {
-      "move": "a6b5",
-      "result": "draw"
-     },
-     "statement": "Kb5 gives up the win."
-    },
-    {
-     "id": "C5",
-     "type": "tablebase",
-     "params": {
-      "move": "a6b6",
-      "result": "draw"
-     },
-     "statement": "Kb6 gives up the win."
-    },
-    {
-     "id": "C6",
-     "type": "mobility",
-     "params": {
-      "square": "c8",
-      "mode": "legal",
-      "count": 1,
-      "after_move": "a6a7"
-     },
-     "statement": "After Ka7 the black king on c8 has exactly one legal move."
+     "statement": "After Kb8 Black is still lost."
     }
    ]
   },
   {
    "type": "item",
-   "item": "IE-TRI-19"
+   "item": "IBe3-63"
   },
   {
    "type": "card",
@@ -127,11 +79,10 @@
   },
   {
    "type": "contrast",
-   "title": "The natural king move or the detour",
-   "prompt": "Black to move wins in the first position. In the second, Black has made the natural king move and White is to move. Predict each.",
+   "title": "Which king move keeps the win",
+   "prompt": "Black to move wins in the first position. In the second, Black has played the natural king move (Kf3) and White is to move. Predict each.",
    "working": "IE-TRI-8",
-   "failing": "IE-TRI-9",
-   "irrelevant": "IBe3-3"
+   "failing": "IE-TRI-9"
   },
   {
    "type": "contrast",
@@ -192,6 +143,7 @@
  "sources": [
   "content/skills/END.TRIANGULATION.json (conditions and contrasts; the node cites Lasker's Common Sense in Chess and Nimzowitsch, not re-read for this lesson)",
   "Board and items: locked-pawn positions found with the project's exact locked-pawn solver (tools/endgames/pawnlib2.py) and checked against the Lichess tablebase by tools/validate.py",
-  "Shipped items IE-TRI-8, IE-TRI-9, IE-TRI-14, IE-TRI-19, IE-TRI-21 (tablebase claims)"
+  "Shipped items IE-TRI-8, IE-TRI-9, IE-TRI-14, IE-TRI-19, IE-TRI-21 (tablebase claims)",
+  "Step 2 and IBe3-63 were rewritten after review: an exhaustive search of the locked-pawn and K+P v K families with the project solvers found no position in which a king triangle is the only winning plan, so no triangle example ships until one is verified (see the fixer report)."
  ]
 }

@@ -69,6 +69,16 @@
     "ref": "authored: template position, engine-checked at depth 16; White must answer a threat",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBa3-i8",
+   "fen": "r4rk1/ppp2ppp/1q2b3/6n1/8/2NQ4/PPP1BPPP/R4RK1 w - - 0 1",
+   "family": "FAM-A3-IN-W2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: PBa3-i3 with the black knight moved from f4 to g5 (one change), engine-checked at depth 16",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -212,6 +222,94 @@
    "contrast_group": "CG-A3-INIT"
   },
   {
+   "id": "IBa3-i8",
+   "skill": "INI.INITIATIVE.D1",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBa3-i8",
+   "prompt": "White to move. Who has the initiative here? Predict, then check.",
+   "answer": {
+    "class": "White",
+    "options": [
+     "White",
+     "Black",
+     "Neither"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g5",
+      "piece": "n"
+     },
+     "statement": "The black knight stands on g5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "f4",
+      "piece": "empty"
+     },
+     "statement": "Nothing stands on f4, so Black's knight does not attack the queen."
+    },
+    {
+     "id": "C3",
+     "type": "quiet_position",
+     "params": {
+      "max": 0,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Black cannot win material."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h2h4"
+      ]
+     },
+     "statement": "h4, trapping the knight, is the engine's first choice."
+    },
+    {
+     "id": "C5",
+     "type": "eval_range",
+     "params": {
+      "min": 250
+     },
+     "statement": "The engine at depth 16 rates White at least two and a half pawns better."
+    }
+   ],
+   "tags": [
+    "node.INI.INITIATIVE",
+    "theme.initiative",
+    "tier.5",
+    "mode.contrast",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "List what each side threatens. A threat here means a move that would win material or mate if the other side did nothing.",
+    "Ask first: if White passed, could Black win anything? Then ask: does White have a move that wins something or forces a reply?",
+    "The side whose moves carry threats the other must answer has the initiative. If neither side has any, nobody has it."
+   ],
+   "explain": "This is the other position with one change: the black knight stands on g5, not f4. Now it attacks nothing and h4 traps it, so the threats are White's and White has the initiative.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "White",
+    "Black",
+    "Neither"
+   ],
+   "contrast_group": "CG-A3-INIT"
+  },
+  {
    "id": "IBa3-i3",
    "skill": "INI.INITIATIVE.D1",
    "cue": 2,
@@ -268,7 +366,7 @@
     "Ask first: if White passed, could Black win anything? Then ask: does White have a move that wins something or forces a reply?",
     "The side whose moves carry threats the other must answer has the initiative. If neither side has any, nobody has it."
    ],
-   "explain": "It is White's turn, but the threats are Black's: if White passed, Black would win by force. White must answer first, so White does not hold the initiative by right of moving first.",
+   "explain": "It is White's turn, but the threats are Black's. The only change from the other position is the knight: on f4 it attacks the queen and the bishop, so if White passed Black would win by force. White must answer first and does not hold the initiative.",
    "review": {
     "status": "needs-human",
     "reviewer": null
@@ -417,26 +515,25 @@
    "id": "IBa3-i6",
    "skill": "INI.INITIATIVE.D1",
    "cue": 3,
-   "task": "find_move",
+   "task": "classify_position",
    "position": "PBa3-i6",
-   "prompt": "White to move. Find a sound move.",
+   "prompt": "White to move. Does White need a forcing move here?",
    "answer": {
-    "moves": [
-     "c1e3",
-     "c1e1"
+    "class": "No",
+    "options": [
+     "Yes",
+     "No"
     ]
    },
    "claims": [
     {
      "id": "C1",
-     "type": "best_move_in",
+     "type": "eval_range",
      "params": {
-      "moves": [
-       "c1e3",
-       "c1e1"
-      ]
+      "min": -40,
+      "max": 40
      },
-     "statement": "Qe3 and Qe1 are both within a few hundredths of a pawn of the best move."
+     "statement": "The engine at depth 16 rates the position about level."
     },
     {
      "id": "C2",
@@ -470,7 +567,7 @@
     "Ask first: if White passed, could Black win anything? Then ask: does White have a move that wins something or forces a reply?",
     "The side whose moves carry threats the other must answer has the initiative. If neither side has any, nobody has it."
    ],
-   "explain": "Neither side has a threat, so no forcing move is needed. Qe3 and Qe1 both keep the balance; the engine at depth 16 rates them within a few hundredths of a pawn of each other.",
+   "explain": "Neither side has a threat, so a quiet developing or waiting move is enough. Several moves keep the balance within about a tenth of a pawn at depth 16.",
    "review": {
     "status": "needs-human",
     "reviewer": null

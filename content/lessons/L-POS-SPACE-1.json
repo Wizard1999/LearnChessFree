@@ -6,23 +6,27 @@
   "minutes": 9,
   "outcomes": [
     "Counts the squares each side's pawns attack in the other side's half and says who has more pawn space (the app's count)",
-    "Finds the pieces in a cramped position that have almost no legal moves",
+    "Finds the piece with the fewest safe squares (squares no enemy pawn attacks) and tells it from a piece blocked by its own men",
     "Checks whether an enemy pawn can attack the pawns that give the space before trusting a space edge",
     "Tells a position with no pawn space to count from one with a space edge"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "In this app, **space** is counted from pawns only: the squares in the opponent's half of the board that your pawns attack. A white pawn on e5 attacks d6 and f6, so enemy pieces cannot use those squares without risk. More such squares usually leaves the other side's pieces fewer places to go. It is a count, not a judgement: it does not say the space is useful."
+      "text": "In this app, **space** is counted from pawns only: the squares in the opponent's half of the board that your pawns attack. A white pawn on e5 attacks d6 and f6, so enemy pieces cannot use those squares without risk. A square is safe for a piece when no enemy pawn attacks it. More such squares usually leaves the other side's pieces fewer places to go. It is a count, not a judgement: it does not say the space is useful."
     },
     {
       "type": "board",
       "fen": "3r1rk1/ppp2pp1/1bp4p/4P3/2PP2q1/4QNP1/PP3P1P/3R1RK1 b - - 2 19",
-      "caption": "Black to move. White's pawns attack 6 squares in Black's half (b5, c5, d5, d6, e5, f6); Black's pawns attack 0. Count White's pawn squares first.",
+      "caption": "Black to move. White's pawns attack 6 squares in Black's half (b5, c5, d5, d6, e5, f6); Black's pawns attack 0. Count White's pawn squares first. Then look at Black's bishop on b6: one of its squares, c5, is attacked by White's d4 pawn.",
       "line": [
         {
-          "move": "f8e8",
-          "say": "The rook on f8 has one legal move, e8. Its own king, pawn and rook block it, not White's pawns."
+          "move": "b6c5",
+          "say": "Bc5 steps onto a square White's d4 pawn attacks, so the pawn can simply capture it. A space pawn takes squares away from enemy pieces."
+        },
+        {
+          "move": "d4c5",
+          "say": "dxc5: the pawn takes the bishop."
         }
       ],
       "arrows": [
@@ -33,12 +37,17 @@
         {
           "from": "e5",
           "to": "f6"
+        },
+        {
+          "from": "d4",
+          "to": "c5"
         }
       ],
       "highlight": [
         "d6",
         "f6",
-        "e5"
+        "e5",
+        "c5"
       ],
       "claims": [
         {
@@ -71,13 +80,14 @@
           "id": "C2"
         },
         {
-          "type": "mobility",
+          "type": "piece_attacks",
           "params": {
-            "square": "f8",
-            "mode": "legal",
-            "count": 1
+            "square": "b6",
+            "includes": [
+              "c5"
+            ]
           },
-          "statement": "Black's rook on f8 has exactly 1 legal move.",
+          "statement": "The black bishop on b6 attacks c5.",
           "id": "C3"
         },
         {
@@ -93,12 +103,22 @@
           "id": "C4"
         },
         {
+          "type": "pawn_attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "Exactly one white pawn (d4) attacks c5.",
+          "id": "C5"
+        },
+        {
           "type": "legal_move",
           "params": {
-            "move": "f8e8"
+            "move": "b6c5"
           },
-          "statement": "Re8 is legal.",
-          "id": "C5"
+          "statement": "Bc5 is legal.",
+          "id": "C6"
         }
       ]
     },

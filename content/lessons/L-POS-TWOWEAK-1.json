@@ -17,37 +17,37 @@
     },
     {
       "type": "board",
-      "fen": "r1b2rk1/pp1p1p2/4p2Q/1q2P2P/2pP3b/P1P5/1P2B3/RNK3Nn b - - 0 21",
-      "caption": "Black to move. White has two weak pawns, on b2 (backward) and h5 (isolated). Black already attacks b2.",
+      "fen": "1r4k1/p4p1p/r4p2/2p1p3/2P1P3/8/P2R1PPP/5RK1 b - - 1 22",
+      "caption": "Black to move. White has two weak pawns, on a2 and c4 (both isolated). Black already attacks a2 with the rook on a6.",
       "line": [
         {
-          "move": "h1g3",
-          "say": "The knight moves and now attacks h5 too, while b2 stays attacked."
+          "move": "b8b4",
+          "say": "The rook moves to b4 and now attacks c4 too, while a2 stays attacked."
         }
       ],
       "arrows": [
         {
-          "from": "h1",
-          "to": "g3"
+          "from": "b8",
+          "to": "b4"
         }
       ],
       "highlight": [
-        "b2",
-        "h5",
-        "g3"
+        "a2",
+        "c4",
+        "b4"
       ],
       "claims": [
         {
           "id": "C1",
           "type": "pawn_set",
           "params": {
-            "kind": "backward",
+            "kind": "isolated",
             "color": "white",
             "includes": [
-              "b2"
+              "a2"
             ]
           },
-          "statement": "White's pawn on b2 is backward."
+          "statement": "White's pawn on a2 is isolated."
         },
         {
           "id": "C2",
@@ -56,60 +56,82 @@
             "kind": "isolated",
             "color": "white",
             "includes": [
-              "h5"
+              "c4"
             ]
           },
-          "statement": "White's pawn on h5 is isolated."
+          "statement": "White's pawn on c4 is isolated."
         },
         {
           "id": "C3",
           "type": "attackers",
           "params": {
-            "square": "b2",
+            "square": "a2",
             "color": "black",
             "count": 1
           },
-          "statement": "1 Black piece(s) attack b2 now."
+          "statement": "1 Black piece(s) attack a2 now."
         },
         {
           "id": "C4",
           "type": "attackers",
           "params": {
-            "square": "h5",
+            "square": "c4",
             "color": "black",
             "count": 0
           },
-          "statement": "No Black piece attacks h5 now."
+          "statement": "No Black piece attacks c4 now."
         },
         {
           "id": "C5",
           "type": "legal_move",
           "params": {
-            "move": "h1g3"
+            "move": "b8b4"
           },
-          "statement": "Ng3 is legal."
+          "statement": "Rb4 is legal."
         },
         {
           "id": "C6",
           "type": "attackers",
           "params": {
-            "square": "b2",
+            "square": "a2",
             "color": "black",
             "count": 1,
-            "after_move": "h1g3"
+            "after_move": "b8b4"
           },
-          "statement": "After Ng3, 1 Black piece(s) attack b2."
+          "statement": "After Rb4, 1 Black piece(s) attack a2."
         },
         {
           "id": "C7",
           "type": "attackers",
           "params": {
-            "square": "h5",
+            "square": "c4",
             "color": "black",
             "count": 1,
-            "after_move": "h1g3"
+            "after_move": "b8b4"
           },
-          "statement": "After Ng3, 1 Black piece(s) attack h5."
+          "statement": "After Rb4, 1 Black piece(s) attack c4."
+        },
+        {
+          "id": "C8",
+          "type": "attackers",
+          "params": {
+            "square": "b4",
+            "color": "white",
+            "count": 0,
+            "after_move": "b8b4"
+          },
+          "statement": "After Rb4, no White piece attacks the rook."
+        },
+        {
+          "id": "C9",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8b4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 Rb4 is the engine's best move."
         }
       ]
     },
@@ -124,7 +146,7 @@
     {
       "type": "contrast",
       "title": "A second target, too costly, nothing to attack",
-      "prompt": "Predict which statement fits each position. In the second, a Black queen has moved from c7 to e6; the third is a different position. Then name the one change that flipped the verdict between the first two.",
+      "prompt": "Predict which statement fits each position. In the second, a White knight has moved from f3 to b3; the third is a different position. Then name the one change that flipped the verdict between the first two.",
       "working": "IBp6-19",
       "failing": "IBp6-20",
       "irrelevant": "IBp6-21"

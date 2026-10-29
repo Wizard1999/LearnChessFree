@@ -79,6 +79,16 @@
     "ref": "authored: 1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 a6 7.O-O Nge7 (legal sequence)",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBa3-c9",
+   "fen": "r1bqk1nr/pppp1ppp/2n5/b7/2BpP3/2P2N2/P4PPP/RNBQ1RK1 b kq - 1 7",
+   "family": "FAM-A3-COMP-EVANS",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.b4 Bxb4 5.c3 Ba5 6.d4 exd4 7.O-O (legal sequence)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -172,6 +182,88 @@
    "contrast_group": "CG-A3-COMP"
   },
   {
+   "id": "IBa3-c9",
+   "skill": "INI.COMPENSATION.D1",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBa3-c9",
+   "prompt": "Black to move. White is two pawns down. What does White have for them, and how long will it last?",
+   "answer": {
+    "class": "The centre and open lines, while Black's king is still uncastled",
+    "options": [
+     "The centre and open lines, while Black's king is still uncastled",
+     "Nothing durable: White is simply worse",
+     "A passed pawn that is ready to run"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e8",
+      "piece": "k"
+     },
+     "statement": "Black's king is still on e8."
+    },
+    {
+     "id": "C2",
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "b",
+       "c"
+      ],
+      "after_moves": [
+       "g8e7",
+       "c3d4"
+      ]
+     },
+     "statement": "After Ne7 cxd4 the b- and c-files are half-open for White."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "color": "white",
+      "kind": "passed",
+      "squares": []
+     },
+     "statement": "White has no passed pawn."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 30
+     },
+     "statement": "The engine at depth 16 rates the position within half a pawn of level."
+    }
+   ],
+   "tags": [
+    "theme.compensation",
+    "node.INI.COMPENSATION",
+    "tier.6",
+    "kind.decision",
+    "mode.gambit",
+    "family.FAM-A3-COMP-EVANS",
+    "cue.2",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Count the pawns and the pieces for both sides before you judge anything.",
+    "Ask what the side that gave material has in return: pieces developed, lines open, the opponent's king still in the centre.",
+    "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
+   ],
+   "explain": "White has the centre and open b- and c-files while Black's king sits on e8, and the engine at depth 16 rates the position about level. That compensation lasts only while Black is undeveloped: each developing move and castling shortens it.",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
    "id": "IBa3-c2",
    "skill": "INI.COMPENSATION.D1",
    "cue": 2,
@@ -263,7 +355,7 @@
   {
    "id": "IBa3-c3",
    "skill": "INI.COMPENSATION.D1",
-   "cue": 2,
+   "cue": 3,
    "task": "classify_position",
    "position": "PBa3-c3",
    "prompt": "Black to move. Count the material first, then pick the verdict on White's compensation.",
@@ -280,6 +372,7 @@
      "id": "C1",
      "type": "eval_range",
      "params": {
+      "min": -300,
       "max": -100
      }
     },
@@ -358,7 +451,7 @@
     "kind.decision",
     "mode.gambit",
     "family.FAM-A3-COMP-HW",
-    "cue.2",
+    "cue.3",
     "kind.authored",
     "lang.en"
    ],
@@ -371,13 +464,7 @@
    "review": {
     "status": "needs-human",
     "reviewer": null
-   },
-   "options": [
-    "Sound compensation",
-    "Practical chances only",
-    "Nothing was given up"
-   ],
-   "contrast_group": "CG-A3-COMP"
+   }
   },
   {
    "id": "IBa3-c4",
@@ -728,7 +815,7 @@
     "Ask what the side that gave material has in return: pieces developed, lines open, the opponent's king still in the centre.",
     "The engine's number at depth 16 is the check. In this lesson, within half a pawn of level counts as sound."
    ],
-   "explain": "White has one pawn fewer, and the engine at depth 16 rates White more than half a pawn behind. Black has castled. By this lesson's rule that is practical chances only: evidence at a fixed depth, not a proof.",
+   "explain": "White has one pawn fewer, and the engine at depth 16 rates White more than half a pawn behind. Compared with the sound Smith-Morra position, White has spent moves on a3, h3 and bishop retreats while Black has castled: the compensation has faded. Evidence at a fixed depth, not a proof.",
    "review": {
     "status": "needs-human",
     "reviewer": null
@@ -737,7 +824,8 @@
     "Sound compensation",
     "Practical chances only",
     "Nothing was given up"
-   ]
+   ],
+   "contrast_group": "CG-A3-COMP"
   },
   {
    "id": "IBa3-c8",

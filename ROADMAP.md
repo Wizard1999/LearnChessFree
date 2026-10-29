@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 53%** (72 of 150 tasks done, in-progress tasks count half). Updated 2026-10-29T13:00+00:00 UTC.
+**Overall: 53%** (72 of 150 tasks done, in-progress tasks count half). Updated 2026-10-29T13:24+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -26,7 +26,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 204 of 204 skill nodes have a lesson (100%); 163 nodes have 10 or more shipped exercises; 7034 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2357 flagged for human review.
+**Coverage (computed from the files):** 204 of 204 skill nodes have a lesson (100%); 163 nodes have 10 or more shipped exercises; 7040 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2363 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|

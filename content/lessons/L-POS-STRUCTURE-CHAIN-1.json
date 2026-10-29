@@ -17,76 +17,77 @@
     },
     {
       "type": "board",
-      "fen": "r1bq1rk1/pp3ppp/2n1pn2/3pP3/5P2/2NB1N2/PPP3PP/R1BQ1RK1 b - - 0 8",
-      "caption": "Black to move. White's pawns on e5 and f4 form a chain: e5 is defended by f4, and nothing defends f4. The unprotected pawn f4 is the base; e5 is the head.",
+      "fen": "r1bqk2r/pp2b1pp/2n2n2/1Bpp4/4pB2/1N2P3/PPP2PPP/RN1QK2R w KQkq - 4 9",
+      "caption": "White to move. Black's pawns on d5 and e4 form a chain: d5 defends e4, and no pawn defends d5. The unprotected pawn d5 is the base; e4 is the head.",
       "line": [
         {
-          "move": "g7g5",
-          "say": "g5 attacks the base f4. Nothing defends f4 with a pawn, so it must be defended by pieces or exchanged."
+          "move": "c2c4",
+          "say": "c4 attacks the base d5. No pawn defends d5, so Black must defend it with pieces, capture, or exchange."
         },
         {
-          "move": "f4g5",
-          "say": "White may capture. Then e5 loses its pawn defender."
+          "move": "d5c4",
+          "say": "If Black captures, e4 loses its pawn defender."
         }
       ],
       "arrows": [
         {
-          "from": "g5",
-          "to": "f4"
+          "from": "c4",
+          "to": "d5"
         }
       ],
       "highlight": [
-        "f4",
-        "e5"
+        "d5",
+        "e4",
+        "c4"
       ],
       "claims": [
         {
           "type": "pawn_set",
           "params": {
             "kind": "chain_base",
-            "color": "white",
+            "color": "black",
             "squares": [
-              "f4"
+              "d5"
             ]
           },
-          "statement": "White's chain base is f4.",
+          "statement": "Black's chain base is d5.",
           "id": "C1"
         },
         {
           "type": "piece_attacks",
           "params": {
-            "square": "f4",
+            "square": "d5",
             "includes": [
-              "e5"
+              "e4"
             ]
           },
-          "statement": "The white pawn on f4 defends e5.",
+          "statement": "The black pawn on d5 defends e4.",
           "id": "C2"
         },
         {
           "type": "moves_where",
           "params": {
             "property": "pawn_move_attacks",
-            "square": "f4",
+            "square": "d5",
             "moves": [
-              "g7g5"
+              "c2c4"
             ]
           },
-          "statement": "The legal pawn moves after which the moved pawn attacks f4: g5.",
+          "statement": "The legal pawn moves after which the moved pawn attacks d5: c4.",
           "id": "C3"
         },
         {
           "type": "pawn_set",
           "params": {
             "kind": "protected",
-            "color": "white",
+            "color": "black",
             "squares": [],
             "after_moves": [
-              "g7g5",
-              "f4g5"
+              "c2c4",
+              "d5c4"
             ]
           },
-          "statement": "After g5 and fxg5, White's pawn on e5 is no longer protected.",
+          "statement": "After c4 and dxc4, Black's pawn on e4 is no longer protected.",
           "id": "C4"
         }
       ]
@@ -147,7 +148,7 @@
   "sources": [
     "content/skills/POS.STRUCTURE.CHAIN.json (idea from Nimzowitsch ideas 30-31, recalled [R])",
     "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
-    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored); the step-2 board is the colour-mirror of position PBp4-6 (authored)",
     "shipped items IP-PAWNS-27, IP-PAWNS-32 and the chain-base items (machine-checked)"
   ]
 }

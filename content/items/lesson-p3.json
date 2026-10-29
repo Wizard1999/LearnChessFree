@@ -433,7 +433,7 @@
    ],
    "hints": [
     "Which difference between the two sides gives White something to do?",
-    "A rook can use an open file; two bishops cannot be used up by White at once.",
+    "A rook can use an open file. The two bishops are Black's, so White cannot use them.",
     "Put a rook on the e-file: Rfe1 or Rce1."
    ],
    "explain": "The e-file is open and the bishop pair belongs to Black. White cannot use Black's bishops, but it can use the file: only Rce1 and Rfe1 put a rook on it, and the engine ranks both first. The checklist names the difference; the move uses it.",
@@ -504,14 +504,24 @@
       "piece": "q"
      },
      "statement": "The black queen stands on d6."
+    },
+    {
+     "id": "C5",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f3f4"
+      ]
+     },
+     "statement": "The engine's first choice is f4, not a rook move."
     }
    ],
    "hints": [
     "The file is open. Is that the only thing that matters?",
-    "Look at what the queen on d6 now does.",
-    "Both rook moves are at least 50 cp worse than the best move; something concrete stops the plan."
+    "Look for a White move that makes the most of the queen standing on d6.",
+    "The pawn move f4 is much stronger; both rook moves are at least 50 cp worse."
    ],
-   "explain": "The open file is still there, but the engine rates both rook moves at least 50 cp below its best move [V]. The checklist is a first look: a concrete reply by the opponent can make an imbalance unusable.",
+   "explain": "The open file is still there, but the engine now prefers f4, which hits Black's pieces and leaves only ...f5. Both rook moves are at least 50 cp worse [V]. The list names the differences; a concrete move can still beat the obvious one.",
    "tags": [
     "node.POS.IMBALANCES",
     "tier.4",
@@ -1650,7 +1660,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBp3-14",
-   "prompt": "Black asks again with ...g5. White's centre is closed: the pawns on d3, c3 and e4 face Black's e5 and d6. Does the question hold? Predict, then check.",
+   "prompt": "Black asks again with ...g5. White has not yet played d4: the pawns on d3, c3 and e4 face Black's e5 and d6. Does the question hold? Predict, then check.",
    "answer": {
     "outcome": "yes",
     "options": [
@@ -1699,11 +1709,11 @@
     }
    ],
    "hints": [
-    "Can White open the centre with a pawn move?",
+    "Can White open the centre now, and would it help?",
     "Where does the bishop go after ...g5, and how many squares does it have?",
-    "It retreats to g3 and has 3 moves; the pawns on d3, c3 and e4 keep the centre shut."
+    "It retreats to g3. White's break d4 is possible but the engine does not favour it."
    ],
-   "explain": "The engine ranks g5 among its top moves. After g5 Bg3 the bishop has 3 moves, and no white pawn attacks e5. In this structure the question costs Black nothing in the engine's rating.",
+   "explain": "The engine ranks g5 among its top moves (within 30 cp of a6, a5 and Qe7) [V]. White's d4 break is available but not good for White here, so the question costs Black nothing in the engine's rating; it is not better than the quiet moves.",
    "tags": [
     "node.POS.PIN.STRATEGIC",
     "tier.4",
@@ -2086,7 +2096,8 @@
     "moves": [
      "f6h5",
      "d7g4",
-     "g7g5"
+     "g7g5",
+     "d7e7"
     ]
    },
    "claims": [
@@ -2097,7 +2108,8 @@
       "moves": [
        "f6h5",
        "d7g4",
-       "g7g5"
+       "g7g5",
+       "d7e7"
       ],
       "within_cp": 25
      },
@@ -2125,9 +2137,9 @@
    "hints": [
     "Is the knight really pinned?",
     "With nothing behind it, the knight can simply move.",
-    "Nh5, Qg4 and g5 are all fine: there is no pin to answer."
+    "Nh5, Qg4, Qe7 and g5 are all fine: there is no pin to answer."
    ],
-   "explain": "The bishop attacks the knight, but d8 and e7 are empty, so the knight is free and the pin question does not arise. The engine rates Nh5, Qg4 and g5 within 25 cp of its first choice.",
+   "explain": "The bishop attacks the knight, but d8 and e7 are empty, so the knight is free and the pin question does not arise. The engine rates Nh5, Qg4, Qe7 and g5 within 25 cp of its first choice.",
    "tags": [
     "node.POS.PIN.STRATEGIC",
     "tier.4",
@@ -2318,7 +2330,7 @@
    ],
    "hints": [
     "Which side has more active pieces?",
-    "Black's knight on a5 and bishop on d5 stand far from the king.",
+    "Material is equal, so compare piece placement: Black's knight on a5 is on the rim.",
     "White stands clearly better."
    ],
    "explain": "The engine rates the position at least 1.2 pawns in White's favour [V]. The valuation comes first: it decides what kind of game to play.",
@@ -2389,7 +2401,7 @@
    ],
    "hints": [
     "From a better position, which kind of move keeps the advantage: a trade that removes Black's best piece, or a retreat?",
-    "Black's bishop on d5 is its best piece, and your knight attacks it.",
+    "Your knight attacks the bishop on d5; trading it keeps your pieces active.",
     "Nxd5."
    ],
    "explain": "With the better game, the active move Nxd5 is the engine's first choice; the retreats Nd2 and Ne1 are each at least 100 cp worse. Here, retreating wastes the advantage.",
@@ -2584,10 +2596,12 @@
    "cue": 2,
    "task": "find_move",
    "position": "PBp3-23",
-   "prompt": "The position is roughly equal. Choose the move that fits that: improve a piece, do not force matters.",
+   "prompt": "The position is roughly equal. Choose a useful move that does not force matters.",
    "answer": {
     "moves": [
-     "b1e1"
+     "b1e1",
+     "c3c4",
+     "g2g4"
     ]
    },
    "claims": [
@@ -2605,10 +2619,13 @@
      "type": "best_move_in",
      "params": {
       "moves": [
-       "b1e1"
-      ]
+       "b1e1",
+       "c3c4",
+       "g2g4"
+      ],
+      "within_cp": 25
      },
-     "statement": "The engine's first choice is Re1."
+     "statement": "Re1, c4 and g4 are each within 25 cp of the engine's first choice."
     },
     {
      "id": "C3",
@@ -2622,10 +2639,10 @@
    ],
    "hints": [
     "When nothing is clearly better, which rook is doing the least?",
-    "The rook on b1 is not on a useful file.",
-    "Rb1-e1."
+    "Which of your pieces or pawns could improve without starting a fight?",
+    "Re1, c4 and g4 all fit; e5 does not."
    ],
-   "explain": "The position is roughly equal [V]. The engine's first choice improves the worst-placed rook (Re1); the advance e5 is at least 80 cp worse.",
+   "explain": "The position is roughly equal [V]. Re1, c4 and g4 are all within about 10 cp of each other; none forces matters. The advance e5 is at least 80 cp worse.",
    "tags": [
     "node.POS.PLAN.MODE",
     "tier.4",
@@ -2841,7 +2858,9 @@
    "answer": {
     "moves": [
      "e6e5",
-     "f8e7"
+     "f8e7",
+     "c8d7",
+     "c6d4"
     ]
    },
    "claims": [
@@ -2851,11 +2870,13 @@
      "params": {
       "moves": [
        "e6e5",
-       "f8e7"
+       "f8e7",
+       "c8d7",
+       "c6d4"
       ],
       "within_cp": 25
      },
-     "statement": "Both moves are within 25 cp of the first choice."
+     "statement": "e5, Be7, Bd7 and Nd4 are each within 25 cp of the engine's first choice."
     },
     {
      "id": "C2",
@@ -2881,7 +2902,7 @@
     "If nobody does, which kind of game suits an equal position?",
     "Improve a piece or make a useful pawn move; c4 loses at least 100 cp."
    ],
-   "explain": "The position is roughly equal and two different moves are sound; the pawn push c4 is at least 100 cp worse. An equal position asks for patient improvement, not a forced plan.",
+   "explain": "The position is roughly equal and several moves are sound (e5, Be7, Bd7, Nd4); the pawn push c4 is at least 100 cp worse. An equal position asks for patient improvement, not a forced plan.",
    "tags": [
     "node.POS.PLAN.MODE",
     "tier.4",
@@ -3028,7 +3049,7 @@
     "Which square is the first one that is not empty?",
     "The knight on f3."
    ],
-   "explain": "The knight on f3 is the only man between the bishop and g2. It looks like an attacker, but it is also a defender: if it leaves, Black's bishop attacks g2. When you allocate pieces, ask which of them are already doing a defensive job.",
+   "explain": "The knight on f3 is the only man between the bishop and g2. It looks like an attacker, but it is also a shield: if it leaves, Black's bishop can trade off White's bishop on g2. When you allocate pieces, ask which of them are already doing a defensive job.",
    "tags": [
     "node.POS.PLAN.PIECES",
     "tier.4",
@@ -3097,7 +3118,7 @@
     "Look at the long diagonal from b7.",
     "After Ng5, Black's bishop attacks g2; the engine rates Ng5 at least 80 cp below its best move."
    ],
-   "explain": "Sending the knight to g5 allows the exchange on g2 [I], and the engine rates Ng5 at least 80 cp below its best move [V]. The knight is one of the minimum defenders; keep it unless you have counted what it guards.",
+   "explain": "Sending the knight to g5 allows the exchange on g2 [I], and the engine rates Ng5 at least 80 cp below its best move [V]. The knight does a shielding job here; keep it unless you have counted what it guards.",
    "tags": [
     "node.POS.PLAN.PIECES",
     "tier.4",

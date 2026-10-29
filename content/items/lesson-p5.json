@@ -511,7 +511,7 @@
    "skill": "POS.PLAN.RACE.D1",
    "cue": 2,
    "task": "predict_outcome",
-   "prompt": "White to move. White's a-pawn on a4 needs 4 moves and Black's h-pawn on h5 needs 4. Black's king stands on e8. (With the king on f8 the same count is a win for White.) What is the result for the side to move with best play? Predict, then check.",
+   "prompt": "White to move. White's a-pawn on a4 needs 4 moves and Black's h-pawn on h5 needs 4. Black's king stands on e8. What is the result for the side to move with best play? Predict, then check.",
    "answer": {
     "outcome": "loss",
     "options": [
@@ -934,7 +934,7 @@
    "skill": "POS.PROPHYLAXIS.D1",
    "cue": 2,
    "task": "predict_outcome",
-   "prompt": "Black to move. White's knight stands on f3 and White threatens the pawn break c3-c4. Must Black deal with it now? Answer yes if the quiet move that stops c4 is clearly better than the natural alternatives (the engine's list shows the gap; a centipawn is one hundredth of a pawn in its score). Predict, then check.",
+   "prompt": "Black to move. White's knight stands on f3 and White threatens the pawn break c3-c4. Must Black deal with it now? Answer yes if the quiet move that stops c4 is clearly better than the natural alternatives (the check afterwards compares the moves by the engine's score; a centipawn is one hundredth of a pawn). Predict, then check.",
    "answer": {
     "outcome": "yes",
     "options": [
@@ -1017,7 +1017,7 @@
    "skill": "POS.PROPHYLAXIS.D1",
    "cue": 2,
    "task": "predict_outcome",
-   "prompt": "Black to move. White's knight stands on h2 (not on f3), and White still has the break c3-c4. Must Black deal with it now? Answer yes if the quiet move that stops c4 is clearly better than the natural alternatives (the engine's list shows the gap; a centipawn is one hundredth of a pawn in its score). Predict, then check.",
+   "prompt": "Black to move. White's knight stands on h2 (not on f3), and White still has the break c3-c4. Must Black deal with it now? Answer yes if the quiet move that stops c4 is clearly better than the natural alternatives (the check afterwards compares the moves by the engine's score; a centipawn is one hundredth of a pawn). Predict, then check.",
    "answer": {
     "outcome": "no",
     "options": [
@@ -1097,7 +1097,7 @@
    ],
    "hints": [
     "Which Black move would stop c4, and is it the only good move?",
-    "The engine's top moves are close, and one of them (Bd6) does not touch c4.",
+    "Which other Black moves come to mind, and would any of them be a mistake if White then played c4?",
     "A move that ignores c4 is not clearly worse here."
    ],
    "explain": "With the knight on h2 the engine's best moves, among them Nd6, Na5 and Bd6, are within 40 centipawns of each other. Nd6 and Na5 both attack c4, and Bd6 does not, so stopping the break is allowed but not needed. This holds for this one change only; it is not a general result.",
@@ -1332,16 +1332,15 @@
     "kind.authored",
     "task.find_move",
     "lang.en",
-    "theme.prophylaxis",
     "tier.5",
     "silent.proph"
    ],
    "hints": [
     "Look at White's knight on c3 and at the pawn on d4.",
     "Bb4 pins the knight on c3 to the king on e1.",
-    "A pinned knight cannot legally move, so it cannot go to d5."
+    "A pinned knight cannot legally move."
    ],
-   "explain": "The engine rates Bb4 best, at least 60 centipawns above Be7. After Bb4 the knight on c3 has no legal move because it is pinned to the king. That this stops White's d5 is the author's reading [I]; the engine confirms only the move.",
+   "explain": "The engine rates Bb4 best, at least 60 centipawns above Be7. After Bb4 the knight on c3 has no legal move because it is pinned to the king. The engine's own line still lets White play d5 (exd5 Qxd5), so this move pins a piece; the item does not show that it prevents a break.",
    "id": "IBp5-15",
    "position": "PBp5-16",
    "orientation": "black",
@@ -1397,7 +1396,7 @@
    ],
    "hints": [
     "Is there one move Black must find, or several that are close?",
-    "Compare the engine's top three moves.",
+    "Try Bd6, Nd6 and Be7 in your head: does one of them clearly beat the other two?",
     "None of them is forced."
    ],
    "explain": "The engine's three best moves are within 40 centipawns of each other, so no single prevention is demanded here; other moves are also close behind. This is a position where asking 'what does he want?' does not produce one forced answer.",
@@ -1709,7 +1708,7 @@
    ],
    "hints": [
     "List what each White pawn can do in one move.",
-    "The pawns on both sides are four ranks apart.",
+    "Four empty ranks lie between the White and Black pawns.",
     "No pawn can reach a square next to an enemy pawn."
    ],
    "explain": "No White pawn move attacks any Black pawn, so there is no break and the question 'is it ready?' does not arise.",
@@ -1794,7 +1793,7 @@
    "skill": "POS.FREEING.D1",
    "cue": 3,
    "task": "predict_outcome",
-   "prompt": "White to move. Does White have a pawn move that attacks a Black pawn, a break to time? Predict, then check.",
+   "prompt": "White to move. Does White have a pawn move that attacks a Black pawn? Predict, then check.",
    "answer": {
     "outcome": "no",
     "options": [
@@ -1876,10 +1875,10 @@
    ],
    "hints": [
     "Look at each pawn move and ask whether it lands next to a Black pawn.",
-    "All pawns are four ranks apart, so no pawn move attacks a pawn.",
+    "Four empty ranks lie between the White and Black pawns, so no pawn move attacks a pawn.",
     "If no pawn move attacks a pawn, there is no break to time."
    ],
-   "explain": "No White pawn move attacks any Black pawn, so there is no break to time; the moves that remain are quiet piece moves, and several are about equally good. This is one constructed position, not a general result.",
+   "explain": "No White pawn move attacks any Black pawn, so there is no break to time; the moves that remain are quiet moves, and several are about equally good. This is one constructed position, not a general result.",
    "id": "IBp5-22",
    "position": "PBp5-23",
    "orientation": "white",
@@ -1972,7 +1971,7 @@
    "skill": "POS.OVERPROTECT.D1",
    "cue": 2,
    "task": "predict_outcome",
-   "prompt": "White to move. The pawn on d4 is attacked once, by the pawn on e5, and defended once, by the queen. Would a second defender, Nf3, be among the engine's top moves? Predict, then check.",
+   "prompt": "White to move. The pawn on d4 is attacked once, by the pawn on e5, and defended once, by the queen. Would a second defender, Nf3, be within 40 centipawns of the engine's best move? Predict, then check.",
    "answer": {
     "outcome": "yes",
     "options": [
@@ -2056,7 +2055,7 @@
    "skill": "POS.OVERPROTECT.D1",
    "cue": 2,
    "task": "predict_outcome",
-   "prompt": "White to move. The pawn on e4 is attacked once, by the knight on f6, and defended once, by the knight on c3. The pawn on d4 is attacked by the pawn on e5 and defended by the queen. Would a second defender of e4, Bd3, be among the engine's top moves? Predict, then check.",
+   "prompt": "White to move. The pawn on e4 is attacked once, by the knight on f6, and defended once, by the knight on c3. The pawn on d4 is attacked by the pawn on e5 and defended by the queen. Would a second defender of e4, Bd3, be within 40 centipawns of the engine's best move? Predict, then check.",
    "answer": {
     "outcome": "no",
     "options": [
@@ -2143,7 +2142,7 @@
     "The bishop on d3 stands on the d-file in front of the queen.",
     "Look at d4 after Bd3."
    ],
-   "explain": "Bd3 adds a defender of e4, but it blocks the queen's protection of d4, which the pawn on e5 attacks, so Black wins a pawn with ...exd4 (the engine's line, depth 16). The engine rates Bd3 at least 100 centipawns below its best move. Counting defenders of one pawn is not enough; ask what the defender stops doing.",
+   "explain": "Bd3 adds a defender of e4, but it blocks the queen's defence of d4, which the pawn on e5 attacks, so Black wins a pawn with ...exd4 (engine line, depth 16). This is a different lesson from over-protection: before adding a defender, ask what the defender stops doing.",
    "id": "IBp5-25",
    "position": "PBp5-25",
    "orientation": "white",
@@ -2325,6 +2324,8 @@
      "b7b6",
      "f6e4",
      "f8e8",
+     "a7a5",
+     "c6c5",
      "b7b5",
      "h7h6"
     ]
@@ -2338,6 +2339,8 @@
        "b7b6",
        "f6e4",
        "f8e8",
+       "a7a5",
+       "c6c5",
        "b7b5",
        "h7h6"
       ]
@@ -2616,9 +2619,9 @@
     "tier.4"
    ],
    "hints": [
-    "Count the moves of both pieces, then check the count against the engine.",
+    "Count the moves of both pieces, then check each capture for a check.",
     "The knight has 8 moves and the bishop 3.",
-    "The engine does not trade the piece with fewer moves here."
+    "The count points to the bishop. Look at what the knight capture does with check."
    ],
    "explain": "The count says to trade the bishop (3 moves) and keep the knight (8), but the engine rates Nxe7+ as best and Bxf6 at least 100 centipawns lower. Nxe7+ forces the queen to recapture on e7, and the bishop on h4 then pins the knight on f6 to it. That reason is the author's reading [I]; the engine confirms only the move and the gap.",
    "id": "IBp5-31",
@@ -2693,8 +2696,8 @@
     "tier.4"
    ],
    "hints": [
-    "Compare the engine's verdict on both trades.",
-    "Both trades are close to the best move.",
+    "Compare what each trade leaves behind: pawns, king, pieces that are attacked.",
+    "Count the legal moves of both pieces; are they far apart?",
     "When both are near the best move, the move count does not decide."
    ],
    "explain": "Bxc6 and Nxd7 are both within 40 centipawns of the engine's best move, so neither is 60 centipawns worse than the other. The 8-against-6 move count does not separate them here.",
@@ -2718,7 +2721,9 @@
    "prompt": "White to move. Find a strong move.",
    "answer": {
     "moves": [
-     "d5b4"
+     "d5b4",
+     "e1e2",
+     "e1f1"
     ]
    },
    "claims": [
@@ -2727,7 +2732,9 @@
      "type": "best_move_in",
      "params": {
       "moves": [
-       "d5b4"
+       "d5b4",
+       "e1e2",
+       "e1f1"
       ]
      },
      "statement": "Nxb4 is the engine's best move."
@@ -2760,6 +2767,16 @@
       "count": 7
      },
      "statement": "The bishop on b5 has 7 legal moves."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Black's bishop on b4 attacks the rook on e1."
     }
    ],
    "tags": [
@@ -2775,9 +2792,9 @@
    "hints": [
     "Which pieces can be traded for pieces of the other kind?",
     "The knight and the bishop each have a trade available.",
-    "Count the moves of both, then check the engine's verdict."
+    "Count the moves of both, then check whether any of your pieces is attacked."
    ],
-   "explain": "The engine's best move is Nxb4, which trades the knight (8 moves) rather than the bishop (7 moves), and it rates Bxc6 at least 60 centipawns lower. The move count points the other way, so it is a rule of thumb and not a law.",
+   "explain": "The engine's best move is Nxb4. It rates Bxc6 at least 60 centipawns lower because Black's bishop on b4 attacks the rook on e1 and wins it after Bxc6 Bxe1. The counts (8 and 7) are too close to decide anyway; a piece already under attack outranks them.",
    "id": "IBp5-33",
    "position": "PBp5-33",
    "orientation": "white",
@@ -2793,7 +2810,9 @@
    "prompt": "White to move. Find a strong move.",
    "answer": {
     "moves": [
-     "e5g6"
+     "e5g6",
+     "d3g3",
+     "d3e3"
     ]
    },
    "claims": [
@@ -2802,7 +2821,9 @@
      "type": "best_move_in",
      "params": {
       "moves": [
-       "e5g6"
+       "e5g6",
+       "d3g3",
+       "d3e3"
       ]
      },
      "statement": "Nxg6 is the engine's best move."
@@ -2852,7 +2873,7 @@
     "The knight and the bishop each have 7 moves.",
     "When the counts are equal, something else has to decide."
    ],
-   "explain": "The knight and the bishop have 7 moves each, so the count cannot choose between the two trades. The engine rates Nxg6 best and Bxf6 at least 100 centipawns lower.",
+   "explain": "The knight and the bishop have 7 moves each, so the count cannot choose between the two trades. The engine rates Nxg6 best and Bxf6 at least 100 centipawns lower; the reason is not shown by the count.",
    "id": "IBp5-34",
    "position": "PBp5-34",
    "orientation": "white",
@@ -3174,7 +3195,7 @@
    "skill": "POS.CONVERT.D1",
    "cue": 3,
    "task": "find_move",
-   "prompt": "White to move. Find a strong move: take material, exchange pieces, or make a threat or quiet move.",
+   "prompt": "White to move. Find a strong move.",
    "answer": {
     "moves": [
      "d3d4"
@@ -3246,7 +3267,7 @@
     "A pawn push to d4 attacks e5.",
     "Compare it with the queen moves."
    ],
-   "explain": "The engine's best move is d4, at least 60 centipawns above Qb4. It captures nothing, but it attacks the pawn on e5, so it is a move with a threat and not a quiet one. In a position that is already clearly better, the strongest move need not capture anything.",
+   "explain": "The engine's best move is d4, at least 60 centipawns above Qb4. It captures nothing and wins nothing at once: it attacks the pawn on e5, which is defended, and offers a pawn exchange that opens lines for the extra rook. In a position that is already clearly better, the strongest move need not capture anything.",
    "id": "IBp5-39",
    "position": "PBp5-40",
    "orientation": "white",
@@ -3259,7 +3280,7 @@
    "skill": "POS.CONVERT.D1",
    "cue": 3,
    "task": "find_move",
-   "prompt": "Black to move. Find a strong move: take material, exchange pieces, or make a threat or quiet move.",
+   "prompt": "Black to move. Find a strong move.",
    "answer": {
     "moves": [
      "b7b5"

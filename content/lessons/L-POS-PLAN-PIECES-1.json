@@ -5,7 +5,7 @@
   "depth": "D1",
   "minutes": 11,
   "outcomes": [
-    "Counts the pieces that bear on the target, and those that can join, against the defenders",
+    "Asks of each attacking piece whether it also does a defensive job before sending it",
     "Names a piece that must stay home and says what it blocks or guards",
     "Says when there is no definite target to allocate pieces to"
   ],
@@ -17,7 +17,7 @@
     {
       "type": "board",
       "fen": "r2q1rk1/pbpn2pp/1p1pRb2/8/5P2/2P2NP1/PP2Q1BP/R1B3K1 w - - 1 16",
-      "caption": "White to move. The knight on f3 looks ready to jump to g5. What else is it doing?",
+      "caption": "White to move. The knight on f3 stands between Black's bishop on b7 and White's bishop on g2.",
       "line": [
         {
           "move": "f3g5",
@@ -29,15 +29,7 @@
         },
         {
           "move": "e2g2",
-          "say": "Qxg2 recaptures."
-        },
-        {
-          "move": "f6g5",
-          "say": "Bxg5: the black bishop takes the knight."
-        },
-        {
-          "move": "f4g5",
-          "say": "fxg5 recaptures. Pieces are level, but White's bishop on g2 is gone and the engine rates Ng5 well below the best move."
+          "say": "Qxg2 recaptures. After the trade White's fianchetto bishop is gone and the engine rates Ng5 about 90 cp lower than g4 [V]."
         }
       ],
       "arrows": [
@@ -90,19 +82,14 @@
     {
       "type": "contrast",
       "title": "Who stays, who goes",
-      "prompt": "Same position, three questions. First: which white man is already doing a defensive job? Second: does sending the knight to g5 work? The third is a different position: is there anything definite to allocate pieces to? Predict the last two, then check.",
+      "prompt": "Two questions about the board above: first, which white man is already doing a defensive job? Second, does sending the knight to g5 work? Then a different position: is there anything definite to allocate pieces to? Predict the last two, then check.",
       "working": "IBp3-PCS-1",
       "failing": "IBp3-PCS-2",
       "irrelevant": "IBp3-PCS-4"
     },
     {
       "type": "card",
-      "text": "A piece that looks like an attacker may be a defender: ask what changes if it leaves. Reserve only the necessary defenders, and recount, because one missed defender turns a winning attack into a losing one. *Rule of thumb:* count the pieces already aimed at the target plus those that can join with a threat next move; attack when that total beats the defenders. If not, improve your pieces first. The counting itself is taught in \"Count before you attack: attack now, not yet, or no\"."
-    },
-    {
-      "type": "item",
-      "item": "IBp3-PCS-3",
-      "silent": true
+      "text": "A piece that looks like an attacker may be doing a defensive job (a shield): ask what changes if it leaves. Reserve only the necessary defenders, and recount, because one missed defender turns a winning attack into a losing one. *Rule of thumb:* count the pieces already aimed at the target plus those that can join with a threat next move; attack when that total beats the defenders. If not, improve your pieces first. The counting itself is taught in \"Count before you attack: attack now, not yet, or no\"."
     },
     {
       "type": "item",
