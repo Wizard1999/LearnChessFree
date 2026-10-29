@@ -104,7 +104,7 @@ export function Course() {
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
-  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
+  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
@@ -319,7 +319,7 @@ export function Course() {
   return (
     <>
     <main className={`page wide mappage curriculum${dockOpen || (node && sk && !busy) ? ' dockopen' : ''}`}>
-      <h1>Curriculum map</h1>
+      <h1 className="sr-only">Curriculum</h1>
       {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
 
