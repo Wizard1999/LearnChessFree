@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parent.parent
 FILES = ROOT / "library" / "files"
 CATALOG = ROOT / "library" / "catalog.json"
 CSV = ROOT / "library" / "candidates.csv"
+APPROVED = json.loads((ROOT / "library" / "approved.json").read_text(encoding="utf8")) if (ROOT / "library" / "approved.json").exists() else {}
 CUTOFF = 1930  # US public domain by publication date as of 2026 (95-year rule); texts first published up to this year qualify
 UA = {"User-Agent": "scholarmate-library-fetch/1.0 (rights-checked; contact via github.com/Wizard1999/LearnChessFree)"}
 
@@ -81,9 +82,13 @@ def main() -> int:
             print(f"{key}: could not fetch ({e})")
             continue
         ok, why, year = judge(raw)
+        note = APPROVED.get(gid)
+        approved = False
+        if not ok and note:
+            why, ok, approved = f"{note} (script said: {why})", True, True
         rec = {"id": key, "source_url": f"https://www.gutenberg.org/ebooks/{gid}", "title": header(raw, "Title"), "author": header(raw, "Author"),
                "release": header(raw, "Release date"), "language": header(raw, "Language"), "year": year, "kind": "book",
-               "rights": {"label": "PD-US by publication date" if ok else "not cleared", "basis": why, "checked": time.strftime("%Y-%m-%d")},
+               "rights": {"label": ("Approved by the owner after a hand check" if approved else "PD-US by publication date") if ok else "not cleared", "basis": why, "checked": time.strftime("%Y-%m-%d")},
                "size": len(raw.encode("utf8")), "status": "stored" if ok else "refused"}
         print(f"{key}: {'STORE' if ok else 'REFUSE'} | {rec['title'][:50]} | {rec['author']} | {why}")
         if ok and not dry:

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
 interface Book {
-  id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string; size: number
+  id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string | null; size: number
   rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
 }
 type Sort = 'title' | 'author' | 'year' | 'level' | 'size'
@@ -53,8 +53,8 @@ export function Bookshelf() {
                 <p className="small">{b.blurb}</p>
                 <p className="small muted"><span className="badge">{b.rights.label}</span> {b.rights.basis} (checked {b.rights.checked})</p>
                 <div className="row">
-                  <button type="button" className="primary" onClick={() => setOpen(b)}>Read</button>
-                  <a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a>
+                  {b.file ? <><button type="button" className="primary" onClick={() => setOpen(b)}>Read</button>
+                  <a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a></> : <span className="small muted">Large file ({Math.round(b.size / 1048576)} MB): read or download it at the source.</span>}
                   <a className="button" href={b.source_url} target="_blank" rel="noreferrer">Original source</a>
                 </div>
               </li>
