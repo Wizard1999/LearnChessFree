@@ -46,3 +46,9 @@ Andrew pasted an 80-entry list compiled by ChatGPT (datasets, books, game collec
 - The CC0 claim for the cartoon chess pieces (no. 7) and every other modern item must be checked on its own page.
 - Several are in German, French or Italian. A new English translation of a public-domain original is our own work and can be shared; we cannot copy anyone else's translation.
 - Priority order proposed in the list (Lichess data, the beginner books, positional classics, annotated games, endgame studies, periodicals) agrees with the order in this plan; periodicals come last because they need chosen issues.
+
+## Queue
+Andrew approved (29 October 2026): build and run `tools/fetch_sources.py` right after the current lesson-writing wave (p5, p6, a3, e3, e4) finishes and is validated and committed; then the reading agents in the planned order.
+
+## Principle (from a second outside review, 29 October 2026)
+The library is an acquisition catalogue and a reference shelf, not the curriculum blueprint. The main curriculum is written from learning goals (what a learner must be able to do), then examples are chosen from public-domain books, CC0 data or our own verified positions. Old examples are fine; old explanations, opening evaluations and advice are checked against the engine and current understanding. Two studies cited in that review (a 2026 study of 44,213 Chess.com players; an August 2026 preprint on puzzle selection) were not read by us: [S: secondary, unverified].
