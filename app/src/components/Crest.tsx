@@ -1,4 +1,4 @@
-/** An original crest (a shield holding a rook over an open book), shown only in the Collegiate look. It copies no real institution's arms. */
+/** An original crest (a shield holding a rook over an open book), shown in the masthead of every look, and drawn as the browser-tab icon (public/icon.svg). It copies no real institution's arms. */
 export function Crest() {
   return (
     <svg className="crest" viewBox="0 0 32 38" width="26" height="31" role="img" aria-label="Crest" focusable="false">
