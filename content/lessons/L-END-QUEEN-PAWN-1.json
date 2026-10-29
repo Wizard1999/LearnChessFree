@@ -1,0 +1,140 @@
+{
+ "id": "L-END-QUEEN-PAWN-1",
+ "title": "Queen against a pawn on the seventh: when it is only a draw",
+ "skill": "END.QUEEN-PAWN",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Classifies a queen against a pawn one step from queening as win or draw from the pawn's file, when the stronger king is far away",
+  "Recognises the stalemate trap that can save a rook or a bishop pawn",
+  "Says why a pawn that is still far from queening is a different case"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A queen usually beats a lone pawn. But when the pawn is one step from queening and its own king stands beside it, a **stalemate** trap can save it: a careless queen move leaves the weaker side with no legal move. The pawn's **file** decides whether the trap exists. Watch one trap first, then compare files."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/7K/8/3Q4/p7/k7 w - - 0 1",
+   "caption": "White to move: a queen against a pawn on a2, the black king in the corner and the white king far away. The tablebase says this position is a draw. One tempting move is shown.",
+   "line": [
+    {
+     "move": "d3b3",
+     "say": "The queen goes to b3, next to the pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With White to move, the result is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d3b3"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d3b1"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "b1",
+      "color": "white",
+      "count": 1,
+      "after_move": "d3b3"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "b2",
+      "color": "white",
+      "count": 1,
+      "after_move": "d3b3"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "mobility",
+     "params": {
+      "square": "a2",
+      "mode": "legal",
+      "count": 0,
+      "after_move": "d3b3"
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe2-1"
+  },
+  {
+   "type": "card",
+   "text": "**When the draw works.** In this course's set-ups (stronger king far away, weaker king beside the pawn), a pawn on the seventh rank draws on the a-, c-, f- and h-files (rook and bishop pawns) and loses on the b-, d-, e- and g-files. Rule of thumb: the nearer the stronger king, the less this holds. A pawn further back is another case."
+  },
+  {
+   "type": "contrast",
+   "title": "Same set-up, a different file",
+   "prompt": "In each position the pawn is one step from queening, its king is beside it and the stronger king is far away. The first two differ in the pawn's file (a or b). In the third the pawn is still far from queening. Predict each result, then check.",
+   "working": "IE-QP-2",
+   "failing": "IE-QP-1",
+   "irrelevant": "IBe2-2"
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-14",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-3",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.QUEEN-PAWN",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which fact did you check first in each position: the pawn's file, how far it had advanced, or where the stronger king stood? Which one did you forget in a position you got wrong?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/edlasker_chess-strategy.md (K29: queen against a pawn on the seventh; ideas and conditions only)",
+  "docs/curriculum-map-v1.1.md (END.QUEEN-PAWN)",
+  "Shipped items IE-QP-1, IE-QP-2, IE-QP-6, IE-QP-7, IE-QP-8, IE-QP-9, IE-QP-13, IE-QP-14 cover the eight files; all results from the Lichess tablebase service [V]",
+  "All new positions: own constructions, results from the tablebase"
+ ]
+}

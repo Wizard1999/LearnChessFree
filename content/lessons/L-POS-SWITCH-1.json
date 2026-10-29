@@ -1,0 +1,140 @@
+{
+  "id": "L-POS-SWITCH-1",
+  "title": "Switching wings: can the heavy piece cross, and should it?",
+  "skill": "POS.SWITCH",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Describes a switch of wing in three parts and checks whether a rook or queen can change wings in one move",
+    "Checks, from the legal moves, whether a rook can change wings in one move",
+    "Tells apart three situations: a swing that works, a swing that is possible but bad, and a piece already on the right wing",
+    "Does not swing a heavy piece across just because it can"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **switch of wing** has three parts. First a demonstration: a pawn advance or threat on one wing. Second, the opponent's pieces move across to meet it. Third, your own rooks or queen swing to the other wing, where fewer defenders now stand. Rule of thumb: it works when your heavy pieces can change wings in a move or two and the opponent is slow to bring defenders back."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/p1p1nbpp/2nq1p2/3p4/1p1P2P1/P2B1N1P/1PPNQP2/R4RK1 b - - 0 14",
+      "caption": "Black to move. Black has pushed a pawn to b4 on the queenside, where it attacks a3 and c3: that is the demonstration. White's king is on the kingside. Black's rook on a8 has not moved yet.",
+      "line": [
+        {
+          "move": "a8e8",
+          "say": "The rook leaves the queenside corner for the e-file in one move, towards the side where White's king stands."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "b4",
+        "a8",
+        "e8"
+      ],
+      "claims": [
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "b4",
+            "piece": "p"
+          },
+          "statement": "Black has a pawn on b4.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "b4",
+            "includes": [
+              "a3",
+              "c3"
+            ]
+          },
+          "statement": "The pawn on b4 attacks a3 and c3.",
+          "id": "C2"
+        },
+        {
+          "type": "king_wing",
+          "params": {
+            "color": "white",
+            "wing": "kingside"
+          },
+          "statement": "White's king is on the kingside.",
+          "id": "C3"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "a8e8"
+          },
+          "statement": "Rae8 is legal: the squares between a8 and e8 are empty.",
+          "id": "C4"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a8e8"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 Rae8 is among the engine's accepted moves (Rae8), all within 0.4 pawns of the best.",
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp4-30"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** A swing needs mobile pieces and an opponent who is slow to answer. It fails if the path is blocked, if a pawn guards the landing square, or if you act on the first threat too early. The app can check legal moves and engine ratings but not the opponent's intentions. The three positions below change one feature at a time."
+    },
+    {
+      "type": "contrast",
+      "title": "Swing, bad swing, nothing to swing",
+      "prompt": "Predict which statement fits each position. In the second a Black pawn moved from h6 to h7; in the third White's queen moved from d3 to h3.",
+      "working": "IBp4-31",
+      "failing": "IBp4-32",
+      "irrelevant": "IBp4-33"
+    },
+    {
+      "type": "item",
+      "item": "IBp4-34",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-35",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.SWITCH",
+        "tpl.p4-sw-sel"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in one of your own games, find a moment when you had a threat on one wing. Write what a switch to the other wing would have needed, and one reason to wait before cashing in the threat."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.SWITCH.json (idea from Capablanca CI-33, recalled [R])",
+    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

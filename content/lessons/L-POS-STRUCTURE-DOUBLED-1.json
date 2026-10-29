@@ -1,0 +1,77 @@
+{
+  "id": "L-POS-STRUCTURE-DOUBLED-1",
+  "title": "Doubled pawns: count what they buy",
+  "skill": "POS.STRUCTURE.DOUBLED",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds doubled pawns by the app's definition (two or more pawns of one colour on a file)",
+    "Lists what can compensate for them: the bishop pair, an open or half-open file, central control",
+    "Sees how one changed piece (bishop to knight) changes that list",
+    "Looks at a capture that would double his pawns and checks whether the opponent's recapture leaves them doubled (three unlabeled positions where it does not); accepting lasting doubled pawns is not tested here"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In this app, pawns are **doubled** when two or more pawns of one colour stand on the same file. They are weak mainly when they advance or are stuck and isolated; while they stay still they can be useful. Rule of thumb: look for what they buy (the bishop pair, a half-open file, central control) before counting a loss. See also 'Weak pawns: targets only if you can attack them'."
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-4"
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-121"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Doubled pawns tend to be acceptable with the bishop pair, a half-open file or central control, and while they stay still. They are a problem when isolated, blocked or forced to advance. 'Always bad' is false, and so is 'never matters'. The next positions change one feature at a time; the last three are captures the opponent takes back at once, so they test the exchange."
+    },
+    {
+      "type": "contrast",
+      "title": "Doubled pawns and the bishop pair",
+      "prompt": "Predict which statement fits, then check. In the second position one Black bishop became a knight; in the third a Black pawn is gone, so nobody has doubled pawns.",
+      "working": "IBp4-12",
+      "failing": "IBp4-13",
+      "irrelevant": "IBp4-14"
+    },
+    {
+      "type": "item",
+      "item": "IBp4-15",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.DOUBLED",
+        "tpl.doubled-ctx"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "When a capture would double your pawns, what do you now check first: does the opponent just recapture, or do the doubled pawns stay? Write your own short list."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.DOUBLED.json (idea from Nimzowitsch idea 39 and Znosko-Borovsky C28, recalled [R])",
+    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "shipped items IP-PAWNS-4, IP-MIX-121 (machine-checked)"
+  ]
+}

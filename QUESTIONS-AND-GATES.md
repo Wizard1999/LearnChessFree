@@ -42,6 +42,8 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 
 | G15 | G | Name clearance: do a trademark search (USPTO TSDR and your country's register, education and games classes) or ask a lawyer about "Scholarmate", because a research-community site of that name has held scholarmate.com and .net since 2006; pick and buy a domain (not .com, .net or .org: taken) if you want one; have a Latin reader check any Latin motto you may want later. See `docs/name-decision.md` | I can search the web and registries but cannot clear a trademark or buy anything | Proceed with the name for the beta on your own site | no |
 
+| Q15 | Q | Sources library (`docs/library-plan.md`): may the app ship the full public-domain and openly licensed book texts inside itself (about 5 MB for ten books; works offline in the exe), with large datasets only linked? And do you want to name any specific books or courses to be listed as ideas-only sources? | Shipping makes the shelf work offline and lets people read the originals; it only ever covers rights-clear texts | Ship rights-clear texts, link datasets | no |
+
 ## Answered / done
 *(none yet)*
 

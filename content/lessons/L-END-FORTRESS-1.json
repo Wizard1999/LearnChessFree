@@ -1,0 +1,139 @@
+{
+ "id": "L-END-FORTRESS-1",
+ "title": "Fortresses: when more material cannot break through",
+ "skill": "END.FORTRESS",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Names what a queen-against-rook-and-pawn fortress needs: covered entry squares, protected pieces and a safe waiting move",
+  "Predicts, for one-feature changes, whether a fortress holds or breaks",
+  "Tests a claimed fortress by looking for the break before relying on it"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A **fortress** is a set-up that the stronger side cannot break, even with extra material. The weaker side keeps its pieces protecting one another, covers the squares the enemy could enter, and keeps a harmless waiting move. For the best-known case, a wrong-coloured bishop with a rook pawn, see the lesson *The wrong bishop, and two knights that cannot mate*."
+  },
+  {
+   "type": "board",
+   "fen": "1k6/2p1K3/r7/8/8/8/5Q2/8 b - - 0 1",
+   "caption": "Black to move: king, rook and a pawn against a queen. Natural moves such as Ra5 and Rc6 lose; Rb6 holds. The tablebase says the position is a draw; one line is shown.",
+   "line": [
+    {
+     "move": "a6b6",
+     "say": "Black's rook moves to b6."
+    },
+    {
+     "move": "f2f8",
+     "say": "The queen checks from f8."
+    },
+    {
+     "move": "b8a7",
+     "say": "The king steps to a7."
+    },
+    {
+     "move": "f8f1",
+     "say": "The queen moves to f1."
+    },
+    {
+     "move": "b6d6",
+     "say": "The rook goes to d6."
+    },
+    {
+     "move": "f1a1",
+     "say": "The queen checks on the a-file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With Black to move, the result is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a6b6"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6a5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6c6"
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe2-28"
+  },
+  {
+   "type": "card",
+   "text": "**Ask three questions.** (1) Is every square the queen could enter, or check from, covered? (2) Do the defenders protect each other, and is none forced to move away? (3) Is there a waiting move that breaks nothing? Rule of thumb: the set-up fails if some defender is attacked more often than it is protected, or if the stronger side can force a defender off its post so that an entry square is uncovered."
+  },
+  {
+   "type": "contrast",
+   "title": "One square less",
+   "prompt": "Black has a king, a rook and an f-pawn against a queen. In the second position the black king stands on e8 instead of f8. In the third only the white king has moved. Predict each result, then check.",
+   "working": "IE-FORT-1",
+   "failing": "IE-FORT-2",
+   "irrelevant": "IBe2-27"
+  },
+  {
+   "type": "item",
+   "item": "IE-FORT-3",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-FORT-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-FORT-15",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.FORTRESS",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which of the three questions did you ask first? In a position where the stronger side won, which question would have shown you the break?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/edlasker_chess-strategy.md (K27)",
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-14, CI-15; ideas only)",
+  "docs/curriculum-map-v1.md (S7)",
+  "The corner fortress with a wrong-coloured bishop is taught in L-END-WRONGBISHOP-1",
+  "All new positions: own constructions, results from the Lichess tablebase service [V]"
+ ]
+}

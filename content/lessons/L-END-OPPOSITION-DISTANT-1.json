@@ -1,0 +1,138 @@
+{
+ "id": "L-END-OPPOSITION-DISTANT-1",
+ "title": "Distant opposition: the same fight from afar",
+ "skill": "END.OPPOSITION.DISTANT",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Counts the squares between two kings on one rank or file and says whether the distance is odd",
+  "Chooses the king move that puts the kings on one line with an odd gap and the opponent to move",
+  "States that books count the gap differently and checks the definition before using a rule"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**Opposition**: the kings face each other and the player who must move gives way (see the lesson *Opposition: one tempo between a win and a draw*). **Distant opposition** is the same fight from afar: the kings stand on one file or rank with an **odd number of squares** between them (3 or 5), and the player who just moved holds it. Count the squares between the kings, not the steps."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/3p4/3P3k/1K6/8/8 w - - 0 1",
+   "caption": "White to move. The pawns on d4 and d5 are locked and the kings stand on b3 and h4. The tablebase says White wins; one line is shown.",
+   "line": [
+    {
+     "move": "b3b4",
+     "say": "White's king reaches the fourth rank: five squares lie between the kings."
+    },
+    {
+     "move": "h4g4",
+     "say": "Black's king steps along the rank."
+    },
+    {
+     "move": "b4c5",
+     "say": "White's king goes round the pawns."
+    },
+    {
+     "move": "g4f5",
+     "say": "Black's king steps towards the pawns."
+    },
+    {
+     "move": "c5d5",
+     "say": "White's king takes the pawn on d5."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With White to move, White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b3b4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b3c3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b3c2"
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-DIST-3"
+  },
+  {
+   "type": "card",
+   "text": "**When it matters.** The pawns are locked and each king wants to walk round them, so the king that must give way loses the race. **A warning on words.** Some books count the gap, others the distance, and then 'odd' and 'even' swap. This course counts the squares between the kings. Rule of thumb: when the close form (one square between) is not available, use the distant one."
+  },
+  {
+   "type": "contrast",
+   "title": "The same kings, the other side to move",
+   "prompt": "The pawns are the same in all three positions. In the second the kings are as in the first, but it is White's turn instead of Black's. In the third it is Black's turn again, but the black king starts on c6 instead of b6. Predict each result, then check.",
+   "working": "IBe2-15",
+   "failing": "IBe2-16",
+   "irrelevant": "IBe2-19"
+  },
+  {
+   "type": "item",
+   "item": "IE-DIST-9"
+  },
+  {
+   "type": "item",
+   "item": "IBe2-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-29",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OPPOSITION.DISTANT",
+    "cue.1"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "When you predicted, did you count the squares between the kings first, or ask whose move it was? Which one did you skip in the position where you were wrong?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-13: opposition at a distance; wording of the gap differs from modern usage)",
+  "sources/sheets/edlasker_chess-strategy.md (K23: distant opposition on same-colour squares; ideas only)",
+  "docs/curriculum-map-v1.1.md (END.OPPOSITION.DISTANT)",
+  "All new positions: own constructions, results from the Lichess tablebase service [V]"
+ ]
+}

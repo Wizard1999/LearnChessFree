@@ -1,0 +1,165 @@
+{
+  "id": "L-POS-SPACE-1",
+  "title": "Space: count the safe squares, then look for the lever",
+  "skill": "POS.SPACE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Counts the squares each side's pawns attack in the other side's half and says who has more pawn space (the app's count)",
+    "Finds the pieces in a cramped position that have almost no legal moves",
+    "Checks whether an enemy pawn can attack the pawns that give the space before trusting a space edge",
+    "Tells a position with no pawn space to count from one with a space edge"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In this app, **space** is counted from pawns only: the squares in the opponent's half of the board that your pawns attack. A white pawn on e5 attacks d6 and f6, so enemy pieces cannot use those squares without risk. More such squares usually leaves the other side's pieces fewer places to go. It is a count, not a judgement: it does not say the space is useful."
+    },
+    {
+      "type": "board",
+      "fen": "3r1rk1/ppp2pp1/1bp4p/4P3/2PP2q1/4QNP1/PP3P1P/3R1RK1 b - - 2 19",
+      "caption": "Black to move. White's pawns attack 6 squares in Black's half (b5, c5, d5, d6, e5, f6); Black's pawns attack 0. Count White's pawn squares first.",
+      "line": [
+        {
+          "move": "f8e8",
+          "say": "The rook on f8 has one legal move, e8. Its own king, pawn and rook block it, not White's pawns."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d6"
+        },
+        {
+          "from": "e5",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "f6",
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "space",
+          "params": {
+            "color": "white",
+            "mode": "pawn_attacks",
+            "count": 6,
+            "squares": [
+              "b5",
+              "c5",
+              "d5",
+              "d6",
+              "e5",
+              "f6"
+            ]
+          },
+          "statement": "White's pawns attack 6 square(s) in the opponent's half: b5, c5, d5, d6, e5 and f6.",
+          "id": "C1"
+        },
+        {
+          "type": "space",
+          "params": {
+            "color": "black",
+            "mode": "pawn_attacks",
+            "count": 0,
+            "squares": []
+          },
+          "statement": "Black's pawns attack 0 square(s) in the opponent's half: none.",
+          "id": "C2"
+        },
+        {
+          "type": "mobility",
+          "params": {
+            "square": "f8",
+            "mode": "legal",
+            "count": 1
+          },
+          "statement": "Black's rook on f8 has exactly 1 legal move.",
+          "id": "C3"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "e5",
+            "includes": [
+              "d6",
+              "f6"
+            ]
+          },
+          "statement": "The white pawn on e5 attacks d6 and f6.",
+          "id": "C4"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "f8e8"
+          },
+          "statement": "Re8 is legal.",
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-SQ-73"
+    },
+    {
+      "type": "item",
+      "item": "IBp4-1"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** A space edge helps most when the other side's pieces really have few safe squares and no pawn can attack your space pawns. If a pawn can, the cramped side may free itself with that lever. Count the squares first, then ask: what can the other side attack with one pawn move? The next three positions differ in one feature."
+    },
+    {
+      "type": "contrast",
+      "title": "Same space, a different lever",
+      "prompt": "Predict, then check. The second position moves one Black pawn; in the third the two White space pawns are gone.",
+      "working": "IBp4-3",
+      "failing": "IBp4-4",
+      "irrelevant": "IBp4-5"
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-66",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-77",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-2",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.SPACE",
+        "cue.1"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In a new position, how sure are you that you can tell whether a space edge is real? Write the first two things you would check."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.SPACE.json (idea and conditions from sheets ZB C20, Nimzowitsch ideas 36 and 38, recalled [R]; not re-read in this session)",
+    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "shipped items IP-SQ-73, IP-MIX-66, IP-MIX-77 (machine-checked pawn-space counts)"
+  ]
+}

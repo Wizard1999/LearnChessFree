@@ -1,0 +1,184 @@
+{
+  "id": "L-ATK-PAWNSTORM-1",
+  "title": "Pawn storms: the lever, the pieces behind it, the defenders near",
+  "skill": "ATK.PAWNSTORM",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Finds the pawn lever that attacks a pawn shielding the castled king",
+    "Counts the pieces that stand ready behind the pawns",
+    "Checks whether the lever is still good after a single change to the position",
+    "Says that the storm idea belongs to opposite-side castling, and does not apply when both kings are on one wing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **pawn storm** pushes pawns at a castled king to open a file or diagonal for your pieces. It belongs mainly to **opposite-side castling**, where pawns are cheap and speed counts. A **lever** is a pawn move that attacks one of the pawns shielding the king. Before pushing, count the pieces standing ready behind the pawns."
+    },
+    {
+      "type": "board",
+      "fen": "2kr3r/1pp1qp2/p3b3/6pp/2P1Nn2/3B1Q1P/PP3PP1/3R1RK1 b - - 0 18",
+      "caption": "Black to move. g4 is a lever (it attacks the shield pawn on h3), but a lever is not yet a good move: the engine prefers Nxd3.",
+      "line": [
+        {
+          "move": "g5g4",
+          "say": "The pawn attacks h3, a shield pawn, and the queen on f3. This is a lever. The engine still rates it far below Nxd3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g1",
+            "piece": "K"
+          },
+          "statement": "The white king stands on g1."
+        },
+        {
+          "id": "C2",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f2",
+              "g2",
+              "h3"
+            ]
+          },
+          "statement": "The pawns shielding the white king are exactly f2, g2 and h3."
+        },
+        {
+          "id": "C3",
+          "type": "moves_where",
+          "params": {
+            "property": "pawn_move_attacks",
+            "square": "f2",
+            "moves": []
+          },
+          "statement": "The pawn moves after which the moved pawn attacks f2 are exactly none."
+        },
+        {
+          "id": "C4",
+          "type": "moves_where",
+          "params": {
+            "property": "pawn_move_attacks",
+            "square": "g2",
+            "moves": []
+          },
+          "statement": "The pawn moves after which the moved pawn attacks g2 are exactly none."
+        },
+        {
+          "id": "C5",
+          "type": "moves_where",
+          "params": {
+            "property": "pawn_move_attacks",
+            "square": "h3",
+            "moves": [
+              "g5g4"
+            ]
+          },
+          "statement": "The pawn moves after which the moved pawn attacks h3 are exactly g4."
+        },
+        {
+          "id": "C6",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f4d3"
+            ]
+          },
+          "statement": "Nxd3 is the engine's best move."
+        },
+        {
+          "id": "C7",
+          "type": "move_loses",
+          "params": {
+            "move": "g5g4",
+            "cp": 600
+          },
+          "statement": "The lever g4 is far worse than Nxd3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "h3",
+        "g2",
+        "f2"
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Count Black's queen, rooks, bishops and knights that stand on files e to h in the board position.",
+      "fields": [
+        {
+          "id": "count",
+          "label": "Black pieces on files e to h:",
+          "type": "number",
+          "answer": 4,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-KING-43"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** A storm works when many of your pieces can join before the defender's pieces arrive, and the pawn barrier can be broken. It fails when the barrier is intact and defenders are near. Finding a lever does not tell you whether to play it. *Rule of thumb:* the side that opens lines first often has the initiative, but that is not a theorem. Call a storm *practical* unless you calculated it to be *sound*."
+    },
+    {
+      "type": "contrast",
+      "title": "One change to the position",
+      "prompt": "Predict what happens when the added white piece attacks your queen, and when the kings are on the same wing.",
+      "working": "IL-JBiER",
+      "failing": "IBa2-10",
+      "irrelevant": "IP-KING-39"
+    },
+    {
+      "type": "item",
+      "item": "IL-0zho9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-dPNN8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-KING-40",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.ATK.PAWNSTORM",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In your own games: when you castled on the opposite wing, did you count the pieces behind your pawns before pushing? What would you count next time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/ATK.PAWNSTORM.json (outcomes, conditions, contrasts)",
+    "sources/sheets/edlasker_chess-strategy.md section 4 K18 and sources/sheets/znosko-borovsky_middle-game.md section 4 C30 (ideas only)",
+    "items: IP-KING-39, 40, 43, 44 (generated); Lichess puzzles JBiER, 0zho9, dPNN8 (CC0); authored IBa2-10 (batch a2)"
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "id": "L-SAC-TYPES-1",
+  "title": "Why give material: the job a sacrifice does",
+  "skill": "SAC.TYPES",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the job of a sacrifice (decoy, or removing a guard) and states the payoff that pays for it",
+    "Counts the king's flight squares and the pieces that can recapture before giving anything up",
+    "Tells a sacrifice that fails from one that works after a single change to the position",
+    "Notices when no sacrifice is needed because the material can be won for free"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **sacrifice** gives up material for something you can name. Two jobs to look for first.\n**Decoy:** lure a piece to a square where it hurts its own side.\n**Remove a guard:** take or drive off the piece that guards a key square.\nSome sacrifices do both jobs at once; say which one you would name first. No named job and payoff means you are guessing. Opening lines against a king: 'The Greek gift: when the bishop sacrifice on h7 works, and when it does not'."
+    },
+    {
+      "type": "board",
+      "fen": "5r1k/6pp/7N/8/8/1Q6/6PP/6K1 w - - 0 1",
+      "caption": "White to move. A decoy: the queen is given up to pull the rook onto g8.",
+      "line": [
+        {
+          "move": "b3g8",
+          "say": "The queen goes to g8 with check. The knight on h6 guards g8, so the king cannot take it."
+        },
+        {
+          "move": "f8g8",
+          "say": "The rook takes the queen and now stands next to its own king."
+        },
+        {
+          "move": "h6f7",
+          "say": "Knight to f7 is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "b3g8",
+            "n": 2
+          },
+          "statement": "Qg8+ Rxg8 Nf7 is a forced mate in two."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_move": "b3g8"
+          },
+          "statement": "After Qg8+ one white piece (the knight) guards g8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "g8"
+        },
+        {
+          "from": "h6",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "g8",
+        "f7"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-VASM0-c1"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Name the job in your own words, then pick the closest option, and give the payoff.",
+      "fields": [
+        {
+          "id": "job",
+          "label": "The job:",
+          "options": [
+            "Decoy: a piece is lured to a bad square",
+            "Remove a guard: a defender is taken or driven off",
+            "Neither: nothing was given up"
+          ]
+        },
+        {
+          "id": "payoff",
+          "label": "The payoff (mate? material?):"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When a sacrifice holds.** The payoff must survive Black's best reply, including declining. *Rule of thumb:* count the king's flight squares and the pieces that can recapture before you give anything.\n**When it fails.** One flight square, or one extra recapturing piece, can turn a mate into a lost queen.\n**When it is not needed.** If the material can be won without giving anything up, win it that way."
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, one change",
+      "prompt": "In the first position White has a queen sacrifice: the queen takes the rook that guards f8. Then one thing is changed. Predict for each: sacrifice that works, sacrifice that fails, or no sacrifice at all?",
+      "working": "IL-td6uO-c1",
+      "failing": "IBa2-1",
+      "irrelevant": "IBa2-2"
+    },
+    {
+      "type": "item",
+      "item": "IBa2-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-o8tvI",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-Qyap0",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAC.TYPES",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you play a sacrifice: can you state the job, the payoff and the reply that would refute it? Which of the three is hardest for you?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAC.TYPES.json (outcomes, conditions, contrasts)",
+    "sources/sheets/emlasker_common-sense.md sections 4.1 and 4.4 (ideas only, original wording)",
+    "docs/council-synthesis.md CD-5 (practical versus sound)",
+    "items: Lichess puzzles td6uO, VASM0, o8tvI, Qyap0 (CC0); authored IBa2-1 to IBa2-3 (batch a2)"
+  ]
+}

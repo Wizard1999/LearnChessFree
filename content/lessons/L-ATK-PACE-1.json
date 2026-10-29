@@ -1,0 +1,149 @@
+{
+  "id": "L-ATK-PACE-1",
+  "title": "How fast to attack: forcing now or calm first",
+  "skill": "ATK.PACE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Chooses between forcing play now and a calm strengthening move, and gives the reason (king in the centre, or sound cover)",
+    "Explains why a calm move that adds an attacker is not passive",
+    "Tests whether a defender's piece already in place changes the right pace",
+    "Recognises a position with no attack to pace because material is simply free"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "How fast should an attack go? Two speeds.\n**Quick:** forcing moves now (checks, captures, sacrifices), because the king is still in the centre or the defenders are not yet near.\n**Moderate:** a calm move that brings one more piece to bear, because forcing moves would only trade your attackers away.\nA calm move that adds an attacker is not passive."
+    },
+    {
+      "type": "board",
+      "fen": "r2qk2r/1pp3p1/p3p2p/2b5/4n3/5NPP/PPP1QPB1/R3K2R b KQkq - 1 15",
+      "caption": "Black to move. White's king is still on e1 and has not castled.",
+      "line": [
+        {
+          "move": "c5f2",
+          "say": "Check at once, while the king is still in the centre."
+        },
+        {
+          "move": "e2f2",
+          "say": "White takes the bishop with the queen."
+        },
+        {
+          "move": "e4f2",
+          "say": "The knight takes the queen."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c5f2"
+            ]
+          },
+          "statement": "Bxf2+ is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "c5f2",
+            "min": 4
+          },
+          "statement": "Along the engine line Bxf2+ nets Black at least 4 points."
+        },
+        {
+          "id": "C3",
+          "type": "king_wing",
+          "params": {
+            "color": "white",
+            "wing": "centre"
+          },
+          "statement": "The white king is in the centre."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "d8d5",
+            "cp": 300
+          },
+          "statement": "The calm Qd5 is far worse."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "f2"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "f2"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-6dElZ-c1"
+    },
+    {
+      "type": "card",
+      "text": "**Moderate pace.** When the king is sheltered behind pawns, forcing moves often run out of pieces. A calm move that adds one more attacker can beat a check. Ask: which of my pieces is not yet attacking? This is a *rule of thumb*. Whether to attack at all is the lesson 'Count before you attack: attack now, not yet, or no'."
+    },
+    {
+      "type": "item",
+      "item": "IL-1ZugF-c1"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** Quick when the king is still in the centre or open files point at it. Moderate when the king is sheltered and you can add an attacker.\n**Fails.** A slow move while the king can still castle gives him time. A calm plan fails when the defender's piece is already in place: test that before trusting the plan."
+    },
+    {
+      "type": "contrast",
+      "title": "The calm plan, and what can break it",
+      "prompt": "In the first position a calm move wins. Predict what happens when one black pawn is added, and when material is simply free so there is no attack to pace.",
+      "working": "IL-4gk2r",
+      "failing": "IBa2-4",
+      "irrelevant": "IBa2-5"
+    },
+    {
+      "type": "item",
+      "item": "IL-GvOLm",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-sj4mX",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa2-6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.ATK.PACE",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Take the last position you attacked in. Was the king still in the centre? Did you pick quick or moderate, and what did the defender do in reply?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/ATK.PACE.json (outcomes, conditions, contrasts)",
+    "sources/sheets/emlasker_common-sense.md section 4.10 (ideas only)",
+    "items: Lichess puzzles XrhSo, 6dElZ, 1ZugF, 4gk2r, GvOLm, sj4mX (CC0); authored IBa2-4 to IBa2-6 (batch a2)"
+  ]
+}

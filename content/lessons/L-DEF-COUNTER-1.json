@@ -1,0 +1,123 @@
+{
+  "id": "L-DEF-COUNTER-1",
+  "title": "Counter-attack or defend: count both races",
+  "skill": "DEF.COUNTER",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Counts how many moves each side needs and says whether to counter-attack or defend",
+    "States the two conditions of a counter-attack: complete defence and threats that arrive first",
+    "Notices when a counter-attack that worked is one move too slow after a single change",
+    "Recognises a position with no counter-attack to make"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **counter-attack** answers a threat with a bigger threat of your own. It works only if your own position survives the first reply and your threats arrive first. Count both races: how many moves does the opponent need, how many do you need, and are yours checks? A half-hearted mix of defending and attacking is often the weakest choice (a rule of thumb from the source idea, not a theorem)."
+    },
+    {
+      "type": "board",
+      "fen": "7k/6p1/P6p/5Q2/5n2/7P/2r2q2/6RK w - - 1 31",
+      "caption": "White to move. Black threatens Qh2 mate.",
+      "line": [
+        {
+          "move": "f5f8",
+          "say": "White does not defend: the check comes first."
+        },
+        {
+          "move": "h8h7",
+          "say": "The king steps up."
+        },
+        {
+          "move": "g1g7",
+          "say": "The rook takes g7 and it is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "f5f8",
+            "n": 2
+          },
+          "statement": "Qf8+ forces checkmate in 2 or fewer against the engine's best defence."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "f2h2",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If it were Black's turn, Qh2# would be checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "h2",
+        "f8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-1WaZ6-c1"
+    },
+    {
+      "type": "card",
+      "text": "**It holds** when your checks or mate threats come with tempo and the opponent's king has no spare move. **It fails** when you are one move slower, or when the opponent can capture your attacker. *Rule of thumb:* if you cannot write down your whole forcing line, defend. 'The best defence is attack' is a slogan, not a theorem."
+    },
+    {
+      "type": "contrast",
+      "title": "The counter-attack, one change",
+      "prompt": "In the first position White counter-attacks and wins. Predict what happens when one square changes so the check can be taken, and when there is no attacker at all.",
+      "working": "IL-7WgjW",
+      "failing": "IBa2-7",
+      "irrelevant": "IBa2-9"
+    },
+    {
+      "type": "item",
+      "item": "IBa2-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-9xb1Q",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-pOJQd",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.DEF.COUNTER",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Recall a game where you were attacked and tried to counter. Did you count both sides' moves first? Were yours checks? What did the count say?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/DEF.COUNTER.json (outcomes, conditions, contrasts)",
+    "sources/sheets/znosko-borovsky_middle-game.md section 4 C23 and sources/sheets/capablanca_chess-fundamentals.md section 4 CI-34 (ideas only)",
+    "items: Lichess puzzles AstVO, 1WaZ6, 7WgjW, 9xb1Q, pOJQd (CC0); authored IBa2-7 to IBa2-9 (batch a2)"
+  ]
+}

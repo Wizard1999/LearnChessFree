@@ -1,0 +1,138 @@
+{
+  "id": "L-DEF-RESOURCES-1",
+  "title": "A defender's resources: meet the chief threat, nothing more",
+  "skill": "DEF.RESOURCES",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the chief threat before choosing a defensive move",
+    "Lists the defender's resources and picks the one that meets that threat",
+    "Notices when a resource that worked before no longer works after one change",
+    "Does not defend when nothing is threatened"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A defender has several resources: move the piece, defend it, block, capture the attacker, make a bigger threat, vacate a weak square before supporting it, give material back. 'Five ways to meet an attack' teaches the first five. The skill here is the order: **name the chief threat first**, then choose the resource that meets it, and nothing more."
+    },
+    {
+      "type": "item",
+      "item": "IBa2-11"
+    },
+    {
+      "type": "board",
+      "fen": "rn2k1r1/1b1p3p/1ppPppqp/1pP5/1P1NP3/P2B4/5PP1/R1Q2RK1 w - - 1 23",
+      "caption": "White to move. Black threatens Qxg2 mate (the rook on g8 backs the queen up). The pawn steps to g3.",
+      "line": [
+        {
+          "move": "g2g3",
+          "say": "The pawn steps up to g3. g2 is no longer there to capture, and the pawn shuts the g-file in front of the king. The engine rates it best."
+        },
+        {
+          "move": "h6h5",
+          "say": "Black continues; the immediate threat has been met."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "g6g2",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If White passes, Black mates with Qxg2."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2g3"
+            ]
+          },
+          "statement": "g3 is the engine's best move."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "c1g5",
+            "cp": 400
+          },
+          "statement": "Bg5 is far worse."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "g2"
+        },
+        {
+          "from": "g2",
+          "to": "g3"
+        }
+      ],
+      "highlight": [
+        "g2",
+        "g3"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-36xhZ-c1"
+    },
+    {
+      "type": "card",
+      "text": "**Vacate, then support.** *Rule of thumb:* if the piece standing on a weak square is itself the problem, move it first; supporting a square while the important piece still stands on it can leave both stuck.\n**Over-defence.** If nothing is threatened, a defensive move is a lost move. Whichever resource you pick must stop the chief threat in the position as it is now."
+    },
+    {
+      "type": "contrast",
+      "title": "The same defence, one change",
+      "prompt": "In the first position the pawn move g6 meets the mate threat. Predict what happens when a white knight is added on g4 (look at what it blocks and what it threatens), and when the white queen is missing.",
+      "working": "IBa2-12",
+      "failing": "IBa2-13",
+      "irrelevant": "IBa2-14"
+    },
+    {
+      "type": "item",
+      "item": "IBa2-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBa2-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-CBK2L",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.DEF.RESOURCES",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of the last time you were attacked in a game. Which threat did you name first, and which resource did you use? Was another resource available?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/DEF.RESOURCES.json (outcomes, conditions, contrasts)",
+    "sources/sheets/emlasker_common-sense.md sections 4.15 and 4.16 (ideas only)",
+    "lesson L-SAF-DEFEND-OPTIONS-1 (basic five resources)",
+    "items: Lichess puzzles 36xhZ, CBK2L (CC0); authored IBa2-11 to IBa2-14, IBa2-20, IBa2-23 (batch a2)"
+  ]
+}

@@ -1,0 +1,155 @@
+{
+ "id": "L-END-PAWN-RACE-QUEEN-FIRST-1",
+ "title": "The first queen: look for its check, not only the count",
+ "skill": "END.PAWN-RACE.QUEEN-FIRST",
+ "depth": "D2",
+ "minutes": 10,
+ "outcomes": [
+  "In a race where both pawns will queen, looks for a check or capture by the first queen instead of only counting moves",
+  "Predicts how moving the black king off the queening file changes the result",
+  "Recognises a position that is not a race because a king stops the pawn"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Both sides will queen, and you have counted who is first (see the lesson *Pawn races: the square, and who queens first*). **Counting is only half.** Ask next what your first queen can do at once: capture the other pawn, cover its queening square, or check along the line where the second queen will appear. A check that also hits the new queen can win it."
+  },
+  {
+   "type": "board",
+   "fen": "8/1P6/8/7k/8/3K4/7p/8 w - - 0 1",
+   "caption": "White to move. Each pawn is one move from queening. The tablebase says White wins; one line is shown.",
+   "line": [
+    {
+     "move": "b7b8q",
+     "say": "White queens first."
+    },
+    {
+     "move": "h2h1q",
+     "say": "Black queens on h1."
+    },
+    {
+     "move": "b8h8",
+     "say": "The queen checks along the h-file, where Black's new queen stands."
+    },
+    {
+     "move": "h5g4",
+     "say": "The king steps aside."
+    },
+    {
+     "move": "h8h1",
+     "say": "The white queen takes the black queen."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With White to move, White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b7b8q"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b7b8r"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "h8",
+      "after_moves": [
+       "b7b8q",
+       "h2h1q",
+       "b8h8"
+      ],
+      "includes": [
+       "h5"
+      ]
+     },
+     "statement": "The queen on h8 attacks the king on h5."
+    },
+    {
+     "id": "C5",
+     "type": "piece_on",
+     "params": {
+      "square": "h1",
+      "after_moves": [
+       "b7b8q",
+       "h2h1q"
+      ],
+      "piece": "q"
+     },
+     "statement": "Black's new queen stands on h1."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe2-4"
+  },
+  {
+   "type": "card",
+   "text": "**When it works.** Both pawns are free to queen, no king can interfere, and the first queen has a check or a capture on its first move. **When it fails.** The check disappears if the black king is not on that line, as in the next pair. Rule of thumb: before you count the moves, look for the first queen's check along the line to the second queen."
+  },
+  {
+   "type": "contrast",
+   "title": "Where are the kings?",
+   "prompt": "Each pawn is one move from queening and White queens first. In the second position only the black king has moved; in the third only the white king has. Predict each result, then check.",
+   "working": "IBe2-5",
+   "failing": "IBe2-6",
+   "irrelevant": "IBe2-7"
+  },
+  {
+   "type": "item",
+   "item": "IBe2-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-10",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.PAWN-RACE.QUEEN-FIRST",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you answered, did you look for a check or a capture by the first queen, or did you only count moves? Which one did you do in the position where you were wrong?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-11: the first queen may capture the other pawn or command its square; ideas only)",
+  "docs/curriculum-map-v1.1.md (END.PAWN-RACE.QUEEN-FIRST)",
+  "The counting step (D1) is taught in L-END-PAWNRACE-1, whose items IA3-308 to IA3-310 carry this node",
+  "All positions: own constructions, results from the Lichess tablebase service [V]"
+ ]
+}

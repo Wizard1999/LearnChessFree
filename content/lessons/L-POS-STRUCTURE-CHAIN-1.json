@@ -1,0 +1,153 @@
+{
+  "id": "L-POS-STRUCTURE-CHAIN-1",
+  "title": "Pawn chains: hit the base, not the head",
+  "skill": "POS.STRUCTURE.CHAIN",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the base and the head of a pawn chain in the app's sense and finds the base",
+    "Names the pawn move that attacks the base and tells it from a move that attacks the head",
+    "Recognises a position with no chain",
+    "Chooses between attacking a chain base now and getting ready first, without being told the idea"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **pawn chain** is a line of pawns that defend each other diagonally. The **base** is the pawn at the back that no pawn defends; the **head** is the pawn at the front. This is the app's definition and it is simpler than book usage. Rule of thumb: a pawn lever against the base removes the support behind the rest of the chain, so play often goes there."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp3ppp/2n1pn2/3pP3/5P2/2NB1N2/PPP3PP/R1BQ1RK1 b - - 0 8",
+      "caption": "Black to move. White's pawns on e5 and f4 form a chain: e5 is defended by f4, and nothing defends f4. The unprotected pawn f4 is the base; e5 is the head.",
+      "line": [
+        {
+          "move": "g7g5",
+          "say": "g5 attacks the base f4. Nothing defends f4 with a pawn, so it must be defended by pieces or exchanged."
+        },
+        {
+          "move": "f4g5",
+          "say": "White may capture. Then e5 loses its pawn defender."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "f4",
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "chain_base",
+            "color": "white",
+            "squares": [
+              "f4"
+            ]
+          },
+          "statement": "White's chain base is f4.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "f4",
+            "includes": [
+              "e5"
+            ]
+          },
+          "statement": "The white pawn on f4 defends e5.",
+          "id": "C2"
+        },
+        {
+          "type": "moves_where",
+          "params": {
+            "property": "pawn_move_attacks",
+            "square": "f4",
+            "moves": [
+              "g7g5"
+            ]
+          },
+          "statement": "The legal pawn moves after which the moved pawn attacks f4: g5.",
+          "id": "C3"
+        },
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "protected",
+            "color": "white",
+            "squares": [],
+            "after_moves": [
+              "g7g5",
+              "f4g5"
+            ]
+          },
+          "statement": "After g5 and fxg5, White's pawn on e5 is no longer protected.",
+          "id": "C4"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-27"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-32"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Attacking the base works best when the lever is supported and your pieces are ready; attacking the head leaves its defender where it is. The chain's owner has plans of his own, usually on the wing the chain points to (a rule of thumb this lesson does not test). For when a break is ready, see the lesson 'Pawn breaks: ready or premature?'."
+    },
+    {
+      "type": "contrast",
+      "title": "Base, head, or no chain",
+      "prompt": "The same Black pawn moves are examined in three positions. Predict what each move attacks, then check. In the third position one White pawn is missing.",
+      "working": "IBp4-6",
+      "failing": "IBp4-7",
+      "irrelevant": "IBp4-8"
+    },
+    {
+      "type": "item",
+      "item": "IBp4-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-11",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.CHAIN",
+        "tpl.chain-base"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last three positions, which one made you wait instead of attacking the base? What did you check about your own pieces first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.CHAIN.json (idea from Nimzowitsch ideas 30-31, recalled [R])",
+    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "shipped items IP-PAWNS-27, IP-PAWNS-32 and the chain-base items (machine-checked)"
+  ]
+}

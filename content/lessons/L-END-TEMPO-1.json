@@ -1,0 +1,147 @@
+{
+ "id": "L-END-TEMPO-1",
+ "title": "Spare moves: who runs out first?",
+ "skill": "END.TEMPO",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Counts the free squares between two facing pawns and says who must give way when the kings are tied",
+  "Finds the spare pawn move that keeps a win",
+  "Recognises a position where the count does not decide because a king is free"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In a locked pawn ending the king that must move may lose ground. So count **spare moves**: pawn moves that can be played without harm. If both kings are tied to their squares, the player who runs out of spare moves first must give way. Having the move is not always good."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/2Kp4/3Pk2p/8/7P/8/8 w - - 0 1",
+   "caption": "White to move. The pawns on d5 and d6 are locked, and the h-pawns on h3 and h5 can still move. The tablebase says White wins; one line is shown.",
+   "line": [
+    {
+     "move": "h3h4",
+     "say": "White spends the spare pawn move."
+    },
+    {
+     "move": "e5e4",
+     "say": "Black has no pawn move left, so the king must move."
+    },
+    {
+     "move": "c6d6",
+     "say": "White's king takes the pawn on d6."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With White to move, White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "h3h4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c6b5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c6b6"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "mobility",
+     "params": {
+      "square": "h5",
+      "mode": "legal",
+      "count": 0,
+      "after_move": "h3h4"
+     },
+     "statement": "After h4 the pawn on h5 cannot move."
+    },
+    {
+     "id": "C6",
+     "type": "mobility",
+     "params": {
+      "square": "d6",
+      "mode": "legal",
+      "count": 0,
+      "after_move": "h3h4"
+     },
+     "statement": "The pawn on d6 cannot move either."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-4"
+  },
+  {
+   "type": "card",
+   "text": "**Count the free squares between the two h-pawns.** In the positions of this lesson, one free square means the player to move takes it and wins; none, or two, means the player to move must give way. Rule of thumb: this only works while both kings are tied down. Move a king away and the count stops mattering."
+  },
+  {
+   "type": "contrast",
+   "title": "The free squares between the h-pawns",
+   "prompt": "The queenside pawns are locked in all three positions. In the first, the h-pawns on h3 and h5 leave one free square. In the second, the black pawn stands on h4 and none is left. In the third the position of the first is shown with Black to move. Predict each result, then check.",
+   "working": "IE-TMP-11",
+   "failing": "IE-TMP-9",
+   "irrelevant": "IE-TMP-12"
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-29",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-26",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.TEMPO",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you answered, did you count the free squares between the pawns, or did you look at the kings first? In the position where the count did not apply, what told you so?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/edlasker_chess-strategy.md (K25: spare moves and forced moves; ideas only)",
+  "docs/curriculum-map-v1.1.md (END.TEMPO)",
+  "All new positions: own constructions, results from the Lichess tablebase service [V]"
+ ]
+}

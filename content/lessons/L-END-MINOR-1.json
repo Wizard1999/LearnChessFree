@@ -1,0 +1,141 @@
+{
+ "id": "L-END-MINOR-1",
+ "title": "Bishop against knight: count the wings",
+ "skill": "END.MINOR",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Predicts win or draw for bishop against knight positions that differ by one pawn's wing",
+  "States the rule of thumb (pawns on both wings favour the bishop) and a case where it fails",
+  "Sees that the rule does not carry over to opposite-coloured bishops"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In an ending of **bishop against knight**, the pawns often decide who stands better. A bishop reaches both wings in one move; a knight needs several. So pawns on **both wings** tend to favour the bishop, and pawns on **one wing** give the knight better chances to hold. This is a rule of thumb: test it on one position first."
+  },
+  {
+   "type": "board",
+   "fen": "8/6n1/6pk/8/4K3/1P6/2B3P1/8 w - - 0 1",
+   "caption": "White: bishop, a pawn on each wing. Black: knight and a kingside pawn. White to move. The tablebase says White wins; one line is shown.",
+   "line": [
+    {
+     "move": "b3b4",
+     "say": "White advances the queenside pawn, far from Black's knight and king."
+    },
+    {
+     "move": "g7e6",
+     "say": "Black's knight moves towards the centre."
+    },
+    {
+     "move": "b4b5",
+     "say": "The pawn goes one step further."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With White to move, White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b3b4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 1
+     },
+     "statement": "White has one pawn on the queenside."
+    },
+    {
+     "id": "C4",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 1
+     },
+     "statement": "White has one pawn on the kingside."
+    },
+    {
+     "id": "C5",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 1
+     },
+     "statement": "Black has one pawn on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe2-20"
+  },
+  {
+   "type": "card",
+   "text": "**When it holds.** The bishop's side has pawns on both wings, so the bishop can switch between them faster than the knight. **When it fails.** All the pawns on one wing: the knight can hold, as the next pair shows. Rule of thumb: count the wings before you count anything else. Opposite-coloured bishops follow other rules, so do not use this on them."
+  },
+  {
+   "type": "contrast",
+   "title": "Move one pawn",
+   "prompt": "White has a bishop and two pawns against a knight and a pawn, and the queenside pawn stands on the third rank. In the second position it has moved to the kingside, still on the third rank. In the third it has moved along its own wing. Predict each result, then check.",
+   "working": "IBe2-21",
+   "failing": "IBe2-22",
+   "irrelevant": "IBe2-23"
+  },
+  {
+   "type": "item",
+   "item": "IBe2-24",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe2-25",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-MIN-14",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MINOR",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which feature did you look at first: the wings, the passed pawn, or the colours of the bishops? Which did you forget in the position where you were wrong?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-17, CI-19: bishop and knight in endings; ideas only)",
+  "sources/sheets/edlasker_chess-strategy.md (K27)",
+  "sources/sheets/emlasker_common-sense.md (4.20)",
+  "docs/curriculum-map-v1.1.md (END.MINOR)",
+  "All new positions: own constructions, results from the Lichess tablebase service [V] (7 pieces at most)"
+ ]
+}

@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 56%** (63 of 121 tasks done, in-progress tasks count half). Updated 2026-10-29T08:11+00:00 UTC.
+**Overall: 53%** (64 of 129 tasks done, in-progress tasks count half). Updated 2026-10-29T08:58+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -16,12 +16,13 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 58% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
+| Phase 6e: Sources library (plan: docs/library-plan.md) | 1/8 | 12% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 162 of 204 skill nodes have a lesson (79%); 150 nodes have 10 or more shipped exercises; 6694 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2035 flagged for human review.
+**Coverage (computed from the files):** 179 of 204 skill nodes have a lesson (88%); 152 nodes have 10 or more shipped exercises; 6785 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2126 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -29,9 +30,9 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
 | S3 Tactics | 24 | 24 | 24 |
 | S4 Calculation | 8 | 8 | 8 |
-| S5 Positional play and planning | 49 | 31 | 32 |
-| S6 Attack, sacrifice and defense | 19 | 9 | 16 |
-| S7 Endgames | 37 | 23 | 35 |
+| S5 Positional play and planning | 49 | 37 | 33 |
+| S6 Attack, sacrifice and defense | 19 | 14 | 16 |
+| S7 Endgames | 37 | 29 | 36 |
 | S8 Openings and structures | 12 | 12 | 7 |
 | S9 Game study | 7 | 7 | 2 |
 | S10 Practical performance | 9 | 9 | 1 |
@@ -41,7 +42,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Ship stored texts in the exe and web build (question Q15); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -161,6 +162,16 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] A "seen" marker on every skill and lesson (map dot, outline, lesson index), separate from mastery
 
 - [x] Trivial-skill signals: five quick correct answers in a row, or a Too easy button, leave a skill out of mixed practice
+
+## Phase 6e: Sources library (plan: docs/library-plan.md)
+- [x] Plan: acquisition order, rights rule, catalog model, in-app Library design
+- [ ] `tools/fetch_sources.py`: download every rights-clear candidate at once, record the evidence, refuse unclear ones
+- [ ] Acquire Tier 1 (the 10 registered books, Wikibooks Chess) and verify Tier 2 candidates one by one
+- [ ] `library/catalog.json` and `tools/build_library.py` (subjects, level, rights, used-in links)
+- [ ] Reading agents in the planned order: one synthesis sheet and coverage check per book
+- [ ] In-app Library: three shelves, reader, download, sort by title, author, year, subject and level, search
+- [ ] Check in check_all: every lesson source resolves to a catalog entry; every stored file has a rights record
+- [ ] Ship stored texts in the exe and web build (question Q15)
 
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)

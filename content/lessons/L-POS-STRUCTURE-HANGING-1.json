@@ -1,0 +1,137 @@
+{
+  "id": "L-POS-STRUCTURE-HANGING-1",
+  "title": "Hanging pawns: hold, advance or exchange",
+  "skill": "POS.STRUCTURE.HANGING",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds hanging pawns by the app's definition (a side-by-side pair with no neighbours and no enemy pawn on their files)",
+    "Names the three plans as rules of thumb: hold, advance one, or exchange them off",
+    "Sees in one worked family that advancing works with some piece placements and fails with others",
+    "Decides without being told the plan whether the advance is acceptable"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In this app, **hanging pawns** are two pawns side by side on the 4th or 5th rank, alone on their files and flanks, with no enemy pawn on their files. No pawn can defend them (a static weakness), yet they control squares and can advance (a dynamic strength). Rule of thumb: the plans are to hold them, advance one, or exchange them off."
+    },
+    {
+      "type": "board",
+      "fen": "r2qr1k1/pb3ppp/2n1n3/1BppP3/R7/2N2N2/PP3PPP/R2Q2K1 b - - 1 13",
+      "caption": "Black to move. Black's pawns on c5 and d5 stand side by side on the fifth rank; no Black pawn is on the b-, e- or other neighbouring files, and White has no pawn on the c- or d-file. These are hanging pawns in the app's sense.",
+      "line": [
+        {
+          "move": "d5d4",
+          "say": "d4 attacks the knight on c3. One of the plans for hanging pawns is to advance one of them."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "d5",
+        "c3"
+      ],
+      "claims": [
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "hanging_pair",
+            "color": "black",
+            "squares": [
+              "c5",
+              "d5"
+            ]
+          },
+          "statement": "Black's hanging pawns are c5 and d5.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "d4",
+            "includes": [
+              "c3"
+            ],
+            "after_move": "d5d4"
+          },
+          "statement": "After d4 the pawn attacks the knight on c3.",
+          "id": "C2"
+        },
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "hanging_pair",
+            "color": "black",
+            "squares": [],
+            "after_move": "d5d4"
+          },
+          "statement": "After d4 Black has no hanging pawns: the pair is no longer level.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-23"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-139"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Advancing tends to work when the advanced pawn gains something concrete, such as attacking a piece, and the pieces that could stop it can be hit. A well-placed enemy piece can make the same advance fail. This lesson tests the advance only; holding and exchanging are named, not drilled. Choosing the safest plan is not a rule."
+    },
+    {
+      "type": "contrast",
+      "title": "The same advance, three positions",
+      "prompt": "Predict whether the advance d4 is within 0.4 pawns of the best move in each. In the second a White knight stands on d3 instead of c3; in the third a Black pawn stands on b6 and the h7 pawn is gone.",
+      "working": "IBp4-24",
+      "failing": "IBp4-25",
+      "irrelevant": "IBp4-26"
+    },
+    {
+      "type": "item",
+      "item": "IBp4-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp4-29",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.HANGING",
+        "tpl.hang-select"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you advanced a hanging pawn in the last three positions, what did you check about White's pieces? Write one sentence."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.HANGING.json (idea from Nimzowitsch idea 43, recalled [R])",
+    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "shipped items IP-PAWNS-23, IP-PAWNS-139 (machine-checked)"
+  ]
+}
