@@ -66,3 +66,12 @@ Logged in `DECISIONS-LOG.md` as I go; veto any by telling me.
 | Q18 | Q | The credit reads "Created by Andrew Valentine". Do you also want a link from it (your site), an "About" page, and a line on the printable certificate? | Visibility of the credit | Masthead, footer, NOTICE only |
 | Q19 | Q | The exe tray and file icon are the shield. Do you want a signed installer later (certificate costs money) or keep the portable exe with the SmartScreen note? | Windows warns on unsigned programs | Portable exe, no signing |
 | G17 | G | Look at the Collegiate look in light and dark after the coral accent change and say whether crimson (light) should also match the default red | Colour consistency | Unchanged |
+
+## Added 29 October 2026 (end of the long stretch)
+| ID | Type | Question or gate | Why it matters | Default if you do not answer |
+|---|---|---|---|---|
+| G18 | G | Have a lawyer (or a trusted adviser) look at `LICENSES.md`, `FREE-FOREVER.md` and `NOTICE` before you post the project widely | The non-commercial lesson licence, GPL code and name rule are my proposal, not legal advice | Stay as drafted |
+| G19 | G | Ask GitHub support to purge the three withdrawn books (Lasker's 1947 Manual, Edge scan, Murray scan) from the repo history, if the repo's public history matters to you | They were committed once before the rights check removed them; we never rewrite history | Leave as is |
+| Q20 | Q | History and "meta" course (chess history, players, how ideas changed): who reviews the history claims? They cannot be machine-checked | Hard rule 1 needs a check or a named human reviewer | Not started |
+| Q21 | Q | Opening deep dives: which openings first (suggest the Italian/Two Knights, Queen's Gambit, Sicilian Najdorf basics, French) and at what depth? | Each needs engine-checked claims and a clear scope | Not started |
+| Q22 | Q | The Windows exe is rebuilt after each wave. Do you want me to stop committing the 16 MB binary (it is currently not tracked) and publish it only as a release you approve? | Publishing a download is an outward step | Not tracked, not published |
