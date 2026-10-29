@@ -1,0 +1,11 @@
+# Name: Scholarmate
+
+Chosen by Andrew on 29 October 2026. The brand is **Scholarmate** (one word), shown with the descriptor "a free chess school" (page title "Scholarmate: a free chess school"). The pun is three-way: the scholar, the mate as a friend and study companion, and the checkmate (Scholar's Mate is the famous four-move checkmate). The Collegiate look shows the motto **"Mate in the making"** (English, so no Latin needs checking) beside the crest. A change of name is one edit in `app/src/brand.ts`, plus `app/index.html`, `app/public/manifest.webmanifest` and the strings in `desktop/Launcher.cs`.
+
+## What I found when I checked (29 October 2026) [S: web search and registry lookups; not a legal search]
+- **An established brand already uses the one-word form.** `scholarmate.com` and `scholarmate.net` (both registered in 2006, renewed to December 2027) belong to **ScholarMate (科研之友), an online community and AI toolset for academic researchers**. It is not about chess, but it is the same word in education and research. A trademark owner could object, and search results for "Scholarmate" will show them first. `scholarmate.org` was registered on 24 March 2026 by someone else. `scholarsmate.com` (the two-word spelling) is registered since 2015 and transfer-locked. I did not check `.app`, `.io`, `.school`, `.academy`, `.chess` or other endings.
+- **The two-word chess term is free of brand use as far as a web search shows:** results for "Scholar's Mate" are pages about the checkmate itself; the trademark results were for other names (Chessreps, Chess Rocket, Gambitius). That was a web search, not a trademark database query.
+- I cannot register domains or accounts: that is Andrew's purchase and decision.
+
+## What this means
+Andrew chose the one-word form knowing none of this was cleared. It works for a free beta on his own site (andrewvalentine.net/learnchessfree). Before anything is printed, bought, or promoted widely, the risk to weigh is the collision with the research site. Ways to reduce it: always show the descriptor ("a free chess school"); do a proper trademark search (USPTO TSDR and the register of his country, education and games classes) or ask a lawyer; keep the two-word fallback "Scholar's Mate" ready (it is one edit away). Logged as decision D25 and gate G15.

@@ -40,6 +40,8 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 
 | G14 | G | Install `server/feedback.php` on your website, set `endpoint` in `feedback-config.json`, and make one test submission (steps in `docs/feedback.md`). Check the `feedback-inbox` folder is not publicly downloadable | I cannot reach your host, and a public form needs your decision about abuse protection and retention | No endpoint: reviewers download a file and send it to you | no |
 
+| G15 | G | Name clearance: do a trademark search (USPTO TSDR and your country's register, education and games classes) or ask a lawyer about "Scholarmate", because a research-community site of that name has held scholarmate.com and .net since 2006; pick and buy a domain (not .com, .net or .org: taken) if you want one; have a Latin reader check any Latin motto you may want later. See `docs/name-decision.md` | I can search the web and registries but cannot clear a trademark or buy anything | Proceed with the name for the beta on your own site | no |
+
 ## Answered / done
 *(none yet)*
 

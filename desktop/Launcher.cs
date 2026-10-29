@@ -1,4 +1,4 @@
-// Chess School desktop launcher: one portable exe, no install. The site is served straight from the zip embedded in the exe (nothing is
+// Scholarmate desktop launcher: one portable exe, no install. The site is served straight from the zip embedded in the exe (nothing is
 // unpacked), on http://localhost:47615/ (a fixed address, so saved progress stays with the same browser origin). Progress lives in a
 // browser profile kept in a folder NEXT TO THE EXE (ChessSchoolData), so the folder can be copied, run from a USB stick or deleted
 // (drop it in the recycle bin) with nothing left behind. If the exe's folder is read-only, the data folder falls back to
@@ -40,26 +40,26 @@ static class Launcher
             ms.Position = 0;
             Zip = new ZipArchive(ms, ZipArchiveMode.Read);
         }
-        catch (Exception e) { MessageBox.Show("Could not read the Chess School files:\n" + e.Message, "Chess School"); return; }
+        catch (Exception e) { MessageBox.Show("Could not read the Scholarmate files:\n" + e.Message, "Scholarmate"); return; }
 
         var listener = new HttpListener();
         listener.Prefixes.Add(Url);
         try { listener.Start(); }
         catch (Exception e)
         {
-            // Something already answers on our address. If it is Chess School (another copy still running), just open it.
-            try { using (var w = new WebClient()) { w.Headers["User-Agent"] = "ChessSchoolLauncher"; if (w.DownloadString(Url).Contains("<title>Chess School")) { Open(); return; } } } catch { }
-            MessageBox.Show("Port " + Port + " is in use, so Chess School cannot start.\n" + e.Message, "Chess School"); return;
+            // Something already answers on our address. If it is Scholarmate (another copy still running), just open it.
+            try { using (var w = new WebClient()) { w.Headers["User-Agent"] = "ChessSchoolLauncher"; if (w.DownloadString(Url).Contains("id=\"root\"")) { Open(); return; } } } catch { }
+            MessageBox.Show("Port " + Port + " is in use, so Scholarmate cannot start.\n" + e.Message, "Scholarmate"); return;
         }
         new Thread(() => Serve(listener)) { IsBackground = true }.Start();
         Open();
 
         var menu = new ContextMenu();
-        menu.MenuItems.Add("Open Chess School", (s, a) => Open());
+        menu.MenuItems.Add("Open Scholarmate", (s, a) => Open());
         menu.MenuItems.Add("Quit", (s, a) => { try { listener.Close(); } catch { } Environment.Exit(0); });
-        var icon = new NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "Chess School (running)", ContextMenu = menu, Visible = true };
+        var icon = new NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "Scholarmate (running)", ContextMenu = menu, Visible = true };
         icon.DoubleClick += (s, a) => Open();
-        icon.ShowBalloonTip(4000, "Chess School", portable ? "Running. Your progress is saved in the ChessSchoolData folder next to this program. Right-click this icon to quit." : "Running. This folder is read-only, so progress is saved in your user profile instead. Right-click this icon to quit.", ToolTipIcon.Info);
+        icon.ShowBalloonTip(4000, "Scholarmate", portable ? "Running. Your progress is saved in the ChessSchoolData folder next to this program. Right-click this icon to quit." : "Running. This folder is read-only, so progress is saved in your user profile instead. Right-click this icon to quit.", ToolTipIcon.Info);
         Application.Run();
         icon.Visible = false; listener.Stop();
     }
