@@ -172,11 +172,11 @@
   },
   {
    "id": "PBg2-18",
-   "fen": "1k6/8/1K6/P7/8/8/8/8 w - - 0 1",
+   "fen": "5k2/8/6K1/7P/8/8/8/8 w - - 0 1",
    "family": "FAM-G2-RP-CORNER",
    "provenance": {
     "kind": "authored",
-    "ref": "node END.ROOK-PAWN conditions 1-3; one-feature variants of the checked positions",
+    "ref": "mirror image (a-file to h-file) of the checked position 2k5/8/1K6/P7 w; result and every move checked on the Lichess tablebase service",
     "licence": "project"
    }
   },
@@ -417,6 +417,66 @@
    "provenance": {
     "kind": "authored",
     "ref": "constructed from tablebase scans (tools/endgames style); one-feature variants of verified positions",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-43",
+   "fen": "r7/7k/8/8/2P5/2K5/8/4R3 w - - 0 1",
+   "family": "FAM-G2-RB-CUTOFF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction: Kc3 Pc4 Re1 against Kh7 and a black rook (one-feature variants); result and every move checked on the Lichess tablebase service",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-44",
+   "fen": "r7/2k5/8/8/2P5/2K5/8/4R3 w - - 0 1",
+   "family": "FAM-G2-RB-CUTOFF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction: Kc3 Pc4 Re1 against Kh7 and a black rook (one-feature variants); result and every move checked on the Lichess tablebase service",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-45",
+   "fen": "1r6/7k/8/8/2P5/2K5/8/4R3 w - - 0 1",
+   "family": "FAM-G2-RB-CUTOFF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction: Kc3 Pc4 Re1 against Kh7 and a black rook (one-feature variants); result and every move checked on the Lichess tablebase service",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-46",
+   "fen": "3r4/4k3/8/1P6/K7/2R5/8/8 w - - 0 1",
+   "family": "FAM-G2-RB-CUTOFF-2",
+   "provenance": {
+    "kind": "generated",
+    "ref": "selected by rule from the project's cached Lichess tablebase results for king, rook and pawn against king and rook (White rook alone on an open file between Black's king and the pawn, king two files from the rook); result and every move checked on the Lichess tablebase service",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-47",
+   "fen": "7k/1R6/5K2/6P1/8/8/8/7r b - - 0 1",
+   "family": "FAM-G2-RB-DISTANCE-2",
+   "provenance": {
+    "kind": "generated",
+    "ref": "selected by rule from the project's cached Lichess tablebase results for king, rook and pawn against king and rook (Black to move, exactly one drawing move, a rook check from five squares away; the close check loses); result and every move checked on the Lichess tablebase service",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBg2-48",
+   "fen": "8/8/8/2kPK3/2r5/8/4R3/8 w - - 0 1",
+   "family": "FAM-G2-RB-BEHIND-FIND-2",
+   "provenance": {
+    "kind": "generated",
+    "ref": "selected by rule from the project's cached Lichess tablebase results for king, rook and pawn against king and rook (exactly one winning move, the rook move behind the passed pawn); result and every move checked on the Lichess tablebase service",
     "licence": "project"
    }
   }
@@ -2377,7 +2437,7 @@
     "Count the knight's route from f3 to c2 or b3.",
     "The knight needs two moves, the pawn needs two, and White moves first."
    ],
-   "explain": "Draw. Only 1.Nd4 holds: the tablebase gives a loss after each of the other ten moves. From f3 the knight needs two moves to reach b3 or c2, as many as the pawn needs to queen. Counting is a rule of thumb; the tablebase is the check.",
+   "explain": "Draw. Only 1.Nd4+ holds: the tablebase gives a loss after each of the other ten moves. From f3 the knight needs two moves to reach b3 or c2, as many as the pawn needs to queen, and Nd4 is check, so Black's king must answer it before the pawn can move. Counting is a rule of thumb; the tablebase is the check.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -2391,7 +2451,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-7",
-   "prompt": "The same position, but the white knight stands on g3 instead of f3. White to move: predict the result with best play.",
+   "prompt": "Black's pawn on a3 needs two moves to queen. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Black wins",
     "options": [
@@ -2720,7 +2780,7 @@
     "contrast.CG-G2-KN-RIM"
    ],
    "hints": [
-    "What changed? Count the knight's route again.",
+    "Count the knight's route to b3 or c2 and compare it with the pawn's two moves.",
     "From g3, how many moves to reach b3 or c2?",
     "Three moves for the knight against two for the pawn."
    ],
@@ -2738,7 +2798,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-8",
-   "prompt": "The first position again (knight on f3), but White's king stands on g8 instead of h8. White to move: predict the result with best play.",
+   "prompt": "Black's pawn on a3 needs two moves to queen. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -2868,11 +2928,11 @@
     "contrast.CG-G2-KN-RIM"
    ],
    "hints": [
-    "Does the king's square change the knight's count?",
-    "Count the knight's route from f3 again.",
-    "Nothing about the race has changed."
+    "Count the knight's moves to b3 or c2, and the pawn's moves to queen.",
+    "White's king stands on g8. Does that change the knight's count?",
+    "White can still hold the draw."
    ],
-   "explain": "Draw. The king one step along the back rank changes nothing: only 1.Nd4 still holds, and the tablebase gives a loss after each of the other eleven moves.",
+   "explain": "Draw. With the white king on g8 instead of h8 the race is unchanged: the tablebase gives a loss after eleven of White's twelve moves.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -3085,14 +3145,14 @@
     "The knight must head for b3 or c2. Which first move brings it closest to both?",
     "Nd4."
    ],
-   "explain": "Nd4 is the only move that draws; the tablebase gives a loss after each of the other ten moves. From d4 the knight attacks both b3 and c2, each one move away and each covering a1.",
+   "explain": "Nd4 is the only move that draws; the tablebase gives a loss after each of the other ten moves. From d4 the knight attacks both b3 and c2, each one move away and each covering a1. It is also check, so Black's king must answer it before the pawn can move.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
     "reviewer": null
    },
    "feedback_by_move": {
-    "f3e1": "Ne1 loses: the tablebase gives Black the win after it, even though c2 is only one more knight move away.",
+    "f3e1": "Ne1 loses: the tablebase gives Black the win after it. The knight is also two moves from c2, but Ne1 is not check and Nd4 was: Black's king gets a free move.",
     "f3g1": "Ng1 loses: the tablebase gives Black the win after it."
    },
    "contrast_group": "CG-G2-KN-RIM",
@@ -3860,7 +3920,7 @@
    "cue": 3,
    "task": "predict_outcome",
    "position": "PBg2-10",
-   "prompt": "White has a bishop on h5 instead of a knight; Black's pawn is on a3 and queens in two moves. White to move: what is the result with best play?",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -3978,7 +4038,7 @@
     "A bishop covers a long diagonal in one move.",
     "White can stop the pawn."
    ],
-   "explain": "Draw. The tablebase gives a draw after four White moves (Bd1, Be2 and two king moves) and a loss after the other six. A bishop crosses the board in one move, so the knight's count does not carry over (a rule of thumb).",
+   "explain": "Draw. The tablebase gives a draw after four White moves (Bd1, Be2 and two king moves) and a loss after the other six. After 1.Bd1 a2 2.Bb3+ the bishop wins the pawn with check, because Black's king stands on e6 on that diagonal; with the king on e7 the same bishop loses. A bishop does not need the knight's count, but the king's square still decides.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -3991,7 +4051,7 @@
    "cue": 3,
    "task": "predict_outcome",
    "position": "PBg2-11",
-   "prompt": "The knight is on f3 again, but Black's king stands on e7 instead of e6. White to move, with best play from both sides: what is the result?",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Black wins",
     "options": [
@@ -4163,11 +4223,11 @@
     "role.failing"
    ],
    "hints": [
-    "Has the knight's count changed?",
-    "Only Black's king moved. Counting the knight is not the whole story.",
+    "What is different from the usual race: where is Black's king?",
+    "Count the knight's moves to b3 or c2, then ask whether any knight move gives check.",
     "Black wins."
    ],
-   "explain": "Black wins: the tablebase gives a loss after all eleven White moves. The knight still needs two moves to reach b3 or c2, exactly as in the drawn position; only Black's king moved, so counting the knight alone is not enough.",
+   "explain": "Black wins: the tablebase gives a loss after all eleven White moves. The knight still needs two moves to reach b3 or c2, as in the drawn position, but there 1.Nd4 was check and here it is not. Counting the knight alone is not enough.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -4565,7 +4625,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-13",
-   "prompt": "The extra white pawn has moved from a4 to h4, so White's pawns are on g4 and h4. White to move: predict the result with best play.",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -4745,11 +4805,11 @@
     "contrast.CG-G2-KN-OUT"
    ],
    "hints": [
-    "Is any white pawn passed now?",
-    "Both white pawns are on the same wing as Black's pawn.",
+    "Is any white pawn passed?",
+    "Both white pawns, on g4 and h4, are on the same wing as Black's pawn.",
     "No outside passed pawn."
    ],
-   "explain": "Draw: the tablebase gives a draw after all seventeen White moves. White has no passed pawn now: the extra pawn stands on the same wing as the others.",
+   "explain": "Draw: the tablebase gives a draw after all seventeen White moves. White has no passed pawn: both white pawns, on g4 and h4, stand on the same wing as Black's pawn on g7.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -4763,7 +4823,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-14",
-   "prompt": "The first position again, but White's knight stands on d3 instead of c3. White to move: predict the result with best play.",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "White wins",
     "options": [
@@ -4933,11 +4993,11 @@
     "contrast.CG-G2-KN-OUT"
    ],
    "hints": [
-    "Does the knight's square change who has the outside passed pawn?",
-    "The a-pawn is still passed and still far away.",
-    "Same result as the first position."
+    "Which white pawn is passed, and how far is it from Black's pawn?",
+    "The a-pawn is passed and far from the kingside.",
+    "White wins."
    ],
-   "explain": "White still wins, with 1.a5 or 1.Nc5; the tablebase gives a draw after fourteen moves and a loss after one. Moving the knight did not change the a-pawn's role.",
+   "explain": "White wins, with 1.a5 or 1.Nc5; the tablebase gives a draw after fourteen moves and a loss after one. White's a-pawn is passed and far from Black's pawn on g7; the knight's square does not change that.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -5247,7 +5307,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-17",
-   "prompt": "The same position, but Black's king stands on d8 instead of c8. White to move: predict the result with best play.",
+   "prompt": "King and pawn ending: White king b6, pawn a5; Black king d8. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "White wins",
     "options": [
@@ -5355,7 +5415,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-18",
-   "prompt": "The first position again (Black king on c8), but Black's king stands on b8 instead. White to move: predict the result with best play.",
+   "prompt": "White king g6, pawn h5; Black king f8. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -5378,7 +5438,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "b6c6"
+      "move": "g6f5"
      }
     },
     {
@@ -5386,7 +5446,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "b6a6"
+      "move": "g6f6"
      }
     },
     {
@@ -5394,7 +5454,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "b6c5"
+      "move": "g6g5"
      }
     },
     {
@@ -5402,7 +5462,7 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "b6b5"
+      "move": "g6h6"
      }
     },
     {
@@ -5410,7 +5470,15 @@
      "type": "tablebase",
      "params": {
       "result": "draw",
-      "move": "a5a6"
+      "move": "g6h7"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h5h6"
      }
     }
    ],
@@ -5429,11 +5497,11 @@
     "contrast.CG-G2-RP-CORNER"
    ],
    "hints": [
-    "Is b8 still close to the corner?",
-    "One king move reaches a8.",
-    "Same result as the first position."
+    "Which edge of the board is the pawn on? Does the corner rule apply there?",
+    "Count Black's king moves to the corner h8: f8 to h8 is two.",
+    "Draw."
    ],
-   "explain": "Draw: the tablebase gives a draw after all five White moves. b8 is one king move from the corner.",
+   "explain": "Draw: the tablebase gives a draw after all six White moves. The h-file is the other edge of the board, so this is the mirror image of the a-file position with Black's king on c8.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -5645,7 +5713,7 @@
    "cue": 2,
    "task": "find_move",
    "position": "PBg2-21",
-   "prompt": "The same shape one file to the right: pawn on b5, White king on c6, Black king on b8. White to move: find the only winning move.",
+   "prompt": "White king c6, pawn b5; Black king b8. White to move: find the only winning move.",
    "answer": {
     "moves": [
      "c6b6"
@@ -5729,7 +5797,7 @@
     "The white king must stand in front of its pawn, next to it.",
     "Kb6."
    ],
-   "explain": "Kb6 is the only winning move; the tablebase gives a draw after each of the other five. With the pawn on the b-file the same set-up wins here: the corner draw of this lesson belongs to the a- and h-files (a rule of thumb).",
+   "explain": "Kb6 is the only winning move; the tablebase gives a draw after each of the other five. The pawn is on the b-file, one file in from the edge: the corner draw of this lesson belongs to the a- and h-files (a rule of thumb).",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -5968,7 +6036,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-24",
-   "prompt": "The same pieces, but the pawn has reached a7. White to move: predict the result with best play.",
+   "prompt": "White has a king, a knight on b1 and a pawn on a7; Black's king stands in the corner, on a8. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -6169,7 +6237,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-25",
-   "prompt": "The first position with the knight on d1 instead of b1. White to move: predict the result with best play.",
+   "prompt": "White has a king, a knight on d1 and a pawn on a5; Black's king stands in the corner, on a8. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "White wins",
     "options": [
@@ -6285,7 +6353,7 @@
    "hints": [
     "Does the knight's square change the pawn's rank or the corner?",
     "The pawn is still on a5.",
-    "Same result as the first position."
+    "White wins."
    ],
    "explain": "White wins: the tablebase gives a win after all ten White moves. The knight's square does not change the pawn's rank.",
    "orientation": "white",
@@ -7324,7 +7392,7 @@
    "cue": 3,
    "task": "predict_outcome",
    "position": "PBg2-33",
-   "prompt": "The same position, but White's rook stands on g7, in front of its own pawn, instead of on g1. White to move: predict the result with best play.",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -7432,11 +7500,11 @@
     "contrast.CG-G2-RB-BEHIND"
    ],
    "hints": [
-    "Where is the rook compared with the pawn now?",
-    "The rook has moved from behind the pawn to in front of it. Nothing else changed.",
+    "Where is White's rook compared with the passed pawn on g5?",
+    "The rook stands on g7, in front of its own pawn.",
     "No White move wins."
    ],
-   "explain": "Draw: the tablebase gives a draw after seven White moves and a loss after one; none wins. Only the rook's square changed: it is in front of its own pawn.",
+   "explain": "Draw: the tablebase gives a draw after seven White moves and a loss after one; none wins. White's rook stands in front of its own pawn; the same position with the rook on g1, behind the pawn, is a win.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -7450,7 +7518,7 @@
    "cue": 3,
    "task": "predict_outcome",
    "position": "PBg2-34",
-   "prompt": "The first position again (White's rook on g1), but Black's rook stands on c6 instead of b6. White to move: predict the result with best play.",
+   "prompt": "White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "White wins",
     "options": [
@@ -7613,11 +7681,11 @@
     "contrast.CG-G2-RB-BEHIND"
    ],
    "hints": [
-    "Does Black's rook square change where White's rook stands?",
-    "White's rook is still behind the pawn.",
-    "Same result as the first position."
+    "Where is White's rook compared with the passed pawn on g5?",
+    "The rook on g1 is on the pawn's file, on a lower rank.",
+    "White wins."
    ],
-   "explain": "White still wins, and only 1.g6 does it: the tablebase gives a draw after fourteen moves and a loss after one. Black's rook moved one square along the sixth rank.",
+   "explain": "White wins, and only 1.g6 does it: the tablebase gives a draw after fourteen moves and a loss after one. White's rook stands on g1, behind the passed pawn on g5; moving Black's rook from b6 to c6 makes no difference.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -7864,7 +7932,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-36",
-   "prompt": "The same position, but Black's king stands on a6 instead of a8. White to move: predict the result with best play.",
+   "prompt": "White's rook is on the seventh rank and White has a passed pawn on d5. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "Draw",
     "options": [
@@ -8059,11 +8127,11 @@
     "contrast.CG-G2-RB-SEVENTH"
    ],
    "hints": [
-    "Is Black's king still on the back rank?",
-    "The king has stepped off the back rank and is nearer to the pawn.",
+    "Is Black's king shut in on the back rank?",
+    "Black's king on a6 has stepped off the back rank and stands nearer to the pawn.",
     "No White move wins."
    ],
-   "explain": "Draw: the tablebase gives a draw after sixteen White moves and a loss after four; none wins. Black's king on a6 is no longer shut in on the back rank.",
+   "explain": "Draw: the tablebase gives a draw after sixteen White moves and a loss after four; none wins. Black's king on a6 is no longer shut in on the back rank; with the king on a8 the same position is a win.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -8077,7 +8145,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBg2-37",
-   "prompt": "The first position again (Black's king on a8), but White's king stands on e3 instead of d3. White to move: predict the result with best play.",
+   "prompt": "White's rook is on the seventh rank and White has a passed pawn on d5. White to move, with best play from both sides: what is the result?",
    "answer": {
     "outcome": "White wins",
     "options": [
@@ -8272,11 +8340,11 @@
     "contrast.CG-G2-RB-SEVENTH"
    ],
    "hints": [
-    "Does White's king square change the rook on the seventh or Black's king?",
-    "Black's king is still shut in on a8.",
-    "Same result as the first position."
+    "Where is Black's king, and which squares can it reach?",
+    "Black's king is shut in on a8, and the rook on h7 attacks a7 and b7.",
+    "White wins."
    ],
-   "explain": "White still wins, and only 1.d6 does it: the tablebase gives a draw after fifteen moves and a loss after four. White's king moved one square sideways.",
+   "explain": "White wins, and only 1.d6 does it: the tablebase gives a draw after fifteen moves and a loss after four. The rook on h7 attacks a7 and b7, so Black's king on a8 is kept on the back rank. White's king on e3 makes no difference: with it on d3 the result is the same.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -8518,7 +8586,7 @@
     "The rook on h7 attacks a7, b7 and c7.",
     "Is a rook on the seventh rank always enough?"
    ],
-   "explain": "Draw: the tablebase gives a draw after fifteen White moves and a loss after five; none wins. Black's king is shut in on the back rank here as well, and the rook still attacks a7, b7 and c7. The seventh rank is a rule of thumb, not a guarantee.",
+   "explain": "Draw: the tablebase gives a draw after fifteen White moves and a loss after five; none wins. Black's king on b8 gets to the pawn in time: 1.d6 Kc8 2.d7+ Kc7, and the pawn on d7 blocks the rook's own view along the seventh rank. The seventh rank is a rule of thumb, not a guarantee.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -9319,6 +9387,1373 @@
     "c3c5": "Rc5 only draws: the tablebase gives a draw after it."
    },
    "id": "IBg2-44"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBg2-43",
+   "prompt": "White has a rook on e1 and a passed pawn on c4. White to move, with best play from both sides: what is the result?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3b2"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3b3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3b4"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c2"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d2"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d3"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d4"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1a1"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1b1"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1c1"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1d1"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e2"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e3"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e4"
+     }
+    },
+    {
+     "id": "C16",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e5"
+     }
+    },
+    {
+     "id": "C17",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e6"
+     }
+    },
+    {
+     "id": "C18",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e7"
+     }
+    },
+    {
+     "id": "C19",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1e8"
+     }
+    },
+    {
+     "id": "C20",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1f1"
+     }
+    },
+    {
+     "id": "C21",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1g1"
+     }
+    },
+    {
+     "id": "C22",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1h1"
+     }
+    },
+    {
+     "id": "C23",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c4c5"
+     }
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "c4"
+      ]
+     },
+     "statement": "The pawn on c4 is passed.",
+     "id": "C24"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "e1",
+      "includes": [
+       "e2",
+       "e3",
+       "e4",
+       "e5",
+       "e6",
+       "e7",
+       "e8"
+      ]
+     },
+     "statement": "The rook on e1 attacks the whole e-file.",
+     "id": "C25"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-G2-RB-CUTOFF",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.cut-off",
+    "theme.passed-pawn",
+    "role.working",
+    "contrast.CG-G2-RB-CUTOFF"
+   ],
+   "hints": [
+    "Where is Black's king compared with the e-file and the pawn?",
+    "Black's king is on the far side of the e-file from the pawn, and the rook on e1 holds the file.",
+    "White wins."
+   ],
+   "explain": "White wins: the tablebase gives a win after twenty of White's twenty-two moves and a loss after two. White's rook on e1 holds the e-file, and Black's king on h7 is on the far side of it from the pawn on c4.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-G2-RB-CUTOFF",
+   "id": "IBg2-45"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBg2-44",
+   "prompt": "White has a rook on e1 and a passed pawn on c4. White to move, with best play from both sides: what is the result?",
+   "answer": {
+    "outcome": "Draw",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3b2"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3b3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3b4"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3c2"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3d2"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3d3"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3d4"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1a1"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1b1"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1c1"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1d1"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e2"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e3"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e4"
+     }
+    },
+    {
+     "id": "C16",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e5"
+     }
+    },
+    {
+     "id": "C17",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e6"
+     }
+    },
+    {
+     "id": "C18",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1e7"
+     }
+    },
+    {
+     "id": "C19",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1e8"
+     }
+    },
+    {
+     "id": "C20",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1f1"
+     }
+    },
+    {
+     "id": "C21",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1g1"
+     }
+    },
+    {
+     "id": "C22",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e1h1"
+     }
+    },
+    {
+     "id": "C23",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c4c5"
+     }
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "c4"
+      ]
+     },
+     "statement": "The pawn on c4 is passed.",
+     "id": "C24"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "e1",
+      "includes": [
+       "e2",
+       "e3",
+       "e4",
+       "e5",
+       "e6",
+       "e7",
+       "e8"
+      ]
+     },
+     "statement": "The rook on e1 attacks the whole e-file.",
+     "id": "C25"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-G2-RB-CUTOFF",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.cut-off",
+    "theme.passed-pawn",
+    "role.failing",
+    "contrast.CG-G2-RB-CUTOFF"
+   ],
+   "hints": [
+    "On which side of the e-file is Black's king?",
+    "Black's king on c7 is on the same side of the e-file as the pawn: nothing is cut off.",
+    "No White move wins."
+   ],
+   "explain": "Draw: the tablebase gives a draw after twenty White moves and a loss after two; none wins. Black's king on c7 is already on the pawn's side of the e-file, so the rook has nothing to cut off. With the king on h7 and everything else unchanged, the position is a win.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-G2-RB-CUTOFF",
+   "id": "IBg2-46"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBg2-45",
+   "prompt": "White has a rook on e1 and a passed pawn on c4. White to move, with best play from both sides: what is the result?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c2"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d2"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d3"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d4"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1a1"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1b1"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1c1"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1d1"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e2"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e3"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e4"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e5"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e6"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1e7"
+     }
+    },
+    {
+     "id": "C16",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e1e8"
+     }
+    },
+    {
+     "id": "C17",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1f1"
+     }
+    },
+    {
+     "id": "C18",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1g1"
+     }
+    },
+    {
+     "id": "C19",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e1h1"
+     }
+    },
+    {
+     "id": "C20",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c4c5"
+     }
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "c4"
+      ]
+     },
+     "statement": "The pawn on c4 is passed.",
+     "id": "C21"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "e1",
+      "includes": [
+       "e2",
+       "e3",
+       "e4",
+       "e5",
+       "e6",
+       "e7",
+       "e8"
+      ]
+     },
+     "statement": "The rook on e1 attacks the whole e-file.",
+     "id": "C22"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-G2-RB-CUTOFF",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.cut-off",
+    "theme.passed-pawn",
+    "role.irrelevant",
+    "contrast.CG-G2-RB-CUTOFF"
+   ],
+   "hints": [
+    "Does Black's rook change which side of the e-file the king is on?",
+    "Black's king is still on the far side of the e-file from the pawn.",
+    "White wins."
+   ],
+   "explain": "White wins: the tablebase gives a win after seventeen of White's nineteen moves and a loss after two. Black's rook stands on b8 instead of a8, which does not change the result: the king is still on the far side of the e-file.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-G2-RB-CUTOFF",
+   "id": "IBg2-47"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBg2-46",
+   "prompt": "White to move, with best play from both sides: what is the result?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "Draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a4a3"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "a4a5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a4b3"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "a4b4"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3a3"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3b3"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c1"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c2"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c4"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c5"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c6"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c7"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c3c8"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c3d3"
+     }
+    },
+    {
+     "id": "C16",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3e3"
+     }
+    },
+    {
+     "id": "C17",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3f3"
+     }
+    },
+    {
+     "id": "C18",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3g3"
+     }
+    },
+    {
+     "id": "C19",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3h3"
+     }
+    },
+    {
+     "id": "C20",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b5b6"
+     }
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "b5"
+      ]
+     },
+     "statement": "The pawn on b5 is passed.",
+     "id": "C21"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "c3",
+      "includes": [
+       "c1",
+       "c2",
+       "c4",
+       "c5",
+       "c6",
+       "c7",
+       "c8"
+      ]
+     },
+     "statement": "The rook on c3 attacks the whole c-file.",
+     "id": "C22"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-G2-RB-CUTOFF-2",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.cut-off",
+    "theme.passed-pawn",
+    "role.working"
+   ],
+   "hints": [
+    "Where is Black's king compared with White's rook and the b-pawn?",
+    "White's rook on the c-file stands between Black's king and the pawn.",
+    "White wins."
+   ],
+   "explain": "White wins: the tablebase gives a win after thirteen of White's nineteen moves, a draw after four and a loss after two. Black's king on e7 is two files from White's rook on c3, on the opposite side of it from the b-pawn. That is the cut-off habit, and here the tablebase confirms it.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBg2-48"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBg2-47",
+   "prompt": "Black to move. White's king and pawn are close to Black's king. Find the only move that draws.",
+   "answer": {
+    "moves": [
+     "h1f1"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h8g8"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1a1"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1b1"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1c1"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1d1"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1e1"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h1f1"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1g1"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h2"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h3"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h4"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h5"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h6"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h1h7"
+     }
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "h6",
+      "color": "white",
+      "count": 1,
+      "after_move": "h1h6"
+     },
+     "statement": "After Rh6+ the pawn on g5 attacks the rook.",
+     "id": "C16"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "f1",
+      "color": "white",
+      "count": 0,
+      "after_move": "h1f1"
+     },
+     "statement": "After Rf1+ no white piece attacks the rook.",
+     "id": "C17"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-G2-RB-DISTANCE-2",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.far-checks",
+    "role.working"
+   ],
+   "hints": [
+    "Black needs checks. Which rook moves give check?",
+    "A check close to White's pieces can be captured. Look for a check from far away along a file.",
+    "Rf1+."
+   ],
+   "explain": "Rf1+ is the only move that draws; the tablebase gives a loss after each of the other thirteen moves. It checks along the f-file from five squares away, where White's king cannot reach the rook. The closer check Rh6+ loses: the pawn on g5 attacks h6.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "h1h6": "Rh6+ loses: the pawn on g5 attacks h6 and takes the rook."
+   },
+   "id": "IBg2-49"
+  },
+  {
+   "skill": "END.ROOK-BASICS.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBg2-48",
+   "prompt": "White to move. Find the only winning move.",
+   "answer": {
+    "moves": [
+     "e2d2"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5e6"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f5"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f6"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2a2"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2b2"
+     }
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e2c2"
+     }
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e2d2"
+     }
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2e1"
+     }
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2e3"
+     }
+    },
+    {
+     "id": "C11",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2e4"
+     }
+    },
+    {
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2f2"
+     }
+    },
+    {
+     "id": "C13",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2g2"
+     }
+    },
+    {
+     "id": "C14",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2h2"
+     }
+    },
+    {
+     "id": "C15",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5d6"
+     }
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "white",
+      "squares": [
+       "d5"
+      ]
+     },
+     "statement": "The pawn on d5 is passed.",
+     "id": "C16"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "d2",
+      "includes": [
+       "d3",
+       "d4",
+       "d5"
+      ],
+      "after_move": "e2d2"
+     },
+     "statement": "After Rd2 the rook defends the pawn along the d-file.",
+     "id": "C17"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c2",
+      "color": "black",
+      "count": 1,
+      "after_move": "e2c2"
+     },
+     "statement": "After Rc2 Black's rook attacks the rook.",
+     "id": "C18"
+    }
+   ],
+   "tags": [
+    "node.END.ROOK-BASICS",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-G2-RB-BEHIND-FIND-2",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.rook-behind-the-pawn",
+    "theme.passed-pawn",
+    "role.working"
+   ],
+   "hints": [
+    "Which White pawn can queen, and which piece should support it?",
+    "The rook belongs on the pawn's file, on a lower rank.",
+    "Rd2."
+   ],
+   "explain": "Rd2 is the only winning move: the tablebase gives a draw after twelve other moves and a loss after one. The rook goes behind the passed pawn on the d-file, where it defends the pawn along the file.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d5d6": "d6 only draws: the tablebase gives a draw after it.",
+    "e2c2": "Rc2 loses the rook: Black's rook on c4 takes it."
+   },
+   "id": "IBg2-50"
   }
  ]
 }

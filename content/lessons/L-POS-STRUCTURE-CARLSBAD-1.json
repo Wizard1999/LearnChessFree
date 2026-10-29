@@ -6,7 +6,7 @@
   "minutes": 10,
   "outcomes": [
     "Recognises the app's Carlsbad structure from the pawn squares, and tells it from the look-alike where White still has a c-pawn",
-    "Names the usual plans: the b-pawn minority attack, and the e-pawn or kingside play for the other side",
+    "Names the usual plans as rules of thumb: the b-pawn minority attack, and for the other side the e-pawn break or kingside play",
     "Checks that the pawn pushed to b4 is supported before starting the minority attack",
     "Finds a move in this structure without being told the plan, including moves that are not the minority attack"
   ],
@@ -18,7 +18,7 @@
     {
       "type": "board",
       "fen": "r2qk2r/pp1nbppp/2p1pn2/3p4/3P4/PP1PPN2/1B1N1PPP/R2QK2R w KQkq - 1 9",
-      "caption": "White to move. White has two pawns on the a-, b- and c-files (a3, b3) against Black's three (a7, b7, c6). One possible line, to show the pawn mechanics: Black can answer differently.",
+      "caption": "White to move. White has two pawns on the a-, b- and c-files (a3, b3) against Black's three (a7, b7, c6). White also has a second pawn on d3 behind d4 (doubled d-pawns), which does not change the queenside count. One possible line, to show the pawn mechanics: Black can answer differently.",
       "line": [
         {
           "move": "b3b4",
@@ -147,7 +147,7 @@
             ],
             "within_cp": 40
           },
-          "statement": "At depth 16 the engine's best move is Bc3; b4 scores within 0.4 pawns of it."
+          "statement": "At depth 16 b4 scores within 0.4 pawns of the engine's best move."
         },
         {
           "id": "C9",
@@ -184,6 +184,19 @@
             ]
           },
           "statement": "After b4, O-O, b5, a6, bxc6, bxc6, Black's pawn on c6 is backward: d5 stands ahead of it and d4 attacks c5."
+        },
+        {
+          "id": "C11",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "includes": [
+              "d3",
+              "d4"
+            ]
+          },
+          "statement": "White's pawns on d3 and d4 are doubled."
         }
       ]
     },
@@ -202,14 +215,14 @@
     {
       "type": "contrast",
       "title": "Same position, one pawn different",
-      "prompt": "In the first two positions only White's a-pawn differs (a3 or a2). Predict whether b4 works in each, then check. The third position asks a different question: is it still the Carlsbad structure?",
-      "working": "IBg3-1",
-      "failing": "IBg3-2",
+      "prompt": "In the first two positions only White's a-pawn differs (a3 or a2). Predict whether b4 works in each, then check. The third position is the worked example with one pawn moved: is it still the Carlsbad structure?",
+      "working": "IBg3-5",
+      "failing": "IBg3-6",
       "irrelevant": "IBg3-7"
     },
     {
       "type": "card",
-      "text": "**The other side.** With pawns on c6, d5 and e6, the usual plans are the e-pawn break (...e5) and play on the kingside. These are rules of thumb as well. A break is only as good as its support: before ...e5, count what attacks e5 and what defends it, and ask what happens to d5 after dxe5."
+      "text": "**The other side.** With pawns on c6, d5 and e6, plans are the e-pawn break (...e5) and kingside play. In the book version of this structure Black has no e-pawn, so ...e5 comes from the app's wider definition. A break is only as good as its support: before ...e5 count what attacks and defends e5, and ask whether d5 stays protected after dxe5."
     },
     {
       "type": "item",
@@ -232,13 +245,13 @@
         "node.POS.STRUCTURE.CARLSBAD",
         "cue.2"
       ],
-      "n": 4,
+      "n": 3,
       "silent": true
     },
     {
       "type": "reflect",
       "kind": "expect",
-      "prompt": "Think about the positions you just played without hints. Before you chose, what did you check? For the side with the minority: was the pawn that goes to b4 supported? For the other side: what attacks and defends the break square? Write one line each.",
+      "prompt": "Think about the positions you just played without hints. Before you chose, what did you check? For the side with the minority: was the pawn that goes to b4 supported? For the other side: which move did you choose, and why? Write one line each.",
       "fields": [
         {
           "id": "white",
@@ -246,7 +259,7 @@
         },
         {
           "id": "black",
-          "label": "For the other side: what I checked before a break"
+          "label": "For the other side: which move I chose and why"
         }
       ]
     }
@@ -259,6 +272,7 @@
     "content/skills/POS.STRUCTURE.CARLSBAD.json (the app's definition and the plans, recalled [R]; no sheet describes them)",
     "docs/exercises-positional.md §5 and tools/positional/gen_struct.py (exact pawn squares)",
     "content/items/lesson-g3.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-pawn edits are marked authored)",
-    "shipped items IP-STRUCT-1 (recognition)"
+    "shipped items IP-STRUCT-1 (recognition)",
+    "the textbook Carlsbad (from the Queen's Gambit exchange: Black has c6 and d5 and no e-pawn), recalled [R], not checked in this session; the app's definition also allows an e6 pawn"
   ]
 }

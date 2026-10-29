@@ -7,7 +7,7 @@
  "outcomes": [
   "Predicts win or draw in a king-and-rook-pawn ending from Black's king distance to the corner, and says what White's king changes",
   "Tells the rook-pawn draw from the win when the same set-up stands on the b- or c-file",
-  "Predicts what a knight adds (a win with the pawn on the fifth rank, a draw with it on the seventh) and reuses the wrong-bishop rule"
+  "Predicts what a knight adds (a win with the pawn on the fifth rank, a draw with it on the seventh when the knight cannot give mate at once) and sees that a bishop does not change the corner question"
  ],
  "steps": [
   {
@@ -103,7 +103,7 @@
   {
    "type": "contrast",
    "title": "How far from the corner?",
-   "prompt": "In the first position Black's king is on c8, two king moves from the corner. Predict the other two, then check.",
+   "prompt": "In the first position Black's king is on c8, two king moves from the corner. In the second it is on d8; in the third the position is mirrored onto the h-file, with Black's king on f8. Predict both, then check.",
    "working": "IBg2-21",
    "failing": "IBg2-19",
    "irrelevant": "IBg2-20"
@@ -114,12 +114,12 @@
   },
   {
    "type": "card",
-   "text": "**Add a piece.** With a knight, White usually wins a rook pawn on the fifth rank even against a king in the corner. *Rule of thumb:* the extra piece wins, unless Black's king is shut in the corner in front of a pawn on the seventh. The wrong-coloured bishop has its own lesson; its rule comes back in the last position below."
+   "text": "**Add a piece.** With a knight, White usually wins a fifth-rank rook pawn against a king in the corner, unless that king is shut in the corner in front of a pawn on the seventh: a *rule of thumb*. A bishop of the wrong colour is a different case with its own, later lesson; here, ask the same question as before: how far is Black's king from the corner?"
   },
   {
    "type": "contrast",
    "title": "A knight on the board",
-   "prompt": "In the first position White has a knight and the pawn is on a5. Predict the other two, then check.",
+   "prompt": "In the first position White has a knight on b1 and the pawn is on a5. In the second the pawn has reached a7; in the third the knight stands on d1, not b1. Predict both, then check.",
    "working": "IBg2-25",
    "failing": "IBg2-26",
    "irrelevant": "IBg2-27"
@@ -170,7 +170,7 @@
      "options": [
       "White's king position",
       "the pawn's file",
-      "the bishop's colour",
+      "the extra piece",
       "none"
      ]
     },

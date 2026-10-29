@@ -767,7 +767,7 @@
         "One square in Black's camp can never be guarded by a pawn again. Can your knight reach it?",
         "The knight can go to c5, where it also attacks a pawn."
       ],
-      "explain": "c5 is a hole: the pawns on a6, b5 and c7 can never guard it again. The knight lands there with no Black piece able to attack it, and it attacks the pawn on a6. The engine agrees that Nc5 is best.",
+      "explain": "c5 is a hole: no Black pawn can still advance to b6 or d6, the squares from which a pawn would guard it. The knight lands there with no Black piece able to attack it, and it attacks the pawn on a6. The engine agrees that Nc5 is best.",
       "id": "IBp2-5",
       "position": "PBp2-5",
       "orientation": "white",
@@ -1036,7 +1036,7 @@
       ],
       "tags": [
         "node.POS.PAWNMOVE",
-        "contrast.working",
+        "contrast.failing",
         "tpl.p2-pm-g6",
         "tier.3",
         "cue.2",
@@ -1116,7 +1116,7 @@
       ],
       "tags": [
         "node.POS.PAWNMOVE",
-        "contrast.failing",
+        "contrast.irrelevant",
         "tpl.p2-pm-g4",
         "tier.3",
         "cue.2",
@@ -1195,7 +1195,7 @@
       ],
       "tags": [
         "node.POS.PAWNMOVE",
-        "contrast.irrelevant",
+        "contrast.working",
         "tpl.p2-pm-g6",
         "tier.3",
         "cue.2",
@@ -1624,7 +1624,7 @@
         "tier.3",
         "kind.authored",
         "cue.2",
-        "contrast.failing",
+        "contrast.working",
         "tpl.p2-oop-lever",
         "family.FAM-Bp2-OOP-A2",
         "lang.en",
@@ -1710,7 +1710,7 @@
         "tier.3",
         "kind.authored",
         "cue.2",
-        "contrast.working",
+        "contrast.failing",
         "tpl.p2-oop-lever",
         "family.FAM-Bp2-OOP-A2",
         "lang.en",
@@ -2405,6 +2405,33 @@
           },
           "statement": "d5 is at least 2 pawns worse than the best move by the engine's count.",
           "id": "C4"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "f4",
+            "includes": [
+              "b8"
+            ],
+            "after_move": "d6d5"
+          },
+          "statement": "After d5 the bishop on f4 attacks the knight on b8.",
+          "id": "C5"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "d5",
+            "includes": [
+              "c6"
+            ],
+            "after_moves": [
+              "d6d5",
+              "e4d5"
+            ]
+          },
+          "statement": "After d5 exd5 the pawn on d5 attacks the knight on c6.",
+          "id": "C6"
         }
       ],
       "tags": [
@@ -2420,10 +2447,10 @@
       ],
       "hints": [
         "This is the same break. What differs from the first position? Count the defenders of d5 again.",
-        "The knight that defended d5 is still on b8.",
-        "With one defender, d5 does not hold: the break is premature."
+        "The knight that defended d5 is still on b8. What did the pawn on d6 keep closed?",
+        "Once d6 has moved, the bishop on f4 attacks b8, and after exd5 the new pawn attacks c6. A level count does not save the break."
       ],
-      "explain": "The knight that supported d5 is still on b8, so d5 is defended once and attacked once, and the engine rates d5 at least 2 pawns below its best move. The same break is premature when the pieces behind it are not developed.",
+      "explain": "After d5 exd5 the pawn on d5 attacks the knight on c6, and the bishop on f4 attacks the knight on b8 along the diagonal the d6 pawn used to block. The count of attackers and defenders is level (one each), so the count alone does not show the danger. The engine rates d5 at least 2 pawns below its best move.",
       "options": [
         "yes",
         "no"
@@ -3034,6 +3061,21 @@
           },
           "statement": "c5 is at least 2 pawns worse than the best move by the engine's count.",
           "id": "C5"
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "b5",
+            "includes": [
+              "e8"
+            ],
+            "after_moves": [
+              "c7c5",
+              "d3b5"
+            ]
+          },
+          "statement": "After c5 the bishop can go to b5, where it attacks the king on e8: it is check.",
+          "id": "C6"
         }
       ],
       "tags": [
@@ -3049,10 +3091,10 @@
       ],
       "hints": [
         "This is the same break. What differs from the first position? Count the defenders of c5 again.",
-        "The knight that defended c5 is back on g8.",
-        "With fewer defenders the break does not hold."
+        "The knight that defended c5 is back on g8. Count the defenders: two against one.",
+        "The count is not everything. After c5, what can the bishop on d3 do on the diagonal toward e8?"
       ],
-      "explain": "The knight that helped to defend c5 is still on g8, and the engine rates c5 at least 2 pawns below its best move. The same break is premature when the pieces that support it are not in place.",
+      "explain": "The knight is back on g8 and the king is still on e8. After c5 White plays Bb5+, and the c-pawn can no longer block the check from c6. The engine rates c5 at least 2 pawns below its best move. Two defenders against one attacker did not make the break ready.",
       "options": [
         "yes",
         "no"

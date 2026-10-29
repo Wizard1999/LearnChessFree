@@ -3,7 +3,7 @@
   "title": "Aim at what cannot move away",
   "skill": "POS.TARGET",
   "depth": "D1",
-  "minutes": 10,
+  "minutes": 11,
   "outcomes": [
     "Names a target that cannot step aside: a backward pawn whose front square the enemy controls, or a pinned piece",
     "Finds the file along which to attack a backward pawn",
@@ -13,16 +13,16 @@
   "steps": [
     {
       "type": "card",
-      "text": "Aim at what cannot get away. A **backward pawn** whose front square an enemy pawn controls cannot simply step forward, and a **pinned** piece cannot leave its square. These are fixed targets: you can bring more attackers. A piece that can move away is a poor target for a pawn kick: it moves, and the pawn that kicked it can never go back."
+      "text": "Aim at what cannot get away. A **backward pawn** whose front square an enemy pawn controls cannot simply step forward, so you can bring more attackers. A piece **pinned** to its king cannot leave the line of the pin. A piece that can move away is a poor target for a pawn kick: it moves, and the pawn that kicked it can never go back."
     },
     {
       "type": "board",
       "fen": "1rbq1rk1/6p1/2nbpn1p/5p2/3P1P2/2PB1N2/6PP/RNBQ1RK1 w - - 1 20",
-      "caption": "White to move. The pawn on e6 is behind f5, and the pawns on d4 and f4 control the square in front of it, e5.",
+      "caption": "White to move. Black's e6 pawn is behind f5, and the d4 and f4 pawns control e5, the square in front of it. The e-file has no White pawn on it (half-open for White), so a rook or queen can use it.",
       "line": [
         {
           "move": "d1e1",
-          "say": "The queen takes the half-open e-file and attacks e6. A pawn on e5 would face three White attackers and two defenders."
+          "say": "The queen takes the e-file and attacks e6. A pawn pushed to e5 would meet four attackers and two defenders."
         }
       ],
       "arrows": [
@@ -78,9 +78,10 @@
           "params": {
             "square": "e5",
             "color": "white",
-            "count": 3
+            "count": 4,
+            "after_move": "d1e1"
           },
-          "statement": "Three White men attack e5."
+          "statement": "After Qe1 four White men attack e5."
         },
         {
           "id": "C5",
@@ -88,9 +89,10 @@
           "params": {
             "square": "e5",
             "color": "black",
-            "count": 2
+            "count": 2,
+            "after_move": "d1e1"
           },
-          "statement": "Two Black men defend e5."
+          "statement": "After Qe1 two Black men defend e5."
         },
         {
           "id": "C6",
@@ -125,6 +127,10 @@
     {
       "type": "item",
       "item": "IP-PAWNS-74"
+    },
+    {
+      "type": "item",
+      "item": "IA1-034"
     },
     {
       "type": "card",

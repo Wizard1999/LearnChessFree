@@ -3,9 +3,10 @@
  "title": "Rook endings: four habits and where they fail",
  "skill": "END.ROOK-BASICS",
  "depth": "D1",
- "minutes": 12,
+ "minutes": 15,
  "outcomes": [
   "Puts the rook behind a passed pawn and predicts how the result changes when the rook stands in front of it",
+  "Checks which side of the rook's file the enemy king stands on, and predicts how the result changes when the king is not cut off",
   "Predicts win or draw with the rook on the seventh rank, and names a position where the seventh rank is not enough",
   "Finds the defender's far check instead of a close one, and spots a position with no passed pawn, where the rook-behind habit does not apply"
  ],
@@ -123,19 +124,31 @@
   },
   {
    "type": "card",
-   "text": "**Why behind?** From behind, the rook keeps the whole file ahead of the pawn in view after every push. In front of the pawn it loses a square with each push. This is a *rule of thumb*: sometimes the passive rook is right, and you will meet that exception below. First test the habit: predict each position, then check."
+   "text": "**Why behind?** From behind, the rook defends the pawn along the file after every push, and each push gives the rook more open squares behind the pawn. In front of the pawn it blocks the pawn's path and loses a square with each push. This is a *rule of thumb*: some positions need a passive rook instead. First test the habit: predict each position, then check."
   },
   {
    "type": "contrast",
    "title": "Behind or in front?",
-   "prompt": "In the first position White's rook is behind its passed pawn. Predict the other two, then check.",
+   "prompt": "In the first position White's rook is behind its passed pawn. In the second it stands on g7, in front of the pawn; in the third Black's rook is on c6. Predict both, then check.",
    "working": "IBg2-34",
    "failing": "IBg2-35",
    "irrelevant": "IBg2-36"
   },
   {
+   "type": "card",
+   "text": "**Cut off, and when it fails.** A rook on a file keeps the enemy king on the far side of that file, away from your pawn. If the king is already on the pawn's side of the file, there is nothing to cut off, and the win can vanish. A *rule of thumb*: check which side of the rook's file the king stands on, then predict."
+  },
+  {
    "type": "item",
    "item": "IA3-701"
+  },
+  {
+   "type": "contrast",
+   "title": "Is the king cut off?",
+   "prompt": "In the first position White's rook on e1 keeps Black's king on the far side of the e-file from the pawn. In the second the king stands on c7, on the pawn's side; in the third Black's rook is on b8, not a8. Predict both, then check.",
+   "working": "IBg2-45",
+   "failing": "IBg2-46",
+   "irrelevant": "IBg2-47"
   },
   {
    "type": "card",
@@ -148,7 +161,7 @@
   {
    "type": "contrast",
    "title": "The rook on the seventh rank",
-   "prompt": "In the first position White's rook is on the seventh rank and Black's king is shut in on a8. Predict the other two, then check.",
+   "prompt": "In the first position White's rook is on the seventh rank and Black's king is shut in on a8. In the second Black's king stands on a6; in the third White's king is on e3, not d3. Predict both, then check.",
    "working": "IBg2-37",
    "failing": "IBg2-38",
    "irrelevant": "IBg2-39"
@@ -156,11 +169,6 @@
   {
    "type": "item",
    "item": "IBg2-41"
-  },
-  {
-   "type": "item",
-   "item": "IE-PHI-1",
-   "silent": true
   },
   {
    "type": "item",
@@ -184,7 +192,7 @@
   {
    "type": "reflect",
    "kind": "expect",
-   "prompt": "Think back to the three silent positions. Which of the four habits did you reach for first in each, and in which one did an exception catch you?",
+   "prompt": "Think back to the silent positions, where no habit was named. Which of the four habits did you reach for first, and in which one did an exception catch you?",
    "fields": [
     {
      "id": "first",
@@ -201,9 +209,9 @@
      "id": "caught",
      "label": "An exception caught me in:",
      "options": [
-      "the passive defence",
       "the seventh-rank position",
       "the position with no passed pawn",
+      "a cut-off or far-check position",
       "none of them"
      ]
     },
@@ -223,6 +231,6 @@
   "sources/sheets/nimzowitsch_my-system.md (ideas 13 and 24: the habits and their exceptions; no sentences used)",
   "sources/sheets/edlasker_chess-strategy.md (K28: activity over material)",
   "content/skills/END.ROOK-BASICS.json (conditions; the short-side-defence line and the two-file cut-off criterion are provisional there and are NOT taught here)",
-  "Positions: own constructions and tablebase scans; every result from the Lichess tablebase service [V] (items IBg2-33 to IBg2-44; shipped items IA3-701 and IE-PHI-1)"
+  "Positions: own constructions and tablebase scans; every result from the Lichess tablebase service [V] (items IBg2-33 to IBg2-50; shipped item IA3-701)"
  ]
 }

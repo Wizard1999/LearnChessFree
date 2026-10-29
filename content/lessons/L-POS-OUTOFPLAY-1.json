@@ -22,11 +22,11 @@
       "line": [
         {
           "move": "c4c5",
-          "say": "The pawn steps forward and offers an exchange. The bishop's diagonals stay shut while it stands on c4."
+          "say": "The c-pawn leaves c4, so the bishop gets c4, b5 and a6 at once. Black can take the pawn."
         },
         {
           "move": "d6c5",
-          "say": "If Black takes, the pawn that blocked the bishop is gone and the bishop has three squares."
+          "say": "Black takes: White is a pawn down, yet the engine still lists c5 among the best moves."
         }
       ],
       "arrows": [
@@ -128,6 +128,77 @@
             ]
           },
           "statement": "c5 is among the engine's top moves."
+        },
+        {
+          "id": "C9",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "black",
+            "count": 3,
+            "after_move": "c4c5"
+          },
+          "statement": "After c5 three Black men attack the pawn on c5."
+        },
+        {
+          "id": "C10",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "white",
+            "count": 1,
+            "after_move": "c4c5"
+          },
+          "statement": "Only the bishop on e3 defends it."
+        },
+        {
+          "id": "C11",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d3",
+            "includes": [
+              "c4",
+              "b5",
+              "a6"
+            ],
+            "after_move": "c4c5"
+          },
+          "statement": "After c5 the bishop on d3 sees c4, b5 and a6."
+        },
+        {
+          "id": "C12",
+          "type": "mobility",
+          "params": {
+            "square": "d3",
+            "mode": "legal",
+            "count": 3,
+            "after_move": "c4c5"
+          },
+          "statement": "After c5 the bishop already has three legal moves, before Black takes."
+        },
+        {
+          "id": "C13",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 4
+          },
+          "statement": "White has four pawns on the queenside (files a to d)."
+        },
+        {
+          "id": "C14",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 3,
+            "after_moves": [
+              "c4c5",
+              "d6c5"
+            ]
+          },
+          "statement": "After c5 dxc5 White has three queenside pawns instead of four: a pawn down."
         }
       ]
     },
@@ -149,10 +220,10 @@
     },
     {
       "type": "contrast",
-      "title": "Can the shut-in bishop be freed?",
-      "prompt": "In the first two positions White's bishop on a2 is shut in by the pawn on b3, and the plan is b4. They differ by one Black pawn. Predict each before you check. In the third, only the bishop's square differs.",
-      "working": "IBp2-17",
-      "failing": "IBp2-16",
+      "title": "Can b4 free the shut-in bishop?",
+      "prompt": "In the first two positions White's bishop on a2 is shut in by the pawn on b3, and the plan is b4. You see the first with its result, then predict the second. They differ by one Black pawn (on a6 or on a5). In the third, only the bishop's square differs.",
+      "working": "IBp2-16",
+      "failing": "IBp2-17",
       "irrelevant": "IBp2-18"
     },
     {

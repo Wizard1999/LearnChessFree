@@ -7,8 +7,8 @@
   "outcomes": [
     "Recognises the app's King's Indian chain in either orientation",
     "Names each side's break and target: White's c4-c5 against d6, Black's ...f5 against e4",
-    "Checks the support for a break before starting it: a pawn to recapture on c5, and the f6 square cleared for ...f5",
-    "Looks at the other wing before hurrying the break, and finds moves in the structure without being told the plan"
+    "Checks the support for a break before starting it: counts what attacks and defends c5, and knows that a clear f6 only makes ...f5 legal, not ready",
+    "Finds moves in the structure without being told the plan"
   ],
   "steps": [
     {
@@ -168,6 +168,32 @@
             ]
           },
           "statement": "After c5 and f5, the Black pawn on f5 attacks e4."
+        },
+        {
+          "id": "C12",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e3",
+            "includes": [
+              "c5"
+            ]
+          },
+          "statement": "The bishop on e3 attacks c5, so it backs the break."
+        },
+        {
+          "id": "C13",
+          "type": "piece_attacks",
+          "params": {
+            "square": "g7",
+            "includes": [
+              "f6",
+              "e5"
+            ],
+            "excludes": [
+              "d4"
+            ]
+          },
+          "statement": "The bishop on g7 attacks f6 and e5 but not d4: the pawn on e5 blocks it."
         }
       ]
     },
@@ -185,27 +211,27 @@
     },
     {
       "type": "card",
-      "text": "**Rule of thumb, with conditions.** A break needs support. c5 needs a pawn to recapture on c5 (here the pawn on b4), or the exchange only loses a pawn; ...f5 needs f6 cleared, so a knight on f6 must move first. Each break is a race on its own wing: before you start yours, look at how fast theirs is. The pawn on e5 also blocks the bishop on g7."
+      "text": "**Rule of thumb, with conditions.** A break needs support: count its attackers and defenders. Here c5 is backed by the pawn on b4 and the bishop on e3. ...f5 first needs f6 cleared (a knight there blocks the pawn), which makes it legal, not ready. Each break is a race on its own wing: check how fast theirs is first. The pawn on e5 also blocks the bishop on g7."
     },
     {
       "type": "contrast",
       "title": "Same break, one pawn different",
-      "prompt": "In the first two positions only a White b-pawn differs (on b4, or not yet there). Predict whether c5 works in each, then check. In the third position a pawn has moved: is it still the chain?",
-      "working": "IBg3-46",
-      "failing": "IBg3-47",
+      "prompt": "In the first two positions only a White b-pawn differs (on b4, or not yet there). Predict whether c5 works in each, then check. The third position is the worked example with one pawn moved: is it still the chain?",
+      "working": "IBg3-48",
+      "failing": "IBg3-49",
       "irrelevant": "IBg3-52"
     },
     {
       "type": "item",
-      "item": "IBg3-55"
+      "item": "IBg3-63"
     },
     {
       "type": "item",
-      "item": "IBg3-56"
+      "item": "IBg3-64"
     },
     {
       "type": "card",
-      "text": "**Counting the race.** If your break is ready and theirs is not, start it. If theirs is ready and yours is not, deal with theirs first. Count moves, not hopes, and look for forcing moves that break the count. This is a rule of thumb. The next positions are unlabeled: decide whether to start a break, prepare it, or leave it for now."
+      "text": "**Counting the race.** Compare the two breaks. If yours is ready and theirs is not, starting yours is a candidate; if theirs is ready and yours is not, check whether you must slow theirs down first. Count moves, not hopes, and look for forcing moves that change the count. This is a rule of thumb. Next, unlabeled positions: start a break, prepare it, or wait?"
     },
     {
       "type": "item",
@@ -239,15 +265,11 @@
     {
       "type": "reflect",
       "kind": "expect",
-      "prompt": "Think about the positions you played without hints. What was your break, what supported it, and how fast was the other side's break? Write one line each.",
+      "prompt": "Think about the positions you played without hints. What was your break, and what supported it? Write one line.",
       "fields": [
         {
           "id": "mine",
           "label": "My break and what supports it"
-        },
-        {
-          "id": "theirs",
-          "label": "Their break and how fast it is"
         }
       ]
     }
