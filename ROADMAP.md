@@ -3,13 +3,14 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 53%** (65 of 130 tasks done, in-progress tasks count half). Updated 2026-10-29T09:07+00:00 UTC.
+**Overall: 52%** (65 of 134 tasks done, in-progress tasks count half). Updated 2026-10-29T09:20+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 21/25 | 84% |
+| Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 0/4 | 0% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
@@ -95,6 +96,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Accessibility and mobile fixes from the review
 - [ ] Full-course walkthrough in the browser as a first-time learner
 - [x] Zero-friction start: first visit goes straight into the first lesson, staged content loading, auto-save with a storage check, resume mid-lesson (decision D19)
+
+## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
+- [ ] Control map toggle on any board: per-square net control (white attackers minus black), colours and counts, in lessons, practice answers, game review and the analysis board
+- [ ] Click a square: attackers and defenders listed with x-rays, and the exchange outcome there
+- [ ] Value-aware version; derived views (outposts and holes, space, king zone, safe squares for each piece)
+- [ ] Training items from the map: tap the controlled squares, count attackers and defenders, predict then reveal; a hidden-map mode
 
 ## Phase 3: Curriculum graph
 - [x] 204 skill nodes with outcomes, conditions, contrasts and misconceptions
