@@ -61,9 +61,9 @@ export function Course() {
   const view = params.get('mission') ?? 'all'
   const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
-  const [leftOpen, setLeftOpen] = useState(() => { try { return localStorage.getItem('map:left') === '1' } catch { return true } })
-  const [rightOpen, setRightOpen] = useState(() => { try { return localStorage.getItem('map:right') === '1' } catch { return true } })
-  const toggleSide = (side: 'left' | 'right') => { const set = side === 'left' ? setLeftOpen : setRightOpen; set(v => { try { localStorage.setItem(`map:${side}`, v ? '0' : '1') } catch { /* optional */ } return !v }) }
+  const [dockOpen, setDockOpen] = useState(() => { try { return localStorage.getItem('dock:left') === '1' } catch { return false } })
+  const [dockTab, setDockTab] = useState<'progress' | 'next'>('progress')
+  const setDock = (open: boolean) => { setDockOpen(open); try { localStorage.setItem('dock:left', open ? '1' : '0') } catch { /* optional */ } }
   const [showBreakdown, setShowBreakdown] = useState(true)
   const [dismissed, setDismissed] = useState<string[]>([])
   const [lastChallenge, setLastChallenge] = useState<number | null>(null)
@@ -104,7 +104,7 @@ export function Course() {
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
-  const otherView = showCourses ? <main className="page wide curriculum"><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide curriculum"><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
+  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
@@ -155,7 +155,7 @@ export function Course() {
 
   const detailPanel = (
     node && sk && !busy && (
-            <section className={`card skilldetail detaildrawer${leftOpen ? ' afterleft' : ''}`} role="dialog" aria-label={`${node.title} detail`}>
+            <section className={`card skilldetail detaildrawer`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
               <h2>{node.title}</h2>
               <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
@@ -182,7 +182,7 @@ export function Course() {
             </section>
           )
   )
-  const leftPanel = leftOpen ? (
+  const leftPanel = (
         <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
         <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button>
           {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all lessons</button>}
@@ -214,8 +214,8 @@ export function Course() {
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
         </section>
-  ) : null
-  const rightPanel = rightOpen ? (
+  )
+  const rightPanel = (
         <div className="mapright sidedrawer right card">
           {warmOpen && mission ? (
             <section className="card challenge">
@@ -291,22 +291,33 @@ export function Course() {
           )}
 
         </div>
-  ) : null
+  )
   /** The two side panels and their edge buttons belong to the whole Curriculum section: they show on the map, the lesson list and the courses. */
+  const skillOpen = !!(node && sk && !busy)
   const chrome = (
-    <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
-      <button type="button" className="edgetab left" aria-expanded={leftOpen} aria-label={leftOpen ? 'Close the progress panel' : 'Open the progress panel'} title={leftOpen ? 'Close' : undefined} onClick={() => toggleSide('left')}>{leftOpen ? '‹' : 'Progress ›'}</button>
-      <button type="button" className="edgetab right" aria-expanded={rightOpen} aria-label={rightOpen ? 'Close the challenge panel' : 'Open the challenge panel'} title={rightOpen ? 'Close' : undefined} onClick={() => toggleSide('right')}>{rightOpen ? '›' : '‹ Challenge'}</button>
-      {leftPanel}
-      {rightPanel}
-      {detailPanel}
+    <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setDock(false); setPicked(null) } }}>
+      <button type="button" className="edgetab left" aria-expanded={dockOpen} aria-label={dockOpen ? 'Close the progress panel' : 'Open the progress panel'} title={dockOpen ? 'Close' : undefined} onClick={() => setDock(!dockOpen)}>{dockOpen ? '‹' : 'Progress ›'}</button>
+      {dockOpen && (
+        <aside className="dock left" aria-label="Progress and challenge">
+          <div className="docktabs" role="tablist">
+            <button type="button" role="tab" aria-selected={dockTab === 'progress'} className={dockTab === 'progress' ? 'chip on' : 'chip'} onClick={() => setDockTab('progress')}>Progress</button>
+            <button type="button" role="tab" aria-selected={dockTab === 'next'} className={dockTab === 'next' ? 'chip on' : 'chip'} onClick={() => setDockTab('next')}>Challenge and next</button>
+          </div>
+          <div className="dockbody">{dockTab === 'next' ? rightPanel : leftPanel}</div>
+        </aside>
+      )}
+      {skillOpen && (
+        <aside className="dock right" aria-label="Selected skill">
+          <div className="dockbody">{detailPanel}</div>
+        </aside>
+      )}
     </div>
   )
 
   if (otherView) return <>{otherView}{chrome}</>
   return (
     <>
-    <main className="page wide mappage curriculum">
+    <main className={`page wide mappage curriculum${dockOpen || (node && sk && !busy) ? ' dockopen' : ''}`}>
       <h1>Curriculum map</h1>
       {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
@@ -331,7 +342,7 @@ export function Course() {
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All lessons · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
-      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`} onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
+      <div className="missiongrid mapgrid">
 
         <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} lessons={content.lessons} lessonProgress={progress ?? []} /></div>
 

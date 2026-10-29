@@ -30,6 +30,15 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const [view, setView] = useState({ x: 0, y: 0, k: 3 })
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
   const svg = useRef<SVGSVGElement>(null)
+  const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
+  /** How ready a skill is to be started: the share of its prerequisite skills that are at Level one or better. A skill with none is ready at once. */
+  const readiness = useMemo(() => {
+    const parents = new Map<string, string[]>()
+    for (const e of layout.edges) parents.set(e.to, [...(parents.get(e.to) ?? []), e.from])
+    const m = new Map<string, number>()
+    for (const n of layout.nodes) { const ps = parents.get(n.id) ?? []; m.set(n.id, ps.length ? ps.filter(p => (progress.get(p)?.level ?? 0) >= 2).length / ps.length : 1) }
+    return m
+  }, [layout, progress])
   const linked = useMemo(() => {
     const s = new Set<string>()
     if (picked) { s.add(picked); for (const e of layout.edges) { if (e.from === picked) s.add(e.to); if (e.to === picked) s.add(e.from) } }
@@ -104,20 +113,33 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         {layout.edges.map(e => {
           const a = byId.get(e.from), b = byId.get(e.to); if (!a || !b) return null
           const on = picked && (e.from === picked || e.to === picked)
-          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={on ? 'mapedge on' : 'mapedge'} />
+          const lf = level(e.from)
+          // a path lights up as the skill before it fills; no hairball for paths that nobody has walked or is about to
+          const lit = lf >= 2 || (lf >= 1 && (readiness.get(e.to) ?? 0) > 0)
+          if (!on && !lit && !(highlightStrand && a.strand === highlightStrand && b.strand === highlightStrand) && view.k < 4) return null
+          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={on ? 'mapedge on' : lit ? 'mapedge lit' : 'mapedge'} style={lit && !on ? { opacity: 0.3 + 0.17 * lf, strokeWidth: 1.5 + lf } : undefined} />
         })}
         {layout.nodes.map(n => {
           const p = progress.get(n.id)
-          const lvl = p ? Math.min(4, p.level) : 0
+          const lvl = level(n.id)
+          const ready = (readiness.get(n.id) ?? 0)
+          const next = lvl < 4 && ready >= 1 && !p?.noExercises
           const dim = (picked && !linked.has(n.id)) || (!picked && highlightStrand && n.strand !== highlightStrand)
+          const cid = `cp-${n.id.replace(/[^A-Za-z0-9]/g, '_')}`
+          // unstarted skills fade with how few of their prerequisites are done, but stay readable
+          const op = lvl > 0 || next ? 1 : 0.38 + 0.62 * ready
           return (
-            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}`} transform={`translate(${n.x},${n.y})`}
-              tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, level ${lvl}`}
+            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
+              tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, ${LEVEL_NAMES[lvl]}${next ? ', ready to start' : ''}`}
               onClick={() => onPick(n.id)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) } }}>
-              <circle r={22} fill={LEVEL_FILL[lvl]} className="nodecircle" />
+              {next && <circle r={32} className="nodeglow" />}
+              <clipPath id={cid}><rect x={-22} y={22 - 44 * (lvl / 4)} width={44} height={44} /></clipPath>
+              <circle r={22} fill="var(--canvas)" className="nodebase" />
+              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
+              <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
               <title>{p?.title ?? n.id}</title>
-              {(picked === n.id || view.k >= 2.4) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+              {(picked === n.id || view.k >= 2.4 || next) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
             </g>
           )
         })}
@@ -132,18 +154,11 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           <div className="maptip" style={{ left: tip.x, top: tip.y }} role="tooltip" onMouseEnter={() => window.clearTimeout(hideTimer.current)} onMouseLeave={hideTip}>
             <h3>{p?.title ?? tip.id}</h3>
             <p className="small muted">{sk?.strand} {strandNames[sk?.strand ?? ''] ?? ''} · tier {sk?.tier} · {LEVEL_NAMES[Math.min(4, p?.level ?? 0)]}{p?.due ? ' · refresher due' : ''}{p?.assumed ? ' · assumed from a test-out' : ''}</p>
-            {sk && <p className="small">{Object.values(sk.depths)[0]?.outcome}</p>}
-            {ls.length === 0 ? <p className="small muted">No lesson for this skill yet.</p> : (
-              <ul>
-                {ls.map(l => { const d = doneBy.get(l.id); return (
-                  <li key={l.id}><button type="button" className="link" onClick={() => navigate(`/lesson/${l.id}`)}>{l.title}</button><span className="muted small">{d?.done ? (d.skipped ? 'Skipped' : 'Finished') : d && d.step > 0 ? 'In progress' : 'Not started'}</span></li>
-                ) })}
-              </ul>
-            )}
+            <p className="small">{ls.length === 0 ? 'No lesson for this skill yet.' : `${ls.filter(l => doneBy.get(l.id)?.done).length} of ${ls.length} lesson${ls.length === 1 ? '' : 's'} finished`}</p>
             <div className="row">
               {ls.length > 0 && !allDone && <button type="button" onClick={() => void mark(ls.map(l => l.id), steps, true)}>Mark as already done</button>}
               {ls.some(l => doneBy.get(l.id)) && <button type="button" className="link" onClick={() => void mark(ls.map(l => l.id), steps, false)}>Reset</button>}
-              <button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
+              {ls[0] && <button type="button" className="link" onClick={() => navigate(`/lesson/${ls[0].id}`)}>Open lesson</button>}<button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
             </div>
           </div>
         )

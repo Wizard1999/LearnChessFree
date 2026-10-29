@@ -131,7 +131,7 @@ fieldset.appearance legend { padding: 0; }
 .blk.due { border-style: dashed; border-width: 2px; }
 .blk.assumed { background-image: repeating-linear-gradient(135deg, transparent 0 3px, rgba(127, 127, 127, 0.45) 3px 5px), linear-gradient(to top, var(--accent) var(--fill, 0%), var(--chip) var(--fill, 0%)); }
 .blk[data-lesson='1']::after { content: ''; position: absolute; top: 2px; right: 2px; width: 6px; height: 6px; border-radius: 50%; background: var(--text); box-shadow: 0 0 0 1px var(--surface); }
-.missiongrid { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 1rem; align-items: start; }
+.missiongrid { display: grid; grid-template-columns: minmax(280px, 330px) 1fr; gap: 1rem; align-items: start; }
 @media (max-width: 860px) { .missiongrid { grid-template-columns: 1fr; } }
 .donutrow { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin: 0.3rem 0; }
 .legendlist li { margin: 0.2rem 0; }
@@ -339,7 +339,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 /* Map stage: optional left and right drawers around the radial map */
 .mapgrid { grid-template-columns: minmax(0, 1fr); }
 .mapgrid.lo { grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); }
-.mapgrid.ro { grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); }
+.mapgrid.ro { grid-template-columns: minmax(0, 1fr) minmax(280px, 330px); }
 .mapgrid.lo.ro { grid-template-columns: minmax(240px, 300px) minmax(420px, 1fr) minmax(260px, 340px); }
 @media (max-width: 1100px) { .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { grid-template-columns: minmax(0, 1fr); } }
 .sidetoggles { margin: 0.4rem 0; }
@@ -416,7 +416,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 @media (max-width: 900px) { .edgetab { top: auto; bottom: 0.6rem; } .edgetab[aria-expanded='true'] { top: auto; } }
 
 /* The skill detail docks beside the open left panel (or beside the left pull tab) so the map stays visible to its right */
-.sidechrome > .detaildrawer { left: 6.6rem; transform: none; width: min(380px, 92vw); max-height: calc(100vh - 5.6rem); }
+.sidechrome > .detaildrawer { left: 6.6rem; transform: none; width: min(330px, 92vw); max-height: calc(100vh - 5.6rem); }
 .sidechrome > .detaildrawer.afterleft { left: calc(min(400px, 92vw) + 2.4rem); }
 @media (max-width: 900px) { .sidechrome > .detaildrawer, .sidechrome > .detaildrawer.afterleft { left: 50%; transform: translateX(-50%); } }
 
@@ -425,3 +425,51 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .edgetab[aria-expanded='true'] { width: 1.9rem; padding: 0.45rem 0; justify-content: center; }
 .curriculum { padding-left: 8rem; padding-right: 8rem; }
 @media (max-width: 900px) { .curriculum { padding-left: 1rem; padding-right: 1rem; } }
+
+/* ONE docked side panel with tabs (Skill, Progress, Challenge and next): it takes room from the page instead of covering it */
+.dock { position: fixed; top: 4.4rem; right: 0; bottom: 0; width: 330px; z-index: 39; display: flex; flex-direction: column; background: var(--surface); border-left: 1px solid var(--control-boundary); }
+.docktabs { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.6rem; border-bottom: 1px solid var(--divider); }
+.dockbody { overflow: auto; flex: 1; padding: 0.4rem 0.8rem 1rem; }
+.dock .sidedrawer, .dock .detaildrawer, .dock .mapright { position: static; width: auto; max-height: none; box-shadow: none; animation: none; transform: none; border: 0; background: transparent; padding: 0; z-index: auto; overflow: visible; }
+.dock .closebtn { display: none; }
+.curriculum { padding-left: 1.5rem; padding-right: 7rem; }
+.curriculum.dockopen { padding-right: calc(330px + 1.5rem); }
+.edgetab.right[aria-expanded='true'] { right: 330px; }
+@media (max-width: 900px) {
+  .dock { top: auto; width: 100%; height: 55vh; border-left: 0; border-top: 1px solid var(--control-boundary); }
+  .curriculum, .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; }
+  .edgetab.right[aria-expanded='true'] { right: 0.6rem; bottom: calc(55vh + 0.4rem); }
+}
+
+/* Nodes fill from the bottom as skills are mastered; paths light up behind them; the logical next skills glow */
+.mapedge.lit { stroke: var(--accent); }
+.mapnode .nodebase { stroke: none; }
+.mapnode.next .nodecircle { stroke: var(--accent); stroke-width: 5; }
+.mapnode .nodeglow { fill: var(--accent); opacity: 0.22; animation: nodepulse 2.4s ease-in-out infinite; }
+@keyframes nodepulse { 0%, 100% { opacity: 0.12; } 50% { opacity: 0.38; } }
+@media (prefers-reduced-motion: reduce) { .mapnode .nodeglow { animation: none; opacity: 0.25; } }
+.mapnode .nodemark { fill: var(--text); }
+
+/* Layout v3: progress and challenge dock on the LEFT, the selected skill's information docks on the RIGHT; each takes room from the map, none covers it */
+.dock.left { left: 0; right: auto; border-left: 0; border-right: 1px solid var(--control-boundary); }
+.dock.right { right: 0; left: auto; }
+.dock .closebtn { display: inline-block; }
+.dock.left .closebtn { display: none; }
+.curriculum { padding-left: 7rem; padding-right: 1.5rem; }
+.curriculum.dockopen { padding-left: calc(330px + 1.5rem); padding-right: 1.5rem; }
+.edgetab.left { left: 0; right: auto; border-radius: 0 8px 8px 0; }
+.edgetab.left[aria-expanded='true'] { left: 330px; }
+@media (max-width: 900px) {
+  .dock.left, .dock.right { top: auto; width: 100%; height: 50vh; border: 0; border-top: 1px solid var(--control-boundary); }
+  .curriculum, .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; }
+  .edgetab.left[aria-expanded='true'] { left: 0.6rem; bottom: calc(50vh + 0.4rem); }
+}
+.curriculum.page, .mappage.curriculum { max-width: none; margin-left: 0; margin-right: 0; }
+.curriculum.dockopen { padding-left: calc(330px + 1rem); }
+.dock { width: 330px; }
+
+/* Centre stays centred: when either dock is open, BOTH sides give up the same room, so the page content never shifts off-centre */
+.curriculum, .curriculum.page { padding-left: 7rem; padding-right: 7rem; }
+.curriculum.dockopen { padding-left: calc(330px + 1.2rem); padding-right: calc(330px + 1.2rem); }
+@media (max-width: 1100px) { .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; } }
+@media (max-width: 900px) { .curriculum, .curriculum.page { padding-left: 1rem; padding-right: 1rem; } }
