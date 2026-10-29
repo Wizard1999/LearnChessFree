@@ -1,5 +1,8 @@
-// Chess School desktop launcher: one exe, no install. It unpacks the embedded site to %LOCALAPPDATA%\ChessSchool, serves it on
-// http://localhost:47615/ (a fixed address, so saved progress stays with the same browser origin) and opens it in an app-style window.
+// Chess School desktop launcher: one portable exe, no install. The site is served straight from the zip embedded in the exe (nothing is
+// unpacked), on http://localhost:47615/ (a fixed address, so saved progress stays with the same browser origin). Progress lives in a
+// browser profile kept in a folder NEXT TO THE EXE (ChessSchoolData), so the folder can be copied, run from a USB stick or deleted
+// (drop it in the recycle bin) with nothing left behind. If the exe's folder is read-only, the data folder falls back to
+// %LOCALAPPDATA%\ChessSchool and the tray notice says so.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,6 +17,9 @@ static class Launcher
 {
     const int Port = 47615;
     static readonly string Url = "http://localhost:" + Port + "/";
+    static string DataDir;
+    static ZipArchive Zip;
+    static readonly object ZipLock = new object();
     static readonly Dictionary<string, string> Mime = new Dictionary<string, string> {
         {".html","text/html; charset=utf-8"},{".js","text/javascript"},{".mjs","text/javascript"},{".css","text/css"},{".json","application/json"},
         {".wasm","application/wasm"},{".svg","image/svg+xml"},{".png","image/png"},{".jpg","image/jpeg"},{".ico","image/x-icon"},
@@ -24,10 +30,17 @@ static class Launcher
     {
         bool first;
         var mutex = new Mutex(true, "ChessSchoolLauncher47615", out first);
+        bool portable;
+        DataDir = PickDataDir(out portable);
         if (!first) { Open(); return; } // already running: just open another window
-        string root = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ChessSchool", "site");
-        try { Unpack(root); }
-        catch (Exception e) { MessageBox.Show("Could not unpack Chess School:\n" + e.Message, "Chess School"); return; }
+        try
+        {
+            var ms = new MemoryStream();
+            using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream("site.zip")) s.CopyTo(ms);
+            ms.Position = 0;
+            Zip = new ZipArchive(ms, ZipArchiveMode.Read);
+        }
+        catch (Exception e) { MessageBox.Show("Could not read the Chess School files:\n" + e.Message, "Chess School"); return; }
 
         var listener = new HttpListener();
         listener.Prefixes.Add(Url);
@@ -36,8 +49,9 @@ static class Launcher
         {
             // Something already answers on our address. If it is Chess School (another copy still running), just open it.
             try { using (var w = new WebClient()) { w.Headers["User-Agent"] = "ChessSchoolLauncher"; if (w.DownloadString(Url).Contains("<title>Chess School")) { Open(); return; } } } catch { }
-            MessageBox.Show("Port " + Port + " is in use, so Chess School cannot start.\n" + e.Message, "Chess School"); return; }
-        new Thread(() => Serve(listener, root)) { IsBackground = true }.Start();
+            MessageBox.Show("Port " + Port + " is in use, so Chess School cannot start.\n" + e.Message, "Chess School"); return;
+        }
+        new Thread(() => Serve(listener)) { IsBackground = true }.Start();
         Open();
 
         var menu = new ContextMenu();
@@ -45,35 +59,21 @@ static class Launcher
         menu.MenuItems.Add("Quit", (s, a) => { try { listener.Close(); } catch { } Environment.Exit(0); });
         var icon = new NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "Chess School (running)", ContextMenu = menu, Visible = true };
         icon.DoubleClick += (s, a) => Open();
-        icon.ShowBalloonTip(3000, "Chess School", "Running. Right-click this icon to quit.", ToolTipIcon.Info);
+        icon.ShowBalloonTip(4000, "Chess School", portable ? "Running. Your progress is saved in the ChessSchoolData folder next to this program. Right-click this icon to quit." : "Running. This folder is read-only, so progress is saved in your user profile instead. Right-click this icon to quit.", ToolTipIcon.Info);
         Application.Run();
         icon.Visible = false; listener.Stop();
     }
 
-    static void Unpack(string root)
+    /** The data folder next to the exe when it can be written; otherwise the user profile. */
+    static string PickDataDir(out bool portable)
     {
-        var asm = Assembly.GetExecutingAssembly();
-        string stamp = File.GetLastWriteTimeUtc(asm.Location).Ticks.ToString();
-        string stampFile = Path.Combine(root, ".stamp");
-        if (File.Exists(stampFile) && File.ReadAllText(stampFile) == stamp) return;
-        if (Directory.Exists(root)) Directory.Delete(root, true);
-        Directory.CreateDirectory(root);
-        using (var s = asm.GetManifestResourceStream("site.zip"))
-        using (var z = new ZipArchive(s))
-            foreach (var e in z.Entries)
-            {
-                if (e.FullName.EndsWith("/")) continue;
-                string dest = Path.GetFullPath(Path.Combine(root, e.FullName));
-                if (!dest.StartsWith(Path.GetFullPath(root))) continue;
-                Directory.CreateDirectory(Path.GetDirectoryName(dest));
-                e.ExtractToFile(dest, true);
-            }
-        File.WriteAllText(stampFile, stamp);
+        string beside = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "ChessSchoolData");
+        try { Directory.CreateDirectory(beside); string t = Path.Combine(beside, ".w"); File.WriteAllText(t, "x"); File.Delete(t); portable = true; return beside; }
+        catch { portable = false; string d = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ChessSchool"); Directory.CreateDirectory(d); return d; }
     }
 
-    static void Serve(HttpListener l, string root)
+    static void Serve(HttpListener l)
     {
-        string full = Path.GetFullPath(root);
         while (l.IsListening)
         {
             HttpListenerContext c;
@@ -84,10 +84,14 @@ static class Launcher
                 {
                     string rel = Uri.UnescapeDataString(c.Request.Url.AbsolutePath).TrimStart('/');
                     if (rel == "") rel = "index.html";
-                    string path = Path.GetFullPath(Path.Combine(full, rel.Replace('/', Path.DirectorySeparatorChar)));
-                    if (!path.StartsWith(full) || !File.Exists(path)) { c.Response.StatusCode = 404; c.Response.Close(); return; }
-                    string mt; if (!Mime.TryGetValue(Path.GetExtension(path).ToLowerInvariant(), out mt)) mt = "application/octet-stream";
-                    byte[] data = File.ReadAllBytes(path);
+                    byte[] data = null;
+                    lock (ZipLock)
+                    {
+                        var e = Zip.GetEntry(rel) ?? Zip.GetEntry(rel.Replace('/', '\\')); // zip entry names may use either slash
+                        if (e != null) using (var s = e.Open()) { var b = new MemoryStream(); s.CopyTo(b); data = b.ToArray(); }
+                    }
+                    if (data == null) { c.Response.StatusCode = 404; c.Response.Close(); return; }
+                    string mt; if (!Mime.TryGetValue(Path.GetExtension(rel).ToLowerInvariant(), out mt)) mt = "application/octet-stream";
                     c.Response.ContentType = mt; c.Response.ContentLength64 = data.Length;
                     c.Response.OutputStream.Write(data, 0, data.Length); c.Response.Close();
                 }
@@ -104,8 +108,9 @@ static class Launcher
             Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Google\Chrome\Application\chrome.exe"),
             Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Google\Chrome\Application\chrome.exe"),
             Environment.ExpandEnvironmentVariables(@"%LocalAppData%\Google\Chrome\Application\chrome.exe") };
+        string profile = Path.Combine(DataDir, "profile");
         foreach (var b in browsers)
-            if (File.Exists(b)) { try { Process.Start(b, "--app=" + Url); return; } catch { } }
-        Process.Start(new ProcessStartInfo(Url) { UseShellExecute = true });
+            if (File.Exists(b)) { try { Process.Start(b, "--user-data-dir=\"" + profile + "\" --no-first-run --no-default-browser-check --app=" + Url); return; } catch { } }
+        Process.Start(new ProcessStartInfo(Url) { UseShellExecute = true }); // last resort: the default browser (its own profile; progress is not portable)
     }
 }

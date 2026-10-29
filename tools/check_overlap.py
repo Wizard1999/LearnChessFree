@@ -12,7 +12,8 @@ from engine import ROOT
 lessons = [json.loads(f.read_text(encoding="utf-8")) for f in sorted((ROOT / "content" / "lessons").glob("*.json"))]
 problems = []
 by_sd = {}
-for l in lessons: by_sd.setdefault((l["skill"], l["depth"]), []).append(l["id"])
+for l in lessons:
+    if not l.get("course"): by_sd.setdefault((l["skill"], l["depth"]), []).append(l["id"])   # a course lesson uses a core skill, it does not replace its lesson
 for k, ids in by_sd.items():
     if len(ids) > 1: problems.append(f"same skill and depth {k[0]}.{k[1]}: {', '.join(ids)}")
 
