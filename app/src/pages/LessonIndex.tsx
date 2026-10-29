@@ -47,7 +47,7 @@ export function LessonIndex() {
         <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
         <p className="small muted">S1, S2 and so on are the sections (strands) of the curriculum, in teaching order.</p>
       </div>
-      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. Open any of them at any time. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
+      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. The lessons are written to be taken in the order listed, each building on the ones before it, and that is the order we recommend. You are free to jump around and explore whenever you like; nothing is locked. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
       <div className="row filters">
         <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
         {(['all', 'todo', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Finished or skipped'}</button>)}

@@ -91,7 +91,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
         <button type="button" onClick={fit}>Fit all</button>
         <button type="button" onClick={locate}>Where I am</button>
-        <span className="small muted">Centre: the first skill. Each ring out needs the ring before it. Drag to move, scroll to zoom.</span>
+        <span className="small muted">Start at the centre and work outward: that is the recommended order, and each ring builds on the one before. You may explore anywhere. Drag to move, scroll to zoom.</span>
       </div>
       <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
         onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
