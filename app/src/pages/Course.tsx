@@ -104,7 +104,7 @@ export function Course() {
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
-  const otherView = showCourses ? <main className="page wide"><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide"><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
+  const otherView = showCourses ? <main className="page wide curriculum"><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide curriculum"><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
@@ -153,33 +153,8 @@ export function Course() {
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
   const busy = !!run || (warmOpen && !!mission)
 
-  if (otherView) return otherView
-  return (
-    <main className="page wide mappage">
-      <h1>Curriculum map</h1>
-      {tabs}
-      <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
-
-      {!busy && (
-        <p className="muted small">
-          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a section and take its warm-up.</>
-            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a section's warm-up.</>
-            : <>You took the placement on {new Date(placement.ts).toLocaleDateString()}. You can <Link to="/placement">take it again</Link>.</>}
-        </p>
-      )}
-
-      {next.length > 0 && !busy && (
-        <section className="card">
-          <h2>Continue</h2>
-          <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min</span></li>)}</ul>
-        </section>
-      )}
-
-
-      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`} onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
-        <button type="button" className="edgetab left" aria-expanded={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? '‹ Close' : 'Progress ›'}</button>
-        <button type="button" className="edgetab right" aria-expanded={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Close ›' : '‹ Challenge'}</button>
-        {leftOpen && <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
+  const leftPanel = leftOpen ? (
+        <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
         <div className="row filters" role="group" aria-label="Sections">
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All lessons · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
@@ -213,11 +188,10 @@ export function Course() {
           ))}
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
-        </section>}
-
-        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} /></div>
-
-        {rightOpen && <div className="mapright sidedrawer right card">
+        </section>
+  ) : null
+  const rightPanel = rightOpen ? (
+        <div className="mapright sidedrawer right card">
           {warmOpen && mission ? (
             <section className="card challenge">
               <h2>Warm-up: {mission.name}</h2>
@@ -318,7 +292,46 @@ export function Course() {
               {sk.misconceptions && sk.misconceptions.length > 0 && <details><summary>Common misunderstandings</summary><ul>{sk.misconceptions.map(c => <li key={c}>{c}</li>)}</ul></details>}
             </section>
           )}
-        </div>}
+        </div>
+  ) : null
+  /** The two side panels and their edge buttons belong to the whole Curriculum section: they show on the map, the lesson list and the courses. */
+  const chrome = (
+    <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
+      <button type="button" className="edgetab left" aria-expanded={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? '‹ Close' : 'Progress ›'}</button>
+      <button type="button" className="edgetab right" aria-expanded={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Close ›' : '‹ Challenge'}</button>
+      {leftPanel}
+      {rightPanel}
+    </div>
+  )
+
+  if (otherView) return <>{otherView}{chrome}</>
+  return (
+    <>
+    <main className="page wide mappage curriculum">
+      <h1>Curriculum map</h1>
+      {tabs}
+      <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
+
+      {!busy && (
+        <p className="muted small">
+          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a section and take its warm-up.</>
+            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a section's warm-up.</>
+            : <>You took the placement on {new Date(placement.ts).toLocaleDateString()}. You can <Link to="/placement">take it again</Link>.</>}
+        </p>
+      )}
+
+      {next.length > 0 && !busy && (
+        <section className="card">
+          <h2>Continue</h2>
+          <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min</span></li>)}</ul>
+        </section>
+      )}
+
+
+      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`} onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
+
+        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} /></div>
+
       </div>
 
       <section className="card outline" aria-label={`${current.name} outline`}>
@@ -355,5 +368,7 @@ export function Course() {
           <div className="small muted">Click for details</div>
         </div>) })()}
     </main>
+    {chrome}
+    </>
   )
 }

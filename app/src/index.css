@@ -382,3 +382,15 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .mappage > section.card:not(.outline), .mappage > p.muted.small { display: none; }
 .mapedge { opacity: 0.16; }
 .mapedge.on { opacity: 0.95; }
+
+/* Edge buttons live on the edges of the browser window in every Curriculum view; the page keeps a gutter so they never cover content */
+.curriculum { padding-left: 6.2rem; padding-right: 6.2rem; }
+.edgetab { position: fixed; top: 50%; writing-mode: horizontal-tb; transform: none; width: 5.4rem; padding: 0.7rem 0.3rem; text-align: center; white-space: normal; line-height: 1.25; z-index: 40; }
+.edgetab.left { left: 0; border-radius: 0 8px 8px 0; transform: translateY(-50%); }
+.edgetab.right { right: 0; border-radius: 8px 0 0 8px; transform: translateY(-50%); }
+.edgetab.left[aria-expanded='true'] { left: min(400px, 92vw); }
+.edgetab.right[aria-expanded='true'] { right: min(400px, 92vw); }
+.sidedrawer { position: fixed; top: 4.4rem; bottom: 0; z-index: 39; border-radius: 0; }
+.sidedrawer.left { left: 0; } .sidedrawer.right { right: 0; }
+.mapgrid .edgetab { position: fixed; }
+@media (max-width: 900px) { .curriculum { padding-left: 1rem; padding-right: 1rem; } .edgetab { top: auto; bottom: 0.6rem; transform: none; width: auto; padding: 0.5rem 0.9rem; } .edgetab.left[aria-expanded='true'], .edgetab.right[aria-expanded='true'] { top: auto; } }
