@@ -75,7 +75,7 @@ def main() -> None:
             except ValueError: continue
             res = RESULT.get(h.get("Result", "*"))
             if res is None or we < MIN_ELO or be < MIN_ELO: continue
-            if h.get("Variant", "Standard") != "Standard": continue
+            if h.get("Variant", "Standard") != "Standard" or h.get("FEN") or h.get("SetUp") == "1": continue  # standard games from the start position only
             moves = []
             node = game
             for _ in range(MAX_PLY):
@@ -89,6 +89,17 @@ def main() -> None:
             seen.add(key)
             kept += 1
             board = chess.Board()
+            ok_game = True
+            staged = []
+            for m in moves:
+                try: staged.append((board.epd(), board.san(m.move), m.uci())); board.push(m.move)
+                except Exception: ok_game = False; break
+            if not ok_game: kept -= 1; continue
+            for epd, san, uci in staged:
+                e = tree[epd].setdefault(uci, [0, 0, 0, 0, 0, 9999, 0, san])
+                e[0] += 1; e[1 + res] += 1; e[4] += (we + be) // 2
+                if year: e[5] = min(e[5], year); e[6] = max(e[6], year)
+            continue
             for m in moves:
                 epd = board.epd()
                 san = board.san(m.move)

@@ -1,0 +1,66 @@
+{
+  "id": "POS.CONTROLMAP",
+  "title": "Reading the square control map",
+  "strand": "S5",
+  "tier": 3,
+  "origin": "gap-control",
+  "depths": {
+    "D0": {
+      "outcome": "Says that the control map shows, for every square, how many White and how many Black pieces attack it.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Reads the n-m counts and the blue or orange tint on a given square, and names two things the map leaves out: pins and x-rays.",
+      "prereqs": [
+        "SAF.COUNT.D1",
+        "FND.VISUAL.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "Uses the map as a habit before moving: reads the landing square and the squares around the pieces first, then checks for pins and batteries by eye.",
+      "prereqs": [
+        "POS.CONTROLMAP.D1",
+        "SAF.COUNT.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "A piece the map counts as an attacker can always make the capture.",
+    "A higher number on the map means the side wins the exchange on that square.",
+    "The map shows every piece lined up on the square, including those behind another piece."
+  ],
+  "sources": [
+    "app/src/lib/control.ts (what the map computes)",
+    "docs/authoring-guide.md (vocabulary: attacked, defended)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=3"
+  },
+  "conditions": [
+    "The map counts direct attacks only, and pins and the king's safety are ignored on purpose.",
+    "The map shows the position before you move; after a move the numbers on the squares you leave and enter change."
+  ],
+  "condition_sources": [
+    "app/src/lib/control.ts header comment",
+    "app/src/lib/control.ts header comment"
+  ],
+  "contrasts": [
+    "The same 0-1 count on a square, once with the attacking knight pinned to its king and once with it free.",
+    "A queen with a rook behind it on the same file: the map counts one attacker, not two."
+  ],
+  "contrast_sources": [
+    "items I-CMAP-3 and I-CMAP-4 (rules claims)",
+    "item I-CMAP-5 (rules claims)"
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails"
+  ],
+  "soft_prereqs": [
+    "POS.CENTER.CONTROL.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.CENTER.CONTROL.D1": "the map is most useful for seeing who holds the centre, which that lesson explains"
+  }
+}

@@ -1,0 +1,262 @@
+{
+ "positions": [
+  {
+   "id": "PGcv-1",
+   "fen": "r5k1/6pp/p7/1ppq4/4p3/1NP1R3/PP4PP/4R1K1 b - - 2 26",
+   "family": "FAM-GCV-QUIET",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, March-September 2020 files (CC0): a casual blitz game, lichess.org/qGc66354, position after ply 51; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGcv-2",
+   "fen": "4r1k1/2p2pp1/p3r3/8/1P1q4/P1nP1Q1P/3B1PP1/3RR1K1 w - - 9 26",
+   "family": "FAM-GCV-EXCH",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020 files (CC0): Krageroe Grand Prix 2020, position after ply 50; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGcv-3",
+   "fen": "r1bqr1k1/pppp1ppp/3n1b2/8/3P4/8/PPP2PPP/RNBQRBK1 w - - 3 11",
+   "family": "FAM-GCV-OVER",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, May 2020 file (CC0): a chess24 online blitz game, position after ply 20; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "prompt": "Black to move. Find a strong move.",
+   "answer": {
+    "moves": [
+     "a8e8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -3000,
+      "max": -250
+     },
+     "statement": "The engine rates the position at least 250 centipawns in Black's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a8e8"
+      ]
+     },
+     "statement": "Re8 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e8",
+      "piece": "empty"
+     },
+     "statement": "The square e8 is empty, so Re8 captures nothing."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "a8f8",
+      "cp": 100
+     },
+     "statement": "Rf8 is at least 100 centipawns worse than Re8."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.3",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.5",
+    "silent.conv"
+   ],
+   "hints": [
+    "List the captures, the checks and the quiet moves. Which pieces are not yet doing anything?",
+    "Black has no capture that wins more than it gives up, and no check.",
+    "Look at the rook on a8 and the file with the pawn on e4."
+   ],
+   "explain": "The engine rates the position at least 250 centipawns in Black's favour and puts Re8 first, at least 100 centipawns above Rf8. The move captures nothing and gives no check. It brings the last idle rook onto the file with the pawn on e4, where it adds pressure. That is a reading of the engine line and a rule of thumb [I], not a proof: when well ahead, improving the worst-placed piece can beat a showy move.",
+   "id": "IGcv-1",
+   "position": "PGcv-1",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "prompt": "White to move. Find a strong move.",
+   "answer": {
+    "moves": [
+     "e1e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 3000
+     },
+     "statement": "The engine rates the position at least 300 centipawns in White's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1e6"
+      ]
+     },
+     "statement": "Rxe6 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e6",
+      "piece": "r"
+     },
+     "statement": "A Black rook stands on e6, so Rxe6 is a capture and Black can take back."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "d2c3",
+      "cp": 150
+     },
+     "statement": "Bxc3 is at least 150 centipawns worse than Rxe6."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.3",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.5",
+    "silent.conv"
+   ],
+   "hints": [
+    "White is ahead. Is there a trade on offer, and what does it remove?",
+    "Rxe6 is met by a recapture, so material is traded, not won.",
+    "Compare it with the capture of the knight on c3."
+   ],
+   "explain": "The engine rates the position at least 300 centipawns in White's favour and puts Rxe6 first, at least 150 centipawns above Bxc3. Black recaptures, so the move trades a pair of rooks. It removes an active enemy rook and leaves White's remaining pieces coordinated. That the exchange helps the side that is ahead is a rule of thumb [I]; the depth-16 numbers do not prove it.",
+   "id": "IGcv-2",
+   "position": "PGcv-2",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.OVERPROTECT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "prompt": "White to move. Find a good move; any of the moves close to the best counts.",
+   "answer": {
+    "moves": [
+     "c1f4",
+     "c2c3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1f4",
+       "c2c3"
+      ],
+      "within_cp": 30
+     },
+     "statement": "c3 is within 30 centipawns of the engine's best move (Bf4)."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One Black piece attacks d4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One White piece defends d4."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 2,
+      "after_move": "c2c3"
+     },
+     "statement": "After c3 two White pieces defend d4."
+    }
+   ],
+   "tags": [
+    "node.POS.OVERPROTECT",
+    "cue.3",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.overprotection",
+    "tier.5",
+    "silent.over"
+   ],
+   "hints": [
+    "Count the attackers and the defenders of the pawn on d4.",
+    "The central pawn on d4 has one attacker and one defender.",
+    "A pawn move can add a defender without moving a piece."
+   ],
+   "explain": "The pawn on d4 is attacked once and defended once. The engine's first choice is Bf4, but c3, which adds a second defender, is within 30 centipawns of it at depth 16, so here the extra defender is a good move. This is one position at one search depth and a small gap: it shows that a second defender of a central pawn can be fine, not that it is best.",
+   "id": "IGcv-3",
+   "position": "PGcv-3",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

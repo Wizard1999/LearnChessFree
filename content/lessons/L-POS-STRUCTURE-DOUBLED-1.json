@@ -8,7 +8,7 @@
     "Finds doubled pawns by the app's definition (two or more pawns of one colour on a file)",
     "Lists what can compensate for them: the bishop pair, an open or half-open file, central control",
     "Sees how one changed piece (bishop to knight) changes that list",
-    "Checks whether an opponent's recapture leaves the pawns doubled, in three unlabeled positions; whether to accept lasting doubled pawns is not tested here"
+    "Decides, in two unlabeled positions from real games, whether a capture that leaves lasting doubled pawns is worth it: once it is the engine's best move (the pawns buy the bishop pair and a file), once it is clearly worse (judged by engine score at a stated depth, a rule of thumb and not a proof)"
   ],
   "steps": [
     {
@@ -37,17 +37,12 @@
     },
     {
       "type": "item",
-      "item": "IBp4-15",
+      "item": "IGD-1",
       "silent": true
     },
     {
       "type": "item",
-      "item": "IBp4-16",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBp4-17",
+      "item": "IGD-2",
       "silent": true
     },
     {
@@ -70,8 +65,9 @@
   },
   "sources": [
     "content/skills/POS.STRUCTURE.DOUBLED.json (idea from Nimzowitsch idea 39 and Znosko-Borovsky C28, recalled [R])",
-    "docs/exercises-positional.md §5 (the app's working definitions of the pawn structures)",
+    "docs/exercises-positional.md \u00c2\u00a75 (the app's working definitions of the pawn structures)",
     "content/items/lesson-p4.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
-    "shipped items IP-PAWNS-4, IP-MIX-121 (machine-checked)"
+    "shipped items IP-PAWNS-4, IP-MIX-121 (machine-checked)",
+    "content/items/gap-doubled.json (IGD-1, IGD-2: positions from Lichess standard rated games, January 2013 sample, CC0; engine-checked at depth 16, Stockfish 19 lite, replacing the weaker IBp4-15 to IBp4-17)"
   ]
 }

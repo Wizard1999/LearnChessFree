@@ -1,0 +1,272 @@
+{
+ "positions": [
+  {
+   "id": "PGa-storm-w",
+   "fen": "2kr3r/1ppq4/pb1p3p/3P1p1b/1PPN1Pp1/8/1P3BPP/R2Q1RK1 b - - 0 23",
+   "family": "FAM-Ga-STORM-G3",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/6qo1Z (FEN after the opponent's first move); opposite-side castling, selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGa-storm-f",
+   "fen": "2kr3r/1ppq4/pb1p3p/3PNp1b/1PPN1Pp1/8/1P3BPP/R2Q1RK1 b - - 0 23",
+   "family": "FAM-Ga-STORM-G3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of Lichess puzzle 6qo1Z (CC0): a white knight added on e5; engine-checked at depth 16",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGa-trade-strip",
+   "fen": "4Rr1k/pp3pr1/3p2q1/5bn1/3Q4/1BP1R2P/PP3PP1/5K2 b - - 12 31",
+   "family": "FAM-Ga-TRADE-STRIP",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/03oAe (FEN before the opponent's first move: the position in which the rook trade is the mistake); selected by engine check",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IGa-storm-w",
+   "skill": "ATK.PAWNSTORM.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PGa-storm-w",
+   "prompt": "Black has castled queenside and White kingside. Black to move. Find the pawn lever.",
+   "answer": {
+    "moves": [
+     "g4g3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g1",
+      "piece": "K"
+     },
+     "statement": "The white king stands on g1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c8",
+      "piece": "k"
+     },
+     "statement": "The black king stands on c8, so the kings are on opposite wings."
+    },
+    {
+     "id": "C3",
+     "type": "moves_where",
+     "params": {
+      "property": "pawn_move_attacks",
+      "square": "h2",
+      "moves": [
+       "g4g3"
+      ]
+     },
+     "statement": "The pawn moves after which the moved pawn attacks the shield pawn on h2 are exactly g3."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g4g3"
+      ],
+      "within_cp": 30
+     },
+     "statement": "g3 is the engine's best move, and every accepted move is within 30 centipawns of it (depth 16)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "d8e8",
+      "cp": 300
+     },
+     "statement": "The quiet rook move Rde8 is at least three pawns worse than g3 (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.ATK.PAWNSTORM",
+    "theme.pawnStorm",
+    "contrast.CG-Ga-STORM",
+    "family.FAM-Ga-STORM-G3",
+    "lang.en",
+    "tier.4",
+    "cue.2",
+    "kind.authored",
+    "role.working"
+   ],
+   "hints": [
+    "Which pawn shields the white king, and which of your pawns could attack it?",
+    "A pawn that attacks a shield pawn is a lever. Which of your pawns can reach a square next to the white pawns on g2 and h2?",
+    "The pawn on g4 can move forward one square."
+   ],
+   "explain": "g3 is a lever: it attacks the shield pawn on h2. The engine at depth 16 rates it at least three pawns above the quiet Rde8. This is an engine result for this one position, not a rule that levers win.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-Ga-STORM",
+   "feedback_by_move": {
+    "d8e8": "Rde8 is quiet. The engine at depth 16 rates it at least three pawns below g3."
+   }
+  },
+  {
+   "id": "IGa-storm-f",
+   "skill": "ATK.PAWNSTORM.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PGa-storm-f",
+   "prompt": "Same position, but a white knight stands on e5. Black to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "d6e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e5",
+      "includes": [
+       "d7"
+      ]
+     },
+     "statement": "The white knight on e5 attacks the black queen on d7."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d6e5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "dxe5 is the engine's best move, and every accepted move is within 30 centipawns of it (depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "g4g3",
+      "cp": 300
+     },
+     "statement": "The lever g3 is at least three pawns worse than dxe5 (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.ATK.PAWNSTORM",
+    "theme.pawnStorm",
+    "contrast.CG-Ga-STORM",
+    "family.FAM-Ga-STORM-G3",
+    "lang.en",
+    "tier.4",
+    "cue.2",
+    "kind.authored",
+    "role.failing"
+   ],
+   "hints": [
+    "What does the new white knight attack?",
+    "Before you push a pawn, check what it leaves attacked.",
+    "Capture the knight."
+   ],
+   "explain": "After g3 White plays Nxd7, taking the queen, so the lever comes too late; the engine at depth 16 rates it at least three pawns below dxe5. The same lever worked one position earlier. A lever is judged by what it leaves attacked, not by the king it aims at.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-Ga-STORM",
+   "feedback_by_move": {
+    "g4g3": "Nxd7 comes first: the knight on e5 attacks your queen."
+   }
+  },
+  {
+   "id": "IGa-trade-strip",
+   "skill": "DEF.TRADES.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PGa-trade-strip",
+   "prompt": "Black to move. White's rook on e8 attacks your rook on f8, and an exchange of rooks is on offer. Find a move that holds the position.",
+   "answer": {
+    "moves": [
+     "g5h7",
+     "h8g8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one black piece guards e8: the rook on f8."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5h7",
+       "h8g8"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Nh7 and Kg8 are the engine's two best moves, and both are within 30 centipawns of the best (depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f8e8",
+      "cp": 400
+     },
+     "statement": "The exchange Rxe8 is at least four pawns worse than the best move (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.DEF.TRADES",
+    "theme.defensiveTrade",
+    "contrast.CG-Ga-TRADE",
+    "tier.5",
+    "mode.contrast",
+    "cue.2",
+    "role.failing",
+    "kind.authored",
+    "lang.en"
+   ],
+   "hints": [
+    "Before you trade, ask which of your pieces guards the back rank and what the trade does to it.",
+    "Count the black pieces that guard e8 now, then count them after Rxe8 Rxe8+.",
+    "Both best moves avoid the exchange and keep a piece guarding f8."
+   ],
+   "explain": "Only the rook on f8 guards e8. After Rxe8 Rxe8+ that guard is gone, the black king is checked and the engine at depth 16 rates the line at least four pawns worse than Nh7 or Kg8. A trade can take away your own defender as well as their attacker. This is one position checked by an engine, not a rule that rook trades lose.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-Ga-TRADE",
+   "feedback_by_move": {
+    "f8e8": "After Rxe8 Rxe8+ the rook that guarded e8 is gone. The engine at depth 16 rates the trade at least four pawns below Nh7."
+   }
+  }
+ ]
+}

@@ -1,0 +1,282 @@
+{
+ "positions": [
+  {
+   "id": "POCB-1",
+   "fen": "8/3k4/8/3P2PK/8/8/b7/B7 w - - 0 1",
+   "family": "FAM-OCB-DRAW",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess, result from the Lichess tablebase (<= 7 pieces): two extra pawns on the d- and g-files, opposite-coloured bishops; draw, all 13 moves draw [V tablebase]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POCB-2",
+   "fen": "k7/7p/6b1/2K5/5P2/4P3/8/B7 w - - 0 1",
+   "family": "FAM-OCB-WIN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess, result from the Lichess tablebase (<= 7 pieces): one extra pawn, opposite-coloured bishops; win, found by tablebase search",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POCB-3",
+   "fen": "k7/7p/6b1/2K5/4PP2/8/8/B7 b - - 0 1",
+   "family": "FAM-OCB-WIN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess, result from the Lichess tablebase (<= 7 pieces): POCB-2 after the pawn push e4",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "White to move, two pawns up, with pawns on both wings. The bishops are on opposite colours. What is the result with best play? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5d6"
+     },
+     "statement": "After d6 the result is still a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5g6"
+     },
+     "statement": "After g6 the result is still a draw."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h5g4"
+     },
+     "statement": "After Kg4 the result is still a draw."
+    }
+   ],
+   "hints": [
+    "Count the pawns, then ask which squares in front of each pawn Black's bishop controls.",
+    "Black's king stands in front of the d-pawn. Can White's bishop help that pawn, given its colour?",
+    "A bishop on the other colour cannot challenge the squares that Black's bishop controls."
+   ],
+   "explain": "A draw, and the tablebase says every White move draws. Two extra pawns on separate wings is the usual way to win with opposite-coloured bishops, but here the pawns have not advanced far and the black king and bishop can hold them. This is the tablebase result for this position, not a general theorem: the rule of thumb 'two extra pawns far apart win' is a tendency only.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-DRAW",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.failing"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IOCB-1",
+   "position": "POCB-1",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "White to move, one pawn up, with the bishops on opposite colours and Black's king in the corner. The position looks drawn. What is the result with best play? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c5d4"
+     },
+     "statement": "Kd4 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c5d5"
+     },
+     "statement": "Kd5 keeps the win."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c5d6"
+     },
+     "statement": "Kd6 keeps the win."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e3e4"
+     },
+     "statement": "e4 lets the win go: a draw."
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4f5"
+     },
+     "statement": "f5 lets the win go: a draw."
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c5b4"
+     },
+     "statement": "Kb4 lets the win go: a draw."
+    }
+   ],
+   "hints": [
+    "The rule of thumb says opposite-coloured bishops draw. Does Black's king have any way to blockade here?",
+    "Look at where Black's king is, and how many moves it needs to reach the pawns.",
+    "Ask whether White's king can advance in front of the pawns without losing them."
+   ],
+   "explain": "A win, according to the tablebase. White's king walks forward behind protected pawns (Kd4, Kd5 or Kd6 all win) while Black's king is shut in the corner and Black's h-pawn cannot be used. The quick pawn pushes e4 and f5 throw the win away, and so do Kb4 and Kb5. 'Opposite-coloured bishops draw' is a rule of thumb, and here the extra pawn is enough.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-WIN",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IOCB-2",
+   "position": "POCB-2",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "The same position after White has pushed the pawn to e4, with both pawns on the fourth rank. Black to move. What is the result with best play? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    }
+   ],
+   "hints": [
+    "Compare this with the position before the pawn move: what has changed?",
+    "Ask whether Black has a safe set-up with king and bishop against these two pawns.",
+    "Check whether White can make progress by force."
+   ],
+   "explain": "A draw, confirmed by the tablebase. In the position before this one, White wins with a king move; the pawn push e4 gave the win away. One move changed the result.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-WIN",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.failing"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IOCB-3",
+   "position": "POCB-3",
+   "orientation": "black"
+  }
+ ]
+}

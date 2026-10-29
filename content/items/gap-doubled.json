@@ -1,0 +1,200 @@
+{
+ "positions": [
+  {
+   "id": "PGD-1",
+   "fen": "r1b1r1k1/ppq3b1/2pp1npp/4pp2/2PPP3/P1NB1PP1/1PQN2P1/2KR3R b - - 0 16",
+   "family": "FAM-GD-accept",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/vz1rd6mo ply 31 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGD-2",
+   "fen": "r1bq1rk1/pp2ppbp/2n3p1/2p5/2BP4/2P1PN2/P4PPP/R1BQ1RK1 w - - 2 10",
+   "family": "FAM-GD-decline",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/khwqjvc2 ply 18 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IGD-1",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGD-1",
+   "prompt": "Black to move. Find a good move.",
+   "answer": {
+    "moves": [
+     "e5d4"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.3",
+    "family.FAM-GD-accept",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "exd4 leaves Black with two pawns on the d-file, but Black keeps both bishops and the e-file opens for the rook, and the engine rates the capture best."
+   ],
+   "explain": "In this position the capture exd4 gives Black doubled pawns on d6 and d4, and White cannot win the pawn on d4 or undo the doubling by recapturing. What Black gets lasts: Black keeps the bishop pair and gains a half-open e-file for the rook. At depth 16 the engine rates exd4 as its best move (the accepted-move claim checks this). Rule of thumb, not a proof: lasting doubled pawns are acceptable when they buy something that also lasts (the bishop pair, an open or half-open file); the engine score is evidence at this depth only.",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "black",
+      "squares": [
+       "d4",
+       "d6"
+      ],
+      "after_move": "e5d4"
+     },
+     "statement": "After exd4 Black's doubled pawns are d4 and d6."
+    },
+    {
+     "id": "C2",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_move": "e5d4"
+     },
+     "statement": "After exd4 the bishop pair belongs to Black only."
+    },
+    {
+     "id": "C3",
+     "type": "open_files",
+     "params": {
+      "half_open_black": [
+       "e"
+      ],
+      "after_move": "e5d4"
+     },
+     "statement": "After exd4 the e-file is half-open for Black."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e5d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 exd4 is within 0.40 pawns of the engine's best move, and the best move is exd4."
+    }
+   ]
+  },
+  {
+   "id": "IGD-2",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGD-2",
+   "prompt": "White to move. Find a good move.",
+   "answer": {
+    "moves": [
+     "c1a3",
+     "f1e1",
+     "h2h3"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.3",
+    "family.FAM-GD-decline",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "feedback_by_move": {
+    "d4c5": "dxc5 doubles your c-pawns and opens the d-file, and you keep both bishops, but the engine rates it clearly worse than a developing move: the doubled pawns come with too little."
+   },
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "dxc5 gives up the pawn structure for bishops and a file, but the engine prefers to keep developing; a quiet move is much better than the capture."
+   ],
+   "explain": "In this position the capture dxc5 gives White doubled pawns on c3 and c5 that Black cannot undo by recapturing, and it opens the d-file while both sides keep their bishop pair. Even so, at depth 16 the engine rates dxc5 at least 0.80 pawns worse than the best move: the pawn on c5 is hard to defend and what the capture buys is small (my reading of the engine line, not a checked claim). Rule of thumb, not a proof: doubled pawns need a lasting gain that is worth more than the structure; an open file or the bishop pair is not enough by itself when both sides have such assets.",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "white",
+      "squares": [
+       "c3",
+       "c5"
+      ],
+      "after_move": "d4c5"
+     },
+     "statement": "After dxc5 White's doubled pawns are c3 and c5."
+    },
+    {
+     "id": "C2",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white",
+       "black"
+      ],
+      "after_move": "d4c5"
+     },
+     "statement": "After dxc5 the bishop pair belongs to White and Black."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1a3",
+       "f1e1",
+       "h2h3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 Ba3, Re1 and h3 are each within 0.40 pawns of the engine's best move, and the best move is one of them."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "d4c5",
+      "cp": 80
+     },
+     "statement": "At depth 16 dxc5 scores at least 80 centipawns worse than the best move."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,187 @@
+{
+  "id": "L-POS-CONTROL-MAP-1",
+  "title": "Square control: the whole board at once",
+  "skill": "POS.CONTROLMAP",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Reads the n-m counts and the blue or orange tint of the control map on any square",
+    "Names what the map leaves out: pins and x-rays",
+    "Glances at the map before moving, starting with the landing square"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Under a lesson board, the **Control map** button paints every square at once. Each square shows two numbers, **White-Black**: how many White pieces and how many Black pieces attack it. **Blue** means White's number is higher, **orange** means Black's. Tap any square to see which pieces they are. Counting attackers is taught in its own lessons; here you learn to read the picture."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "caption": "White to move. Turn on the map and tap f7.",
+      "line": [
+        {
+          "move": "f3g5",
+          "say": "The knight joins the bishop. The map on f7 changes from 1-1 to 2-1."
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "g5"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f3g5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 1
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 1
+          }
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 2,
+            "after_move": "f3g5"
+          }
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 1,
+            "after_move": "f3g5"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "I-CMAP-1"
+    },
+    {
+      "type": "item",
+      "item": "I-CMAP-2"
+    },
+    {
+      "type": "card",
+      "text": "The map is a **rule-based count, not a verdict**. A blue square does not mean White wins a fight there; it only says White has more pieces looking at it. Two things it leaves out, on purpose: **pins** (a pinned piece still counts) and **x-rays** (a piece behind another piece does not count). Check both by eye."
+    },
+    {
+      "type": "contrast",
+      "title": "Same map, different truth",
+      "prompt": "Both boards show f3 as 0-1 with a black knight on e5. Only one rook has moved. Can the knight capture on f3? Predict first, then check.",
+      "working": "I-CMAP-4",
+      "failing": "I-CMAP-3"
+    },
+    {
+      "type": "item",
+      "item": "I-CMAP-5"
+    },
+    {
+      "type": "card",
+      "text": "Make the map a **habit before you move**, in this order. First, the square you want to land on: is Black's number above zero? Second, your own pieces: any whose Black number is higher than yours? Third, a quick look for pins and pieces lined up behind others. It takes seconds and replaces a vague worry with two numbers."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "caption": "White considers the knight jump to d4. What would the map say there?",
+      "line": [
+        {
+          "move": "f3d4",
+          "say": "On d4 the map would read 0-2: no White support, two Black attackers."
+        },
+        {
+          "move": "e5d4",
+          "say": "Black can take with the pawn."
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "d4"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f3d4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 2,
+            "after_move": "f3d4"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 0,
+            "after_move": "f3d4"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "I-CMAP-6"
+    },
+    {
+      "type": "item",
+      "item": "I-CMAP-7"
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which of the three limits of the map (pins, x-rays, 'a number is not a verdict') would you have forgotten? How will you remind yourself to check it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "app/src/lib/control.ts (definition of the map, by the project)",
+    "docs/authoring-guide.md (vocabulary: attacked, defended)",
+    "Linked, not re-taught: L-SAF-COUNT-1, L-FND-COUNT-1, L-SAF-COUNT-FUTURE-1, L-POS-CENTER-CONTROL-1"
+  ]
+}
