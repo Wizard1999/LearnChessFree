@@ -23,7 +23,7 @@ import { Crest } from './components/Crest'
 import { useLocation } from 'react-router-dom'
 
 // Five places for a learner; the rest are tools, one click away under More.
-const links: [string, string][] = [['/', 'Today'], ['/course', 'Course'], ['/practice', 'Practice'], ['/progress', 'Progress']]
+const links: [string, string][] = [['/', 'Today'], ['/course', 'Curriculum'], ['/practice', 'Practice'], ['/progress', 'Progress']]
 const more: [string, string][] = [['/games', 'My games'], ['/openings', 'Openings'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
 export default function App() {

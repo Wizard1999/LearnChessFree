@@ -80,7 +80,7 @@ export function Placement() {
       <h1>Placement</h1>
       <section className="card">
         <p className="lede">About 15 minutes. You will see positions from easy to harder levels. <strong>Nothing tells you which idea applies</strong>, and some positions have no tactic. Please do not use outside help; the point is to learn what you can do on your own.</p>
-        <ul><li>Hints are off during placement.</li><li>You can stop at any time; a short placement still helps.</li><li>Placement does not mark anything as mastered. It only skips the order of lessons you probably do not need, and you can always open any lesson from the Course page.</li></ul>
+        <ul><li>Hints are off during placement.</li><li>You can stop at any time; a short placement still helps.</li><li>Placement does not mark anything as mastered. It only skips the order of lessons you probably do not need, and you can always open any lesson from the Curriculum page.</li></ul>
         {existing?.done && !existing.skipped && <p className="muted small">Last placement ({new Date(existing.ts).toLocaleDateString()}): {existing.frontierTier === 0 ? 'nothing was assumed' : `tiers below ${existing.frontierTier} looked comfortable`}. Taking it again is fine.</p>}
         {existing?.skipped && <p className="muted small">You skipped the placement on {new Date(existing.ts).toLocaleDateString()}. You can take it now.</p>}
         {plan.length === 0 && <p className="warn">There are not enough unlabeled exercises in the content yet to run a placement. Try again after more content is built.</p>}
@@ -88,7 +88,7 @@ export function Placement() {
           <button type="button" className="primary" disabled={plan.length === 0} onClick={() => setStarted(true)}>Begin ({plan.length} positions)</button>
           <button type="button" onClick={skip}>Skip the placement</button>
         </div>
-        <p className="muted small">New to chess, or just not in the mood for a test? Skipping is fine. Nothing is assumed about what you know, and the course starts from the beginning. You can take the placement later from the Course page.</p>
+        <p className="muted small">New to chess, or just not in the mood for a test? Skipping is fine. Nothing is assumed about what you know, and the curriculum starts from the beginning. You can take the placement later from the Curriculum page.</p>
       </section>
     </main>
   )
@@ -99,16 +99,16 @@ export function Placement() {
       <section className="card">
         {keptEarlier && <p>You skipped this retake, so your earlier result from {new Date(outcome.ts).toLocaleDateString()} still applies.</p>}
         {outcome.skipped ? (
-          <p>You skipped the placement. Nothing is assumed: the course starts from the beginning, and the daily plan will pick lessons and practice for you. If you find the early lessons easy, take the placement later and the app will skip ahead.</p>
+          <p>You skipped the placement. Nothing is assumed: the curriculum starts from the beginning, and the daily plan will pick lessons and practice for you. If you find the early lessons easy, take the placement later and the app will skip ahead.</p>
         ) : (
           <>
-            <p>{outcome.frontierTier === 0 ? 'Nothing is assumed: the course starts at the beginning.' : <>Tiers below <strong>tier {outcome.frontierTier}</strong> looked comfortable, so tier {outcome.frontierTier} is where learning starts. Skills in the lower tiers are marked <em>assumed</em> (hatched on the course map), not mastered, and do not count as progress until you show them. Mixed practice will test them, and their lessons are left out of Continue except for the tier just below.</>}</p>
+            <p>{outcome.frontierTier === 0 ? 'Nothing is assumed: the curriculum starts at the beginning.' : <>Tiers below <strong>tier {outcome.frontierTier}</strong> looked comfortable, so tier {outcome.frontierTier} is where learning starts. Skills in the lower tiers are marked <em>assumed</em> (hatched on the curriculum map), not mastered, and do not count as progress until you show them. Mixed practice will test them, and their lessons are left out of Continue except for the tier just below.</>}</p>
             <table className="table"><thead><tr><th>Tier</th><th>Right</th><th>Shown</th></tr></thead>
               <tbody>{Object.entries(outcome.byTier).map(([t, b]) => <tr key={t}><td>{t}</td><td>{b.ok}</td><td>{b.n}</td></tr>)}</tbody></table>
             <p className="muted small">This is a rough starting point from a handful of positions, not a rating. {(attempts?.length ?? 0) > 0 ? '' : 'Your history starts here.'}</p>
           </>
         )}
-        <div className="row"><Link className="button primary" to="/">See today's plan</Link><Link className="button" to="/course?view=map">Open the course map</Link></div>
+        <div className="row"><Link className="button primary" to="/">See today's plan</Link><Link className="button" to="/course?view=map">Open the curriculum map</Link></div>
       </section>
     </main>
   )

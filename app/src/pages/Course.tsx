@@ -93,13 +93,13 @@ export function Course() {
   const showLessons = tab !== 'map' && !showCourses // the list of lessons is the default view; the map is the second
   const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'lessons') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
   const tabs = (
-    <div className="row filters" role="group" aria-label="Course views">
+    <div className="row filters" role="group" aria-label="Curriculum views">
       <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
       <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
-  const otherView = showCourses ? <main className="page wide"><h1>Course</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
+  const otherView = showCourses ? <main className="page wide"><h1>Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide"><h1>Curriculum</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
@@ -151,14 +151,14 @@ export function Course() {
   if (otherView) return otherView
   return (
     <main className="page wide">
-      <h1>Course map</h1>
+      <h1>Curriculum map</h1>
       {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
 
       {!busy && (
         <p className="muted small">
-          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a mission and take its warm-up.</>
-            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a mission's warm-up.</>
+          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a section and take its warm-up.</>
+            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a section's warm-up.</>
             : <>You took the placement on {new Date(placement.ts).toLocaleDateString()}. You can <Link to="/placement">take it again</Link>.</>}
         </p>
       )}
@@ -170,17 +170,17 @@ export function Course() {
         </section>
       )}
 
-      <div className="row filters" role="group" aria-label="Missions">
-        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All missions · {overall.percent}%</button>
+      <div className="row filters" role="group" aria-label="Sections">
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All lessons · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
 
       <div className="missiongrid">
         <section className="card missionpanel" aria-label={`${current.name} progress`}>
-          {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all missions</button>}
+          {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all lessons</button>}
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
-            <div className="completebanner" role="status"><strong>✓ {isAll ? 'Course' : 'Mission'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is on the Progress page.</div>) : null })()}
+            <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is on the Progress page.</div>) : null })()}
           <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'MISSION PROGRESS'}</p>
           <div className="donutrow">
             <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
@@ -189,7 +189,7 @@ export function Course() {
               {current.assumedCount > 0 && <li><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> of these, <strong>{current.assumedCount}</strong> are only assumed (hatched), not yet shown</li>}
             </ul>
           </div>
-          <p className="small muted">{isAll ? 'Overall' : 'Mission'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
+          <p className="small muted">{isAll ? 'Overall' : 'Section'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
           <button type="button" className="link" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</button>
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
@@ -231,13 +231,13 @@ export function Course() {
                       {w.conclusive === false ? 'It was too short to vouch for any tier, so nothing was changed.'
                         : superseded ? `A newer placement (${new Date(placement.ts).toLocaleDateString()}) replaced this result.`
                         : assumedHere > 0 ? `${assumedHere} skills in tiers below ${w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on something you had not practised at that level was not held against you.`
-                        : 'Nothing in this mission is assumed from it.'}</p>) })()
-                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on something you have not practised at that level is not held against you (once you have practised it, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this mission show as assumed, and their lessons (except the tier just below the line) are left out of Continue; you can still open any lesson. Assumed skills are not counted as progress until you show them.</p>}
+                        : 'Nothing in this section is assumed from it.'}</p>) })()
+                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on something you have not practised at that level is not held against you (once you have practised it, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this section show as assumed, and their lessons (except the tier just below the line) are left out of Continue; you can still open any lesson. Assumed skills are not counted as progress until you show them.</p>}
                   <div className="row"><button type="button" className={warm || warmDone ? '' : 'primary'} onClick={() => { setWarmDone(null); setWarmOpen(true) }}>{warm || warmDone ? 'Take it again' : 'Start the warm-up'}</button></div>
                 </section>
               )}
               <section className="card challenge">
-                <h2>Mastery challenge{isAll ? ' across every mission' : ''}</h2>
+                <h2>Mastery challenge{isAll ? ' across every section' : ''}</h2>
                 <p>Strengthen skills you have already practised: six unlabelled questions on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
                 {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <><p className="muted small">{plan?.reason}</p>{planNow?.unlocked && <div className="row"><button type="button" onClick={startChallenge}>Start anyway</button><span className="muted small">Nothing is locked; the wait is only advice.</span></div>}</>}
                 <details><summary className="small">How a challenge changes your levels</summary>
@@ -261,7 +261,7 @@ export function Course() {
           {!busy && (
             <section className="card">
               <h2>Skills up next for you</h2>
-              {upNext.length === 0 ? <p className="muted">No skill has all its prerequisites shown yet {isAll ? '' : 'in this mission '}(nothing is locked: every lesson and exercise below is open to you now). The whole list is in the outline under the map.</p> : (
+              {upNext.length === 0 ? <p className="muted">No skill has all its prerequisites shown yet {isAll ? '' : 'in this section '}(nothing is locked: every lesson and exercise below is open to you now). The whole list is in the outline under the map.</p> : (
                 <ul className="plain upnext">{upNext.map(n => {
                   const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : undefined
                   return (
@@ -313,7 +313,7 @@ export function Course() {
 
       <section className="card outline" aria-label={`${current.name} outline`}>
         <h2>Outline: {current.name}</h2>
-        <p className="small muted">Everything in {isAll ? 'the course' : 'this mission'}, in teaching order, with nothing hidden or locked. Open any lesson or practise any skill at any time.</p>
+        <p className="small muted">Everything in {isAll ? 'the curriculum' : 'this section'}, in teaching order, with nothing hidden or locked. Open any lesson or practise any skill at any time.</p>
         {(isAll ? missions : [current]).map(m => (
           <div key={m.strand}>
             {isAll && <h3>{m.strand} · {m.name}</h3>}

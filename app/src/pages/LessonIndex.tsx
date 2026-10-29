@@ -35,7 +35,7 @@ export function LessonIndex() {
 
   return (
     <section aria-label="Lesson index">
-      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. Open any of them at any time. Marking a lesson finished or skipped only changes this list and the course map; it does not count as evidence that you know the skill.</p>
+      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. Open any of them at any time. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
       <div className="row filters">
         <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
         {(['all', 'todo', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Finished or skipped'}</button>)}

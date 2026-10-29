@@ -34,7 +34,7 @@ export function Library() {
         <h2>Lessons</h2>
         <ul className="plain">{[...lessons].sort((a, b) => a.id.localeCompare(b.id)).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}>{l.title}</Link> <span className="muted small">· {l.skill} {l.depth}</span></li>)}</ul>
         {lessons.length === 0 && <p className="muted">No lessons built yet.</p>}
-        <p className="muted small">{skills.length} skill nodes are on the <Link to="/course?view=map">Course map</Link>.</p>
+        <p className="muted small">{skills.length} skill nodes are on the <Link to="/course?view=map">Curriculum map</Link>.</p>
       </section>
     </main>
   )

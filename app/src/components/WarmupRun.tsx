@@ -14,7 +14,7 @@ export function WarmupRun({ mission, items, attempts, onFinish, onCancel }: { mi
   const planned = useMemo(() => plannedPerTier(plan), [plan])
   const [idx, setIdx] = useState(0)
   const [results, setResults] = useState<TierResult[]>([])
-  if (plan.items.length === 0) return <div><p className="muted">There are no unlabelled exercises in this mission yet, so a warm-up is not possible.</p><button type="button" onClick={onCancel}>Back</button></div>
+  if (plan.items.length === 0) return <div><p className="muted">There are no unlabelled exercises in this section yet, so a warm-up is not possible.</p><button type="button" onClick={onCancel}>Back</button></div>
   const it = plan.items[idx]
   const done = (r: ItemResult) => {
     const next = [...results, { tier: plan.tierOf.get(it.id) ?? 0, ok: r.correct }]
