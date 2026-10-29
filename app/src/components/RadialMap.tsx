@@ -41,6 +41,23 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     const cx = ns.reduce((t, n) => t + n.x, 0) / ns.length, cy = ns.reduce((t, n) => t + n.y, 0) / ns.length
     setView({ x: -cx, y: -cy, k: 1.6 })
   }, [highlightStrand, layout])
+  /** When a skill is chosen, bring it into the part of the map that is not covered by a panel, with its neighbours around it. */
+  useEffect(() => {
+    if (!picked) return
+    const n = byId.get(picked); if (!n) return
+    const t = window.setTimeout(() => {
+      const el = svg.current; if (!el) return
+      const box = el.getBoundingClientRect()
+      const cover = (sel: string) => [...document.querySelectorAll(sel)].map(e => e.getBoundingClientRect())
+      let left = box.left, right = box.right
+      for (const r of cover('.sidechrome > .sidedrawer.left, .sidechrome > .detaildrawer')) if (r.right > left && r.left < box.left + box.width / 2) left = Math.max(left, r.right)
+      for (const r of cover('.sidechrome > .sidedrawer.right')) if (r.left < right && r.right > box.left + box.width / 2) right = Math.min(right, r.left)
+      const dx = ((left + right) / 2) - (box.left + box.width / 2)
+      setView(v => { const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); return { x: -n.x + dx * upp, y: -n.y, k } })
+    }, 80)
+    return () => window.clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [picked])
   const zoom = (f: number) => setView(v => ({ ...v, k: Math.max(0.25, Math.min(6, v.k * f)) }))
   const fit = () => setView({ x: 0, y: 0, k: 1 })
   const locate = () => {

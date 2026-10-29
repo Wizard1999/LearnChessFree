@@ -155,7 +155,7 @@ export function Course() {
 
   const detailPanel = (
     node && sk && !busy && (
-            <section className="card skilldetail detaildrawer" role="dialog" aria-label={`${node.title} detail`}>
+            <section className={`card skilldetail detaildrawer${leftOpen ? ' afterleft' : ''}`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
               <h2>{node.title}</h2>
               <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
