@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 54%** (69 of 139 tasks done, in-progress tasks count half). Updated 2026-10-29T12:02+00:00 UTC.
+**Overall: 53%** (69 of 143 tasks done, in-progress tasks count half). Updated 2026-10-29T12:16+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -19,6 +19,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 6e: Sources library (plan: docs/library-plan.md) | 4/9 | 61% |
+| Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning) | 0/4 | 12% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
@@ -40,7 +41,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); In-app Library: books shelf with reader, download, sort by title, author, year, level, length, filter by subject and level, search (data shelf and in-copyright pointers not yet); Ship stored texts in the exe and web build (shipped by default, 2 MB; question Q15 still open)
+**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); In-app Library: books shelf with reader, download, sort by title, author, year, level, length, filter by subject and level, search (data shelf and in-copyright pointers not yet); Ship stored texts in the exe and web build (shipped by default, 2 MB; question Q15 still open); `tools/fetch_games.py`: Lichess broadcasts (CC0, 81 monthly files) and The Week in Chess weekly zips (1994 to now), resumable, stored locally and gitignored
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
@@ -188,6 +189,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [~] In-app Library: books shelf with reader, download, sort by title, author, year, level, length, filter by subject and level, search (data shelf and in-copyright pointers not yet)
 - [ ] Check in check_all: every lesson source resolves to a catalog entry; every stored file has a rights record
 - [~] Ship stored texts in the exe and web build (shipped by default, 2 MB; question Q15 still open)
+
+## Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning)
+- [~] `tools/fetch_games.py`: Lichess broadcasts (CC0, 81 monthly files) and The Week in Chess weekly zips (1994 to now), resumable, stored locally and gitignored
+- [ ] Older games (before 1994): PGN Mentor event files and public-domain game books; check each source's terms
+- [ ] Build master-game statistics for the opening explorer and Analysis from the PGN (de-duplicate, keep only top-level over-the-board events, rating floor)
+- [ ] Famous-games course candidates ranked from the data (decisive, instructive, well-annotated)
 
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)
