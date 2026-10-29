@@ -35,4 +35,4 @@ Autonomous build phase (Andrew asked me to take over; questions go to `QUESTIONS
 - **Not done:** human review (G3), baseline (G1), GitHub Pages (G10), sign-in sync (Q11), master-game statistics (Q6). Evaluation design: `docs/evaluation-plan.md`. Deploy notes: `docs/running-and-deploying.md`.
 
 ## Credit (permanent)
-9. **Andrew's name stays on it.** The masthead line "Created by Andrew Ryan" (`app/src/brand.ts`: `author`, `byline`) shows in the header of every page and look, with a footer line, `NOTICE`, the author meta tag and `package.json`. Never remove or hide it, in any redesign, name change, exe or deploy. If the credited name should change, he says so; the one edit is in `brand.ts`.
+9. **Andrew's name stays on it.** The masthead line "Created by Andrew Valentine" (`app/src/brand.ts`: `author`, `byline`) shows in the header of every page and look, with a footer line, `NOTICE`, the author meta tag and `package.json`. Never remove or hide it, in any redesign, name change, exe or deploy. If the credited name should change, he says so; the one edit is in `brand.ts`.
