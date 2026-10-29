@@ -54,7 +54,8 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       return [manifest, ...(await Promise.all([load<Skill[]>('skills.json', v), load<Lesson[]>('lessons.json', v), load<Record<string, VerifiedInfo>>('verified.json', v), load<Course[]>('courses.json', v).catch(() => [] as Course[])]))] as const
     })
     const assemble = ([manifest, skills, lessons, verified, courses]: Awaited<typeof small>, items: Item[]): ContentBundle => ({
-      manifest, skills, items, lessons, verified, courses,
+      // Course exercises (tag course.*) are reached through their own lessons by id; they stay out of the core pools used by practice, daily plans, placement and challenges.
+      manifest, skills, items: items.filter(i => !(i.tags ?? []).some(t => t.startsWith('course.'))), lessons, verified, courses,
       skillById: new Map(skills.map(s => [s.id, s])),
       itemById: new Map(items.map(i => [i.id, i])),
       lessonById: new Map(lessons.map(l => [l.id, l])),

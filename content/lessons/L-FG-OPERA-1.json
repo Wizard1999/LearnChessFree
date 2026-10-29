@@ -1,0 +1,711 @@
+{
+  "id": "L-FG-OPERA-1",
+  "course": "famous-games",
+  "title": "The Opera Game: Morphy in Paris, 1858",
+  "skill": "TAC.PIN",
+  "depth": "D2",
+  "uses": [
+    "TAC.PIN",
+    "OPN.TEMPO",
+    "ATK.CENTER",
+    "TAC.DECOY",
+    "TAC.MATE-SEARCH"
+  ],
+  "minutes": 13,
+  "game": {
+    "white": "Paul Morphy",
+    "black": "Duke Karl of Brunswick and Count Isouard (consultation game)",
+    "place": "Paris",
+    "year": 1858,
+    "result": "1-0",
+    "eco": "C41",
+    "score_checked": "33 plies; legal move by move with python-chess; ends in checkmate (17.Rd8#); Wikipedia 'Opera Game' and E. Lasker, Chess Strategy (1915) print the same moves"
+  },
+  "outcomes": [
+    "Predicts the key moves of a famous game from the positions, with no idea named",
+    "Sees where a pin, an attack on a king in the centre, a decoy and a forced-mate search each decided a move of one famous game",
+    "Says which moment of the game they would have missed, and what they would have needed to notice"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Paris, 1858.** Paul Morphy has White. Black's moves are chosen together by two amateurs, the Duke of Brunswick and Count Isouard. Accounts say they played in a theatre box during an opera, and differ on which opera. The moves match two sources. Watch the first eight moves, then predict four White moves and judge one position that is not from the game. Before each, ask: which pieces are in the fight on each side, and which are still at home?"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "The first eight moves of each side. Step through them, then count which pieces have come out.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White takes the centre with a pawn."
+        },
+        {
+          "move": "e7e5",
+          "say": "Black answers in kind."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops a knight and attacks the pawn on e5."
+        },
+        {
+          "move": "d7d6",
+          "say": "Black defends the pawn with a pawn."
+        },
+        {
+          "move": "d2d4",
+          "say": "White attacks e5 a second time."
+        },
+        {
+          "move": "c8g4",
+          "say": "Black's bishop attacks the knight on f3."
+        },
+        {
+          "move": "d4e5",
+          "say": "White takes the pawn on e5."
+        },
+        {
+          "move": "g4f3",
+          "say": "Black takes the knight."
+        },
+        {
+          "move": "d1f3",
+          "say": "The queen takes back and comes out."
+        },
+        {
+          "move": "d6e5",
+          "say": "Black takes the pawn on e5."
+        },
+        {
+          "move": "f1c4",
+          "say": "White develops the bishop; the bishop and the queen both aim at the pawn on f7."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight and attacks the pawn on e4."
+        },
+        {
+          "move": "f3b3",
+          "say": "The queen attacks the pawn on b7."
+        },
+        {
+          "move": "d8e7",
+          "say": "Black's queen steps to e7."
+        },
+        {
+          "move": "b1c3",
+          "say": "White develops the second knight."
+        },
+        {
+          "move": "c7c6",
+          "say": "Black plays the pawn to c6."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3"
+            ]
+          },
+          "statement": "After Nf3 the knight attacks the pawn on e5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6"
+            ]
+          },
+          "statement": "After d6 one black pawn defends e5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6",
+              "d2d4"
+            ]
+          },
+          "statement": "After d4 two white pieces attack e5."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6",
+              "d2d4",
+              "c8g4"
+            ]
+          },
+          "statement": "After Bg4 the bishop attacks the knight on f3."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6",
+              "d2d4",
+              "c8g4",
+              "d4e5",
+              "g4f3",
+              "d1f3",
+              "d6e5",
+              "f1c4"
+            ]
+          },
+          "statement": "After Bc4 the bishop and the queen attack f7."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6",
+              "d2d4",
+              "c8g4",
+              "d4e5",
+              "g4f3",
+              "d1f3",
+              "d6e5",
+              "f1c4",
+              "g8f6"
+            ]
+          },
+          "statement": "After Nf6 the knight attacks the pawn on e4."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "b7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "e7e5",
+              "g1f3",
+              "d7d6",
+              "d2d4",
+              "c8g4",
+              "d4e5",
+              "g4f3",
+              "d1f3",
+              "d6e5",
+              "f1c4",
+              "g8f6",
+              "f3b3"
+            ]
+          },
+          "statement": "After Qb3 the queen attacks the pawn on b7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1K2R w KQkq - 0 9",
+      "caption": "Move 9, White to move. Step through what Morphy played and Black's reply.",
+      "line": [
+        {
+          "move": "c1g5",
+          "say": "The bishop attacks the knight on f6. The queen stands behind it on e7."
+        },
+        {
+          "move": "b7b5",
+          "say": "Black attacks the bishop on c4 with a pawn."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "white",
+            "count": 1,
+            "after_move": "c1g5"
+          },
+          "statement": "After Bg5 the bishop attacks the knight on f6."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e7",
+            "piece": "q"
+          },
+          "statement": "The black queen stands on e7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "c1g5",
+              "f6d7"
+            ]
+          },
+          "statement": "If the knight leaves, the bishop attacks the queen."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "c1g5",
+              "b7b5"
+            ]
+          },
+          "statement": "After b5 a black pawn attacks the bishop on c4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/p3qppp/2p2n2/1p2p1B1/2B1P3/1QN5/PPP2PPP/R3K2R w KQkq - 0 10",
+      "caption": "Move 10, White to move. Step through Morphy's capture and Black's reply.",
+      "line": [
+        {
+          "move": "c3b5",
+          "say": "The knight takes the pawn on b5."
+        },
+        {
+          "move": "c6b5",
+          "say": "Black takes the knight."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IFGopera-8"
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/p3qppp/5n2/1p2p1B1/2B1P3/1Q6/PPP2PPP/R3K2R w KQkq - 0 11",
+      "caption": "What happened in the game.",
+      "line": [
+        {
+          "move": "c4b5",
+          "say": "The bishop takes a second pawn, with check."
+        },
+        {
+          "move": "b8d7",
+          "say": "The knight blocks the check. It is now pinned to the king: it has no legal move."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "c4b5"
+          },
+          "statement": "After Bxb5 the bishop gives check."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 0,
+            "after_moves": [
+              "c4b5",
+              "b8d7"
+            ]
+          },
+          "statement": "After Nbd7 the knight on d7 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IFGopera-7"
+    },
+    {
+      "type": "board",
+      "fen": "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/R3K2R w KQkq - 1 12",
+      "caption": "Move 12, White to move. Step through what Morphy played.",
+      "line": [
+        {
+          "move": "e1c1",
+          "say": "White castles queenside. The rook lands on d1 and, with the bishop, attacks the knight on d7."
+        },
+        {
+          "move": "a8d8",
+          "say": "Black's rook comes to d8 and defends the knight too."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "d7"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d1",
+            "piece": "R",
+            "after_move": "e1c1"
+          },
+          "statement": "After castling queenside the rook stands on d1."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 2,
+            "after_move": "e1c1"
+          },
+          "statement": "After castling two white pieces attack the knight on d7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "black",
+            "count": 4,
+            "after_moves": [
+              "e1c1",
+              "a8d8"
+            ]
+          },
+          "statement": "After Rd8 four black pieces defend d7."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IFGopera-4"
+    },
+    {
+      "type": "board",
+      "fen": "3rkb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R w k - 3 13",
+      "caption": "What happened in the game.",
+      "line": [
+        {
+          "move": "d1d7",
+          "say": "The rook takes the pinned knight."
+        },
+        {
+          "move": "d8d7",
+          "say": "Black's rook takes back."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "Before the capture the knight on d7 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IFGopera-9"
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2rqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2K4R w k - 0 14",
+      "caption": "What happened in the game.",
+      "line": [
+        {
+          "move": "h1d1",
+          "say": "White's last rook joins: the rook and the bishop both attack d7."
+        },
+        {
+          "move": "e7e6",
+          "say": "Black's queen leaves e7 and attacks White's queen on b3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "d7"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 2,
+            "after_move": "h1d1"
+          },
+          "statement": "After Rd1 the rook and the bishop attack d7."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "h1d1",
+              "e7e6"
+            ]
+          },
+          "statement": "After Qe6 the black queen attacks the queen on b3."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IFGopera-5"
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2r1ppp/4qn2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 2 15",
+      "caption": "What happened in the game.",
+      "line": [
+        {
+          "move": "b5d7",
+          "say": "The bishop takes on d7 with check."
+        },
+        {
+          "move": "f6d7",
+          "say": "The knight takes the bishop and leaves f6. Now the bishop on g5 attacks d8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "d8"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "b5d7"
+          },
+          "statement": "After Bxd7 the bishop gives check."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b5d7",
+              "f6d7"
+            ]
+          },
+          "statement": "After Nxd7 the bishop on g5 attacks d8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2B1ppp/4qn2/4p1B1/4P3/1Q6/PPP2PPP/2KR4 b k - 0 15",
+      "caption": "Black was not forced to take with the knight. The engine at depth 16 prefers Qxd7 and still rates White more than nine pawns ahead.",
+      "line": [
+        {
+          "move": "e6d7",
+          "say": "The queen takes the bishop instead."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e6d7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Qxd7 is Black's best reply (engine, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 900,
+            "max": 3000
+          },
+          "statement": "The engine at depth 16 still rates the position at least nine pawns better for White."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 0 16",
+      "caption": "Back to the game, where Black took with the knight. The finish.",
+      "line": [
+        {
+          "move": "b3b8",
+          "say": "The queen gives check from b8. Only the knight on d7 can take her."
+        },
+        {
+          "move": "d7b8",
+          "say": "The knight takes the queen and leaves d7."
+        },
+        {
+          "move": "d1d8",
+          "say": "Checkmate. The bishop on g5 defends the rook on d8, so the king cannot take it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "d8"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "b3b8",
+            "n": 2
+          },
+          "statement": "Qb8+ is a forced mate in two (engine, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b8",
+            "color": "black",
+            "count": 1,
+            "after_move": "b3b8"
+          },
+          "statement": "After Qb8+ only one black piece attacks b8."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b3b8",
+              "d7b8",
+              "d1d8"
+            ]
+          },
+          "statement": "After Rd8 the bishop on g5 defends the rook."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the game shows.** Before move 9 White had a queen, a bishop and a knight out; Black had a queen and a knight out, and its king, f8 bishop and b8 knight had not moved. The engine at depth 16 rated White at least two pawns ahead. The sacrifices then opened lines and pulled pieces off their posts. One game, not a rule. Skills at work: *Pins*, *Attacking a king in the centre*, *Decoy*, *Searching for a forced mate*, *Tempo: which moves helped*."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which of the six moments would you have missed: Bg5, Nxb5, castling queenside, Rxd7, Bxd7+ or Qb8+? Pick one, and say what you would have needed to notice.",
+      "fields": [
+        {
+          "id": "missed",
+          "label": "The moment I would have missed:",
+          "options": [
+            "Bg5",
+            "Nxb5",
+            "castling queenside",
+            "Rxd7",
+            "Bxd7+",
+            "Qb8+",
+            "none of them"
+          ]
+        },
+        {
+          "id": "notice",
+          "label": "What I would have needed to notice:",
+          "options": [
+            "a pin",
+            "a king still in the centre",
+            "a piece that cannot move",
+            "a check that leaves one reply",
+            "something else"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "https://en.wikipedia.org/wiki/Opera_Game (read 28 Oct 2026: full move list, players, Paris 1858, result 1-0, opera-box setting, sources disagree on which opera)",
+    "sources/raw/edlasker_chess-strategy_gutenberg5614.txt (Edward Lasker, Chess Strategy, 1915, public domain, Project Gutenberg #5614: prints the game in descriptive notation; decoded with python-chess, one consistent sequence, identical to the Wikipedia score, ending in mate; used for the moves only, commentary not used)",
+    "https://www.chessgames.com/perl/chessgame?gid=1233404 (read 28 Oct 2026: players, Paris 1858, result 1-0, ECO C41, final move 17.Rd8#, first published in The Field, 4 Dec 1858; the page as fetched did not show the move text)",
+    "sources/raw/pg34180.txt (Edge, The Exploits and Triumphs, in Europe, of Paul Morphy, 1859, Project Gutenberg #34180: names the Duke of Brunswick and Count Isouard as chess amateurs who played Morphy in consultation; does not print this game)",
+    "Engine statements: Stockfish 19 lite, depth 16, via tools/validate.py (evidence under recorded limits, not proof)",
+    "content/items/lesson-fg-opera.json, PFGopera-7: our own one-pawn edit of the move-10 position (not a game position), used as the failing look-alike"
+  ]
+}

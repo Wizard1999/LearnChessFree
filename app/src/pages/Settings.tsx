@@ -50,6 +50,7 @@ export function SettingsContent() {
         <h2>Appearance</h2>
         <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches.</p>
         {([
+          ['style', 'Look', [['friendly', 'Friendly'], ['collegiate', 'Collegiate']]],
           ['theme', 'Theme', [['system', 'Same as my device'], ['light', 'Light'], ['dark', 'Dark']]],
           ['board', 'Board colours', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast']]],
           ['text', 'Text size', [['standard', 'Standard'], ['large', 'Large'], ['larger', 'Larger']]],

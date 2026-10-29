@@ -85,6 +85,9 @@ export interface Lesson {
   outcomes?: string[]
   steps: LessonStep[]
   review: { status: string; reviewer?: string | null }
+  /** Optional course this lesson belongs to (content/courses); such a lesson uses core skills and does not replace their lessons. */
+  course?: string
+  uses?: string[]
   /** Other skill nodes this lesson also teaches (a lesson has one main skill; coverage of the rest is recorded here). */
   also?: string[]
   sources?: string[]

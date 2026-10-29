@@ -19,6 +19,7 @@ import { Roadmap } from './pages/Roadmap'
 import { SettingsDrawer } from './components/SettingsDrawer'
 import { BRAND } from './brand'
 import { ErrorBoundary } from './components/ErrorBoundary'
+import { Crest } from './components/Crest'
 import { useLocation } from 'react-router-dom'
 
 // Five places for a learner; the rest are tools, one click away under More.
@@ -32,7 +33,7 @@ export default function App() {
   return (
     <ContentProvider>
       <header className="top">
-        <NavLink to="/" className="brand">{BRAND.name}</NavLink>
+        <NavLink to="/" className="brand"><Crest /><span>{BRAND.name}</span></NavLink>
         <nav aria-label="Main">
           {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a')) moreRef.current?.removeAttribute('open') }}>
