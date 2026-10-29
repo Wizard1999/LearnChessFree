@@ -40,6 +40,18 @@ export function layoutMap(skills: Skill[]): MapLayout {
   const wedges: MapLayout['wedges'] = []
   let a0 = -Math.PI / 2
   for (const st of strands) { const w = (2 * Math.PI * skills.filter(s => s.strand === st).length) / total; wedges.push({ strand: st, from: a0, to: a0 + w }); a0 += w }
+  // ring radii: at least one step beyond the previous ring, and wide enough that the crowdiest wedge on that ring keeps SPACING between neighbours
+  const SPACING = 52
+  const maxRing = Math.max(0, ...[...ring.values()])
+  const radii: number[] = []
+  for (let r = 0; r <= maxRing; r++) {
+    let need = (r === 0 ? CENTRE_GAP : radii[r - 1]) + STEP
+    for (const w of wedges) {
+      const n = skills.filter(s => s.strand === w.strand && ring.get(s.id) === r).length
+      if (n > 1) need = Math.max(need, (n * SPACING) / (w.to - w.from))
+    }
+    radii.push(need)
+  }
   const nodes: MapNode[] = []
   for (const w of wedges) {
     const inStrand = skills.filter(s => s.strand === w.strand)
@@ -49,11 +61,11 @@ export function layoutMap(skills: Skill[]): MapLayout {
       group.sort((x, y) => x.id.localeCompare(y.id))
       group.forEach((s, i) => {
         const angle = w.from + ((i + 0.5) / group.length) * (w.to - w.from)
-        const rad = r === 0 && s.id === 'FND.BOARD' ? 0 : CENTRE_GAP + (r + 1) * STEP
+        const rad = r === 0 && s.id === 'FND.BOARD' ? 0 : radii[r]
         nodes.push({ id: s.id, strand: s.strand, ring: r, angle, x: Math.cos(angle) * rad, y: Math.sin(angle) * rad, tier: s.tier })
       })
     }
   }
   const rings = Math.max(0, ...[...ring.values()]) + 1
-  return { nodes, edges, rings, wedges, radius: CENTRE_GAP + (rings + 1) * STEP }
+  return { nodes, edges, rings, wedges, radius: (radii[radii.length - 1] ?? 0) + STEP }
 }

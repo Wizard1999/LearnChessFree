@@ -1,0 +1,85 @@
+import { useMemo, useRef, useState } from 'react'
+import { layoutMap } from '../lib/mapLayout'
+import type { NodeProgress } from '../lib/missions'
+import type { Skill } from '../types'
+
+interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string> }
+
+const LEVEL_FILL = ['var(--canvas)', 'var(--chip)', 'var(--info)', 'var(--info)', 'var(--success)']
+
+/** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
+ * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
+export function RadialMap({ skills, progress, picked, onPick, strandNames }: Props) {
+  const layout = useMemo(() => layoutMap(skills), [skills])
+  const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
+  const R = layout.radius + 40
+  const [view, setView] = useState({ x: 0, y: 0, k: 3 })
+  const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
+  const svg = useRef<SVGSVGElement>(null)
+  const linked = useMemo(() => {
+    const s = new Set<string>()
+    if (picked) { s.add(picked); for (const e of layout.edges) { if (e.from === picked) s.add(e.to); if (e.to === picked) s.add(e.from) } }
+    return s
+  }, [picked, layout])
+  const zoom = (f: number) => setView(v => ({ ...v, k: Math.max(0.25, Math.min(6, v.k * f)) }))
+  const fit = () => setView({ x: 0, y: 0, k: 1 })
+  const locate = () => {
+    // centre on the first skill that is started but not mastered, else the first not started
+    const open = layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises })
+    const cand = open.find(n => (progress.get(n.id)?.level ?? 0) > 0) ?? open.sort((a, b) => a.ring - b.ring)[0]
+    if (cand) { setView({ x: -cand.x, y: -cand.y, k: 2 }); onPick(cand.id) }
+  }
+  const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
+  return (
+    <div className="radialmap">
+      <div className="row filters mapbar">
+        <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in">＋</button>
+        <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
+        <button type="button" onClick={fit}>Fit all</button>
+        <button type="button" onClick={locate}>Where I am</button>
+        <span className="small muted">Centre: the first skill. Each ring out needs the ring before it. Drag to move, scroll to zoom.</span>
+      </div>
+      <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
+        onWheel={e => { e.preventDefault(); zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12) }}
+        onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
+        onPointerMove={e => {
+          const d = drag.current; if (!d || !svg.current) return
+          const scale = (2 * R) / view.k / svg.current.getBoundingClientRect().width
+          setView(v => ({ ...v, x: d.vx + (e.clientX - d.x) * scale, y: d.vy + (e.clientY - d.y) * scale }))
+        }}
+        onPointerUp={() => { drag.current = null }}>
+        {layout.wedges.map(w => {
+          const mid = (w.from + w.to) / 2
+          const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
+          return (
+            <g key={w.strand} className="mapwedge">
+              <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
+              <text x={Math.cos(mid) * (layout.radius - 20)} y={Math.sin(mid) * (layout.radius - 20)} textAnchor="middle" className="wedgelabel">{w.strand} {strandNames[w.strand] ?? ''}</text>
+            </g>
+          )
+        })}
+        {layout.edges.map(e => {
+          const a = byId.get(e.from), b = byId.get(e.to); if (!a || !b) return null
+          const on = picked && (e.from === picked || e.to === picked)
+          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={on ? 'mapedge on' : 'mapedge'} />
+        })}
+        {layout.nodes.map(n => {
+          const p = progress.get(n.id)
+          const lvl = p ? Math.min(4, p.level) : 0
+          const dim = picked && !linked.has(n.id)
+          return (
+            <g key={n.id} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}`} transform={`translate(${n.x},${n.y})`}
+              tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, level ${lvl}`}
+              onClick={() => onPick(n.id)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) } }}>
+              <circle r={22} fill={LEVEL_FILL[lvl]} className="nodecircle" />
+              {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
+              <title>{p?.title ?? n.id}</title>
+              {(picked === n.id || view.k >= 2.4) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+            </g>
+          )
+        })}
+        <circle r={5} className="mapcentre" />
+      </svg>
+    </div>
+  )
+}

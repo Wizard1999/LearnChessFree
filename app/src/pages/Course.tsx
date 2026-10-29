@@ -1,3 +1,4 @@
+import { RadialMap } from '../components/RadialMap'
 import { lessonMinutes } from '../lib/lessonTime'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -8,7 +9,7 @@ import { CoursesView } from './CoursesView'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
-import { challengeSeed, challengeVerdict, LEVEL_HELP, LEVEL_NAMES, nodeProgress, planChallenge, skillsUpNext, type ChallengePlan, type Level, type Mission, type NodeProgress } from '../lib/missions'
+import { STRAND_NAMES, challengeSeed, challengeVerdict, LEVEL_HELP, LEVEL_NAMES, nodeProgress, planChallenge, skillsUpNext, type ChallengePlan, type Level, type Mission, type NodeProgress } from '../lib/missions'
 import { masteryMap, nextLessons, type Placement, type StrandWarmup } from '../lib/progress'
 import { interleave } from '../lib/select'
 import { useMissionData } from '../lib/useMissions'
@@ -60,6 +61,9 @@ export function Course() {
   const view = params.get('mission') ?? 'all'
   const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
+  const [leftOpen, setLeftOpen] = useState(() => { try { return localStorage.getItem('map:left') !== '0' } catch { return true } })
+  const [rightOpen, setRightOpen] = useState(() => { try { return localStorage.getItem('map:right') !== '0' } catch { return true } })
+  const toggleSide = (side: 'left' | 'right') => { const set = side === 'left' ? setLeftOpen : setRightOpen; set(v => { try { localStorage.setItem(`map:${side}`, v ? '0' : '1') } catch { /* optional */ } return !v }) }
   const [showBreakdown, setShowBreakdown] = useState(true)
   const [dismissed, setDismissed] = useState<string[]>([])
   const [lastChallenge, setLastChallenge] = useState<number | null>(null)
@@ -176,8 +180,9 @@ export function Course() {
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
 
-      <div className="missiongrid">
-        <section className="card missionpanel" aria-label={`${current.name} progress`}>
+      <div className="row filters sidetoggles"><button type="button" aria-pressed={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? 'Hide' : 'Show'} progress and project window</button><button type="button" aria-pressed={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Hide' : 'Show'} challenge and skills up next</button><button type="button" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button></div>
+      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`}>
+        {leftOpen && <section className="card missionpanel" aria-label={`${current.name} progress`}>
           {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all lessons</button>}
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
@@ -206,9 +211,11 @@ export function Course() {
           ))}
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
-        </section>
+        </section>}
 
-        <div>
+        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} /></div>
+
+        {rightOpen && <div className="mapright">
           {warmOpen && mission ? (
             <section className="card challenge">
               <h2>Warm-up: {mission.name}</h2>
@@ -309,7 +316,7 @@ export function Course() {
               {sk.misconceptions && sk.misconceptions.length > 0 && <details><summary>Common misunderstandings</summary><ul>{sk.misconceptions.map(c => <li key={c}>{c}</li>)}</ul></details>}
             </section>
           )}
-        </div>
+        </div>}
       </div>
 
       <section className="card outline" aria-label={`${current.name} outline`}>
