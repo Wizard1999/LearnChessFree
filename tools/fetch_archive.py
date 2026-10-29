@@ -71,10 +71,10 @@ def main() -> int:
                 data = urllib.request.urlopen(urllib.request.Request(f"https://archive.org/download/{d['identifier']}/{urllib.parse.quote(txt)}", headers=UA), timeout=180).read().decode("utf8", "replace").replace("\r\n", "\n")
             except Exception as e: print(f"{n} {title[:40]}: download failed ({e})"); continue
             basis_extra = ""
-            if not meta_ok:
-                ok, why, _ = FS.judge(data)
-                if not ok: print(f"{n} not cleared ({d['identifier']}): {why}", flush=True); continue
-                basis_extra = f" Metadata has no copyright status; the text itself was checked: {why}."
+            # an uploader's licence tag or status field is never enough on its own (CLAUDE.md rule 4): the text itself must also pass
+            ok, why, _ = FS.judge(data)
+            if not ok: print(f"{n} not cleared ({d['identifier']}): {why}", flush=True); continue
+            basis_extra = f" The text itself was checked: {why}."
             key = f"ia_{d['identifier']}"
             rec = {"id": key, "candidate": n, "source_url": f"https://archive.org/details/{d['identifier']}", "title": t, "author": c, "year": y,
                    "release": str(md.get("date", "")), "language": ",".join(md["language"]) if isinstance(md.get("language"), list) else str(md.get("language", "")),
