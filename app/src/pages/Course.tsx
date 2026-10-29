@@ -98,8 +98,7 @@ export function Course() {
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
-  if (showCourses) return <main className="page wide"><h1>Course</h1>{tabs}<CoursesView /></main>
-  if (showLessons) return <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main>
+  const otherView = showCourses ? <main className="page wide"><h1>Course</h1>{tabs}<CoursesView /></main> : showLessons ? <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main> : null // returned after every hook has run
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
@@ -149,6 +148,7 @@ export function Course() {
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
   const busy = !!run || (warmOpen && !!mission)
 
+  if (otherView) return otherView
   return (
     <main className="page wide">
       <h1>Course map</h1>
