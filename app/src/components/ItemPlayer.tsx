@@ -238,6 +238,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       <LoopPanel levels={phase === 'answer' ? loopLevels : []} shown={!!loopShown} open={loopOpened} onOpen={() => setLoopOpened(true)} />
       <ChessBoard
         key={boardKey}
+        controlMap={phase === 'done'}
         fen={phase === 'done' ? shownFen : studying || hidden.length === 0 ? curFen : hidePieces(curFen, hidden)}
         orientation={orientation}
         movable={movable}

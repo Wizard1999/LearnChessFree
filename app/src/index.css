@@ -250,3 +250,12 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px
 
 /* the "mate" in the wordmark takes the accent colour */
 .brand .mate { color: var(--accent); }
+
+/* Square control map: a tinted, numbered layer over the board (Control button on a board). Blue = White controls more, orange = Black. */
+.board-wrap { position: relative; }
+.controltoggle { position: absolute; top: 0.3rem; right: 0.3rem; z-index: 6; min-height: 32px; padding: 0.15rem 0.7rem; font-size: 0.85rem; }
+.controlmap { position: absolute; inset: 0; z-index: 5; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); }
+.controlmap .ctl { position: relative; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: #111; cursor: pointer; }
+.controlmap .ctl.sel { outline: 3px solid var(--focus); outline-offset: -3px; }
+.controlmap .ctlnum { position: absolute; left: 2px; bottom: 1px; font: 700 0.7rem/1 var(--font-moves); color: #111; background: rgba(255, 255, 255, 0.7); border-radius: 2px; padding: 0 2px; }
+.controldetail { position: absolute; left: 0; right: 0; bottom: 0; z-index: 7; padding: 0.4rem 0.6rem; font-size: 0.85rem; background: var(--surface); color: var(--text); border-top: 2px solid var(--control-boundary); }

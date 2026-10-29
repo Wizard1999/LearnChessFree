@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { ALL_SQUARES, controlMap, describe as describeControl } from '../lib/control'
 import { Chessground } from 'chessground'
 import type { Api } from 'chessground/api'
 import type { Config } from 'chessground/config'
@@ -32,10 +33,12 @@ export interface Props {
   edit?: EditMode | null
   /** Gives the parent the underlying Chessground API (e.g. to place a piece from a palette). */
   apiRef?: { current: Api | null }
+  /** Offers the control-map toggle (who attacks and defends every square). Off by default so a test never shows it. */
+  controlMap?: boolean
 }
 
 /** Thin React wrapper around Chessground (GPL-3.0-or-later): rendering, drag/touch input, arrows, highlights. */
-export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], lastMove = null, check = false, label, edit = null, apiRef }: Props) {
+export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false}: Props) {
   const el = useRef<HTMLDivElement>(null)
   const api = useRef<Api | null>(null)
   const cb = useRef({ movable, picker, edit })
@@ -87,5 +90,34 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
 
   useEffect(() => { api.current?.set(config()); api.current?.setAutoShapes(autoShapes()) })
 
-  return <div className="board-wrap" role="img" aria-label={label ?? 'Chess board'}><div ref={el} className="board" /></div>
+  const [showControl, setShowControl] = useState(false)
+  const [picked, setPicked] = useState<string | null>(null)
+  const map = useMemo(() => (showControl && controlMapOn ? controlMap(fen) : null), [showControl, controlMapOn, fen])
+  const cells = useMemo(() => {
+    const files = orientation === 'white' ? 'abcdefgh' : 'hgfedcba'
+    const ranks = orientation === 'white' ? '87654321' : '12345678'
+    return ranks.split('').flatMap(r => files.split('').map(f => `${f}${r}`))
+  }, [orientation])
+  return (
+    <div className="board-wrap" role="img" aria-label={label ?? 'Chess board'}>
+      <div ref={el} className="board" />
+      {controlMapOn && <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }} title="Show who controls each square">{showControl ? 'Hide control' : 'Control'}</button>}
+      {map && (
+        <div className="controlmap" aria-label="Square control map">
+          {cells.filter(sq => ALL_SQUARES.includes(sq)).map(sq => {
+            const c = map.get(sq)!
+            const strength = Math.min(1, Math.abs(c.net) / 3)
+            const bg = c.net === 0 ? 'transparent' : c.net > 0 ? `rgba(31, 90, 190, ${0.12 + 0.5 * strength})` : `rgba(214, 100, 20, ${0.12 + 0.5 * strength})`
+            return (
+              <button key={sq} type="button" className={picked === sq ? 'ctl sel' : 'ctl'} style={{ background: bg }} aria-label={describeControl(c)} onClick={() => setPicked(p => (p === sq ? null : sq))}>
+                <span className="ctlnum">{c.white || c.black ? `${c.white.length}-${c.black.length}` : ''}</span>
+              </button>
+            )
+          })}
+        </div>
+      )}
+      {map && picked && <div className="controldetail" role="status">{describeControl(map.get(picked)!)}</div>}
+      {map && !picked && <div className="controldetail muted" role="note">Blue: White controls more. Orange: Black controls more. Each square shows White attackers - Black attackers. Tap a square for details. Pins are ignored.</div>}
+    </div>
+  )
 }

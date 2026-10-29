@@ -164,7 +164,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
         step.line && step.line.length > 0
           ? <section className="card"><LinePlayer fen={step.fen} line={step.line} caption={step.caption} arrows={step.arrows} highlight={step.highlight} />
               <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
-          : <section className="card"><ChessBoard fen={step.fen} orientation={sideToMove(step.fen)} shapes={(step.arrows ?? []).map(a => ({ from: a.from, to: a.to }))} highlight={step.highlight} />
+          : <section className="card"><ChessBoard fen={step.fen} orientation={sideToMove(step.fen)} shapes={(step.arrows ?? []).map(a => ({ from: a.from, to: a.to }))} highlight={step.highlight} controlMap />
               {step.caption && <p className="caption">{step.caption}</p>}
               <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
       )}

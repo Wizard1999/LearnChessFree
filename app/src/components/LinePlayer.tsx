@@ -23,7 +23,7 @@ export function LinePlayer({ fen, line, caption, arrows = [], highlight = [], or
   return (
     <figure className="lineplayer">
       {title && <figcaption className="muted small">{title}</figcaption>}
-      <ChessBoard fen={data.fens[i]} orientation={orientation ?? sideToMove(fen)} shapes={shapes} highlight={i === 0 ? highlight : []} lastMove={data.lastMoves[i]} label={caption} />
+      <ChessBoard fen={data.fens[i]} orientation={orientation ?? sideToMove(fen)} shapes={shapes} highlight={i === 0 ? highlight : []} lastMove={data.lastMoves[i]} label={caption} controlMap />
       {caption && i === 0 && <p className="caption">{caption}</p>}
       {say && <p className="caption say">{say}</p>}
       {i > 0 && !say && <p className="caption muted">{data.sans[i - 1]}</p>}

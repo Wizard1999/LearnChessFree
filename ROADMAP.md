@@ -3,14 +3,14 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 52%** (65 of 134 tasks done, in-progress tasks count half). Updated 2026-10-29T09:20+00:00 UTC.
+**Overall: 53%** (65 of 134 tasks done, in-progress tasks count half). Updated 2026-10-29T09:24+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 21/25 | 84% |
-| Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 0/4 | 0% |
+| Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 0/4 | 25% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
@@ -39,7 +39,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
+**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
@@ -98,8 +98,8 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Zero-friction start: first visit goes straight into the first lesson, staged content loading, auto-save with a storage check, resume mid-lesson (decision D19)
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
-- [ ] Control map toggle on any board: per-square net control (white attackers minus black), colours and counts, in lessons, practice answers, game review and the analysis board
-- [ ] Click a square: attackers and defenders listed with x-rays, and the exchange outcome there
+- [~] Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play
+- [~] Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet
 - [ ] Value-aware version; derived views (outposts and holes, space, king zone, safe squares for each piece)
 - [ ] Training items from the map: tap the controlled squares, count attackers and defenders, predict then reveal; a hidden-map mode
 
