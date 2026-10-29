@@ -2,12 +2,14 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
 import { useContent } from '../lib/content'
+import type { Lesson } from '../types'
 import { lessonSort, useLessonProgress } from '../lib/progress'
 import { STRAND_NAMES } from '../lib/missions'
 
 type Filter = 'all' | 'todo' | 'done'
 
-const mins = (l: { minutes?: number }) => l.minutes ?? 8
+import { lessonMinutes } from '../lib/lessonTime'
+const mins = (l: Lesson) => lessonMinutes(l)
 const fmt = (m: number) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${m % 60 ? `${m % 60} min` : ''}`.trim())
 
 /** Every lesson on one page: find it, open it, or mark it finished, skipped or unstarted. Nothing is locked. */
@@ -65,7 +67,7 @@ export function LessonIndex() {
                 <li key={l.id} className={`row lessonrow ${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
                   <span className="statusmark" aria-hidden="true">{p?.done ? (p.skipped ? '»' : '✓') : p && p.step > 0 ? '◐' : '○'}</span>
                   <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
-                  <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {l.minutes ?? 8} min · {status}</span></span>
+                  <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min · {status}</span></span>
                   <span className="actions">
                     {!p?.done && <><button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, false)}>Mark finished</button> <button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, true)}>Skip</button></>}
                     {(p?.done || (p && p.step > 0)) && <button type="button" className="link" onClick={() => void reset(l.id)}>Reset</button>}

@@ -1,3 +1,5 @@
+import { Crest } from '../components/Crest'
+import { lessonMinutes } from '../lib/lessonTime'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContent, useContentFull } from '../lib/content'
@@ -97,7 +99,8 @@ export function Today() {
         <p className="lede">No sign-up and nothing to set up. Your progress is saved in this browser as you go. A private or incognito window deletes it when you close it, so use a normal window (or export a file from Settings).</p>
         {storageDead && <p className="warn-text" role="alert">This browser is not storing anything (blocked site data does this), so your progress will be lost when you close the tab.</p>}
         <section className="card hero">
-          <p className="eyebrow">First lesson · about {firstLesson.minutes} min</p>
+          <div className="herocrest" aria-hidden="true"><Crest /></div>
+          <p className="eyebrow">First lesson · about {lessonMinutes(firstLesson)} min</p>
           <h2>{firstLesson.title}</h2>
           <p>Lessons run in order from the beginning, and each one has you try things on a real board. Already know the basics? Skip ahead below.</p>
           <div className="row">{action(firstLesson, true, 'Start learning')}</div>
@@ -126,7 +129,7 @@ export function Today() {
             <section className="card hero"><p className="muted">Preparing today's plan…</p></section>
           ) : upNext ? (
             <section className="card hero">
-              <p className="eyebrow">Up next · about {upNext.minutes} min</p>
+              <p className="eyebrow">Up next · about {lessonMinutes(upNext)} min</p>
               <h2>{upNext.title}</h2>
               <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
               <div className="row">{action(upNext, true)}</div>

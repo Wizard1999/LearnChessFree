@@ -1,3 +1,4 @@
+import { lessonMinutes } from '../lib/lessonTime'
 import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
 import { useLessonProgress } from '../lib/progress'
@@ -27,7 +28,7 @@ export function CoursesView() {
             <p className="small muted"><progress value={d} max={ls.length || 1} aria-label={`${d} of ${ls.length} lessons finished`} /> {d} of {ls.length} finished or skipped · {c.family}</p>
             <p>{c.summary}</p>
             {c.uses && c.uses.length > 0 && <p className="small muted">Uses: {c.uses.map(u => content.skillById.get(u)?.title ?? u).join(', ')}</p>}
-            <ol className="plain">{ls.map(l => <li key={l.id} className="row"><span aria-hidden="true">{done.has(l.id) ? '✓' : '○'}</span><Link className={done.has(l.id) ? 'button' : 'button primary'} to={`/lesson/${l.id}`}>{done.has(l.id) ? 'Review' : 'Open'}</Link> <span><strong>{l.title}</strong> <span className="muted small">· {l.minutes ?? 10} min</span></span></li>)}</ol>
+            <ol className="plain">{ls.map(l => <li key={l.id} className="row"><span aria-hidden="true">{done.has(l.id) ? '✓' : '○'}</span><Link className={done.has(l.id) ? 'button' : 'button primary'} to={`/lesson/${l.id}`}>{done.has(l.id) ? 'Review' : 'Open'}</Link> <span><strong>{l.title}</strong> <span className="muted small">· {lessonMinutes(l)} min</span></span></li>)}</ol>
           </div>
         )
       })}

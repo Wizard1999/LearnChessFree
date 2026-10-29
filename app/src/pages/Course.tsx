@@ -1,3 +1,4 @@
+import { lessonMinutes } from '../lib/lessonTime'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
@@ -166,7 +167,7 @@ export function Course() {
       {next.length > 0 && !busy && (
         <section className="card">
           <h2>Continue</h2>
-          <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {l.minutes ?? 8} min</span></li>)}</ul>
+          <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min</span></li>)}</ul>
         </section>
       )}
 

@@ -80,7 +80,7 @@ export function Lab() {
       <div className="labgrid">
         <div>
           <ChessBoard key={`${item.id}-${resetKey}`} fen={placement ? curFen : baseFen} orientation={stm} shapes={[{ from: move.slice(0, 2), to: move.slice(2, 4), brush: 'blue' }]}
-            edit={{ onChange: pl => { setPlacement(pl); setResult(null) }, onSquare }} apiRef={apiRef} label="Editable position" />
+            edit={{ onChange: pl => { setPlacement(pl); setResult(null) }, onSquare }} apiRef={apiRef} label="Editable position" controlMap />
           <p className="muted small">Drag a piece to move it, drag it off the board to remove it, or pick a piece below and click a square to add one.</p>
           <div className="palette" role="group" aria-label="Piece palette">
             {PALETTE.map(p => <button key={p.id} type="button" className={tool === p.id ? 'chip on' : 'chip'} onClick={() => setTool(tool === p.id ? null : p.id)} title={p.label} aria-label={p.label}>{SYMBOL[p.id]}</button>)}

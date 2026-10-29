@@ -160,7 +160,7 @@ function Review({ game, onBack }: { game: GameRec; onBack: () => void }) {
       <h2>{game.white} vs {game.black} <span className="muted small">· {game.result} · {game.date ?? ''}</span></h2>
       <div className="reviewgrid">
         <div>
-          <ChessBoard fen={fen} orientation={side} lastMove={last} label="Game position" />
+          <ChessBoard fen={fen} orientation={side} lastMove={last} label="Game position" controlMap />
           <div className="row">
             <button type="button" onClick={() => setI(0)} aria-label="Start">⏮</button>
             <button type="button" onClick={() => setI(x => Math.max(0, x - 1))} aria-label="Previous move">◀</button>

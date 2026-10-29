@@ -1,3 +1,4 @@
+import { lessonMinutes } from './lessonTime'
 import type { Attempt, LessonProgress } from '../db'
 import type { ContentBundle, Item } from '../types'
 import { isDue } from './schedule'
@@ -44,7 +45,7 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
     why: `These skills are due for a look: ${due.map(dueName).join(', ')}. You get fresh positions, not the ones you have already seen.`, itemIds: reviewItems.map(i => i.id) })
 
   const lessons = nextLessons(c, masteries, placement, progress, 1)
-  if (lessons[0]) blocks.push({ id: 'lesson', kind: 'lesson', title: lessons[0].title, minutes: lessons[0].minutes ?? 8, lessonId: lessons[0].id,
+  if (lessons[0]) blocks.push({ id: 'lesson', kind: 'lesson', title: lessons[0].title, minutes: lessonMinutes(lessons[0]), lessonId: lessons[0].id,
     why: 'It is the next lesson whose prerequisites you have met, in curriculum order.' })
 
   if (attempts.length === 0 && !placement.done) {
