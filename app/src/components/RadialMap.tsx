@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { layoutMap } from '../lib/mapLayout'
 import type { NodeProgress } from '../lib/missions'
 import type { Skill } from '../types'
@@ -29,6 +29,13 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames }: Pro
     const cand = open.find(n => (progress.get(n.id)?.level ?? 0) > 0) ?? open.sort((a, b) => a.ring - b.ring)[0]
     if (cand) { setView({ x: -cand.x, y: -cand.y, k: 2 }); onPick(cand.id) }
   }
+  // a native, non-passive wheel listener: React's onWheel cannot stop the page from scrolling
+  useEffect(() => {
+    const el = svg.current; if (!el) return
+    const h = (e: WheelEvent) => { e.preventDefault(); zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12) }
+    el.addEventListener('wheel', h, { passive: false })
+    return () => el.removeEventListener('wheel', h)
+  }, [])
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
@@ -40,7 +47,6 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames }: Pro
         <span className="small muted">Centre: the first skill. Each ring out needs the ring before it. Drag to move, scroll to zoom.</span>
       </div>
       <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
-        onWheel={e => { e.preventDefault(); zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12) }}
         onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
         onPointerMove={e => {
           const d = drag.current; if (!d || !svg.current) return

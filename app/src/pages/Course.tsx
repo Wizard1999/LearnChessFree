@@ -61,8 +61,8 @@ export function Course() {
   const view = params.get('mission') ?? 'all'
   const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
-  const [leftOpen, setLeftOpen] = useState(() => { try { return localStorage.getItem('map:left') !== '0' } catch { return true } })
-  const [rightOpen, setRightOpen] = useState(() => { try { return localStorage.getItem('map:right') !== '0' } catch { return true } })
+  const [leftOpen, setLeftOpen] = useState(() => { try { return localStorage.getItem('map:left') === '1' } catch { return true } })
+  const [rightOpen, setRightOpen] = useState(() => { try { return localStorage.getItem('map:right') === '1' } catch { return true } })
   const toggleSide = (side: 'left' | 'right') => { const set = side === 'left' ? setLeftOpen : setRightOpen; set(v => { try { localStorage.setItem(`map:${side}`, v ? '0' : '1') } catch { /* optional */ } return !v }) }
   const [showBreakdown, setShowBreakdown] = useState(true)
   const [dismissed, setDismissed] = useState<string[]>([])
@@ -155,7 +155,7 @@ export function Course() {
 
   if (otherView) return otherView
   return (
-    <main className="page wide">
+    <main className="page wide mappage">
       <h1>Curriculum map</h1>
       {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
@@ -175,14 +175,16 @@ export function Course() {
         </section>
       )}
 
-      <div className="row filters" role="group" aria-label="Sections">
+
+      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`} onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
+        <button type="button" className="edgetab left" aria-expanded={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? '‹ Close' : 'Progress ›'}</button>
+        <button type="button" className="edgetab right" aria-expanded={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Close ›' : '‹ Challenge'}</button>
+        {leftOpen && <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
+        <div className="row filters" role="group" aria-label="Sections">
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All lessons · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
-      </div>
-
-      <div className="row filters sidetoggles"><button type="button" aria-pressed={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? 'Hide' : 'Show'} progress and project window</button><button type="button" aria-pressed={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Hide' : 'Show'} challenge and skills up next</button><button type="button" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button></div>
-      <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`}>
-        {leftOpen && <section className="card missionpanel" aria-label={`${current.name} progress`}>
+        </div>
+        <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button>
           {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all lessons</button>}
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
@@ -215,7 +217,7 @@ export function Course() {
 
         <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} /></div>
 
-        {rightOpen && <div className="mapright">
+        {rightOpen && <div className="mapright sidedrawer right card">
           {warmOpen && mission ? (
             <section className="card challenge">
               <h2>Warm-up: {mission.name}</h2>
