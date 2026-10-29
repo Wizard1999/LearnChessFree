@@ -1,27 +1,35 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Chess, type Square } from 'chess.js'
+import type { Api } from 'chessground/api'
+import type { Key } from 'chessground/types'
 import { ChessBoard } from '../components/ChessBoard'
 import { getEngine, resetEngine, scoreText, type EngineLine } from '../engine'
-import { destsFor } from '../lib/play'
+import { destsFor, flipTurn } from '../lib/play'
 import { db, type GameRec } from '../db'
 import { loadOpenings, nameOf, children as openingChildren, cnt, type OGraph } from '../lib/openingsData'
+import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree } from '../lib/pgnTree'
+import { pieceCount, probeTablebase, TB_TEXT, type TbResult } from '../lib/tablebase'
 
-const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 const epdOf = (fen: string) => fen.split(' ').slice(0, 4).join(' ')
-
-interface TNode { id: number; parent: number | null; san: string; uci: string; fen: string; ply: number; kids: number[] }
-interface Tree { nodes: TNode[] }
-const emptyTree = (fen: string): Tree => ({ nodes: [{ id: 0, parent: null, san: '', uci: '', fen, ply: 0, kids: [] }] })
+const cloneTree = (t: Tree): Tree => ({ ...t, nodes: t.nodes.map(n => ({ ...n, kids: [...n.kids] })) })
 
 /** Win chance for White in percent from a centipawn score (the logistic curve Lichess publishes; recalled from memory [R]). */
 const winPct = (cp: number) => 50 + 50 * (2 / (1 + Math.exp(-0.00368208 * cp)) - 1)
 const toCp = (l: EngineLine, white: boolean) => { const sign = white ? 1 : -1; return l.kind === 'mate' ? sign * (l.value > 0 ? 2000 : -2000) : sign * l.value }
 type Mark = '' | '?!' | '?' | '??'
 
+const PALETTE = [
+  { id: 'wk', role: 'king', color: 'white', sym: '♔' }, { id: 'wq', role: 'queen', color: 'white', sym: '♕' }, { id: 'wr', role: 'rook', color: 'white', sym: '♖' },
+  { id: 'wb', role: 'bishop', color: 'white', sym: '♗' }, { id: 'wn', role: 'knight', color: 'white', sym: '♘' }, { id: 'wp', role: 'pawn', color: 'white', sym: '♙' },
+  { id: 'bk', role: 'king', color: 'black', sym: '♚' }, { id: 'bq', role: 'queen', color: 'black', sym: '♛' }, { id: 'br', role: 'rook', color: 'black', sym: '♜' },
+  { id: 'bb', role: 'bishop', color: 'black', sym: '♝' }, { id: 'bn', role: 'knight', color: 'black', sym: '♞' }, { id: 'bp', role: 'pawn', color: 'black', sym: '♟' },
+] as const
+
 function sanLine(fen: string, pv: string[], n = 10): { san: string; num: string }[] {
   const c = new Chess(fen)
-  const base = (fenFull(fen) - 1) * 2 + (c.turn() === 'b' ? 1 : 0)
+  const f = fen.split(' ')
+  const base = ((parseInt(f[5] ?? '1', 10) || 1) - 1) * 2 + (c.turn() === 'b' ? 1 : 0)
   const out: { san: string; num: string }[] = []
   for (const uci of pv.slice(0, n)) {
     const ply = base + out.length
@@ -29,32 +37,31 @@ function sanLine(fen: string, pv: string[], n = 10): { san: string; num: string 
   }
   return out
 }
-const fenFull = (fen: string) => +(fen.split(' ')[5] ?? 1) || 1
 
-/** Anything with a result field is a position or a game; the rest is rejected with a message. */
-function parseInput(text: string): { start: string; sans: string[] } | string {
+/** A FEN, or a PGN with variations, comments and marks; anything else is rejected with a message. */
+function parseInput(text: string): Tree | string {
   const t = text.trim()
   if (!t) return 'Nothing to load.'
-  if (/^[prnbqkPRNBQK1-8/]+\s+[wb]\s+/.test(t)) { try { return { start: new Chess(t).fen(), sans: [] } } catch { return 'That is not a valid position.' } }
-  try {
-    const c = new Chess()
-    c.loadPgn(t)
-    const h = c.getHeaders()
-    const start = h.FEN && h.SetUp !== '0' ? h.FEN : START
-    return { start, sans: c.history() }
-  } catch { return 'That is not a valid FEN or PGN.' }
+  if (/^[prnbqkPRNBQK1-8/]+\s+[wb]\s+/.test(t)) { try { return emptyTree(new Chess(t).fen()) } catch { return 'That is not a valid position.' } }
+  return parsePgn(t)
 }
 
-/** The engine on its own, plus a game explorer: a move tree with variations, an evaluation bar and graph, whole-game analysis, and import and export. */
+/** The engine on its own, plus a game explorer: move tree with variations and comments, evaluation bar and graph, whole-game analysis,
+ * threat arrows, a board editor, tablebase lookups, and PGN and FEN in and out. */
 export function Analysis() {
   const [params] = useSearchParams()
-  const [tree, setTree] = useState<Tree>(() => emptyTree(START))
+  const [tree, setTree] = useState<Tree>(() => emptyTree())
   const [cur, setCur] = useState(0)
   const [flip, setFlip] = useState(false)
   const [on, setOn] = useState(true)
   const [multipv, setMultipv] = useState(3)
   const [maxDepth, setMaxDepth] = useState(18)
   const [arrows, setArrows] = useState(true)
+  const [threat, setThreat] = useState(false)
+  const [threatLine, setThreatLine] = useState<EngineLine | null>(null)
+  const [tbOn, setTbOn] = useState(false)
+  const [tb, setTb] = useState<TbResult | null>(null)
+  const [tbErr, setTbErr] = useState<string | null>(null)
   const [lines, setLines] = useState<EngineLine[] | null>(null)
   const [liveDepth, setLiveDepth] = useState(0)
   const [thinking, setThinking] = useState(false)
@@ -68,6 +75,10 @@ export function Analysis() {
   const [saved, setSaved] = useState<GameRec[]>([])
   const [graph, setGraph] = useState<OGraph | null>(null)
   const [epdToNode, setEpdToNode] = useState<Map<string, string>>(new Map())
+  const [editing, setEditing] = useState<{ turn: 'w' | 'b'; castle: string } | null>(null)
+  const [tool, setTool] = useState<string | null>(null)
+  const editApi = useRef<Api | null>(null)
+  const editPlacement = useRef('')
 
   const node = tree.nodes[cur]
   const fen = node.fen
@@ -77,20 +88,15 @@ export function Analysis() {
   const mainline = useMemo(() => { const out = [0]; let n = tree.nodes[0]; while (n.kids.length) { n = tree.nodes[n.kids[0]]; out.push(n.id) } return out }, [tree])
 
   // ---- moves and navigation
-  const play = useCallback((from: string, to: string, promotion?: string) => {
-    const c = new Chess(tree.nodes[cur].fen)
-    let m
-    try { m = c.move({ from, to, promotion }) } catch { return }
-    const same = tree.nodes[cur].kids.find(k => tree.nodes[k].san === m.san)
-    if (same !== undefined) { setCur(same); return }
-    setTree(t => {
-      const id = t.nodes.length
-      const nodes = t.nodes.map(n => (n.id === cur ? { ...n, kids: [...n.kids, id] } : n))
-      nodes.push({ id, parent: cur, san: m.san, uci: from + to + (m.promotion ?? ''), fen: c.fen(), ply: t.nodes[cur].ply + 1, kids: [] })
-      return { nodes }
-    })
-    setCur(tree.nodes.length)
+  const playSan = useCallback((san: string, from = cur) => {
+    const nt = cloneTree(tree)
+    const id = addMove(nt, from, san)
+    if (id === null) return
+    setTree(nt); setCur(id)
   }, [tree, cur])
+  const play = useCallback((from: string, to: string, promotion?: string) => {
+    try { playSan(new Chess(fen).move({ from, to, promotion }).san) } catch { /* illegal: the board only offers legal moves */ }
+  }, [fen, playSan])
   const playUci = (uci: string) => play(uci.slice(0, 2), uci.slice(2, 4), uci[4])
   function onBoardMove(from: string, to: string) {
     const piece = chess.get(from as Square)
@@ -99,18 +105,12 @@ export function Analysis() {
   }
   /** Plays the first `k+1` moves of an engine line from the current position, as a new branch if needed. */
   function playLine(pv: string[], k: number) {
-    let at = cur, nodes = tree.nodes.slice(), c = new Chess(fen)
+    const nt = cloneTree(tree); let at = cur; const c = new Chess(fen)
     for (const uci of pv.slice(0, k + 1)) {
-      let m
-      try { m = c.move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] }) } catch { break }
-      const same = nodes[at].kids.find(x => nodes[x].san === m.san)
-      if (same !== undefined) { at = same; continue }
-      const id = nodes.length
-      nodes = nodes.map(n => (n.id === at ? { ...n, kids: [...n.kids, id] } : n))
-      nodes.push({ id, parent: at, san: m.san, uci: uci.slice(0, 4) + (m.promotion ?? ''), fen: c.fen(), ply: nodes[at].ply + 1, kids: [] })
-      at = id
+      let m; try { m = c.move({ from: uci.slice(0, 2), to: uci.slice(2, 4), promotion: uci[4] }) } catch { break }
+      const id = addMove(nt, at, m.san); if (id === null) break; at = id
     }
-    setTree({ nodes }); setCur(at)
+    setTree(nt); setCur(at)
   }
   const go = useCallback((d: 'start' | 'back' | 'fwd' | 'end') => {
     setCur(c => {
@@ -124,7 +124,7 @@ export function Analysis() {
   useEffect(() => {
     const h = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement
-      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) return
+      if (editing || (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT'))) return
       if (e.key === 'ArrowLeft') { go('back'); e.preventDefault() }
       else if (e.key === 'ArrowRight') { go('fwd'); e.preventDefault() }
       else if (e.key === 'ArrowUp' || e.key === 'Home') { go('start'); e.preventDefault() }
@@ -133,29 +133,39 @@ export function Analysis() {
     }
     window.addEventListener('keydown', h)
     return () => window.removeEventListener('keydown', h)
-  }, [go])
+  }, [go, editing])
   function deleteFromHere() {
     if (cur === 0) return
     const drop = new Set<number>(); const walk = (id: number) => { drop.add(id); tree.nodes[id].kids.forEach(walk) }; walk(cur)
     const parent = tree.nodes[cur].parent ?? 0
-    // keep ids dense: rebuild
     const keep = tree.nodes.filter(n => !drop.has(n.id))
     const remap = new Map(keep.map((n, i) => [n.id, i]))
     const nodes = keep.map(n => ({ ...n, id: remap.get(n.id)!, parent: n.parent === null ? null : remap.get(n.parent)!, kids: n.kids.filter(k => !drop.has(k)).map(k => remap.get(k)!) }))
-    setTree({ nodes }); setCur(remap.get(parent)!)
+    setTree({ ...tree, nodes }); setCur(remap.get(parent)!)
+  }
+  /** Makes this variation the main line at its branch point. */
+  function promoteVariation() {
+    const p = node.parent; if (p === null) return
+    const nt = cloneTree(tree); nt.nodes[p].kids = [cur, ...nt.nodes[p].kids.filter(k => k !== cur)]; setTree(nt)
+  }
+  function annotate(patch: { comment?: string; nag?: number | undefined }) {
+    const nt = cloneTree(tree); const n = nt.nodes[cur]
+    if ('comment' in patch) n.comment = patch.comment || undefined
+    if ('nag' in patch) n.nag = patch.nag
+    setTree(nt)
   }
 
   // ---- live engine: deepen step by step so something appears at once
   useEffect(() => {
-    if (!on || over || batch) { setLines(null); setLiveDepth(0); return }
+    if (!on || over || batch || editing) { setLines(null); setLiveDepth(0); setThreatLine(null); return }
     let dead = false
-    setThinking(true); setNote(null)
+    setThinking(true); setNote(null); setThreatLine(null)
     const steps = [...new Set([Math.min(8, maxDepth), Math.min(12, maxDepth), Math.min(16, maxDepth), maxDepth])]
     const run = async () => {
       await new Promise(r => setTimeout(r, 200))
       for (const d of steps) {
         if (dead) return
-        const timeout = new Promise<null>(r => setTimeout(() => r(null), 25000))
+        const timeout = new Promise<null>(r => setTimeout(() => r(null), 30000))
         let r: EngineLine[] | null = null
         try { r = await Promise.race([getEngine().analyse(fen, { depth: d, multipv }), timeout]) } catch { if (!dead) { setThinking(false); setNote('The engine could not run here.') } return }
         if (dead) return
@@ -163,19 +173,32 @@ export function Analysis() {
         setLines(r); setLiveDepth(r[0]?.depth ?? d)
         if (r[0]) setEvals(e => ({ ...e, [epdOf(fen)]: toCp(r![0], whiteToMove) }))
       }
+      if (threat && !chess.inCheck()) {
+        // the opponent's best move if it were their turn: a "null move" search
+        const r = await getEngine().analyse(flipTurn(fen), { depth: Math.min(14, maxDepth), multipv: 1 }).catch(() => null)
+        if (!dead && r && r[0]) setThreatLine(r[0])
+      }
       if (!dead) setThinking(false)
     }
     void run()
     return () => { dead = true }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fen, on, over, maxDepth, multipv, batch])
+  }, [fen, on, over, maxDepth, multipv, batch, threat, editing])
 
-  // terminal positions have no engine line
   useEffect(() => {
     if (!over) return
     const cp = chess.isCheckmate() ? (whiteToMove ? -2000 : 2000) : 0
     setEvals(e => ({ ...e, [epdOf(fen)]: cp }))
   }, [over, fen, chess, whiteToMove])
+
+  // ---- tablebase (optional, online; only the position is sent)
+  useEffect(() => {
+    setTb(null); setTbErr(null)
+    if (!tbOn || pieceCount(fen) > 7 || editing) return
+    let dead = false
+    probeTablebase(fen).then(r => { if (!dead) setTb(r) }).catch(() => { if (!dead) setTbErr('The tablebase service could not be reached.') })
+    return () => { dead = true }
+  }, [tbOn, fen, editing])
 
   // ---- whole-game analysis of the main line
   async function analyseGame() {
@@ -212,8 +235,15 @@ export function Analysis() {
       m.set(mainline[i], d >= 30 ? '??' : d >= 20 ? '?' : d >= 10 ? '?!' : '')
     }
     const acc = (xs: number[]) => (xs.length ? xs.reduce((s, d) => s + Math.max(0, Math.min(100, 103.1668 * Math.exp(-0.04354 * d) - 3.1669)), 0) / xs.length : null)
-    return { m, white: acc(loss.w), black: acc(loss.b) }
+    const mistakes = mainline.filter(id => m.get(id) === '?' || m.get(id) === '??')
+    return { m, white: acc(loss.w), black: acc(loss.b), mistakes }
   }, [evals, mainline, tree])
+  function nextMistake(dir: 1 | -1) {
+    const ms = marks.mistakes; if (!ms.length) return
+    const idx = mainline.indexOf(cur)
+    const cand = dir === 1 ? ms.find(id => mainline.indexOf(id) > idx) ?? ms[0] : [...ms].reverse().find(id => mainline.indexOf(id) < idx) ?? ms[ms.length - 1]
+    setCur(cand)
+  }
 
   // ---- opening names from the bundled explorer data
   useEffect(() => {
@@ -231,70 +261,79 @@ export function Analysis() {
 
   // ---- saved games and import
   useEffect(() => { void db.games.orderBy('ts').reverse().toArray().then(setSaved).catch(() => undefined) }, [])
-  function load(start: string, sans: string[]) {
-    const t = emptyTree(start); const c = new Chess(start); let at = 0
-    for (const s of sans) {
-      let m; try { m = c.move(s) } catch { break }
-      const id = t.nodes.length
-      t.nodes[at].kids.push(id)
-      t.nodes.push({ id, parent: at, san: m.san, uci: m.from + m.to + (m.promotion ?? ''), fen: c.fen(), ply: id, kids: [] })
-      at = id
-    }
-    setTree(t); setCur(0); setEvals({}); setMsg(null)
-  }
-  function importText(t: string) {
-    const r = parseInput(t)
-    if (typeof r === 'string') { setMsg(r); return }
-    load(r.start, r.sans); setText('')
-  }
+  function loadTree(t: Tree) { setTree(t); setCur(0); setEvals({}); setMsg(null); setText('') }
+  function importText(t: string) { const r = parseInput(t); if (typeof r === 'string') setMsg(r); else loadTree(r) }
   useEffect(() => {
     const fenParam = params.get('fen'), gameParam = params.get('game')
-    if (fenParam) { const r = parseInput(fenParam); if (typeof r !== 'string') load(r.start, r.sans) }
+    if (fenParam) { const r = parseInput(fenParam); if (typeof r !== 'string') loadTree(r) }
     else if (gameParam) void db.games.get(+gameParam).then(g => { if (g) importText(g.pgn) })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const pgnOut = useMemo(() => {
-    const c = new Chess(tree.nodes[0].fen)
-    for (const id of mainline.slice(1)) { try { c.move(tree.nodes[id].san) } catch { break } }
-    return c.pgn()
-  }, [tree, mainline])
+  const pgnOut = useMemo(() => writePgn(tree), [tree])
   const copy = (s: string, label: string) => { void navigator.clipboard?.writeText(s).then(() => setMsg(`${label} copied.`), () => setMsg('Copy was blocked; select the text instead.')) }
+  const shareLink = () => `${window.location.href.split('#')[0]}#/analysis?fen=${encodeURIComponent(fen)}`
   function download() {
     const url = URL.createObjectURL(new Blob([pgnOut], { type: 'application/x-chess-pgn' }))
     const a = document.createElement('a'); a.href = url; a.download = 'analysis.pgn'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
+  }
+
+  // ---- board editor
+  function openEditor() {
+    const f = fen.split(' ')
+    editPlacement.current = f[0]
+    setEditing({ turn: (f[1] as 'w' | 'b') ?? 'w', castle: f[2] === '-' ? '' : f[2] })
+  }
+  function editSquare(key: string) {
+    const a = editApi.current
+    if (!a || !tool) return
+    if (tool === 'erase') a.setPieces(new Map([[key as Key, undefined]]))
+    else { const p = PALETTE.find(x => x.id === tool)!; a.setPieces(new Map([[key as Key, { role: p.role, color: p.color }]])) }
+    editPlacement.current = a.getFen()
+  }
+  function applyEditor() {
+    if (!editing) return
+    const castle = ['K', 'Q', 'k', 'q'].filter(c => editing.castle.includes(c)).join('') || '-'
+    try { loadTree(emptyTree(new Chess(`${editPlacement.current} ${editing.turn} ${castle} - 0 1`).fen())); setEditing(null) }
+    catch { setMsg('That position is not legal: each side needs exactly one king, and the side not to move cannot be in check.') }
   }
 
   // ---- rendering helpers
   const topCp = evals[epdOf(fen)]
   const bar = topCp === undefined ? 50 : winPct(topCp)
   const barLabel = lines?.[0] ? scoreText(lines[0], whiteToMove) : topCp !== undefined ? (Math.abs(topCp) >= 2000 ? (topCp > 0 ? '1-0' : '0-1') : `${topCp > 0 ? '+' : ''}${(topCp / 100).toFixed(1)}`) : ''
-  const shapes = !arrows || !on || over || !lines ? [] : lines.slice(0, multipv).map((l, i) => ({ from: l.pv[0].slice(0, 2), to: l.pv[0].slice(2, 4), brush: (i === 0 ? 'green' : i === 1 ? 'blue' : 'yellow') as 'green' | 'blue' | 'yellow' }))
+  const shapes = [
+    ...(!arrows || !on || over || !lines ? [] : lines.slice(0, multipv).map((l, i) => ({ from: l.pv[0].slice(0, 2), to: l.pv[0].slice(2, 4), brush: (i === 0 ? 'green' : i === 1 ? 'blue' : 'yellow') as 'green' | 'blue' | 'yellow' }))),
+    ...(threat && threatLine ? [{ from: threatLine.pv[0].slice(0, 2), to: threatLine.pv[0].slice(2, 4), brush: 'red' as const }] : []),
+  ]
   const status = chess.isCheckmate() ? `Checkmate: ${whiteToMove ? 'Black' : 'White'} wins.` : chess.isStalemate() ? 'Stalemate: a draw.' : chess.isDraw() ? 'A draw by rule.' : chess.isCheck() ? 'Check.' : ''
   const lastMove = node.uci ? ([node.uci.slice(0, 2), node.uci.slice(2, 4)] as [string, string]) : null
+  const top = lines?.[0]
+  const wdl = top?.wdl ? (whiteToMove ? top.wdl : ([top.wdl[2], top.wdl[1], top.wdl[0]] as [number, number, number])) : null
 
   function renderLine(startId: number): ReactNode[] {
     const out: ReactNode[] = []
-    let id = startId; let first = true
-    for (let guard = 0; guard < 600; guard++) {
+    let id: number | undefined = startId; let first = true
+    for (let guard = 0; id !== undefined && guard < 800; guard++) {
       const n = tree.nodes[id]
-      const white = n.ply % 2 === 1
-      const label = white ? `${Math.ceil(n.ply / 2)}.` : first ? `${Math.ceil(n.ply / 2)}...` : ''
+      const { number, white } = moveNumber(tree, n)
+      const label = white ? `${number}.` : first ? `${number}...` : ''
       const mk = marks.m.get(id) ?? ''
-      out.push(<span key={id} className="mv">{label && <span className="mvnum">{label}</span>}<button type="button" className={`mvbtn${id === cur ? ' on' : ''}${mk ? ' m' + mk.length : ''}`} onClick={() => setCur(id)} aria-current={id === cur ? 'true' : undefined}>{n.san}{mk}</button></span>)
-      first = false
-      if (!n.kids.length) break
-      const [main, ...alts] = n.kids
-      for (const a of alts) out.push(<span key={`v${a}`} className="variation">({renderLine(a)})</span>)
-      id = main
-      first = alts.length > 0
+      const manual = n.nag ? NAG_SYMBOL[n.nag] ?? '' : ''
+      const shown = manual || mk
+      const cid: number = id
+      out.push(<span key={id} className="mv">{label && <span className="mvnum">{label}</span>}<button type="button" className={`mvbtn${id === cur ? ' on' : ''}${shown ? ' m' + shown.length : ''}${shown && shown[0] === '!' ? ' good' : ''}`} onClick={() => setCur(cid)} aria-current={id === cur ? 'true' : undefined}>{n.san}{shown}</button>{n.comment && <span className="mvcomment">{n.comment}</span>}</span>)
+      first = !!n.comment
+      const par = tree.nodes[n.parent ?? 0]
+      if (par.kids[0] === id) for (const a of par.kids.slice(1)) { out.push(<span key={`v${a}`} className="variation">({renderLine(a)})</span>); first = true }
+      id = n.kids[0]
     }
     return out
   }
-  const rootKids = tree.nodes[0].kids
-  const moveList = rootKids.length ? (() => { const [main, ...alts] = rootKids; return [...renderLine(main), ...alts.map(a => <span key={`rv${a}`} className="variation">({renderLine(a)})</span>)] })() : []
+  const moveList = tree.nodes[0].kids.length ? renderLine(tree.nodes[0].kids[0]) : []
 
   const evalPoints = mainline.map((id, i) => ({ id, i, cp: evals[epdOf(tree.nodes[id].fen)] }))
   const haveGraph = evalPoints.filter(p => p.cp !== undefined).length >= 2
+  const editFen = editing ? `${editPlacement.current} ${editing.turn} - - 0 1` : fen
 
   return (
     <main className="page wide">
@@ -307,18 +346,43 @@ export function Analysis() {
               <div className="evalfill" style={{ height: `${flip ? 100 - bar : bar}%`, [flip ? 'top' : 'bottom']: 0 }} />
               <span className="evaltext">{barLabel}</span>
             </div>
-            <ChessBoard fen={fen} orientation={flip ? 'black' : 'white'} movable={over ? null : { color: whiteToMove ? 'white' : 'black', dests: destsFor(chess), onMove: onBoardMove }} shapes={shapes} lastMove={lastMove} check={chess.inCheck()} label="Analysis board" controlMap />
+            {editing ? (
+              <ChessBoard key="editor" fen={editFen} orientation={flip ? 'black' : 'white'} edit={{ onChange: pl => { editPlacement.current = pl }, onSquare: editSquare }} apiRef={editApi} label="Board editor" />
+            ) : (
+              <ChessBoard fen={fen} orientation={flip ? 'black' : 'white'} movable={over ? null : { color: whiteToMove ? 'white' : 'black', dests: destsFor(chess), onMove: onBoardMove }} shapes={shapes} lastMove={lastMove} check={chess.inCheck()} label="Analysis board" controlMap />
+            )}
           </div>
-          {promo && <div className="row" role="group" aria-label="Promote to"><span className="small">Promote to:</span>{(['q', 'r', 'b', 'n'] as const).map(p => <button key={p} type="button" onClick={() => { play(promo.from, promo.to, p); setPromo(null) }}>{({ q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight' })[p]}</button>)}<button type="button" className="link" onClick={() => setPromo(null)}>Cancel</button></div>}
-          <div className="row filters analysisbar">
-            <button type="button" onClick={() => go('start')} aria-label="Go to start" disabled={cur === 0}>⏮</button>
-            <button type="button" onClick={() => go('back')} aria-label="Previous move" disabled={cur === 0}>◀</button>
-            <button type="button" onClick={() => go('fwd')} aria-label="Next move" disabled={!node.kids.length}>▶</button>
-            <button type="button" onClick={() => go('end')} aria-label="Go to end" disabled={!node.kids.length}>⏭</button>
-            <button type="button" onClick={() => setFlip(f => !f)}>Flip</button>
-            <button type="button" onClick={deleteFromHere} disabled={cur === 0} title="Delete this move and everything after it">Delete from here</button>
-          </div>
-          <p className="small muted">Arrow keys move through the game, F flips the board. The control map button under the board shows who controls each square.</p>
+          {editing ? (
+            <div className="card" role="group" aria-label="Board editor">
+              <p className="small muted">Pick a piece, then click squares to place it. Drag a piece to move it, or drag it off the board to remove it.</p>
+              <div className="palette" role="group" aria-label="Piece palette">
+                {PALETTE.map(p => <button key={p.id} type="button" className={tool === p.id ? 'chip on' : 'chip'} onClick={() => setTool(tool === p.id ? null : p.id)} aria-label={`${p.color} ${p.role}`}>{p.sym}</button>)}
+                <button type="button" className={tool === 'erase' ? 'chip on' : 'chip'} onClick={() => setTool(tool === 'erase' ? null : 'erase')}>Erase</button>
+                <button type="button" onClick={() => { editApi.current?.set({ fen: '8/8/8/8/8/8/8/8 w - - 0 1' }); editPlacement.current = '8/8/8/8/8/8/8/8' }}>Clear</button>
+                <button type="button" onClick={() => { editApi.current?.set({ fen: START_FEN }); editPlacement.current = START_FEN.split(' ')[0] }}>Start position</button>
+              </div>
+              <div className="row filters">
+                <label className="small">Side to move <select value={editing.turn} onChange={e => setEditing({ ...editing, turn: e.target.value as 'w' | 'b' })}><option value="w">White</option><option value="b">Black</option></select></label>
+                {['K', 'Q', 'k', 'q'].map(c => <label key={c} className="small"><input type="checkbox" checked={editing.castle.includes(c)} onChange={e => setEditing({ ...editing, castle: e.target.checked ? editing.castle + c : editing.castle.replace(c, '') })} /> {({ K: 'White O-O', Q: 'White O-O-O', k: 'Black O-O', q: 'Black O-O-O' })[c]}</label>)}
+              </div>
+              <div className="row"><button type="button" className="primary" onClick={applyEditor}>Analyse this position</button><button type="button" onClick={() => setEditing(null)}>Cancel</button></div>
+            </div>
+          ) : (
+            <>
+              {promo && <div className="row" role="group" aria-label="Promote to"><span className="small">Promote to:</span>{(['q', 'r', 'b', 'n'] as const).map(p => <button key={p} type="button" onClick={() => { play(promo.from, promo.to, p); setPromo(null) }}>{({ q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight' })[p]}</button>)}<button type="button" className="link" onClick={() => setPromo(null)}>Cancel</button></div>}
+              <div className="row filters analysisbar">
+                <button type="button" onClick={() => go('start')} aria-label="Go to start" disabled={cur === 0}>⏮</button>
+                <button type="button" onClick={() => go('back')} aria-label="Previous move" disabled={cur === 0}>◀</button>
+                <button type="button" onClick={() => go('fwd')} aria-label="Next move" disabled={!node.kids.length}>▶</button>
+                <button type="button" onClick={() => go('end')} aria-label="Go to end" disabled={!node.kids.length}>⏭</button>
+                <button type="button" onClick={() => setFlip(f => !f)}>Flip</button>
+                <button type="button" onClick={openEditor}>Edit board</button>
+                <button type="button" onClick={deleteFromHere} disabled={cur === 0} title="Delete this move and everything after it">Delete from here</button>
+                <button type="button" onClick={promoteVariation} disabled={node.parent === null || tree.nodes[node.parent].kids[0] === cur} title="Make this line the main line">Make main line</button>
+              </div>
+              <p className="small muted">Arrow keys move through the game, F flips the board. The control map button under the board shows who controls each square. <Link to={`/play?fen=${encodeURIComponent(fen)}`}>Play on from here against the computer</Link>.</p>
+            </>
+          )}
         </div>
 
         <div className="stack">
@@ -326,23 +390,39 @@ export function Analysis() {
             <div className="sectionhead"><h2>{over ? status : `${whiteToMove ? 'White' : 'Black'} to move`}</h2>
               <button type="button" onClick={() => setOn(o => !o)} aria-pressed={on}>{on ? 'Engine on' : 'Engine off'}</button></div>
             {status && !over && <p className="small muted">{status}</p>}
-            {on && !over && (
+            {on && !over && !editing && (
               <>
-                <p className="small muted" role="status">{batch ? 'Analysing the whole game…' : thinking ? `Thinking… depth ${liveDepth}` : lines ? `Depth ${liveDepth}` : ''}{note ? ` ${note}` : ''}</p>
+                <p className="small muted" role="status">{batch ? 'Analysing the whole game…' : thinking ? `Thinking… depth ${liveDepth}` : lines ? `Depth ${liveDepth}` : ''}{top?.nodes ? ` · ${(top.nodes / 1000).toFixed(0)}k nodes` : ''}{top?.nps ? ` · ${(top.nps / 1000).toFixed(0)}k nodes/s` : ''}{note ? ` ${note}` : ''}</p>
+                {wdl && <p className="small" aria-label="Win, draw, loss chances"><span className="wdl"><span style={{ width: `${wdl[0] / 10}%` }} className="wdlw" /><span style={{ width: `${wdl[1] / 10}%` }} className="wdld" /><span style={{ width: `${wdl[2] / 10}%` }} className="wdll" /></span> White {(wdl[0] / 10).toFixed(0)}% · draw {(wdl[1] / 10).toFixed(0)}% · Black {(wdl[2] / 10).toFixed(0)}%</p>}
                 <ol className="plain enginelines">
                   {(lines ?? []).map(l => {
                     const mv = sanLine(fen, l.pv)
                     return <li key={l.rank}><strong className="score">{scoreText(l, whiteToMove)}</strong><span>{mv.map((m, k) => <span key={k}>{m.num && <span className="mvnum">{m.num}</span>}<button type="button" className="mvbtn" onClick={() => playLine(l.pv, k)} title="Play this line up to here">{m.san}</button></span>)}</span></li>
                   })}
                 </ol>
+                {threat && (chess.inCheck() ? <p className="small muted">Threat arrows are off while the side to move is in check.</p> : threatLine && <p className="small"><span className="threatkey">Threat</span> if it were {whiteToMove ? 'Black' : 'White'}'s move, the engine would play {sanLine(flipTurn(fen), threatLine.pv, 1)[0]?.san} ({scoreText(threatLine, true)} for them).</p>)}
               </>
             )}
             <div className="row filters">
               <label className="small">Lines <select value={multipv} onChange={e => setMultipv(+e.target.value)}>{[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}</select></label>
-              <label className="small">Depth <select value={maxDepth} onChange={e => setMaxDepth(+e.target.value)}>{[10, 14, 16, 18, 20, 22, 24].map(n => <option key={n} value={n}>{n}</option>)}</select></label>
+              <label className="small">Depth <select value={maxDepth} onChange={e => setMaxDepth(+e.target.value)}>{[10, 14, 16, 18, 20, 22, 24, 26, 30].map(n => <option key={n} value={n}>{n}</option>)}</select></label>
               <label className="small"><input type="checkbox" checked={arrows} onChange={e => setArrows(e.target.checked)} /> Arrows</label>
+              <label className="small"><input type="checkbox" checked={threat} onChange={e => setThreat(e.target.checked)} /> Show threats</label>
+              <label className="small" title="Sends only the position to the public Lichess tablebase service, for endgames with seven pieces or fewer"><input type="checkbox" checked={tbOn} onChange={e => setTbOn(e.target.checked)} /> Tablebase (online)</label>
             </div>
           </section>
+
+          {tbOn && (
+            <section className="card" aria-label="Tablebase">
+              <h2>Endgame tablebase</h2>
+              {pieceCount(fen) > 7 ? <p className="small muted">The tablebase covers positions with seven pieces or fewer; this one has {pieceCount(fen)}.</p> : tbErr ? <p className="small" role="alert">{tbErr}</p> : !tb ? <p className="small muted">Looking up…</p> : (
+                <>
+                  <p><strong>{TB_TEXT[tb.category] ?? tb.category}</strong> for {whiteToMove ? 'White' : 'Black'}{tb.dtm !== null ? `, mate in ${Math.abs(tb.dtm)}` : ''}{tb.dtz !== null ? ` (distance to a zeroing move: ${Math.abs(tb.dtz)})` : ''}.</p>
+                  <p className="small">{tb.moves.slice(0, 8).map(m => <span key={m.uci} className="mv"><button type="button" className="mvbtn" onClick={() => playUci(m.uci)}>{m.san}</button><span className="muted small"> {m.category === 'loss' ? 'wins' : m.category === 'win' ? 'loses' : m.category === 'draw' ? 'draws' : m.category}</span></span>)}</p>
+                </>
+              )}
+            </section>
+          )}
 
           {graph && openingName?.name && (
             <section className="card" aria-label="Opening">
@@ -358,7 +438,10 @@ export function Analysis() {
                 : <button type="button" onClick={() => void analyseGame()} disabled={mainline.length < 2} title="Evaluate every position of the main line at depth 12">Analyse whole game</button>}</div>
             {moveList.length === 0 ? <p className="muted small">No moves yet. Play on the board, or load a game below.</p> : <div className="movelist">{moveList}</div>}
             {(marks.white !== null || marks.black !== null) && (
-              <p className="small">Accuracy (a rough estimate from win-chance loss; ?! is a loss of 10 to 20 points of win chance, ? 20 to 30, ?? 30 or more): White {marks.white !== null ? `${marks.white.toFixed(0)}%` : 'n/a'}, Black {marks.black !== null ? `${marks.black.toFixed(0)}%` : 'n/a'}.</p>
+              <>
+                <p className="small">Accuracy (a rough estimate from win-chance loss; ?! is a loss of 10 to 20 points of win chance, ? 20 to 30, ?? 30 or more): White {marks.white !== null ? `${marks.white.toFixed(0)}%` : 'n/a'}, Black {marks.black !== null ? `${marks.black.toFixed(0)}%` : 'n/a'}. {marks.mistakes.length} mistake{marks.mistakes.length === 1 ? '' : 's'} or worse.</p>
+                {marks.mistakes.length > 0 && <div className="row"><button type="button" onClick={() => nextMistake(-1)}>◀ Previous mistake</button><button type="button" onClick={() => nextMistake(1)}>Next mistake ▶</button></div>}
+              </>
             )}
             {haveGraph && (
               <svg className="evalgraph" viewBox={`0 0 ${Math.max(1, mainline.length - 1) * 10} 100`} preserveAspectRatio="none" role="img" aria-label="Evaluation graph of the main line">
@@ -370,15 +453,27 @@ export function Analysis() {
             )}
           </section>
 
+          {cur !== 0 && (
+            <section className="card" aria-label="Annotate">
+              <h2>Annotate {node.san}</h2>
+              <div className="row filters" role="group" aria-label="Move mark">
+                {(['!', '?', '!!', '??', '!?', '?!'] as const).map(s => <button key={s} type="button" className={node.nag === SYMBOL_NAG[s] ? 'chip on' : 'chip'} aria-pressed={node.nag === SYMBOL_NAG[s]} onClick={() => annotate({ nag: node.nag === SYMBOL_NAG[s] ? undefined : SYMBOL_NAG[s] })}>{s}</button>)}
+              </div>
+              <textarea rows={2} value={node.comment ?? ''} onChange={e => annotate({ comment: e.target.value })} placeholder="Your comment on this move" aria-label="Comment on this move" />
+              <p className="small muted">Marks and comments travel with the PGN you copy or download.</p>
+            </section>
+          )}
+
           <section className="card" aria-label="Load and save">
             <h2>Load or save</h2>
-            <textarea rows={3} value={text} onChange={e => setText(e.target.value)} placeholder="Paste a PGN or a FEN" aria-label="PGN or FEN" />
+            <textarea rows={3} value={text} onChange={e => setText(e.target.value)} placeholder="Paste a PGN (variations and comments are kept) or a FEN" aria-label="PGN or FEN" />
             <div className="row filters">
               <button type="button" onClick={() => importText(text)} disabled={!text.trim()}>Load</button>
-              <button type="button" onClick={() => { load(START, []) }}>New board</button>
+              <button type="button" onClick={() => loadTree(emptyTree())}>New board</button>
               <button type="button" onClick={() => copy(fen, 'FEN')}>Copy FEN</button>
               <button type="button" onClick={() => copy(pgnOut, 'PGN')} disabled={mainline.length < 2}>Copy PGN</button>
               <button type="button" onClick={download} disabled={mainline.length < 2}>Download PGN</button>
+              <button type="button" onClick={() => copy(shareLink(), 'Link')}>Copy link to this position</button>
             </div>
             {saved.length > 0 && (
               <label className="field"><span className="small muted">Open one of your saved games</span>

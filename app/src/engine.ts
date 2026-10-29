@@ -1,6 +1,6 @@
 // Stockfish 19 (lite, single thread, GPL-3.0) in a Web Worker, behind a serial request queue.
 // Engine output is EVIDENCE under recorded limits and a sparring partner; it is never the source of an explanation.
-export interface EngineLine { rank: number; depth: number; kind: 'cp' | 'mate'; value: number; pv: string[] }
+export interface EngineLine { rank: number; depth: number; kind: 'cp' | 'mate'; value: number; pv: string[]; nodes?: number; nps?: number; wdl?: [number, number, number] }
 export interface GoLimit { depth?: number; movetime?: number; nodes?: number }
 export interface Strength { elo?: number; skill?: number } // elo uses UCI_LimitStrength (1320-3190); skill 0-20 is the finer low-end control
 
@@ -33,6 +33,7 @@ export class Engine {
   private async init() {
     this.send('uci'); await this.waitFor('uciok')
     this.send('setoption name Hash value 32')
+    this.send('setoption name UCI_ShowWDL value true')
     this.send('isready'); await this.waitFor('readyok')
   }
 
@@ -76,7 +77,8 @@ export class Engine {
         const m = l.match(/info depth (\d+) .*?(?:multipv (\d+) )?score (cp|mate) (-?\d+).*? pv (.*)/)
         if (m) {
           const rank = m[2] ? +m[2] : 1
-          best.set(rank, { rank, depth: +m[1], kind: m[3] as 'cp' | 'mate', value: +m[4], pv: m[5].split(' ') })
+          const nodes = l.match(/ nodes (\d+)/), nps = l.match(/ nps (\d+)/), wdl = l.match(/ wdl (\d+) (\d+) (\d+)/)
+          best.set(rank, { rank, depth: +m[1], kind: m[3] as 'cp' | 'mate', value: +m[4], pv: m[5].split(' '), nodes: nodes ? +nodes[1] : undefined, nps: nps ? +nps[1] : undefined, wdl: wdl ? [+wdl[1], +wdl[2], +wdl[3]] : undefined })
         }
       }
       return [...best.values()].sort((a, b) => a.rank - b.rank)

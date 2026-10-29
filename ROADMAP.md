@@ -3,13 +3,14 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 56%** (69 of 135 tasks done, in-progress tasks count half). Updated 2026-10-29T11:32+00:00 UTC.
+**Overall: 54%** (69 of 139 tasks done, in-progress tasks count half). Updated 2026-10-29T12:02+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 22/26 | 85% |
+| Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md) | 0/4 | 0% |
 | Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 0/4 | 25% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 3/10 | 30% |
@@ -97,6 +98,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Full-course walkthrough in the browser as a first-time learner
 - [x] Zero-friction start: first visit goes straight into the first lesson, staged content loading, auto-save with a storage check, resume mid-lesson (decision D19)
 - [x] Analysis page (More → Analysis): move tree with variations, eval bar and graph, clickable engine lines, whole-game analysis with accuracy, opening names, PGN/FEN import and export, saved games, control map. Not yet: board editor, tablebase lookup, engine-vs-you training from a position
+
+## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
+- [ ] Layout engine `lib/mapLayout.ts`: rings by prerequisite depth, a wedge per strand, tests
+- [ ] `RadialMap` SVG with pan, zoom, fit, search, node detail
+- [ ] Toggleable side panels: section progress left, mastery challenge and skills up next right
+- [ ] Lesson links drawn as a second edge layer; keyboard and screen-reader route
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
 - [~] Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play
