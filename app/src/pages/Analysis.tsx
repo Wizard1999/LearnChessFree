@@ -70,6 +70,7 @@ export function Analysis() {
   const [bests, setBests] = useState<Record<string, string>>({}) // epd -> the engine's preferred move (uci) in that position
   const [batch, setBatch] = useState<{ done: number; total: number } | null>(null)
   const cancelBatch = useRef(false)
+  const [retry, setRetry] = useState<{ id: number; verdict: string | null } | null>(null)
   const [promo, setPromo] = useState<{ from: string; to: string } | null>(null)
   const [text, setText] = useState('')
   const [msg, setMsg] = useState<string | null>(null)
@@ -100,6 +101,7 @@ export function Analysis() {
   }, [fen, playSan])
   const playUci = (uci: string) => play(uci.slice(0, 2), uci.slice(2, 4), uci[4])
   function onBoardMove(from: string, to: string) {
+    if (retry) { void tryRetry(from, to); return }
     const piece = chess.get(from as Square)
     if (piece?.type === 'p' && (to[1] === '8' || to[1] === '1')) setPromo({ from, to })
     else play(from, to)
@@ -247,6 +249,29 @@ export function Analysis() {
     if (!u || u === node.uci) return null
     try { return { uci: u, san: new Chess(pf).move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }).san } } catch { return null }
   })()
+  /** Learn from your mistakes: go to the position before a mistake and ask for a better move than the one played. */
+  function startRetry(id: number) {
+    const n = tree.nodes[id]; if (n.parent === null) return
+    setCur(n.parent); setRetry({ id, verdict: null })
+  }
+  async function tryRetry(from: string, to: string) {
+    if (!retry) return
+    const n = tree.nodes[retry.id]; const pf = tree.nodes[n.parent ?? 0].fen
+    const c = new Chess(pf); let m
+    try { m = c.move({ from, to, promotion: 'q' }) } catch { return }
+    const uci = m.from + m.to + (m.promotion ?? '')
+    if (uci === n.uci) { setRetry({ ...retry, verdict: 'That is the move that was played. Look for something better.' }); return }
+    const best = bests[epdOf(pf)]
+    if (uci === best) { setRetry({ ...retry, verdict: `Yes: ${m.san} is the engine's first choice.` }); return }
+    setRetry({ ...retry, verdict: `Checking ${m.san} with the engine…` })
+    const r = await getEngine().analyse(c.fen(), { depth: 12, multipv: 1 }).catch(() => null)
+    const before = evals[epdOf(pf)]
+    if (!r || !r[0] || before === undefined) { setRetry({ ...retry, verdict: 'The engine could not check that move.' }); return }
+    const mover = new Chess(pf).turn(); const after = toCp(r[0], c.turn() === 'w')
+    const pa = mover === 'w' ? winPct(before) : 100 - winPct(before), pb = mover === 'w' ? winPct(after) : 100 - winPct(after)
+    const loss = pa - pb
+    setRetry({ ...retry, verdict: loss < 10 ? `${m.san} also works: it keeps the position about as good (the engine at depth 12).` : `Not quite: ${m.san} gives up about ${loss.toFixed(0)} points of win chance. Try again, or show the answer.` })
+  }
   function nextMistake(dir: 1 | -1) {
     const ms = marks.mistakes; if (!ms.length) return
     const idx = mainline.indexOf(cur)
@@ -454,7 +479,9 @@ export function Analysis() {
             {(marks.white !== null || marks.black !== null) && (
               <>
                 <p className="small">Accuracy (a rough estimate from win-chance loss; ?! is a loss of 10 to 20 points of win chance, ? 20 to 30, ?? 30 or more): White {marks.white !== null ? `${marks.white.toFixed(0)}%` : 'n/a'}, Black {marks.black !== null ? `${marks.black.toFixed(0)}%` : 'n/a'}. {marks.mistakes.length} mistake{marks.mistakes.length === 1 ? '' : 's'} or worse.</p>
-                {marks.mistakes.length > 0 && <div className="row"><button type="button" onClick={() => nextMistake(-1)}>◀ Previous mistake</button><button type="button" onClick={() => nextMistake(1)}>Next mistake ▶</button></div>}
+                {marks.mistakes.length > 0 && <div className="row"><button type="button" onClick={() => nextMistake(-1)}>◀ Previous mistake</button><button type="button" onClick={() => nextMistake(1)}>Next mistake ▶</button><button type="button" className="primary" onClick={() => startRetry(marks.mistakes[0])}>Learn from your mistakes</button></div>}
+                {retry && (() => { const n = tree.nodes[retry.id]; const pf = tree.nodes[n.parent ?? 0].fen; const bu = bests[epdOf(pf)]; const bsan = bu ? (() => { try { return new Chess(pf).move({ from: bu.slice(0, 2), to: bu.slice(2, 4), promotion: bu[4] }).san } catch { return null } })() : null; const nextId = marks.mistakes[marks.mistakes.indexOf(retry.id) + 1]
+                  return <div className="card" role="status"><p><strong>Your turn.</strong> In the game, {new Chess(pf).turn() === 'w' ? 'White' : 'Black'} played {n.san}, which lost ground. Find a better move on the board.</p>{retry.verdict && <p>{retry.verdict}</p>}<div className="row">{bsan && <button type="button" onClick={() => setRetry({ ...retry, verdict: `The engine preferred ${bsan}.` })}>Show the answer</button>}{nextId !== undefined && <button type="button" onClick={() => startRetry(nextId)}>Next mistake</button>}<button type="button" onClick={() => setRetry(null)}>Stop</button></div></div> })()}
               </>
             )}
             {haveGraph && (
