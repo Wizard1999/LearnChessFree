@@ -4,6 +4,7 @@ import type { Lesson } from '../types'
  * practice question, 2 for a contrast trio, 1 for a reflection, 0.4 for a board. A planning estimate [I], not a measurement:
  * real timings come from the learner's own attempts once we have them. */
 export function lessonMinutes(l: Lesson): number {
+  if (!Array.isArray(l.steps)) return l.minutes ?? 8 // not a full lesson (a plan block, say): trust its own figure
   let t = 0
   for (const s of l.steps) {
     switch (s.type) {

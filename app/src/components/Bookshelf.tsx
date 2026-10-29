@@ -60,7 +60,7 @@ export function Bookshelf() {
               const flip = hover?.id === b.id ? hover.flip : false
               const hue = hueOf(b)
               return (
-                <li key={b.id} className={`cover${open ? ' open' : ''}${flip ? ' flip' : ''}`} style={{ ['--h' as string]: hue }} onMouseEnter={e => enter(b.id, e.currentTarget)} onMouseLeave={leave} onFocus={e => enter(b.id, e.currentTarget)}>
+                <li key={b.id} className={`cover${open ? ' open' : ''}${flip ? ' flip' : ''}${pinned === b.id ? ' pinned' : ''}`} style={{ ['--h' as string]: hue }} onMouseEnter={e => enter(b.id, e.currentTarget)} onMouseLeave={leave} onFocus={e => enter(b.id, e.currentTarget)}>
                   <button type="button" className="coverface" aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
                     <span className="coverlevel">{b.level}</span>
                     <span className="covertitle">{b.title}</span>
@@ -74,11 +74,15 @@ export function Bookshelf() {
                     <p className="small">{b.blurb}</p>
                     <p className="small muted">{b.subjects.join(', ')}</p>
                     <p className="small"><span className="badge" title={b.rights.basis}>{b.rights.label}</span></p>
+                    {pinned === b.id ? (
+                      <>
                     <div className="row">
-                      {b.file ? <><button type="button" className="primary" onClick={() => setOpen(b)}>Read</button><a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a></> : <span className="small muted">Large file: read it at the source.</span>}
-                      <a className="button" href={b.source_url} target="_blank" rel="noreferrer">Source</a>
-                    </div>
-                    <details className="small"><summary>How we know it is free to share</summary>{b.rights.basis} (checked {b.rights.checked})</details>
+                          {b.file ? <><button type="button" className="primary" onClick={() => setOpen(b)}>Read</button><a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a></> : <span className="small muted">Large file: read it at the source.</span>}
+                          <a className="button" href={b.source_url} target="_blank" rel="noreferrer">Source</a>
+                        </div>
+                        <details className="small"><summary>How we know it is free to share</summary>{b.rights.basis} (checked {b.rights.checked})</details>
+                      </>
+                    ) : <p className="small muted">Click the cover for Read, Download and the rights details.</p>}
                   </div>
                 </li>
               )
