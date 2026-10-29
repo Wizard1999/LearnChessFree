@@ -153,6 +153,35 @@ export function Course() {
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
   const busy = !!run || (warmOpen && !!mission)
 
+  const detailPanel = (
+    node && sk && !busy && (
+            <section className="card skilldetail detaildrawer" role="dialog" aria-label={`${node.title} detail`}>
+              <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
+              <h2>{node.title}</h2>
+              <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
+              {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
+              {node.cuedTop && <p className="small muted">The deepest exercises for this skill are ones that name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
+              <div className="row">
+                {lessonsFor(node.id).map(l => <Link key={l.id} className="button primary" to={`/lesson/${l.id}`}>Open lesson: {l.title}</Link>)}
+              </div>
+              {lessonsFor(node.id).map(l => { const pr = progress?.find(p => p.lessonId === l.id); return (
+                <p key={l.id} className="small">{l.title}: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
+                  {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
+                  {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
+              <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
+                <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
+                  <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
+              <div className="row">
+                {lessonsFor(node.id).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`}>Lesson: {l.title}</Link>)}
+                {node.workingDepth && <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link>}
+                {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
+              </div>
+              {sk.conditions && sk.conditions.length > 0 && <details><summary>When the idea holds</summary><ul>{sk.conditions.map(c => <li key={c}>{c}</li>)}</ul></details>}
+              {sk.contrasts && sk.contrasts.length > 0 && <details><summary>Where it fails or does not apply</summary><ul>{sk.contrasts.map(c => <li key={c}>{c}</li>)}</ul></details>}
+              {sk.misconceptions && sk.misconceptions.length > 0 && <details><summary>Common misunderstandings</summary><ul>{sk.misconceptions.map(c => <li key={c}>{c}</li>)}</ul></details>}
+            </section>
+          )
+  )
   const leftPanel = leftOpen ? (
         <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
         <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button>
@@ -261,33 +290,6 @@ export function Course() {
             </section>
           )}
 
-          {node && sk && !busy && (
-            <section className="card skilldetail detaildrawer" role="dialog" aria-label={`${node.title} detail`}>
-              <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
-              <h2>{node.title}</h2>
-              <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
-              {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
-              {node.cuedTop && <p className="small muted">The deepest exercises for this skill are ones that name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
-              <div className="row">
-                {lessonsFor(node.id).map(l => <Link key={l.id} className="button primary" to={`/lesson/${l.id}`}>Open lesson: {l.title}</Link>)}
-              </div>
-              {lessonsFor(node.id).map(l => { const pr = progress?.find(p => p.lessonId === l.id); return (
-                <p key={l.id} className="small">{l.title}: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
-                  {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
-                  {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
-              <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
-                <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
-                  <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
-              <div className="row">
-                {lessonsFor(node.id).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`}>Lesson: {l.title}</Link>)}
-                {node.workingDepth && <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link>}
-                {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
-              </div>
-              {sk.conditions && sk.conditions.length > 0 && <details><summary>When the idea holds</summary><ul>{sk.conditions.map(c => <li key={c}>{c}</li>)}</ul></details>}
-              {sk.contrasts && sk.contrasts.length > 0 && <details><summary>Where it fails or does not apply</summary><ul>{sk.contrasts.map(c => <li key={c}>{c}</li>)}</ul></details>}
-              {sk.misconceptions && sk.misconceptions.length > 0 && <details><summary>Common misunderstandings</summary><ul>{sk.misconceptions.map(c => <li key={c}>{c}</li>)}</ul></details>}
-            </section>
-          )}
         </div>
   ) : null
   /** The two side panels and their edge buttons belong to the whole Curriculum section: they show on the map, the lesson list and the courses. */
@@ -297,6 +299,7 @@ export function Course() {
       <button type="button" className="edgetab right" aria-expanded={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Close ›' : '‹ Challenge'}</button>
       {leftPanel}
       {rightPanel}
+      {detailPanel}
     </div>
   )
 
@@ -330,7 +333,7 @@ export function Course() {
       </div>
       <div className={`missiongrid mapgrid${leftOpen ? ' lo' : ''}${rightOpen ? ' ro' : ''}`} onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
 
-        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} /></div>
+        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} lessons={content.lessons} lessonProgress={progress ?? []} /></div>
 
       </div>
 

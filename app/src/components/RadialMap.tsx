@@ -1,18 +1,32 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { db, type LessonProgress } from '../db'
 import { layoutMap } from '../lib/mapLayout'
-import type { NodeProgress } from '../lib/missions'
-import type { Skill } from '../types'
+import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
+import type { Lesson, Skill } from '../types'
 
-interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null }
+interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[] }
 
 const LEVEL_FILL = ['var(--canvas)', 'var(--chip)', 'var(--info)', 'var(--info)', 'var(--success)']
 
 /** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null }: Props) {
+export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress }: Props) {
   const layout = useMemo(() => layoutMap(skills), [skills])
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
   const R = layout.radius + 40
+  const navigate = useNavigate()
+  const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null)
+  const hideTimer = useRef<number | undefined>(undefined)
+  const showTip = (id: string, el: Element) => {
+    window.clearTimeout(hideTimer.current)
+    const box = svg.current?.parentElement?.getBoundingClientRect(), r = el.getBoundingClientRect()
+    if (!box) return
+    setTip({ id, x: Math.min(Math.max(8, r.right - box.left + 10), box.width - 310), y: Math.min(Math.max(8, r.top - box.top - 10), box.height - 220) })
+  }
+  const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => setTip(null), 220) }
+  const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
+  const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
   const [view, setView] = useState({ x: 0, y: 0, k: 3 })
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
   const svg = useRef<SVGSVGElement>(null)
@@ -80,7 +94,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           const lvl = p ? Math.min(4, p.level) : 0
           const dim = (picked && !linked.has(n.id)) || (!picked && highlightStrand && n.strand !== highlightStrand)
           return (
-            <g key={n.id} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}`} transform={`translate(${n.x},${n.y})`}
+            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}`} transform={`translate(${n.x},${n.y})`}
               tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, level ${lvl}`}
               onClick={() => onPick(n.id)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) } }}>
               <circle r={22} fill={LEVEL_FILL[lvl]} className="nodecircle" />
@@ -92,6 +106,31 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         })}
         <circle r={5} className="mapcentre" />
       </svg>
+      {tip && (() => {
+        const p = progress.get(tip.id), sk = skills.find(x => x.id === tip.id)
+        const ls = lessons.filter(l => l.skill === tip.id || (l.also ?? []).includes(tip.id))
+        const steps = Object.fromEntries(ls.map(l => [l.id, l.steps.length]))
+        const allDone = ls.length > 0 && ls.every(l => doneBy.get(l.id)?.done)
+        return (
+          <div className="maptip" style={{ left: tip.x, top: tip.y }} role="tooltip" onMouseEnter={() => window.clearTimeout(hideTimer.current)} onMouseLeave={hideTip}>
+            <h3>{p?.title ?? tip.id}</h3>
+            <p className="small muted">{sk?.strand} {strandNames[sk?.strand ?? ''] ?? ''} · tier {sk?.tier} · {LEVEL_NAMES[Math.min(4, p?.level ?? 0)]}{p?.due ? ' · refresher due' : ''}{p?.assumed ? ' · assumed from a test-out' : ''}</p>
+            {sk && <p className="small">{Object.values(sk.depths)[0]?.outcome}</p>}
+            {ls.length === 0 ? <p className="small muted">No lesson for this skill yet.</p> : (
+              <ul>
+                {ls.map(l => { const d = doneBy.get(l.id); return (
+                  <li key={l.id}><button type="button" className="link" onClick={() => navigate(`/lesson/${l.id}`)}>{l.title}</button><span className="muted small">{d?.done ? (d.skipped ? 'Skipped' : 'Finished') : d && d.step > 0 ? 'In progress' : 'Not started'}</span></li>
+                ) })}
+              </ul>
+            )}
+            <div className="row">
+              {ls.length > 0 && !allDone && <button type="button" onClick={() => void mark(ls.map(l => l.id), steps, true)}>Mark as already done</button>}
+              {ls.some(l => doneBy.get(l.id)) && <button type="button" className="link" onClick={() => void mark(ls.map(l => l.id), steps, false)}>Reset</button>}
+              <button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
