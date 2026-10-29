@@ -45,6 +45,11 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 | Q15 | Q | Sources library (`docs/library-plan.md`): may the app ship the full public-domain and openly licensed book texts inside itself (about 5 MB for ten books; works offline in the exe), with large datasets only linked? And do you want to name any specific books or courses to be listed as ideas-only sources? | Shipping makes the shelf work offline and lets people read the originals; it only ever covers rights-clear texts | Ship rights-clear texts, link datasets | no |
 
 ## Answered / done
+- **Q1/Q2 (29 Oct 2026):** Andrew's level is unmeasured: beats new players comfortably, expects to struggle at a club. Lichess username: **Sugaku**; no Chess.com account. Used only for testing (game import, baseline), not for development.
+- **G3/G11 (29 Oct 2026):** no named strong-player reviewer; the plan is to share with friends and post it online at a better state, and collect beta feedback through his website. G11 was answered earlier.
+- **Q16 (29 Oct 2026):** the old URL stays up and redirects.
+- **G17 (29 Oct 2026):** Collegiate shares the friendly palette in light and dark (done).
+- **Q3 (29 Oct 2026, to be settled later):** intent stated: always credited, free for anyone to use, host or modify, never usable in a product for sale, Andrew keeps control only to keep it free and public forever. See the licensing note in the 29 October reply and `NOTICE`.
 *(none yet)*
 
 ## Decisions I made autonomously (so you can veto them)
