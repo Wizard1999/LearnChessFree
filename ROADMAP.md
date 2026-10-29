@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 55%** (72 of 143 tasks done, in-progress tasks count half). Updated 2026-10-29T12:57+00:00 UTC.
+**Overall: 53%** (72 of 150 tasks done, in-progress tasks count half). Updated 2026-10-29T13:00+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -20,6 +20,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 6e: Sources library (plan: docs/library-plan.md) | 4/9 | 61% |
 | Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning) | 0/4 | 12% |
+| Phase 3c: The simplicity pass (design: docs/design-simplicity-pass.md) | 0/7 | 0% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
@@ -45,7 +46,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Beginner test: five beginners and five club players (gate G11), fix what two or more stumble on; Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -195,6 +196,15 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Older games (before 1994): PGN Mentor event files and public-domain game books; check each source's terms
 - [ ] Build master-game statistics for the opening explorer and Analysis from the PGN (de-duplicate, keep only top-level over-the-board events, rating floor)
 - [ ] Famous-games course candidates ranked from the data (decisive, instructive, well-annotated)
+
+## Phase 3c: The simplicity pass (design: docs/design-simplicity-pass.md)
+- [ ] Complexity budget and the five rules adopted (one job per screen, three levels of depth, no overlap or shifting, words over widgets, progressive disclosure)
+- [ ] Audit Today and the Start screen: first five minutes on a phone and a laptop, clicks and words counted
+- [ ] Audit the lesson player and exercise screens
+- [ ] Audit the Curriculum views (list, map, docks) and Practice and Progress
+- [ ] Names and words sweep (one word per idea across the site)
+- [ ] Accessibility and mobile checks per page; before and after screenshots in `docs/design-audit/`
+- [ ] Beginner test: five beginners and five club players (gate G11), fix what two or more stumble on
 
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)
