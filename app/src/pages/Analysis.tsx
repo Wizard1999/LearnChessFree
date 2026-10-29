@@ -67,6 +67,7 @@ export function Analysis() {
   const [thinking, setThinking] = useState(false)
   const [note, setNote] = useState<string | null>(null)
   const [evals, setEvals] = useState<Record<string, number>>({}) // epd -> centipawns, White's point of view
+  const [bests, setBests] = useState<Record<string, string>>({}) // epd -> the engine's preferred move (uci) in that position
   const [batch, setBatch] = useState<{ done: number; total: number } | null>(null)
   const cancelBatch = useRef(false)
   const [promo, setPromo] = useState<{ from: string; to: string } | null>(null)
@@ -171,7 +172,7 @@ export function Analysis() {
         if (dead) return
         if (r === null) { resetEngine(); setThinking(false); setNote('The engine took too long and was restarted. Lower the depth.'); return }
         setLines(r); setLiveDepth(r[0]?.depth ?? d)
-        if (r[0]) setEvals(e => ({ ...e, [epdOf(fen)]: toCp(r![0], whiteToMove) }))
+        if (r[0]) { setEvals(e => ({ ...e, [epdOf(fen)]: toCp(r![0], whiteToMove) })); setBests(b => ({ ...b, [epdOf(fen)]: r![0].pv[0] })) }
       }
       if (threat && !chess.inCheck()) {
         // the opponent's best move if it were their turn: a "null move" search
@@ -215,7 +216,7 @@ export function Analysis() {
         const timeout = new Promise<null>(r => setTimeout(() => r(null), 25000))
         const r = await Promise.race([getEngine().analyse(f, { depth: 12, multipv: 1 }), timeout]).catch(() => null)
         if (r === null) { resetEngine(); setMsg('The engine stopped answering during the analysis; try again with fewer moves.'); break }
-        if (r[0]) setEvals(e => ({ ...e, [key]: toCp(r[0], c.turn() === 'w') }))
+        if (r[0]) { setEvals(e => ({ ...e, [key]: toCp(r[0], c.turn() === 'w') })); setBests(b => ({ ...b, [key]: r[0].pv[0] })) }
       }
       setBatch({ done: i + 1, total: ids.length })
     }
@@ -238,6 +239,14 @@ export function Analysis() {
     const mistakes = mainline.filter(id => m.get(id) === '?' || m.get(id) === '??')
     return { m, white: acc(loss.w), black: acc(loss.b), mistakes }
   }, [evals, mainline, tree])
+  /** What the engine preferred instead of the move played at this node, when it was analysed and differs from it. */
+  const better = (() => {
+    if (cur === 0 || node.parent === null) return null
+    const pf = tree.nodes[node.parent].fen
+    const u = bests[epdOf(pf)]
+    if (!u || u === node.uci) return null
+    try { return { uci: u, san: new Chess(pf).move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }).san } } catch { return null }
+  })()
   function nextMistake(dir: 1 | -1) {
     const ms = marks.mistakes; if (!ms.length) return
     const idx = mainline.indexOf(cur)
@@ -302,8 +311,13 @@ export function Analysis() {
   const bar = topCp === undefined ? 50 : winPct(topCp)
   const barLabel = lines?.[0] ? scoreText(lines[0], whiteToMove) : topCp !== undefined ? (Math.abs(topCp) >= 2000 ? (topCp > 0 ? '1-0' : '0-1') : `${topCp > 0 ? '+' : ''}${(topCp / 100).toFixed(1)}`) : ''
   const shapes = [
-    ...(!arrows || !on || over || !lines ? [] : lines.slice(0, multipv).map((l, i) => ({ from: l.pv[0].slice(0, 2), to: l.pv[0].slice(2, 4), brush: (i === 0 ? 'green' : i === 1 ? 'blue' : 'yellow') as 'green' | 'blue' | 'yellow' }))),
-    ...(threat && threatLine ? [{ from: threatLine.pv[0].slice(0, 2), to: threatLine.pv[0].slice(2, 4), brush: 'red' as const }] : []),
+    ...(!arrows || !on || over || !lines ? [] : lines.slice(0, multipv).map((l, i) => {
+      // thickness follows how much win chance the move gives up against the best line (as on Lichess): best is thick, weak moves thin
+      const own = (x: EngineLine) => winPct(x.kind === 'mate' ? (x.value > 0 ? 2000 : -2000) : x.value)
+      const loss = Math.max(0, own(lines[0]) - own(l))
+      return { from: l.pv[0].slice(0, 2), to: l.pv[0].slice(2, 4), brush: (i === 0 ? 'green' : i === 1 ? 'blue' : 'yellow') as 'green' | 'blue' | 'yellow', width: Math.max(3, 13 - loss * 0.7) }
+    })),
+    ...(threat && threatLine ? [{ from: threatLine.pv[0].slice(0, 2), to: threatLine.pv[0].slice(2, 4), brush: 'red' as const, width: 8 }] : []),
   ]
   const status = chess.isCheckmate() ? `Checkmate: ${whiteToMove ? 'Black' : 'White'} wins.` : chess.isStalemate() ? 'Stalemate: a draw.' : chess.isDraw() ? 'A draw by rule.' : chess.isCheck() ? 'Check.' : ''
   const lastMove = node.uci ? ([node.uci.slice(0, 2), node.uci.slice(2, 4)] as [string, string]) : null
@@ -460,6 +474,7 @@ export function Analysis() {
                 {(['!', '?', '!!', '??', '!?', '?!'] as const).map(s => <button key={s} type="button" className={node.nag === SYMBOL_NAG[s] ? 'chip on' : 'chip'} aria-pressed={node.nag === SYMBOL_NAG[s]} onClick={() => annotate({ nag: node.nag === SYMBOL_NAG[s] ? undefined : SYMBOL_NAG[s] })}>{s}</button>)}
               </div>
               <textarea rows={2} value={node.comment ?? ''} onChange={e => annotate({ comment: e.target.value })} placeholder="Your comment on this move" aria-label="Comment on this move" />
+              {better && (marks.m.get(cur) ?? '') !== '' && <p className="small">The engine preferred <strong>{better.san}</strong>. <button type="button" className="link" onClick={() => { if (node.parent !== null) playSan(better.san, node.parent) }}>Play it as a variation</button></p>}
               <p className="small muted">Marks and comments travel with the PGN you copy or download.</p>
             </section>
           )}

@@ -10,7 +10,7 @@ import 'chessground/assets/chessground.brown.css'
 import { prefersReducedMotion } from '../lib/appearance'
 import 'chessground/assets/chessground.cburnett.css'
 
-export interface BoardShape { from: string; to?: string; brush?: 'green' | 'red' | 'blue' | 'yellow' }
+export interface BoardShape { from: string; to?: string; brush?: 'green' | 'red' | 'blue' | 'yellow'; /** Arrow thickness, 2 (thin) to 14 (thick); default 10. */ width?: number }
 export interface EditMode {
   /** Called with the FEN piece-placement field whenever the learner moves, drops or deletes a piece (drag off the board to delete). */
   onChange: (placement: string) => void
@@ -80,7 +80,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       drawable: { enabled: false, visible: true },
     }
   }
-  const autoShapes = (): DrawShape[] => shapes.map(s => ({ orig: s.from as Key, dest: s.to as Key | undefined, brush: s.brush ?? 'green' }))
+  const autoShapes = (): DrawShape[] => shapes.map(s => ({ orig: s.from as Key, dest: s.to as Key | undefined, brush: s.brush ?? 'green', modifiers: s.width ? { lineWidth: s.width } : undefined }))
 
   useEffect(() => {
     if (!el.current) return
