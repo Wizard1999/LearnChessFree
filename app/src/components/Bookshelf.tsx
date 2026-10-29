@@ -38,7 +38,7 @@ export function Bookshelf() {
       {failed && <p className="muted" role="status">The book list could not be loaded.</p>}
       {books && (
         <>
-          <div className="row filters">
+          <div className="bookfilters">
             <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search books" aria-label="Search books" />
             <label className="small">Sort <select value={sort} onChange={e => setSort(e.target.value as Sort)}><option value="title">Title A to Z</option><option value="author">Author A to Z</option><option value="year">Year</option><option value="level">Level</option><option value="size">Length</option></select></label>
             <label className="small">Subject <select value={subject} onChange={e => setSubject(e.target.value)}><option value="">All</option>{subjects.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
