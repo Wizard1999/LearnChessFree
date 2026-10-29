@@ -296,12 +296,13 @@ export function Course() {
   const skillOpen = !!(node && sk && !busy)
   const chrome = (
     <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setDock(false); setPicked(null) } }}>
-      <button type="button" className="edgetab left" aria-expanded={dockOpen} aria-label={dockOpen ? 'Close the progress panel' : 'Open the progress panel'} title={dockOpen ? 'Close' : undefined} onClick={() => setDock(!dockOpen)}>{dockOpen ? '‹' : 'Progress ›'}</button>
+      {!dockOpen && <button type="button" className="edgetab left" aria-expanded={false} aria-label="Open the progress panel" onClick={() => setDock(true)}>Progress ›</button>}
       {dockOpen && (
         <aside className="dock left" aria-label="Progress and challenge">
           <div className="docktabs" role="tablist">
             <button type="button" role="tab" aria-selected={dockTab === 'progress'} className={dockTab === 'progress' ? 'chip on' : 'chip'} onClick={() => setDockTab('progress')}>Progress</button>
             <button type="button" role="tab" aria-selected={dockTab === 'next'} className={dockTab === 'next' ? 'chip on' : 'chip'} onClick={() => setDockTab('next')}>Challenge and next</button>
+            <button type="button" className="dockclose" aria-label="Close the progress panel" title="Close" onClick={() => setDock(false)}>‹</button>
           </div>
           <div className="dockbody">{dockTab === 'next' ? rightPanel : leftPanel}</div>
         </aside>

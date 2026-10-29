@@ -473,3 +473,21 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .curriculum.dockopen { padding-left: calc(330px + 1.2rem); padding-right: calc(330px + 1.2rem); }
 @media (max-width: 1100px) { .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; } }
 @media (max-width: 900px) { .curriculum, .curriculum.page { padding-left: 1rem; padding-right: 1rem; } }
+
+/* The open panel's close arrow lives inside the panel, so nothing sits on top of the page content */
+.dockclose { margin-left: auto; min-height: 0; padding: 0.25rem 0.7rem; font-size: 1.1rem; line-height: 1; }
+.edgetab[aria-expanded='true'] { display: none; }
+
+/* Below 1100px there is no room beside the map: the panels become one bottom sheet and the page makes room under it, so nothing overlaps */
+@media (max-width: 1100px) {
+  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46vh; border: 0; border-top: 1px solid var(--control-boundary); z-index: 39; }
+  .dock.right { z-index: 40; }
+  .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; padding-bottom: 50vh; }
+  .curriculum, .curriculum.page { padding-left: 1rem; padding-right: 1rem; }
+  .edgetab.left { top: auto; bottom: 0.6rem; }
+}
+@media (max-width: 1100px) {
+  .curriculum { padding-bottom: 4.5rem; }
+  .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100vh - 13.5rem); }
+  .edgetab.left { left: 1rem; }
+}
