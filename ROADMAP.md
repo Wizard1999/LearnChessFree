@@ -190,7 +190,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] `library/catalog.json` and `tools/build_library.py` (subjects, level, rights; used-in links not yet)
 - [ ] Reading agents in the planned order: one synthesis sheet and coverage check per book
 - [x] In-app Library: wall of book covers (27 books), details beside the cover on hover or click, reader with find and bookmark, download, sort and filter, search; data shelf and ideas-only pointers still to add
-- [ ] Check in check_all: every lesson source resolves to a catalog entry; every stored file has a rights record; add a regression test that no shipped book fails the text check
+- [x] Check in check_all: every stored library text has a rights record and still passes the text check (or is on library/approved.json); lesson sources resolving to catalog entries still to do
 - [x] Ship stored texts in the exe and web build (default yes, 3 MB cap per book, 8.5 MB total)
 
 ## Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning)

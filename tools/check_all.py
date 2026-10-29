@@ -122,6 +122,26 @@ def main():
         for (st, ti), r in sorted(by.items(), key=lambda kv: (str(kv[0][0]), kv[0][1] if kv[0][1] is not None else -1)):
             print(f"{st!s:6} {ti!s:4} {r[0]:6} {r[1]:11} {r[2]:12} {r[3]:6}")
 
+    # library: every stored text has a rights record and still passes the text check (or Andrew approved that book by hand)
+    cat_path = ROOT / "library" / "catalog.json"
+    if cat_path.exists():
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("fetch_sources", ROOT / "tools" / "fetch_sources.py")
+        fs = importlib.util.module_from_spec(spec); spec.loader.exec_module(fs)
+        approved = json.loads((ROOT / "library" / "approved.json").read_text(encoding="utf8")) if (ROOT / "library" / "approved.json").exists() else {}
+        for key, rec in json.loads(cat_path.read_text(encoding="utf8")).items():
+            if rec.get("status") != "stored": continue
+            f = ROOT / "library" / "files" / f"{key}.txt"
+            if not rec.get("rights", {}).get("basis"): errs.append(f"library {key}: no rights record")
+            if f.exists():
+                ok, why, _ = fs.judge(f.read_text(encoding="utf8", errors="replace"))
+                if not ok and key.replace("pg", "") not in approved:
+                    errs.append(f"library {key}: stored text fails the rights check ({why}) and is not on library/approved.json")
+            elif not (ROOT / "library" / "files").exists():
+                pass  # files are regenerable and gitignored; the shipped copy is app/public/library
+            else:
+                warns.append(f"library {key}: stored text file is missing locally")
+
     print(f"{len(skills)} skills, {len(positions)} positions, {len(items)} items, {len(lessons)} lessons")
     for w in warns: print("WARN ", w)
     for e in errs: print("ERROR", e)
