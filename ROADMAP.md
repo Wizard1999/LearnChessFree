@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 53%** (67 of 135 tasks done, in-progress tasks count half). Updated 2026-10-29T11:26+00:00 UTC.
+**Overall: 56%** (69 of 135 tasks done, in-progress tasks count half). Updated 2026-10-29T11:32+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -17,7 +17,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 58% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
-| Phase 6e: Sources library (plan: docs/library-plan.md) | 2/9 | 22% |
+| Phase 6e: Sources library (plan: docs/library-plan.md) | 4/9 | 61% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
@@ -39,11 +39,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
+**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); In-app Library: books shelf with reader, download, sort by title, author, year, level, length, filter by subject and level, search (data shelf and in-copyright pointers not yet); Ship stored texts in the exe and web build (shipped by default, 2 MB; question Q15 still open)
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Ship stored texts in the exe and web build (question Q15); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -174,13 +174,13 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 ## Phase 6e: Sources library (plan: docs/library-plan.md)
 - [x] Plan: acquisition order, rights rule, catalog model, in-app Library design
 - [x] Candidate list of 80 sources recorded (library/candidates.csv; unverified leads from ChatGPT)
-- [ ] `tools/fetch_sources.py`: download every rights-clear candidate at once, record the evidence, refuse unclear ones
-- [ ] Acquire Tier 1 (the 10 registered books, Wikibooks Chess) and verify Tier 2 candidates one by one
-- [ ] `library/catalog.json` and `tools/build_library.py` (subjects, level, rights, used-in links)
+- [x] `tools/fetch_sources.py`: rights check from each text's own notices, refuses unclear ones (first run: 5 stored, 3 refused for hand check: Fishburne x2 no year found, Young "all rights reserved" text)
+- [~] Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending)
+- [x] `library/catalog.json` and `tools/build_library.py` (subjects, level, rights; used-in links not yet)
 - [ ] Reading agents in the planned order: one synthesis sheet and coverage check per book
-- [ ] In-app Library: three shelves, reader, download, sort by title, author, year, subject and level, search
+- [~] In-app Library: books shelf with reader, download, sort by title, author, year, level, length, filter by subject and level, search (data shelf and in-copyright pointers not yet)
 - [ ] Check in check_all: every lesson source resolves to a catalog entry; every stored file has a rights record
-- [ ] Ship stored texts in the exe and web build (question Q15)
+- [~] Ship stored texts in the exe and web build (shipped by default, 2 MB; question Q15 still open)
 
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)

@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useContent } from '../lib/content'
+import { Bookshelf } from '../components/Bookshelf'
 
 export function Library() {
   const { manifest, items, lessons, skills, verified } = useContent()
@@ -9,7 +10,8 @@ export function Library() {
   const engines = useMemo(() => { const m = new Map<string, number>(); for (const v of Object.values(verified)) { const k = `${v.engine ?? 'rules only'}${v.depth ? ` @ depth ${v.depth}` : ''}`; m.set(k, (m.get(k) ?? 0) + 1) } return [...m.entries()] }, [verified])
   return (
     <main className="page">
-      <h1>Library and how we know it is right</h1>
+      <h1>Library</h1>
+      <Bookshelf />
       <section className="card">
         <h2>What is in this build</h2>
         <p>{manifest.lessons} lessons, {manifest.items} exercises, {manifest.skills} skill nodes. Built {new Date(manifest.built).toLocaleString()} (content hash {manifest.hash}).</p>
