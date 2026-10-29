@@ -3,16 +3,16 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 53%** (65 of 134 tasks done, in-progress tasks count half). Updated 2026-10-29T09:24+00:00 UTC.
+**Overall: 53%** (67 of 135 tasks done, in-progress tasks count half). Updated 2026-10-29T11:26+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
-| Phase 2: The app | 21/25 | 84% |
+| Phase 2: The app | 22/26 | 85% |
 | Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 0/4 | 25% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
-| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
+| Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 3/10 | 30% |
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 58% |
 | Phase 6: Data | 1/3 | 33% |
@@ -23,7 +23,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 179 of 204 skill nodes have a lesson (88%); 152 nodes have 10 or more shipped exercises; 6785 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2126 flagged for human review.
+**Coverage (computed from the files):** 204 of 204 skill nodes have a lesson (100%); 163 nodes have 10 or more shipped exercises; 7034 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2357 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -31,19 +31,19 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
 | S3 Tactics | 24 | 24 | 24 |
 | S4 Calculation | 8 | 8 | 8 |
-| S5 Positional play and planning | 49 | 37 | 33 |
-| S6 Attack, sacrifice and defense | 19 | 14 | 16 |
-| S7 Endgames | 37 | 29 | 36 |
+| S5 Positional play and planning | 49 | 49 | 44 |
+| S6 Attack, sacrifice and defense | 19 | 19 | 16 |
+| S7 Endgames | 37 | 37 | 36 |
 | S8 Openings and structures | 12 | 12 | 7 |
 | S9 Game study | 7 | 7 | 2 |
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
+**Building now:** Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play; Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Ship stored texts in the exe and web build (question Q15); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Ship stored texts in the exe and web build (question Q15); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -96,6 +96,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Accessibility and mobile fixes from the review
 - [ ] Full-course walkthrough in the browser as a first-time learner
 - [x] Zero-friction start: first visit goes straight into the first lesson, staged content loading, auto-save with a storage check, resume mid-lesson (decision D19)
+- [x] Analysis page (More → Analysis): move tree with variations, eval bar and graph, clickable engine lines, whole-game analysis with accuracy, opening names, PGN/FEN import and export, saved games, control map. Not yet: board editor, tablebase lookup, engine-vs-you training from a position
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
 - [~] Control map toggle on boards: per-square counts and blue/orange tint, built into lesson boards, move-by-move steps and exercise answers; not yet in game review, the contrast lab or Play
@@ -117,7 +118,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Course page as a chapter list with evocative and literal titles
 - [ ] Accessibility build: keyboard-operable board, live regions, skip link, text size, audit
 - [ ] Copy audit against the doctrine's voice table
-- [~] Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4)
+- [x] Name chosen: Scholarmate (D25); trademark and domain clearance still open (G15)
 - [ ] Identity study: three comparable treatments to choose from (question Q10)
 - [ ] Usability rounds with real people (gate G11)
 
@@ -140,11 +141,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Endgames first set (9)
 - [x] Tranche 1: advanced tactics, foundations, openings, game study, practice habits, self-direction 5-7 (written, reviewed and fixed)
 - [~] Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started)
-- [~] Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started)
-- [~] Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started)
-- [~] Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started)
+- [~] Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6)
+- [~] Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished)
+- [~] Tranche 2d: endgames (all batches written and validated; review pass unfinished)
 - [~] Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md)
-- [ ] Review and fix pass on the unreviewed tranche lessons (p1, p2, a1, e1, g1, g2, g3) and the remaining batches c2, p3-p6, a2, a3, e2-e4 (paused: weekly usage limit)
+- [ ] Review and fix pass on the unreviewed tranche lessons (p1-p6, a1, a3, e1, e3, e4, g1-g3)
 - [ ] Contrast step: show the baseline result and ask the irrelevant item, as the lesson cards promise (review finding on the g2 lessons)
 - [ ] Read-through of all lessons for voice, order and consistency
 - [ ] Course: famous games analysed (each game verified move by move; original commentary)
