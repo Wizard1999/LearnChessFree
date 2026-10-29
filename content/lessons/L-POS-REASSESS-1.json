@@ -1,0 +1,146 @@
+{
+  "id": "L-POS-REASSESS-1",
+  "title": "A new valuation after every change",
+  "skill": "POS.REASSESS",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the fact that changed after an exchange or a pawn move",
+    "Checks whether the old plan relied on that fact",
+    "Keeps the plan when nothing it relies on has changed",
+    "Picks a new plan from the new position when the old one is out of date"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A plan is a guess about one position. When the position changes (an exchange, a pawn move, a threat), the guess may be out of date. After each change ask two questions: **what changed?** and **did my plan rely on it?** If yes, make a fresh valuation, as a spectator would, and pick the plan again. If no, carry on. Changing plans when nothing changed wastes time."
+    },
+    {
+      "type": "board",
+      "fen": "2rr2k1/1b2bppp/pqnppn2/1p6/4PB2/PNN2P2/1PPQB1PP/3R1R1K w - - 0 16",
+      "caption": "White to move. Black has just played ...d6. White's plan was e5.",
+      "line": [
+        {
+          "move": "e4e5",
+          "say": "e5 was the plan."
+        },
+        {
+          "move": "d6e5",
+          "say": "dxe5: the new pawn on d6 takes it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The pawn on d6 attacks e5."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "e4e5",
+            "cp": 200
+          },
+          "statement": "e5 is at least 200 cp worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp3-REA-1"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-REA-2"
+    },
+    {
+      "type": "card",
+      "text": "A change matters when it touches a fact the plan needs: a square, a piece, a file, a defender. Here the plan needed e5 free of pawn attacks. A king step or ...h6 touches none of these, but check each move: even a far pawn can hit a piece (...c5 attacks a knight on d4). Ignoring a real change is *thinking inertia*; reacting to an irrelevant one wastes time."
+    },
+    {
+      "type": "item",
+      "item": "IP-EXCH-9"
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three black replies",
+      "prompt": "White's plan is e5. The first board shows Black's reply ...h6: the plan stands. Now predict what happens to the plan after ...d6 and after ...Kh8, then check.",
+      "working": "IBp3-REA-4",
+      "failing": "IBp3-REA-3",
+      "irrelevant": "IBp3-REA-5"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-REA-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-REA-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-REA-8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.REASSESS",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of your last game. Name one move after which your plan was out of date. Did you notice at the time or only afterwards?",
+      "fields": [
+        {
+          "id": "move",
+          "label": "The move or exchange that changed the position:"
+        },
+        {
+          "id": "fact",
+          "label": "The fact it changed (square, file, piece, defender):"
+        },
+        {
+          "id": "noticed",
+          "label": "When I noticed:",
+          "options": [
+            "at once",
+            "a move or two later",
+            "after the game"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C09: a plan comes from the valuation and is revised; C24: do not change plans constantly; ideas only, original wording)",
+    "docs/reconciliation-pasted-curriculum.md section 2 (POS.REASSESS); docs/curriculum-map-v1.1.md section 3",
+    "items: IBp3-REA-1..9 (a Lichess game position, CC0, with the opponent's reply replayed by python-chess); shipped item IP-EXCH-9"
+  ]
+}

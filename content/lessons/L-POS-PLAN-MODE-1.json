@@ -1,0 +1,139 @@
+{
+  "id": "L-POS-PLAN-MODE-1",
+  "title": "Better, worse or equal: the valuation sets the mode",
+  "skill": "POS.PLAN.MODE",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Labels a position better, worse or equal after listing the differences",
+    "Chooses a mode that fits the label: act, defend and restore freedom, or manoeuvre",
+    "Does not attack from a clearly worse position or sit still when clearly better",
+    "Checks a counter-attack before playing it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Before you choose a plan, decide **who stands better**. Then match the kind of game to the label (a *rule of thumb*): if you are better, **play actively**, so the advantage is not wasted; if worse, **defend and restore freedom** by bringing pieces into play; if equal, **manoeuvre**: improve your worst piece and do not force matters. The label comes first, and it has to be honest."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/p1p1bppp/1p2p3/nP1b1n2/3P4/P1N1PN2/4BPPP/R1BQ1RK1 w - - 4 13",
+      "caption": "White to move. White's pieces are active; Black's knight and bishop stand far from the king.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "Nxd5: the active move takes Black's best piece."
+        },
+        {
+          "move": "e6d5",
+          "say": "Black recaptures."
+        },
+        {
+          "move": "d1c2",
+          "say": "Qc2: the queen joins and White stays active."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "a5",
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 120
+          },
+          "statement": "The engine rates the position at least 1.2 pawns for White."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c3d5"
+            ]
+          },
+          "statement": "The engine's first choice is Nxd5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-1"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-2"
+    },
+    {
+      "type": "card",
+      "text": "The label is the hard part. Compare material, then king safety, then piece activity, and say where you are unsure. The mode is a default (a *rule of thumb*), not a law: a worse side may counter-attack, but a counter-attack has to be checked, and an attack from a clearly worse position is the most dangerous choice. An equal position often has several sound moves."
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-3"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-4"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-6"
+    },
+    {
+      "type": "contrast",
+      "title": "Three labels, three modes",
+      "prompt": "Three positions, three labels. The first board shows a clearly better side playing actively. In the second you are clearly worse and consider a queen raid. The third is roughly level. Predict the last two, then check.",
+      "working": "IBp3-MODE-2",
+      "failing": "IBp3-MODE-5",
+      "irrelevant": "IBp3-MODE-7"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-MODE-10",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PLAN.MODE",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "For each silent position, what label did you give it (better, worse, equal) before you chose a move? In which position were you least sure, and what would have made you sure?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C08: the right kind of game follows the valuation; C24: equal positions; ideas only, original wording; his advice to give up a hopeless game is NOT taught)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.PLAN.MODE)",
+    "items: IBp3-MODE-1..11 (Lichess games, CC0); the labels are engine ratings at depth 16, the mode names are the author's labelling [I]"
+  ]
+}

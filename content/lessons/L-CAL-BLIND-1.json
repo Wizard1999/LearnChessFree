@@ -1,0 +1,309 @@
+{
+  "id": "L-CAL-BLIND-1",
+  "title": "Hold the line in your head: six plies, nothing moved",
+  "skill": "CAL.BLIND",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Follows a six-ply line with no piece moved, then taps the loose pieces in the end position",
+    "Rebuilds the whole list after a quiet move, not only after captures",
+    "Tells a line worth holding in the head from a one-move look",
+    "Runs a ten-minute blind trace away from the app and counts the matches"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Calculating without moving pieces:** play the line in your head and look at the board only at the end. You need no photographic memory, only the list from the tracing lesson, kept current: *what moved, what is gone, what is attacked now.* Moving pieces while you think is a different skill; it hides whether you can hold the position. Six plies is a first target, a rule of thumb."
+    },
+    {
+      "type": "board",
+      "fen": "5r1k/5r1p/1pb2pp1/p1p1q3/3pPNPP/1P1P2Q1/1PP2R1K/5R2 w - - 1 28",
+      "caption": "White to move. Six plies, nothing moved. After each ply update the list: moved, gone, attacked now.",
+      "line": [
+        {
+          "move": "f4g6",
+          "say": "Nxg6+: the knight takes the g6 pawn, with check. Moved: knight to g6. Gone: the black g-pawn."
+        },
+        {
+          "move": "h7g6",
+          "say": "hxg6: the h-pawn takes the knight. Gone: the White knight. A black pawn now stands on g6."
+        },
+        {
+          "move": "g3e5",
+          "say": "Qxe5: queen takes queen. Gone: the black queen. The pawn on f6 now attacks the White queen."
+        },
+        {
+          "move": "f6e5",
+          "say": "fxe5: the f-pawn takes the queen. Gone: the White queen. A black pawn now stands on e5."
+        },
+        {
+          "move": "f2f7",
+          "say": "Rxf7: rook takes rook. Gone: Black's f7 rook. The rook on f8 attacks the new rook on f7."
+        },
+        {
+          "move": "f8f7",
+          "say": "Rxf7: rook takes rook. The rooks on f1 and f7 now face each other, and neither has a defender."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f4",
+          "to": "g6"
+        },
+        {
+          "from": "g3",
+          "to": "e5"
+        },
+        {
+          "from": "f2",
+          "to": "f7"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g6",
+            "piece": "p",
+            "after_moves": [
+              "f4g6",
+              "h7g6"
+            ]
+          },
+          "statement": "After two moves a black pawn stands on g6."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f6",
+            "piece": "p",
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5"
+            ]
+          },
+          "statement": "After three moves a black pawn stands on f6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f6",
+            "includes": [
+              "e5"
+            ],
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5"
+            ]
+          },
+          "statement": "After three moves the pawn on f6 attacks e5."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "e5",
+            "piece": "p",
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5",
+              "f6e5"
+            ]
+          },
+          "statement": "After four moves a black pawn stands on e5."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "f7",
+            "piece": "R",
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5",
+              "f6e5",
+              "f2f7"
+            ]
+          },
+          "statement": "After five moves a White rook stands on f7."
+        },
+        {
+          "id": "C6",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f8",
+            "includes": [
+              "f7"
+            ],
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5",
+              "f6e5",
+              "f2f7"
+            ]
+          },
+          "statement": "After five moves the rook on f8 attacks f7."
+        },
+        {
+          "id": "C7",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f1"
+            ],
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5",
+              "f6e5",
+              "f2f7",
+              "f8f7"
+            ]
+          },
+          "statement": "After the six moves the White pieces that are loose are exactly: f1."
+        },
+        {
+          "id": "C8",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "f7"
+            ],
+            "after_moves": [
+              "f4g6",
+              "h7g6",
+              "g3e5",
+              "f6e5",
+              "f2f7",
+              "f8f7"
+            ]
+          },
+          "statement": "After the six moves the Black pieces that are loose are exactly: f7."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc2-1"
+    },
+    {
+      "type": "card",
+      "text": "**Where it breaks.** Captures make the list easy to update. The first *quiet* move is where lines slip: nothing leaves the board, so the old picture silently stays in your head. Rule of thumb: after every quiet move, rebuild the whole list. Holding two branches at once comes later. And when one move shows the answer, just look at the board; the effort is wasted there."
+    },
+    {
+      "type": "item",
+      "item": "IBc2-2"
+    },
+    {
+      "type": "contrast",
+      "title": "Same start, one quiet move",
+      "prompt": "You just did the first line: every move a capture or a check. Here the same start has one quiet move in the middle. The second exercise is a single move. Predict the loose pieces in each, then check.",
+      "working": "IBc2-2",
+      "failing": "IBc2-3",
+      "irrelevant": "IBc2-4"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The next three exercises are silent: no hints, no engine. In one the pieces vanish after 30 seconds. The app checks only your final squares; it cannot show where your picture went wrong. Hints on request only is planned, not built. First say how many of the three you expect to get right."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you start the three silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the three right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc2-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc2-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc2-7",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "A harder drill: after 20 seconds of study the pieces vanish and you enter a whole line of five or seven plies, both sides; type the moves if you like. A piece you move may show again where it lands. It counts toward the next depth of this skill. There is no skip button, and Show me the answer counts as a miss. A miss shows where your picture fails."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.BLIND",
+        "mode.blind"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Blind trace: ten minutes, away from the app.** Take a position from your own game or a book diagram, and touch nothing. Pick a six-ply line to test. Write one sentence for the position after the sixth ply and one for the key threat. Then set the position up, play the line, and mark each sentence right or wrong. Ten lines make a set."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one blind-trace set of ten lines. The first target is 7 right out of 10 (the skill node's level-1 figure). I do not know that this drill improves play; your count shows how well you hold lines now. This note stays on this device.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "The positions will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "diagrams in a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "right",
+          "label": "After the set: lines where the position sentence matched the board, out of 10:",
+          "type": "number"
+        },
+        {
+          "id": "slip",
+          "label": "Where the picture slipped most:",
+          "options": [
+            "at a quiet move",
+            "after a capture on a busy square",
+            "late in the line",
+            "nowhere"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "skill node CAL.BLIND (conditions, contrasts, misconceptions, outcome per depth)",
+    "L-CAL-VISUALIZE-1 (the moved / gone / attacked list that this lesson extends)",
+    "positions: Lichess puzzles (CC0); lines are the puzzle solutions, except the quiet-move line in IBc2-3, which was generated with the project engine (depth 11) and is only a stated variation",
+    "the six-ply target and 7 of 10 come from the skill node's level-1 outcome; no data here shows the drill improves play [H]"
+  ]
+}

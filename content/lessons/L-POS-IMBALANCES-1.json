@@ -1,0 +1,165 @@
+{
+  "id": "L-POS-IMBALANCES-1",
+  "title": "Imbalances: fill the list, then use one",
+  "skill": "POS.IMBALANCES",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Lists the differences between the two sides from the board (files, bishops, outposts, pawns)",
+    "Chooses the one difference the next move can use",
+    "Says why a filled-in list is a start, not a verdict"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**An imbalance is a difference between the two sides.** Read the board for: pieces (a bishop pair, an outpost square), pawns (weak pawns, majorities), files (open or half-open), space, king safety. Write the list first. Then ask one question: **which difference can I use in the next few moves?** The list is where you start. It does not pick the move."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qr1k1/p1p1bpp1/1p4b1/3P2Pp/2PP3P/2N1QP1B/PP4K1/2R2R2 w - - 1 18",
+      "caption": "White to move. The list: the e-file is open, and Black owns both bishops.",
+      "line": [
+        {
+          "move": "c1e1",
+          "say": "Rce1: the rook takes the open file."
+        },
+        {
+          "move": "g6h7",
+          "say": "Black steps the bishop back. Black still owns both bishops."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "open_files",
+          "params": {
+            "open": [
+              "e"
+            ]
+          },
+          "statement": "The e-file is open."
+        },
+        {
+          "id": "C2",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "black"
+            ]
+          },
+          "statement": "Only Black has the bishop pair."
+        },
+        {
+          "id": "C3",
+          "type": "moves_where",
+          "params": {
+            "property": "rook_to_open_file",
+            "moves": [
+              "c1e1",
+              "f1e1"
+            ]
+          },
+          "statement": "Rce1 and Rfe1 are the only rook moves to an open file."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1e1",
+              "c1e1"
+            ],
+            "within_cp": 20
+          },
+          "statement": "The engine's first choices are the two rook moves."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp3-IMB-1"
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-92"
+    },
+    {
+      "type": "card",
+      "text": "**A difference helps only if you can use it.** *Rule of thumb:* an open file is useful when a rook can reach it and nothing stops the rook; a bishop pair is useful when the bishops have open lines. The differences also pull against each other: one side has the file, the other the bishops. Read the facts first, then ask what the opponent can do about them."
+    },
+    {
+      "type": "contrast",
+      "title": "Same open file, one change",
+      "prompt": "The e-file is open in both positions. In the second, Black's queen stands on d6. Predict whether a rook move to the e-file is still best, then check. (The third position is a forced mate: when a tactic decides, the list does not matter.)",
+      "working": "IBp3-IMB-1",
+      "failing": "IBp3-IMB-2",
+      "irrelevant": "IA2-36"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-IMB-3"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-IMB-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-112",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.IMBALANCES",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Pick a quiet position from one of your own games (My games). Fill the list before you choose a move.",
+      "fields": [
+        {
+          "id": "files",
+          "label": "Files (open, half-open) and who can use them:"
+        },
+        {
+          "id": "pieces",
+          "label": "Pieces (bishop pair, outposts, bad pieces):"
+        },
+        {
+          "id": "pawns",
+          "label": "Pawns (weak pawns, majorities) and king safety:"
+        },
+        {
+          "id": "use",
+          "label": "The one difference I can use in the next few moves, and the move:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C01-C07: the frame, the piece-by-piece audit, the difference method; ideas only, original wording)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.IMBALANCES)",
+    "items: IBp3-IMB-1..4 (Lichess games, CC0, and one authored one-feature edit); shipped items IP-MIX-92, IP-MIX-112, IA2-36",
+    "reflect step (fill the list from one of your own games): self-checked, with no machine check; the learner is the only judge"
+  ]
+}

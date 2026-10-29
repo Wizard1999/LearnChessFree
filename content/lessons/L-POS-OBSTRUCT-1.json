@@ -1,0 +1,164 @@
+{
+  "id": "L-POS-OBSTRUCT-1",
+  "title": "Obstructions: name what blocks the line",
+  "skill": "POS.OBSTRUCT",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Names the pawns or pieces that block a rook's file or a bishop's diagonal, for both sides",
+    "Tells an obstruction from a blockade",
+    "Counts attackers and defenders before trying to remove an enemy obstruction"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "An **obstruction** is a low-value pawn or piece that blocks the line of a long-range piece: a rook's file or a bishop's diagonal. It can be the enemy's or your own. A **blockade** is different: a piece placed in front of a passed pawn to stop the pawn. To find obstructions, follow each rook, bishop and queen along its line until it meets the first man."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqr1k1/1pp1bppp/p1n5/3np3/2B5/3P1N2/PPPB1PPP/RN1QR1K1 w - - 2 10",
+      "caption": "White to move. The black pawn on e5 and the knight on d5 stop White's rook and bishop short of their targets.",
+      "line": [
+        {
+          "move": "f3e5",
+          "say": "Nxe5: two white pieces attack the pawn and one black piece defends it."
+        },
+        {
+          "move": "c6e5",
+          "say": "Black takes back."
+        },
+        {
+          "move": "e1e5",
+          "say": "Rxe5: the rook recaptures, and its line is open."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e5"
+        },
+        {
+          "from": "c4",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Two white pieces attack e5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One black piece defends e5."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e1",
+            "includes": [
+              "e5"
+            ],
+            "excludes": [
+              "e6",
+              "e7"
+            ]
+          },
+          "statement": "The rook's line stops at e5."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ]
+          },
+          "statement": "The engine's first choice is Nxe5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-1"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-2"
+    },
+    {
+      "type": "item",
+      "item": "IBp2-14"
+    },
+    {
+      "type": "card",
+      "text": "*Rule of thumb:* an enemy obstruction is easier to remove than one of your own, because you can bring many attackers against it. **Count first:** attackers against defenders, including pieces that join after the first capture; the cheapest man should capture first. With more attackers, taking or exchanging the obstruction can open your line. Without them, leave it alone. An obstruction only troubles the side whose line it blocks."
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-3"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one more defender",
+      "prompt": "Working: the pawn is attacked twice and defended once. Failing: the same position with one more defender. Irrelevant: a piece in front of a passed pawn. Predict, then check.",
+      "working": "IBp3-OBS-3",
+      "failing": "IBp3-OBS-4",
+      "irrelevant": "IBp1-20"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-OBS-9",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.OBSTRUCT",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you chose a move in the last positions, did you first follow each long-range piece along its line to the first man, or did you start with captures? Write what you did first."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md (section 4.9: obstructions are low-value men on lines; enemy ones are easier to remove; vocabulary clash with blockade in section 5 item 5; ideas only, original wording)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.OBSTRUCT)",
+    "items: IBp3-OBS-1..9 (Lichess games, CC0, and authored one-feature edits); shipped items IBp2-14, IBp1-20"
+  ]
+}

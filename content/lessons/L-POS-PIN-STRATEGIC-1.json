@@ -1,0 +1,164 @@
+{
+  "id": "L-POS-PIN-STRATEGIC-1",
+  "title": "A pin can last: four ways to meet it",
+  "skill": "POS.PIN.STRATEGIC",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Names the four policies against a pinned knight and recognises the question, ignoring and reserves in play",
+    "Recognises the question: a flank pawn push at the pinning bishop",
+    "Checks whether the centre can be opened before asking again",
+    "Knows that more than one policy is often sound"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A pin need not be won at once; it can shape an opening. When a bishop pins your knight to the queen, you have four policies: **put the question** (a flank pawn attacks the bishop), **ignore** the pin and play in the centre, **bring up reserves** so the knight is no longer pinned, or **hold the choice** with a useful move and decide later. (No exercise here trains this one.)"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pppp1ppp/4pn2/6B1/2PP4/8/PP2PPPP/RN1QKBNR b KQkq - 1 3",
+      "caption": "Black to move. The bishop on g5 pins the knight on f6 to the queen.",
+      "line": [
+        {
+          "move": "h7h6",
+          "say": "h6 puts the question: the pawn attacks the bishop."
+        },
+        {
+          "move": "g5h4",
+          "say": "Bh4 keeps the pin. The bishop has answered the question."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h7",
+          "to": "h6"
+        },
+        {
+          "from": "g5",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "g5",
+        "f6",
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "moves_where",
+          "params": {
+            "property": "pawn_move_attacks",
+            "square": "g5",
+            "moves": [
+              "h7h6"
+            ]
+          },
+          "statement": "h6 is the only pawn move that attacks the bishop."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h7h6"
+            ]
+          },
+          "statement": "The engine's first choice is h6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "d8",
+            "piece": "q"
+          },
+          "statement": "The queen stands behind the knight."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "g5",
+            "includes": [
+              "f6"
+            ]
+          },
+          "statement": "The bishop on g5 attacks the knight."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "e7",
+            "piece": "empty"
+          },
+          "statement": "e7 is empty, so the knight is pinned to the queen on d8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-1"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-2"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-3"
+    },
+    {
+      "type": "card",
+      "text": "*Rule of thumb:* the question is good when the bishop's retreat leaves it few squares and the centre cannot be opened, so the bishop cannot come back to life. It is bad when the centre can open, or when the pawn advance leaves your king facing a break. It does not always win a tempo, and it can weaken the side that asks."
+    },
+    {
+      "type": "contrast",
+      "title": "The second question: ...g5",
+      "prompt": "Black has played ...h6 and the bishop has gone to h4. Black now asks again with ...g5. In the second position the white f-pawn stands on f4; in the third, Black's queen is on d7. Predict each time, then check.",
+      "working": "IBp3-PIN-4",
+      "failing": "IBp3-PIN-5",
+      "irrelevant": "IBp3-PIN-6"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PIN-9",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PIN.STRATEGIC",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In the silent positions, which question did you ask first: 'is the piece pinned to something valuable?' or 'can the centre open if I ask?' Which one did you skip?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 28: the question, ignoring, reserves, holding the choice; its opening verdicts are marked [CHECK] there, so every verdict here is an engine check at depth 16, not his claim)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.PIN.STRATEGIC)",
+    "positions: opening lines replayed with python-chess and one-feature edits; items IBp3-PIN-1..11"
+  ]
+}

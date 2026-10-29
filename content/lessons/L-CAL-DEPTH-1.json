@@ -1,0 +1,258 @@
+{
+  "id": "L-CAL-DEPTH-1",
+  "title": "Where the depth goes: sort the candidates before you calculate",
+  "skill": "CAL.DEPTH",
+  "depth": "D1",
+  "minutes": 12,
+  "outcomes": [
+    "Given three candidates, says which one gets the deep look and which get a short look",
+    "Gives the reason: a forcing line that keeps going, against a move whose piece can be taken for nothing or a quiet move",
+    "Tells a position that needs a deep look from a forced move and from a quiet one",
+    "Starts a time log that compares the seconds spent on critical and routine positions"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Depth is a budget you split between lines, not one number for the whole position. Sort the candidates first. **Deep look:** a forcing line (checks, captures, threats) with few replies, and it keeps going. **Short look:** a move whose piece can be taken for nothing (it is loose), or a quiet move that starts nothing. **No calculation:** only one legal move. A rule of thumb, not a tested method."
+    },
+    {
+      "type": "board",
+      "fen": "r6k/pb1n1Qpp/1p6/2p5/2B5/1Pq5/P5PP/4R2K w - - 0 25",
+      "caption": "White to move. Candidates: A) Re8+  B) Qxg7+  C) Qe7. A gets the deep look: follow it to the end.",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "Re8+ is check, and the rook can be taken."
+        },
+        {
+          "move": "a8e8",
+          "say": "Black takes the rook."
+        },
+        {
+          "move": "f7e8",
+          "say": "Qxe8+ is check again."
+        },
+        {
+          "move": "d7f8",
+          "say": "Black blocks with the knight."
+        },
+        {
+          "move": "e8f8",
+          "say": "Qxf8 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e8"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1e8"
+          },
+          "statement": "Re8+ is legal."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e1e8",
+            "n": 3
+          },
+          "statement": "Re8+ forces checkmate in 3 or fewer against the engine's best defence (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/pb1n1Qpp/1p6/2p5/2B5/1Pq5/P5PP/4R2K w - - 0 25",
+      "caption": "Same position. B) Qxg7+ gets a short look: follow it for two plies.",
+      "line": [
+        {
+          "move": "f7g7",
+          "say": "Qxg7+ takes a pawn, with check. But the queen on g7 is loose: nothing defends it."
+        },
+        {
+          "move": "h8g7",
+          "say": "Kxg7: the king takes the queen. White has given up a queen for a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "g7"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "e1",
+              "g7"
+            ],
+            "after_move": "f7g7"
+          },
+          "statement": "After Qxg7+ the White pieces that are loose are exactly: e1, g7."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f7g7",
+            "cp": 400
+          },
+          "statement": "Qxg7+ is at least 4 pawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "f7g7",
+            "max": -2
+          },
+          "statement": "After Qxg7+ the mover's net material change along the engine's best defence is at most -2 (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc2-8"
+    },
+    {
+      "type": "card",
+      "text": "**When the sort fails.** It uses only what you can see: checks, captures, threats, and whether the moved piece can be taken free. A quiet move can hide the best line, so give quiet candidates a short look, not a pass. In an opening line you know, recall replaces calculation. Rule of thumb: stop deepening when the position is quiet or the result is forced, not when you are tired."
+    },
+    {
+      "type": "item",
+      "item": "IBc2-11"
+    },
+    {
+      "type": "contrast",
+      "title": "Same line, one move later",
+      "prompt": "You just sorted the first position. The next is the same position after White's first move, and the last is an opening position. How much calculation does the player to move need? Predict, then check.",
+      "working": "IBc2-11",
+      "failing": "IBc2-12",
+      "irrelevant": "IBc2-13"
+    },
+    {
+      "type": "item",
+      "item": "IBc2-9"
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Say why the line you chose got the deep look. The answer is my judgement.",
+      "fields": [
+        {
+          "id": "why",
+          "label": "It got the deep look because:",
+          "options": [
+            "it is forcing and its piece cannot be taken for nothing",
+            "it is the only check",
+            "it is the first move I saw",
+            "it wins the most material at once"
+          ],
+          "answer": "it is forcing and its piece cannot be taken for nothing"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The next two exercises are silent. In each, you may decide that no candidate needs a deep look. The app shows no time log; the one below is yours, kept on paper or with a phone timer. Say first how many of the two you expect to get right."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Commit to a number before the two silent exercises. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the two right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBc2-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBc2-14",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "Now spend the depth where it pays: two puzzles with the theme named, each a forced mate of four or five moves. Follow the forcing line to its end before you play."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.DEPTH",
+        "cue.1"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Time log: one session, on paper.** Take six positions from Practice (mixed). Before you solve each, write **C** (critical: a forcing line or a tempting capture) or **R** (routine: many moves about equal). Solve it with a timer running and write the seconds. Then average the seconds for C and for R. The aim: C takes longer than R. The app does not time this log."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one time-log session. A log of six positions is a rough first look, not a measurement. This note stays on this device.",
+      "fields": [
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "n_c",
+          "label": "Positions I marked C:",
+          "type": "number"
+        },
+        {
+          "id": "sec_c",
+          "label": "Average seconds on C:",
+          "type": "number"
+        },
+        {
+          "id": "sec_r",
+          "label": "Average seconds on R:",
+          "type": "number"
+        },
+        {
+          "id": "followed",
+          "label": "Did the time follow my sort?",
+          "options": [
+            "yes",
+            "partly",
+            "no"
+          ]
+        },
+        {
+          "id": "surprise",
+          "label": "A position I marked R that needed more depth, or marked C that did not (one line):"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "skill node CAL.DEPTH (conditions, contrasts, misconceptions); the node cites docs/council-synthesis.md Round 3 for the point that allocating depth is the skill (cited by the node, not re-read here)",
+    "L-LOOP-V5-1 (depth as a budget, stop signs), which this lesson builds on",
+    "positions: Lichess puzzles (CC0) and two opening positions played with python-chess; the deep, short and quiet roles are defined in this lesson and checked by claims on mates, losses, loose pieces and material",
+    "the rule of thumb has no study behind it here [H]; the time log is the learner's own evidence"
+  ]
+}

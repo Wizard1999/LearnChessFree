@@ -1,0 +1,157 @@
+{
+  "id": "L-POS-PLAN-PIECES-1",
+  "title": "Who goes, who stays: allocating pieces to a plan",
+  "skill": "POS.PLAN.PIECES",
+  "depth": "D1",
+  "minutes": 11,
+  "outcomes": [
+    "Counts the pieces that bear on the target, and those that can join, against the defenders",
+    "Names a piece that must stay home and says what it blocks or guards",
+    "Says when there is no definite target to allocate pieces to"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Allocation** starts with a target: a king, a weak pawn. Decide where the main blow falls, which pieces can go, and which are the minimum to keep at home. *Rule of thumb:* keep the defenders that also do other work (a knight on f3 can guard the king's side and the centre), and do not send everything. With no target yet, there is nothing to allocate."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/pbpn2pp/1p1pRb2/8/5P2/2P2NP1/PP2Q1BP/R1B3K1 w - - 1 16",
+      "caption": "White to move. The knight on f3 looks ready to jump to g5. What else is it doing?",
+      "line": [
+        {
+          "move": "f3g5",
+          "say": "Ng5 sends the knight forward."
+        },
+        {
+          "move": "b7g2",
+          "say": "Black's bishop now attacks g2 and takes it."
+        },
+        {
+          "move": "e2g2",
+          "say": "Qxg2 recaptures."
+        },
+        {
+          "move": "f6g5",
+          "say": "Bxg5: the black bishop takes the knight."
+        },
+        {
+          "move": "f4g5",
+          "say": "fxg5 recaptures. Pieces are level, but White's bishop on g2 is gone and the engine rates Ng5 well below the best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b7",
+          "to": "g2"
+        },
+        {
+          "from": "f3",
+          "to": "g5"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "g2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Black does not attack g2 now."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 1,
+            "after_move": "f3g5"
+          },
+          "statement": "After Ng5 Black attacks g2."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "f3g5",
+            "cp": 80
+          },
+          "statement": "Ng5 is at least 80 cp worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBa1-10"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PCS-1"
+    },
+    {
+      "type": "card",
+      "text": "A piece that looks like an attacker may be a defender: ask what changes if it leaves. Reserve only the necessary defenders, and recount, because one missed defender turns a winning attack into a losing one. *Rule of thumb:* count the pieces already aimed at the target plus those that can join with a threat next move; attack when that total beats the defenders. If not, improve your pieces first."
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PCS-2"
+    },
+    {
+      "type": "contrast",
+      "title": "Count, then go",
+      "prompt": "Same position, one change. In the first board, two pieces attack f7 against two defenders, and the bishop on d3 can join at g6 next move. In the second, the queen stands on e2, so only one attacker is in place. The third is a different position: is there anything definite to aim at? Predict the last two, then check.",
+      "working": "IBa1-11",
+      "failing": "IBa1-12",
+      "irrelevant": "IBp3-PCS-4"
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PCS-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp3-PCS-5",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Open one of your own games (My games) and pick a middlegame position where you attacked. Write down the allocation you used and the one you would use now.",
+      "fields": [
+        {
+          "id": "target",
+          "label": "The target (king, weak pawn):"
+        },
+        {
+          "id": "send",
+          "label": "Pieces I sent, in the order they arrived:"
+        },
+        {
+          "id": "stay",
+          "label": "Pieces I kept at home, and what each one guards:"
+        },
+        {
+          "id": "miss",
+          "label": "A defender I forgot to count, if any:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C10: allocate pieces, order of arrival, reserve the necessary defenders; C32: the count of defenders; ideas only, original wording)",
+    "docs/curriculum-map-v1.1.md section 3 (POS.PLAN.PIECES)",
+    "items: IBp3-PCS-1..5 (Lichess games, CC0, and one opening line); shipped items IBa1-10, IBa1-11, IBa1-12. The order of arrival is NOT trained by a checked item (the sheet advises mixing short- and long-range pieces)."
+  ]
+}
