@@ -33,3 +33,8 @@ Template per opening (one course, five to seven lessons): 1. the idea and the pa
 - Anything that needs a server or an account (a shared leaderboard, a community).
 
 ## Open questions (logged as Q12 to Q14 in QUESTIONS-AND-GATES.md)
+
+## Opening course order, from our own data [V]
+Games reaching each named family within 8 plies, all 8 rating bands together (4,752,291 online blitz, rapid and classical games, September 2026; the family name is the part of the opening name before the first colon or comma; a game is counted once per family it passes through, so King's Pawn Game and Queen's Pawn Game are the two first-move umbrellas). In order of how often learners will meet them:
+Sicilian Defense (464,593), Scandinavian (293,691), French (279,827), Caro-Kann (253,659), Italian Game (224,644), Indian defences (222,374; the King's Indian and relatives), Queen's Gambit (180,671), Zukertort Opening (148,715), Bishop's Opening (140,407), English Opening (138,199), Philidor (117,082), Pirc (114,580), Scotch (103,191), Ruy Lopez (101,458), Vienna (88,213).
+Suggested first six courses, weighing popularity with what the lessons teach: Italian Game (clear ideas for beginners), Sicilian Defense, French Defense, Caro-Kann, Queen's Gambit, then the London and King's Indian structures (the London sits under Queen's Pawn Game, so it needs its own count before the course is built). The Ruy Lopez is much less common online than its reputation but is theory-rich, so it comes after those. Online amateur data is not master theory: each course says which numbers come from it.
