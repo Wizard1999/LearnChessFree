@@ -155,7 +155,16 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           return (
             <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
               tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, ${LEVEL_NAMES[lvl]}${next ? ', ready to start' : ''}`}
-              onClick={() => onPick(n.id)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) } }}>
+              onClick={() => onPick(n.id)} data-id={n.id} onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) }
+                else if (['ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown'].includes(e.key)) {
+                  // along the links: right or up goes on to a skill this one leads to, left or down goes back to one it builds on
+                  const fwd = e.key === 'ArrowRight' || e.key === 'ArrowUp'
+                  const targets = layout.edges.filter(x => (fwd ? x.from : x.to) === n.id).map(x => (fwd ? x.to : x.from))
+                  const t = targets.sort((p, q) => level(p) - level(q))[0]
+                  if (t) { e.preventDefault(); (svg.current?.querySelector(`[data-id="${t}"]`) as SVGElement | null)?.focus() }
+                }
+              }}>
               {next && <circle r={32} className="nodeglow" />}
               <clipPath id={cid}><rect x={-22} y={22 - 44 * (lvl / 4)} width={44} height={44} /></clipPath>
               <circle r={22} fill="var(--canvas)" className="nodebase" />

@@ -77,8 +77,10 @@ export function Today() {
 
   const activeBlock = active
   const firstLesson = fresh ? blocks.find(b => b.kind === 'lesson') : undefined
-  const upNext = blocks.find(b => !doneIds.includes(b.id))
-  const others = blocks.filter(b => b !== upNext)
+  // the placement offer is a quiet link, never the main card; the main card is the next lesson or review
+  const startBlock = blocks.find(b => b.kind === 'start' && !doneIds.includes(b.id))
+  const upNext = blocks.find(b => !doneIds.includes(b.id) && b.kind !== 'start') ?? startBlock
+  const others = blocks.filter(b => b !== upNext && b !== startBlock)
   const learning = [...masteries.entries()].filter(([, m]) => m.state !== 'unseen').sort((a, b) => b[1].n - a[1].n).slice(0, 6)
 
   const inProgress = (b: Block) => b.kind === 'lesson' && (progress ?? []).some(p => p.lessonId === b.lessonId && !p.done && p.step > 0)
@@ -144,8 +146,9 @@ export function Today() {
               <p>Open the <Link to="/course">course</Link> to pick something, or try <Link to="/practice">some practice</Link>.</p>
             </section>
           )}
-          <section className="card">
-            <h2>Your own aim for today <span className="muted small">· optional</span></h2>
+          {startBlock && upNext !== startBlock && <p className="small">Already play? <Link to="/placement">Find your starting point</Link> (optional, about {startBlock.minutes} minutes).</p>}
+          <details className="card aimcard" open={!!intention}>
+            <summary>Set your own aim for today <span className="muted small">· optional</span></summary>
             {intention === undefined ? <p className="muted">Loading…</p> : intention === null ? (
               <p className="muted">You skipped this today. <button type="button" className="link" onClick={() => void saveIntention('')}>Set one now</button></p>
             ) : intention !== '' ? (
@@ -158,8 +161,8 @@ export function Today() {
                   <button type="button" onClick={() => void saveIntention(null)}>Skip</button></div>
               </>
             )}
-          </section>
-          {others.length > 0 && <p className="lede">{upNext ? 'Also on the plan today. ' : ''}{intention ? 'Compare it with your own aim; you decide which to follow. ' : ''}You can skip, reorder, or do something else on the Practice page. The plan is a suggestion, not a requirement.</p>}
+          </details>
+          {others.length > 0 && <details className="moreplan"><summary>More for today ({others.length})</summary>
           {others.map(b => (
             <section key={b.id} className={doneIds.includes(b.id) ? 'card done' : 'card'}>
               <h2>{b.title} <span className="muted small">· about {b.minutes} min</span></h2>
@@ -170,14 +173,16 @@ export function Today() {
               </div>
             </section>
           ))}
-          <section className="card">
-            <h2>What the evidence says right now</h2>
+          {others.length > 0 && <p className="small muted">The plan is a suggestion, not a requirement. Skip anything, or do something else from Practice.</p>}
+          </details>}
+          <details className="card evidencecard">
+            <summary>What the evidence says right now</summary>
             {learning.length === 0 ? <p className="muted">Nothing yet. Evidence appears here as you answer exercises where the idea is not named.</p> : (
               <ul className="plain">{learning.map(([k, m]) => <li key={k}><strong>{content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title ?? k}</strong> <span className="muted small">({k.slice(k.lastIndexOf('.') + 1)})</span>: {describeMastery(m)}</li>)}</ul>
             )}
             <p className="muted small">Independence (last {ind.counted} first attempts): {ind.hintRate === null ? 'no unlabeled exercises yet.' : `hints used on ${Math.round(ind.hintRate * 100)}% of unlabeled exercises; ${ind.unpromptedAccuracy === null ? '' : `${Math.round(ind.unpromptedAccuracy * 100)}% correct without hints.`}`}
               {ind.calibrationError !== null && ` Confidence vs. correctness gap: ${ind.calibrationError.toFixed(2)} (lower is better calibrated).`}</p>
-          </section>
+          </details>
         </>
       )}
       {activeBlock && (
