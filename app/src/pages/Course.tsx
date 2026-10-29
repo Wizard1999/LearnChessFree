@@ -65,6 +65,7 @@ export function Course() {
   const [run, setRun] = useState<{ plan: ChallengePlan; items: ChallengePlan['picks'][number]['items']; before: Record<string, Level> } | null>(null)
   const [result, setResult] = useState<{ node: NodeProgress; rights: number; before: Level; after: Level }[] | null>(null)
   const [warmOpen, setWarmOpen] = useState(false)
+  const [bulk, setBulk] = useState<string[] | null>(null) // lessons changed by the last mark-all, so it can be undone
   const [hover, setHover] = useState<{ n: NodeProgress; x: number; y: number } | null>(null)
   const hoverNode = (n: NodeProgress | null, el?: HTMLElement) => { if (!n || !el) { setHover(null); return } const r = el.getBoundingClientRect(); setHover({ n, x: Math.min(r.left, window.innerWidth - 340), y: r.bottom + 6 }) }
   useEffect(() => { if (!picked) return; const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setPicked(null) }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k) }, [picked])
@@ -131,7 +132,6 @@ export function Course() {
   const markLesson = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
   const resetLesson = (id: string) => db.lessonProgress.delete(id)
   const lessonIdsOf = (nodes: NodeProgress[]) => content.lessons.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
-  const [bulk, setBulk] = useState<string[] | null>(null) // lessons changed by the last mark-all, so it can be undone
   async function markAll(nodes: NodeProgress[], skipped: boolean, label: string) {
     const ls = lessonIdsOf(nodes)
     if (!window.confirm(`${label} ${ls.length} lessons? You can undo this right after, or reset any lesson later.`)) return
