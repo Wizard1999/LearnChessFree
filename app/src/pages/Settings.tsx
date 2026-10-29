@@ -4,12 +4,26 @@ import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearan
 import { useStorageStatus } from '../lib/persist'
 import { effectiveTrivial, loadNever, loadTrivial, showAgain } from '../lib/trivial'
 import { useAttempts } from '../lib/progress'
+import { db } from '../db'
+import { loadReviewer, reviewFile, saveReviewer, sendReviews, feedbackEndpoint, type Reviewer } from '../lib/feedback'
+import { useContent } from '../lib/content'
+import { useLiveQuery } from 'dexie-react-hooks'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function SettingsContent() {
   const [msg, setMsg] = useState<string | null>(null)
   const [loop, setLoop] = useState<LoopState>(EMPTY_LOOP)
   const storage = useStorageStatus()
+  const { manifest } = useContent()
+  const reviewCount = useLiveQuery(() => db.feedback.count(), [])
+  const [reviewer, setReviewer] = useState<Reviewer>({ name: '', role: '' })
+  const [hasEndpoint, setHasEndpoint] = useState(false)
+  const [sendMsg, setSendMsg] = useState<string | null>(null)
+  useEffect(() => { void loadReviewer().then(setReviewer); void feedbackEndpoint().then(u => setHasEndpoint(!!u)) }, [])
+  async function downloadReviews() {
+    const blob = new Blob([JSON.stringify(await reviewFile(manifest.hash), null, 1)], { type: 'application/json' })
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `chess-school-reviews-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(a.href)
+  }
   const attempts = useAttempts()
   const [manual, setManual] = useState<string[]>([])
   const [never, setNever] = useState<string[]>([])
@@ -77,6 +91,17 @@ export function SettingsContent() {
           <button type="button" onClick={() => void doReset()}>Delete everything</button>
         </div>
         {msg && <p role="status">{msg}</p>}
+      </section>
+      <section className="card">
+        <h2>Reviews</h2>
+        <p className="small muted">You can review any lesson (the link under it) and report a problem with any exercise. Reviews are saved on this device. {hasEndpoint ? 'This copy can send them to the project.' : 'To share them, download the file and send it to the person who gave you this copy.'}</p>
+        <div className="row">
+          <label className="field"><span className="small muted">Your name (optional)</span><input type="text" value={reviewer.name} onChange={e => { const r = { ...reviewer, name: e.target.value }; setReviewer(r); void saveReviewer(r) }} /></label>
+          <label className="field"><span className="small muted">You are</span><select value={reviewer.role} onChange={e => { const r = { ...reviewer, role: e.target.value as Reviewer['role'] }; setReviewer(r); void saveReviewer(r) }}><option value="">Prefer not to say</option><option value="strong-player">A strong player</option><option value="teacher">A teacher or coach</option><option value="learner">A learner</option><option value="other">Other</option></select></label>
+        </div>
+        <p>{reviewCount ?? 0} review{reviewCount === 1 ? '' : 's'} saved on this device.</p>
+        <div className="row"><button type="button" onClick={() => void downloadReviews()} disabled={!reviewCount}>Download my reviews</button>{hasEndpoint && <button type="button" className="primary" disabled={!reviewCount} onClick={() => void sendReviews(manifest.hash).then(m => setSendMsg(m ?? 'Sent. Thank you.'))}>Send my reviews</button>}</div>
+        {sendMsg && <p role="status">{sendMsg}</p>}
       </section>
       <section className="card">
         <h2>Skills left out of practice</h2>

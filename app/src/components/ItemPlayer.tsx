@@ -7,6 +7,8 @@ import { PlayOut } from './PlayOut'
 import { LoopPanel } from './LoopPanel'
 import { getEngine, resetEngine } from '../engine'
 import { addTrivial } from '../lib/trivial'
+import { addFeedback } from '../lib/feedback'
+import { ITEM_KINDS } from './ReviewPanel'
 import { isAlsoSound } from '../lib/altmove'
 import { db, type AttemptSource } from '../db'
 import { useContent } from '../lib/content'
@@ -70,6 +72,10 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const [checking, setChecking] = useState(false)
   const [altNote, setAltNote] = useState<{ san: string; why: string } | null>(null)
   const [trivialMarked, setTrivialMarked] = useState(false)
+  const [reporting, setReporting] = useState(false)
+  const [reportKind, setReportKind] = useState('')
+  const [reportText, setReportText] = useState('')
+  const [reported, setReported] = useState(false)
   const bestLine = useRef<Promise<import('../engine').EngineLine | undefined> | null>(null)
   useEffect(() => { void loadLoop().then(setLoopState) }, [])
   const mixed = source === 'practice' || source === 'daily' || source === 'review'
@@ -291,6 +297,14 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
             {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
             {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
           {item.explain && <p>{item.explain}</p>}
+          <div className="small">
+            {reported ? <span role="status">Thank you: your report is saved on this device (send it from Settings → Reviews).</span> : !reporting ? <button type="button" className="link" onClick={() => setReporting(true)}>Report a problem with this exercise</button> : (
+              <div className="reportbox">
+                <select aria-label="What is wrong" value={reportKind} onChange={e => setReportKind(e.target.value)}><option value="">What is wrong?</option>{ITEM_KINDS.map(k => <option key={k} value={k}>{k}</option>)}</select>
+                <textarea aria-label="Details" rows={2} value={reportText} onChange={e => setReportText(e.target.value)} placeholder="What did you see? What should it say?" />
+                <button type="button" disabled={!reportKind} onClick={() => { void addFeedback({ targetType: 'item', targetId: item.id, checks: {}, kind: reportKind, text: reportText }, 'item-report').then(() => setReported(true)) }}>Save report</button>
+              </div>)}
+          </div>
           {item.claims.filter(c => c.statement).length > 0 && (
             <ul className="checks small">{item.claims.filter(c => c.statement).slice(0, 5).map(c => <li key={c.id}><span aria-hidden="true">✓</span> {c.statement}</li>)}</ul>
           )}

@@ -38,6 +38,8 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 | G12 | G | Open Library or purchased ebooks: if you want in-copyright books used as coverage checklists (topic lists only, no text), name the titles or provide them. The five new public-domain Gutenberg books are already registered | Rights rules in `library/REGISTRY.md` | Public-domain sources only | no |
 | G13 | G | Reddit is refused by all my browsing tools. If you want Reddit-sourced misconceptions, paste threads into `docs/misconceptions-by-level.md` or tell me which to read via another route | The tool policy, not your setup | Not used | no |
 
+| G14 | G | Install `server/feedback.php` on your website, set `endpoint` in `feedback-config.json`, and make one test submission (steps in `docs/feedback.md`). Check the `feedback-inbox` folder is not publicly downloadable | I cannot reach your host, and a public form needs your decision about abuse protection and retention | No endpoint: reviewers download a file and send it to you | no |
+
 ## Answered / done
 *(none yet)*
 

@@ -26,6 +26,19 @@ export interface Reflection { id?: number; kind: string; lessonId?: string; data
 export interface LessonProgress { lessonId: string; step: number; done: boolean; ts: number; /** Marked done by the learner without doing it. */ skipped?: boolean }
 export interface GameRec { id?: number; source: string; white: string; black: string; result: string; date?: string; pgn: string; ts: number; analysis?: unknown; me?: 'white' | 'black' }
 export interface KV { key: string; value: unknown }
+/** A reviewer's report on a lesson or an exercise. Stored on the reviewer's device, exported as a file, optionally posted to the project's feedback address. */
+export interface Feedback {
+  id?: number
+  targetType: 'lesson' | 'item'
+  targetId: string
+  ts: number
+  /** Answers to the checklist: key -> 'yes' | 'no' | 'unsure' or a difficulty word. */
+  checks: Record<string, string>
+  step?: number
+  kind?: string
+  text: string
+  build: string
+}
 
 class AppDB extends Dexie {
   attempts!: Table<Attempt, number>
@@ -33,6 +46,7 @@ class AppDB extends Dexie {
   lessonProgress!: Table<LessonProgress, string>
   games!: Table<GameRec, number>
   kv!: Table<KV, string>
+  feedback!: Table<Feedback, number>
   constructor() {
     super('chess-school')
     this.version(1).stores({
@@ -41,6 +55,14 @@ class AppDB extends Dexie {
       lessonProgress: 'lessonId',
       games: '++id,ts',
       kv: 'key',
+    })
+    this.version(2).stores({
+      attempts: '++id,itemId,skillKey,family,ts,source',
+      reflections: '++id,kind,ts',
+      lessonProgress: 'lessonId',
+      games: '++id,ts',
+      kv: 'key',
+      feedback: '++id,targetType,targetId,ts',
     })
   }
 }
@@ -58,13 +80,14 @@ export async function exportAll() {
   return {
     format: 'chess-school-export', version: 1, exportedAt: new Date().toISOString(),
     attempts: await db.attempts.toArray(), reflections: await db.reflections.toArray(),
-    lessonProgress: await db.lessonProgress.toArray(), games: await db.games.toArray(), kv: await db.kv.toArray(),
+    lessonProgress: await db.lessonProgress.toArray(), games: await db.games.toArray(), kv: await db.kv.toArray(), feedback: await db.feedback.toArray(),
   }
 }
 export async function importAll(obj: Awaited<ReturnType<typeof exportAll>>) {
   if (obj.format !== 'chess-school-export') throw new Error('Not a Chess School export file')
-  await db.transaction('rw', [db.attempts, db.reflections, db.lessonProgress, db.games, db.kv], async () => {
-    await Promise.all([db.attempts.clear(), db.reflections.clear(), db.lessonProgress.clear(), db.games.clear(), db.kv.clear()])
+  await db.transaction('rw', [db.attempts, db.reflections, db.lessonProgress, db.games, db.kv, db.feedback], async () => {
+    await Promise.all([db.attempts.clear(), db.reflections.clear(), db.lessonProgress.clear(), db.games.clear(), db.kv.clear(), db.feedback.clear()])
+    await db.feedback.bulkAdd((obj.feedback ?? []).map(a => ({ ...a, id: undefined })))
     await db.attempts.bulkAdd(obj.attempts.map(a => ({ ...a, id: undefined })))
     await db.reflections.bulkAdd(obj.reflections.map(a => ({ ...a, id: undefined })))
     await db.lessonProgress.bulkPut(obj.lessonProgress)
