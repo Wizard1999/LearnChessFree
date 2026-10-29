@@ -201,6 +201,16 @@
    }
   },
   {
+   "id": "PBp1-27",
+   "fen": "2r2rk1/pp2bppp/5n2/8/3p4/6P1/PP1B1P1P/2R1NRK1 w - - 0 1",
+   "family": "FAM-P1-BLOCK-C",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Authored middlegame skeleton (engine and structure checked): Black passed pawn on d4, White to move; only the knight reaches the blockading square.",
+    "licence": "project"
+   }
+  },
+  {
    "id": "PBp1-21",
    "fen": "r1b2rk1/p1qpbppp/n1p2n2/1p6/4PP2/PNN1B3/1PPQB1PP/3R1RK1 b - - 2 15",
    "family": "FAM-PS-vv7ijldy",
@@ -665,7 +675,7 @@
    ],
    "hints": [
     "Look at the seventh rank: what stands on it, and where can the Black king go?",
-    "The rook attacks a pawn from behind, and the king cannot come forward to help it.",
+    "The rook attacks a pawn from behind, and it is White's move, so the king cannot get to g8 in time.",
     "Take the pawn, or bring the king closer."
    ],
    "explain": "Tablebase (exact): White wins. Rxh7 takes the pawn from behind while the rook still holds the seventh rank, so the king on f8 has only e8 and g8. Kb4 also wins. Retreating the rook to d6 only draws.",
@@ -684,7 +694,7 @@
     "reviewer": null
    },
    "feedback_by_move": {
-    "d7d6": "Rd6 lets the king step out and the tablebase gives a draw.",
+    "d7d6": "Rd6 only draws (tablebase, exact): White gives up the immediate Rxh7.",
     "h4h5": "The pawn push does not win: the tablebase gives a draw.",
     "g5g6": "The pawn push does not win: the tablebase gives a draw."
    },
@@ -732,14 +742,23 @@
       "count": 5
      },
      "statement": "If it were Black's turn, the king on f8 could go to e8, g8, e7, f7 and g7."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "Even Rd7 only draws."
     }
    ],
    "hints": [
     "Compare with the last position: only the rook moved. Where can the Black king go now?",
     "The rook no longer holds the seventh rank.",
-    "The king can step forward, and the result is a draw."
+    "Even Rd7 only draws, so White cannot win."
    ],
-   "explain": "Tablebase (exact): the position is a draw. On d6 the rook does not take away e7, f7 and g7, so the Black king can step off the back rank and the rook cannot attack h7. The rook on d7 won; one rank lower it does not.",
+   "explain": "Tablebase (exact): the position is a draw. White's rook is one move from d7, but Rd7 now only draws: Black answers Kg8, which defends h7. In the first position White won because the rook was already on d7 and it was White's move, so Rxh7 came before the king could defend it.",
    "tags": [
     "node.POS.SEVENTH",
     "cue.2",
@@ -894,135 +913,48 @@
    "orientation": "white"
   },
   {
-   "id": "IBp1-9",
-   "skill": "POS.MAJORITY.D2",
-   "cue": 2,
-   "task": "find_move",
+   "id": "IBp1-30",
+   "skill": "POS.MAJORITY.D1",
+   "cue": 1,
+   "task": "select_squares",
    "position": "PBp1-9",
-   "prompt": "White has three pawns on the queenside against two, and the kings are far from them. White can win. Find a move that keeps the win.",
+   "prompt": "White has three pawns on the queenside against two. Tap the candidate: the White pawn with no Black pawn in front of it on its own file.",
    "answer": {
-    "moves": [
-     "a2a4",
-     "a2a3",
-     "b2b3",
-     "c2c3",
-     "h4g3",
-     "h4h3",
-     "h4g4",
-     "h4g5",
-     "h4h5"
+    "squares": [
+     "a2"
     ]
    },
    "claims": [
     {
      "id": "C1",
-     "type": "tablebase",
+     "type": "piece_on",
      "params": {
-      "result": "win"
+      "square": "a2",
+      "piece": "P"
      },
-     "statement": "The position is a win for White."
+     "statement": "The pawn on a2 is White's."
     },
     {
      "id": "C2",
-     "type": "tablebase",
+     "type": "open_files",
      "params": {
-      "result": "win",
-      "move": "a2a4"
+      "half_open_black": [
+       "a"
+      ]
      },
-     "statement": "a4 keeps the win."
+     "statement": "The a-file is the only file with a White pawn and no Black pawn."
     },
     {
      "id": "C3",
-     "type": "tablebase",
+     "type": "piece_on",
      "params": {
-      "result": "win",
-      "move": "a2a3"
+      "square": "a7",
+      "piece": "empty"
      },
-     "statement": "a2a3 keeps the win."
+     "statement": "No Black pawn stands on the a-file in front of the a-pawn."
     },
     {
      "id": "C4",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "b2b3"
-     },
-     "statement": "b2b3 keeps the win."
-    },
-    {
-     "id": "C5",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "c2c3"
-     },
-     "statement": "c2c3 keeps the win."
-    },
-    {
-     "id": "C6",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "h4g3"
-     },
-     "statement": "h4g3 keeps the win."
-    },
-    {
-     "id": "C7",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "h4h3"
-     },
-     "statement": "h4h3 keeps the win."
-    },
-    {
-     "id": "C8",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "h4g4"
-     },
-     "statement": "h4g4 keeps the win."
-    },
-    {
-     "id": "C9",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "h4g5"
-     },
-     "statement": "h4g5 keeps the win."
-    },
-    {
-     "id": "C10",
-     "type": "tablebase",
-     "params": {
-      "result": "win",
-      "move": "h4h5"
-     },
-     "statement": "h4h5 keeps the win."
-    },
-    {
-     "id": "C11",
-     "type": "tablebase",
-     "params": {
-      "result": "draw",
-      "move": "b2b4"
-     },
-     "statement": "b4 only draws."
-    },
-    {
-     "id": "C12",
-     "type": "tablebase",
-     "params": {
-      "result": "draw",
-      "move": "c2c4"
-     },
-     "statement": "c4 only draws."
-    },
-    {
-     "id": "C13",
      "type": "wing_pawns",
      "params": {
       "color": "white",
@@ -1032,7 +964,99 @@
      "statement": "White has three pawns on the queenside."
     },
     {
-     "id": "C14",
+     "id": "C5",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "queenside",
+      "count": 2
+     },
+     "statement": "Black has two pawns on the queenside."
+    }
+   ],
+   "hints": [
+    "Look at the three White pawns on the queenside: a2, b2 and c2.",
+    "Which of them has no Black pawn in front of it on its own file?",
+    "The Black pawns stand on b7 and c7. The a-file is clear."
+   ],
+   "explain": "The candidate is the pawn on a2: no Black pawn stands in front of it on the a-file, while b2 faces b7 and c2 faces c7. The candidate usually leads, and the other pawns follow.",
+   "tags": [
+    "node.POS.MAJORITY",
+    "cue.1",
+    "tier.3",
+    "kind.authored",
+    "lang.en",
+    "family.FAM-P1-MAJ-A"
+   ],
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "orientation": "white"
+  },
+  {
+   "id": "IBp1-9",
+   "skill": "POS.MAJORITY.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBp1-9",
+   "prompt": "White has three pawns on the queenside against two, and the kings are far from them. White plays a2-a4. What is the result with best play?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b2b4"
+     },
+     "statement": "b4 only draws."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c2c4"
+     },
+     "statement": "c4 only draws."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "a2a4"
+     },
+     "statement": "a4 keeps the win."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The position is a win for White."
+    },
+    {
+     "id": "C5",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "count": 3
+     },
+     "statement": "White has three pawns on the queenside."
+    },
+    {
+     "id": "C6",
      "type": "wing_pawns",
      "params": {
       "color": "black",
@@ -1042,7 +1066,7 @@
      "statement": "Black has two pawns on the queenside."
     },
     {
-     "id": "C15",
+     "id": "C7",
      "type": "piece_on",
      "params": {
       "square": "a7",
@@ -1053,10 +1077,10 @@
    ],
    "hints": [
     "Count the pawns on each wing. Which pawn has no Black pawn in front of it on its own file?",
-    "Moving the unopposed pawn, or a single step, keeps the win. Moving the middle pawn two squares may not.",
-    "Several moves win. The two that do not are both pawn moves of two squares by the pawns that face Black pawns."
+    "That pawn is the candidate: it leads, and the others follow.",
+    "The candidate's push keeps the win."
    ],
-   "explain": "Tablebase (exact): nine moves keep the win, among them a4 by the a-pawn, the only pawn with no Black pawn in front of it, and the king moves. The two-square moves b4 and c4 only draw. Rule of thumb, not proved in general: the candidate leads and the middle pawn does not hurry.",
+   "explain": "Tablebase (exact): White still wins after a4. The a-pawn is the candidate: no Black pawn stands in front of it, and it leads. The same two-square push by the pawns that face a Black pawn, b4 or c4, only draws. Rule of thumb, not proved in general: the candidate leads and the middle pawn does not hurry.",
    "tags": [
     "node.POS.MAJORITY",
     "cue.2",
@@ -1071,10 +1095,6 @@
    "review": {
     "status": "machine-only",
     "reviewer": null
-   },
-   "feedback_by_move": {
-    "b2b4": "b4 only draws: the tablebase says so.",
-    "c2c4": "c4 only draws: the tablebase says so."
    },
    "contrast_group": "CG-P1-MAJ",
    "orientation": "white"
@@ -1162,13 +1182,15 @@
    "id": "IBp1-11",
    "skill": "POS.MAJORITY.D3",
    "cue": 2,
-   "task": "find_move",
+   "task": "predict_outcome",
    "position": "PBp1-10",
-   "prompt": "The Black king is on d5 instead of f8; the pawns and the White king are the same. White can still win. Find a winning move.",
+   "prompt": "The Black king is on d5 instead of f8; the pawns and the White king are the same. White plays a2-a4, the move that won before. What is the result with best play?",
    "answer": {
-    "moves": [
-     "h4g3",
-     "h4g5"
+    "outcome": "draw",
+    "options": [
+     "White wins",
+     "draw",
+     "Black wins"
     ]
    },
    "claims": [
@@ -1176,12 +1198,21 @@
      "id": "C1",
      "type": "tablebase",
      "params": {
-      "result": "win"
+      "result": "draw",
+      "move": "a2a4"
      },
-     "statement": "The position is a win for White."
+     "statement": "a4 only draws here."
     },
     {
      "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The position is still a win for White."
+    },
+    {
+     "id": "C3",
      "type": "tablebase",
      "params": {
       "result": "win",
@@ -1190,7 +1221,7 @@
      "statement": "Kg3 wins."
     },
     {
-     "id": "C3",
+     "id": "C4",
      "type": "tablebase",
      "params": {
       "result": "win",
@@ -1199,7 +1230,34 @@
      "statement": "Kg5 wins."
     },
     {
-     "id": "C4",
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h4g4"
+     },
+     "statement": "Kg4 only draws."
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h4h3"
+     },
+     "statement": "Kh3 only draws."
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h4h5"
+     },
+     "statement": "Kh5 only draws."
+    },
+    {
+     "id": "C8",
      "type": "tablebase",
      "params": {
       "result": "draw",
@@ -1208,16 +1266,7 @@
      "statement": "a3 only draws."
     },
     {
-     "id": "C5",
-     "type": "tablebase",
-     "params": {
-      "result": "draw",
-      "move": "a2a4"
-     },
-     "statement": "a4 only draws."
-    },
-    {
-     "id": "C6",
+     "id": "C9",
      "type": "tablebase",
      "params": {
       "result": "draw",
@@ -1226,7 +1275,7 @@
      "statement": "b3 only draws."
     },
     {
-     "id": "C7",
+     "id": "C10",
      "type": "tablebase",
      "params": {
       "result": "draw",
@@ -1235,7 +1284,7 @@
      "statement": "c3 only draws."
     },
     {
-     "id": "C8",
+     "id": "C11",
      "type": "tablebase",
      "params": {
       "result": "loss",
@@ -1244,7 +1293,16 @@
      "statement": "b4 loses."
     },
     {
-     "id": "C9",
+     "id": "C12",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "c2c4"
+     },
+     "statement": "c4 loses."
+    },
+    {
+     "id": "C13",
      "type": "wing_pawns",
      "params": {
       "color": "white",
@@ -1254,7 +1312,7 @@
      "statement": "White still has three pawns on the queenside."
     },
     {
-     "id": "C10",
+     "id": "C14",
      "type": "wing_pawns",
      "params": {
       "color": "black",
@@ -1265,11 +1323,11 @@
     }
    ],
    "hints": [
-    "The pawn count is the same as before. What has changed?",
-    "The Black king is close to the pawns. Which of your pieces is too far away?",
-    "The king moves; no pawn move wins."
+    "Compare with the last position: only the Black king moved, from f8 to d5.",
+    "The Black king is now close to the queenside pawns.",
+    "The same push no longer wins: the result is a draw."
    ],
-   "explain": "Tablebase (exact): White still wins, but only with Kg3 or Kg5. Every pawn move draws, and b4 even loses. The count of pawns is the same as in the last position; the position of the kings decides which moves work. Counting a majority is not enough.",
+   "explain": "Tablebase (exact): a4 only draws here, although the same move won when the Black king was on f8. White still wins from this position, but only with Kg3 or Kg5; the other king moves (Kg4, Kh3, Kh5) only draw. The pawn moves a3, b3 and c3 also only draw, and b4 and c4 lose. The count of pawns is the same as in the last position; the position of the kings decides which moves work. Counting a majority is not enough.",
    "tags": [
     "node.POS.MAJORITY",
     "cue.2",
@@ -1283,13 +1341,6 @@
    "review": {
     "status": "machine-only",
     "reviewer": null
-   },
-   "feedback_by_move": {
-    "a2a4": "a4 only draws here: with the Black king near, the pawn push does not win.",
-    "b2b4": "b4 loses here.",
-    "a2a3": "a3 only draws here.",
-    "b2b3": "b3 only draws here.",
-    "c2c3": "c3 only draws here."
    },
    "contrast_group": "CG-P1-MAJ",
    "orientation": "white"
@@ -1687,9 +1738,9 @@
      "type": "eval_range",
      "params": {
       "min": -60,
-      "max": 150
+      "max": 60
      },
-     "statement": "With best play White is slightly ahead, not winning a pawn."
+     "statement": "With best play the position is about level (engine, depth 16), and Black does not win the e4 pawn."
     }
    ],
    "hints": [
@@ -2103,7 +2154,7 @@
     "The blockading square is the one directly in front of the pawn.",
     "A knight can reach that square."
    ],
-   "explain": "The pawn on d5 is passed, and d6 is the square in front of it. The knight lands there and nothing of White's attacks it. The engine counts Nd6 among its two best moves here (Stockfish 19 lite, depth 16). Rule of thumb, not proved by the engine: a minor piece is the default blockader.",
+   "explain": "The pawn on d5 is passed, and d6 is the square in front of it. The knight lands there and nothing of White's attacks it. The engine counts Nd6 among its two best moves here (Stockfish 19 lite, depth 16). Rule of thumb, not proved by the engine: a knight is the default blockader.",
    "tags": [
     "node.POS.BLOCKADE",
     "cue.1",
@@ -2119,6 +2170,92 @@
    },
    "contrast_group": "CG-P1-BLOCK",
    "orientation": "black"
+  },
+  {
+   "id": "IBp1-29",
+   "skill": "POS.BLOCKADE.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PBp1-27",
+   "prompt": "White to move. Black has a passed pawn. Blockade it: put a piece on the square directly in front of the pawn.",
+   "answer": {
+    "moves": [
+     "e1d3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e1d3"
+     },
+     "statement": "Nd3 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "moves_where",
+     "params": {
+      "property": "blockades_passed",
+      "moves": [
+       "e1d3"
+      ]
+     },
+     "statement": "Nd3 is the only move that blockades the passed pawn."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "black",
+      "squares": [
+       "d4"
+      ]
+     },
+     "statement": "The pawn on d4 is Black's only passed pawn."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d3",
+      "color": "black",
+      "count": 0,
+      "after_move": "e1d3"
+     },
+     "statement": "After Nd3 no Black piece attacks the knight."
+    },
+    {
+     "id": "C5",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1d3"
+      ]
+     },
+     "statement": "Nd3 is the engine's first choice."
+    }
+   ],
+   "hints": [
+    "First find the passed pawn: no White pawn in front of it on its own file or on a neighbouring file.",
+    "Black's pawns move down the board, so the blockading square is the one directly below the pawn.",
+    "A knight can reach that square."
+   ],
+   "explain": "The pawn on d4 is passed, and d3 is the square in front of it. The knight lands there and nothing of Black's attacks it. The engine counts Nd3 as its first choice (Stockfish 19 lite, depth 16). Rule of thumb, not proved by the engine: a knight is the default blockader.",
+   "tags": [
+    "node.POS.BLOCKADE",
+    "cue.1",
+    "tier.3",
+    "kind.authored",
+    "lang.en",
+    "family.FAM-P1-BLOCK-C"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "white"
   },
   {
    "id": "IBp1-21",
@@ -2465,7 +2602,7 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBp1-22",
-   "prompt": "Black's f-pawn stands on e6 instead of f7. Black plays the same lever, d6. Does the bishop on c8 get out?",
+   "prompt": "Black's f-pawn stands on e6 instead of f7. Black plays the same pawn move, d6. Does the bishop on c8 get out?",
    "answer": {
     "outcome": "no",
     "options": [

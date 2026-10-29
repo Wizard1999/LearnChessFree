@@ -261,6 +261,16 @@
    }
   },
   {
+   "id": "PBa1-8",
+   "fen": "rn1q1rk1/pp1b1ppp/2pbp3/8/3PB3/P4N2/QPP3PP/R1B2RK1 w - - 0 1",
+   "family": "FAM-A1-GG",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of PBa1-1 (itself an edit of the Lichess puzzle position lz7jB, CC0): the white queen moved d1-a2",
+    "licence": "project"
+   }
+  },
+  {
    "id": "PBa1-40",
    "fen": "r4nrk/pp2qpp1/2p3Rp/3pP2Q/3P4/P1PB4/1P1N2PP/6K1 w - - 0 1",
    "family": "FAM-A1-COM",
@@ -1837,15 +1847,6 @@
      "statement": "Along the engine's best-defence line White ends behind in material."
     },
     {
-     "id": "C4",
-     "type": "move_is_not_mate",
-     "params": {
-      "move": "e8g8",
-      "null_move_first": true
-     },
-     "statement": "If White passed, Black could castle short: the bishop has left f8."
-    },
-    {
      "id": "C5",
      "type": "piece_on",
      "params": {
@@ -1853,14 +1854,39 @@
       "piece": "b"
      },
      "statement": "The black bishop stands on e7."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Two black pieces defend the bishop on e7: the queen and the king."
+    },
+    {
+     "id": "C7",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g8",
+      "includes": [
+       "g6"
+      ],
+      "after_moves": [
+       "h4g6",
+       "h8g8"
+      ]
+     },
+     "statement": "After Nxg6 Rg8 the rook on g8 attacks the knight on g6."
     }
    ],
    "hints": [
-    "What has the bishop move changed for the black king?",
-    "Can the black king castle short now? What stood in its way before?",
-    "The king can castle short now, which was impossible before."
+    "What has the bishop move changed? Look at what the knight on g6 would attack and what defends it.",
+    "After Nxg6 the knight attacks the rook on h8 and the bishop on e7. Is the bishop defended? Can the rook step away with a threat?",
+    "The queen and the king defend the bishop on e7, and Rg8 attacks the knight, so the sacrifice wins nothing."
    ],
-   "explain": "The bishop has left f8, so the king can castle short. The engine rates Nxg6 at least 3.5 pawns worse than its best move, White does not come out ahead in material along the best-defence line, and without the sacrifice the position is roughly level.",
+   "explain": "The bishop on e7 is defended by the queen and the king, so the knight's attack on it wins nothing, and the rook can answer Nxg6 with Rg8, attacking the knight. The engine rates Nxg6 at least 3.5 pawns worse than its best move, White does not come out ahead in material along the best-defence line, and without the sacrifice the position is roughly level.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -3067,6 +3093,116 @@
     "family.FAM-A1-GG",
     "lang.en",
     "role.working"
+   ]
+  },
+  {
+   "id": "IBa1-8",
+   "skill": "ATK.GREEKGIFT.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBa1-8",
+   "prompt": "White is thinking about Bxh7+, a bishop capture on the h-pawn with check. Does the sacrifice work, that is, does it win material or mate against the best defence?",
+   "answer": {
+    "outcome": "No, it fails",
+    "options": [
+     "Yes, it works",
+     "No, it fails"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "e4h7",
+      "cp": 300
+     },
+     "statement": "Bxh7+ is at least 3 pawns worse than the engine's best move (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "e4h7",
+      "max": -1
+     },
+     "statement": "Along the engine's best-defence line White ends behind in material."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 120
+     },
+     "statement": "Without the sacrifice the engine rates the position as roughly level (depth 16)."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "a2",
+      "piece": "Q"
+     },
+     "statement": "The white queen stands on a2."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "a2",
+      "excludes": [
+       "h5"
+      ],
+      "after_moves": [
+       "e4h7",
+       "g8h7",
+       "f3g5",
+       "h7g8"
+      ]
+     },
+     "statement": "The queen on a2 does not attack h5, even after Bxh7+ Kxh7 Ng5+ Kg8."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e4h7",
+       "g8h7",
+       "f3g5",
+       "h7g8"
+      ]
+     },
+     "statement": "After Ng5+ Kg8 only the knight attacks h7."
+    }
+   ],
+   "hints": [
+    "Bxh7+ Kxh7 Ng5+ brings the knight in. Which of your pieces comes next, and where does it need to go?",
+    "The queen is the piece that joins on h5. Where is it, and can it reach h5 in one move?",
+    "The queen stands on a2 and cannot reach h5, so the attack stops after the knight's check."
+   ],
+   "explain": "The queen stands on a2, so it cannot reach h5. After Bxh7+ Kxh7 Ng5+ Kg8 the knight is the only white piece attacking h7. The engine rates Bxh7+ at least 3 pawns worse than its best move, White ends behind in material along the best-defence line, and without the sacrifice the position is roughly level.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Yes, it works",
+    "No, it fails"
+   ],
+   "tags": [
+    "node.ATK.GREEKGIFT",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-A1-GG",
+    "lang.en",
+    "role.failing"
    ]
   },
   {
