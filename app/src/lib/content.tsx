@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import type { ContentBundle, Item, Lesson, LessonStep, Manifest, Skill, VerifiedInfo } from '../types'
+import type { ContentBundle, Course, Item, Lesson, LessonStep, Manifest, Skill, VerifiedInfo } from '../types'
 
 const base = import.meta.env.BASE_URL
 /** `v`: the manifest's hash. Each content file is requested as ?v=<hash>, so one visit never mixes files of different builds (the service worker caches by URL). */
@@ -51,10 +51,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     let cancelled = false
     const small = load<Manifest>('manifest.json').then(async manifest => {
       const v = manifest.hash
-      return [manifest, ...(await Promise.all([load<Skill[]>('skills.json', v), load<Lesson[]>('lessons.json', v), load<Record<string, VerifiedInfo>>('verified.json', v)]))] as const
+      return [manifest, ...(await Promise.all([load<Skill[]>('skills.json', v), load<Lesson[]>('lessons.json', v), load<Record<string, VerifiedInfo>>('verified.json', v), load<Course[]>('courses.json', v).catch(() => [] as Course[])]))] as const
     })
-    const assemble = ([manifest, skills, lessons, verified]: Awaited<typeof small>, items: Item[]): ContentBundle => ({
-      manifest, skills, items, lessons, verified,
+    const assemble = ([manifest, skills, lessons, verified, courses]: Awaited<typeof small>, items: Item[]): ContentBundle => ({
+      manifest, skills, items, lessons, verified, courses,
       skillById: new Map(skills.map(s => [s.id, s])),
       itemById: new Map(items.map(i => [i.id, i])),
       lessonById: new Map(lessons.map(l => [l.id, l])),

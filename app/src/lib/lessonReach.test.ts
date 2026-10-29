@@ -15,7 +15,7 @@ const skills = read<Skill[]>('skills.json')
 const items = read<Item[]>('items.json')
 const lessons = read<Lesson[]>('lessons.json')
 const bundle: ContentBundle = {
-  manifest, skills, items, lessons, verified: {},
+  manifest, skills, items, lessons, verified: {}, courses: [],
   skillById: new Map(skills.map(s => [s.id, s])), itemById: new Map(items.map(i => [i.id, i])), lessonById: new Map(lessons.map(l => [l.id, l])),
   cuedOnly: new Set(manifest.cued_only ?? []), depthsWithItems: new Set(manifest.depths_with_items ?? []),
 }

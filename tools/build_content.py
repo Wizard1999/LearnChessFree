@@ -76,9 +76,10 @@ def main():
                                   engine=next((r["settings"]["engine"] for r in recs if (r.get("settings") or {}).get("engine")), None),
                                   depth=next((r["settings"]["depth"] for r in recs if (r.get("settings") or {}).get("depth")), None))
     def w(name, obj): (OUT / name).write_text(json.dumps(obj, separators=(",", ":")), encoding="utf-8")
-    w("skills.json", skills); w("items.json", items); w("lessons.json", lessons); w("verified.json", verified)
+    courses = [jload(f) for f in sorted((ROOT / "content" / "courses").glob("*.json"))] if (ROOT / "content" / "courses").exists() else []
+    w("skills.json", skills); w("items.json", items); w("lessons.json", lessons); w("verified.json", verified); w("courses.json", courses)
     w("items-first.json", first_visit_items(skills, lessons, items))
-    blob = json.dumps([skills, items, lessons, verified], sort_keys=True).encode()   # the app asks for every content file as ?v=<this hash>
+    blob = json.dumps([skills, items, lessons, verified, courses], sort_keys=True).encode()   # the app asks for every content file as ?v=<this hash>
     # Skill-depths that have exercises but none at cue 3 or above: the app counts their cued evidence in full (app/src/lib/mastery.ts)
     best_cue = {}
     for it in items: best_cue[it["skill"]] = max(best_cue.get(it["skill"], 0), it.get("cue", 0))

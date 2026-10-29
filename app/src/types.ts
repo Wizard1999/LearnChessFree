@@ -93,7 +93,11 @@ export interface Lesson {
 export interface VerifiedInfo { claims: number; checked_at: string | null; engine: string | null; depth: number | null }
 export interface Manifest { version: number; /** Skill-depth keys whose exercises are all cued (cue 1-2). */ cued_only?: string[]; /** Skill-depth keys that have at least one shipped exercise. */ depths_with_items?: string[]; built: string; hash: string; skills: number; items: number; lessons: number; skipped: number; by_review: Record<string, number> }
 
+/** An optional path layered on the core curriculum (docs/course-families.md). Lessons are ordinary lessons listed by id. */
+export interface Course { id: string; title: string; family: string; summary: string; audience?: string; uses?: string[]; lessons: string[] }
+
 export interface ContentBundle {
+  courses: Course[]
   manifest: Manifest
   skills: Skill[]
   items: Item[]

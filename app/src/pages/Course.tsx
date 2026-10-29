@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
 import { LessonIndex } from './LessonIndex'
+import { CoursesView } from './CoursesView'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
@@ -86,14 +87,18 @@ export function Course() {
   const planNow = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, null, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
   if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
 
-  const showLessons = params.get('view') !== 'map' // the list of lessons is the default view; the map is the second
+  const tab = params.get('view')
+  const showCourses = tab === 'courses'
+  const showLessons = tab !== 'map' && !showCourses // the list of lessons is the default view; the map is the second
   const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'lessons') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
   const tabs = (
     <div className="row filters" role="group" aria-label="Course views">
       <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
-      <button type="button" className={!showLessons ? 'chip on' : 'chip'} aria-pressed={!showLessons} onClick={() => setTab('map')}>Map</button>
+      <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
+      <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
     </div>
   )
+  if (showCourses) return <main className="page wide"><h1>Course</h1>{tabs}<CoursesView /></main>
   if (showLessons) return <main className="page wide"><h1>Course</h1>{tabs}<LessonIndex /></main>
 
   const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
