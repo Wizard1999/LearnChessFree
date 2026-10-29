@@ -91,7 +91,8 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
         <button type="button" onClick={fit}>Fit all</button>
         <button type="button" onClick={locate}>Where I am</button>
-        <span className="small muted">Start at the centre and work outward: that is the recommended order, and each ring builds on the one before. You may explore anywhere. Drag to move, scroll to zoom.</span>
+        <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
+        <span className="small muted">Start at the centre and work outward: that is the recommended order. You may explore anywhere. Drag to move, scroll to zoom.</span>
       </div>
       <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
         onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
@@ -111,14 +112,26 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
             </g>
           )
         })}
+        <defs>
+          <marker id="arrow-pre" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrowpre" /></marker>
+          <marker id="arrow-next" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrownext" /></marker>
+        </defs>
         {layout.edges.map(e => {
           const a = byId.get(e.from), b = byId.get(e.to); if (!a || !b) return null
-          const on = picked && (e.from === picked || e.to === picked)
+          const focus = picked ?? hov
+          // the chosen skill (or the one under the pointer): blue lines come IN from what it builds on, orange lines go OUT to what it leads to
+          const pre = focus !== null && e.to === focus
+          const next = focus !== null && e.from === focus
           const lf = level(e.from)
           // a path lights up as the skill before it fills; no hairball for paths that nobody has walked or is about to
           const lit = lf >= 2 || (lf >= 1 && (readiness.get(e.to) ?? 0) > 0)
-          if (!on && !lit && !(highlightStrand && a.strand === highlightStrand && b.strand === highlightStrand) && view.k < 4) return null
-          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={on ? 'mapedge on' : lit ? 'mapedge lit' : 'mapedge'} style={lit && !on ? { opacity: 0.3 + 0.17 * lf, strokeWidth: 1.5 + lf } : undefined} />
+          if (!pre && !next && !lit && !(highlightStrand && a.strand === highlightStrand && b.strand === highlightStrand) && view.k < 4) return null
+          if (pre || next) {
+            // stop the line at the edge of the target node so the arrowhead is visible
+            const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = 24
+            return <line key={`${e.from}>${e.to}`} x1={a.x + (dx / len) * r} y1={a.y + (dy / len) * r} x2={b.x - (dx / len) * r} y2={b.y - (dy / len) * r} className={pre ? 'mapedge pre' : 'mapedge next'} markerEnd={pre ? 'url(#arrow-pre)' : 'url(#arrow-next)'} />
+          }
+          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={lit ? 'mapedge lit' : 'mapedge'} style={lit ? { opacity: 0.3 + 0.17 * lf, strokeWidth: 1.5 + lf } : undefined} />
         })}
         {layout.nodes.map(n => {
           const p = progress.get(n.id)
