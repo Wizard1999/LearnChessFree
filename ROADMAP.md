@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 59%** (61 of 111 tasks done, in-progress tasks count half). Updated 2026-10-29T02:15+00:00 UTC.
+**Overall: 55%** (61 of 118 tasks done, in-progress tasks count half). Updated 2026-10-29T02:16+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -16,6 +16,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 5: Lessons (one per skill node; see the metric above) | 10/23 | 54% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
+| Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 0/7 | 0% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
@@ -40,7 +41,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Name: shortlist and recommendation written (`docs/name-shortlist.md`); waiting for your pick (question Q4); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Master (over-the-board) statistics (question Q6); Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -159,6 +160,15 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] A "seen" marker on every skill and lesson (map dot, outline, lesson index), separate from mastery
 
 - [x] Trivial-skill signals: five quick correct answers in a row, or a Too easy button, leave a skill out of mixed practice
+
+## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
+- [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)
+- [ ] Strong-player review of the slice (gate G3)
+- [ ] A test that the slice is reachable from the Start screen without dead ends
+- [ ] Clear the human-review flags on exercises in the slice
+- [ ] Web version online (gate G10) and the exe tested on a second machine
+- [ ] First testers and the evaluation plan started (gate G11)
+- [ ] Keyboard-operable board and screen-reader pass
 
 ## Phase 6c: Courses on top of the core (design: docs/course-families.md)
 - [ ] Course data model and a Courses view in the Course tab (question Q12)
