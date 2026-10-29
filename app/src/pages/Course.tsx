@@ -295,8 +295,8 @@ export function Course() {
   /** The two side panels and their edge buttons belong to the whole Curriculum section: they show on the map, the lesson list and the courses. */
   const chrome = (
     <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setLeftOpen(false); setRightOpen(false) } }}>
-      <button type="button" className="edgetab left" aria-expanded={leftOpen} onClick={() => toggleSide('left')}>{leftOpen ? '‹ Close' : 'Progress ›'}</button>
-      <button type="button" className="edgetab right" aria-expanded={rightOpen} onClick={() => toggleSide('right')}>{rightOpen ? 'Close ›' : '‹ Challenge'}</button>
+      <button type="button" className="edgetab left" aria-expanded={leftOpen} aria-label={leftOpen ? 'Close the progress panel' : 'Open the progress panel'} title={leftOpen ? 'Close' : undefined} onClick={() => toggleSide('left')}>{leftOpen ? '‹' : 'Progress ›'}</button>
+      <button type="button" className="edgetab right" aria-expanded={rightOpen} aria-label={rightOpen ? 'Close the challenge panel' : 'Open the challenge panel'} title={rightOpen ? 'Close' : undefined} onClick={() => toggleSide('right')}>{rightOpen ? '›' : '‹ Challenge'}</button>
       {leftPanel}
       {rightPanel}
       {detailPanel}
