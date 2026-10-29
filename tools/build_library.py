@@ -19,8 +19,8 @@ for key, rec in sorted(cat.items()):
     big = rec["size"] > MAX_BUNDLED
     if not big:
         shutil.copyfile(src, out / "files" / f"{key}.txt")
-    books.append({"id": key, "title": rec["title"], "author": rec["author"].replace("‏", ""), "year": rec.get("year"), "language": rec.get("language", ""),
+    books.append({"id": key, "title": rec["title"], "author": __import__("re").sub(r"\s*[\(\[].*?[\)\]]|,?\s*\d{4}(-\d{4})?\.?$", "", rec["author"].replace("‏", "")).strip(" ,;"), "year": rec.get("year"), "language": rec.get("language", ""),
                   "source_url": rec["source_url"], "file": None if big else f"files/{key}.txt", "size": rec["size"], "rights": rec["rights"],
-                  "subjects": t.get("subjects") or rec.get("subjects") or ["unsorted"], "level": t.get("level") or rec.get("level") or "Reference", "blurb": t.get("blurb") or f"{rec['title']}, {rec['author']}. Uncorrected OCR text from the Internet Archive; read it with that in mind."})
+                  "subjects": t.get("subjects") or rec.get("subjects") or ["unsorted"], "level": t.get("level") or rec.get("level") or "Reference", "blurb": t.get("blurb") or "Scanned from the original and read by machine, so expect odd characters and broken diagrams. Subject and level are our guess from the title."})
 (out / "catalog.json").write_text(json.dumps({"books": books}, indent=1, ensure_ascii=False), encoding="utf8")
 print(f"library: {len(books)} books shipped, {sum(b['size'] for b in books if b['file']) // 1024} KB")

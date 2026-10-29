@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface Book {
   id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string | null; size: number
@@ -24,6 +24,10 @@ export function Bookshelf() {
   const [q, setQ] = useState('')
   const [open, setOpen] = useState<Book | null>(null)
   const [pinned, setPinned] = useState<string | null>(null)
+  const [hover, setHover] = useState<{ id: string; flip: boolean } | null>(null)
+  const timer = useRef<number | undefined>(undefined)
+  const enter = (id: string, el: HTMLElement) => { window.clearTimeout(timer.current); setHover({ id, flip: el.getBoundingClientRect().right + 340 > window.innerWidth }) }
+  const leave = () => { window.clearTimeout(timer.current); timer.current = window.setTimeout(() => setHover(null), 200) }
 
   useEffect(() => { fetch(`${base()}catalog.json`).then(r => (r.ok ? r.json() : Promise.reject(r.status))).then(d => setBooks(d.books as Book[])).catch(() => setFailed(true)) }, [])
   const subjects = useMemo(() => [...new Set((books ?? []).flatMap(b => b.subjects))].sort(), [books])
@@ -52,11 +56,12 @@ export function Bookshelf() {
           {shown.length === 0 && <p className="muted">No books match.</p>}
           <ul className="plain coverwall">
             {shown.map(b => {
-              const open = pinned === b.id
+              const open = pinned === b.id || hover?.id === b.id
+              const flip = hover?.id === b.id ? hover.flip : false
               const hue = hueOf(b)
               return (
-                <li key={b.id} className={`cover${open ? ' open' : ''}`} style={{ ['--h' as string]: hue }}>
-                  <button type="button" className="coverface" aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(open ? null : b.id)}>
+                <li key={b.id} className={`cover${open ? ' open' : ''}${flip ? ' flip' : ''}`} style={{ ['--h' as string]: hue }} onMouseEnter={e => enter(b.id, e.currentTarget)} onMouseLeave={leave} onFocus={e => enter(b.id, e.currentTarget)}>
+                  <button type="button" className="coverface" aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
                     <span className="coverlevel">{b.level}</span>
                     <span className="covertitle">{b.title}</span>
                     <span className="coverrule" aria-hidden="true" />

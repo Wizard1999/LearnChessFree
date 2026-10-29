@@ -60,13 +60,16 @@ def main() -> None:
     kept = total = dup = 0
     t0 = time.time()
     for name, stream in pgn_streams():
-        while True:
-            try:
-                game = chess.pgn.read_game(stream)
-            except Exception:
-                continue
-            if game is None: break
+        text = stream.read()
+        # cheap pre-filter on the header text: only games where both ratings reach the floor are parsed move by move
+        blocks = re.split(r"\n(?=\[Event )", text)
+        for blk in blocks:
+            mw, mb = re.search(r'\[WhiteElo "(\d+)"\]', blk), re.search(r'\[BlackElo "(\d+)"\]', blk)
             total += 1
+            if not mw or not mb or int(mw.group(1)) < MIN_ELO or int(mb.group(1)) < MIN_ELO: continue
+            try: game = chess.pgn.read_game(io.StringIO(blk))
+            except Exception: continue
+            if game is None: continue
             h = game.headers
             try: we, be = int(h.get("WhiteElo", "0")), int(h.get("BlackElo", "0"))
             except ValueError: continue
