@@ -24,6 +24,11 @@ Rights labels: **CC0 [V]** verified on the provider's page; **PD-US [V-notice]**
 | B3 | Nimzowitsch, *My System* (Hereford transl., Harcourt Brace, **1930**) | Notice "Copyright 1930" on scan [V-notice]; 1930 publications entered the US public domain on 2026-01-01 (my application of the 95-year rule) | `sources/raw/nimzowitsch_my-system_1930-harcourt_archive.txt` |
 | B4 | Emanuel Lasker, *Common Sense in Chess* ([1910]) | Archive metadata NOT_IN_COPYRIGHT (US) [V] | `sources/raw/emlasker_common-sense_archive.txt` |
 | B5 | Znosko-Borovsky, *The Middle Game in Chess* (1922) | Archive metadata NOT_IN_COPYRIGHT (US) [V] | `sources/raw/znosko-borovsky_middle-game_archive.txt` |
+| B6 | Franklin K. Young, *Chess Generalship, Vol. I: Grand Reconnaissance* | Gutenberg #55278 [V]; notice "Copyright, 1910" in the text, so PD-US by date | `sources/raw/pg55278.txt` (downloaded 28 Oct 2026; not yet read) |
+| B7 | H. E. Bird, *Chess History and Reminiscences* | Gutenberg #4902 [V]; nineteenth-century text (references to games of the 1840s onward), PD-US | `sources/raw/pg4902.txt` (not yet read; for the history course) |
+| B8 | F. M. Edge, *The Exploits and Triumphs, in Europe, of Paul Morphy* | Gutenberg #34180 [V]; 1859 original, PD-US | `sources/raw/pg34180.txt` (not yet read; Morphy games, history course) |
+| B9 | Edward Lasker, *Chess and Checkers: The Way to Mastership* | Gutenberg #4913 [V]; text states "copyright 1918", PD-US by date | `sources/raw/pg4913.txt` (not yet read) |
+| B10 | Howard Staunton, *The Blue Book of Chess* | Gutenberg #16377 [V]; Staunton 1840s-50s with a 1910 edition notice, PD-US | `sources/raw/pg16377.txt` (not yet read; openings of the period, for the history course) |
 
 **Excluded and deleted unread:** an archive upload tagged "Public Domain Mark" of *Lasker's Manual* that is the **1947 McKay edition** ("Copyright © 1947 … all rights reserved"), and an upload of *My System* that is the **21st Century Edition** (modern intro and edit). Tagging by an uploader is not evidence of public domain.
 
