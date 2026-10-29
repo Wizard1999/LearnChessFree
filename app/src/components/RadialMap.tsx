@@ -40,6 +40,15 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     for (const n of layout.nodes) { const ps = parents.get(n.id) ?? []; m.set(n.id, ps.length ? ps.filter(p => (progress.get(p)?.level ?? 0) >= 2).length / ps.length : 1) }
     return m
   }, [layout, progress])
+  /** Each prerequisite is worth an equal share of the way into a skill (3 prerequisites: a third each). A prerequisite counts fully at Level one and partly before that. */
+  const pathLight = useMemo(() => {
+    const parents = new Map<string, string[]>()
+    for (const e of layout.edges) parents.set(e.to, [...(parents.get(e.to) ?? []), e.from])
+    const share = (id: string) => Math.min(1, (progress.get(id)?.level ?? 0) / 2)
+    const total = new Map<string, number>()
+    for (const [t, ps] of parents) total.set(t, ps.reduce((sum, p) => sum + share(p), 0) / ps.length)
+    return { total, share }
+  }, [layout, progress])
   const linked = useMemo(() => {
     const s = new Set<string>()
     if (picked) { s.add(picked); for (const e of layout.edges) { if (e.from === picked) s.add(e.to); if (e.to === picked) s.add(e.from) } }
@@ -122,16 +131,17 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           // the chosen skill (or the one under the pointer): blue lines come IN from what it builds on, orange lines go OUT to what it leads to
           const pre = focus !== null && e.to === focus
           const next = focus !== null && e.from === focus
-          const lf = level(e.from)
-          // a path lights up as the skill before it fills; no hairball for paths that nobody has walked or is about to
-          const lit = lf >= 2 || (lf >= 1 && (readiness.get(e.to) ?? 0) > 0)
-          if (!pre && !next && !lit && !(highlightStrand && a.strand === highlightStrand && b.strand === highlightStrand) && view.k < 4) return null
+          // the path to a skill brightens as its prerequisites are done and is brightest when all of them are; it fades as the skill itself is mastered
+          // (the light moves on to what comes next). Paths from skills you have not touched stay dark.
+          const c = pathLight.share(e.from), tl = level(e.to)
+          const light = tl >= 4 ? 0 : c * (0.25 + 0.75 * (pathLight.total.get(e.to) ?? 0)) * (tl >= 2 ? 0.5 : 1)
+          const lit = light > 0.02
           if (pre || next) {
             // stop the line at the edge of the target node so the arrowhead is visible
             const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = 24
             return <line key={`${e.from}>${e.to}`} x1={a.x + (dx / len) * r} y1={a.y + (dy / len) * r} x2={b.x - (dx / len) * r} y2={b.y - (dy / len) * r} className={pre ? 'mapedge pre' : 'mapedge next'} markerEnd={pre ? 'url(#arrow-pre)' : 'url(#arrow-next)'} />
           }
-          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={lit ? 'mapedge lit' : 'mapedge'} style={lit ? { opacity: 0.3 + 0.17 * lf, strokeWidth: 1.5 + lf } : undefined} />
+          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={lit ? 'mapedge lit' : 'mapedge'} style={lit ? { opacity: 0.12 + 0.88 * light, strokeWidth: 1.5 + 3 * light } : undefined} />
         })}
         {layout.nodes.map(n => {
           const p = progress.get(n.id)

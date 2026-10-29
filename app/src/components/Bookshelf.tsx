@@ -8,6 +8,10 @@ type Sort = 'title' | 'author' | 'year' | 'level' | 'size'
 const LEVELS = ['Beginner', 'Improver', 'Club', 'Advanced', 'Reference']
 const PAGE = 5000
 
+/** A stable cover colour from the subject, shifted a little per book so neighbours differ. */
+const SUBJECT_HUE: Record<string, number> = { 'rules and basics': 205, tactics: 12, strategy: 150, endgames: 270, openings: 35, history: 330, 'game collections': 190, 'endgame studies': 280, 'tactics and defence': 20, 'problem composition': 100, mates: 350 }
+const hueOf = (b: Book) => { const base = SUBJECT_HUE[b.subjects[0]] ?? 220; let h = 0; for (const ch of b.id) h = (h * 31 + ch.charCodeAt(0)) % 28; return (base + h - 14 + 360) % 360 }
+
 const base = () => `${import.meta.env.BASE_URL}library/`
 
 /** The texts we may share, each with how we know. Subjects and levels are our labels about how a book reads, not claims about its author. */
@@ -19,6 +23,7 @@ export function Bookshelf() {
   const [level, setLevel] = useState('')
   const [q, setQ] = useState('')
   const [open, setOpen] = useState<Book | null>(null)
+  const [pinned, setPinned] = useState<string | null>(null)
 
   useEffect(() => { fetch(`${base()}catalog.json`).then(r => (r.ok ? r.json() : Promise.reject(r.status))).then(d => setBooks(d.books as Book[])).catch(() => setFailed(true)) }, [])
   const subjects = useMemo(() => [...new Set((books ?? []).flatMap(b => b.subjects))].sort(), [books])
@@ -45,20 +50,34 @@ export function Bookshelf() {
             <label className="small">Level <select value={level} onChange={e => setLevel(e.target.value)}><option value="">All</option>{LEVELS.map(l => <option key={l} value={l}>{l}</option>)}</select></label>
           </div>
           {shown.length === 0 && <p className="muted">No books match.</p>}
-          <ul className="plain bookshelf">
-            {shown.map(b => (
-              <li key={b.id} className="bookcard">
-                <div className="sectionhead"><strong>{b.title}</strong><span className="muted small">{b.level}</span></div>
-                <p className="small muted">{b.author}{b.year ? ` · ${b.year}` : ''} · {Math.round(b.size / 1024)} KB · {b.subjects.join(', ')}</p>
-                <p className="small">{b.blurb}</p>
-                <p className="small muted"><span className="badge">{b.rights.label}</span> {b.rights.basis} (checked {b.rights.checked})</p>
-                <div className="row">
-                  {b.file ? <><button type="button" className="primary" onClick={() => setOpen(b)}>Read</button>
-                  <a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a></> : <span className="small muted">Large file ({Math.round(b.size / 1048576)} MB): read or download it at the source.</span>}
-                  <a className="button" href={b.source_url} target="_blank" rel="noreferrer">Original source</a>
-                </div>
-              </li>
-            ))}
+          <ul className="plain coverwall">
+            {shown.map(b => {
+              const open = pinned === b.id
+              const hue = hueOf(b)
+              return (
+                <li key={b.id} className={`cover${open ? ' open' : ''}`} style={{ ['--h' as string]: hue }}>
+                  <button type="button" className="coverface" aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(open ? null : b.id)}>
+                    <span className="coverlevel">{b.level}</span>
+                    <span className="covertitle">{b.title}</span>
+                    <span className="coverrule" aria-hidden="true" />
+                    <span className="coverauthor">{b.author.replace(/,.*$/, '')}</span>
+                    <span className="coveryear">{b.year ?? ''}</span>
+                  </button>
+                  <div className="coverinfo" role="group" aria-label={`About ${b.title}`}>
+                    <strong>{b.title}</strong>
+                    <p className="small muted">{b.author}{b.year ? ` · ${b.year}` : ''} · {Math.round(b.size / 1024)} KB</p>
+                    <p className="small">{b.blurb}</p>
+                    <p className="small muted">{b.subjects.join(', ')}</p>
+                    <p className="small"><span className="badge" title={b.rights.basis}>{b.rights.label}</span></p>
+                    <div className="row">
+                      {b.file ? <><button type="button" className="primary" onClick={() => setOpen(b)}>Read</button><a className="button" href={`${base()}${b.file}`} download={`${b.id}.txt`}>Download</a></> : <span className="small muted">Large file: read it at the source.</span>}
+                      <a className="button" href={b.source_url} target="_blank" rel="noreferrer">Source</a>
+                    </div>
+                    <details className="small"><summary>How we know it is free to share</summary>{b.rights.basis} (checked {b.rights.checked})</details>
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </>
       )}
