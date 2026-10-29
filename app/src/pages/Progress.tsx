@@ -40,7 +40,7 @@ export function Progress() {
   if (!attempts) return <main className="page"><p className="muted">Loading…</p></main>
   return (
     <main className="page wide">
-      <h1>Your progress and how independent you are becoming</h1>
+      <h1>Your progress</h1>
       <p className="lede">The goal is not a number going up. It is that you can do things on your own, notice what you do not know, and choose your own training. These views show that evidence and its limits. Nothing here is a rating.</p>
       {firsts.length === 0 ? <section className="card"><p>No exercises answered yet. <Link to="/">Start with today's plan</Link>.</p></section> : (
         <>

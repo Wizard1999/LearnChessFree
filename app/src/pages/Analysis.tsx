@@ -9,6 +9,7 @@ import { destsFor, flipTurn } from '../lib/play'
 import { db, type GameRec } from '../db'
 import { loadOpenings, nameOf, children as openingChildren, cnt, type OGraph } from '../lib/openingsData'
 import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree } from '../lib/pgnTree'
+import { mastersFor, type MasterInfo, type MasterRow } from '../lib/masters'
 import { pieceCount, probeTablebase, TB_TEXT, type TbResult } from '../lib/tablebase'
 
 const epdOf = (fen: string) => fen.split(' ').slice(0, 4).join(' ')
@@ -59,6 +60,7 @@ export function Analysis() {
   const [arrows, setArrows] = useState(true)
   const [threat, setThreat] = useState(false)
   const [threatLine, setThreatLine] = useState<EngineLine | null>(null)
+  const [masters, setMasters] = useState<{ info: MasterInfo; rows: MasterRow[] } | null>(null)
   const [tbOn, setTbOn] = useState(false)
   const [tb, setTb] = useState<TbResult | null>(null)
   const [tbErr, setTbErr] = useState<string | null>(null)
@@ -193,6 +195,13 @@ export function Analysis() {
     const cp = chess.isCheckmate() ? (whiteToMove ? -2000 : 2000) : 0
     setEvals(e => ({ ...e, [epdOf(fen)]: cp }))
   }, [over, fen, chess, whiteToMove])
+
+  // ---- statistics from top-level games, when this build includes them
+  useEffect(() => {
+    let dead = false
+    void mastersFor(epdOf(fen)).then(m => { if (!dead) setMasters(m) })
+    return () => { dead = true }
+  }, [fen])
 
   // ---- tablebase (optional, online; only the position is sent)
   useEffect(() => {
@@ -481,6 +490,29 @@ export function Analysis() {
                   <p className="small">{tb.moves.slice(0, 8).map(m => <span key={m.uci} className="mv"><button type="button" className="mvbtn" onClick={() => playUci(m.uci)}>{m.san}</button><span className="muted small"> {m.category === 'loss' ? 'wins' : m.category === 'win' ? 'loses' : m.category === 'draw' ? 'draws' : m.category}</span></span>)}</p>
                 </>
               )}
+            </section>
+          )}
+
+          {masters && masters.rows.length > 0 && (
+            <section className="card" aria-label="Top-level games">
+              <h2>Top-level games</h2>
+              <p className="small muted">From {masters.info.games.toLocaleString()} over-the-board games between players rated {masters.info.minElo}+ (first {masters.info.maxPly / 2} moves). Counts are games, not evaluations.</p>
+              <table className="mastertable">
+                <thead><tr><th>Move</th><th>Games</th><th>White / draw / Black</th><th>Avg rating</th></tr></thead>
+                <tbody>
+                  {masters.rows.slice(0, 8).map(r => {
+                    const tot = r.white + r.draw + r.black || 1
+                    return (
+                      <tr key={r.uci}>
+                        <td><button type="button" className="mvbtn" onClick={() => playUci(r.uci)}>{r.san}</button></td>
+                        <td>{r.games.toLocaleString()}</td>
+                        <td><span className="wdl" title={`White ${Math.round(100 * r.white / tot)}%, draw ${Math.round(100 * r.draw / tot)}%, Black ${Math.round(100 * r.black / tot)}%`}><span className="wdlw" style={{ width: `${100 * r.white / tot}%` }} /><span className="wdld" style={{ width: `${100 * r.draw / tot}%` }} /><span className="wdll" style={{ width: `${100 * r.black / tot}%` }} /></span> <span className="small muted">{Math.round(100 * r.white / tot)}/{Math.round(100 * r.draw / tot)}/{Math.round(100 * r.black / tot)}%</span></td>
+                        <td>{r.avgElo}</td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
             </section>
           )}
 
