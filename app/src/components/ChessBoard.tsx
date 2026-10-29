@@ -99,9 +99,8 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     return ranks.split('').flatMap(r => files.split('').map(f => `${f}${r}`))
   }, [orientation])
   return (
-    <div className="board-wrap" role="img" aria-label={label ?? 'Chess board'}>
+    <div className={controlMapOn ? 'board-wrap hascontrol' : 'board-wrap'} role="img" aria-label={label ?? 'Chess board'}>
       <div ref={el} className="board" />
-      {controlMapOn && <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }} title="Show who controls each square">{showControl ? 'Hide control' : 'Control'}</button>}
       {map && (
         <div className="controlmap" aria-label="Square control map">
           {cells.filter(sq => ALL_SQUARES.includes(sq)).map(sq => {
@@ -116,8 +115,13 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
           })}
         </div>
       )}
-      {map && picked && <div className="controldetail" role="status">{describeControl(map.get(picked)!)}</div>}
-      {map && !picked && <div className="controldetail muted" role="note">Blue: White controls more. Orange: Black controls more. Each square shows White attackers - Black attackers. Tap a square for details. Pins are ignored.</div>}
+      {controlMapOn && (
+        <div className="controlbar">
+          <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
+          {map && picked && <span className="controldetail" role="status">{describeControl(map.get(picked)!)}</span>}
+          {map && !picked && <span className="controldetail muted" role="note">Blue: White controls more. Orange: Black. Each square: White attackers - Black attackers. Tap a square for details. Pins ignored.</span>}
+        </div>
+      )}
     </div>
   )
 }
