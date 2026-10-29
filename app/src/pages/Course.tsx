@@ -339,8 +339,8 @@ export function Course() {
       )}
 
 
-      <div className="row filters sectionbar" role="group" aria-label="Sections">
-        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}>All lessons · {overall.percent}%</button>
+      <div className="row filters sectionbar" role="group" aria-label="Sections"><span className="small muted sectionlabel">Highlight a section on the map:</span>
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
       <div className="missiongrid mapgrid">

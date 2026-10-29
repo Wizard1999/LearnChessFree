@@ -146,7 +146,7 @@ export function overallMission(missions: Mission[]): Mission {
   const nodes = missions.flatMap(m => m.nodes)
   const counts = [0, 0, 0, 0, 0]
   for (const n of nodes) counts[n.level]++
-  return { strand: 'all', name: 'All lessons', nodes, percent: meanPercent(nodes, n => n.level), percentWithAssumed: meanPercent(nodes, n => n.levelWithAssumed), assumedCount: nodes.filter(n => n.levelWithAssumed > n.level).length, counts, tiers: [] }
+  return { strand: 'all', name: 'Whole curriculum', nodes, percent: meanPercent(nodes, n => n.level), percentWithAssumed: meanPercent(nodes, n => n.levelWithAssumed), assumedCount: nodes.filter(n => n.levelWithAssumed > n.level).length, counts, tiers: [] }
 }
 
 /** "Skills up next": started skills first, then the lowest tier; only where the prerequisites of the working depth are met. */
