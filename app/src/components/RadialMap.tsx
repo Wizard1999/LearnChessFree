@@ -3,13 +3,13 @@ import { layoutMap } from '../lib/mapLayout'
 import type { NodeProgress } from '../lib/missions'
 import type { Skill } from '../types'
 
-interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string> }
+interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null }
 
 const LEVEL_FILL = ['var(--canvas)', 'var(--chip)', 'var(--info)', 'var(--info)', 'var(--success)']
 
 /** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ skills, progress, picked, onPick, strandNames }: Props) {
+export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null }: Props) {
   const layout = useMemo(() => layoutMap(skills), [skills])
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
   const R = layout.radius + 40
@@ -21,6 +21,12 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames }: Pro
     if (picked) { s.add(picked); for (const e of layout.edges) { if (e.from === picked) s.add(e.to); if (e.to === picked) s.add(e.from) } }
     return s
   }, [picked, layout])
+  useEffect(() => {
+    if (!highlightStrand) return
+    const ns = layout.nodes.filter(n => n.strand === highlightStrand); if (!ns.length) return
+    const cx = ns.reduce((t, n) => t + n.x, 0) / ns.length, cy = ns.reduce((t, n) => t + n.y, 0) / ns.length
+    setView({ x: -cx, y: -cy, k: 1.6 })
+  }, [highlightStrand, layout])
   const zoom = (f: number) => setView(v => ({ ...v, k: Math.max(0.25, Math.min(6, v.k * f)) }))
   const fit = () => setView({ x: 0, y: 0, k: 1 })
   const locate = () => {
@@ -58,7 +64,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames }: Pro
           const mid = (w.from + w.to) / 2
           const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
           return (
-            <g key={w.strand} className="mapwedge">
+            <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`}>
               <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
               <text x={Math.cos(mid) * (layout.radius - 20)} y={Math.sin(mid) * (layout.radius - 20)} textAnchor="middle" className="wedgelabel">{w.strand} {strandNames[w.strand] ?? ''}</text>
             </g>
@@ -72,7 +78,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames }: Pro
         {layout.nodes.map(n => {
           const p = progress.get(n.id)
           const lvl = p ? Math.min(4, p.level) : 0
-          const dim = picked && !linked.has(n.id)
+          const dim = (picked && !linked.has(n.id)) || (!picked && highlightStrand && n.strand !== highlightStrand)
           return (
             <g key={n.id} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}`} transform={`translate(${n.x},${n.y})`}
               tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, level ${lvl}`}
