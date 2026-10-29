@@ -32,6 +32,12 @@ Legend: **Q** question · **G** gate (an action or permission only you can give)
 
 | Q11 | Q | Optional sign-in to keep progress across devices: which route? (A) none for now, use the export/import file (built); (B) the learner's own cloud storage (Google Drive / Dropbox / a folder) with their own login; (C) a small hosted backend with email magic-link or passkey sign-in; (D) self-hosted. Any of B-D needs an outside service, so it is your call and your money/privacy decision | The product works with no account (progress saves in the browser on first visit, nothing to set up). Sign-in would only add sync and recovery if the browser data is cleared. C is the simplest for learners; it means running or renting a server and storing their progress | A: nothing hosted. Export/import stays the only way to move progress | no |
 
+| Q12 | Q | Course families (`docs/course-families.md`): is the order right (famous games, opening deep dives, history and meta, playstyles, advanced club courses), and may I start the famous-games pilot with about 8 games? | You asked for these; the plan builds them on the core curriculum without overlap | Proceed in that order, pilot first | no |
+| Q13 | Q | Duplicate lessons found by `tools/check_overlap.py`: L-END-MATE-1 / L-END-MATEKQ-1, L-FND-COUNT-1 / L-SAF-COUNT-1, L-FND-THREAT-1 / L-LOOP-V1-1. Which of each pair is the keeper? | They teach the same skill at the same depth. Merging needs a read of both | Keep the earlier FND/END-MATE lesson in each pair and retarget the later one to a deeper depth, after you or I compare them | no |
+| Q14 | Q | Playstyle course: are you happy that every claim about a named player must come from a stated game sample (numbers), with no opinions like "strong at endgames" unless measured? | It keeps the school's honesty rule. It makes the course data-heavy and a bit drier | Measured claims only | no |
+| G12 | G | Open Library or purchased ebooks: if you want in-copyright books used as coverage checklists (topic lists only, no text), name the titles or provide them. The five new public-domain Gutenberg books are already registered | Rights rules in `library/REGISTRY.md` | Public-domain sources only | no |
+| G13 | G | Reddit is refused by all my browsing tools. If you want Reddit-sourced misconceptions, paste threads into `docs/misconceptions-by-level.md` or tell me which to read via another route | The tool policy, not your setup | Not used | no |
+
 ## Answered / done
 *(none yet)*
 
