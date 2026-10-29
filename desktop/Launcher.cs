@@ -26,6 +26,12 @@ static class Launcher
         {".woff","font/woff"},{".woff2","font/woff2"},{".txt","text/plain; charset=utf-8"},{".webmanifest","application/manifest+json"} };
 
     [STAThread]
+    static System.Drawing.Icon LoadIcon()
+    {
+        try { using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream("icon.ico")) return new System.Drawing.Icon(s); }
+        catch { return System.Drawing.SystemIcons.Application; }
+    }
+
     static void Main()
     {
         bool first;
@@ -57,7 +63,7 @@ static class Launcher
         var menu = new ContextMenu();
         menu.MenuItems.Add("Open Scholarmate", (s, a) => Open());
         menu.MenuItems.Add("Quit", (s, a) => { try { listener.Close(); } catch { } Environment.Exit(0); });
-        var icon = new NotifyIcon { Icon = System.Drawing.SystemIcons.Application, Text = "Scholarmate (running)", ContextMenu = menu, Visible = true };
+        var icon = new NotifyIcon { Icon = LoadIcon(), Text = "Scholarmate (running)", ContextMenu = menu, Visible = true };
         icon.DoubleClick += (s, a) => Open();
         icon.ShowBalloonTip(4000, "Scholarmate", portable ? "Running. Your progress is saved in the ChessSchoolData folder next to this program. Right-click this icon to quit." : "Running. This folder is read-only, so progress is saved in your user profile instead. Right-click this icon to quit.", ToolTipIcon.Info);
         Application.Run();
