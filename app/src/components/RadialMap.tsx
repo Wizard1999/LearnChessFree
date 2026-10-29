@@ -152,7 +152,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
               {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
               <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
-              {(picked === n.id || view.k >= 2.4 || next) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+              {picked !== n.id && hov !== n.id && (view.k >= 2.4 || next) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
             </g>
           )
         })}
