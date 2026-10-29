@@ -8,6 +8,7 @@ MAX_BUNDLED = 3 * 1024 * 1024  # larger texts are listed with a link to the sour
 cat = json.loads((ROOT / "library" / "catalog.json").read_text(encoding="utf8"))
 tags = json.loads((ROOT / "library" / "tags.json").read_text(encoding="utf8"))
 out = ROOT / "app" / "public" / "library"
+if (out / "files").exists(): shutil.rmtree(out / "files")  # never leave a removed book behind
 (out / "files").mkdir(parents=True, exist_ok=True)
 books = []
 for key, rec in sorted(cat.items()):
