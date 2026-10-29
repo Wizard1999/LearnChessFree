@@ -26,3 +26,5 @@ Status (2026-10-24): working app and content pipeline built; autonomous build in
 
 ## Run it with one click (Windows)
 Download `desktop/ChessSchool.exe` and double-click it. Nothing to install. It is portable: the program serves the site from inside itself and keeps your progress in a `ChessSchoolData` folder created next to it. Copy or move the folder anywhere (a USB stick works), and delete everything by putting the folder in the recycle bin. If the folder is read-only, progress is kept in your user profile instead and the tray notice says so. It opens in Microsoft Edge or Google Chrome (one of them must be installed). Right-click the tray icon to quit. Rebuild: `powershell -File desktopuild-exe.ps1`.
+
+Created by Andrew Ryan. See NOTICE.

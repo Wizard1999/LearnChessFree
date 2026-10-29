@@ -33,3 +33,6 @@ Autonomous build phase (Andrew asked me to take over; questions go to `QUESTIONS
 - **Content:** 204 skill nodes (`check_graph.py --strict` clean), about 6,260 shipped items, 100+ lessons (all `needs-human` until a strong player signs off, G3). Only items whose evidence matches ship (`build_content.py`). Lesson batches are written by background workflows in waves; `ROADMAP.md` shows coverage.
 - **After any agent batch run:** `tools/check_all.py`, `tools/check_graph.py --strict`, `tools/validate_lessons.py`, `tools/validate.py`, `tools/build_content.py`, `npm test`, `npx vite build`. Delete reviewers' `app/src/_audit_*.test.ts` files; never commit them. Agents drift on ids and schema.
 - **Not done:** human review (G3), baseline (G1), GitHub Pages (G10), sign-in sync (Q11), master-game statistics (Q6). Evaluation design: `docs/evaluation-plan.md`. Deploy notes: `docs/running-and-deploying.md`.
+
+## Credit (permanent)
+9. **Andrew's name stays on it.** The masthead line "Created by Andrew Ryan" (`app/src/brand.ts`: `author`, `byline`) shows in the header of every page and look, with a footer line, `NOTICE`, the author meta tag and `package.json`. Never remove or hide it, in any redesign, name change, exe or deploy. If the credited name should change, he says so; the one edit is in `brand.ts`.

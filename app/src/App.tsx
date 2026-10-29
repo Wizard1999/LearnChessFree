@@ -34,7 +34,7 @@ export default function App() {
   return (
     <ContentProvider>
       <header className="top">
-        <NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink>
+        <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline}</span></div>
         <nav aria-label="Main">
           {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a')) moreRef.current?.removeAttribute('open') }}>
@@ -67,6 +67,7 @@ export default function App() {
         <Route path="*" element={<main className="page"><h1>Not found</h1></main>} />
       </Routes>
       </ErrorBoundary>
+      <footer className="sitefooter">{BRAND.name} was created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.</footer>
     </ContentProvider>
   )
 }
