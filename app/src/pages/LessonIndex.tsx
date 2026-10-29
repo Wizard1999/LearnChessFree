@@ -7,6 +7,9 @@ import { STRAND_NAMES } from '../lib/missions'
 
 type Filter = 'all' | 'todo' | 'done'
 
+const mins = (l: { minutes?: number }) => l.minutes ?? 8
+const fmt = (m: number) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${m % 60 ? `${m % 60} min` : ''}`.trim())
+
 /** Every lesson on one page: find it, open it, or mark it finished, skipped or unstarted. Nothing is locked. */
 export function LessonIndex() {
   const content = useContent()
@@ -30,11 +33,18 @@ export function LessonIndex() {
     return [...m.entries()].sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
   }, [content, byId, q, filter])
   const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
+  const totalMin = content.lessons.reduce((t, l) => t + mins(l), 0)
+  const doneMin = content.lessons.filter(l => byId.get(l.id)?.done).reduce((t, l) => t + mins(l), 0)
   const mark = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
   const reset = (id: string) => db.lessonProgress.delete(id)
 
   return (
     <section aria-label="Lesson index">
+      <div className="card overallbar">
+        <div className="sectionhead"><strong>Whole curriculum</strong><span className="muted small">{fmt(totalMin)} of lessons in all · {fmt(Math.max(0, totalMin - doneMin))} left</span></div>
+        <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
+        <p className="small muted">S1, S2 and so on are the sections (strands) of the curriculum, in teaching order.</p>
+      </div>
       <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. Open any of them at any time. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
       <div className="row filters">
         <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
@@ -43,7 +53,8 @@ export function LessonIndex() {
       {groups.length === 0 && <p className="muted">No lessons match.</p>}
       {groups.map(([strand, ls]) => (
         <div key={strand} className="card">
-          <h2>{strand} · {STRAND_NAMES[strand] ?? strand}</h2>
+          {(() => { const all = content.lessons.filter(l => content.skillById.get(l.skill)?.strand === strand); const t = all.reduce((x, l) => x + mins(l), 0); return (
+            <div className="sectionhead"><h2>{strand} · {STRAND_NAMES[strand] ?? strand}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
           {(() => { const all = content.lessons.filter(l => content.skillById.get(l.skill)?.strand === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
             <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
           <ul className="plain lessonindex">
