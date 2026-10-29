@@ -9,3 +9,4 @@ Say "go" and I start these in this order, a few agents at a time (the 5-hour win
 5. **Release 0.1 hardening**: review the first-10-hours slice (`docs/first-10-hours.md`), reachability test from the Start screen.
 
 After each wave: `tools/validate_lessons.py` (no args), `tools/check_all.py`, `tools/check_graph.py --strict`, `tools/check_overlap.py` (stay at 1), `tools/build_content.py`, `npm test`, `npx vite build`; delete any `app/src/_audit_*.test.ts`; `tools/update_roadmap.py`; commit and push (pull `--no-rebase` first). Do NOT start a second copy of a batch while one is running (this caused the p5 collision).
+- After any UI change: load every route (Today, Curriculum x3, Practice, Progress, Analysis, Library, Games, Lab, Plan, Play, Openings, Roadmap, Settings, a lesson, Placement, Drill) and confirm none shows 'This page hit a problem'.
