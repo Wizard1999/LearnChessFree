@@ -34,3 +34,12 @@ describe('pgn tree', () => {
     expect(START_FEN).toContain('rnbqkbnr')
   })
 })
+
+describe('pgn evals', () => {
+  it('reads [%eval] comments as centipawns', () => {
+    const t = parsePgn('1. e4 {[%eval 0.30]} e5 {[%eval -0.12] a comment} 2. Qh5 {[%eval #5]} *') as Tree
+    const [a] = t.nodes[0].kids; const b = t.nodes[a].kids[0]; const c = t.nodes[b].kids[0]
+    expect(t.nodes[a].evalCp).toBe(30); expect(t.nodes[b].evalCp).toBe(-12); expect(t.nodes[c].evalCp).toBe(2000)
+    expect(t.nodes[b].comment).toBe('a comment')
+  })
+})

@@ -295,7 +295,13 @@ export function Analysis() {
 
   // ---- saved games and import
   useEffect(() => { void db.games.orderBy('ts').reverse().toArray().then(setSaved).catch(() => undefined) }, [])
-  function loadTree(t: Tree) { setTree(t); setCur(0); setEvals({}); setMsg(null); setText('') }
+  function loadTree(t: Tree) {
+    setTree(t); setCur(0); setMsg(null); setText('')
+    // scores stored in the PGN ([%eval]) fill the evaluation graph at once
+    const seeded: Record<string, number> = {}
+    for (const n of t.nodes) if (n.evalCp !== undefined) seeded[epdOf(n.fen)] = n.evalCp
+    setEvals(seeded)
+  }
   function importText(t: string) { const r = parseInput(t); if (typeof r === 'string') setMsg(r); else loadTree(r) }
   useEffect(() => {
     const fenParam = params.get('fen'), gameParam = params.get('game')
@@ -303,7 +309,22 @@ export function Analysis() {
     else if (gameParam) void db.games.get(+gameParam).then(g => { if (g) importText(g.pgn) })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const pgnOut = useMemo(() => writePgn(tree), [tree])
+  const [withEvals, setWithEvals] = useState(false)
+  const pgnOut = useMemo(() => {
+    if (!withEvals) return writePgn(tree)
+    // engine scores travel as the standard [%eval] comment (in pawns, from White's point of view) on the moves that were analysed
+    const t = cloneTree(tree)
+    for (const n of t.nodes) {
+      const cp = evals[epdOf(n.fen)]
+      if (n.id !== 0 && cp !== undefined) n.comment = `${n.comment ? n.comment + ' ' : ''}[%eval ${Math.abs(cp) >= 2000 ? (cp > 0 ? '#1' : '#-1') : (cp / 100).toFixed(2)}]`
+    }
+    return writePgn(t)
+  }, [tree, withEvals, evals])
+  async function saveToGames() {
+    const h = tree.headers ?? {}
+    await db.games.add({ source: 'analysis', white: h.White ?? 'Analysis', black: h.Black ?? 'Analysis', result: h.Result ?? '*', date: h.Date && h.Date !== '????.??.??' ? h.Date.replace(/\./g, '-') : new Date().toISOString().slice(0, 10), pgn: pgnOut, ts: Date.now() })
+    setMsg('Saved to My games.'); void db.games.orderBy('ts').reverse().toArray().then(setSaved)
+  }
   const copy = (s: string, label: string) => { void navigator.clipboard?.writeText(s).then(() => setMsg(`${label} copied.`), () => setMsg('Copy was blocked; select the text instead.')) }
   const shareLink = () => `${window.location.href.split('#')[0]}#/analysis?fen=${encodeURIComponent(fen)}`
   function download() {
@@ -515,6 +536,8 @@ export function Analysis() {
               <button type="button" onClick={() => copy(fen, 'FEN')}>Copy FEN</button>
               <button type="button" onClick={() => copy(pgnOut, 'PGN')} disabled={mainline.length < 2}>Copy PGN</button>
               <button type="button" onClick={download} disabled={mainline.length < 2}>Download PGN</button>
+              <button type="button" onClick={() => void saveToGames()} disabled={mainline.length < 2}>Save to My games</button>
+              <label className="small"><input type="checkbox" checked={withEvals} onChange={e => setWithEvals(e.target.checked)} /> Include engine scores in the PGN</label>
               <button type="button" onClick={() => copy(shareLink(), 'Link')}>Copy link to this position</button>
             </div>
             {saved.length > 0 && (
