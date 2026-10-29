@@ -1,7 +1,19 @@
 """Build the in-app library: library/catalog.json (stored texts only) + library/tags.json -> app/public/library/.
 Only records whose status is "stored" ship. Tags (subjects, level, blurb) are our own labels [I], not claims about the author."""
-import json, shutil
+import json, re, shutil
 from pathlib import Path
+
+
+def clean_author(a: str) -> str:
+    """Catalogue strings such as 'Cook, Eugene Beauharnais, 1830-1915, ed Henry, W. R., d. 1866' become 'Eugene Beauharnais Cook'."""
+    a = a.replace(chr(0x200f), "").replace(chr(0xfffd), "")
+    a = re.sub(r"[(\[].*?[)\]]", "", a)
+    first = re.split(r";|, joint|, ed\b|, tr\b|, trans|, d\. |, active|\. [A-Z][a-z]+ [a-z]", a)[0]
+    first = re.sub(r",?\s*\d{4}\s*-\s*\d{0,4}.*$", "", first)
+    parts = [p.strip() for p in first.split(",") if p.strip()]
+    if len(parts) >= 2 and " " not in parts[0]:
+        return f"{parts[1]} {parts[0]}"
+    return " ".join(parts) if parts else a.strip()
 
 ROOT = Path(__file__).resolve().parent.parent
 MAX_BUNDLED = 3 * 1024 * 1024  # larger texts are listed with a link to the source instead of being shipped inside the app
@@ -19,7 +31,7 @@ for key, rec in sorted(cat.items()):
     big = rec["size"] > MAX_BUNDLED
     if not big:
         shutil.copyfile(src, out / "files" / f"{key}.txt")
-    books.append({"id": key, "title": rec["title"], "author": __import__("re").sub(r"\s*[\(\[].*?[\)\]]|,?\s*\d{4}(-\d{4})?\.?$", "", rec["author"].replace("‏", "")).strip(" ,;"), "year": rec.get("year"), "language": rec.get("language", ""),
+    books.append({"id": key, "title": rec["title"], "author": t.get("author") or clean_author(rec["author"]), "year": rec.get("year"), "language": rec.get("language", ""),
                   "source_url": rec["source_url"], "file": None if big else f"files/{key}.txt", "size": rec["size"], "rights": rec["rights"],
                   "subjects": t.get("subjects") or rec.get("subjects") or ["unsorted"], "level": t.get("level") or rec.get("level") or "Reference", "blurb": t.get("blurb") or "Scanned from the original and read by machine, so expect odd characters and broken diagrams. Subject and level are our guess from the title."})
 (out / "catalog.json").write_text(json.dumps({"books": books}, indent=1, ensure_ascii=False), encoding="utf8")
