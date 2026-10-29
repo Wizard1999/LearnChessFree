@@ -491,3 +491,18 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
   .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100vh - 13.5rem); }
   .edgetab.left { left: 1rem; }
 }
+
+/* FINAL layout rule for the Curriculum pages: the centre column has ONE width and one position whatever is open. The two panels live in
+   the side gutters (330px each plus a margin) whether they are open or not, so opening or selecting never resizes or shifts the centre. */
+main.curriculum, main.curriculum.dockopen, main.curriculum.page {
+  box-sizing: border-box; max-width: none; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; padding-bottom: 1.5rem;
+  width: min(1100px, calc(100vw - 2 * (330px + 1.5rem)));
+}
+/* Not enough room for two side gutters: one bottom sheet instead, and the centre takes the full width, again the same in every state */
+@media (max-width: 1300px) {
+  main.curriculum, main.curriculum.dockopen, main.curriculum.page { width: auto; margin-left: 1rem; margin-right: 1rem; padding-bottom: 4.5rem; }
+  main.curriculum.dockopen { padding-bottom: calc(46vh + 1rem); }
+  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46vh; border: 0; border-top: 1px solid var(--control-boundary); }
+  .dock.right { z-index: 40; }
+  .edgetab.left { top: auto; bottom: 0.6rem; left: 1rem; }
+}
