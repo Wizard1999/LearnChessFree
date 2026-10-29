@@ -1,0 +1,552 @@
+{
+ "positions": [
+  {
+   "id": "PSattack-storm-1",
+   "fen": "2k3rr/pp3p2/2pp1q2/2b1pNpp/4Pn2/P2P1Q1P/1PP1NPP1/R4RK1 b - - 3 19",
+   "family": "FAM-ISattack-STORM-1",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/vyNpv (FEN after the opponent's first move); opposite-side castling, selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSattack-storm-2",
+   "fen": "r1b2rk1/pp1q1pp1/3p3p/2p1p2P/2P1P1P1/P3PQ2/NPP5/2K2RR1 w - - 0 20",
+   "family": "FAM-ISattack-STORM-2",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/z0Nmr (FEN after the opponent's first move); opposite-side castling, selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSattack-storm-3",
+   "fen": "1rb2rk1/p4ppp/2p5/2q1pPPQ/3pP3/1B2n3/PPP1N2P/2KRR3 w - - 3 20",
+   "family": "FAM-ISattack-STORM-3",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/xTkmr (FEN after the opponent's first move); opposite-side castling, selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSattack-trade-1",
+   "fen": "5rk1/2Q3p1/5q1p/4p3/8/2P1P3/PP3rPP/R4RK1 w - - 0 22",
+   "family": "FAM-ISattack-TRADE-1",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/DSMI2 (FEN before the opponent's first move: the position in which the rook trade is the mistake); selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSattack-trade-2",
+   "fen": "r4rk1/1b3Rpp/1p6/p1n5/1N3Q2/P7/1qP3PP/5R1K b - - 0 25",
+   "family": "FAM-ISattack-TRADE-2",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/FSgmN (FEN before the opponent's first move: the position in which the rook trade is the mistake); selected by engine check",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSattack-trade-3",
+   "fen": "2r4k/p4Qp1/7p/8/3qP1N1/5P2/P4RPP/2r2R1K w - - 4 29",
+   "family": "FAM-ISattack-TRADE-3",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/Aoy1V (FEN before the opponent's first move: the position in which the rook trade is the mistake); selected by engine check",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISattack-storm-1",
+   "skill": "ATK.PAWNSTORM.D2",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSattack-storm-1",
+   "prompt": "Black has castled queenside and White kingside, so the kings are on opposite wings. Black to move. Find the pawn lever: a pawn move that attacks a pawn in front of the enemy king.",
+   "answer": {
+    "moves": [
+     "g5g4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g1",
+      "piece": "K"
+     },
+     "statement": "The white king stands on g1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c8",
+      "piece": "k"
+     },
+     "statement": "The black king stands on c8, so the kings are on opposite wings."
+    },
+    {
+     "id": "C3",
+     "type": "moves_where",
+     "params": {
+      "property": "pawn_move_attacks",
+      "square": "h3",
+      "moves": [
+       "g5g4"
+      ]
+     },
+     "statement": "The pawn moves after which the moved pawn attacks the White pawn on h3 are exactly g4."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5g4"
+      ],
+      "within_cp": 30
+     },
+     "statement": "g4 is the engine's best move, and every accepted move is within 30 centipawns of it (depth 16)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "c5b6",
+      "cp": 400
+     },
+     "statement": "The quieter Bb6 is at least 4 pawns worse than g4 (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.ATK.PAWNSTORM",
+    "theme.pawnStorm",
+    "family.FAM-ISattack-STORM-1",
+    "lang.en",
+    "tier.3",
+    "cue.1",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "A lever is a pawn move that attacks one of the pawns shielding the enemy king.",
+    "Look for a pawn that can step forward next to the White pawn on h3.",
+    "The pawn move ends on a square that attacks h3."
+   ],
+   "explain": "g4 is a lever: it attacks the pawn on h3. At depth 16 the engine rates it at least 4 pawns above Bb6. This is an engine result for this one position, not a rule that pawn storms win.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c5b6": "Bb6 is quieter. The engine at depth 16 rates it at least 4 pawns below g4."
+   }
+  },
+  {
+   "id": "ISattack-storm-2",
+   "skill": "ATK.PAWNSTORM.D2",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSattack-storm-2",
+   "prompt": "White has castled queenside and Black kingside, so the kings are on opposite wings. White to move. Find the pawn lever: a pawn move that attacks a pawn in front of the enemy king.",
+   "answer": {
+    "moves": [
+     "g4g5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "K"
+     },
+     "statement": "The white king stands on c1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "g8",
+      "piece": "k"
+     },
+     "statement": "The black king stands on g8, so the kings are on opposite wings."
+    },
+    {
+     "id": "C3",
+     "type": "moves_where",
+     "params": {
+      "property": "pawn_move_attacks",
+      "square": "h6",
+      "moves": [
+       "g4g5"
+      ]
+     },
+     "statement": "The pawn moves after which the moved pawn attacks the Black pawn on h6 are exactly g5."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g4g5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "g5 is the engine's best move, and every accepted move is within 30 centipawns of it (depth 16)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "a2c3",
+      "cp": 300
+     },
+     "statement": "The quieter Nc3 is at least 3 pawns worse than g5 (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.ATK.PAWNSTORM",
+    "theme.pawnStorm",
+    "family.FAM-ISattack-STORM-2",
+    "lang.en",
+    "tier.3",
+    "cue.1",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "A lever is a pawn move that attacks one of the pawns shielding the enemy king.",
+    "Look for a pawn that can step forward next to the Black pawn on h6.",
+    "The pawn move ends on a square that attacks h6."
+   ],
+   "explain": "g5 is a lever: it attacks the pawn on h6. At depth 16 the engine rates it at least 3 pawns above Nc3. This is an engine result for this one position, not a rule that pawn storms win.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "a2c3": "Nc3 is quieter. The engine at depth 16 rates it at least 3 pawns below g5."
+   }
+  },
+  {
+   "id": "ISattack-storm-3",
+   "skill": "ATK.PAWNSTORM.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PSattack-storm-3",
+   "prompt": "The kings are on opposite wings. White to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "g5g6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "K"
+     },
+     "statement": "The white king stands on c1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "g8",
+      "piece": "k"
+     },
+     "statement": "The black king stands on g8, so the kings are on opposite wings."
+    },
+    {
+     "id": "C3",
+     "type": "moves_where",
+     "params": {
+      "property": "pawn_move_attacks",
+      "square": "h7",
+      "moves": [
+       "g5g6"
+      ]
+     },
+     "statement": "The pawn moves after which the moved pawn attacks the Black pawn on h7 are exactly g6."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5g6"
+      ],
+      "within_cp": 30
+     },
+     "statement": "g6 is the engine's best move, and every accepted move is within 30 centipawns of it (depth 16)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "c2c3",
+      "cp": 500
+     },
+     "statement": "The quieter c3 is at least 5 pawns worse than g6 (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.ATK.PAWNSTORM",
+    "theme.pawnStorm",
+    "family.FAM-ISattack-STORM-3",
+    "lang.en",
+    "tier.3",
+    "cue.2",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "With the kings on opposite wings, pawns can attack freely. Which of your pawns could attack a shield pawn?",
+    "One pawn can step forward to attack the Black pawn on h7.",
+    "Push that pawn."
+   ],
+   "explain": "g6 is a lever: it attacks the pawn on h7. At depth 16 the engine rates it at least 5 pawns above c3. This is an engine result for this one position, not a rule that pawn storms win.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c2c3": "c3 is quieter. The engine at depth 16 rates it at least 5 pawns below g6."
+   }
+  },
+  {
+   "id": "ISattack-trade-1",
+   "skill": "DEF.TRADES.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSattack-trade-1",
+   "prompt": "White to move. Your rook can take on f2, and the rook trade looks natural. Before you trade, ask which of your pieces the trade would remove from the defence. Find a better move.",
+   "answer": {
+    "moves": [
+     "c7c4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f2",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one black piece guards f2, so the trade on f2 will be recaptured."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c7c4"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Qc4+ is among the engine's best moves, within 30 centipawns of the best (depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f1f2",
+      "cp": 300
+     },
+     "statement": "The trade Rxf2 is at least three pawns worse than the best move (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.DEF.TRADES",
+    "theme.defensiveTrade",
+    "family.FAM-ISattack-TRADE-1",
+    "lang.en",
+    "tier.3",
+    "cue.1",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "Ask what the rook that would trade is currently guarding, and who guards it afterwards.",
+    "Check your back rank: after the trade, can the enemy pieces give check there?",
+    "The trade Rxf2 is not the best idea here. Look for a move that keeps your pieces working together."
+   ],
+   "explain": "The only black piece guarding f2 is the queen on f6, but after Rxf2 Qxf2+ the white rook that held the back rank is gone and the engine finds a forced mate. At depth 16 the engine rates Rxf2 at least three pawns below the best move. A trade can take away your own defender as well as the enemy attacker. This is one position checked by an engine, not a rule that rook trades lose.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "f1f2": "Rxf2 trades rooks and weakens your own back rank. The engine at depth 16 rates it at least three pawns below the best move."
+   }
+  },
+  {
+   "id": "ISattack-trade-2",
+   "skill": "DEF.TRADES.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSattack-trade-2",
+   "prompt": "Black to move. Your rook can take on f7, and the rook trade looks natural. Before you trade, ask which of your pieces the trade would remove from the defence. Find a better move.",
+   "answer": {
+    "moves": [
+     "f8d8",
+     "f8e8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Exactly one white piece guards f7, so the trade on f7 will be recaptured."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8d8",
+       "f8e8"
+      ],
+      "within_cp": 60
+     },
+     "statement": "Rfd8, Rfe8 are among the engine's best moves, within 60 centipawns of the best (depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f8f7",
+      "cp": 300
+     },
+     "statement": "The trade Rxf7 is at least three pawns worse than the best move (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.DEF.TRADES",
+    "theme.defensiveTrade",
+    "family.FAM-ISattack-TRADE-2",
+    "lang.en",
+    "tier.3",
+    "cue.1",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "Ask what the rook that would trade is currently guarding, and who guards it afterwards.",
+    "Check your back rank: after the trade, can the enemy pieces give check there?",
+    "The trade Rxf7 is not the best idea here. Look for a move that keeps your pieces working together."
+   ],
+   "explain": "After Rxf7 Rxf7 the rook that covered the back rank has left the first rank, and the engine finds a forced mate. At depth 16 the engine rates Rxf7 at least three pawns below the best move. A trade can take away your own defender as well as the enemy attacker. This is one position checked by an engine, not a rule that rook trades lose.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "f8f7": "Rxf7 trades rooks and weakens your own back rank. The engine at depth 16 rates it at least three pawns below the best move."
+   }
+  },
+  {
+   "id": "ISattack-trade-3",
+   "skill": "DEF.TRADES.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PSattack-trade-3",
+   "prompt": "White to move. An exchange of rooks is available on c1. Find a move that keeps your position healthy.",
+   "answer": {
+    "moves": [
+     "g2g3",
+     "f7f4",
+     "f7f5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c1",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one black piece guards c1, so the trade on c1 will be recaptured."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g2g3",
+       "f7f4",
+       "f7f5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "g3, Qf4, Qf5 are among the engine's best moves, within 30 centipawns of the best (depth 16)."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f1c1",
+      "cp": 300
+     },
+     "statement": "The trade Rxc1 is at least three pawns worse than the best move (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.DEF.TRADES",
+    "theme.defensiveTrade",
+    "family.FAM-ISattack-TRADE-3",
+    "lang.en",
+    "tier.3",
+    "cue.2",
+    "kind.mined",
+    "role.working",
+    "sibling.easier"
+   ],
+   "hints": [
+    "Ask what the rook that would trade is currently guarding, and who guards it afterwards.",
+    "Check your back rank: after the trade, can the enemy pieces give check there?",
+    "The trade Rxc1 is not the best idea here. Look for a move that keeps your pieces working together."
+   ],
+   "explain": "After Rxc1 Rxc1+ White's king is checked on the back rank with the other rook gone from the defence, and the engine finds a forced mate. At depth 16 the engine rates Rxc1 at least three pawns below the best move. A trade can take away your own defender as well as the enemy attacker. This is one position checked by an engine, not a rule that rook trades lose.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "f1c1": "Rxc1 trades rooks and weakens your own back rank. The engine at depth 16 rates it at least three pawns below the best move."
+   }
+  }
+ ]
+}

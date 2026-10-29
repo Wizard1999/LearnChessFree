@@ -1,0 +1,352 @@
+{
+ "positions": [
+  {
+   "id": "PSocb-1",
+   "fen": "3b1k2/8/8/8/2K5/6P1/B7/8 w - - 0 1",
+   "family": "FAM-OCB-DRAW",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess (opposite-coloured bishops, <= 7 pieces), result and move categories from the Lichess tablebase [V tablebase]; one extra pawn, draw, every White move draws",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSocb-2",
+   "fen": "1k6/8/8/3B4/6P1/b7/6K1/8 w - - 0 1",
+   "family": "FAM-OCB-DRAW",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess (opposite-coloured bishops, <= 7 pieces), result and move categories from the Lichess tablebase [V tablebase]; one extra pawn, draw, every White move draws",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSocb-3",
+   "fen": "K7/8/3P4/1b6/1k2P2B/8/8/8 w - - 0 1",
+   "family": "FAM-OCB-WIN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess (opposite-coloured bishops, <= 7 pieces), result and move categories from the Lichess tablebase [V tablebase]; two extra connected pawns, win, only Bf2 wins",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSocb-4",
+   "fen": "8/4P3/8/4K3/3B4/1k6/8/7b w - - 0 1",
+   "family": "FAM-OCB-WIN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by random search with python-chess (opposite-coloured bishops, <= 7 pieces), result and move categories from the Lichess tablebase [V tablebase]; pawn on the seventh with the king in front of it, win; e8=Q, e8=R and Kd6 win",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 1,
+   "task": "predict_outcome",
+   "prompt": "Opposite-coloured bishops endgame, White to move with one extra pawn. Opposite-coloured bishops often draw even a pawn up. Is that what happens here? Predict the result with best play.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g3g4"
+     },
+     "statement": "After g4 the result is still a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c4d5"
+     },
+     "statement": "After Kd5 the result is still a draw."
+    }
+   ],
+   "hints": [
+    "Your bishop and the enemy bishop live on different colours, so neither can ever attack the other or drive it away.",
+    "With a single extra pawn, can White's king and bishop ever force the g-pawn past the black bishop's squares?"
+   ],
+   "explain": "A draw, and the tablebase says every White move draws. With opposite-coloured bishops the defender's bishop and king can set up a blockade on the pawn's path that the attacker's bishop cannot challenge. One extra pawn is the classic case where this rule of thumb ('opposite bishops draw') holds. It is a tendency, not a theorem: other positions with one extra pawn do win.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-OCB-DRAW",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "ISocb-1",
+   "position": "PSocb-1",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "prompt": "White to move, one pawn up, and the bishops are on opposite colours. What is the result with best play? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g4g5"
+     },
+     "statement": "After g5 the result is still a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g2f3"
+     },
+     "statement": "After Kf3 the result is still a draw."
+    }
+   ],
+   "hints": [
+    "Think about what the colour of each bishop means for who can control the squares in front of the pawn.",
+    "One extra pawn and opposite-coloured bishops: a common drawing pattern. Can Black's king and bishop hold the pawn's path?"
+   ],
+   "explain": "A draw, and every White move draws according to the tablebase. White's bishop cannot challenge the squares that Black's bishop controls, so the extra g-pawn cannot be forced through. This is the tablebase result for this position; 'opposite bishops draw with one extra pawn' is a rule of thumb that holds here, not a guarantee.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-OCB-DRAW",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "ISocb-2",
+   "position": "PSocb-2",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 1,
+   "task": "predict_outcome",
+   "prompt": "Opposite-coloured bishops, but White has two connected pawns on adjacent files, and White to move. Two connected pawns usually beat opposite bishops. Is it a win here? Predict the result with best play.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "h4f2"
+     },
+     "statement": "Bf2 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4e5"
+     },
+     "statement": "e5 lets the win go: a draw."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "d7 lets the win go: a draw."
+    }
+   ],
+   "hints": [
+    "Two pawns side by side can advance together, and one bishop cannot stop both.",
+    "Count how many of White's moves keep the win; the difference between the right bishop move and a hasty pawn push is the point."
+   ],
+   "explain": "A win, but the tablebase says only Bf2 keeps it: the hasty pawn pushes e5 and d7 allow a draw, and so does any other bishop move or king move. The rule of thumb 'two connected pawns win with opposite bishops' is a tendency; here it needs exact play.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-OCB-WIN",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "ISocb-3",
+   "position": "PSocb-3",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.MINOR.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "prompt": "White to move, a pawn on the seventh rank, opposite-coloured bishops. The position may look drawn. What is the result with best play? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e7e8q"
+     },
+     "statement": "e8=Q wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5d6"
+     },
+     "statement": "Kd6 wins."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f6"
+     },
+     "statement": "Kf6 lets the win go: a draw."
+    }
+   ],
+   "hints": [
+    "Black's king is far from the pawn and the pawn is one step from promotion. Which squares does Black's bishop control?",
+    "Check whether the promotion square is covered, and what happens to the new piece."
+   ],
+   "explain": "A win. The pawn is already on the seventh rank and Black's bishop cannot stop it from promoting safely, so e8=Q (and e8=R, and Kd6) win according to the tablebase, while a quiet king move lets it slip to a draw. 'Opposite bishops draw' is a rule of thumb that applies to slow positions; an advanced, supported passed pawn changes the picture.",
+   "tags": [
+    "node.END.MINOR",
+    "tier.4",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-OCB-WIN",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "ISocb-4",
+   "position": "PSocb-4",
+   "orientation": "white"
+  }
+ ]
+}

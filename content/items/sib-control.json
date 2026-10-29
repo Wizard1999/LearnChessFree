@@ -1,0 +1,626 @@
+{
+ "positions": [
+  {
+   "id": "PS-CTRL-1",
+   "fen": "r1bq1rk1/1pp2pp1/1bnp1n1p/p7/2BPP3/4BN1P/PP3PP1/RN1QR1K1 b - - 0 11",
+   "family": "FAM-SIBCTRL-A",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 21; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PS-CTRL-2",
+   "fen": "r1b1kb1r/pp3ppp/2p1pn2/q7/2pP4/2N1P3/PP1N1PPP/R2QKB1R w KQkq - 0 9",
+   "family": "FAM-SIBCTRL-B",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 16; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PS-CTRL-3",
+   "fen": "r2qkb1r/pp1Npppp/1nn5/1B6/3P4/8/PP3PPP/RNBQK2R b KQkq - 0 10",
+   "family": "FAM-SIBCTRL-C",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 19; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PS-CTRL-4",
+   "fen": "r2q1rk1/pb1n1pp1/1p2pb1p/2pp2N1/3P1P1P/3BP3/PPPNQ1P1/R3K2R w KQ - 0 13",
+   "family": "FAM-SIBCTRL-D",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 24; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PS-CTRL-5",
+   "fen": "r2q1rk1/pp1bbpp1/2n2n1p/1B1pN1B1/3P4/2N5/PP3PPP/R2Q1RK1 w - - 0 12",
+   "family": "FAM-SIBCTRL-E",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 22; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PS-CTRL-6",
+   "fen": "r1bq1rk1/1p1nbppp/p7/2pn4/P1p2B2/4PN2/1P2BPPP/R2Q1RK1 w - - 0 12",
+   "family": "FAM-SIBCTRL-F",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-05 file (CC0): a chess24 broadcast game, position after ply 22; attacker counts checked by the project's rules engine",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IScontrol-1",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PS-CTRL-1",
+   "prompt": "Black to move. Turn on the control map and tap e4. Which side does the map favour on e4, counting only the number of attackers?",
+   "answer": {
+    "class": "Black",
+    "options": [
+     "White",
+     "Black",
+     "Neither (equal numbers)"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.1",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.1.read"
+   ],
+   "hints": [
+    "Read the two numbers on e4: White's count, then Black's.",
+    "Which pieces of each colour can capture on e4? White has no piece that guards it.",
+    "The black knight on f6 attacks the pawn; nothing of White's protects it."
+   ],
+   "explain": "The map shows 0-1 on e4: the f6 knight attacks the pawn and no White piece defends it. The map counts attackers only; it does not say whether Black should take.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "White",
+    "Black",
+    "Neither (equal numbers)"
+   ]
+  },
+  {
+   "id": "IScontrol-2",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PS-CTRL-2",
+   "prompt": "White to move. Among c4, d4, e5, d5 and b4, tap every square where White's number on the map is higher than Black's. Ignore other squares.",
+   "answer": {
+    "squares": [
+     "c4",
+     "d4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 2
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 0
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 0
+     }
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     }
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C8",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 4
+     }
+    },
+    {
+     "id": "C9",
+     "type": "attackers",
+     "params": {
+      "square": "b4",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C10",
+     "type": "attackers",
+     "params": {
+      "square": "b4",
+      "color": "black",
+      "count": 2
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.1",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.1.tap"
+   ],
+   "hints": [
+    "Work square by square: write White's number, then Black's.",
+    "Two of the five favour Black and one is level.",
+    "Count how many of the five show a blue tint."
+   ],
+   "explain": "Blue squares are those where White's count beats Black's: c4 (2-0) and d4 (1-0). e5 is level at 1-1, while d5 (1-4) and b4 (0-2) favour Black.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IScontrol-3",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PS-CTRL-3",
+   "prompt": "Black to move. Turn on the control map and tap d7. Which side does the map favour on d7, counting only the number of attackers?",
+   "answer": {
+    "class": "Black",
+    "options": [
+     "White",
+     "Black",
+     "Neither (equal numbers)"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "black",
+      "count": 3
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.1",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.1.read"
+   ],
+   "hints": [
+    "Read the two numbers on d7: White's count, then Black's.",
+    "On an occupied square, the owner's number counts defenders and the other side's number counts attackers.",
+    "Count the black pieces that can capture on d7: a knight, the queen and the king."
+   ],
+   "explain": "The map shows 0-3 on d7: the b6 knight, the d8 queen and the e8 king can all capture there, and the White knight on d7 has no defender. The map shows the count only, not the best move.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "White",
+    "Black",
+    "Neither (equal numbers)"
+   ]
+  },
+  {
+   "id": "IScontrol-4",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 2,
+   "task": "select_squares",
+   "position": "PS-CTRL-4",
+   "prompt": "White to move. Among d4, c5, e4, h5 and e5, tap every square where White's number on the map is higher than Black's. Hint: compare the two numbers on each square; ties do not count.",
+   "answer": {
+    "squares": [
+     "e4",
+     "h5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "black",
+      "count": 2
+     }
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 3
+     }
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1
+     }
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "h5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C8",
+     "type": "attackers",
+     "params": {
+      "square": "h5",
+      "color": "black",
+      "count": 0
+     }
+    },
+    {
+     "id": "C9",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     }
+    },
+    {
+     "id": "C10",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 2
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.2",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.2.tap"
+   ],
+   "hints": [
+    "Write White's number, then Black's, for each of the five squares.",
+    "Empty squares count too: the map shows who could capture there.",
+    "Two squares are blue; e5 is a tie."
+   ],
+   "explain": "White's number is higher on e4 (3-1) and h5 (1-0). d4 (1-2) and c5 (1-2) favour Black, and e5 is a 2-2 tie.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IScontrol-5",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PS-CTRL-5",
+   "prompt": "White to move. Look at the map for the White bishop on g5. Hint: the owner's number counts its defenders, the other side's number its attackers. Is the bishop attacked more than it is defended?",
+   "answer": {
+    "class": "Attacked more than defended",
+    "options": [
+     "Attacked more than defended",
+     "Defended at least as often as attacked"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.2",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.2.read"
+   ],
+   "hints": [
+    "Read the two numbers on g5: White's (defenders), then Black's (attackers).",
+    "Compare them: is the attackers' number higher?",
+    "Black's number is 1 (the h6 pawn) and White's is 0."
+   ],
+   "explain": "The map shows 0-1 on g5: the h6 pawn attacks the bishop and no White piece defends it. The map flags the situation; whether it matters depends on what is hanging elsewhere.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "Attacked more than defended",
+    "Defended at least as often as attacked"
+   ]
+  },
+  {
+   "id": "IScontrol-6",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 2,
+   "task": "select_squares",
+   "position": "PS-CTRL-6",
+   "prompt": "White to move. Among d5, c4, e5, b5 and c5, tap every square where White's number on the map is higher than Black's. Hint: ties and Black-favoured squares do not count.",
+   "answer": {
+    "squares": [
+     "d5",
+     "c4",
+     "e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 0
+     }
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     }
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     }
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C8",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1
+     }
+    },
+    {
+     "id": "C9",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C10",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "black",
+      "count": 2
+     }
+    }
+   ],
+   "tags": [
+    "node.POS.CONTROLMAP",
+    "cue.2",
+    "kind.lichess_game",
+    "lang.en",
+    "theme.controlMap",
+    "tier.3",
+    "cue.2.tap"
+   ],
+   "hints": [
+    "Write White's number, then Black's, for each of the five squares.",
+    "Occupied squares count as well: look at attackers and defenders together.",
+    "Three squares are blue; b5 is a tie and c5 favours Black."
+   ],
+   "explain": "White's number is higher on d5 (1-0), c4 (1-0) and e5 (2-1). b5 is level at 1-1 and c5 favours Black at 0-2.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

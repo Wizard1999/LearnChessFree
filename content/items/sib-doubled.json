@@ -1,0 +1,381 @@
+{
+ "positions": [
+  {
+   "id": "PSD-1",
+   "fen": "r1bq1rk1/pp1n1pbp/3p1np1/2p5/3PP3/6P1/PP1N1PBP/RNBQR1K1 b - - 1 10",
+   "family": "FAM-SD-accept",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/0s8l1h8j ply 20 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSD-2",
+   "fen": "rnb1kb1r/5ppp/2p2n2/1pPpp3/1B1P4/4P3/P4PPP/RN2KBNR w KQkq - 0 11",
+   "family": "FAM-SD-decline",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/8j1xxp2h ply 21 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSD-3",
+   "fen": "r1bq1rk1/1p3pbp/3p1npn/4p3/p3PP2/2N2N1P/PPP1B1P1/R2Q1RBK b - - 2 15",
+   "family": "FAM-SD-accept",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/vp12hknc ply 30 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSD-4",
+   "fen": "rn1qk2r/pb3ppp/3ppb2/1pp5/2P1PP1P/2NPQNP1/PP2B3/2KR3R w kq - 0 14",
+   "family": "FAM-SD-decline",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "lichess.org/jsrgym8j ply 27 (Lichess standard rated games, January 2013 sample)",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISdoubled-1",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSD-1",
+   "prompt": "Black to move. One capture here leaves Black with doubled pawns. Decide whether doubled pawns are worth it in this position, then find a good move.",
+   "answer": {
+    "moves": [
+     "c5d4"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.1",
+    "family.FAM-SD-accept",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "cxd4 gives Black pawns on d4 and d6, and in return the c-file is open and the e-file is half-open for Black's rooks; the engine rates the capture best."
+   ],
+   "explain": "In this position the capture cxd4 gives Black doubled pawns on d4 and d6. What Black gets: the c-file becomes open and the e-file half-open for the rooks. Neither side loses its bishop pair, so that factor is neutral. At depth 16 the engine rates cxd4 as its best move (the claim checks this). Rule of thumb, not a proof: doubled pawns are acceptable when they buy something that lasts, such as an open or half-open file; the engine score is evidence at this depth only.",
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "black",
+      "squares": [
+       "d4",
+       "d6"
+      ],
+      "after_move": "c5d4"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "e"
+      ],
+      "after_move": "c5d4"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white",
+       "black"
+      ],
+      "after_move": "c5d4"
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c5d4"
+      ],
+      "within_cp": 40
+     },
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "id": "ISdoubled-2",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSD-2",
+   "prompt": "White to move. dxe5 is possible but would leave White with doubled pawns. Decide whether it is worth it here, then find a good move.",
+   "answer": {
+    "moves": [
+     "a2a4",
+     "g1f3"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.1",
+    "family.FAM-SD-decline",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "dxe5 doubles White's e-pawns without a lasting gain here, and the engine rates it far below a developing or quiet move such as Nf3."
+   ],
+   "explain": "In this position dxe5 gives White doubled pawns on e3 and e5 and both sides keep their bishop pair, so the structure cost buys no lasting trade-off that I can name. At depth 16 the engine rates dxe5 at least 0.80 pawns worse than its best move (the claim checks this); the accepted moves a4 and Nf3 are within 0.40 pawns of the best. I have not isolated every reason for the engine's gap, so treat it as evidence at this depth. Rule of thumb, not a proof: doubled pawns need a lasting gain that is worth more than the structure.",
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "white",
+      "squares": [
+       "e3",
+       "e5"
+      ],
+      "after_move": "d4e5"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white",
+       "black"
+      ],
+      "after_move": "d4e5"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "d4e5",
+      "cp": 80
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a2a4",
+       "g1f3"
+      ],
+      "within_cp": 40
+     },
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "id": "ISdoubled-3",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PSD-3",
+   "prompt": "Black to move. Pawn structure matters in this position. Find a good move.",
+   "answer": {
+    "moves": [
+     "e5f4"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.2",
+    "family.FAM-SD-accept",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "exf4 leaves Black with pawns on f4 and f7, but the e-file is half-open for Black and the engine still rates the capture best."
+   ],
+   "explain": "In this position the capture exf4 gives Black doubled pawns on f4 and f7. What Black gets: the e-file and the c-file become half-open for Black, and Black keeps its bishop pair (White keeps its pair too, so that factor is neutral). At depth 16 the engine rates exf4 as its best move (the claim checks this). Rule of thumb, not a proof: lasting doubled pawns can be acceptable when they buy open or half-open files; the engine score is evidence at this depth only.",
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "black",
+      "squares": [
+       "f4",
+       "f7"
+      ],
+      "after_move": "e5f4"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "d",
+       "f"
+      ],
+      "half_open_black": [
+       "c",
+       "e"
+      ],
+      "after_move": "e5f4"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white",
+       "black"
+      ],
+      "after_move": "e5f4"
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e5f4"
+      ],
+      "within_cp": 40
+     },
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "id": "ISdoubled-4",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "auto",
+   "skill": "POS.STRUCTURE.DOUBLED.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PSD-4",
+   "prompt": "White to move. Pawn structure matters in this position. Find a good move.",
+   "answer": {
+    "moves": [
+     "d3d4",
+     "c3b5"
+    ]
+   },
+   "tags": [
+    "node.POS.STRUCTURE.DOUBLED",
+    "tier.5",
+    "cue.2",
+    "family.FAM-SD-decline",
+    "task.find_move",
+    "tpl.p4-dbl-find",
+    "theme.structure",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List the captures you have. Which ones change the shape of your own pawns, and what do your pieces and the files get in return?",
+    "Compare what you give up with what you keep: count bishops and look at which files your rooks can use.",
+    "cxb5 doubles White's b-pawns and leaves only Black with two bishops; the engine prefers d4 or Nxb5."
+   ],
+   "explain": "In this position cxb5 gives White doubled pawns on b2 and b5, and after the capture only Black has two bishops. At depth 16 the engine rates cxb5 at least 0.80 pawns worse than its best move (the claim checks this); d4 and Nxb5 are within 0.40 pawns of the best. I have not isolated every reason for the gap, so treat it as evidence at this depth. Rule of thumb, not a proof: doubled pawns that also hand over the bishop pair need a gain worth more than both.",
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "white",
+      "squares": [
+       "b2",
+       "b5"
+      ],
+      "after_move": "c4b5"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_move": "c4b5"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "c4b5",
+      "cp": 80
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d3d4",
+       "c3b5"
+      ],
+      "within_cp": 40
+     },
+     "id": "C4"
+    }
+   ]
+  }
+ ]
+}

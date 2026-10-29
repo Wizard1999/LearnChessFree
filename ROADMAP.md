@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 52%** (77 of 160 tasks done, in-progress tasks count half). Updated 2026-10-29T13:54+00:00 UTC.
+**Overall: 55%** (83 of 162 tasks done, in-progress tasks count half). Updated 2026-10-29T15:08+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -16,19 +16,20 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 3/10 | 30% |
 | Phase 4: Exercise bank | 4/8 | 62% |
 | Phase 5: Lessons (one per skill node; see the metric above) | 12/24 | 62% |
-| Phase 6: Data | 1/3 | 50% |
+| Phase 6: Data | 2/3 | 67% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
-| Phase 6e: Sources library (plan: docs/library-plan.md) | 6/9 | 72% |
-| Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning) | 1/4 | 38% |
+| Phase 6e: Sources library (plan: docs/library-plan.md) | 7/9 | 83% |
+| Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning) | 2/4 | 50% |
 | Phase 3c: The simplicity pass (design: docs/design-simplicity-pass.md) | 0/7 | 0% |
-| Phase 5b: Follow-ups from the review waves (29 October 2026) | 0/6 | 0% |
+| Phase 5b: Follow-ups from the review waves (29 October 2026) | 2/6 | 33% |
 | Phase 3d: Analysis page, what remains | 0/4 | 0% |
+| Phase 6g: Famous games, wave 2 (29 October 2026) | 1/2 | 50% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 205 of 205 skill nodes have a lesson (100%); 163 nodes have 10 or more shipped exercises; 7058 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2381 flagged for human review.
+**Coverage (computed from the files):** 205 of 205 skill nodes have a lesson (100%); 164 nodes have 10 or more shipped exercises; 7108 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2431 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -36,7 +37,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
 | S3 Tactics | 24 | 24 | 24 |
 | S4 Calculation | 8 | 8 | 8 |
-| S5 Positional play and planning | 50 | 50 | 44 |
+| S5 Positional play and planning | 50 | 50 | 45 |
 | S6 Attack, sacrifice and defense | 19 | 19 | 16 |
 | S7 Endgames | 37 | 37 | 36 |
 | S8 Openings and structures | 12 | 12 | 7 |
@@ -44,7 +45,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Master (over-the-board) statistics: panel in Analysis built; statistics build running (see Phase 6f); Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); Build master-game statistics (`tools/build_master_stats.py` then `tools/ship_master_stats.py`): top-level only (both players 2500+), first 12 moves, de-duplicated; full build in progress
+**Building now:** Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending)
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
@@ -171,7 +172,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 6: Data
 - [x] Opening statistics from 4.75 million Lichess games in eight rating bands
-- [~] Master (over-the-board) statistics: panel in Analysis built; statistics build running (see Phase 6f)
+- [x] Master (over-the-board) statistics: 329,379 top-level games (both players 2500+, first 12 moves) in Analysis and the Openings explorer
 - [ ] Difficulty calibration from real learner data (needs learners)
 
 ## Phase 6b: Motivation (local, no server)
@@ -196,7 +197,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 ## Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning)
 - [x] `tools/fetch_games.py`: Lichess broadcasts (81 monthly files) and The Week in Chess weekly zips (issues 920 to 1668; earlier issues have no zip), resumable, stored locally and gitignored
 - [ ] Older games (before 1994): PGN Mentor event files and public-domain game books; check each source's terms
-- [~] Build master-game statistics (`tools/build_master_stats.py` then `tools/ship_master_stats.py`): top-level only (both players 2500+), first 12 moves, de-duplicated; full build in progress
+- [x] Build master-game statistics (`tools/build_master_stats.py`, `tools/ship_master_stats.py`): de-duplicated, standard games only, about 7 MB shipped
 - [ ] Famous-games course candidates ranked from the data (decisive, instructive, well-annotated)
 
 ## Phase 3c: The simplicity pass (design: docs/design-simplicity-pass.md)
@@ -210,8 +211,8 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 5b: Follow-ups from the review waves (29 October 2026)
 - [ ] A genuine triangulation example (none exists in the single-pawn families searched; needs a richer generator or a human)
-- [ ] Two doubled-pawn items are in; add the matching cue-1 and cue-2 siblings
-- [ ] Cue-1 and cue-2 siblings for the new convert, over-protection and opposite-bishop items
+- [x] Cue-1 and cue-2 siblings for the doubled-pawn items (4 new)
+- [x] Cue-1 and cue-2 siblings for convert, over-protection, opposite-bishop, attack and square-control items (about 26 new practice items)
 - [ ] A dedicated opposite-coloured-bishops skill node and lesson (the items currently sit in L-END-MINOR-1)
 - [ ] Resolve the last overlap pair (L-FND-THREAT-1 and L-LOOP-V1-1): keep the first, deepen the second
 - [ ] Strong-player review (G3) of explanations; beta feedback from Andrew's friends and site stands in until then
@@ -221,6 +222,10 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Move labels beyond mistakes: best, book, brilliant (needs a stated rule and a check)
 - [ ] Multi-chapter studies; image export; keyboard shortcut help
 - [ ] Opening explorer pages using the master statistics for the whole Openings page
+
+## Phase 6g: Famous games, wave 2 (29 October 2026)
+- [x] Five more annotated games: Capablanca-Marshall 1918, Lasker-Capablanca 1914, Fischer-Spassky 1972 game 6, Short-Timman 1991, Tal-Botvinnik 1960 game 6 (13 course lessons in all; scores checked against several sources, game dates and endings stated only where sources agree)
+- [ ] Wave 3: older public-domain games and endgame classics; opening deep dives; history and meta course (needs a named human reviewer for history claims)
 
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)

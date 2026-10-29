@@ -1,0 +1,555 @@
+{
+ "positions": [
+  {
+   "id": "PSconvert-1",
+   "fen": "7Q/1q1kb3/4r3/p4p2/2pp3P/2P2nPN/1P3PK1/2B1R1R1 w - - 0 46",
+   "family": "FAM-SIB-TRADE",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-09 file (CC0): https://lichess.org/broadcast/22-torneo-internazionale-round-9/-/sZXSDL9M/qh2WbG1m, position after ply 90; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSconvert-2",
+   "fen": "5n1k/1bq1p2p/6pn/2pB1pN1/1pP5/1P4PP/5P2/4Q1K1 b - - 0 32",
+   "family": "FAM-SIB-TRADE",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2023-11 file (CC0): https://lichess.org/broadcast/velez-santander-open-2023/round-1/LKiOzou7/stYkM8q9, position after ply 63; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSconvert-3",
+   "fen": "5rk1/p1B2ppp/Q3rb2/2Pp1q2/1P1n4/P4N1P/3N1KP1/3RR3 w - - 1 24",
+   "family": "FAM-SIB-TRADE",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2020-09 file (CC0): https://lichess.org/broadcast/2020-schachbundesliga-championship-round-2/-/THzDDUSE/FVrhWguK, position after ply 46; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSconvert-4",
+   "fen": "5rk1/ppb2r2/2p3qp/2Pp2p1/3PnP2/P6b/1PQ1N1NP/2BBRRK1 w - - 0 28",
+   "family": "FAM-SIB-IMPROVE",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2023-11 file (CC0): https://lichess.org/broadcast/fide-grand-swiss-2023/round-7/Y1yEHnI1/e1NdmH6C, position after ply 54; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSconvert-5",
+   "fen": "r1bq1rk1/1p1pbppp/p1n1pn2/8/2P1P3/1N4P1/PP3PBP/RNBQ1RK1 w - - 1 10",
+   "family": "FAM-SIB-OVER",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2021-2022 file (CC0): https://lichess.org/broadcast/zonal-32/round-2/QZuzpkIr/REMLpGgG, mid-game position; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PSconvert-6",
+   "fen": "rnbq1rk1/4bppp/p2ppn2/1p6/3NP3/2N1B3/PPP1BPPP/R2Q1R1K w - - 0 10",
+   "family": "FAM-SIB-OVER",
+   "provenance": {
+    "kind": "lichess_game",
+    "ref": "Lichess broadcast database, 2021-2022 file (CC0): https://lichess.org/broadcast/zonal-31/round-1/SURNJIuh/8rvJrhkW, mid-game position; confirmed by the project's engine at depth 16",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 1,
+   "task": "find_move",
+   "prompt": "White is well ahead in material. A rule of thumb says that trading pieces helps the side that is ahead. Is there a good trade here? Find the best move.",
+   "answer": {
+    "moves": [
+     "e1e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 400,
+      "max": 3000
+     },
+     "statement": "The engine rates the position at least 400 centipawns in White's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1e6"
+      ]
+     },
+     "statement": "Rxe6 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e6",
+      "piece": "r"
+     },
+     "statement": "An enemy rook stands on e6, so Rxe6 is a capture and the opponent can take back."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "e1e6",
+      "min": -1,
+      "max": 1
+     },
+     "statement": "Rxe6 is a trade: material changes by at most one point once the exchanges settle (the check allows plus or minus 1)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "e1f1",
+      "cp": 100
+     },
+     "statement": "Ref1 is at least 100 centipawns worse than Rxe6."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.1",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.3",
+    "role.working",
+    "family.FAM-SIB-TRADE"
+   ],
+   "hints": [
+    "You are ahead. List the pieces you would be glad to swap off and the enemy pieces that are still active.",
+    "Black's rook on e6 is the most active black piece, and a White rook on the e-file attacks it.",
+    "Take the rook on e6 with your rook; Black has to take back."
+   ],
+   "explain": "The engine rates the position at least 400 centipawns in White's favour and puts Rxe6 first, at least 100 centipawns above Ref1 (depth 16). Black recaptures, so a pair of rooks goes off and White's extra material stays on the board. Black's most active piece is gone. That trading when ahead is a good plan is a rule of thumb [I]; here it is only one position at one search depth.",
+   "id": "ISconvert-1",
+   "position": "PSconvert-1",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 1,
+   "task": "find_move",
+   "prompt": "Black is well ahead in material. A rule of thumb says that trading pieces helps the side that is ahead. Is there a good trade here? Find the best move.",
+   "answer": {
+    "moves": [
+     "b7d5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -3000,
+      "max": -400
+     },
+     "statement": "The engine rates the position at least 400 centipawns in Black's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b7d5"
+      ]
+     },
+     "statement": "Bxd5 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "B"
+     },
+     "statement": "An enemy bishop stands on d5, so Bxd5 is a capture and the opponent can take back."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "b7d5",
+      "min": -1,
+      "max": 1
+     },
+     "statement": "Bxd5 is a trade: material changes by at most one point once the exchanges settle (the check allows plus or minus 1)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "b7c6",
+      "cp": 100
+     },
+     "statement": "Bc6 is at least 100 centipawns worse than Bxd5."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.1",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.3",
+    "role.working",
+    "family.FAM-SIB-TRADE"
+   ],
+   "hints": [
+    "You are ahead. Which white piece is the most active, and can you remove it?",
+    "White's bishop on d5 stands on a strong central square and your bishop on b7 attacks it.",
+    "Take the bishop on d5 with your bishop; White has to take back with the pawn on c4."
+   ],
+   "explain": "The engine rates the position at least 400 centipawns in Black's favour and puts Bxd5 first, at least 100 centipawns above Bc6 (depth 16). White recaptures with the pawn on c4, so a pair of bishops goes off. The strong white bishop is removed and Black keeps the extra material. That trading when ahead is a good plan is a rule of thumb [I]; here it is only one position at one search depth.",
+   "id": "ISconvert-2",
+   "position": "PSconvert-2",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 2,
+   "task": "find_move",
+   "prompt": "White to move. Find the best move. A hint is available.",
+   "answer": {
+    "moves": [
+     "e1e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 400,
+      "max": 3000
+     },
+     "statement": "The engine rates the position at least 400 centipawns in White's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1e6"
+      ]
+     },
+     "statement": "Rxe6 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e6",
+      "piece": "r"
+     },
+     "statement": "An enemy rook stands on e6, so Rxe6 is a capture and the opponent can take back."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "e1e6",
+      "min": -1,
+      "max": 1
+     },
+     "statement": "Rxe6 is a trade: material changes by at most one point once the exchanges settle (the check allows plus or minus 1)."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "c7d6",
+      "cp": 100
+     },
+     "statement": "Bd6 is at least 100 centipawns worse than Rxe6."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.2",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.4",
+    "role.working",
+    "family.FAM-SIB-TRADE"
+   ],
+   "hints": [
+    "You are ahead. Is there an exchange on offer that removes an enemy piece?",
+    "Look at the black rook on e6 and the white rook that faces it.",
+    "Take the rook on e6 with your rook; Black takes back with the pawn on f7."
+   ],
+   "explain": "The engine rates the position at least 400 centipawns in White's favour and puts Rxe6 first, at least 100 centipawns above Bd6 (depth 16). Black recaptures with the f7 pawn, so a pair of rooks goes off and one defender is removed. That trading when ahead is a good plan is a rule of thumb [I]; here it is only one position at one search depth.",
+   "id": "ISconvert-3",
+   "position": "PSconvert-3",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.CONVERT.D1",
+   "cue": 2,
+   "task": "find_move",
+   "prompt": "White to move. Find a strong move. A hint is available.",
+   "answer": {
+    "moves": [
+     "e2c3",
+     "e2g3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 150,
+      "max": 3000
+     },
+     "statement": "The engine rates the position at least 150 centipawns in White's favour (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e2c3",
+       "e2g3"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Nc3 and Ng3 are both within 30 centipawns of the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e2",
+      "piece": "N"
+     },
+     "statement": "A White knight stands on e2, where it is passive."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "f1f3",
+      "cp": 100
+     },
+     "statement": "Rf3 is at least 100 centipawns worse than the best move."
+    }
+   ],
+   "tags": [
+    "node.POS.CONVERT",
+    "cue.2",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.advantage",
+    "tier.4",
+    "role.working",
+    "family.FAM-SIB-IMPROVE"
+   ],
+   "hints": [
+    "You are ahead, so there is no need to hurry. Which of your pieces is doing the least?",
+    "The knight on e2 has no active squares where it stands.",
+    "Move the knight on e2 to a square where it attacks something: c3 and g3 both do."
+   ],
+   "explain": "The engine rates the position at least 150 centipawns in White's favour and puts the knight moves to c3 and g3 first, both within 30 centipawns of each other and at least 100 above Rf3 (depth 16). Both bring the least active piece into play. That improving the worst-placed piece is a good plan when ahead is a rule of thumb [I], not a proof.",
+   "id": "ISconvert-4",
+   "position": "PSconvert-4",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.OVERPROTECT.D1",
+   "cue": 1,
+   "task": "find_move",
+   "prompt": "White to move. The pawn on e4 is attacked and defended once. A move that adds a defender (overprotection) can be useful. Find a good move; any of the moves close to the best counts.",
+   "answer": {
+    "moves": [
+     "b1c3",
+     "d1e2"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b1c3",
+       "d1e2"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Nc3 and Qe2 are within 30 centipawns of the engine's best move (depth 16) and the best move is among them."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One Black piece attacks e4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One White piece defends e4."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_move": "b1c3"
+     },
+     "statement": "After b1c3 two White pieces defend e4."
+    }
+   ],
+   "tags": [
+    "node.POS.OVERPROTECT",
+    "cue.1",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.overprotection",
+    "tier.3",
+    "role.working",
+    "family.FAM-SIB-OVER"
+   ],
+   "hints": [
+    "Count the attackers and the defenders of the pawn on e4.",
+    "The pawn on e4 has one attacker and one defender. Which move adds a second defender?",
+    "The knight on b1 can go to c3, and the queen can go to e2; both guard e4."
+   ],
+   "explain": "The pawn on e4 is attacked once and defended once. Nc3 and Qe2 each add a second defender and both are within 30 centipawns of the engine's first choice at depth 16 (the first choice is one of the two; the order changed between runs by about ten centipawns). This is one position at one search depth and small gaps: it shows that a second defender of a central pawn can be fine, not that it is best.",
+   "id": "ISconvert-5",
+   "position": "PSconvert-5",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "POS.OVERPROTECT.D1",
+   "cue": 2,
+   "task": "find_move",
+   "prompt": "White to move. Find a good move; any of the moves close to the best counts. A hint is available.",
+   "answer": {
+    "moves": [
+     "e2f3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e2f3"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Bf3 is within 30 centipawns of the engine's best move (depth 16) and the best move is among them."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One Black piece attacks e4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One White piece defends e4."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_move": "e2f3"
+     },
+     "statement": "After e2f3 two White pieces defend e4."
+    }
+   ],
+   "tags": [
+    "node.POS.OVERPROTECT",
+    "cue.2",
+    "kind.mined",
+    "task.find_move",
+    "lang.en",
+    "theme.overprotection",
+    "tier.4",
+    "role.working",
+    "family.FAM-SIB-OVER"
+   ],
+   "hints": [
+    "Think about the pawn on e4: how many pieces attack it and how many guard it?",
+    "One piece attacks e4 and one guards it. A piece move can add a guard and also improve that piece.",
+    "The bishop on e2 can step to f3."
+   ],
+   "explain": "The pawn on e4 is attacked once and defended once. Bf3 adds a second defender and is the engine's first choice at depth 16. This is one position at one search depth: it shows that a second defender of a central pawn can be right, not that it always is.",
+   "id": "ISconvert-6",
+   "position": "PSconvert-6",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}
