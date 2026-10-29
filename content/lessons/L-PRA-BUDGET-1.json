@@ -38,86 +38,14 @@
     },
     {
       "type": "card",
-      "text": "**Pay for routine moves first.** Give routine moves a small price and keep the rest of the phase share for critical moments, such as a tempting capture that may cost material. Forced replies cost almost nothing. The prices (10 seconds, one minute) are a rule of thumb to adjust, not a measured optimum."
-    },
-    {
-      "type": "board",
-      "fen": "3r1r2/ppp1qpk1/6p1/n3P1N1/3Pp1PP/2P5/bP1QB3/2KR3R w - - 0 19",
-      "caption": "White to move. The pawn on e4 can be taken. Is this a routine move or a critical one?",
-      "line": [
-        {
-          "move": "g5e4",
-          "say": "Nxe4 takes a pawn. It looks free."
-        },
-        {
-          "move": "a5b3",
-          "say": "Nb3+ is check, and the knight also attacks the queen on d2."
-        },
-        {
-          "move": "c1c2",
-          "say": "The king must move, and the queen stays attacked."
-        },
-        {
-          "move": "b3d2",
-          "say": "Nxd2 takes the queen."
-        },
-        {
-          "move": "d1d2",
-          "say": "Rxd2 takes the knight back. White gave a queen for a knight and a pawn."
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "move_loses",
-          "params": {
-            "move": "g5e4",
-            "cp": 500
-          },
-          "statement": "Nxe4 is rated at least five pawns worse than the best move."
-        },
-        {
-          "id": "C2",
-          "type": "material_after_move",
-          "params": {
-            "move": "g5e4",
-            "max": -5
-          },
-          "statement": "Along the engine line Nxe4 ends with White five or more points down."
-        },
-        {
-          "id": "C3",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d2f4"
-            ]
-          },
-          "statement": "Qf4 is the engine's best move."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "g5",
-          "to": "e4"
-        },
-        {
-          "from": "a5",
-          "to": "b3"
-        }
-      ],
-      "highlight": [
-        "e4",
-        "d2"
-      ]
+      "text": "**Pay for routine moves first.** Give routine moves a small price and keep the rest of the phase share for critical moments, such as a tempting capture that may cost material (the pawn grab that loses a queen is an exercise in *How deep? Spend calculation where it pays*; here you only price it). Forced replies cost almost nothing. The prices (10 seconds, one minute) are a rule of thumb to adjust, not a measured optimum."
     },
     {
       "type": "contrast",
       "title": "How much of the budget does it deserve?",
-      "prompt": "The first position was routine: about 10 seconds was the right price. In this one, decide: is it critical, so it needs extra from the pool, or routine, so the usual price is enough? A forced move, with one legal move, gets almost nothing; you meet one in the next exercises. Predict, then check.",
-      "working": "IA5-33",
-      "failing": "IA5-32",
-      "irrelevant": "IA5-45"
+      "prompt": "Each position comes with the same budget: a routine move gets about 10 seconds. Decide for each: is it critical, so it needs extra from the pool, or routine, so the usual price is enough? A forced move, with one legal move, gets almost nothing; you meet one in the next exercises. Predict, then check.",
+      "working": "IB6-11",
+      "failing": "IB6-10"
     },
     {
       "type": "card",
@@ -169,16 +97,6 @@
           "answer": "does not apply"
         }
       ]
-    },
-    {
-      "type": "item",
-      "item": "IB6-10",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IB6-11",
-      "silent": true
     },
     {
       "type": "item",

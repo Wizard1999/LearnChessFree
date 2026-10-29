@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 55%** (63 of 121 tasks done, in-progress tasks count half). Updated 2026-10-29T04:12+00:00 UTC.
+**Overall: 56%** (63 of 121 tasks done, in-progress tasks count half). Updated 2026-10-29T08:11+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -13,7 +13,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 2/10 | 25% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 56% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 11/24 | 58% |
 | Phase 6: Data | 1/3 | 33% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
@@ -37,7 +37,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md)
+**Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
 
@@ -142,7 +142,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Course: famous games analysed (each game verified move by move; original commentary)
 - [ ] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)
 - [x] Overlap check in the curriculum tools (tools/check_overlap.py; found 3 duplicate lesson pairs, listed in docs/review-findings-pending.md)
-- [ ] Resolve every overlap reported by tools/check_overlap.py (listed in docs/overlaps-to-resolve.md): nothing is taught twice, lessons link instead
+- [~] Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
 - [x] Lesson pages show Connected lessons (builds on, uses, leads to, seen in a course), derived from the skill graph
 - [x] Coverage audit script (tools/coverage_audit.py) and a by-level misconceptions note (docs/misconceptions-by-level.md); both from recall, to be replaced by real syllabi and learner data
 - [ ] Check that every listed misconception has a practice exercise; write the missing ones
