@@ -211,6 +211,9 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
     ? { color: lineMode ? sideToMove(curFen) : orientation, dests: destsFor(curChess), onMove } : null
   const picker = phase === 'answer' && !studying && item.task === 'select_squares'
     ? { selected, onToggle: (sq: string) => setSelected(prev => { const n = new Set(prev); if (n.has(sq)) n.delete(sq); else n.add(sq); return n }) } : null
+  const marks: Record<string, 'right' | 'miss' | 'bad'> | undefined = phase === 'done' && item.task === 'select_squares'
+    ? (() => { const want = new Set(item.answer.squares ?? []); const m: Record<string, 'right' | 'miss' | 'bad'> = {}; for (const s of want) m[s] = selected.has(s) ? 'right' : 'miss'; for (const s of selected) if (!want.has(s)) m[s] = 'bad'; return m })()
+    : undefined
   const shapes: BoardShape[] = []
   if (item.task === 'predict_outcome' && proposed) shapes.push({ from: proposed.slice(0, 2), to: proposed.slice(2, 4), brush: 'blue' })
   if (item.answer.from) shapes.push({ from: item.answer.from, brush: 'yellow' })
@@ -244,6 +247,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
         movable={movable}
         picker={picker}
         shapes={shapes}
+        marks={marks}
         label={prompt}
       />
 

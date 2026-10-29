@@ -26,6 +26,8 @@ export interface Props {
   picker?: { selected: ReadonlySet<string>; onToggle: (sq: string) => void } | null
   shapes?: BoardShape[]
   highlight?: string[]
+  /** Squares tinted by outcome after an answer: 'right' (correct and chosen), 'miss' (correct but not chosen), 'bad' (chosen but wrong). */
+  marks?: Record<string, 'right' | 'miss' | 'bad'>
   lastMove?: [string, string] | null
   check?: boolean
   label?: string
@@ -38,7 +40,7 @@ export interface Props {
 }
 
 /** Thin React wrapper around Chessground (GPL-3.0-or-later): rendering, drag/touch input, arrows, highlights. */
-export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false}: Props) {
+export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false}: Props) {
   const el = useRef<HTMLDivElement>(null)
   const api = useRef<Api | null>(null)
   const cb = useRef({ movable, picker, edit })
@@ -55,6 +57,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     const hl = new Map<Key, string>()
     for (const s of highlight) hl.set(s as Key, 'hl')
     if (picker) for (const s of picker.selected) hl.set(s as Key, 'sel')
+    if (marks) for (const [s, k] of Object.entries(marks)) hl.set(s as Key, `mark-${k}`)
     return {
       fen,
       // chessground does not read the side to move from the FEN: without this, every Black move is treated as a queued premove.

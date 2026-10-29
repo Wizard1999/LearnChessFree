@@ -3,6 +3,7 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import { ContentProvider, RequireFullContent } from './lib/content'
 import { Today } from './pages/Today'
 import { Course } from './pages/Course'
+import { Analysis } from './pages/Analysis'
 import { LessonPage } from './pages/LessonPage'
 import { Practice } from './pages/Practice'
 import { Placement } from './pages/Placement'
@@ -24,7 +25,7 @@ import { useLocation } from 'react-router-dom'
 
 // Five places for a learner; the rest are tools, one click away under More.
 const links: [string, string][] = [['/', 'Today'], ['/course', 'Curriculum'], ['/practice', 'Practice'], ['/progress', 'Progress']]
-const more: [string, string][] = [['/games', 'My games'], ['/openings', 'Openings'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
+const more: [string, string][] = [['/games', 'My games'], ['/openings', 'Openings'], ['/engine', 'Engine'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="/lab" element={<RequireFullContent><Lab /></RequireFullContent>} />
         <Route path="/progress" element={<RequireFullContent><Progress /></RequireFullContent>} />
         <Route path="/play" element={<PlayPage />} />
+        <Route path="/engine" element={<Analysis />} />
         <Route path="/openings" element={<Openings />} />
         <Route path="/drill" element={<Drill />} />
         <Route path="/games" element={<RequireFullContent><Games /></RequireFullContent>} />

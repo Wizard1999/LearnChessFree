@@ -1,0 +1,146 @@
+{
+ "id": "L-END-TRANSITION-1",
+ "title": "Which ending to enter: check the trade first",
+ "skill": "END.TRANSITION",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Names the ending that a trade leads to and says whether it is a win, a draw or a loss",
+  "Sees that a winning position can turn into a draw by a trade into the wrong ending",
+  "Checks the ending that follows a trade before making it"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "Before you trade, ask which ending you are entering. A trade is a choice of ending, not a safe default. Trade queens into a king-and-pawn ending and the result depends on where the kings stand. The question is not whether you are ahead, but whether the ending that follows is won. Here is a trade that works."
+  },
+  {
+   "type": "board",
+   "fen": "3q4/4k3/8/4PK2/8/8/8/3Q4 w - - 0 1",
+   "caption": "White to move. White trades queens and enters a king-and-pawn ending. The trade wins.",
+   "line": [
+    {
+     "move": "d1d8",
+     "say": "White takes the queen with check."
+    },
+    {
+     "move": "e7d8",
+     "say": "Black's king recaptures. Only kings and the e-pawn are left."
+    },
+    {
+     "move": "f5f6",
+     "say": "White's king steps in front of the pawn."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black's king goes to e8."
+    },
+    {
+     "move": "f6e6",
+     "say": "White's king goes to e6."
+    },
+    {
+     "move": "e8f8",
+     "say": "Black's king goes to f8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "d8"
+    }
+   ],
+   "highlight": [
+    "d8",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Before the trade the tablebase result for White is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "d1d8",
+      "result": "win"
+     },
+     "statement": "After Qxd8+ the tablebase result for White is still a win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe3-50"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** A trade into a known ending is only as good as the ending. Rule of thumb: before simplifying, name the ending, find the kings and the pawn, and check the result. Misconceptions to drop: exchanging is not always safe, and it does not always kill winning chances. Predict: the same trade with the white king one step away, and with the black king elsewhere."
+  },
+  {
+   "type": "contrast",
+   "title": "The same trade, one king moves",
+   "prompt": "White to move and White trades queens in each. Predict the result of the ending that follows.",
+   "working": "IBe3-50",
+   "failing": "IBe3-51",
+   "irrelevant": "IBe3-52"
+  },
+  {
+   "type": "item",
+   "item": "IBe3-53",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-TRN-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-TRN-6",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.TRANSITION",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you traded, did you name the ending and check where the kings stood? In which item would a quick trade have cost you the win?",
+   "fields": [
+    {
+     "id": "named",
+     "label": "I named the ending first:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "cost",
+     "label": "The trade that would have cost me:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.TRANSITION.json (the node cites Lasker's Chess Strategy K21 and Znosko-Borovsky C17-C18, not re-read for this lesson)",
+  "New positions: queen-trade families found with the project's king-and-pawn solver and checked by tablebase claims (tools/validate.py)",
+  "Shipped items IE-TRN-5 and IE-TRN-6 (minor-piece endings, tablebase claims)"
+ ]
+}

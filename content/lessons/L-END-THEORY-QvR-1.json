@@ -1,0 +1,266 @@
+{
+ "id": "L-END-THEORY-QvR-1",
+ "title": "Queen against rook: force the king away from its rook",
+ "skill": "END.THEORY.QvR",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Finds the check that starts a forced win of the rook in a queen-against-rook position",
+  "Checks for a rook fork, a stalemating capture and an advanced pawn before playing a check",
+  "Predicts win or draw for queen against rook, including when the rook's side is to move"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A queen is stronger than a rook, but it does not win by size alone. It wins by **forcing**: a check makes the king move, then one queen move attacks the king and the rook together (a fork), or the rook behind the king on the same line (a skewer).\nIn the positions below the rook falls. Your job: find the check that separates the rook from its king."
+  },
+  {
+   "type": "board",
+   "fen": "8/Q7/8/2K5/8/8/7r/2k5 w - - 0 1",
+   "caption": "White to move. Look for a check that makes the black king stand in front of its rook.",
+   "line": [
+    {
+     "move": "a7a1",
+     "say": "Qa1+ is check along the first rank. Black must answer it."
+    },
+    {
+     "move": "c1c2",
+     "say": "The king steps to c2, onto the same rank as its rook on h2."
+    },
+    {
+     "move": "a1a2",
+     "say": "Qa2+ checks along the second rank. The king stands between the queen and the rook."
+    },
+    {
+     "move": "c2d3",
+     "say": "The king must leave the rank to escape the check."
+    },
+    {
+     "move": "a2h2",
+     "say": "Now the queen takes the rook."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a7",
+     "to": "a1"
+    },
+    {
+     "from": "a1",
+     "to": "a2"
+    },
+    {
+     "from": "a2",
+     "to": "h2"
+    }
+   ],
+   "highlight": [
+    "h2",
+    "c1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White to move wins."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "a7a1",
+      "min": 5
+     },
+     "statement": "Qa1+ wins the rook along the engine's best defence."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c2",
+      "piece": "k",
+      "after_moves": [
+       "a7a1",
+       "c1c2"
+      ]
+     },
+     "statement": "After Qa1+ Kc2 the king stands on c2."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "h2",
+      "piece": "r",
+      "after_moves": [
+       "a7a1",
+       "c1c2"
+      ]
+     },
+     "statement": "The rook stands on h2 on the same rank as the king."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "h2",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a7a1",
+       "c1c2",
+       "a1a2",
+       "c2d3"
+      ]
+     },
+     "statement": "After Qa2+ and Kd3 the queen attacks the rook on h2."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "A **tablebase** is a stored list of exact results for positions with few pieces. It gives the result with best play by both sides: win, draw or loss. It does not say how many moves a person needs, or how hard the defence is to find; that is not measured here. Read 'the queen wins' as a statement about perfect play, then practise the method until it is routine."
+  },
+  {
+   "type": "item",
+   "item": "IBe4-1"
+  },
+  {
+   "type": "item",
+   "item": "IBe4-2"
+  },
+  {
+   "type": "card",
+   "text": "Check three things before a check.\n**1. Who moves?** The rook's side to move may fork king and queen and draw.\n**2. Stalemate.** Taking the rook can leave a lone king with no legal move: a draw.\n**3. Pawns.** An advanced pawn can change the result; this method is for queen against rook alone.\nBefore each check, ask: can the rook then check and hit the queen?"
+  },
+  {
+   "type": "item",
+   "item": "IBe4-3"
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/K5Q1/8/8/8/8/1r6 w - - 0 1",
+   "caption": "White to move. The capture looks natural. Watch the black king after it.",
+   "line": [
+    {
+     "move": "g6b1",
+     "say": "Qxb1 wins the rook. Black's king on a8 now has no legal move."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g6",
+     "to": "b1"
+    }
+   ],
+   "highlight": [
+    "a8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from here."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g6b1"
+     },
+     "statement": "After Qxb1 the position is a draw."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/K7/8/8/8/8/1Q6 b - - 0 1",
+   "caption": "The position after Qxb1, Black to move. The king is not in check and has no legal move: stalemate, so the game is drawn.",
+   "highlight": [
+    "a8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "stalemate"
+     },
+     "statement": "Black has no legal move and is not in check."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Same pieces, one change",
+   "prompt": "Predict each result, then check. The next position changes the side to move; a third changes something that does not matter.",
+   "working": "IBe4-4",
+   "failing": "IBe4-5",
+   "irrelevant": "IBe4-17"
+  },
+  {
+   "type": "item",
+   "item": "IBe4-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe4-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe4-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe4-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe4-18",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "task.find_move"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which check would you most likely forget in a game: whose move it is, the stalemate capture, or a pawn on the board? Write one sentence on how you would remind yourself."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.THEORY.QvR.json",
+  "content/items/lesson-e4.json (items IBe4-1 to IBe4-9, tablebase and engine checked)",
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-15 conditions, ideas only)"
+ ]
+}

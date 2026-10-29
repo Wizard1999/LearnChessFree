@@ -1,0 +1,171 @@
+{
+ "id": "L-END-MATE-BN-1",
+ "title": "Bishop and knight against a lone king: the right corner",
+ "skill": "END.MATE-BN",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Describes the method: drive the lone king to the edge, then along it to the corner of the bishop's colour",
+  "Finds the first move of a bishop-and-knight mate near the corner",
+  "Tells a mating position from a look-alike with the bishop on the wrong colour, and a win from a fifty-move draw"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**Bishop and knight** can mate a bare king, but by the textbook rule only around a corner of the **bishop's colour**: with a light-squared bishop, h1 or a8. There are two phases. The king, bishop and knight first push the lone king to an edge, then drive it along the edge to the right corner. In the example the net closes at h1."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/8/7K/8/N5Bk/8 w - - 0 1",
+   "caption": "White to move mates in five. Black's king is on the h-file; the white bishop stands on a light square, like the corner h1.",
+   "line": [
+    {
+     "move": "g2h3",
+     "say": "A quiet bishop move. There is no check."
+    },
+    {
+     "move": "h2h1",
+     "say": "Black's king goes into the corner h1."
+    },
+    {
+     "move": "h4g3",
+     "say": "White's king comes to g3, next to the corner area."
+    },
+    {
+     "move": "h1g1",
+     "say": "Black's king steps to g1, still on the edge."
+    },
+    {
+     "move": "a2c1",
+     "say": "The knight comes towards the action."
+    },
+    {
+     "move": "g1h1",
+     "say": "Black's king goes back to h1."
+    },
+    {
+     "move": "h3g2",
+     "say": "Check from the bishop on g2; the white king on g3 guards that square."
+    },
+    {
+     "move": "h1g1",
+     "say": "Black's king steps to g1."
+    },
+    {
+     "move": "c1e2",
+     "say": "Checkmate: the knight attacks g1, and the bishop and king cover the other squares."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g2",
+     "to": "h3"
+    },
+    {
+     "from": "a2",
+     "to": "c1"
+    }
+   ],
+   "highlight": [
+    "h1",
+    "g1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "g2h3",
+      "n": 5
+     },
+     "statement": "Bh3 starts a forced mate in five."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The tablebase result for White is a win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBe3-16"
+  },
+  {
+   "type": "card",
+   "text": "**Two conditions.** The corner must match the bishop; if the king sits in the wrong corner you must drive it out and along the edge to the other one. And the fifty-move count keeps running: a win can still be a draw if too few moves are left. Predict each look-alike."
+  },
+  {
+   "type": "contrast",
+   "title": "Right bishop colour or wrong",
+   "prompt": "White to move. In the first position the bishop's colour matches the corner h1. Predict whether a mate in two exists; then see the bishop on a dark square, and the knight on the other wing.",
+   "working": "IBe3-10",
+   "failing": "IBe3-11",
+   "irrelevant": "IBe3-12"
+  },
+  {
+   "type": "contrast",
+   "title": "The same win with the clock running",
+   "prompt": "Same pieces and squares each time; only the halfmove clock differs. Predict win, draw or loss for White.",
+   "working": "IBe3-13",
+   "failing": "IBe3-14",
+   "irrelevant": "IBe3-15"
+  },
+  {
+   "type": "item",
+   "item": "IBe3-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe3-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe3-19",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-BN",
+    "cue.4"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each move: did you check the colour of your bishop and the corner you were driving towards? What did you forget?",
+   "fields": [
+    {
+     "id": "colour",
+     "label": "I checked the bishop's colour:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "What I forgot:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-BN.json (conditions and contrasts; the node cites Capablanca CI-04, not re-read for this lesson)",
+  "docs/lessons-endgames.md (the corner rule is stated as a textbook rule checked on example positions)",
+  "All new positions are own constructions found by an engine scan and python-chess enumeration; mates are engine claims (depth 16); results are Lichess tablebase claims (the clock variants use the tablebase's clock-aware result)"
+ ]
+}

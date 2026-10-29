@@ -1,0 +1,211 @@
+{
+ "id": "L-END-REMOTE-1",
+ "title": "The remote passed pawn: bring the king first",
+ "skill": "END.REMOTE",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [
+  "Explains the remote passed pawn as a decoy: the king's journey is prepared before the pawn is spent",
+  "Decides in a given ending whether to push the remote passed pawn now or move the king first",
+  "Recognises a position with no passed pawn, where the idea does not apply"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A passed pawn **far from the kings** is a *remote passed pawn*. Its job is to be a decoy: the enemy king has to run after it, so your own king can take pawns on the other wing. Spend it too early and the decoy is gone before your king is ready. First prepare the king's journey, then push. Watch Black do it."
+  },
+  {
+   "type": "board",
+   "fen": "8/7p/2K5/3p4/3P4/2k5/8/8 b - - 0 1",
+   "caption": "Black to move. The h-pawn is a passed pawn far from the kings. The king moves first and the pawn follows.",
+   "line": [
+    {
+     "move": "c3d4",
+     "say": "Black's king takes the pawn on d4 first. The h-pawn stays where it is."
+    },
+    {
+     "move": "c6b5",
+     "say": "White's king goes to b5."
+    },
+    {
+     "move": "h7h5",
+     "say": "Now the h-pawn starts to run."
+    },
+    {
+     "move": "b5a4",
+     "say": "White's king goes to a4."
+    },
+    {
+     "move": "h5h4",
+     "say": "The pawn runs on."
+    },
+    {
+     "move": "a4a3",
+     "say": "White's king goes to a3."
+    },
+    {
+     "move": "h4h3",
+     "say": "The pawn is on h3."
+    },
+    {
+     "move": "a3a4",
+     "say": "White's king goes back to a4."
+    },
+    {
+     "move": "h3h2",
+     "say": "The pawn is on h2."
+    },
+    {
+     "move": "a4a5",
+     "say": "White's king goes to a5."
+    },
+    {
+     "move": "h2h1q",
+     "say": "The pawn queens."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "h7",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With Black to move the tablebase result is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "c3d4",
+      "result": "win"
+     },
+     "statement": "Kxd4 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "h7h5",
+      "result": "draw"
+     },
+     "statement": "h5 at once gives up the win: result draw."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "move": "h7h6",
+      "result": "draw"
+     },
+     "statement": "h6 at once gives up the win: result draw."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_set",
+     "params": {
+      "kind": "passed",
+      "color": "black",
+      "squares": [
+       "h7"
+      ]
+     },
+     "statement": "The pawn on h7 is the only passed pawn of Black."
+    },
+    {
+     "id": "C6",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 0
+     },
+     "statement": "White has no pawn on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-REM-5"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** Pushing is not wrong in itself. If the pawn push wins ground at once, push; if your king still has work to do, move the king first. Rule of thumb: ask what each side's king can reach while the pawn runs. And check the pawns first: with no passed pawn there is no decoy at all. Predict the three cases."
+  },
+  {
+   "type": "contrast",
+   "title": "Push, wait, or nothing to push",
+   "prompt": "Three positions with Black to move. Which advice fits each: push the passed pawn now, move the king first, or there is no passed pawn?",
+   "working": "IE-REM-8",
+   "failing": "IE-REM-22",
+   "irrelevant": "IBe3-40"
+  },
+  {
+   "type": "item",
+   "item": "IE-REM-14",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-REM-24",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe3-41",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.REMOTE",
+    "cue.2"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you ask what the kings could reach while the pawn ran, or did you push because the pawn was passed? Which did you do?",
+   "fields": [
+    {
+     "id": "asked",
+     "label": "I asked what the kings could reach:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "habit",
+     "label": "My first impulse was to push:",
+     "options": [
+      "often",
+      "sometimes",
+      "rarely"
+     ]
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.REMOTE.json (the node reads END.REMOTE as the remote passed pawn, Nimzowitsch's term; the node cites My System ideas 19-20, not re-read for this lesson)",
+  "Shipped items IE-REM-5, IE-REM-8, IE-REM-14, IE-REM-22, IE-REM-24 (tablebase claims); board: tablebase claims on the start position and the first moves, the rest of the line is the tablebase's best line",
+  "Lesson 'The outside passed pawn: a decoy for the enemy king' (L-END-OUTSIDE-1) teaches the related idea for pawns on both wings"
+ ]
+}

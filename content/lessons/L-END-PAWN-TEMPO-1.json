@@ -1,0 +1,186 @@
+{
+ "id": "L-END-PAWN-TEMPO-1",
+ "title": "Pawn-step timing: one step or two",
+ "skill": "END.PAWN-TEMPO",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [
+  "Explains that a pawn still on its starting square can spend its moves as one step or two, and so changes who runs out of spare moves",
+  "Finds the pawn step that keeps a win in a locked-pawn ending",
+  "Tells a position where the count decides from one where no pawn has a spare move"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "The lesson *Spare moves: who runs out first?* counts free squares between pawns. A pawn on its **starting square** adds a choice: it can step once or twice, so its owner can change the count. Timing means choosing the step that leaves the opponent without a spare move first. These positions are our own reconstructions, checked in the tablebase, not copies of a book's diagrams."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/p7/5pK1/4kP2/8/P7/8 w - - 0 1",
+   "caption": "White to move. The f-pawns are locked; the a-pawns are free to move. The single step a3 wins, the double step a4 does not.",
+   "line": [
+    {
+     "move": "a2a3",
+     "say": "The pawn takes one step, keeping a second step in reserve."
+    },
+    {
+     "move": "a6a5",
+     "say": "Black's a-pawn steps up."
+    },
+    {
+     "move": "a3a4",
+     "say": "White's pawn steps up and the two a-pawns now face each other."
+    },
+    {
+     "move": "e4d4",
+     "say": "Black has no pawn move left; the king moves."
+    },
+    {
+     "move": "g5f5",
+     "say": "White's king takes the pawn on f5."
+    },
+    {
+     "move": "d4d5",
+     "say": "Black's king follows."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a2",
+     "to": "a3"
+    }
+   ],
+   "highlight": [
+    "a2",
+    "a6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With White to move the tablebase result is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "a2a3",
+      "result": "win"
+     },
+     "statement": "a3 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "a2a4",
+      "result": "loss"
+     },
+     "statement": "a4 gives up the win: result loss."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "move": "g5g6",
+      "result": "loss"
+     },
+     "statement": "Kg6 gives up the win: result loss."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "move": "g5h4",
+      "result": "loss"
+     },
+     "statement": "Kh4 gives up the win: result loss."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-PTM-4"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** The count only decides while both kings are tied to their squares and the pawns are locked. It is a heuristic, not a law: in the first pair below both sides lose if they must move. Check three things before you push: is a king free, how many squares lie between the flank pawns, and which pawn still has the choice of one step or two?"
+  },
+  {
+   "type": "contrast",
+   "title": "One free square fewer",
+   "prompt": "Black to move. In the first position, Black wins. In the second, White's pawn is still on its starting square. Predict each.",
+   "working": "IE-PTM-3",
+   "failing": "IE-PTM-1",
+   "irrelevant": "IBe3-30"
+  },
+  {
+   "type": "contrast",
+   "title": "Who must move, and one pawn step",
+   "prompt": "Pawns locked on d5 and d6. First: White to move with both h-pawns on their starting squares. Then the same with Black to move. Then Black's h-pawn one step further. Predict each.",
+   "working": "IE-PTM-11",
+   "failing": "IE-PTM-9",
+   "irrelevant": "IE-PTM-10"
+  },
+  {
+   "type": "item",
+   "item": "IE-PTM-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-PTM-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe3-31",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.PAWN-TEMPO",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you ask whether a king was free and which pawn still had two ways to move? Which of the two did you forget?",
+   "fields": [
+    {
+     "id": "king",
+     "label": "I checked whether a king was free:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "pawn",
+     "label": "I looked at the pawns on their starting squares:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.PAWN-TEMPO.json (status: blocked, because the book's diagrams are missing from the source text; the positions here are reconstructed and checked in the tablebase, they are not the book's)",
+  "Shipped items IE-PTM-1 to IE-PTM-12 (tablebase claims); board: tablebase claims on the start position and the first move; later moves of the line are the tablebase's best line, not claims",
+  "Lesson 'Spare moves: who runs out first?' (L-END-TEMPO-1) teaches the free-square count"
+ ]
+}

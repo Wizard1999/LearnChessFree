@@ -99,10 +99,29 @@ export function prereqMet(key: string, skills: Map<string, Skill>, masteries: Ma
   return lessonDone(skill) || !hasLesson(skill)
 }
 
+const rankCache = new WeakMap<Map<string, Skill>, Map<string, number>>()
+/** How many prerequisite steps lie behind a skill depth (a depth with no prerequisites is 0), so a lesson never sorts before what it builds on. */
+function prereqRank(key: string, skills: Map<string, Skill>, seen: Set<string> = new Set()): number {
+  let cache = rankCache.get(skills)
+  if (!cache) { cache = new Map(); rankCache.set(skills, cache) }
+  const hit = cache.get(key)
+  if (hit !== undefined) return hit
+  if (seen.has(key)) return 0
+  seen.add(key)
+  const i = key.lastIndexOf('.')
+  const pre = skills.get(key.slice(0, i))?.depths[key.slice(i + 1)]?.prereqs ?? []
+  const r = pre.length ? 1 + Math.max(...pre.map(k => prereqRank(k, skills, seen))) : 0
+  seen.delete(key)
+  cache.set(key, r)
+  return r
+}
+
+/** Curriculum order: tier, then prerequisite depth (what a lesson builds on comes first), then skill id. */
 export function lessonSort(a: Lesson, b: Lesson, skills: Map<string, Skill>) {
   const ta = skills.get(a.skill)?.tier ?? 9
   const tb = skills.get(b.skill)?.tier ?? 9
-  return ta - tb || a.skill.localeCompare(b.skill) || a.depth.localeCompare(b.depth) || a.id.localeCompare(b.id)
+  const ra = prereqRank(`${a.skill}.${a.depth}`, skills), rb = prereqRank(`${b.skill}.${b.depth}`, skills)
+  return ta - tb || ra - rb || a.skill.localeCompare(b.skill) || a.depth.localeCompare(b.depth) || a.id.localeCompare(b.id)
 }
 
 /** Lessons whose prerequisites are met, not yet finished, in curriculum order. */
