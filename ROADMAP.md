@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 55%** (61 of 118 tasks done, in-progress tasks count half). Updated 2026-10-29T02:16+00:00 UTC.
+**Overall: 55%** (61 of 118 tasks done, in-progress tasks count half). Updated 2026-10-29T03:28+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -21,20 +21,20 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 153 of 204 skill nodes have a lesson (75%); 147 nodes have 10 or more shipped exercises; 6603 exercises ship, 12 wait for validation; 0 items reviewed by a person, 1944 flagged for human review.
+**Coverage (computed from the files):** 156 of 204 skill nodes have a lesson (76%); 148 nodes have 10 or more shipped exercises; 6645 exercises ship, 0 wait for validation; 0 items reviewed by a person, 1986 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
 | S1 Rules and board vision | 20 | 20 | 18 |
 | S2 Safety and the thinking loop | 12 | 12 | 7 |
 | S3 Tactics | 24 | 24 | 24 |
-| S4 Calculation | 8 | 5 | 8 |
+| S4 Calculation | 8 | 8 | 8 |
 | S5 Positional play and planning | 49 | 25 | 30 |
 | S6 Attack, sacrifice and defense | 19 | 9 | 16 |
 | S7 Endgames | 37 | 23 | 35 |
 | S8 Openings and structures | 12 | 12 | 7 |
 | S9 Game study | 7 | 7 | 2 |
-| S10 Practical performance | 9 | 9 | 0 |
+| S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |
 
 **Building now:** Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (batches p1 and p2 written and validated, review pass unfinished; p3 to p6 not started); Tranche 2c: attack, defence, sacrifice, initiative (batch a1 written, review pass unfinished; a2 and a3 not started); Tranche 2d: endgames (batch e1 written, review pass unfinished; e2 to e4 not started); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md)

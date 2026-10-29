@@ -2,7 +2,7 @@
 
     python tools/check_overlap.py
 
-Flags (1) two lessons for the same skill and depth, (2) lessons whose named exercises (item, contrast and practice-tag sets) overlap
+Rule (Andrew, 28 October 2026): nothing is taught twice; lessons link to each other instead. Flags (0) the same board position in two different lessons, (1) two lessons for the same skill and depth, (2) lessons whose named exercises (item, contrast and practice-tag sets) overlap
 by more than 40%, (3) two lessons that list the same skill as main or `also` coverage for the same depth. Exit code 1 if any
 overlap is found, so it can gate new lessons."""
 import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent))
@@ -30,6 +30,18 @@ for a, b in itertools.combinations(lessons, 2):
     if not x or not y: continue
     j = len(x & y) / min(len(x), len(y))
     if j > 0.4 and len(x & y) >= 2: problems.append(f"shared exercises {a['id']} / {b['id']}: {len(x & y)} common ({j:.0%} of the smaller)")
+# the same position shown to the learner in two different lessons (items with the same board, by FEN without move counters)
+try:
+    items = {i["id"]: i for i in json.loads((ROOT / "app" / "public" / "content" / "items.json").read_text(encoding="utf-8"))}
+    def fen_key(i): return " ".join(i["fen"].split()[:4])
+    by_fen = {}
+    for l in lessons:
+        for iid in {x for x in sets[l["id"]] if not x.startswith("tags:")}:
+            if iid in items: by_fen.setdefault(fen_key(items[iid]), set()).add(l["id"])
+    for k, ls in by_fen.items():
+        if len(ls) > 1: problems.append(f"same position in several lessons {sorted(ls)}: {k}")
+except FileNotFoundError:
+    print("note: app/public/content/items.json missing, position check skipped (run tools/build_content.py)")
 for p in problems: print("OVERLAP", p)
 print(f"{len(problems)} overlaps in {len(lessons)} lessons")
 sys_exit = 1 if problems else 0
