@@ -846,3 +846,16 @@ body:has(.mappage) .dock { bottom: var(--botH, 0); }
   .mappage .maplede, .mappage .sectionlabel { display: none; }
   main.mappage.curriculum { min-height: 15rem; }
 }
+/* the view buttons sit in exactly the same place on every Curriculum view: same distance under the header, same left edge when the windows are open */
+main.mappage.curriculum { padding-top: calc(1.2rem + 13px); } /* 13px = the margin the list views put above their view buttons; measured, so the buttons do not move */
+main.mappage.curriculum.winleft { margin-left: calc(330px + 1rem); }
+main.mappage.curriculum.winright { margin-right: calc(330px + 1rem); }
+/* the same scrollbar room on every page, so a page that scrolls and one that does not line up */
+html { scrollbar-gutter: stable; }
+/* windows closed: the view buttons sit where the list views put them (the list column is centred); the map below still uses the full width */
+@media (min-width: 1301px) {
+  main.mappage.curriculum { --ml: 0.75rem; --mr: 0.75rem; margin-left: var(--ml); margin-right: var(--mr); }
+  main.mappage.curriculum.winleft { --ml: calc(330px + 1rem); }
+  main.mappage.curriculum.winright { --mr: calc(330px + 1rem); }
+  main.mappage.curriculum [aria-label="Curriculum views"] { margin-left: calc((100% + var(--ml) + var(--mr) - min(1100px, 100vw - 2 * (330px + 1.5rem))) / 2 - var(--ml)); }
+}
