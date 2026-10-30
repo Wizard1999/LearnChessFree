@@ -37,6 +37,17 @@ self.addEventListener('fetch', e => {
     }
     const hit = await cache.match(req)
     if (hit) return hit
-    try { const r = await fetch(req); if (r.ok) cache.put(req, r.clone()); return r } catch { return Response.error() }
+    try {
+      const r = await fetch(req)
+      if (r.ok) {
+        await cache.put(req, r.clone())
+        // Maia models (about 3.5 MB each) are fetched on first use only; keep the three most recent so the cache stays bounded.
+        if (/\/maia\/maia\d+\.onnx$/.test(url.pathname)) {
+          const models = (await cache.keys()).filter(k => /\/maia\/maia\d+\.onnx$/.test(new URL(k.url).pathname))
+          for (const k of models.slice(0, Math.max(0, models.length - 3))) await cache.delete(k)
+        }
+      }
+      return r
+    } catch { return Response.error() }
   })())
 })

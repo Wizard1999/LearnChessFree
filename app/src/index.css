@@ -803,3 +803,46 @@ main.page > p.small.muted > a { display: inline-flex; align-items: center; min-h
 .mapsvg.hasHi .mapwedge .wedgebg { opacity: 0.1; }
 .mapsvg .mapwedge.hi .wedgebg { fill: var(--accent); opacity: 0.34; stroke: var(--accent); stroke-opacity: 1; stroke-width: 5; }
 
+
+/* Maia opponent (Play page): the explanation under the opponent choice. Added with lib/maia.ts. */
+.maia-note { max-width: 62ch; margin: .5rem 0 1rem; line-height: 1.5; }
+
+/* ===== Map page fits the window (31 Oct 2026) =====
+   The map is exactly as tall as the window under the header (no page scrolling), and it fits AROUND the windows the learner switches on from the
+   toolbar (Progress, Mastery challenge, Up next on the left; the chosen skill on the right): opening a window narrows the map, closing widens it. */
+.edgetab { display: none; }
+main.mappage.curriculum { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem)); box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; width: auto; max-width: none; margin-left: 0.75rem; margin-right: 0.75rem; padding: 0.4rem 0 0.5rem; }
+main.mappage.curriculum.winleft { margin-left: calc(330px + 1.25rem); }
+main.mappage.curriculum.winright { margin-right: calc(330px + 1.25rem); }
+.mappage .mapgrid { flex: 1 1 auto; min-height: 0; height: auto; }
+.mappage .maplede { margin: 0 0 0.3rem; }
+.mappage .sectionbar { flex: 0 0 auto; }
+.dock { top: var(--topH, 4.4rem); }
+.dock.left { display: flex; flex-direction: column; }
+.dockwin { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; border-bottom: 1px solid var(--divider); }
+.dockwin:last-child { border-bottom: 0; }
+.dockwinhead { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.4rem 0.35rem 0.8rem; border-bottom: 1px solid var(--divider); flex: 0 0 auto; }
+.dockwinhead .dockclose { min-width: 2.2rem; min-height: 2.2rem; }
+.tabsep { flex: 0 0 1px; align-self: stretch; background: var(--divider); margin: 0 0.4rem; }
+.mappage [aria-label="Curriculum views"] { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 0 0.35rem; }
+.mappage [aria-label="Curriculum views"] .chip { white-space: nowrap; flex: 0 0 auto; }
+/* narrower windows: the panels become a bottom sheet and the map fits in what is left above it */
+@media (max-width: 1300px) {
+  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { margin-left: 0.75rem; margin-right: 0.75rem; }
+  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - 46vh); }
+}
+@media (max-width: 700px) {
+  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - min(36vh, 20rem)); }
+}
+
+/* the footer line stays (the credit), but takes little room under the map */
+body:has(.mappage) .sitefooter { margin: 0 auto; padding: 0.3rem 1rem; font-size: 0.75rem; }
+body:has(.mappage) .buildstamp { display: inline; margin-left: 0.5rem; }
+/* the windows stop above the footer line, so the credit stays readable */
+body:has(.mappage) .dock { bottom: var(--botH, 0); }
+@media (max-width: 1300px) { body:has(.mappage) .dock { bottom: 0; } }
+/* phones: the map gets the room; explanations fold away, and it never shrinks to a sliver when a sheet is open */
+@media (max-width: 700px) {
+  .mappage .maplede, .mappage .sectionlabel { display: none; }
+  main.mappage.curriculum { min-height: 15rem; }
+}

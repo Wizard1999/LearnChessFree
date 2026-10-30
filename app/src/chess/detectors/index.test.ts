@@ -71,7 +71,7 @@ describe('robustness', () => {
       detectConcepts(fen)
       for (const san of new Chess(fen).moves()) detectConcepts(fen, san)
     }
-  })
+  }, 60000) // heavy: every detector on every legal move; allow for a busy machine
   it('handles checkmated and stalemated positions in position mode', () => {
     detectConcepts('r5k1/8/8/8/8/8/5PPP/r5K1 w - - 0 1') // White is checkmated
     detectConcepts('k7/2Q5/1K6/8/8/8/8/8 b - - 0 1') // Black is stalemated

@@ -60,9 +60,25 @@ export function Course() {
   const view = params.get('mission') ?? 'all'
   const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
-  const [dockOpen, setDockOpen] = useState(() => { try { return localStorage.getItem('dock:left') === '1' } catch { return false } })
-  const [dockTab, setDockTab] = useState<'progress' | 'next'>('progress')
-  const setDock = (open: boolean) => { setDockOpen(open); try { localStorage.setItem('dock:left', open ? '1' : '0') } catch { /* optional */ } }
+  // three windows the learner switches on and off from the toolbar; the map fits around whichever are open (they are remembered)
+  type Wins = { progress: boolean; challenge: boolean; next: boolean }
+  const [wins, setWins] = useState<Wins>(() => { try { const w = JSON.parse(localStorage.getItem('map:wins') ?? 'null'); if (w && typeof w === 'object') { const o = { progress: !!w.progress, challenge: !!w.challenge, next: !!w.next }; if (window.matchMedia?.('(max-width: 1300px)').matches) { const first = (['progress', 'challenge', 'next'] as const).find(k => o[k]); return { progress: first === 'progress', challenge: first === 'challenge', next: first === 'next' } } return o } } catch { /* optional */ } return { progress: false, challenge: false, next: false } })
+  const saveWins = (w: Wins) => { setWins(w); try { localStorage.setItem('map:wins', JSON.stringify(w)) } catch { /* optional */ } }
+  // on a narrow screen the windows are a bottom sheet, so only one is open at a time
+  const narrowScreen = () => typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches === true
+  const toggleWin = (k: keyof Wins) => saveWins(narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !wins[k] } : { ...wins, [k]: !wins[k] })
+  const dockOpen = wins.progress || wins.challenge || wins.next
+  // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
+  useEffect(() => {
+    const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
+    const set = () => {
+      document.documentElement.style.setProperty('--topH', `${Math.ceil(el.getBoundingClientRect().height)}px`)
+      document.documentElement.style.setProperty('--botH', `${Math.ceil(foot?.getBoundingClientRect().height ?? 0)}px`)
+    }
+    set(); const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(set) : null; ro?.observe(el); if (foot) ro?.observe(foot); window.addEventListener('resize', set)
+    return () => { ro?.disconnect(); window.removeEventListener('resize', set) }
+  }, [])
+  const setDock = (open: boolean) => { if (!open) saveWins({ progress: false, challenge: false, next: false }) }
   const [showBreakdown, setShowBreakdown] = useState(true)
   const [dismissed, setDismissed] = useState<string[]>([])
   const [lastChallenge, setLastChallenge] = useState<number | null>(null)
@@ -102,10 +118,14 @@ export function Course() {
       <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
       <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
       <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
+      <span className="tabsep" aria-hidden="true" />
+      <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
+      <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
+      <button type="button" className={wins.next ? 'chip on' : 'chip'} aria-pressed={wins.next} onClick={() => toggleWin('next')}>Up next</button>
     </div>
   )
 
-  const pick = (id: string) => { setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
+  const pick = (id: string) => { if (narrowScreen() && dockOpen) saveWins({ progress: false, challenge: false, next: false }); setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
   function startChallenge() {
     const chosen = plan?.unlocked ? plan : planNow?.unlocked ? planNow : null
@@ -260,9 +280,9 @@ export function Course() {
           <Legend />
         </section>
   )
-  const rightPanel = (
+  const rightPanel = (part: 'challenge' | 'next') => (
         <div className="mapright sidedrawer right card">
-          {warmOpen && mission ? (
+          {part === 'challenge' && (warmOpen && mission ? (
             <section className="card challenge">
               <h2>Warm-up: {mission.name}</h2>
               <WarmupRun mission={mission} items={content.items} attempts={attempts} onFinish={r => void finishWarmup(r)} onCancel={() => setWarmOpen(false)} />
@@ -298,9 +318,9 @@ export function Course() {
                   <p className="small">Both exercises right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
               </section>
             </>
-          )}
+          ))}
 
-          {result && !busy && (
+          {part === 'challenge' && result && !busy && (
             <section className="card result ok" role="status" aria-live="polite">
               <h3>Challenge finished</h3>
               <table className="table small"><thead><tr><th>Skill</th><th>Right</th><th>What it means</th><th>Level</th></tr></thead>
@@ -312,7 +332,7 @@ export function Course() {
             </section>
           )}
 
-          {!busy && (
+          {part === 'next' && !busy && (
             <section className="card">
               <h2>Skills up next for you</h2>
               {upNext.length === 0 ? <p className="muted">No skill has all its prerequisites shown yet {isAll ? '' : 'in this section '}(nothing is locked: every lesson and exercise below is open to you now). The whole list is in the outline under the map.</p> : (
@@ -341,15 +361,11 @@ export function Course() {
   const skillOpen = !!(node && sk && !busy)
   const chrome = (
     <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setDock(false); setPicked(null) } }}>
-      {!dockOpen && <button type="button" className="edgetab left" aria-expanded={false} aria-label="Open the progress panel" onClick={() => setDock(true)}>Progress ›</button>}
       {dockOpen && (
-        <aside className="dock left" aria-label="Progress and challenge">
-          <div className="docktabs" role="tablist">
-            <button type="button" role="tab" aria-selected={dockTab === 'progress'} className={dockTab === 'progress' ? 'chip on' : 'chip'} onClick={() => setDockTab('progress')}>Progress</button>
-            <button type="button" role="tab" aria-selected={dockTab === 'next'} className={dockTab === 'next' ? 'chip on' : 'chip'} onClick={() => setDockTab('next')}>Challenge and next</button>
-            <button type="button" className="dockclose" aria-label="Close the progress panel" title="Close" onClick={() => setDock(false)}>‹</button>
-          </div>
-          <div className="dockbody">{dockTab === 'next' ? rightPanel : leftPanel}</div>
+        <aside className="dock left" aria-label="Progress, challenge and up next">
+          {wins.progress && <div className="dockwin"><div className="dockwinhead"><strong>Progress</strong><button type="button" className="dockclose" aria-label="Close progress" onClick={() => toggleWin('progress')}>✕</button></div><div className="dockbody">{leftPanel}</div></div>}
+          {wins.challenge && <div className="dockwin"><div className="dockwinhead"><strong>Mastery challenge</strong><button type="button" className="dockclose" aria-label="Close mastery challenge" onClick={() => toggleWin('challenge')}>✕</button></div><div className="dockbody">{rightPanel('challenge')}</div></div>}
+          {wins.next && <div className="dockwin"><div className="dockwinhead"><strong>Up next</strong><button type="button" className="dockclose" aria-label="Close up next" onClick={() => toggleWin('next')}>✕</button></div><div className="dockbody">{rightPanel('next')}</div></div>}
         </aside>
       )}
       {skillOpen && (
@@ -364,7 +380,7 @@ export function Course() {
   if (otherView) return <>{otherView}{chrome}</>
   return (
     <>
-    <main className={`page wide mappage curriculum${dockOpen || (node && sk && !busy) ? ' dockopen' : ''}`}>
+    <main className={`page wide mappage curriculum${dockOpen ? ' winleft' : ''}${node && sk && !busy ? ' winright' : ''}`}>
       <h1 className="sr-only">Curriculum</h1>
       {tabs}
       <details className="inlinenote maplede"><summary>How the map fills in</summary><p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p></details>
@@ -379,31 +395,6 @@ export function Course() {
 
       </div>
 
-      <section className="card outline" aria-label={`${current.name} outline`}>
-        <h2>Outline: {current.name}</h2>
-        <p className="small muted">Everything in {isAll ? 'the curriculum' : 'this section'}, in teaching order, with nothing hidden or locked. Open any lesson or practice any skill at any time.</p>
-        {(isAll ? missions : [current]).map(m => (
-          <div key={m.strand}>
-            {isAll && <h3>{m.strand} · {m.name}</h3>}
-            {m.tiers.map(t => (
-              <div key={t.tier}>
-                <h4>Tier {t.tier} <span className="muted small">{t.gloss}</span></h4>
-                <ul className="plain outlinelist">{t.nodes.map(n => {
-                  const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : content.skillById.get(n.id)?.depths.D1
-                  return (
-                    <li key={n.id}>
-                      <Swatch level={n.levelWithAssumed} /> <strong>{n.title}</strong> <span className="muted small">· {LEVEL_NAMES[n.level]}{n.levelWithAssumed > n.level ? ' (assumed)' : ''}{n.due ? ' · refresher due' : ''}</span>
-                      {d && <span className="small"> {d.outcome}</span>}
-                      {' '}{lessonsFor(n.id).map(l => { const pr = progress?.find(x => x.lessonId === l.id); return <Link key={l.id} className="small" to={`/lesson/${l.id}`}>{pr?.done ? (pr.skipped ? '» skipped' : '✓ seen') : pr && pr.step > 0 ? '◐ started' : '○ not seen'} · Lesson: {l.title}</Link> })}
-                      {n.workingDepth && <> <Link className="small" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practice</Link></>}
-                      {!n.hasLesson && n.noExercises && <span className="muted small"> (nothing written yet)</span>}
-                    </li>)
-                })}</ul>
-              </div>
-            ))}
-          </div>
-        ))}
-      </section>
       {hover && !picked && (() => { const d = content.skillById.get(hover.n.id)?.depths[hover.n.workingDepth ?? 'D1']; const ls = lessonsFor(hover.n.id); return (
         <div className="blocktip" role="tooltip" style={{ left: hover.x, top: hover.y }}>
           <strong>{hover.n.title}</strong>
