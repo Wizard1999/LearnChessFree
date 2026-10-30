@@ -1,5 +1,6 @@
 // Read-aloud with the browser's built-in speech synthesis: free, local, no service, nothing sent anywhere.
 // Off by default. The choices (on/off, voice, speed) are kept per device in localStorage, guarded like the appearance settings.
+import { bestVoice } from './voices'
 import { useEffect, useSyncExternalStore } from 'react'
 import { chunkForSpeech, speakable } from './speech'
 
@@ -72,7 +73,8 @@ export function speakText(raw: string) {
   const chunks = chunkForSpeech(speakable(raw))
   if (chunks.length === 0) return
   const mine = token
-  const voice = state.voices.find(v => v.voiceURI === state.prefs.voice)
+  // the chosen voice, else the most natural English one the browser has (lib/voices.ts)
+  const voice = state.voices.find(v => v.voiceURI === state.prefs.voice) ?? bestVoice(state.voices)
   chunks.forEach((c, k) => {
     const u = new SpeechSynthesisUtterance(c)
     if (voice) { u.voice = voice; u.lang = voice.lang }

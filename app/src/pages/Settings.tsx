@@ -1,3 +1,4 @@
+import { isOnline, rankedVoices } from '../lib/voices'
 import { useEffect, useState } from 'react'
 import { exportAll, importAll, resetAll } from '../db'
 import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
@@ -83,12 +84,12 @@ export function SettingsContent() {
       {speech.available && (
         <section className="card">
           <h2>Read aloud</h2>
-          <p className="small muted">Lessons can be read to you by your browser's own voices. Nothing is sent anywhere. Turn it on with the Read aloud button at the top of a lesson.</p>
+          <p className="small muted">Lessons can be read to you by your browser's own voices, best-sounding first. A voice marked online is run by your browser's maker (Microsoft, Google or Apple), which receives the sentence being read; lesson text holds nothing personal. Local voices send nothing. For the most natural sound, use Microsoft Edge (its "Natural" voices) or add Enhanced or Premium voices in your system's speech settings. Turn it on with the Read aloud button at the top of a lesson.</p>
           <div className="row">
             <label className="field"><span className="small muted">Voice</span>
               <select value={speech.prefs.voice} onChange={e => savePrefs({ voice: e.target.value })}>
-                <option value="">Browser default</option>
-                {speech.voices.map(v => <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang})</option>)}
+                <option value="">Best available (automatic)</option>
+                {rankedVoices(speech.voices).map(v => <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang}){isOnline(v) ? ', online' : ''}</option>)}
               </select></label>
             <label className="field"><span className="small muted">Speed: {speech.prefs.rate.toFixed(1)}x</span>
               <input type="range" min={RATE_MIN} max={RATE_MAX} step={0.1} value={speech.prefs.rate} onChange={e => savePrefs({ rate: Number(e.target.value) })} /></label>
