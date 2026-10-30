@@ -2,7 +2,8 @@ import { Crest } from '../components/Crest'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContent, useContentFull } from '../lib/content'
-import { independence, masteryMap, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
+import { MapPreview } from '../components/MapPreview'
+import { independence, masteryMap, nextLessons, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
 import { buildDaily, dateKey, NO_EXTRAS, type Block, type Extras } from '../lib/daily'
 import { challengeSeed, planChallenge } from '../lib/missions'
 import { useMissionData } from '../lib/useMissions'
@@ -11,6 +12,7 @@ import { db, kvGet, kvSet } from '../db'
 import { describeMastery } from '../lib/mastery'
 import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/drill'
 import { useStorageStatus } from '../lib/persist'
+import { stageLine, stageProgress } from '../lib/stageProgress'
 
 const NONE: never[] = []
 
@@ -65,6 +67,14 @@ export function Today() {
   const ind = useMemo(() => independence(attempts ?? []), [attempts])
   const masteries = useMemo(() => masteryMap(attempts ?? [], Date.now(), content.cuedOnly), [attempts, content.cuedOnly])
 
+  // the small map: where the learner is and which skill the recommended path reaches next
+  const mapLevels = useMemo(() => new Map(missionData.overall.nodes.map(n => [n.id, n.level as number])), [missionData.overall])
+  const mapNext = useMemo(() => {
+    if (!missionData.ctx || !progress || !planReady) return null
+    const l = nextLessons(content, missionData.ctx.masteries, placement, progress, 1)[0]
+    return l ? { id: l.skill, title: content.skillById.get(l.skill)?.title ?? l.title } : null
+  }, [missionData.ctx, progress, planReady, content, placement])
+
   async function saveIntention(text: string | null) {
     setIntention(text); await kvSet(`daily:${day}:intention`, text)
     if (text) await db.reflections.add({ kind: 'intention', data: { text }, ts: Date.now() })
@@ -73,7 +83,7 @@ export function Today() {
     const next = [...new Set([...doneIds, id])]
     setDoneIds(next); setActive(null); await kvSet(`daily:${day}:done`, next)
   }
-  if (!ready) return <main className="page"><p className="muted">Loading…</p></main>
+  if (!ready) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
 
   const activeBlock = active
   const firstLesson = fresh ? blocks.find(b => b.kind === 'lesson') : undefined
@@ -81,6 +91,7 @@ export function Today() {
   const startBlock = blocks.find(b => b.kind === 'start' && !doneIds.includes(b.id))
   const upNext = blocks.find(b => !doneIds.includes(b.id) && b.kind !== 'start') ?? startBlock
   const others = blocks.filter(b => b !== upNext && b !== startBlock)
+  const stageText = stageLine(stageProgress(content.lessons, P, masteries))
   const learning = [...masteries.entries()].filter(([, m]) => m.state !== 'unseen').sort((a, b) => b[1].n - a[1].n).slice(0, 6)
 
   const inProgress = (b: Block) => b.kind === 'lesson' && (progress ?? []).some(p => p.lessonId === b.lessonId && !p.done && p.step > 0)
@@ -106,12 +117,12 @@ export function Today() {
           <p>Lessons run in order from the beginning, and each one has you try things on a real board. Already know the basics? Skip ahead below.</p>
           <div className="row">{action(firstLesson, true, 'Start learning')}</div>
         </section>
-        <p className="small">Already play? <Link to="/placement">Find your starting level</Link> (about 15 minutes, optional). Or <Link to="/course">see the whole course</Link>.</p>
+        <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting level <span className="muted">(about 15 minutes, optional)</span></Link><Link to="/course">See the whole course</Link></div>
         <details className="small howitworks">
           <summary>How this school works</summary>
           <ul>
             <li><strong>Test first, then learn.</strong> Most practice here does not tell you which idea to use, because in a real game nobody does. Lessons come with labelled examples; practice does not.</li>
-            <li><strong>Help is allowed and counted.</strong> Hints and prompts are there when you need them. They lower the credit an answer earns, so what the app thinks you know stays honest.</li>
+            <li><strong>Hints are allowed and counted.</strong> Hints and prompts are there when you need them. They lower the credit an answer earns, so what the app thinks you know stays honest.</li>
             <li><strong>You steer.</strong> You can say what you want to work on, and later make your own training plans and test whether they worked.</li>
             <li><strong>Every position is checked by software</strong> (rules, a chess engine, endgame tablebases).</li>
             <li><strong>Your data stays on this device.</strong> Back it up or move it from Settings whenever you like.</li>
@@ -146,7 +157,9 @@ export function Today() {
               <p>Open the <Link to="/course">course</Link> to pick something, or try <Link to="/practice">some practice</Link>.</p>
             </section>
           )}
-          {startBlock && upNext !== startBlock && <p className="small">Already play? <Link to="/placement">Find your starting point</Link> (optional, about {startBlock.minutes} minutes).</p>}
+          {planReady && stageText && <p className="small muted stageline"><Link to="/course?view=lessons">{stageText}</Link></p>}
+          {planReady && missionData.ctx && <MapPreview skills={content.skills} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
+          {startBlock && upNext !== startBlock && <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting point <span className="muted">(optional, about {startBlock.minutes} minutes)</span></Link></div>}
           <details className="card aimcard" open={!!intention}>
             <summary>Set your own aim for today <span className="muted small">· optional</span></summary>
             {intention === undefined ? <p className="muted">Loading…</p> : intention === null ? (

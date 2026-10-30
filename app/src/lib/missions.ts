@@ -13,7 +13,7 @@ export const LEVEL_HELP = [
   'No lesson viewed and no exercise tried.',
   'You have viewed the lesson or tried exercises, but the evidence is not yet reliable.',
   'The idea is reliable when it is named or cued (depth D1).',
-  'The idea is reliable in unlabelled positions where nobody names it (depth D2).',
+  'The idea is reliable in unlabeled positions where nobody names it (depth D2).',
   'Reliable in the exercises at the deepest depth, and not due for a refresher. This is mastery in training: it is not yet shown in your own games.',
 ] as const
 export const STRAND_NAMES: Record<string, string> = {
@@ -83,7 +83,7 @@ export function nodeProgress(skill: Skill, ctx: MissionContext): NodeProgress {
     if (depthNames.some(d => status(d) !== 'unseen') || lessonDone) level = 1
     if (hasD1 && met('D1')) level = 2
     if (hasD2 && met('D2')) level = 3
-    if (top && status(top) === 'reliable' && level >= (items.includes('D2') ? 3 : 2)) level = due ? 3 : 4 // mastered needs real evidence at the deepest practised depth, and a refresher not overdue
+    if (top && status(top) === 'reliable' && level >= (items.includes('D2') ? 3 : 2)) level = due ? 3 : 4 // mastered needs real evidence at the deepest practiced depth, and a refresher not overdue
     if (!top) level = Math.min(level, 1) as Level // no exercises: only "Seen" can be earned, by finishing the lesson
     return level
   }
@@ -167,13 +167,13 @@ export const challengeSeed = (strand: string, lastChallenge: number | null, day 
 export interface ChallengePlan { unlocked: boolean; reason: string; picks: { node: NodeProgress; items: Item[] }[] }
 
 /**
- * Mastery challenge: 6 questions on 3 skills, 2 each, unlabelled, fresh, chosen for staleness and level, one mastered skill at
+ * Mastery challenge: 6 questions on 3 skills, 2 each, unlabeled, fresh, chosen for staleness and level, one mastered skill at
  * most (a retention check). Unlocks when 3 skills have been started and 12 hours have passed since the last challenge.
  */
 export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: Attempt[], lastChallengeTs: number | null, now: number, seed: string): ChallengePlan {
   const bySkill = new Map<string, Item[]>()
   for (const i of items) { if (i.cue >= 3) bySkill.set(i.skill, [...(bySkill.get(i.skill) ?? []), i]) }
-  /** Unlabelled exercises for the node at the depth to test: at least two, from at least two different positions. */
+  /** Unlabeled exercises for the node at the depth to test: at least two, from at least two different positions. */
   const usablePool = (n: NodeProgress): Item[] => {
     for (const d of [n.workingDepth, ...n.depths.map(x => x.depth).reverse()].filter((x): x is string => !!x)) {
       const pool = bySkill.get(`${n.id}.${d}`) ?? []
@@ -184,7 +184,7 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
   // "Started" means the learner has answered exercises in it (a finished lesson alone has no date to rank by, and an assumed skill has no
   // evidence) and the challenge has something to ask about it.
   const started = nodes.filter(n => n.level >= 1 && !n.noExercises && n.lastTs !== null && usablePool(n).length > 0)
-  if (started.length < 3) return { unlocked: false, reason: `Practise at least 3 skills first (${started.length} so far).`, picks: [] }
+  if (started.length < 3) return { unlocked: false, reason: `Practice at least 3 skills first (${started.length} so far).`, picks: [] }
   if (lastChallengeTs !== null && now - lastChallengeTs < CHALLENGE_GAP_MS) {
     const h = Math.ceil((CHALLENGE_GAP_MS - (now - lastChallengeTs)) / 3600000)
     return { unlocked: false, reason: `Another challenge opens in about ${h} hour${h === 1 ? '' : 's'}. The gap is on purpose: spaced review works better than back-to-back review. Ordinary practice is open any time.`, picks: [] }
@@ -202,11 +202,11 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
     if (n.level === 4) mastered++
     picks.push({ node: n, items: chosen })
   }
-  if (picks.length < 3) return { unlocked: false, reason: 'Not enough fresh unlabelled exercises yet for three of your skills.', picks: [] }
-  return { unlocked: true, reason: 'Ready: six questions on three skills.', picks }
+  if (picks.length < 3) return { unlocked: false, reason: 'Not enough fresh unlabeled exercises yet for three of your skills.', picks: [] }
+  return { unlocked: true, reason: 'Ready: six exercises on three skills.', picks }
 }
 
-/** What a challenge result means for one skill (two questions): both right is evidence for, both wrong is evidence against. */
+/** What a challenge result means for one skill (two exercises): both right is evidence for, both wrong is evidence against. */
 export function challengeVerdict(rights: number, questions = 2): 'up' | 'same' | 'down' {
   if (rights >= questions) return 'up'
   if (rights === 0) return 'down'

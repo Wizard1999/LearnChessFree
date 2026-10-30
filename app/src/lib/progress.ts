@@ -28,18 +28,18 @@ export function groupBySkillKey(attempts: Attempt[]): Map<string, Attempt[]> {
   return m
 }
 /**
- * Test-out attempts (placement, mission warm-up) carry no penalty on a skill the learner has never practised: a right answer is
+ * Test-out attempts (placement, mission warm-up) carry no penalty on a skill the learner has never practiced: a right answer is
  * evidence, a wrong one is only "not yet shown" and is left out. After real practice (lesson, practice, review, challenge, game)
  * every attempt counts, so a warm-up can never lower a skill the learner has worked on.
  */
 export function evidenceAttempts(attempts: Attempt[]): Attempt[] {
   const out: Attempt[] = []
   for (const group of groupBySkillKey(attempts).values()) {
-    let practised = false
+    let practiced = false
     for (const a of [...group].sort((x, y) => x.ts - y.ts)) {
       const testOut = a.source === 'placement' || a.source === 'warmup'
-      if (!testOut) practised = true
-      if (testOut && !a.correct && !practised) continue
+      if (!testOut) practiced = true
+      if (testOut && !a.correct && !practiced) continue
       out.push(a)
     }
   }

@@ -21,7 +21,7 @@ describe('node levels come from evidence', () => {
     expect(nodeProgress(F, ctxFor([F], {}, { F: ['D1', 'D2'] }, ['F'])).level).toBe(1)
     expect(nodeProgress(F, ctxFor([F], { 'F.D1': m('practising') }, { F: ['D1', 'D2'] })).level).toBe(1)
   })
-  it('climbs with reliable depths and Mastered needs the deepest practised depth', () => {
+  it('climbs with reliable depths and Mastered needs the deepest practiced depth', () => {
     const c1 = ctxFor([F], { 'F.D1': m('reliable') }, { F: ['D1', 'D2'] })
     expect(nodeProgress(F, c1).level).toBe(2)
     const c2 = ctxFor([F], { 'F.D1': m('reliable'), 'F.D2': m('reliable') }, { F: ['D1', 'D2'] })

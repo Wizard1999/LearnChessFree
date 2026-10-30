@@ -5,12 +5,12 @@ import { evidenceAttempts, frontierFor, masteryMap, prereqMet, statusOf, type Pl
 
 const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: o.itemId ?? 'i', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
 
-describe('test-out attempts carry no penalty on unpractised skills', () => {
-  it('drops wrong warm-up and placement answers when the skill was never practised', () => {
+describe('test-out attempts carry no penalty on unpracticed skills', () => {
+  it('drops wrong warm-up and placement answers when the skill was never practiced', () => {
     const a = [att({ source: 'warmup', correct: false, ts: 1 }), att({ source: 'placement', correct: false, ts: 2 }), att({ source: 'warmup', correct: true, ts: 3 })]
     expect(evidenceAttempts(a).map(x => x.ts)).toEqual([3])
   })
-  it('keeps wrong warm-up answers once the learner has practised the skill', () => {
+  it('keeps wrong warm-up answers once the learner has practiced the skill', () => {
     const a = [att({ source: 'practice', correct: true, ts: 1 }), att({ source: 'warmup', correct: false, ts: 2 })]
     expect(evidenceAttempts(a)).toHaveLength(2)
   })

@@ -33,8 +33,8 @@ export function usePracticeReady(): (tags: string[]) => boolean {
 export function RequireFullContent({ children }: { children: ReactNode }) {
   const c = useContext(Ctx)
   if (c?.full) return <>{children}</>
-  if (c?.bankFailed) return <main className="page"><p>The exercises could not be downloaded. Check your connection, then <button type="button" className="link" onClick={() => location.reload()}>try again</button>. The first lessons still work.</p></main>
-  return <main className="page"><p className="muted">Loading the exercise bank…</p></main>
+  if (c?.bankFailed) return <main className="page"><h1 className="sr-only">Exercises unavailable</h1><p>The exercises could not be downloaded. Check your connection, then <button type="button" className="link" onClick={() => location.reload()}>try again</button>. The first lessons still work.</p></main>
+  return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading the exercise bank…</p></main>
 }
 
 /** Exercise ids a lesson step names directly. */
@@ -86,7 +86,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     return () => { cancelled = true }
   }, [])
   if (error) return <main className="page"><h1>Content not available</h1><p>{error}</p></main>
-  if (!loaded) return <main className="page"><p className="muted">Loading the curriculum…</p></main>
+  if (!loaded) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading the curriculum…</p></main>
   return <Ctx.Provider value={loaded}>{children}</Ctx.Provider>
 }
 

@@ -51,7 +51,7 @@ def main():
     tot = sum(r[0] > 0 for r in rows)
     print(f"\nTOTAL nodes with misconceptions: {len(rows)}; gap nodes: {tot}; missing items: {sum(r[0] for r in rows)}")
     print("\n25 largest gaps (gap, node, misconceptions, covering items, tagged):")
-    for r in sorted(rows, key=lambda r: (-r[0], r[1]))[:25]:
+    for r in sorted(rows, key=lambda r: (-r[0], r[1]))[:(10**6 if "--all" in __import__("sys").argv else 25)]:
         print("  ", *r)
     return 0
 

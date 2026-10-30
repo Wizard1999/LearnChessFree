@@ -1,4 +1,4 @@
-// Mission warm-up: a short, no-penalty test-out inside one strand (docs/missions-design.md). It asks a few unlabelled questions per
+// Mission warm-up: a short, no-penalty test-out inside one strand (docs/missions-design.md). It asks a few unlabeled questions per
 // tier, easiest tier first, and stops early once two tiers in a row go badly. The result is a per-strand "frontier": skills in
 // tiers below it show as "assumed" (the same mechanism as the placement test), to be confirmed by mixed practice and challenges.
 import type { Attempt } from '../db'
@@ -13,7 +13,7 @@ export const MIN_PER_TIER = 2
 
 export interface WarmupPlan { items: Item[]; tierOf: Map<string, number> }
 
-/** One unlabelled question per node, spread over distinct nodes in each tier, ascending by tier, at most WARMUP_MAX_ITEMS. */
+/** One unlabeled question per node, spread over distinct nodes in each tier, ascending by tier, at most WARMUP_MAX_ITEMS. */
 export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[], seed: string): WarmupPlan {
   const tiers = mission.tiers.filter(t => t.nodes.some(n => !n.noExercises))
   const perTier = tiers.length > 4 ? 2 : 3
@@ -45,7 +45,7 @@ export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[],
   return { items: out, tierOf }
 }
 
-/** Prefer the unlabelled depth (D2), then D1, then whatever has exercises. */
+/** Prefer the unlabeled depth (D2), then D1, then whatever has exercises. */
 function depthPool(n: NodeProgress, bySkill: Map<string, Item[]>): Item[] {
   for (const d of ['D2', 'D1', 'D3']) { const p = bySkill.get(`${n.id}.${d}`); if (p && p.length) return p }
   return []

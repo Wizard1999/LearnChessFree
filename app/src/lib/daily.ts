@@ -71,7 +71,7 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   if (dueCheck) blocks.push({ id: 'plan-check', kind: 'link', to: '/plan', cta: 'Open my plan', title: 'Check your training plan', minutes: 6,
     why: 'You set a plan and the time you chose has passed. Checking on positions you have not seen is how you find out whether it worked.' })
   if (extras.challenge) blocks.push({ id: 'challenge', kind: 'link', to: '/course', cta: 'Start the challenge', title: 'A mastery challenge is ready', minutes: 6,
-    why: `Six unlabelled questions on three skills you have already practised (${extras.challenge.skills.join(', ')}). They are the most overdue. Spaced review is what keeps a skill from fading, and it can raise a level as well as lower one.` })
+    why: `Six unlabeled exercises on three skills you have already practiced (${extras.challenge.skills.join(', ')}). They are the most overdue. Spaced review is what keeps a skill from fading, and it can raise a level as well as lower one.` })
   if (extras.repDue > 0) blocks.push({ id: 'drill', kind: 'link', to: '/drill', cta: 'Drill my lines', title: 'Repertoire drill', minutes: Math.max(3, Math.min(8, extras.repDue)),
     why: `${extras.repDue} position${extras.repDue === 1 ? '' : 's'} in the openings you saved ${extras.repDue === 1 ? 'is' : 'are'} due. A line you do not recall at the board is not yet a line you play.` })
   const unanalysed = extras.games - extras.analysedGames
@@ -84,7 +84,7 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
     why: 'Knowing that an idea works is different from knowing what it depends on. In the lab you change one feature of a position, predict the result, and the engine checks.' })
   const hinted = attempts.filter(a => a.firstAttempt && a.cue >= 3 && a.hints > 0).length
   if (firsts >= 12 && hinted / firsts > 0.3) blocks.push({ id: 'silent', kind: 'link', to: '/practice?go=1&n=8&silent=1', cta: 'Start silent set', title: 'A silent set', minutes: 6,
-    why: `You used hints on ${Math.round((hinted / firsts) * 100)}% of recent unlabelled exercises. One set with hints turned off tells you where you stand on your own.` })
+    why: `You used hints on ${Math.round((hinted / firsts) * 100)}% of recent unlabeled exercises. One set with hints turned off tells you where you stand on your own.` })
 
   blocks.push({ id: 'reflect', kind: 'reflect', title: 'One minute to think', minutes: 1,
     why: 'Noticing what felt unclear is how you start choosing your own training.' })

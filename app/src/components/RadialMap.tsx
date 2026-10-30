@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { db, type LessonProgress } from '../db'
 import { layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
+import { skillState, sheetOffset, listMaxHeight } from '../lib/mapSheet'
 import { BANDS, REGIONS, bandOf } from '../lib/mapRegions'
+import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
 import type { Lesson, Skill } from '../types'
 
 interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null }
@@ -39,8 +41,27 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   useEffect(() => { try { sessionStorage.setItem('map-view', JSON.stringify(view)) } catch { /* storage unavailable */ } }, [view])
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
   const svg = useRef<SVGSVGElement>(null)
+  // touch: the active pointers, the running pinch, and whether this gesture has been a drag or pinch (then its click must not select a skill)
+  const ptrs = useRef(new Map<number, { x: number; y: number }>())
+  const pinch = useRef<{ cam: Cam; from: Pinch } | null>(null)
+  const suppressClick = useRef(false), moved = useRef(false), lastType = useRef('mouse')
+  const lastTap = useRef<{ t: number; x: number; y: number } | null>(null)
+  const endPointer = (e: React.PointerEvent<SVGSVGElement>) => {
+    const wasPinch = pinch.current !== null
+    ptrs.current.delete(e.pointerId)
+    if (ptrs.current.size < 2) pinch.current = null
+    // after a pinch the remaining finger does not start a pan (the map would jump); the next touch starts fresh
+    drag.current = null
+    if (e.type === 'pointerup' && e.pointerType === 'touch' && !wasPinch && !moved.current && ptrs.current.size === 0 && svg.current) {
+      const tap = { t: e.timeStamp, x: e.clientX, y: e.clientY }
+      if (isDoubleTap(lastTap.current, tap)) { suppressClick.current = true; lastTap.current = null; setView(zoomAt(viewRef.current, 2, R, svg.current.getBoundingClientRect(), e.clientX, e.clientY)) }
+      else lastTap.current = tap
+    }
+  }
   const [q, setQ] = useState('')
   const [listOpen, setListOpen] = useState(false)
+  const listRef = useRef<HTMLDivElement>(null)
+  // the list follows the map: when it opens, the picked skill is scrolled into view
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
   /** How ready a skill is to be started: the share of its prerequisite skills that are at Level one or better. A skill with none is ready at once. */
   const readiness = useMemo(() => {
@@ -77,13 +98,17 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     const n = byId.get(picked); if (!n) return
     const t = window.setTimeout(() => {
       const el = svg.current; if (!el) return
+      // on a phone the page is scrolled so the whole map workspace (toolbar and map) sits above the bottom sheet
+      if (window.matchMedia?.('(max-width: 700px)').matches) el.closest('.radialmap')?.scrollIntoView({ block: 'start' })
       const box = el.getBoundingClientRect()
       const cover = (sel: string) => [...document.querySelectorAll(sel)].map(e => e.getBoundingClientRect())
       let left = box.left, right = box.right
       for (const r of cover('.sidechrome > .sidedrawer.left, .sidechrome > .detaildrawer')) if (r.right > left && r.left < box.left + box.width / 2) left = Math.max(left, r.right)
       for (const r of cover('.sidechrome > .sidedrawer.right')) if (r.left < right && r.right > box.left + box.width / 2) right = Math.min(right, r.left)
       const dx = ((left + right) / 2) - (box.left + box.width / 2)
-      const v = viewRef.current; const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); go({ x: -n.x + dx * upp, y: -n.y, k })
+      const sheet = document.querySelector('.dock.right')?.getBoundingClientRect()
+      const dy = sheetOffset(box, sheet ?? null)
+      const v = viewRef.current; const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); go({ x: -n.x + dx * upp, y: -n.y + dy * upp, k })
     }, 80)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -120,9 +145,18 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     return layout.nodes.map(n => ({ n, title: progress.get(n.id)?.title ?? n.id })).filter(x => x.title.toLowerCase().includes(t) || x.n.id.toLowerCase().includes(t)).slice(0, 8)
   }, [q, layout, progress])
   const showSkill = (id: string) => { const n = byId.get(id); if (!n) return; go({ x: -n.x, y: -n.y, k: Math.max(viewRef.current.k, 2.4) }); onPick(id); setQ(''); setListOpen(false) }
+  useEffect(() => {
+    const el = listRef.current; if (!el) return
+    // a bottom sheet (phones) must not cover the list: the list ends above it
+    const sheet = document.querySelector('.dock.right')?.getBoundingClientRect()
+    const cap = listMaxHeight(el.getBoundingClientRect().top, sheet && sheet.width >= window.innerWidth * 0.8 ? sheet.top : null)
+    el.style.maxHeight = cap === null ? '' : `${cap}px`
+    el.querySelector('[aria-current]')?.scrollIntoView({ block: 'nearest' })
+  }, [listOpen, picked, hits.length])
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
+      <div className="mapbarwrap">
       <div className="row filters mapbar">
         <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
         <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in">＋</button>
@@ -134,14 +168,58 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
         <span className="small muted">Centre outwards is the reading order of the subjects; the recommended path (Curriculum, All lessons) mixes them by stage. Drag to move, scroll to zoom.</span>
       </div>
+      {(hits.length > 0 || listOpen) && (
+        <div className="maplist" role="listbox" aria-label="Skills" ref={listRef}>
+          {hits.length === 0 && <div className="maplisthead"><span className="small muted">All skills, in map order. The one you picked is marked.</span><button type="button" onClick={() => setListOpen(false)}>Close list</button></div>}
+          {hits.length > 0
+            ? hits.map(h => <button key={h.n.id} type="button" role="option" aria-selected={picked === h.n.id} className={picked === h.n.id ? 'on' : undefined} onClick={() => showSkill(h.n.id)}>{h.title} <span className="muted small">· {h.n.strand}</span></button>)
+            : REGIONS.map(rg => (
+              <div key={rg.id}><strong className="small">{rg.name}</strong>
+                {rg.strands.map(st => (
+                  <div key={st}><span className="small muted">{st} {strandNames[st] ?? ''}</span>
+                    <div className="maplistrow">{layout.nodes.filter(n => n.strand === st).sort((a, b) => a.ring - b.ring || a.id.localeCompare(b.id)).map(n => {
+                      const t = progress.get(n.id)?.title ?? n.id, st2 = skillState(progress.get(n.id))
+                      return <button key={n.id} type="button" className={picked === n.id ? 'link on' : 'link'} aria-current={picked === n.id ? 'true' : undefined} aria-label={`${t}, ${st2.word}${picked === n.id ? ', selected' : ''}`} onClick={() => showSkill(n.id)}><span aria-hidden="true" className="listmark">{st2.mark}</span>{t}</button>
+                    })}</div>
+                  </div>))}
+              </div>))}
+        </div>
+      )}
+      </div>
       <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
-        onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
+        onPointerDown={e => {
+          if (ptrs.current.size === 0) { suppressClick.current = false; pinch.current = null; moved.current = false }
+          ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); lastType.current = e.pointerType;
+          (e.target as Element).setPointerCapture?.(e.pointerId)
+          if (ptrs.current.size === 2 && svg.current) {
+            // a second finger: from now on the gesture is a pinch (zoom and pan together); it never selects a skill
+            const [a, b] = [...ptrs.current.values()]
+            pinch.current = { cam: viewRef.current, from: pinchGeometry(a, b) }
+            drag.current = null; suppressClick.current = true
+          } else if (ptrs.current.size === 1) drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }
+          else drag.current = null
+        }}
         onPointerMove={e => {
+          if (ptrs.current.has(e.pointerId)) ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+          if (pinch.current && ptrs.current.size >= 2 && svg.current) {
+            const [a, b] = [...ptrs.current.values()]
+            const r = svg.current.getBoundingClientRect()
+            setView(viewForPinch(pinch.current.cam, pinch.current.from, pinchGeometry(a, b), R, r))
+            return
+          }
           const d = drag.current; if (!d || !svg.current) return
+          if (e.pointerType === 'touch' && Math.hypot(e.clientX - d.x, e.clientY - d.y) > TAP_SLOP) { moved.current = true; suppressClick.current = true }
           const scale = (2 * R) / view.k / svg.current.getBoundingClientRect().width
           setView(v => ({ ...v, x: d.vx + (e.clientX - d.x) * scale, y: d.vy + (e.clientY - d.y) * scale }))
         }}
-        onPointerUp={() => { drag.current = null }}>
+        onPointerUp={endPointer}
+        onPointerCancel={endPointer}
+        onClickCapture={e => { if (suppressClick.current) { e.stopPropagation(); e.preventDefault() } }}
+        onDoubleClick={e => {
+          // mouse: a double click zooms in on that point (touch has its own double tap above)
+          if (lastType.current === 'touch' || !svg.current) return
+          setView(zoomAt(viewRef.current, 1.8, R, svg.current.getBoundingClientRect(), e.clientX, e.clientY))
+        }}>
         {layout.wedges.map(w => {
           const mid = (w.from + w.to) / 2
           const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
@@ -248,19 +326,6 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         })()}
         <circle r={5} className="mapcentre" />
       </svg>
-      {(hits.length > 0 || listOpen) && (
-        <div className="maplist" role="listbox" aria-label="Skills">
-          {hits.length > 0
-            ? hits.map(h => <button key={h.n.id} type="button" role="option" aria-selected={false} onClick={() => showSkill(h.n.id)}>{h.title} <span className="muted small">· {h.n.strand}</span></button>)
-            : REGIONS.map(rg => (
-              <div key={rg.id}><strong className="small">{rg.name}</strong>
-                {rg.strands.map(st => (
-                  <div key={st}><span className="small muted">{st} {strandNames[st] ?? ''}</span>
-                    <div className="maplistrow">{layout.nodes.filter(n => n.strand === st).sort((a, b) => a.ring - b.ring || a.id.localeCompare(b.id)).map(n => <button key={n.id} type="button" className="link" onClick={() => showSkill(n.id)}>{progress.get(n.id)?.title ?? n.id}</button>)}</div>
-                  </div>))}
-              </div>))}
-        </div>
-      )}
       <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of the whole map"
         onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
         <circle r={layout.radius} className="miniback" />

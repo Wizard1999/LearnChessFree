@@ -1,0 +1,759 @@
+{
+ "positions": [
+  {
+   "id": "PGm7-1",
+   "fen": "4r1k1/ppp2ppp/8/8/3q4/8/PPP1NBPP/4K3 w - - 0 1",
+   "family": "FAM-GM7-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "P-CMAP style: constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): Black queen d4 attacked by a pinned knight and a free bishop",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-2",
+   "fen": "6k1/5ppp/3q4/8/r2N4/4P2P/5PP1/6K1 b - - 0 1",
+   "family": "FAM-GM7-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): two black attackers (queen, rook) against one white defender (pawn e3) of the knight on d4",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-3",
+   "fen": "6k1/p4ppp/8/8/R7/8/5PPP/R5K1 w - - 0 1",
+   "family": "FAM-GM7-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): two white rooks doubled on the a-file against the pawn a7",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-4",
+   "fen": "4k3/6r1/4r3/8/3Q4/7P/5PP1/6K1 w - - 0 1",
+   "family": "FAM-GM7-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): queen d4 against rooks on e6 (a knight's jump away) and g7 (on the long diagonal); luft on h2",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-5",
+   "fen": "4k3/2p3pb/3p4/8/8/3Q4/5PPP/6K1 w - - 0 1",
+   "family": "FAM-GM7-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): queen d3 faces a pawn on d6 defended by c7 and a loose bishop on h7",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-6",
+   "fen": "r1b2rk1/pp1p1ppp/4p3/8/3PN2P/q3n3/P3BPP1/R2Q1RK1 w - - 0 17",
+   "family": "FAM-GM7-6",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 1d5gM (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm7-7",
+   "fen": "4k3/8/8/3pP3/8/8/8/4K3 w - - 0 1",
+   "family": "FAM-GM7-7",
+   "provenance": {
+    "kind": "authored",
+    "ref": "constructed by hand and checked with python-chess legality plus the project validator (not copied from any source): white pawn e5 beside a black pawn d5 with no en passant square in the FEN",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-8",
+   "fen": "r1bq1rk1/1pp2ppp/p1np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQR1K1 w - - 0 8",
+   "family": "FAM-GM7-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "reached by 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.d3 d6 6.O-O O-O 7.Re1 a6 (played with python-chess); moves listed by the project engine",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm7-9",
+   "fen": "r3k2r/5ppp/pnpqp3/3p4/NP1P4/P2QP3/5PPP/2R1K2R b Kkq - 2 16",
+   "family": "FAM-GM7-9",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 2TIZQ (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm7-10",
+   "fen": "8/8/8/3r4/P7/4P1k1/6p1/R5K1 b - - 5 54",
+   "family": "FAM-GM7-10",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 72oO9 (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IGm7-1",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-1",
+   "prompt": "White to move. A plain attacker count shows two White pieces attacking the black queen on d4: the knight on e2 and the bishop on f2. Take the queen with the piece that can really do it.",
+   "answer": {
+    "moves": [
+     "f2d4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 2
+     }
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "e2d4"
+     },
+     "statement": "Nxd4 is illegal: the knight on e2 is pinned to the king on e1 by the rook on e8."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "e2",
+      "mode": "legal",
+      "count": 0
+     }
+    },
+    {
+     "id": "C4",
+     "type": "legal_move",
+     "params": {
+      "move": "f2d4"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "material_after_move",
+     "params": {
+      "move": "f2d4",
+      "min": 5
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.CONTROLMAP",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.controlMap"
+   ],
+   "hints": [
+    "The count tells you who attacks d4, not who is free to move.",
+    "Look along the e-file from the black rook.",
+    "Which piece stands between the rook and the white king?"
+   ],
+   "explain": "Both the knight and the bishop attack d4, so the map counts two. The knight is pinned to its king by the rook on e8 and has no legal move, so only the bishop can capture. An attacker on the map is not always a capture you can make.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "e2d4": "Illegal: the knight on e2 is pinned against the king on e1, so it cannot leave the e-file."
+   }
+  },
+  {
+   "id": "IGm7-2",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PGm7-2",
+   "prompt": "Black to move. The map shows d4 as 1-2: the white knight is defended once, and Black attacks it twice, with the queen on d6 and the rook on a4. Does a capture on d4 win material for Black? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "a4d4",
+      "max": 0
+     },
+     "statement": "Rxd4 exd4 Qxd4 gives up a rook for a knight and a pawn, so Black does not gain material."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "d6d4",
+      "cp": 300
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.CONTROLMAP",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.controlMap"
+   ],
+   "hints": [
+    "The map counts attackers; it does not weigh what each attacker is worth.",
+    "Imagine the capture and each recapture in turn: who takes first?",
+    "Add up what Black gives and what Black gets if the rook goes first."
+   ],
+   "explain": "Black has more attackers than White has defenders, yet neither capture gains. Taking with the rook costs a rook for a knight and a pawn, and taking with the queen costs the queen for a knight. A bigger number of attackers does not by itself win the exchange: the values of the pieces taking first decide.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d6d4": "The queen would be recaptured by the pawn: a queen for a knight."
+   }
+  },
+  {
+   "id": "IGm7-3",
+   "skill": "POS.CONTROLMAP.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PGm7-3",
+   "prompt": "Two White rooks stand on a4 and a1, with Black's pawn on a7 on the same file. How many White attackers does the control map count on a7?",
+   "answer": {
+    "class": "1",
+    "options": [
+     "1",
+     "2",
+     "3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "a7",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "a1",
+      "piece": "R"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "a7",
+      "color": "white",
+      "count": 1,
+      "after_move": "a4b4"
+     },
+     "statement": "After the front rook leaves the file, the rook on a1 attacks a7: it was behind, not counted."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.CONTROLMAP",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.controlMap"
+   ],
+   "hints": [
+    "The map counts pieces that see the square along an open line.",
+    "Which rook has a clear line to a7 right now?",
+    "The rook on a1 looks along the file, but a piece of its own side is in the way."
+   ],
+   "explain": "The map counts 1: only the rook on a4 attacks a7. The rook on a1 would count once the front rook has moved. Pieces lined up behind another piece do not appear in the count, so you add them by looking.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm7-4",
+   "skill": "FND.PIECE.QUEEN.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-4",
+   "prompt": "White to move. The queen on d4 can take a black rook for nothing. Which capture is possible, and which rook can the queen not reach?",
+   "answer": {
+    "moves": [
+     "d4g7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4e6"
+     },
+     "statement": "The queen cannot go from d4 to e6: that is a knight's jump, and the queen does not move that way."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4g7"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "d4g7",
+      "min": 4
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.PIECE.QUEEN",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.queen"
+   ],
+   "hints": [
+    "Check each of the queen's eight lines from d4.",
+    "The rook on e6 is not on a rank, a file or a diagonal of d4.",
+    "Follow the long diagonal from d4 towards h8."
+   ],
+   "explain": "The rook on e6 is a knight's jump from d4, and the queen moves only along ranks, files and diagonals, so Qxe6 is illegal. The rook on g7 lies on the long diagonal with nothing between, so Qxg7 wins it.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d4e6": "Illegal: from d4 the square e6 is a knight's jump away, and the queen cannot move like a knight."
+   }
+  },
+  {
+   "id": "IGm7-5",
+   "skill": "FND.PIECE.QUEEN.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-5",
+   "prompt": "White to move. The queen can reach two black units: the pawn on d6 and the bishop on h7. Which capture is safe?",
+   "answer": {
+    "moves": [
+     "d3h7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d3d6"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d6",
+      "color": "black",
+      "count": 1
+     }
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "d3d6",
+      "max": -5
+     },
+     "statement": "Qxd6 is answered by cxd6: the queen is lost for a pawn."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "d3h7",
+      "min": 3
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.PIECE.QUEEN",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.queen"
+   ],
+   "hints": [
+    "Before a capture, ask what could take back.",
+    "Count the black pieces that attack d6.",
+    "The bishop on h7 has no defender."
+   ],
+   "explain": "The pawn on d6 is attacked by the pawn on c7, so taking it loses the queen for a pawn. The bishop on h7 is loose, so Qxh7 wins it without loss. Being the strongest piece does not make a capture safe; the question is what can recapture.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d3d6": "The pawn on c7 recaptures: Qxd6 cxd6 gives up a queen for a pawn."
+   }
+  },
+  {
+   "id": "IGm7-6",
+   "skill": "DEF.DIAGNOSE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-6",
+   "prompt": "White to move. A knight on e3 attacks the queen and the rook on f1. Find the defence that deals with both attacked pieces at once.",
+   "answer": {
+    "moves": [
+     "f2e3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f2e3"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "d1c1",
+      "cp": 200
+     },
+     "statement": "Moving the queen to c1 leaves the knight on e3 in place; the engine rates it clearly worse than taking the knight."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.DEF.DIAGNOSE",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.defence"
+   ],
+   "hints": [
+    "Defending is not only moving the piece that is attacked.",
+    "Two pieces are attacked by the same enemy piece.",
+    "Can that attacking piece be captured?"
+   ],
+   "explain": "Moving the queen away answers only one of the two attacks. The pawn on f2 can capture the knight, removing the attacker, and the engine rates that move well above the queen retreat.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d1c1": "The queen steps away, but the knight on e3 stays; the engine rates this much worse than fxe3."
+   }
+  },
+  {
+   "id": "IGm7-7",
+   "skill": "FND.ENPASSANT.D2",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PGm7-7",
+   "prompt": "White to move. The black pawn reached d5 two moves ago, and Black's last move was Kd8-e8. Tap every square the pawn on e5 can move to.",
+   "answer": {
+    "from": "e5",
+    "squares": [
+     "e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e5",
+      "to": [
+       "e6"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "e5d6"
+     },
+     "statement": "exd6 is illegal: en passant is only available on the move right after the two-square advance, and the position records no such move."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.ENPASSANT",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.enPassant"
+   ],
+   "hints": [
+    "En passant depends on what the opponent just played.",
+    "Black's last move was a king move.",
+    "Is there an en passant target square in this position?"
+   ],
+   "explain": "A pawn standing beside an enemy pawn can capture it en passant only on the move right after that pawn advanced two squares. Here the pawn arrived earlier, so e5 can only advance to e6.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "e5d6": "Illegal here: the black pawn did not just advance two squares, so en passant is not available."
+   }
+  },
+  {
+   "id": "IGm7-8",
+   "skill": "POS.PLAN.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-8",
+   "prompt": "White to move in a quiet position. Black has no threat. Pick a sound move that fits a plan White's pieces can carry out (not an attack with nothing behind it).",
+   "answer": {
+    "moves": [
+     "c4b3",
+     "a2a4",
+     "h2h3",
+     "b1d2"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c4b3",
+       "a2a4",
+       "h2h3",
+       "b1d2"
+      ],
+      "within_cp": 60
+     }
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "g2g4",
+      "cp": 250
+     },
+     "statement": "The pawn push g4 is rated far worse than the best moves."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "h2h4",
+      "cp": 100
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.PLAN",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.plan"
+   ],
+   "hints": [
+    "A plan needs pieces ready to follow the pawns.",
+    "Which White pieces are still undeveloped or badly placed?",
+    "Compare a pawn push on the kingside with finishing development."
+   ],
+   "explain": "Quiet moves that develop the knight on b1 or keep the bishop safe are rated much better than the kingside pawn pushes g4 and h4, which no White piece stands ready to support. A pawn move alone is not a plan; the pieces must be able to follow it.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "g2g4": "The engine rates g4 far below the developing moves: the push has no pieces behind it.",
+    "h2h4": "Also rated clearly below the developing moves."
+   }
+  },
+  {
+   "id": "IGm7-9",
+   "skill": "PRA.RECOVER.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-9",
+   "prompt": "You lost this game and are reviewing it the next day, calm and rested. Black to move. Write down the one concrete error: what did Black need to see here? Find the best move.",
+   "answer": {
+    "moves": [
+     "b6a4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b6a4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "b6a4",
+      "min": 2
+     }
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "b6c4",
+      "cp": 250
+     },
+     "statement": "Retreating the knight to c4 leaves the knight on a4 alone; the engine rates it far below taking it."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.PRA.RECOVER",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.review"
+   ],
+   "hints": [
+    "Name one thing in the position, not a feeling about the game.",
+    "Both knights face each other.",
+    "Is the white knight on a4 defended?"
+   ],
+   "explain": "The knight on b6 can capture the white knight on a4, and the engine rates that far above retreating. A recovery routine ends with one concrete error like this, found when you can look at the board calmly, rather than a long replay while upset.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "b6c4": "The black knight steps away but leaves the white knight on a4 in place; rated far below taking it."
+   }
+  },
+  {
+   "id": "IGm7-10",
+   "skill": "TAC.MATE-SEARCH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm7-10",
+   "prompt": "Black to move. Find a forced mate in two. Think about every check, then every quiet move.",
+   "answer": {
+    "moves": [
+     "d5h5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "d5h5",
+      "n": 2
+     }
+    },
+    {
+     "id": "C2",
+     "type": "move_is_not_mate",
+     "params": {
+      "move": "d5d1"
+     },
+     "statement": "Rd1+ is a check but not mate, and White's rook takes it."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "d5d1",
+      "cp": 300
+     }
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.TAC.MATE-SEARCH",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "theme.mate"
+   ],
+   "hints": [
+    "Checks are only the first group of candidate moves.",
+    "After the check on d1 which white piece can take the rook?",
+    "A quiet rook move can threaten mate on the first rank."
+   ],
+   "explain": "Rd1+ is the only check, and the rook on a1 simply takes it. The quiet Rh5 threatens mate, and the engine confirms a forced mate in two. Skipping the quiet moves because the checks fail would have missed it.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d5d1": "The only check, but the rook on a1 captures it."
+   }
+  }
+ ]
+}

@@ -51,7 +51,7 @@ export function LessonIndex() {
         <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
         <p className="small muted">{view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'S1, S2 and so on are the subject sections, a reference library. Take the recommended path to learn in order.'}</p>
       </div>
-      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. The recommended path (top) mixes the subjects so you can play a full game early and meet each idea when you need it; the section view groups the same lessons by subject for looking things up. You are free to jump around and explore whenever you like; nothing is locked. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
+      <div className="lede">Nothing is locked: open any lesson, in any order. <details className="inlinenote"><summary>How this list works</summary>The recommended path mixes the subjects so you can play a full game early and meet each idea when you need it; "By subject" groups the same lessons for looking things up. Marking a lesson finished or skipped only changes this list and the map; it is not evidence that you know the skill.</details></div>
       <div className="row filters">
         {(['path', 'section'] as View[]).map(v => <button key={v} type="button" className={view === v ? 'chip on' : 'chip'} aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Recommended path' : 'By subject'}</button>)}
         <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
@@ -74,8 +74,8 @@ export function LessonIndex() {
                   <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
                   <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min · {status}</span></span>
                   <span className="actions">
-                    {!p?.done && <><button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, false)}>Mark finished</button> <button type="button" className="link" onClick={() => void mark(l.id, l.steps.length, true)}>Skip</button></>}
-                    {(p?.done || (p && p.step > 0)) && <button type="button" className="link" onClick={() => void reset(l.id)}>Reset</button>}
+                    {!p?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void mark(l.id, l.steps.length, false)}>Mark finished</button> <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void mark(l.id, l.steps.length, true)}>Skip</button></>}
+                    {(p?.done || (p && p.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void reset(l.id)}>Reset</button>}
                   </span>
                 </li>
               )

@@ -21,14 +21,14 @@ export function Drill() {
   useEffect(() => { if (rep && queue === null) setQueue(shuffled(dueCards(cards, state), `drill:${new Date().toDateString()}`).slice(0, 12)) }, [rep, cards, state, queue])
 
   if (!rep || !queue) return <main className="page"><h1>Repertoire drill</h1><p className="muted">Loading…</p></main>
-  if (cards.length === 0) return <main className="page"><h1>Repertoire drill</h1><p>You have not saved any lines yet. Build some in <Link to="/openings">Openings</Link> with "Add this line", then come back to practise them.</p></main>
+  if (cards.length === 0) return <main className="page"><h1>Repertoire drill</h1><p>You have not saved any lines yet. Build some in <Link to="/openings">Openings</Link> with "Add this line", then come back to practice them.</p></main>
 
   const card = queue[i]
   const chess = card ? new Chess(card.fen) : null
 
-  async function onMove(from: Key, to: Key) {
+  async function onMove(from: Key, to: Key, promotion?: string) {
     if (!card || !chess || answer) return
-    const played = tryMove(card.fen, uciFor(chess, from, to))
+    const played = tryMove(card.fen, uciFor(chess, from, to, undefined, promotion))
     if (!played) return
     const san = played.san
     const ok = san === card.expected
@@ -51,7 +51,7 @@ export function Drill() {
           <p className="muted small">Position {i + 1} of {queue.length}. You are {card.side === 'white' ? 'White' : 'Black'}. Your line so far: {card.before.length ? numbered(card.before) : 'the start of the game'}.</p>
           <ChessBoard key={`${card.key}-${answer ? 'a' : 'q'}`} fen={answer && answer.ok ? answer.fen : card.fen} orientation={card.side} label="Repertoire position"
             shapes={answer && !answer.ok ? (() => { try { const m = new Chess(card.fen).move(card.expected); return [{ from: m.from, to: m.to, brush: 'green' as const }] } catch { return [] } })() : []}
-            movable={answer || !chess ? null : { color: card.side, dests: destsFor(chess), onMove: (f, t) => void onMove(f, t) }} />
+            movable={answer || !chess ? null : { color: card.side, dests: destsFor(chess), onMove: (f, t, pr) => void onMove(f, t, pr) }} />
           {!answer && <p>What do you play?</p>}
           {answer && (
             <section className={answer.ok ? 'result ok' : 'result no'} role="status">

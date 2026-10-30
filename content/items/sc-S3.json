@@ -1,0 +1,131 @@
+{
+ "positions": [
+  {
+   "id": "PSCS3-1",
+   "fen": "6k1/5ppp/8/2R5/8/6N1/8/K7 w - - 0 1",
+   "family": "FAM-SCS3-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "copy of the position of IG-MATE1-19 (machine-generated, validated there); this item re-asks it with a neutral prompt for the stage check",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSCS3-2",
+   "fen": "8/8/8/8/6q1/8/2k5/K7 b - - 0 1",
+   "family": "FAM-SCS3-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "copy of the position of IG-ENDMATE-27 (machine-generated, validated there); this item re-asks it with a neutral prompt for the stage check",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "FND.MATE1.D1",
+   "cue": 1,
+   "task": "find_move",
+   "answer": {
+    "moves": [
+     "c5c8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "c5c8",
+      "n": 1
+     },
+     "statement": "Rc8# is checkmate."
+    }
+   ],
+   "orientation": "white",
+   "id": "ISCS3-1",
+   "position": "PSCS3-1",
+   "prompt": "White to move. Find the best move.",
+   "explain": "Rc8 gives check along the open eighth rank, and the black king has no square to go to and nothing can capture the rook or step in its way: that is checkmate.",
+   "hints": [
+    "Look at what the opponent king can do after each of your candidate moves."
+   ],
+   "tags": [
+    "node.FND.MATE1",
+    "tier.1",
+    "cue.1",
+    "lang.en",
+    "task.find_move",
+    "kind.authored",
+    "mode.silent",
+    "stage-check.S3"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "skill": "END.MATE-KQ.D2",
+   "cue": 3,
+   "task": "find_move",
+   "answer": {
+    "moves": [
+     "g4a4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "g4a4",
+      "n": 1
+     },
+     "statement": "Qa4# forces checkmate in 1."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "g4c4",
+      "result": "draw"
+     },
+     "statement": "Qc4 only draws (tablebase)."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "g4e6",
+      "result": "draw"
+     },
+     "statement": "Qe6 only draws (tablebase)."
+    }
+   ],
+   "orientation": "black",
+   "id": "ISCS3-2",
+   "position": "PSCS3-2",
+   "prompt": "Black to move. Find the best move.",
+   "explain": "Qa4 gives check and takes away every square next to the white king, so it is checkmate. Two other queen moves leave the white king with no legal move but no check, which is a draw by stalemate.",
+   "hints": [
+    "Look at what the opponent king can do after each of your candidate moves."
+   ],
+   "tags": [
+    "node.END.MATE-KQ",
+    "node.FND.STALEMATE",
+    "tier.1",
+    "cue.3",
+    "lang.en",
+    "task.find_move",
+    "kind.authored",
+    "mode.silent",
+    "stage-check.S3"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,810 @@
+{
+ "positions": [
+  {
+   "id": "PGm3-1",
+   "fen": "7k/8/8/8/8/8/N7/KN6 w - - 0 1",
+   "family": "FAM-GM3-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "king and two knights against a bare king, built by hand and then checked by the validator [V]: the game is not over and the Lichess tablebase says draw",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm3-2",
+   "fen": "8/8/8/3k4/8/8/8/KBN5 w - - 0 1",
+   "family": "FAM-GM3-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "king, bishop and knight against a bare king, built by hand; the tablebase result is checked by the validator [V]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm3-3",
+   "fen": "8/6Kp/4N3/N7/8/8/8/7k w - - 0 1",
+   "family": "FAM-GM3-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every White move classified by the Lichess tablebase [V tablebase]: king and two knights against king and pawn, one winning move, many drawing moves, among them the capture of the pawn",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm3-4",
+   "fen": "5k2/7P/8/8/8/8/6N1/3K4 b - - 0 1",
+   "family": "FAM-GM3-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every Black move classified by the Lichess tablebase (<=7 pieces) [V tablebase]: king, knight and rook pawn on h7 against a king, one drawing move, three losing moves",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm3-5",
+   "fen": "3r3k/pp4bp/3Bn1p1/7n/8/8/PP3P1K/3R1RN1 b - - 2 27",
+   "family": "FAM-GM3-5",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 00PUc (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-6",
+   "fen": "4Q3/4qppk/2p2b1p/1p2pP2/2r1B3/5P1P/6P1/5R1K w - - 4 34",
+   "family": "FAM-GM3-6",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 00Uo9 (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-7",
+   "fen": "5Q2/8/1bk1p1p1/5p2/3p4/5qPK/7P/8 w - - 2 52",
+   "family": "FAM-GM3-7",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 004mT (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-8",
+   "fen": "3r1bnr/2p2ppp/2bk4/R7/5P2/2N5/4N1PP/1R4K1 w - - 4 22",
+   "family": "FAM-GM3-8",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 00DkJ (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-9",
+   "fen": "r2q1r1k/1ppbb1pn/p1n4p/3QNp2/B3P3/2P4P/PP3PP1/R1B1RNK1 b - - 0 14",
+   "family": "FAM-GM3-9",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 00X5w (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-10",
+   "fen": "r2qkb1r/pp1npppp/2p2n2/4N3/2B5/6N1/PPPP1PPP/R1BbK2R w KQkq - 0 8",
+   "family": "FAM-GM3-10",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 04Sre (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm3-11",
+   "fen": "5k2/2p3p1/p1p4p/4N3/5b2/2P1p3/PP2K2P/8 w - - 2 36",
+   "family": "FAM-GM3-11",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 01zIg (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IGm3-1",
+   "skill": "FND.DRAWS.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PGm3-1",
+   "prompt": "White has king and two knights, Black a bare king, and it is White's move. Have the rules ended the game as a draw because there is too little material?",
+   "answer": {
+    "class": "The game goes on",
+    "options": [
+     "The game is already drawn by the rules",
+     "The game goes on"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "ongoing"
+     },
+     "statement": "The side to move has legal moves and the game is not over."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The tablebase result for White is a draw: mate cannot be forced."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.DRAWS",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.classify_position",
+    "theme.endgame"
+   ],
+   "hints": [
+    "Does the position end the game by itself (mate, stalemate)? Look at whose move it is and whether there are legal moves.",
+    "Separate two questions: does the rulebook stop the game here, and can White force mate against best defence?",
+    "The rules stop the game only when no mate could ever occur. Ask whether the tablebase's verdict is the same thing."
+   ],
+   "explain": "The game is not over: White has legal moves and the position is neither mate nor stalemate. The tablebase calls it a draw with best play, because mate cannot be forced, but that is a result of play, not an automatic ending by rule.",
+   "contrast_group": "CG-GM3-1",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-2",
+   "skill": "FND.DRAWS.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PGm3-2",
+   "prompt": "White has king, bishop and knight against a bare king, White to move. Black's king stands in the centre. With correct play, is this a win or a draw?",
+   "answer": {
+    "class": "White wins with correct play",
+    "options": [
+     "White wins with correct play",
+     "The position is a draw with correct play"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "ongoing"
+     },
+     "statement": "The game is not over."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The tablebase result for White is a win."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.DRAWS",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.classify_position",
+    "theme.endgame"
+   ],
+   "hints": [
+    "Compare this with king and two knights against a bare king. What changes when one knight becomes a bishop?",
+    "The bishop controls squares of one colour; the knight reaches the others. Does that team have enough control?",
+    "Check the result against the tablebase idea, not against a feeling that minor pieces never win."
+   ],
+   "explain": "The tablebase says White wins from this position, although only minor pieces are on the board. Two knights cannot force mate, but a bishop and a knight can, so the look-alike is a win.",
+   "contrast_group": "CG-GM3-2",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-3",
+   "skill": "FND.DRAWS.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm3-3",
+   "prompt": "White to move with two knights against a pawn. The pawn on h7 can be taken at once. Which move keeps the win?",
+   "answer": {
+    "moves": [
+     "g7h6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "g7h6"
+     },
+     "statement": "After Kh6 White still wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g7h7"
+     },
+     "statement": "After Kxh7 the position is a draw."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.DRAWS",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame"
+   ],
+   "hints": [
+    "Count what is left on the board for each side after you take the pawn.",
+    "King and two knights against a bare king: can mate be forced? Compare with the pawn still being there.",
+    "The winning move does not capture. It uses the king to keep the pawn from being useful."
+   ],
+   "explain": "Kxh7 leaves king and two knights against a bare king, which the tablebase calls a draw. Kh6 keeps the black pawn on the board and the tablebase says White still wins.",
+   "feedback_by_move": {
+    "g7h7": "Kxh7 wins the pawn, but the tablebase says the result is then a draw: two knights cannot force mate against a bare king."
+   },
+   "contrast_group": "CG-GM3-3",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-4",
+   "skill": "END.ROOK-PAWN.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm3-4",
+   "prompt": "Black to move, a knight and a rook pawn down, and the pawn stands on h7. Which move holds the draw?",
+   "answer": {
+    "moves": [
+     "f8g7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f8g7"
+     },
+     "statement": "After Kg7 the position is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f8f7"
+     },
+     "statement": "After Kf7 Black loses."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f8e8"
+     },
+     "statement": "After Ke8 Black loses."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.END.ROOK-PAWN",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame"
+   ],
+   "hints": [
+    "Where must the pawn arrive to promote, and which black king move guards that square?",
+    "An extra knight and a pawn do not win by themselves here. What matters is who controls the promotion square.",
+    "One king move reaches the square next to the pawn and the corner."
+   ],
+   "explain": "Kg7 keeps the black king beside the promotion square h8, and the tablebase confirms the draw. Kf7 and Ke8 lose, so an extra knight plus a rook pawn does not always win.",
+   "feedback_by_move": {
+    "f8f7": "Kf7 stays near the pawn's file, but the tablebase says it loses.",
+    "f8e8": "Ke8 backs away from the corner, and the tablebase says it loses."
+   },
+   "contrast_group": "CG-GM3-4",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-5",
+   "skill": "CAL.VISUALIZE.D1",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PGm3-5",
+   "prompt": "Black to move. Do not move any piece. Play 27...Rxd6 28.Rxd6 in your head, then tap every Black piece that is loose after those two moves (attacked and not defended).",
+   "answer": {
+    "squares": [
+     "e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Before the two moves no Black piece is loose."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "after_moves": [
+       "d8d6",
+       "d1d6"
+      ],
+      "squares": [
+       "e6"
+      ]
+     },
+     "statement": "After the two moves only the knight on e6 is loose."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.CAL.VISUALIZE",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares",
+    "theme.hangingPiece"
+   ],
+   "hints": [
+    "After the capture and the recapture, which white piece stands on d6, and what is it looking at?",
+    "Redraw the rook's lines from its new square. Which black piece does it now attack, and does anything defend that piece?",
+    "The piece sits next to the rook's new square."
+   ],
+   "explain": "In the starting position no Black piece is loose. After the capture and recapture, the white rook stands on d6 and the knight on e6 is attacked with no defender. The picture changed because of the two moves, so tracking the moved pieces is what shows it.",
+   "contrast_group": "CG-GM3-5",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-6",
+   "skill": "CAL.VISUALIZE.D2",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PGm3-6",
+   "prompt": "White to move. Do not move any piece. Play 34.Qxe7 Bxe7 35.f6+ in your head, then tap every Black piece that is loose at the end (attacked and not defended).",
+   "answer": {
+    "squares": [
+     "e7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Before the three moves no Black piece is loose."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "after_moves": [
+       "e8e7",
+       "f6e7",
+       "f5f6"
+      ],
+      "squares": [
+       "e7"
+      ]
+     },
+     "statement": "After the three moves only the bishop on e7 is loose."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.CAL.VISUALIZE",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares",
+    "theme.hangingPiece"
+   ],
+   "hints": [
+    "Keep track of which piece captured what, and which pawn moved on the last ply.",
+    "After the last move, which black pieces does the moved pawn attack?",
+    "The bishop that recaptured stands next to the pawn's new attacking squares."
+   ],
+   "explain": "Before the line no Black piece is loose. After the queen trade and the pawn advance, the bishop that recaptured on e7 is attacked by the pawn on f6 and nothing defends it. A longer line is useful only if each capture is tracked correctly.",
+   "contrast_group": "CG-GM3-6",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-7",
+   "skill": "POS.IMBALANCES.D3",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PGm3-7",
+   "prompt": "White to move. Count the material for both sides first, then say who stands better.",
+   "answer": {
+    "class": "White is better",
+    "options": [
+     "White is better",
+     "Black is better",
+     "About equal"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 250,
+      "max": 5000
+     },
+     "statement": "The engine rates the position in White's favour by at least 2.5 pawns (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8a8"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Qa8+ is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "f8a8",
+      "min": 8
+     },
+     "statement": "Along the engine's best line Qa8+ nets White at least eight points of material."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.IMBALANCES",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.classify_position",
+    "theme.skewer"
+   ],
+   "hints": [
+    "Add up the pieces for each side, then look at whose move it is and which checks exist.",
+    "A count describes the position before any move is played. What does the side to move have in the way of checks?",
+    "Look at the long diagonal that starts on a8."
+   ],
+   "explain": "The engine rates the position clearly in White's favour, and the best move, Qa8+, wins at least eight points of material along its best line. So a count of the pieces alone did not decide who stands better.",
+   "contrast_group": "CG-GM3-7",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-8",
+   "skill": "POS.IMBALANCES.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm3-8",
+   "prompt": "White to move. You may list the imbalances (pieces, files, king safety), but the move comes from a concrete line. Which move is best?",
+   "answer": {
+    "moves": [
+     "b1d1"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "b1d1"
+     },
+     "statement": "Rd1+ is legal."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b1d1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Rd1+ is the engine's best move at depth 16."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "e2d4",
+      "cp": 400
+     },
+     "statement": "Nd4 is at least four pawns worse than Rd1+."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "g1f1",
+      "cp": 400
+     },
+     "statement": "Kf1 is at least four pawns worse than Rd1+."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.IMBALANCES",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.advantage"
+   ],
+   "hints": [
+    "Which black pieces are near the king, and which of White's pieces could give a check?",
+    "A list of features does not choose between candidate moves. Check the forcing moves first.",
+    "One rook move gives check along a file."
+   ],
+   "explain": "Rd1+ is the engine's best move at depth 16, and Nd4 and Kf1 each rate at least four pawns lower. A checklist names features of the position; choosing among the moves comes from calculating the forcing ones.",
+   "feedback_by_move": {
+    "e2d4": "Nd4 centralises a knight, which looks like an improvement, but the engine rates it at least four pawns below Rd1+.",
+    "g1f1": "Kf1 steps off the back rank, but the engine rates it at least four pawns below Rd1+."
+   },
+   "contrast_group": "CG-GM3-8",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-9",
+   "skill": "GAME.PATTERNS.D3",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PGm3-9",
+   "prompt": "Black to move. Suppose you had missed a threat like this once in a game. One miss is not yet a pattern; a set of test positions is how you check. This is one test position. If Black passed, what would White threaten? Show White's move.",
+   "answer": {
+    "threat_move": "e5g6"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e5g6",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If Black passed, Ng6 would be checkmate."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.GAME.PATTERNS",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.threat_detection",
+    "theme.mate"
+   ],
+   "hints": [
+    "Pretend you pass. Look at the squares around the black king and at the white pieces that can reach them.",
+    "Which white piece could give check from a square the king cannot take or step away from?",
+    "A knight move."
+   ],
+   "explain": "If Black passed, Ng6 would be checkmate. One missed threat in one game is a single data point; a suspected pattern is checked by how often the same kind of miss appears across a set of positions.",
+   "contrast_group": "CG-GM3-9",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-10",
+   "skill": "PRA.CLOCK.D3",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm3-10",
+   "prompt": "White to move, move 8 of a ten-minute game. Time matters at every move, not only near the end. One move here ends the game at once: find it quickly.",
+   "answer": {
+    "moves": [
+     "c4f7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c4f7"
+     },
+     "statement": "Bxf7 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "c4f7",
+      "n": 1
+     },
+     "statement": "Bxf7 is checkmate."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "e5f7",
+      "cp": 400
+     },
+     "statement": "Nxf7 is at least four pawns worse than Bxf7."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.PRA.CLOCK",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.mateIn1"
+   ],
+   "hints": [
+    "Look at the black king first. How many of its neighbouring squares are free?",
+    "Which white piece can give check, and is its checking square protected?",
+    "A capture on f7 with one particular piece."
+   ],
+   "explain": "Bxf7 is checkmate, so there is nothing to compare it with. A long think here would cost clock that later moves may need; a forced win deserves seconds, not minutes.",
+   "feedback_by_move": {
+    "e5f7": "Nxf7 takes a pawn and attacks the queen, but it does not end the game, and the engine rates it at least four pawns below Bxf7."
+   },
+   "contrast_group": "CG-GM3-10",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm3-11",
+   "skill": "SELF.3.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm3-11",
+   "prompt": "White to move. You could explain what a fork is. Now find the best move here, with no theme named.",
+   "answer": {
+    "moves": [
+     "e5g6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e5g6"
+     },
+     "statement": "Ng6+ is legal."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e5g6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Ng6+ is the engine's best move at depth 16."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "e5c6",
+      "cp": 400
+     },
+     "statement": "Nxc6 is at least four pawns worse than Ng6+."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "e5g6",
+      "min": 2
+     },
+     "statement": "Along the engine's best line Ng6+ nets White at least two points of material."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.SELF.3",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.fork"
+   ],
+   "hints": [
+    "Check the checks first: which of your moves attack the king?",
+    "After a check, what else would the same piece attack? Look at the black pieces that are not defended.",
+    "The knight goes to a square from which it attacks the king and another piece."
+   ],
+   "explain": "Ng6+ is the engine's best move at depth 16 and nets at least two points along its best line, while Nxc6 rates at least four pawns lower. Being able to explain a pattern and being able to find it in an unlabeled position are two skills; this item tests the second.",
+   "feedback_by_move": {
+    "e5c6": "Nxc6 takes a pawn, but the engine rates it at least four pawns below Ng6+."
+   },
+   "contrast_group": "CG-GM3-11",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

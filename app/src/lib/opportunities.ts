@@ -11,7 +11,7 @@ export const CONCEPT_LABEL: Record<ConceptName, string> = {
   passedPawn: 'passed pawn', openFile: 'open file', outpost: 'outpost', bishopPair: 'bishop pair', isolatedDoubled: 'weak pawns',
 }
 
-/** The skill a concept is practised under, when the course has it. */
+/** The skill a concept is practiced under, when the course has it. */
 export const CONCEPT_SKILL: Partial<Record<ConceptName, string>> = {
   fork: 'TAC.FORK', pin: 'TAC.PIN', skewer: 'TAC.SKEWER', discoveredAttack: 'TAC.DISCOVERED', doubleCheck: 'TAC.DOUBLECHECK',
   hangingPiece: 'SAF.LOOSE', trappedPiece: 'TAC.TRAPPED', backRank: 'TAC.BACKRANK',

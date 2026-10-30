@@ -144,7 +144,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const noThreat = item.task === 'threat_detection' && (item.answer.threat_move === 'none' || (item.answer.moves ?? []).length === 0 && !item.answer.threat_move)
   const accepted = item.task === 'threat_detection' ? (noThreat ? [] : item.answer.moves ?? (item.answer.threat_move ? [item.answer.threat_move] : [])) : item.answer.moves ?? []
 
-  function onMove(from: Key, to: Key) { handleUci(uciFor(curChess, from, to, accepted)) }
+  function onMove(from: Key, to: Key, promotion?: string) { handleUci(uciFor(curChess, from, to, accepted, promotion)) }
   const [typed, setTyped] = useState('')
   function submitTyped() {
     const txt = typed.trim()
@@ -155,7 +155,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       setTyped(''); handleUci(mv.from + mv.to + (mv.promotion ?? ''))
     } catch { setMessage(`"${txt}" is not a legal move in this position. Use notation such as Nf3, exd5, O-O, or e2e4.`) }
   }
-  /** A move outside the accepted set is compared with the engine's best line before it is called wrong (unlabelled find-the-move items only). */
+  /** A move outside the accepted set is compared with the engine's best line before it is called wrong (unlabeled find-the-move items only). */
   async function soundAlternative(uci: string): Promise<{ san: string; why: string } | null> {
     try {
       const eng = getEngine()

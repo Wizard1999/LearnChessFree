@@ -658,3 +658,138 @@ main.mappage.curriculum, main.mappage.curriculum.dockopen {
 .miniview { fill: none; stroke: var(--accent); stroke-width: 14; }
 @media (max-width: 700px) { svg.minimap { display: none; } .mapsearch { width: 8rem; } }
 .timegraph .timewhite { fill: var(--info); opacity: 0.85; cursor: pointer; } .timegraph .timeblack { fill: var(--text-secondary); opacity: 0.8; cursor: pointer; }
+
+/* ---- Keyboard and screen-reader board layer (components/ChessBoard.tsx, lib/boardKeys.ts) and skip link ---- */
+.skiplink { position: absolute; left: 0.5rem; top: -4rem; z-index: 1000; padding: 0.5rem 0.9rem; background: var(--surface, #fff); color: var(--text, #111); border: 2px solid var(--focus); border-radius: 6px; }
+.skiplink:focus { top: 0.5rem; }
+main:focus { outline: none; }
+.kbdgrid { position: absolute; inset: 0; z-index: 6; pointer-events: none; display: grid; grid-template-rows: repeat(8, 1fr); }
+.kbdgrid:focus { outline: none; }
+.kbdgrid:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.kbdrow { display: grid; grid-template-columns: repeat(8, 1fr); }
+.kbdcell { overflow: hidden; }
+.kbdcursor, .kbdselected { position: absolute; width: 12.5%; height: 12.5%; box-sizing: border-box; pointer-events: none; }
+.kbdcursor { border: 4px solid var(--focus); box-shadow: inset 0 0 0 2px var(--surface, #fff); z-index: 2; }
+.kbdselected { border: 3px dashed var(--accent, var(--focus)); z-index: 1; }
+.promomenu { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 8; display: flex; gap: 0.4rem; padding: 0.6rem; background: var(--surface, #fff); color: var(--text, #111); border: 2px solid var(--focus); border-radius: 8px; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35); }
+.promomenu button { min-width: 4.2rem; min-height: 2.6rem; }
+.promomenu button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .board-wrap cg-board piece, .board-wrap .cg-wrap piece { transition: none !important; animation: none !important; } }
+
+/* Analysis: move labels, board "More" menu and shortcut help (Best / Book / Only move) */
+.mvlabel { font-size: 0.72rem; margin: 0 0.25rem 0 0.05rem; padding: 0 0.35rem; border-radius: 999px; border: 1px solid var(--control-boundary); color: var(--text-secondary); white-space: nowrap; vertical-align: middle; }
+h2 .mvlabel { font-size: 0.8rem; margin-left: 0.5rem; font-weight: 400; }
+.mvlabel.lb-best, .mvlabel.lb-only { color: var(--success); border-color: var(--success); }
+.boardmore { position: relative; display: inline-block; margin: 0; }
+.boardmore summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; min-height: 40px; box-sizing: border-box; padding: 0.45rem 0.9rem; border: 1px solid var(--control-boundary); border-radius: 999px; background: var(--surface); color: var(--text); }
+.boardmore summary::-webkit-details-marker { display: none; }
+.boardmore summary::after { content: ' \25BE'; font-size: 0.8em; white-space: pre; }
+.boardmore summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.boardmorelist { position: absolute; top: 100%; left: 0; z-index: 60; min-width: 13rem; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.4rem; margin-top: 0.2rem; background: var(--surface); border: 1px solid var(--control-boundary); border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+.boardmorelist button { text-align: left; border-radius: 4px; }
+.helpdialog { max-width: min(28rem, calc(100vw - 2rem)); background: var(--surface); color: var(--text); border: 1px solid var(--control-boundary); border-radius: 12px; padding: 1rem 1.25rem; }
+.helpdialog::backdrop { background: rgba(0,0,0,0.45); }
+.shortcuts { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin: 0.5rem 0; }
+.shortcuts dt, .shortcuts dd { margin: 0; }
+.shortcuts kbd { font: inherit; font-size: 0.85rem; padding: 0.05rem 0.4rem; border: 1px solid var(--control-boundary); border-bottom-width: 2px; border-radius: 4px; background: var(--chip); }
+
+/* Contrast step stages (lesson player): one calm stage at a time. */
+.contrast .contrast-stage { margin: 0 0 6px; text-transform: uppercase; letter-spacing: .04em; }
+.contrast .options { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+/* ---- Simplicity and accessibility audit: lesson player, Practice, Progress, lesson list (docs/design-audit/lesson-practice-progress.md) ----
+   Tap targets of at least 40px for the small text controls, tables that scroll inside their own box instead of the page, and a quiet inline note. */
+main.page .link, .lessonrow .link, .lessontools .link { display: inline-flex; align-items: center; min-height: 40px; padding: 0 0.35rem; box-sizing: border-box; }
+.link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+.lessontools { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.75rem; }
+.lessontools a { display: inline-flex; align-items: center; min-height: 40px; }
+.lessonrow .actions { align-items: center; }
+.connected p a { display: inline-block; padding: 0.55rem 0.15rem; }
+details.practiceopts > summary, .page details > summary { min-height: 40px; display: flex; align-items: center; }
+.check input[type="checkbox"] { width: 1.25rem; height: 1.25rem; margin-top: 0.15rem; flex: none; }
+.field select { min-height: 40px; max-width: 100%; }
+.tablewrap { max-width: 100%; overflow-x: auto; }
+.inlinenote { display: block; margin-top: 0.3rem; font-size: 0.95rem; }
+.inlinenote[open] > summary { margin-bottom: 0.3rem; }
+@media (max-width: 700px) {
+  .lessonrow { flex-wrap: wrap; }
+  .lessonrow .actions { margin-left: 0; width: 100%; }
+}
+.controlbar .controltoggle { min-height: 40px; }
+main.page > p.small.muted > a { display: inline-flex; align-items: center; min-height: 40px; }
+.chip { min-height: 40px; }
+/* The floating "Progress" tab sits bottom-left on phones: keep the end of the list clear of it. */
+@media (max-width: 900px) { main.curriculum:not(.mappage) { padding-bottom: 5rem; } }
+
+/* Today: the small 'where you are' map preview (components/MapPreview.tsx). Static, in normal flow, never overlaps; hidden on very small phones. */
+.mappreview { display: flex; align-items: center; gap: 1rem; padding: 0.6rem 0.9rem; text-decoration: none; color: var(--text); }
+.mappreview:hover { border-color: var(--accent); }
+.mappreviewsvg { width: 120px; height: 120px; flex: none; display: block; }
+.mappreviewtext { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
+.pvwedge { fill: var(--info); opacity: 0.26; stroke: var(--text-secondary); stroke-opacity: 0.5; stroke-width: 6; }
+.pvwedge.here { opacity: 0.32; stroke: var(--accent); stroke-opacity: 1; }
+.pvdot { fill: var(--text-secondary); opacity: 0.8; } .pvdot.part { fill: var(--info); opacity: 1; } .pvdot.full { fill: var(--success); opacity: 1; }
+.pvnextring { fill: none; stroke: var(--accent); stroke-width: 22; } .pvnextdot { fill: var(--accent); }
+@media (max-width: 359px), (max-height: 560px) { .mappreview { display: none; } }
+
+/* ---- Phone pass (390 wide): Start screen, Today, Curriculum list and map (docs/design-audit/mobile-map-start.md) ----
+   Tap targets of at least 40px in the header, a compact map toolbar that does not wrap into half the screen, a skill list that opens under the toolbar,
+   a small minimap in the free corner, and a bottom sheet that is shorter than the page and never covers the toolbar. */
+.mapbarwrap { position: relative; z-index: 9; }
+.maplist { top: 100%; left: 0.6rem; max-height: min(60vh, 28rem); }
+.maplisthead { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.4rem; }
+.maplist .maplistrow .link { align-items: center; min-height: 40px; }
+.maplist .listmark { display: inline-block; width: 1.2rem; text-align: center; color: var(--text-secondary); }
+.maplist button.on { background: var(--chip); border-radius: 4px; outline: 2px solid var(--accent); outline-offset: 0; font-weight: 700; }
+.startlinks { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.startlinks a { display: inline-flex; align-items: center; min-height: 40px; }
+.maplede { margin: 0.3rem 0; }
+.maplede .lede { margin-top: 0.3rem; }
+.radialmap { scroll-margin-top: 8.4rem; }
+@media (max-width: 700px) {
+  .top .brand { display: inline-flex; align-items: center; min-height: 40px; }
+  .top nav a, .top nav .morenav summary { display: flex; align-items: center; min-height: 40px; box-sizing: border-box; }
+  .top nav .morelist a { min-height: 40px; }
+  .top .button, .top button { min-height: 40px; }
+  .byline { font-size: 0.78rem; }
+  .mapbar { gap: 0.4rem; padding: 0.4rem; }
+  .mapbar .mapsearch { flex: 1 1 100%; width: auto; min-width: 0; box-sizing: border-box; min-height: 40px; }
+  .mapbar button { padding: 0.4rem 0.7rem; }
+  .mapbar button[aria-label="Zoom in"], .mapbar button[aria-label="Zoom out"] { min-width: 44px; padding: 0.4rem 0; }
+  .mapbar > .small.muted { display: none; }
+  .mapbar .maplegend { font-size: 0.8rem; }
+  .maplist { left: 0.4rem; right: 0.4rem; width: auto; max-height: min(44vh, 22rem); }
+  .maplisthead button { white-space: nowrap; }
+  .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100dvh - 19rem); min-height: 440px; }
+  svg.minimap { display: block; width: 5.5rem; height: 5.5rem; top: auto; right: 0.5rem; bottom: 0.5rem; }
+  .dock.left, .dock.right { height: min(36vh, 20rem); border-radius: 12px 12px 0 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.25); }
+  main.mappage.curriculum.dockopen { padding-bottom: calc(min(36vh, 20rem) + 1rem); }
+  .dock.right .dockbody { padding-top: 0; }
+  .dock.right .closebtn { position: sticky; top: 0; z-index: 2; float: right; min-height: 44px; min-width: 44px; margin: 0.3rem 0 0 0.5rem; }
+  .dock.right .detaildrawer h2 { font-size: 1.1rem; margin-top: 0.7rem; }
+  .dockclose { min-width: 44px; min-height: 44px; }
+  .edgetab { min-height: 44px; }
+  main.curriculum.skillopen { padding-bottom: calc(min(36vh, 20rem) + 1rem); }
+  .dock .dockbody a, .dock .dockbody button.link, .dock .dockbody summary, .dock .dockbody .why { display: inline-flex; align-items: center; min-height: 40px; box-sizing: border-box; }
+  .dock .dockbody .linkrow { gap: 0 0.9rem; }
+  .dock .dockbody .why { min-width: 40px; justify-content: center; }
+}
+.startlinks a .muted { margin-left: 0.35rem; }
+
+/* ---- ask the engine about a square (control map): optional, below the detail line, grows the bar so nothing is covered ---- */
+.controlbar .squareask { flex: 1 1 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 0.35rem; }
+.controlbar .squareask .controltoggle:disabled { opacity: 0.7; cursor: progress; }
+.squareask-answer { font-size: 0.85rem; line-height: 1.35; }
+.squareask-answer p { margin: 0 0 0.25rem; }
+
+/* ---- path stages: Progress "Your path" list and the quiet stage line on Today ---- */
+.pathlist { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.pathstage { border: 1px solid var(--divider); border-radius: 6px; padding: 0.5rem 0.8rem; }
+.pathstage.current { border: 2px solid var(--control-boundary); }
+.pathstage h3 { margin: 0 0 0.2rem; font-size: 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.pathstage p { margin: 0.15rem 0; }
+.stageline { margin: 0.2rem 0 0.6rem; }
+
+/* Read aloud: lesson-header toggle (Pause/Stop appear in the same row, so nothing shifts) and the Settings controls. */
+.readaloud { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; justify-content: flex-end; min-height: 2rem; margin: 0 0 0.3rem; }
+.readaloud button.small { padding: 0.2rem 0.7rem; }

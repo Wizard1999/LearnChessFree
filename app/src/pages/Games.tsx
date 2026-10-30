@@ -231,7 +231,7 @@ function PatternSummary({ games }: { games: GameRec[] }) {
   return (
     <section className="card">
       <h2>Patterns behind your biggest drops</h2>
-      <p className="small muted">From {rows.nGames} analysed game{rows.nGames === 1 ? '' : 's'} where we know which side you played, {rows.nDrops} move{rows.nDrops === 1 ? '' : 's'} lost a pawn or more.</p>
+      <p className="small muted">From {rows.nGames} analyzed game{rows.nGames === 1 ? '' : 's'} where we know which side you played, {rows.nDrops} move{rows.nDrops === 1 ? '' : 's'} lost a pawn or more.</p>
       <p><strong>Tactics the engine preferred instead:</strong> {fmt(rows.missed)}.</p>
       <p><strong>Tactics your move allowed:</strong> {fmt(rows.allowed)}.</p>
       <p className="small muted">This is a small sample. Treat a count as a lead to test with a plan on the My plan page, not as a verdict on your play.</p>

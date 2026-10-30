@@ -80,10 +80,10 @@ export function PlayGame({ startFen, humanColor, botId, maxMoves, allowHint = tr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function onHumanMove(from: Key, to: Key) {
+  function onHumanMove(from: Key, to: Key, promotion?: string) {
     if (!humanTurn || thinking || ended.current) return
     const before = chess.current.fen()
-    const uci = uciFor(chess.current, from, to)
+    const uci = uciFor(chess.current, from, to, undefined, promotion)
     try {
       const mv = chess.current.move({ from, to, promotion: uci[4] })
       onMove?.(before, uci)

@@ -5,6 +5,7 @@ import { masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
 import { isDue } from '../lib/schedule'
 import { effectiveTrivial, loadNever, loadTrivial } from '../lib/trivial'
 import { interleave, pickFresh } from '../lib/select'
+import { skillLabel, tidyLabel } from '../lib/labels'
 import { ItemSequence } from '../components/LessonPlayer'
 import type { Item } from '../types'
 
@@ -72,17 +73,17 @@ export function Practice() {
       <h1>Practice</h1>
       {!started && (
         <section className="card">
-          <p className="lede">Practice gives you positions where nobody tells you which idea applies. Fresh positions come first.</p>
-          <div className="row"><button type="button" className="primary big" onClick={go}>Start mixed practice</button></div>
+          <p className="lede">Positions with no label telling you which idea to use. New ones come first.</p>
+          <div className="row"><button type="button" className="primary big" onClick={go}>Start {n} mixed positions</button></div>
           <details className="practiceopts">
-            <summary>Choose what to practise instead</summary>
+            <summary>Choose what to practice instead</summary>
             <div className="grid2">
               <label className="field"><span className="small muted">Skill (optional)</span>
-                <select value={skill} onChange={e => set('skill', e.target.value)}><option value="">Mixed: all skills</option>{skillKeys.map(k => <option key={k} value={k}>{k}</option>)}</select></label>
+                <select value={skill} onChange={e => set('skill', e.target.value)}><option value="">Mixed: all skills</option>{skillKeys.map(k => <option key={k} value={k}>{skillLabel(k, content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title)}</option>)}</select></label>
               <label className="field"><span className="small muted">Theme or kind (optional)</span>
-                <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
-              <label className="field"><span className="small muted">Strand (optional)</span>
-                <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+                <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{tidyLabel(t)}</option>)}</select></label>
+              <label className="field"><span className="small muted">Area of chess (optional)</span>
+                <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{tidyLabel(t)}</option>)}</select></label>
               <label className="field"><span className="small muted">Which skills</span>
                 <select value={everything ? '1' : ''} onChange={e => set('all', e.target.value)}><option value="">Only skills I have met</option><option value="1">Everything</option></select></label>
               <label className="field"><span className="small muted">How many</span>

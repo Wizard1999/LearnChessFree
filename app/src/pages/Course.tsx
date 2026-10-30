@@ -91,7 +91,7 @@ export function Course() {
 
   // The 12-hour gap is advice (spaced review works better), never a lock: the learner can always run a challenge now.
   const planNow = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(current.nodes, content.items, attempts, null, Date.now(), challengeSeed(current.strand, lastChallenge)) : null), [ctx, attempts, current, content.items, lastChallenge])
-  if (!ctx || !attempts) return <main className="page"><p className="muted">Loading…</p></main>
+  if (!ctx || !attempts) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
 
   const tab = params.get('view')
   const showCourses = tab === 'courses'
@@ -198,8 +198,8 @@ export function Course() {
               <h3 className="sdh">What to do next</h3>
               <div className="row">
                 {open ? <Link className="button primary" to={`/lesson/${open.id}`}>{started ? 'Continue' : 'Start'} the lesson: {open.title}</Link>
-                  : node.workingDepth ? <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link> : null}
-                {open && node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link>}
+                  : node.workingDepth ? <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practice {node.workingDepth}</Link> : null}
+                {open && node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practice {node.workingDepth}</Link>}
                 {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
               </div>
               <h3 className="sdh">What it connects to</h3>
@@ -210,8 +210,8 @@ export function Course() {
               <details><summary>Lessons for this skill ({ls.length})</summary>
                 {ls.map(l => { const pr = lp(l.id); return (
                   <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
-                    {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
-                    {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
+                    {!pr?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
+                    {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
                 {ls.length === 0 && <p className="small muted">No lesson for this skill yet.</p>}
               </details>
               <details><summary>Every depth in detail</summary>
@@ -234,7 +234,7 @@ export function Course() {
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
             <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is on the Progress page.</div>) : null })()}
-          <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'MISSION PROGRESS'}</p>
+          <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'SECTION PROGRESS'}</p>
           <div className="donutrow">
             <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
             <ul className="plain legendlist">
@@ -270,7 +270,7 @@ export function Course() {
           ) : run ? (
             <section className="card challenge">
               <h2>Mastery challenge</h2>
-              <ItemSequence items={run.items} source="challenge" silent intro="Six questions on three skills, no hints" onComplete={r => void finishChallenge(r)} />
+              <ItemSequence items={run.items} source="challenge" silent intro="Six exercises on three skills, no hints" onComplete={r => void finishChallenge(r)} />
             </section>
           ) : (
             <>
@@ -284,18 +284,18 @@ export function Course() {
                     <p role="status">Taken {new Date(w.ts).toLocaleDateString()} ({shown}).{' '}
                       {w.conclusive === false ? 'It was too short to vouch for any tier, so nothing was changed.'
                         : superseded ? `A newer placement (${new Date(placement.ts).toLocaleDateString()}) replaced this result.`
-                        : assumedHere > 0 ? `${assumedHere} skills in tiers below ${w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on something you had not practised at that level was not held against you.`
+                        : assumedHere > 0 ? `${assumedHere} skills in tiers below ${w.frontierTier} show as assumed (hatched) until mixed practice and challenges confirm them. A wrong answer on something you had not practiced at that level was not held against you.`
                         : 'Nothing in this section is assumed from it.'}</p>) })()
-                    : <p>About ten unlabelled questions, easiest tier first, no hints. A wrong answer on something you have not practised at that level is not held against you (once you have practised it, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this section show as assumed, and their lessons (except the tier just below the line) are left out of Continue; you can still open any lesson. Assumed skills are not counted as progress until you show them.</p>}
+                    : <p>About ten unlabeled exercises, easiest tier first, no hints. A wrong answer on something you have not practiced at that level is not held against you (once you have practiced it, every answer counts). It stops early if two tiers in a row go badly. If you do well, the early skills in this section show as assumed, and their lessons (except the tier just below the line) are left out of Continue; you can still open any lesson. Assumed skills are not counted as progress until you show them.</p>}
                   <div className="row"><button type="button" className={warm || warmDone ? '' : 'primary'} onClick={() => { setWarmDone(null); setWarmOpen(true) }}>{warm || warmDone ? 'Take it again' : 'Start the warm-up'}</button></div>
                 </section>
               )}
               <section className="card challenge">
                 <h2>Mastery challenge{isAll ? ' across every section' : ''}</h2>
-                <p>Strengthen skills you have already practised: six unlabelled questions on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
+                <p>Strengthen skills you have already practiced: six unlabeled exercises on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
                 {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <><p className="muted small">{plan?.reason}</p>{planNow?.unlocked && <div className="row"><button type="button" onClick={startChallenge}>Start anyway</button><span className="muted small">Nothing is locked; the wait is only advice.</span></div>}</>}
                 <details><summary className="small">How a challenge changes your levels</summary>
-                  <p className="small">Both questions right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
+                  <p className="small">Both exercises right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
               </section>
             </>
           )}
@@ -367,7 +367,7 @@ export function Course() {
     <main className={`page wide mappage curriculum${dockOpen || (node && sk && !busy) ? ' dockopen' : ''}`}>
       <h1 className="sr-only">Curriculum</h1>
       {tabs}
-      <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
+      <details className="inlinenote maplede"><summary>How the map fills in</summary><p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p></details>
 
       <div className="row filters sectionbar" role="group" aria-label="Sections"><span className="small muted sectionlabel">Sections:</span>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
@@ -381,7 +381,7 @@ export function Course() {
 
       <section className="card outline" aria-label={`${current.name} outline`}>
         <h2>Outline: {current.name}</h2>
-        <p className="small muted">Everything in {isAll ? 'the curriculum' : 'this section'}, in teaching order, with nothing hidden or locked. Open any lesson or practise any skill at any time.</p>
+        <p className="small muted">Everything in {isAll ? 'the curriculum' : 'this section'}, in teaching order, with nothing hidden or locked. Open any lesson or practice any skill at any time.</p>
         {(isAll ? missions : [current]).map(m => (
           <div key={m.strand}>
             {isAll && <h3>{m.strand} · {m.name}</h3>}
@@ -395,7 +395,7 @@ export function Course() {
                       <Swatch level={n.levelWithAssumed} /> <strong>{n.title}</strong> <span className="muted small">· {LEVEL_NAMES[n.level]}{n.levelWithAssumed > n.level ? ' (assumed)' : ''}{n.due ? ' · refresher due' : ''}</span>
                       {d && <span className="small"> {d.outcome}</span>}
                       {' '}{lessonsFor(n.id).map(l => { const pr = progress?.find(x => x.lessonId === l.id); return <Link key={l.id} className="small" to={`/lesson/${l.id}`}>{pr?.done ? (pr.skipped ? '» skipped' : '✓ seen') : pr && pr.step > 0 ? '◐ started' : '○ not seen'} · Lesson: {l.title}</Link> })}
-                      {n.workingDepth && <> <Link className="small" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practise</Link></>}
+                      {n.workingDepth && <> <Link className="small" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`}>Practice</Link></>}
                       {!n.hasLesson && n.noExercises && <span className="muted small"> (nothing written yet)</span>}
                     </li>)
                 })}</ul>

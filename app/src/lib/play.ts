@@ -22,9 +22,10 @@ export function destsFor(chess: Chess): Map<Key, Key[]> {
 }
 
 /** Build the UCI string for a drag/click move; promotions default to the accepted piece if the answer names one, else a queen. */
-export function uciFor(chess: Chess, from: string, to: string, accepted?: string[]): string {
+export function uciFor(chess: Chess, from: string, to: string, accepted?: string[], promotion?: string): string {
   const mv = chess.moves({ verbose: true }).find(m => m.from === from && m.to === to && m.promotion)
   if (!mv) return from + to
+  if (promotion) return from + to + promotion
   const wanted = accepted?.find(a => a.startsWith(from + to) && a.length === 5)
   return wanted ?? from + to + 'q'
 }

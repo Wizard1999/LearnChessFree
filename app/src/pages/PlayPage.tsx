@@ -43,7 +43,7 @@ export function PlayPage() {
               <select value={color} onChange={e => setColor(e.target.value as 'white' | 'black')}><option value="white">White</option><option value="black">Black</option></select></label>
           </div>
           <details><summary>Start from a position instead</summary>
-            <label className="field"><span className="small muted">FEN</span><input type="text" value={fenInput} onChange={e => setFenInput(e.target.value)} placeholder="Paste a FEN, e.g. an ending you want to practise" /></label>
+            <label className="field"><span className="small muted">FEN</span><input type="text" value={fenInput} onChange={e => setFenInput(e.target.value)} placeholder="Paste a FEN, e.g. an ending you want to practice" /></label>
             <div className="row"><button type="button" onClick={applyFen}>Use this position</button><button type="button" onClick={() => { setFen(START); setFenInput('') }}>Standard start</button></div>
             {fenError && <p className="warn">{fenError}</p>}
             <p className="muted small">Current start: <code>{fen === START ? 'standard' : fen}</code></p>

@@ -8,6 +8,7 @@ import { db } from '../db'
 import { loadReviewer, reviewFile, saveReviewer, sendReviews, feedbackEndpoint, type Reviewer } from '../lib/feedback'
 import { useContent } from '../lib/content'
 import { useLiveQuery } from 'dexie-react-hooks'
+import { RATE_MAX, RATE_MIN, savePrefs, speakText, useSpeech } from '../lib/readAloud'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function SettingsContent() {
@@ -33,6 +34,7 @@ export function SettingsContent() {
   const [look, setLook] = useState<Appearance>(loadAppearance())
   const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = { ...look, [k]: v }; setLook(n); saveAppearance(n) }
   useEffect(() => { void loadLoop().then(setLoop) }, [])
+  const speech = useSpeech()
 
   async function doExport() {
     const data = await exportAll()
@@ -66,7 +68,7 @@ export function SettingsContent() {
         {([
           ['style', 'Look', [['friendly', 'Friendly'], ['collegiate', 'Collegiate']]],
           ['theme', 'Theme', [['system', 'Same as my device'], ['light', 'Light'], ['dark', 'Dark']]],
-          ['board', 'Board colours', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast']]],
+          ['board', 'Board colors', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast']]],
           ['text', 'Text size', [['standard', 'Standard'], ['large', 'Large'], ['larger', 'Larger']]],
           ['motion', 'Motion', [['system', 'Same as my device'], ['reduce', 'Reduce motion']]],
         ] as [keyof Appearance, string, [string, string][]][]).map(([key, label, opts]) => (
@@ -78,6 +80,22 @@ export function SettingsContent() {
           </fieldset>
         ))}
       </section>
+      {speech.available && (
+        <section className="card">
+          <h2>Read aloud</h2>
+          <p className="small muted">Lessons can be read to you by your browser's own voices. Nothing is sent anywhere. Turn it on with the Read aloud button at the top of a lesson.</p>
+          <div className="row">
+            <label className="field"><span className="small muted">Voice</span>
+              <select value={speech.prefs.voice} onChange={e => savePrefs({ voice: e.target.value })}>
+                <option value="">Browser default</option>
+                {speech.voices.map(v => <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang})</option>)}
+              </select></label>
+            <label className="field"><span className="small muted">Speed: {speech.prefs.rate.toFixed(1)}x</span>
+              <input type="range" min={RATE_MIN} max={RATE_MAX} step={0.1} value={speech.prefs.rate} onChange={e => savePrefs({ rate: Number(e.target.value) })} /></label>
+            <button type="button" onClick={() => speakText('Knight takes e5, check. Castle kingside with O-O.')}>Hear a sample</button>
+          </div>
+        </section>
+      )}
       <section className="card">
         <h2>Your progress saves itself</h2>
         <p>Everything you do is saved on this device as you go. You never need an account to learn here or to keep your progress. Nothing is sent anywhere, except that pressing "Fetch my latest games" on the My games page asks Lichess or Chess.com for your public games and so sends them the username you typed.</p>

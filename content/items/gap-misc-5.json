@@ -1,0 +1,938 @@
+{
+ "positions": [
+  {
+   "id": "PGm5-1",
+   "fen": "4k3/8/7n/8/8/8/3P4/2B3K1 w - - 0 1",
+   "family": "FAM-GM5-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "hand-placed bishop, own pawn and enemy knight on one diagonal; claims checked by the rules engine [V rules]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-2",
+   "fen": "4k3/8/8/8/n7/8/8/2B3K1 w - - 0 1",
+   "family": "FAM-GM5-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "hand-placed bishop and knight on opposite colours; claims checked by the rules engine [V rules]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-3",
+   "fen": "4k3/8/8/8/3B4/8/8/4K3 w - - 0 1",
+   "family": "FAM-GM5-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "hand-placed lone bishop with kings; destinations computed by python-chess [V rules]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-4",
+   "fen": "8/8/8/K7/8/8/4P2k/8 b - - 0 1",
+   "family": "FAM-GM5-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every move classified by the Lichess tablebase (<=7 pieces) [V tablebase]: K+P v K, pawn on its starting rank, black to move, one drawing move, four losing moves",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-5",
+   "fen": "4K3/k7/8/8/2P5/8/8/8 b - - 0 1",
+   "family": "FAM-GM5-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every move classified by the Lichess tablebase (<=7 pieces) [V tablebase]: K+P v K, pawn on the fourth rank, black to move, one drawing move, four losing moves",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-6",
+   "fen": "8/3k4/8/5P2/5K2/8/8/8 w - - 0 1",
+   "family": "FAM-GM5-6",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every move classified by the Lichess tablebase (<=7 pieces) [V tablebase]: K+P v K, white to move, one winning move, several drawing moves",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-7",
+   "fen": "8/8/8/6K1/2P5/k7/8/8 w - - 0 1",
+   "family": "FAM-GM5-7",
+   "provenance": {
+    "kind": "authored",
+    "ref": "found by random search with python-chess; every move classified by the Lichess tablebase (<=7 pieces) [V tablebase]: K+P v K, white to move, one winning move, eight drawing moves",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-8",
+   "fen": "r4rk1/pb2qp1n/1p2p2Q/2b5/4P3/2PB1N1P/P4PP1/3RR1K1 w - - 1 22",
+   "family": "FAM-GM5-8",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 4oaYQ (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm5-9",
+   "fen": "rn1q2k1/ppp3pp/3bpp2/4r3/3P4/5N2/PPP2PPP/R1BQ1RK1 w - - 0 1",
+   "family": "FAM-GM5-9",
+   "provenance": {
+    "kind": "authored",
+    "ref": "hand-built middlegame with a rook placed in front of its pawns; claims checked by rules and engine [V]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PGm5-10",
+   "fen": "q3k3/1p3p2/n1p1p1p1/2PpPnN1/3P4/Pr6/1P1Q1P1P/2KR3R b - - 6 24",
+   "family": "FAM-GM5-10",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "Lichess puzzle 2AXwG (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PGm5-11",
+   "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 4 4",
+   "family": "FAM-GM5-11",
+   "provenance": {
+    "kind": "authored",
+    "ref": "opening position after 1.e4 e5 2.Nf3 Nc6 3.Nc3 Nf6 (Four Knights); claims checked by rules and engine [V]",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IGm5-1",
+   "skill": "FND.PIECE.BISHOP.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PGm5-1",
+   "prompt": "White to move. The black knight on h6 stands on the same long diagonal as the bishop on c1. Can the bishop take it right now?",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "c1h6"
+     },
+     "statement": "Bxh6 is not a legal move."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "c1",
+      "to": [
+       "a3",
+       "b2"
+      ]
+     },
+     "statement": "The bishop on c1 can reach only these squares: a3, b2."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.PIECE.BISHOP",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.bishop"
+   ],
+   "hints": [
+    "Trace the diagonal from c1 toward h6, one square at a time.",
+    "Is every square between the bishop and the knight empty?",
+    "Look at d2."
+   ],
+   "explain": "The white pawn on d2 stands between the bishop and h6. A bishop slides but does not jump, so it stops in front of its own pawn. The listed destinations are the squares it can actually reach.",
+   "feedback_by_move": {
+    "c1h6": "Bxh6 would need the bishop to pass over the pawn on d2. A bishop cannot jump, and the validator confirms the move is illegal."
+   },
+   "contrast_group": "CG-GM5-1",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-2",
+   "skill": "FND.PIECE.BISHOP.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PGm5-2",
+   "prompt": "White to move. Can the bishop on c1 capture the knight on a4 in one move?",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "c1a4"
+     },
+     "statement": "Bxa4 is not a legal move."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "c1",
+      "to": [
+       "a3",
+       "b2",
+       "d2",
+       "e3",
+       "f4",
+       "g5",
+       "h6"
+      ]
+     },
+     "statement": "The bishop on c1 can reach only these squares: a3, b2, d2, e3, f4, g5, h6."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.PIECE.BISHOP",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.bishop"
+   ],
+   "hints": [
+    "A bishop stays on the colour it started on. Which colour is c1?",
+    "Which colour is a4?",
+    "Compare the listed destination squares with a4."
+   ],
+   "explain": "The bishop on c1 reaches only the squares in the claim, all on the same colour as c1. The knight on a4 stands on the other colour, so no single bishop move takes it, and a bishop never changes colour by moving.",
+   "feedback_by_move": {
+    "c1a4": "Bxa4 is not a bishop move: a4 is not on a diagonal from c1. A bishop cannot change the colour of its square to get there either."
+   },
+   "contrast_group": "CG-GM5-2",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-3",
+   "skill": "FND.PIECE.BISHOP.D2",
+   "cue": 3,
+   "task": "select_squares",
+   "position": "PGm5-3",
+   "prompt": "White to move. Tap every square the bishop on d4 can move to.",
+   "answer": {
+    "from": "d4",
+    "squares": [
+     "a1",
+     "a7",
+     "b2",
+     "b6",
+     "c3",
+     "c5",
+     "e3",
+     "e5",
+     "f2",
+     "f6",
+     "g1",
+     "g7",
+     "h8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "a1",
+       "a7",
+       "b2",
+       "b6",
+       "c3",
+       "c5",
+       "e3",
+       "e5",
+       "f2",
+       "f6",
+       "g1",
+       "g7",
+       "h8"
+      ]
+     },
+     "statement": "The bishop on d4 can reach exactly these squares: a1, a7, b2, b6, c3, c5, e3, e5, f2, f6, g1, g7, h8."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "Bd5 is not a legal move."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.FND.PIECE.BISHOP",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares",
+    "theme.bishop"
+   ],
+   "hints": [
+    "Which directions can a bishop slide in?",
+    "Is d5, straight ahead, on a diagonal from d4?",
+    "Follow each of the four diagonals to the edge or to a piece."
+   ],
+   "explain": "A bishop moves only along diagonals. The squares directly in front, behind or beside it are not on a diagonal, so it cannot step there as a pawn or a king can.",
+   "feedback_by_move": {
+    "d4d5": "d5 is straight ahead of the bishop, not on a diagonal. A bishop cannot make a pawn-like step, and the validator confirms the move is illegal."
+   },
+   "contrast_group": "CG-GM5-3",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-4",
+   "skill": "END.PAWN-RACE.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-4",
+   "prompt": "Black to move. The white pawn has not moved yet and the white king is far away. Which king move still saves the draw?",
+   "answer": {
+    "moves": [
+     "h2g3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h2g3"
+     },
+     "statement": "After Kg3 the position is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h2g2"
+     },
+     "statement": "After Kg2 Black loses."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h2h3"
+     },
+     "statement": "After Kh3 Black loses."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.END.PAWN-RACE",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.pawnEndgame"
+   ],
+   "hints": [
+    "Count the pawn's moves to the last rank, remembering its first move may cover two squares.",
+    "Count the king's moves to reach the pawn's file or its path.",
+    "The king needs to come closer to the e-file and also move up the board. One step does both."
+   ],
+   "explain": "Kg3 draws and the tablebase shows the other king moves lose. When counting the pawn's moves, the two-square first move saves a tempo, so a count that uses one square per move is a move too slow.",
+   "feedback_by_move": {
+    "h2g2": "Kg2 moves toward the pawn's file along the rank, but the tablebase says it loses. Kg3 is the only move that draws."
+   },
+   "contrast_group": "CG-GM5-4",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-5",
+   "skill": "END.PAWN-RACE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-5",
+   "prompt": "Black to move. The pawn is two ranks ahead of the king and can be caught only by one route. Which king move holds the draw?",
+   "answer": {
+    "moves": [
+     "a7b6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a7b6"
+     },
+     "statement": "After Kb6 the position is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a7a6"
+     },
+     "statement": "After Ka6 Black loses."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a7b7"
+     },
+     "statement": "After Kb7 Black loses."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.END.PAWN-RACE",
+    "tier.2",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.pawnEndgame"
+   ],
+   "hints": [
+    "Count how many moves the king needs to reach the c-file in front of the pawn.",
+    "A step straight along a file or a rank gains in one direction only.",
+    "Which first step gains a file and a rank together?"
+   ],
+   "explain": "Kb6 is a diagonal step, so it gains a file and a rank together. The tablebase shows that the straight steps Ka6 and Kb7 lose, so the diagonal route is the one that saves the game here.",
+   "feedback_by_move": {
+    "a7a6": "Ka6 walks straight up the a-file, away from the c-file that the king has to reach. The tablebase says it loses; Kb6 is the only drawing move."
+   },
+   "contrast_group": "CG-GM5-5",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-6",
+   "skill": "END.TABLEBASE-LAB.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-6",
+   "prompt": "White to move in a king and pawn ending. A tablebase can tell you which moves win and which only draw, but not why. Find the only winning move, then try to state a reason you could test on a neighbouring position.",
+   "answer": {
+    "moves": [
+     "f4g5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f4g5"
+     },
+     "statement": "After Kg5 White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f5f6"
+     },
+     "statement": "After f6 the game is only a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4e4"
+     },
+     "statement": "After Ke4 the game is only a draw."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.END.TABLEBASE-LAB",
+    "tier.2",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.pawnEndgame"
+   ],
+   "hints": [
+    "Compare the winning move with the other king moves: what changes for the black king?",
+    "The tablebase will confirm a move but not give a reason; form a guess about where the kings stand.",
+    "Which king move takes a square near the pawn's path?"
+   ],
+   "explain": "Kg5 wins, while pushing the pawn or moving the king elsewhere only draws. The tablebase gives results, not reasons: to find the reason, change the position one feature at a time and compare results.",
+   "feedback_by_move": {
+    "f5f6": "f6 looks natural, but the tablebase says it only draws. A tablebase gives you the result of each move, so use it to test guesses, not to read off an explanation."
+   },
+   "contrast_group": "CG-GM5-6",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-7",
+   "skill": "PRA.COMPETE.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-7",
+   "prompt": "Event routine check. Your preparation list for this tournament has only opening files. In round three the opening is long over and you reach this ending, White to move. Which move wins?",
+   "answer": {
+    "moves": [
+     "c4c5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c4c5"
+     },
+     "statement": "After c5 White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5f4"
+     },
+     "statement": "After Kf4 the game is only a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5g4"
+     },
+     "statement": "After Kg4 the game is only a draw."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.PRA.COMPETE",
+    "tier.2",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.pawnEndgame"
+   ],
+   "hints": [
+    "Which piece can still be useful if the king cannot be in two places?",
+    "Count the black king's moves to the pawn's path.",
+    "Moving the pawn is the only move that keeps the win."
+   ],
+   "explain": "Only the pawn push c5 wins here; both king moves tried only draw. The ending is a place where preparation of technique, not of opening lines, decides the result.",
+   "feedback_by_move": {
+    "g5f4": "Kf4 brings the king toward the pawn, but the tablebase says the game is then only a draw. The pawn needs to run now."
+   },
+   "contrast_group": "CG-GM5-7",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-8",
+   "skill": "SAF.COUNT.FUTURE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-8",
+   "prompt": "White to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "e4e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Right now only the queen attacks the knight on h7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Right now only the king defends the knight on h7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 2,
+      "after_move": "e4e5"
+     },
+     "statement": "After e5 two white pieces attack the knight on h7."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5"
+      ]
+     },
+     "statement": "e5 is the engine's best move."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "h6h7",
+      "cp": 300
+     },
+     "statement": "Qxh7+ is at least three pawns worse than the best move."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.SAF.COUNT.FUTURE",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.countFuture"
+   ],
+   "hints": [
+    "Count the pieces attacking the knight on h7 and the pieces defending it.",
+    "Can any white piece join the attack in one move without capturing anything?",
+    "One of your own pawns blocks the diagonal of a piece that could attack h7."
+   ],
+   "explain": "Today the knight on h7 is attacked once and defended once, so taking at once fails. The pawn move e5 opens the bishop's diagonal, which brings a second attacker. The count that matters includes the pieces a single move can bring in.",
+   "feedback_by_move": {
+    "h6h7": "Qxh7+ counts only the attacker that is there now: one attacker against one defender. The engine rates the move at least three pawns below the best one."
+   },
+   "contrast_group": "CG-GM5-8",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "source": {
+    "kind": "lichess_puzzle",
+    "id": "4oaYQ"
+   }
+  },
+  {
+   "id": "IGm5-9",
+   "skill": "SAF.COUNT.FUTURE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-9",
+   "prompt": "White to move. Find a strong move.",
+   "answer": {
+    "moves": [
+     "d4e5",
+     "f3e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "Two white pieces attack the rook on e5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Two black pieces defend the rook on e5."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d4e5",
+       "f3e5"
+      ],
+      "within_cp": 100
+     },
+     "statement": "dxe5 and Nxe5 are both strong; the engine's best is one of them."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "d4e5",
+      "min": 4
+     },
+     "statement": "After dxe5 White comes out at least four points ahead."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "c2c4",
+      "cp": 300
+     },
+     "statement": "c4 is at least three pawns worse than the best move."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.SAF.COUNT.FUTURE",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.countFuture"
+   ],
+   "hints": [
+    "Count the attackers and the defenders of the rook on e5.",
+    "Equal numbers do not settle the exchange. Which pieces would be captured and in what order?",
+    "Start the exchange with the cheapest attacker."
+   ],
+   "explain": "Both sides have two pieces on e5, yet White gains material: the first capture takes the rook with a pawn, the cheapest attacker. Equal numbers do not mean an equal exchange, because the value of the first capturer and of the captured piece decides the result.",
+   "feedback_by_move": {
+    "c2c4": "c4 treats two attackers against two defenders as a balanced standoff and leaves the rook to move away. The engine rates c4 at least three pawns below the best move."
+   },
+   "contrast_group": "CG-GM5-9",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IGm5-10",
+   "skill": "SELF.4.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-10",
+   "prompt": "Black to move. Several ideas are available at once: pressure on a3, the c5 pawn, the white queen. Pick the one move that is clearly best.",
+   "answer": {
+    "moves": [
+     "a6b4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a6b4"
+      ]
+     },
+     "statement": "Nb4 is the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "b7b6",
+      "cp": 400
+     },
+     "statement": "b6 is at least four pawns worse than the best move."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "a3",
+      "color": "black",
+      "count": 2,
+      "after_move": "a6b4"
+     },
+     "statement": "After Nb4 two black pieces attack the pawn on a3."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.SELF.4",
+    "tier.2",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.focus"
+   ],
+   "hints": [
+    "List the ideas you could pursue, then ask which single move serves the most forcing one.",
+    "A piece standing on a6 blocks a file. What happens to that file if it moves?",
+    "Move the knight to a square that attacks something."
+   ],
+   "explain": "Nb4 is the engine's best move and it opens the a-file for the queen, so one move serves the main idea. A move that aims at several goals at once, like b6, is rated far lower: more goals does not make a better plan.",
+   "feedback_by_move": {
+    "b7b6": "b6 touches the c5 pawn and seems to do several things at once, but the engine rates it at least four pawns below Nb4. A move or a plan with more goals is not better for that reason."
+   },
+   "contrast_group": "CG-GM5-10",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "source": {
+    "kind": "lichess_puzzle",
+    "id": "2AXwG"
+   }
+  },
+  {
+   "id": "IGm5-11",
+   "skill": "POS.CENTER.MOBILE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PGm5-11",
+   "prompt": "White to move. Black has a pawn on e5 in the centre. Find a good move.",
+   "answer": {
+    "moves": [
+     "d2d4",
+     "f1b5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The knight on f3 is the only white attacker of the e5 pawn."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The knight on c6 is the only black defender of the e5 pawn."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d4",
+       "f1b5"
+      ],
+      "within_cp": 60
+     },
+     "statement": "Bb5 and d4 are the engine's top moves."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "f3e5",
+      "cp": 150
+     },
+     "statement": "Nxe5 is at least a pawn and a half worse than the best move."
+    }
+   ],
+   "tags": [
+    "misconception",
+    "node.POS.CENTER.MOBILE",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "theme.centre"
+   ],
+   "hints": [
+    "Count the attackers and the defenders of the e5 pawn.",
+    "Taking at once can be answered by a recapture. Can you add an attacker first?",
+    "Which move challenges e5 or adds pressure to the piece that defends it?"
+   ],
+   "explain": "The e5 pawn is attacked once and defended once, so Nxe5 meets one defender with one attacker and is rated far below the alternatives. The engine's top moves, d4 and Bb5, challenge the pawn or its defender instead of capturing at once.",
+   "feedback_by_move": {
+    "f3e5": "Nxe5 takes the centre pawn at once, but the knight on c6 defends the pawn. The engine rates it at least a pawn and a half below d4."
+   },
+   "contrast_group": "CG-GM5-11",
+   "orientation": "auto",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

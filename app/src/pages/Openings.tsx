@@ -154,7 +154,9 @@ export function Openings() {
             )}
             {kids.length > 10 && <p className="muted small">{kids.length - 10} more moves are stored; widen the filter to see them in the tree.</p>}
           </section>
-          {g.nodes.get(curId) && <MastersCard epd={g.nodes.get(curId)!.e} />}
+          {g.nodes.get(curId) && <MastersCard always epd={g.nodes.get(curId)!.e}
+            canPlay={uci => (g.out.get(curId) ?? []).some(e => e.u === uci)}
+            onPlay={uci => { const e = (g.out.get(curId) ?? []).find(x => x.u === uci); if (e) void select(e.t, curId) }} />}
           {others.length > 0 && (
             <section className="card">
               <h2>⇄ Other ways to get here</h2>

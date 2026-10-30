@@ -11,6 +11,8 @@ import { loadOpenings, nameOf, children as openingChildren, cnt, type OGraph } f
 import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree, type TNode } from '../lib/pgnTree'
 import { mastersFor, type MasterInfo, type MasterRow } from '../lib/masters'
 import { pieceCount, probeTablebase, TB_TEXT, type TbResult } from '../lib/tablebase'
+import { LABEL_RULES, moveLabel, type MoveLabel } from '../lib/moveLabel'
+import { boardToPng } from '../lib/boardImage'
 
 const epdOf = (fen: string) => fen.split(' ').slice(0, 4).join(' ')
 const cloneTree = (t: Tree): Tree => ({ ...t, nodes: t.nodes.map(n => ({ ...n, kids: [...n.kids] })) })
@@ -71,6 +73,10 @@ export function Analysis() {
   const [evals, setEvals] = useState<Record<string, number>>({}) // epd -> centipawns, White's point of view
   const [bests, setBests] = useState<Record<string, string>>({}) // epd -> the engine's preferred move (uci) in that position
   const [batch, setBatch] = useState<{ done: number; total: number } | null>(null)
+  const [gaps, setGaps] = useState<Record<string, number>>({}) // epd -> best minus second-best line, centipawns from the mover's view (only when two lines were searched)
+  const [helpOpen, setHelpOpen] = useState(false)
+  const helpRef = useRef<HTMLDialogElement>(null)
+  const moreRef = useRef<HTMLDetailsElement>(null)
   const cancelBatch = useRef(false)
   const [retry, setRetry] = useState<{ id: number; verdict: string | null } | null>(null)
   const [promo, setPromo] = useState<{ from: string; to: string } | null>(null)
@@ -102,8 +108,9 @@ export function Analysis() {
     try { playSan(new Chess(fen).move({ from, to, promotion }).san) } catch { /* illegal: the board only offers legal moves */ }
   }, [fen, playSan])
   const playUci = (uci: string) => play(uci.slice(0, 2), uci.slice(2, 4), uci[4])
-  function onBoardMove(from: string, to: string) {
+  function onBoardMove(from: string, to: string, promotion?: string) {
     if (retry) { void tryRetry(from, to); return }
+    if (promotion) { play(from, to, promotion); return }
     const piece = chess.get(from as Square)
     if (piece?.type === 'p' && (to[1] === '8' || to[1] === '1')) setPromo({ from, to })
     else play(from, to)
@@ -135,6 +142,7 @@ export function Analysis() {
       else if (e.key === 'ArrowUp' || e.key === 'Home') { go('start'); e.preventDefault() }
       else if (e.key === 'ArrowDown' || e.key === 'End') { go('end'); e.preventDefault() }
       else if (e.key === 'f') setFlip(f => !f)
+      else if (e.key === '?') { setHelpOpen(true); e.preventDefault() }
     }
     window.addEventListener('keydown', h)
     return () => window.removeEventListener('keydown', h)
@@ -177,6 +185,9 @@ export function Analysis() {
         if (r === null) { resetEngine(); setThinking(false); setNote('The engine took too long and was restarted. Lower the depth.'); return }
         setLines(r); setLiveDepth(r[0]?.depth ?? d)
         if (r[0]) { setEvals(e => ({ ...e, [epdOf(fen)]: toCp(r![0], whiteToMove) })); setBests(b => ({ ...b, [epdOf(fen)]: r![0].pv[0] })) }
+        const gapKey = epdOf(fen)
+        if (r[0] && r[1]) { const g = (whiteToMove ? 1 : -1) * (toCp(r[0], true) - toCp(r[1], true)); setGaps(x => ({ ...x, [gapKey]: g })) }
+        else setGaps(x => { if (!(gapKey in x)) return x; const rest = { ...x }; delete rest[gapKey]; return rest }) // fewer than two lines: no second-best, so no stale gap
       }
       if (threat && !chess.inCheck()) {
         // the opponent's best move if it were their turn: a "null move" search
@@ -258,6 +269,14 @@ export function Analysis() {
     if (!u || u === node.uci) return null
     try { return { uci: u, san: new Chess(pf).move({ from: u.slice(0, 2), to: u.slice(2, 4), promotion: u[4] }).san } } catch { return null }
   })()
+  /** Best / Book / Only move for the move that led to node `id`, by the rule in lib/moveLabel.ts; null when the data is not there. */
+  const labelOf = (id: number): MoveLabel | null => {
+    const n = tree.nodes[id]
+    if (n.parent === null || !n.uci) return null
+    const pk = epdOf(tree.nodes[n.parent].fen)
+    return moveLabel({ played: n.uci, best: bests[pk], gapCp: gaps[pk], inBook: epdToNode.has(epdOf(n.fen)) })
+  }
+  const labelTag = (id: number) => { const lb = labelOf(id); return lb ? <span className={`mvlabel lb-${lb === 'Only move' ? 'only' : lb.toLowerCase()}`} title={LABEL_RULES}>{lb}</span> : null }
   /** Learn from your mistakes: go to the position before a mistake and ask for a better move than the one played. */
   function startRetry(id: number) {
     const n = tree.nodes[id]; if (n.parent === null) return
@@ -341,6 +360,25 @@ export function Analysis() {
     const a = document.createElement('a'); a.href = url; a.download = 'analysis.pgn'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
   }
 
+  // ---- save the board as a PNG (plain board and pieces only)
+  async function saveImage() {
+    const blob = await boardToPng(fen, flip, document).catch(() => null)
+    if (!blob) { setMsg('The board image could not be made here.'); return }
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a'); a.href = url; a.download = 'board.png'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000)
+    setMsg('Board image saved.')
+  }
+  useEffect(() => {
+    const d = helpRef.current; if (!d) return
+    if (helpOpen && !d.open) d.showModal()
+    if (!helpOpen && d.open) d.close()
+  }, [helpOpen])
+  useEffect(() => {
+    const close = (e: MouseEvent) => { const m = moreRef.current; if (m?.open && !m.contains(e.target as Node)) m.open = false }
+    document.addEventListener('mousedown', close)
+    return () => document.removeEventListener('mousedown', close)
+  }, [])
+
   // ---- board editor
   function openEditor() {
     const f = fen.split(' ')
@@ -390,7 +428,7 @@ export function Analysis() {
       const manual = n.nag ? NAG_SYMBOL[n.nag] ?? '' : ''
       const shown = manual || mk
       const cid: number = id
-      out.push(<span key={id} className="mv">{label && <span className="mvnum">{label}</span>}<button type="button" className={`mvbtn${id === cur ? ' on' : ''}${shown ? ' m' + shown.length : ''}${shown && shown[0] === '!' ? ' good' : ''}`} onClick={() => setCur(cid)} aria-current={id === cur ? 'true' : undefined}>{n.san}{shown}</button>{n.comment && <span className="mvcomment">{n.comment}</span>}</span>)
+      out.push(<span key={id} className="mv">{label && <span className="mvnum">{label}</span>}<button type="button" className={`mvbtn${id === cur ? ' on' : ''}${shown ? ' m' + shown.length : ''}${shown && shown[0] === '!' ? ' good' : ''}`} onClick={() => setCur(cid)} aria-current={id === cur ? 'true' : undefined}>{n.san}{shown}</button>{labelTag(cid)}{n.comment && <span className="mvcomment">{n.comment}</span>}</span>)
       first = !!n.comment
       const par = tree.nodes[n.parent ?? 0]
       if (par.kids[0] === id) for (const a of par.kids.slice(1)) { out.push(<span key={`v${a}`} className="variation">({renderLine(a)})</span>); first = true }
@@ -455,8 +493,15 @@ export function Analysis() {
                 <button type="button" onClick={openEditor}>Edit board</button>
                 <button type="button" onClick={deleteFromHere} disabled={cur === 0} title="Delete this move and everything after it">Delete from here</button>
                 <button type="button" onClick={promoteVariation} disabled={node.parent === null || tree.nodes[node.parent].kids[0] === cur} title="Make this line the main line">Make main line</button>
+                <details className="boardmore" ref={moreRef}>
+                  <summary>More</summary>
+                  <div className="boardmorelist">
+                    <button type="button" onClick={() => { setHelpOpen(true); if (moreRef.current) moreRef.current.open = false }}>Keyboard shortcuts</button>
+                    <button type="button" onClick={() => { if (moreRef.current) moreRef.current.open = false; void saveImage() }}>Save board as image</button>
+                  </div>
+                </details>
               </div>
-              <p className="small muted">Arrow keys move through the game, F flips the board. The control map button under the board shows who controls each square. <Link to={`/play?fen=${encodeURIComponent(fen)}`}>Play on from here against the computer</Link>.</p>
+              <p className="small muted">Arrow keys move through the game, F flips the board, ? lists the shortcuts. The control map button under the board shows who controls each square. <Link to={`/play?fen=${encodeURIComponent(fen)}`}>Play on from here against the computer</Link>.</p>
             </>
           )}
         </div>
@@ -535,6 +580,7 @@ export function Analysis() {
             <div className="sectionhead"><h2>Moves</h2>
               {batch ? <button type="button" onClick={() => { cancelBatch.current = true }}>Stop ({batch.done}/{batch.total})</button>
                 : <button type="button" onClick={() => void analyseGame()} disabled={mainline.length < 2} title="Evaluate every position of the main line at depth 12">Analyse whole game</button>}</div>
+            <details className="small"><summary>What the move labels mean</summary><p className="small muted">{LABEL_RULES}</p></details>
             {moveList.length === 0 ? <p className="muted small">No moves yet. Play on the board, or load a game below.</p> : <div className="movelist">{moveList}</div>}
             {(marks.white !== null || marks.black !== null) && (
               <>
@@ -566,7 +612,7 @@ export function Analysis() {
 
           {cur !== 0 && (
             <section className="card" aria-label="Annotate">
-              <h2>Annotate {node.san}</h2>
+              <h2>Annotate {node.san}{labelTag(cur)}</h2>
               <div className="row filters" role="group" aria-label="Move mark">
                 {(['!', '?', '!!', '??', '!?', '?!'] as const).map(s => <button key={s} type="button" className={node.nag === SYMBOL_NAG[s] ? 'chip on' : 'chip'} aria-pressed={node.nag === SYMBOL_NAG[s]} onClick={() => annotate({ nag: node.nag === SYMBOL_NAG[s] ? undefined : SYMBOL_NAG[s] })}>{s}</button>)}
               </div>
@@ -600,6 +646,20 @@ export function Analysis() {
           </section>
         </div>
       </div>
+      <dialog ref={helpRef} className="helpdialog" aria-label="Keyboard shortcuts" onClose={() => setHelpOpen(false)}>
+        <h2>Keyboard shortcuts</h2>
+        <dl className="shortcuts">
+          <dt><kbd>←</kbd></dt><dd>Previous move</dd>
+          <dt><kbd>→</kbd></dt><dd>Next move</dd>
+          <dt><kbd>↑</kbd> or <kbd>Home</kbd></dt><dd>Go to the start</dd>
+          <dt><kbd>↓</kbd> or <kbd>End</kbd></dt><dd>Go to the end</dd>
+          <dt><kbd>F</kbd></dt><dd>Flip the board</dd>
+          <dt><kbd>?</kbd></dt><dd>Show this list</dd>
+          <dt><kbd>Esc</kbd></dt><dd>Close this list</dd>
+        </dl>
+        <p className="small muted">The keys do not work while you type in a box or while the board editor is open.</p>
+        <div className="row"><button type="button" className="primary" onClick={() => setHelpOpen(false)}>Close</button></div>
+      </dialog>
     </main>
   )
 }

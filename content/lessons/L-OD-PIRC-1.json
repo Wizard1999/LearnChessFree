@@ -1,0 +1,373 @@
+{
+  "id": "L-OD-PIRC-1",
+  "course": "opening-deep-dives",
+  "title": "Pirc Defence: let White build the centre, then strike at it",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "POS.STRUCTURE.CHAIN",
+    "POS.BREAKS",
+    "OPN.PRINCIPLES"
+  ],
+  "minutes": 14,
+  "outcomes": [
+    "Names the Classical (4.Nf3), Austrian Attack (4.f4) and Byrne (4.Bg5) branches by their move orders",
+    "Finds Black's pawn breaks against d4 (...c5, ...e5) and White's matching plans (keep the centre, e5 push, quiet set-up)",
+    "Tells when ...e5 is covered by the f4 pawn and when ...c5 is a poor choice (a checked pair of quiet positions)",
+    "Reads game counts from master and online data as results, not evaluations"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**The Pirc Defence** starts 1.e4 d6 2.d4 Nf6 3.Nc3 g6. Black lets White build a centre of pawns on e4 and d4, then attacks it from the sides: the bishop on g7 and pawn breaks such as ...c5 and ...e5 (breaks are taught in the breaks lesson).\nOur opening data names the next move: 4.Nf3 is the **Classical Variation**, 4.f4 the **Austrian Attack**, 4.Bg5 the **Byrne Variation**."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "The Pirc Defence, Classical Variation: step through the first eleven moves. Other move orders exist; this line shows the set-up.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White takes space with the e-pawn."
+        },
+        {
+          "move": "d7d6",
+          "say": "Black does not contest the centre with ...d5."
+        },
+        {
+          "move": "d2d4",
+          "say": "White now has pawns on e4 and d4: a big centre."
+        },
+        {
+          "move": "g8f6",
+          "say": "The knight attacks the e4 pawn."
+        },
+        {
+          "move": "b1c3",
+          "say": "A knight defends e4."
+        },
+        {
+          "move": "g7g6",
+          "say": "Black prepares to fianchetto the bishop."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops; our opening data calls this the Classical Variation."
+        },
+        {
+          "move": "f8g7",
+          "say": "The fianchettoed bishop stands on g7, behind its knight."
+        },
+        {
+          "move": "f1e2",
+          "say": "White develops the last minor piece on the kingside."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles. Now think: which pawn could strike at d4?"
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles too. Black to move."
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e4",
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e2e4"
+          },
+          "statement": "1.e4 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "d7d6",
+              "d2d4",
+              "g8f6"
+            ]
+          },
+          "statement": "After 2...Nf6 one black piece attacks e4."
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "c3",
+            "includes": [
+              "e4"
+            ],
+            "after_moves": [
+              "e2e4",
+              "d7d6",
+              "d2d4",
+              "g8f6",
+              "b1c3"
+            ]
+          },
+          "statement": "After 3.Nc3 the knight on c3 defends e4."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "g7",
+            "piece": "b",
+            "after_moves": [
+              "e2e4",
+              "d7d6",
+              "d2d4",
+              "g8f6",
+              "b1c3",
+              "g7g6",
+              "g1f3",
+              "f8g7"
+            ]
+          },
+          "statement": "After 4...Bg7 the black bishop stands on g7."
+        },
+        {
+          "id": "C5",
+          "type": "piece_on",
+          "params": {
+            "square": "f8",
+            "piece": "r",
+            "after_moves": [
+              "e2e4",
+              "d7d6",
+              "d2d4",
+              "g8f6",
+              "b1c3",
+              "g7g6",
+              "g1f3",
+              "f8g7",
+              "f1e2",
+              "e8g8"
+            ]
+          },
+          "statement": "After 5...O-O a black rook stands on f8."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you see numbers: in top-level games (both players rated 2,500 or more) that reached 1.e4 d6 2.d4 Nf6 3.Nc3 g6, which fourth move for White was played most often?",
+      "fields": [
+        {
+          "id": "fourth",
+          "label": "My guess:",
+          "options": [
+            "4.Nf3",
+            "4.Be3",
+            "4.f4",
+            "4.Bg5"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Results of games.** Our master set (329,379 games, both players 2,500+) lists 1,090 games that continued 1.e4 d6 2.d4 Nf6 3.Nc3 g6 with a common fourth move (rarer moves are not shipped: a floor). Fourth moves: Nf3 in 296, Be3 in 289, f4 in 273, Bg5 in 99, g3 in 40. After 4.f4: 119 White wins, 95 draws, 59 Black wins.\nOnline (Lichess, September 2026, 1900-2100 band, 3,069 games at this position): Nf3 in 1,177, f4 in 580, Bg5 in 450, Be3 in 376."
+    },
+    {
+      "type": "reflect",
+      "kind": "evidence",
+      "prompt": "The three most common fourth moves in the master set are within 23 games of each other. Does that show which of them is best? In one sentence: what do the counts show, and what do they not show?"
+    },
+    {
+      "type": "card",
+      "text": "**Black's plan (rule of thumb).** Castle, keep the bishop on g7 aiming at the centre, and strike at d4 with a pawn: ...e5 or ...c5. Each break attacks d4 from a different side. Before you pick one, look at White's pawns and pieces: a break can be covered. Find a break for Black."
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-1"
+    },
+    {
+      "type": "card",
+      "text": "**White's plans (rule of thumb).** Two common set-ups in our data. **Austrian:** pawns on e4, d4 and f4; develop with Nf3 and a bishop, and keep e5 as a space-gaining push. **Quiet (Classical):** Be2, castle, then slow moves. In both, the centre pawns are the asset to keep. Step through the Austrian, then find White's move."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/ppp1pp1p/3p1np1/8/3PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 4",
+      "caption": "The Austrian Attack: 4.f4. White adds a third centre pawn; step through to Black's strike.",
+      "line": [
+        {
+          "move": "f2f4",
+          "say": "A third pawn joins the centre: e4, d4 and f4."
+        },
+        {
+          "move": "f8g7",
+          "say": "The bishop takes the fianchetto square again."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops and adds a defender of d4."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles."
+        },
+        {
+          "move": "f1e2",
+          "say": "White develops the bishop and keeps the centre pawns where they are."
+        },
+        {
+          "move": "c7c5",
+          "say": "Black strikes at d4 with the c-pawn."
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e4",
+        "f4",
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f2f4"
+          },
+          "statement": "4.f4 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f4",
+            "includes": [
+              "e5"
+            ],
+            "after_moves": [
+              "f2f4"
+            ]
+          },
+          "statement": "After 4.f4 the pawn on f4 attacks e5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "f2f4",
+              "f8g7",
+              "g1f3"
+            ]
+          },
+          "statement": "After 5.Nf3 two white pieces defend d4."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "f2f4",
+              "f8g7",
+              "g1f3",
+              "e8g8",
+              "f1e2",
+              "c7c5"
+            ]
+          },
+          "statement": "After 6...c5 one black piece attacks d4 (the c-pawn)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-3"
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-2"
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-4"
+    },
+    {
+      "type": "card",
+      "text": "**When these hold (rule of thumb).** The f4 pawn attacks e5, so in the checked Austrian position ...e5 is rated at least a pawn worse and ...c5 is the engine's first choice. In the quiet Classical, c5 is the first choice after h3 and rated below e5 after Be3 at depth 16, by a small margin. **Question to ask:** which break is covered, and what changed since last time? Check the position first."
+    },
+    {
+      "type": "contrast",
+      "title": "One quiet move changes whether c5 works",
+      "prompt": "In all three positions Black has castled after 1.e4 d6 2.d4 Nf6 3.Nc3 g6 4.Nf3 Bg7 5.Be2, and White has played a sixth move: h3, Be3 or a3. Black considers c5 or e5. For each, predict which is rated higher, then check.",
+      "working": "IODpirc-5",
+      "failing": "IODpirc-6",
+      "irrelevant": "IODpirc-7"
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODpirc-12",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. Before you chose a move, what did you check? Write one line for each side. Then, if you like, open the Openings explorer at 1.e4 d6 2.d4 Nf6 3.Nc3 g6 and switch the rating bands (it shows online games only; the master counts above are not in it).",
+      "fields": [
+        {
+          "id": "white",
+          "label": "As White: what I checked before pushing a pawn"
+        },
+        {
+          "id": "black",
+          "label": "As Black: what I checked before choosing a break"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "Move orders and names: app/public/openings (core.json: Pirc Defense B07, Classical Variation B08, Austrian Attack B09, Byrne Variation B07; visit counts from 4,752,291 online games, September 2026, band 1900-2100 quoted by name) [V]",
+    "Masters statistics: app/public/masters/stats.json (329,379 games, both players 2500 or more, built 2026-10-29); counts quoted exactly from the tree rows at the position after 3...g6 (1,090 games; the sum of the listed next moves; rarer moves are dropped) [V]",
+    "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-pirc.json and this lesson's board claims [V]",
+    "Positions: replayed from the opening move sequences with python-chess; see provenance in content/items/lesson-od-pirc.json",
+    "Core skills used: content/skills/OPN.STRUCT.json, POS.BREAKS.json, POS.STRUCTURE.CHAIN.json, OPN.PRINCIPLES.json; docs/course-families.md (course design)"
+  ]
+}

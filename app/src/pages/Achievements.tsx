@@ -14,7 +14,7 @@ export function badgesFor(missions: Mission[], correctRun: number): Badge[] {
     if (live.every(n => n.level >= 2)) out.push({ id: `${m.strand}:found`, title: `Foundations: ${m.name}`, detail: `All ${live.length} skills with exercises are at Level two or above.` })
     if (live.every(n => n.level === 4 && !n.due)) out.push({ id: `${m.strand}:done`, title: `Section complete: ${m.name}`, detail: `All ${live.length} skills with exercises are Mastered and none is due for a refresher.` })
   }
-  if (correctRun >= 20) out.push({ id: 'run20', title: '20 in a row', detail: 'Twenty unlabelled first attempts in a row, right and without hints.' })
+  if (correctRun >= 20) out.push({ id: 'run20', title: '20 in a row', detail: 'Twenty unlabeled first attempts in a row, right and without hints.' })
   return out
 }
 
@@ -38,7 +38,7 @@ export function Achievements() {
     }).join('')
     const w = window.open('', '_blank')
     if (!w) return
-    w.document.write(`<!doctype html><meta charset="utf-8"><title>Certificate</title><style>body{font:16px Georgia,serif;max-width:720px;margin:40px auto;padding:0 20px}h1{text-align:center}td{padding:4px 12px;border-bottom:1px solid #ccc}</style><h1>Certificate of completion</h1><p style="text-align:center">${title}</p><p style="text-align:center">Dated ${new Date().toLocaleDateString()}. Every skill below was shown by answering unlabelled exercises, and none was due for a refresher on this date.</p><table>${rows}</table><p><button onclick="print()">Print</button></p>`)
+    w.document.write(`<!doctype html><meta charset="utf-8"><title>Certificate</title><style>body{font:16px Georgia,serif;max-width:720px;margin:40px auto;padding:0 20px}h1{text-align:center}td{padding:4px 12px;border-bottom:1px solid #ccc}</style><h1>Certificate of completion</h1><p style="text-align:center">${title}</p><p style="text-align:center">Dated ${new Date().toLocaleDateString()}. Every skill below was shown by answering unlabeled exercises, and none was due for a refresher on this date.</p><table>${rows}</table><p><button onclick="print()">Print</button></p>`)
     w.document.close()
   }
 

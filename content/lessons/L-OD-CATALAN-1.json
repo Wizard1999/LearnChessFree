@@ -1,0 +1,362 @@
+{
+ "id": "L-OD-CATALAN-1",
+ "course": "opening-deep-dives",
+ "title": "Catalan Opening: the long diagonal and the open and closed plans",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "POS.BISHOPS",
+  "POS.BREAKS",
+  "POS.PLAN"
+ ],
+ "minutes": 12,
+ "outcomes": [
+  "Names the move order of the Catalan Opening (1.d4 Nf6 2.c4 e6 3.g3 d5 4.Bg2) and the two branches that Black's choice on c4 creates",
+  "Opens the bishop's long diagonal with a knight move only after checking that the b7 square and the rest of the line are empty",
+  "Before taking a pawn on c4, counts the white pieces that attack c4, and finds that a knight on d2 changes the answer",
+  "In the closed branch, counts the defenders of the e4 break for White and finds a pawn move that frees the bishop on c8 for Black"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**Catalan Opening** (ECO E00 to E09, the standard codes; the name comes from our opening data): 1.d4 Nf6 2.c4 e6 3.g3 d5 4.Bg2. The bishop on g2 looks along the long diagonal towards d5. In our online data (4,752,291 games, September 2026, all 8 rating bands) 1,530 games reach 3.g3 and 1,241 reach 4.Bg2. Black's choice between taking the pawn on c4 and keeping the pawn on d5 splits the opening into *open* and *closed* plans. This lesson shows one of each."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+   "caption": "Position after 1.d4 Nf6 2.c4 e6, White to move. Step through one line of the open branch. Other moves are possible; this line shows the bishop's diagonal and the fight for c4.",
+   "line": [
+    {
+     "move": "g2g3",
+     "say": "g3 prepares the bishop's move to g2."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black puts a pawn on d5, the square the bishop will aim at."
+    },
+    {
+     "move": "f1g2",
+     "say": "Bg2: the bishop now attacks d5 along the long diagonal."
+    },
+    {
+     "move": "f8e7",
+     "say": "Be7 develops the bishop and prepares to castle."
+    },
+    {
+     "move": "g1f3",
+     "say": "Nf3 develops the knight, which now stands in front of the bishop on its own diagonal."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles kingside."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles kingside."
+    },
+    {
+     "move": "d5c4",
+     "say": "Black takes the pawn on c4. No white piece attacks it yet."
+    },
+    {
+     "move": "d1c2",
+     "say": "Qc2 attacks the pawn on c4."
+    },
+    {
+     "move": "a7a6",
+     "say": "a6 prepares b5 to hold the pawn."
+    },
+    {
+     "move": "c2c4",
+     "say": "Qxc4 takes the pawn back."
+    },
+    {
+     "move": "b7b5",
+     "say": "b5 attacks the queen."
+    },
+    {
+     "move": "c4c2",
+     "say": "The queen retreats to c2."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g2",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "g2",
+    "c4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g2",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2"
+      ]
+     },
+     "statement": "After Bg2 the bishop attacks d5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g2",
+      "includes": [
+       "f3"
+      ],
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3"
+      ]
+     },
+     "statement": "After Nf3 the bishop on g2 defends the knight on f3, which stands on its diagonal."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8"
+      ]
+     },
+     "statement": "After O-O the black king is on the kingside."
+    },
+    {
+     "id": "C4",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8",
+       "e1g1"
+      ]
+     },
+     "statement": "After O-O the white king is on the kingside."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 0,
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8",
+       "e1g1",
+       "d5c4"
+      ]
+     },
+     "statement": "After dxc4 no white piece attacks c4."
+    },
+    {
+     "id": "C6",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c2",
+      "includes": [
+       "c4"
+      ],
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8",
+       "e1g1",
+       "d5c4",
+       "d1c2"
+      ]
+     },
+     "statement": "After Qc2 the queen attacks c4."
+    },
+    {
+     "id": "C7",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "Q",
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8",
+       "e1g1",
+       "d5c4",
+       "d1c2",
+       "a7a6",
+       "c2c4"
+      ]
+     },
+     "statement": "After Qxc4 the white queen stands on c4."
+    },
+    {
+     "id": "C8",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b5",
+      "includes": [
+       "c4"
+      ],
+      "after_moves": [
+       "g2g3",
+       "d7d5",
+       "f1g2",
+       "f8e7",
+       "g1f3",
+       "e8g8",
+       "e1g1",
+       "d5c4",
+       "d1c2",
+       "a7a6",
+       "c2c4",
+       "b7b5"
+      ]
+     },
+     "statement": "After b5 the pawn attacks the queen on c4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What strong players chose** (results of games, not evaluations). Source: our masters data, 329,379 games, both players rated 2500 or more. After 4.Bg2, Black played Be7 in 563 games, Bb4+ in 532 and dxc4 in 408. After 1.d4 Nf6 2.c4 e6 3.g3 d5 4.Bg2 Be7 5.Nf3 O-O 6.O-O, Black played dxc4 in 2,764 games (White won 678, 1,618 were drawn, Black won 468) and c6 in 466. Samples are small; results also reflect the players."
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-1"
+  },
+  {
+   "type": "card",
+   "text": "**White's two ideas in the open lines (rule of thumb, not a law).** In the next position the engine (depth 16) rates Qc2, Qa4 and Ne5 within 0.4 pawn of its best move, so attacking c4 is one sound idea and opening the diagonal is another. A bishop on g2 attacks a8 only if every square between them is empty. Ask first: what stands between my bishop and a8?"
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-2"
+  },
+  {
+   "type": "card",
+   "text": "**Black's side of the long diagonal (rule of thumb).** In the next position a Black bishop can step onto the diagonal that White's bishop on g2 looks along. The engine (depth 16) names a first choice; check which squares and pieces lie on the diagonal before you move."
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-3"
+  },
+  {
+   "type": "card",
+   "text": "**The closed branch.** After 6.O-O c6 our data names the position *Catalan Opening: Closed* (E06): 849 online games reach it. In the masters data c6 was played in 466 games against 2,764 for dxc4. No pawn has been taken on c4 here. The next two items give one position for each side; the claims are engine claims at depth 16 (within 0.4 pawn of the best move)."
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-4"
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-5"
+  },
+  {
+   "type": "card",
+   "text": "**A typical mistake.** In the open branch after 4...dxc4 5.Nf3 Nc6, our data names a line *Open Defense, Modern Sharp Variation* (40 online games). Before that, White has a tempting pawn move that attacks the knight. The next item tests whether you check what a move costs before you play it."
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-6"
+  },
+  {
+   "type": "contrast",
+   "title": "One piece moves, the plan flips",
+   "prompt": "In all three positions it is Black's move after 6.O-O and Black considers dxc4. The second differs from the first only in where White's queenside knight stands (d2 instead of b1). The third differs from the first only in where Black's light-squared bishop stands (d7 instead of c8). Predict for each whether dxc4 is reasonable, then check.",
+   "working": "IODcatalan-11",
+   "failing": "IODcatalan-12",
+   "irrelevant": "IODcatalan-13"
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODcatalan-10",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.OPN.STRUCT",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Think about the positions you played without hints. Before you chose a move, what did you check? Write one line for each side.",
+   "fields": [
+    {
+     "id": "white",
+     "label": "As White: what I checked before moving the knight or pushing a pawn"
+    },
+    {
+     "id": "black",
+     "label": "As Black: what I checked before taking the pawn or moving a bishop"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Move orders and names: app/public/openings (core.json and chunks; ECO E00 to E09 names; visit counts summed over the 8 rating bands, 4,752,291 online games, September 2026) [V]",
+  "Masters statistics: app/public/masters/stats.json (329,379 games, both players 2500 or more, built 2026-10-29); counts quoted exactly from the tree rows at the positions after 4.Bg2 and after 6.O-O [V]",
+  "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-catalan.json and this lesson's board claims [V]",
+  "Positions: replayed from the opening move sequences with python-chess; the three contrast positions differ by one piece move (see provenance in content/items/lesson-od-catalan.json)",
+  "Core skills used: content/skills/OPN.STRUCT.json, POS.BISHOPS.json, POS.BREAKS.json, POS.PLAN.json; docs/course-families.md (course design)"
+ ]
+}

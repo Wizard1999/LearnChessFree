@@ -10,6 +10,9 @@ import { useAttempts } from '../lib/progress'
 import { sideToMove } from '../lib/play'
 import type { Item, Lesson, LessonStep, ReflectField } from '../types'
 import type { LoopLevel } from '../lib/loop'
+import { ReadAloudBar } from './ReadAloudBar'
+import { useSpokenText } from '../lib/readAloud'
+import { contrastStageLabel, GUESS_LABEL, guessEcho, nextContrastStage, type ContrastGuess, type ContrastStage } from '../lib/contrastStages'
 
 const NO_ITEMS: Item[] = []
 
@@ -126,6 +129,12 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
   // While only the first-visit exercises have arrived, a lesson that needs others (named exercises, or a practice set drawn from a tag)
   // waits for the whole bank rather than start with a different set. (The set is picked only after this check, so it is never picked early.)
   const waiting = !full && steps.some(s => stepItemIds(s).some(id => !content.itemById.has(id)) || (s.type === 'practice' && !practiceReady(s.tags)))
+  // Read aloud (off unless the learner turned it on): a card's title and text, or a plain board's caption. A board with a line is
+  // read by the line player, move by move. Speech stops on every step change and on leaving.
+  const spoken = !restored || waiting || done || !step ? ''
+    : step.type === 'card' ? [step.title, step.text].filter(Boolean).join('. ')
+    : step.type === 'board' && !(step.line && step.line.length > 0) ? step.caption ?? '' : ''
+  useSpokenText(spoken)
   if (!restored) return null
   if (waiting) return <p className="muted">Loading the exercises for this lesson…</p>
 
@@ -145,13 +154,14 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
         <p>You finished <strong>{lesson.title}</strong>.</p>
         {lesson.outcomes && <><p className="small muted">What you should now be able to do:</p><ul>{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></>}
         <p className="muted small">Finishing a lesson only means you have <em>seen</em> the idea. It counts as <strong>reliable</strong> only after you solve fresh positions where nobody names it. Those come back as mixed practice{sk ? ` (skill: ${sk.title})` : ''}.</p>
-        <div className="row"><Link className="button primary" to="/" onClick={onExit}>Back to today</Link><Link className="button" to="/practice">Practise mixed positions</Link></div>
+        <div className="row"><Link className="button primary" to="/" onClick={onExit}>Back to today</Link><Link className="button" to="/practice">Practice mixed positions</Link></div>
       </section>
     )
   }
 
   return (
     <div className="lesson">
+      <ReadAloudBar />
       {resumedAt !== null && i === resumedAt && <p className="small muted">Picked up where you left off. <button type="button" className="link" onClick={() => { setI(0); setResumedAt(null) }}>Start from the beginning</button></p>}
       <div className="progress" aria-label={`Step ${i + 1} of ${steps.length}`}>
         {steps.map((_, k) => <span key={k} className={k < i ? 'dot done' : k === i ? 'dot now' : 'dot'} />)}
@@ -162,7 +172,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       )}
       {step.type === 'board' && (
         step.line && step.line.length > 0
-          ? <section className="card"><LinePlayer fen={step.fen} line={step.line} caption={step.caption} arrows={step.arrows} highlight={step.highlight} />
+          ? <section className="card"><LinePlayer fen={step.fen} line={step.line} caption={step.caption} arrows={step.arrows} highlight={step.highlight} readAloud />
               <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
           : <section className="card"><ChessBoard fen={step.fen} orientation={sideToMove(step.fen)} shapes={(step.arrows ?? []).map(a => ({ from: a.from, to: a.to }))} highlight={step.highlight} controlMap />
               {step.caption && <p className="caption">{step.caption}</p>}
@@ -173,19 +183,26 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
         return it ? <ItemSequence items={[it]} source="lesson" silent={step.silent} askConfidence={step.ask_confidence} loopShown={loopLevel} onComplete={next} /> : <p className="warn">Missing exercise {step.item}.</p>
       })()}
       {step.type === 'practice' && <ItemSequence items={practice} source="lesson" silent={step.silent} askConfidence={step.ask_confidence} loopShown={loopLevel} onComplete={next} intro="Practice set" />}
-      {step.type === 'contrast' && <ContrastStep step={step} onNext={next} />}
+      {step.type === 'contrast' && <ContrastStep key={`${lesson.id}:${i}`} step={step} lessonId={lesson.id} onNext={next} />}
       {step.type === 'reflect' && <ReflectStep step={step} lessonId={lesson.id} onNext={next} />}
     </div>
   )
 }
 
-function ContrastStep({ step, onNext }: { step: Extract<LessonStep, { type: 'contrast' }>; onNext: () => void }) {
+function ContrastStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { type: 'contrast' }>; lessonId: string; onNext: () => void }) {
   const { itemById } = useContent()
   const working = itemById.get(step.working)
   const failing = itemById.get(step.failing)
   const irrelevant = step.irrelevant ? itemById.get(step.irrelevant) : undefined
-  const [stage, setStage] = useState<'working' | 'predict'>('working')
+  const [stage, setStage] = useState<ContrastStage>('predict')
+  const [guess, setGuess] = useState<ContrastGuess | null>(null)
   if (!working || !failing) return <p className="warn">Missing contrast items.</p>
+  const hasIrr = !!irrelevant
+  const advance = () => { const n = nextContrastStage(stage, hasIrr); if (n) setStage(n); else onNext() }
+  async function startWorking() {
+    if (guess) { try { await db.reflections.add({ kind: 'contrast-predict', lessonId, data: { guess, prompt: step.prompt ?? '' }, ts: Date.now() }) } catch { /* ignore */ } }
+    advance()
+  }
   // The arrow shows the move that works. For a find-the-move item that is its answer; for other tasks no single move is "the idea", and the first
   // claim carrying a move can be one that loses (a review caught arrows on a losing king move), so draw nothing.
   const claimMove = (working.claims.find(c => typeof (c.params as { move?: string }).move === 'string')?.params as { move?: string } | undefined)?.move
@@ -193,16 +210,26 @@ function ContrastStep({ step, onNext }: { step: Extract<LessonStep, { type: 'con
   return (
     <section className="card contrast">
       <h3>{step.title ?? 'Same idea, one change'}</h3>
-      {stage === 'working' ? (
+      <p className="muted small contrast-stage">{contrastStageLabel(stage)}</p>
+      {stage === 'predict' && (
         <>
+          <p>{step.prompt ?? 'Here is an idea that works in one position. Will it still work after a small change?'}</p>
+          <div className="options" role="group" aria-label="Your prediction">
+            {(['works', 'fails', 'unsure'] as ContrastGuess[]).map(g => <button type="button" key={g} className={guess === g ? 'chip on' : 'chip'} aria-pressed={guess === g} onClick={() => setGuess(g)}>{GUESS_LABEL[g]}</button>)}
+          </div>
+          <div className="row"><button type="button" className="primary" onClick={() => void startWorking()}>{guess ? 'Show where it works' : 'Skip the guess and look'}</button></div>
+        </>
+      )}
+      {stage === 'working' && (
+        <>
+          <p className="muted small">{guessEcho(guess)}</p>
           <p>Here the idea <strong>works</strong>.{working.task === 'predict_outcome' && working.answer.outcome ? <> The result: <strong>{working.answer.outcome}</strong>.</> : null}</p>
           <ChessBoard fen={working.fen} orientation={sideToMove(working.fen)} shapes={wMove ? [{ from: wMove.slice(0, 2), to: wMove.slice(2, 4) }] : []} label="The working position" />
-          <div className="row"><button type="button" className="primary" onClick={() => setStage('predict')}>Now change one thing</button></div>
+          <div className="row"><button type="button" className="primary" onClick={advance}>Now change one thing</button></div>
         </>
-      ) : (
-        <ItemSequence items={[failing, ...(irrelevant ? [irrelevant] : [])]} source="lesson" intro="Predict first" silent={step.silent} askConfidence={step.ask_confidence} onComplete={onNext} />
       )}
-      {stage === 'predict' && step.prompt && <p className="muted small">{step.prompt}</p>}
+      {stage === 'failing' && <ItemSequence items={[failing]} source="lesson" intro="The changed position" silent={step.silent} askConfidence={step.ask_confidence} onComplete={advance} />}
+      {stage === 'irrelevant' && irrelevant && <ItemSequence items={[irrelevant]} source="lesson" intro="A change that should not matter" silent={step.silent} askConfidence={step.ask_confidence} onComplete={advance} />}
     </section>
   )
 }

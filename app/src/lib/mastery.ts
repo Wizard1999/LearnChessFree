@@ -72,7 +72,7 @@ export interface Mastery {
   b: number
   mean: number
   pReliable: number
-  unlabeledWeight: number // weighted evidence at cue >= 3 (at any cue where the depth has no unlabelled exercise: see cuedOnly)
+  unlabeledWeight: number // weighted evidence at cue >= 3 (at any cue where the depth has no unlabeled exercise: see cuedOnly)
   /** The depth has no exercise at cue 3 or above, so evidence at the cue it has counts in full and "reliable" means reliable when the idea is named or cued. */
   cuedOnly: boolean
   n: number // independent first attempts counted

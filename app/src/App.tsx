@@ -34,6 +34,7 @@ export default function App() {
   const moreRef = useRef<HTMLDetailsElement>(null)
   return (
     <ContentProvider>
+      <a href="#main" className="skiplink" onClick={e => { e.preventDefault(); const m = document.querySelector('main'); if (m) { m.setAttribute('tabindex', '-1'); m.focus({ preventScroll: false }) } }}>Skip to main content</a>
       <header className="top">
         <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline}</span></div>
         <nav aria-label="Main">
@@ -49,6 +50,7 @@ export default function App() {
       <ErrorBoundary resetKey={loc.pathname}>
       <Routes>
         <Route path="/" element={<Today />} />
+        <Route path="/today" element={<Navigate to="/" replace />} />
         <Route path="/course" element={<RequireFullContent><Course /></RequireFullContent>} />
         <Route path="/lesson/:id" element={<LessonPage />} />
         <Route path="/practice" element={<RequireFullContent><Practice /></RequireFullContent>} />
