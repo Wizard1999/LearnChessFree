@@ -107,11 +107,24 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Zero-friction start: first visit goes straight into the first lesson, staged content loading, auto-save with a storage check, resume mid-lesson (decision D19)
 - [x] Analysis page (More → Analysis): move tree with variations, eval bar and graph, clickable engine lines, whole-game analysis with accuracy, opening names, PGN/FEN import and export, saved games, control map. Not yet: board editor, tablebase lookup, engine-vs-you training from a position
 
+## Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37)
+- [x] Build the recommended path in 8 stages, hand-ordered for the first three, topologically checked against prerequisites (`tools/build_path.py`, `content/path.json`)
+- [x] Lesson list defaults to the path; subject sections kept as a reference view
+- [x] Fix the named errors: piece-value arithmetic wording, fork intro, "loose" definitions, pawn-shield wording, square-naming lesson, bishop-before-rook reference, safety habit examines the intended move
+- [~] Backward-reference and over-broad-claim audit of all lessons in path order (text-only edits; structural problems listed for follow-up)
+- [ ] Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape
+- [ ] Make reflection specific and occasional (name the missed defender, reconstruct the mistaken line) instead of repeated confidence ratings
+- [ ] Separate discovery from assessment: later checks mix unrelated positions, no theme label, include quiet moves and declined tactics
+- [ ] Distribute the thinking loop (V2 to V6) so each procedure is introduced when a problem shows its use; confirm with the path
+- [ ] Pilot the first stages with true beginners and record where they need outside explanations (needs people; gate G1)
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
 - [x] Side panels: progress and challenge dock on the left, the selected skill's information on the right, fixed-width centre, bottom sheet on narrow screens
 - [ ] Lesson links drawn as a second edge layer; keyboard route between connected skills; clicking a lesson in the list highlights its node
+- [x] Map as main workspace: full-width canvas, compact section row, stronger sectors, "Your next step" marker, labels that thin with zoom, camera remembered across lessons, four-question skill panel (D38)
+- [ ] Map: milestone rings with ability labels, broad region grouping, corner minimap, search, back-to-previous-view, connection explanations, mobile list synced with the map
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
 - [x] Control map toggle on boards: per-square counts and blue/orange tint, in lesson boards, move-by-move steps, exercise answers, game review and the Contrast lab (off in tests and in Play on purpose)

@@ -604,3 +604,39 @@ details.practiceopts { margin-top: 1rem; } details.practiceopts > summary { curs
 .controlmap.inspecting, .controlmap.inspecting .ctl { pointer-events: auto; }
 .controlbar { display: flex; flex-wrap: wrap; gap: 0.5rem 0.6rem; }
 .controlbar .controldetail { flex: 1 1 100%; }
+
+/* ===== Map as the main workspace (review of 30 Oct 2026, decision D38) =====
+   The map page uses the whole window: a compact toolbar, a map that fills the height, and the two panels floating over it from the edges.
+   The map itself never moves or resizes when a panel opens (the panels overlay it). */
+main.mappage.curriculum, main.mappage.curriculum.dockopen {
+  width: auto; margin-left: 0.75rem; margin-right: 0.75rem; max-width: none; padding-top: 0.5rem; padding-bottom: 0.75rem;
+}
+.mappage .sectionbar { flex-wrap: nowrap; overflow-x: auto; margin: 0 0 0.4rem; padding-bottom: 0.25rem; gap: 0.4rem; scrollbar-width: thin; align-items: center; }
+.mappage .sectionbar .chip { white-space: nowrap; flex: 0 0 auto; }
+.mappage .sectionlabel { flex: 0 0 auto; flex-basis: auto; }
+.mappage .tabs, .mappage .viewtabs { margin-bottom: 0.4rem; }
+.mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100vh - 9.5rem); min-height: 560px; }
+@media (min-width: 1300px) {
+  /* the docks (fixed, in the side gutters) now overlay the map: keep them clear of the header and above the map */
+  .mappage ~ .sidechrome .dock, .mappage .dock { z-index: 30; }
+}
+/* stronger, more inviting geography: visible sector edges and headings, clearer circles */
+.wedgebg { opacity: 0.2; stroke: var(--text-secondary); stroke-opacity: 0.55; stroke-width: 2; }
+.mapwedge:nth-child(even) .wedgebg { opacity: 0.15; }
+.wedgelabel { font-size: 42px; fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 10px; letter-spacing: 0.01em; }
+.mapnode .nodecircle { stroke: var(--text); stroke-opacity: 0.7; stroke-width: 3.5; }
+.mapnode .nodebase { fill: var(--surface); }
+.mapnode.next .nodecircle { stroke: var(--accent); stroke-opacity: 1; stroke-width: 6; }
+.mapnode .nodeglow { opacity: 0.32; }
+.nodelabel { font-size: 22px; font-weight: 600; }
+/* your next step: one ring and one tag on the whole map */
+.maprec .recring { stroke: var(--accent); stroke-width: 7; stroke-dasharray: 14 8; }
+.maprec .recpill { fill: var(--accent); }
+.maprec .rectext { fill: var(--on-accent); font-size: 21px; font-weight: 700; }
+/* selected-skill panel: four questions, one primary action in the same accent as the rest of the site */
+.skilldetail .sdh { font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-secondary); margin: 1.1rem 0 0.3rem; font-weight: 700; }
+.skilldetail .rungs li { margin: 0.2rem 0; }
+.skilldetail .rungs li.got span:first-child { color: var(--success); }
+.skilldetail .linkrow { display: flex; flex-wrap: wrap; gap: 0.2rem 0.7rem; align-items: baseline; }
+.skilldetail .button.primary, .maptip .button.primary, .missionpanel .button.primary, .skilldetail button.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.skilldetail .button.primary:hover, .maptip .button.primary:hover, .missionpanel .button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--on-accent); }

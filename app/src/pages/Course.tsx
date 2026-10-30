@@ -1,5 +1,4 @@
 import { RadialMap } from '../components/RadialMap'
-import { lessonMinutes } from '../lib/lessonTime'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
@@ -152,34 +151,69 @@ export function Course() {
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
   const busy = !!run || (warmOpen && !!mission)
 
+  // what a skill builds on and leads to, read from the prerequisites of its depths
+  const links = (id: string) => {
+    const s0 = content.skillById.get(id); if (!s0) return { from: [] as string[], to: [] as string[] }
+    const from = new Set<string>(), to = new Set<string>()
+    for (const dep of Object.values(s0.depths)) for (const k of dep.prereqs ?? []) { const n = k.slice(0, k.lastIndexOf('.')); if (n !== id && content.skillById.has(n)) from.add(n) }
+    for (const o of content.skills) if (o.id !== id) for (const dep of Object.values(o.depths)) if ((dep.prereqs ?? []).some(k => k.slice(0, k.lastIndexOf('.')) === id)) to.add(o.id)
+    return { from: [...from], to: [...to] }
+  }
+  const skillName = (id: string) => content.skillById.get(id)?.title ?? id
   const detailPanel = (
-    node && sk && !busy && (
+    node && sk && !busy && (() => {
+      const ls = lessonsFor(node.id)
+      const lp = (id: string) => progress?.find(p => p.lessonId === id)
+      const open = ls.find(l => !lp(l.id)?.done)           // the first lesson of this skill not yet finished
+      const started = !!open && (lp(open.id)?.step ?? 0) > 0
+      const cn = links(node.id)
+      const showDepth = node.workingDepth ?? 'D1'
+      const outcome = sk.depths[showDepth]?.outcome ?? sk.depths.D1?.outcome
+      // student-facing names for the evidence levels; each is ticked only when the evidence supports it (the same rule as the map nodes)
+      const rungs: [string, string, boolean][] = [
+        ['Recognise it', 'when the idea is named', node.level >= 2],
+        ['Find it yourself', 'in positions where nobody names it', node.level >= 3],
+        ['Rely on it', 'at the deepest depth, not due for a refresher', node.level >= 4],
+      ]
+      return (
             <section className={`card skilldetail detaildrawer`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
               <h2>{node.title}</h2>
-              <p><span className="blk swatch inline" style={{ ['--fill' as string]: `${FILL[node.level]}%` }} aria-hidden="true" /> <strong>{LEVEL_NAMES[node.level]}</strong>{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}<br /><span className="small muted">{LEVEL_HELP[node.level]}</span></p>
+              <h3 className="sdh">What it lets you do</h3>
+              <p>{outcome}</p>
+              <h3 className="sdh">What you have shown</h3>
+              <ul className="plain rungs">{rungs.map(([name, how, got]) => <li key={name} className={got ? 'got' : ''}><span aria-hidden="true">{got ? '●' : '○'}</span> <strong>{name}</strong> <span className="muted small">{how}{got ? '' : ': not shown yet'}</span></li>)}</ul>
+              <p className="small muted">Using it in your own games is not measured yet. {LEVEL_NAMES[node.level]}{node.due ? ' · a refresher is due' : ''}{node.levelWithAssumed > node.level ? ` · assumed up to ${LEVEL_NAMES[node.levelWithAssumed].toLowerCase()} from your placement or warm-up, not yet shown` : ''}.</p>
               {node.noExercises && <p className="small muted">This skill has no exercises yet, so it can only reach Seen, by finishing its lesson.</p>}
-              {node.cuedTop && <p className="small muted">The deepest exercises for this skill are ones that name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
+              <h3 className="sdh">What to do next</h3>
               <div className="row">
-                {lessonsFor(node.id).map(l => <Link key={l.id} className="button primary" to={`/lesson/${l.id}`}>Open lesson: {l.title}</Link>)}
-              </div>
-              {lessonsFor(node.id).map(l => { const pr = progress?.find(p => p.lessonId === l.id); return (
-                <p key={l.id} className="small">{l.title}: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
-                  {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
-                  {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
-              <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
-                <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
-                  <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
-              <div className="row">
-                {lessonsFor(node.id).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`}>Lesson: {l.title}</Link>)}
-                {node.workingDepth && <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link>}
+                {open ? <Link className="button primary" to={`/lesson/${open.id}`}>{started ? 'Continue' : 'Start'} the lesson: {open.title}</Link>
+                  : node.workingDepth ? <Link className="button primary" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link> : null}
+                {open && node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practise {node.workingDepth}</Link>}
                 {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
               </div>
+              <h3 className="sdh">What it connects to</h3>
+              <p className="small linkrow"><span className="muted">Builds on:</span> {cn.from.length ? cn.from.map(id => <button key={id} type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button>) : <span className="muted">nothing: you can start here</span>}</p>
+              <p className="small linkrow"><span className="muted">Leads to:</span> {cn.to.length ? cn.to.map(id => <button key={id} type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button>) : <span className="muted">no skill after this one yet</span>}</p>
+              <details><summary>Lessons for this skill ({ls.length})</summary>
+                {ls.map(l => { const pr = lp(l.id); return (
+                  <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
+                    {!pr?.done && <><button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
+                    {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
+                {ls.length === 0 && <p className="small muted">No lesson for this skill yet.</p>}
+              </details>
+              <details><summary>Every depth in detail</summary>
+                {node.cuedTop && <p className="small muted">The deepest exercises for this skill name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
+                <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
+                  <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
+                    <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>
+              </details>
               {sk.conditions && sk.conditions.length > 0 && <details><summary>When the idea holds</summary><ul>{sk.conditions.map(c => <li key={c}>{c}</li>)}</ul></details>}
               {sk.contrasts && sk.contrasts.length > 0 && <details><summary>Where it fails or does not apply</summary><ul>{sk.contrasts.map(c => <li key={c}>{c}</li>)}</ul></details>}
               {sk.misconceptions && sk.misconceptions.length > 0 && <details><summary>Common misunderstandings</summary><ul>{sk.misconceptions.map(c => <li key={c}>{c}</li>)}</ul></details>}
             </section>
-          )
+      )
+    })()
   )
   const leftPanel = (
         <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
@@ -323,29 +357,13 @@ export function Course() {
       {tabs}
       <p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p>
 
-      {!busy && (
-        <p className="muted small">
-          {!placement.done ? <>Not sure where to start? <Link to="/placement">Take the placement</Link> (it can be skipped), or open a section and take its warm-up.</>
-            : placement.skipped ? <>You skipped the placement. If the early lessons feel easy, you can <Link to="/placement">take it now</Link>, or take a section's warm-up.</>
-            : <>You took the placement on {new Date(placement.ts).toLocaleDateString()}. You can <Link to="/placement">take it again</Link>.</>}
-        </p>
-      )}
-
-      {next.length > 0 && !busy && (
-        <section className="card">
-          <h2>Continue</h2>
-          <ul className="plain">{next.slice(0, 2).map(l => <li key={l.id}><Link to={`/lesson/${l.id}`}><strong>{l.title}</strong></Link> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {lessonMinutes(l)} min</span></li>)}</ul>
-        </section>
-      )}
-
-
-      <div className="row filters sectionbar" role="group" aria-label="Sections"><span className="small muted sectionlabel">Highlight a section on the map:</span>
+      <div className="row filters sectionbar" role="group" aria-label="Sections"><span className="small muted sectionlabel">Sections:</span>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
       <div className="missiongrid mapgrid">
 
-        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} lessons={content.lessons} lessonProgress={progress ?? []} /></div>
+        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} /></div>
 
       </div>
 

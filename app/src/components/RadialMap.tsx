@@ -5,11 +5,11 @@ import { layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
 import type { Lesson, Skill } from '../types'
 
-interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[] }
+interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null }
 
 /** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress }: Props) {
+export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null }: Props) {
   const layout = useMemo(() => layoutMap(skills), [skills])
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
   const R = layout.radius + 40
@@ -28,7 +28,9 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null) }, 220) }
   const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
   const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
-  const [view, setView] = useState({ x: 0, y: 0, k: 3 })
+  // the camera is remembered for the session, so coming back from a lesson lands where the learner was
+  const [view, setView] = useState(() => { try { const v = JSON.parse(sessionStorage.getItem('map-view') ?? 'null'); if (v && [v.x, v.y, v.k].every(Number.isFinite)) return v as { x: number; y: number; k: number } } catch { /* storage unavailable */ } return { x: 0, y: 0, k: 3 } })
+  useEffect(() => { try { sessionStorage.setItem('map-view', JSON.stringify(view)) } catch { /* storage unavailable */ } }, [view])
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
   const svg = useRef<SVGSVGElement>(null)
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
@@ -92,6 +94,8 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     el.addEventListener('wheel', h, { passive: false })
     return () => el.removeEventListener('wheel', h)
   }, [])
+  // the skill to do next: the one the path recommends, else the earliest skill that is ready and not yet mastered
+  const rec = recommended ?? layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises && (readiness.get(n.id) ?? 0) >= 1 }).sort((a, b) => a.ring - b.ring)[0]?.id ?? null
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
@@ -101,7 +105,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <button type="button" onClick={fit}>Fit all</button>
         <button type="button" onClick={locate}>Where I am</button>
         <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
-        <span className="small muted">Start at the centre and work outward: that is the recommended order. You may explore anywhere. Drag to move, scroll to zoom.</span>
+        <span className="small muted">Centre outwards is the reading order of the subjects; the recommended path (Curriculum, All lessons) mixes them by stage. Drag to move, scroll to zoom.</span>
       </div>
       <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
         onPointerDown={e => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y }; (e.target as Element).setPointerCapture?.(e.pointerId) }}
@@ -171,7 +175,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
               {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
               <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
-              {picked !== n.id && hov !== n.id && (view.k >= 2.4 || next) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+              {picked !== n.id && hov !== n.id && (view.k >= 3.5 || ((view.k >= 1.7 || next) && (lvl > 0 || next))) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
             </g>
           )
         })}
@@ -185,6 +189,16 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
             </g>
           )
         })}
+        {rec && byId.get(rec) && picked !== rec && (() => {
+          const n = byId.get(rec)!
+          return (
+            <g transform={`translate(${n.x},${n.y})`} className="maprec" pointerEvents="none">
+              <circle r={42} className="recring" fill="none" />
+              <rect x={-86} y={-78} width={172} height={34} rx={17} className="recpill" />
+              <text y={-55} textAnchor="middle" className="rectext">Your next step</text>
+            </g>
+          )
+        })()}
         <circle r={5} className="mapcentre" />
       </svg>
       {tip && (() => {
