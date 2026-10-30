@@ -21,6 +21,7 @@ import { SettingsDrawer } from './components/SettingsDrawer'
 import { BRAND } from './brand'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Crest } from './components/Crest'
+import { BuildStamp } from './components/BuildStamp'
 import { useLocation } from 'react-router-dom'
 
 // Five places for a learner; the rest are tools, one click away under More.
@@ -67,7 +68,7 @@ export default function App() {
         <Route path="*" element={<main className="page"><h1>Not found</h1></main>} />
       </Routes>
       </ErrorBoundary>
-      <footer className="sitefooter">{BRAND.name} was created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.</footer>
+      <footer className="sitefooter">{BRAND.name} was created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
     </ContentProvider>
   )
 }
