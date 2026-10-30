@@ -5,8 +5,10 @@ import { useContent } from '../lib/content'
 import type { Lesson } from '../types'
 import { lessonSort, useLessonProgress } from '../lib/progress'
 import { STRAND_NAMES } from '../lib/missions'
+import { PATH_STAGES } from '../lib/pathStages'
 
 type Filter = 'all' | 'todo' | 'done'
+type View = 'path' | 'section'
 
 import { lessonMinutes } from '../lib/lessonTime'
 const mins = (l: Lesson) => lessonMinutes(l)
@@ -18,6 +20,7 @@ export function LessonIndex() {
   const progress = useLessonProgress()
   const [q, setQ] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
+  const [view, setView] = useState<View>('path') // the recommended path mixes the sections by stage; the section view is the reference library
   const byId = useMemo(() => new Map((progress ?? []).map(p => [p.lessonId, p])), [progress])
   const groups = useMemo(() => {
     const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
@@ -29,11 +32,12 @@ export function LessonIndex() {
       if (q && !text.includes(q.toLowerCase())) continue
       if (filter === 'done' && !done) continue
       if (filter === 'todo' && done) continue
-      const strand = sk?.strand ?? '?'
+      const strand = view === 'path' ? l.stage ?? '?' : sk?.strand ?? '?'
       m.set(strand, [...(m.get(strand) ?? []), l])
     }
     return [...m.entries()].sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
-  }, [content, byId, q, filter])
+  }, [content, byId, q, filter, view])
+  const groupOf = (l: Lesson) => (view === 'path' ? l.stage : content.skillById.get(l.skill)?.strand)
   const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
   const totalMin = content.lessons.reduce((t, l) => t + mins(l), 0)
   const doneMin = content.lessons.filter(l => byId.get(l.id)?.done).reduce((t, l) => t + mins(l), 0)
@@ -45,19 +49,20 @@ export function LessonIndex() {
       <div className="card overallbar">
         <div className="sectionhead"><strong>Whole curriculum</strong><span className="muted small">{fmt(totalMin)} of lessons in all · {fmt(Math.max(0, totalMin - doneMin))} left</span></div>
         <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
-        <p className="small muted">S1, S2 and so on are the sections (strands) of the curriculum, in teaching order.</p>
+        <p className="small muted">{view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'S1, S2 and so on are the subject sections, a reference library. Take the recommended path to learn in order.'}</p>
       </div>
-      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. The lessons are written to be taken in the order listed, each building on the ones before it, and that is the order we recommend. You are free to jump around and explore whenever you like; nothing is locked. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
+      <p className="lede">{content.lessons.length} lessons, {doneCount} finished or skipped. The recommended path (top) mixes the subjects so you can play a full game early and meet each idea when you need it; the section view groups the same lessons by subject for looking things up. You are free to jump around and explore whenever you like; nothing is locked. Marking a lesson finished or skipped only changes this list and the curriculum map; it does not count as evidence that you know the skill.</p>
       <div className="row filters">
+        {(['path', 'section'] as View[]).map(v => <button key={v} type="button" className={view === v ? 'chip on' : 'chip'} aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Recommended path' : 'By subject'}</button>)}
         <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
         {(['all', 'todo', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Finished or skipped'}</button>)}
       </div>
       {groups.length === 0 && <p className="muted">No lessons match.</p>}
       {groups.map(([strand, ls]) => (
         <div key={strand} className="card">
-          {(() => { const all = content.lessons.filter(l => content.skillById.get(l.skill)?.strand === strand); const t = all.reduce((x, l) => x + mins(l), 0); return (
-            <div className="sectionhead"><h2>{strand} · {STRAND_NAMES[strand] ?? strand}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
-          {(() => { const all = content.lessons.filter(l => content.skillById.get(l.skill)?.strand === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
+          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); return (
+            <div className="sectionhead"><h2>{view === 'path' ? `Stage ${strand.slice(1)} · ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : `${strand} · ${STRAND_NAMES[strand] ?? strand}`}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
+          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
             <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
           <ul className="plain lessonindex">
             {ls.map(l => {

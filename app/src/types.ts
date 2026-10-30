@@ -82,6 +82,9 @@ export interface Lesson {
   skill: string
   depth: string
   minutes?: number
+  /** Place in the recommended learning path (1 = first) and its stage id (S0..S7); set by tools/build_path.py. */
+  order?: number
+  stage?: string
   outcomes?: string[]
   steps: LessonStep[]
   review: { status: string; reviewer?: string | null }

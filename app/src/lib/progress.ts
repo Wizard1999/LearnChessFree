@@ -120,6 +120,7 @@ function prereqRank(key: string, skills: Map<string, Skill>, seen: Set<string> =
 
 /** Curriculum order: tier, then prerequisite depth (what a lesson builds on comes first), then skill id. */
 export function lessonSort(a: Lesson, b: Lesson, skills: Map<string, Skill>) {
+  if (a.order !== undefined && b.order !== undefined) return a.order - b.order // the recommended path (content/path.json), already checked against the prerequisites
   const ta = skills.get(a.skill)?.tier ?? 9
   const tb = skills.get(b.skill)?.tier ?? 9
   const ra = prereqRank(`${a.skill}.${a.depth}`, skills), rb = prereqRank(`${b.skill}.${b.depth}`, skills)

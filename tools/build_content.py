@@ -26,7 +26,7 @@ def first_visit_items(skills, lessons, items):
     The app loads this file first and swaps in items.json when it finishes (app/src/lib/content.tsx). `ready` lists the practice tag sets
     whose exercises are all here, so those lessons can start at once."""
     tier = {s["id"]: s.get("tier", 9) for s in skills}
-    order = sorted(lessons, key=lambda l: (tier.get(l["skill"], 9), l["skill"], l["depth"], l["id"]))[:FIRST_LESSONS]
+    order = sorted(lessons, key=lambda l: l.get("order", 9999))[:FIRST_LESSONS]   # the recommended path (tools/build_path.py)
     by_id = {i["id"]: i for i in items}
     keep, ready = {}, set()
     for l in order:
@@ -69,6 +69,11 @@ def main():
             if pvs: row["reveal_pv"] = max(pvs, key=len)[:8]   # the engine's checked line, shown AFTER the learner answers
             items.append(row)
     lessons = [jload(f) for f in sorted((ROOT / "content" / "lessons").glob("*.json"))]
+    import build_path   # the recommended learning path: every lesson gets its place (order) and stage; the app sorts by it
+    path_doc = build_path.build()
+    where = {lid: (n + 1, st["id"]) for n, (st, lid) in enumerate((st, lid) for st in path_doc["stages"] for lid in st["lessons"])}
+    for l in lessons: l["order"], l["stage"] = where[l["id"]]
+    (OUT / "path.json").write_text(json.dumps(path_doc, separators=(",", ":")), encoding="utf-8"); (ROOT / "content" / "path.json").write_text(json.dumps(path_doc, indent=1, ensure_ascii=False), encoding="utf-8")
     verified = {}
     for it in items:
         recs = ev_by_item.get(it["id"], [])
