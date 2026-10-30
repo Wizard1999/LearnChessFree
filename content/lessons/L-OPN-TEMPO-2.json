@@ -1,0 +1,124 @@
+{
+  "id": "L-OPN-TEMPO-2",
+  "title": "Tempo: choosing the move that gains one",
+  "skill": "OPN.TEMPO",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Picks the developing move that also attacks a piece that has already moved",
+    "Says why a piece that moves twice can still gain a tempo",
+    "Sees that a chasing move that can simply be captured gains nothing",
+    "Treats the count of tempi as less important in a closed centre"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Development: a lead you can spend** and **Moves that help and moves that wait** you marked which moves helped and which cost a tempo. Now you choose. A move *gains* a tempo when it develops a piece and also attacks one that has already moved, so the other side must answer and you keep building. Try the cleanest case first."
+    },
+    {
+      "type": "item",
+      "item": "IBds82-7"
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 0 3",
+      "caption": "The line continues. Count who is developing and who is moving the same piece again.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "A knight comes out and attacks the queen."
+        },
+        {
+          "move": "d5a5",
+          "say": "The queen moves again. It has now moved twice."
+        },
+        {
+          "move": "d2d4",
+          "say": "A pawn takes more of the centre."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops a second knight."
+        }
+      ],
+      "highlight": [
+        "c3",
+        "a5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_attacks",
+          "params": {
+            "square": "c3",
+            "includes": [
+              "d5"
+            ],
+            "after_move": "b1c3"
+          },
+          "statement": "After Nc3 the knight attacks d5, where the queen stands."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When the count helps, and when it misleads.** *Rule of thumb:* in open and half-open positions, where pieces can attack at once, the side that gains tempi often keeps the lead. The count misleads when the chasing move can simply be answered (a pawn can capture your attacker), in closed positions, and when a piece moves twice to win something. Next: one chasing pawn move in three positions. Predict first."
+    },
+    {
+      "type": "contrast",
+      "title": "Does the attack gain a tempo?",
+      "prompt": "White can attack a black piece in the first two positions. Does the attack gain a tempo? Predict, then check.",
+      "working": "IBds82-10",
+      "failing": "IBds82-12",
+      "irrelevant": "IBds82-13"
+    },
+    {
+      "type": "item",
+      "item": "IBds82-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds82-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds82-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds82-14",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.TEMPO",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one position from this lesson. Write the move you chose, what it attacked, and what the other side had to do. Then write one position where a piece moving twice would be a mistake."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/OPN.TEMPO.json (D2 outcome)",
+    "sources/sheets/nimzowitsch_my-system.md idea 1 and 3 (ideas and conditions only, original wording)",
+    "sources/sheets/edlasker_chess-strategy.md K6",
+    "positions: authored by replaying legal moves from the start; engine checks at depth 16 (content/items/lesson-ds82.json)"
+  ]
+}

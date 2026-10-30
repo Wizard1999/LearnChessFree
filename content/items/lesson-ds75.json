@@ -1,0 +1,587 @@
+{
+ "positions": [
+  {
+   "id": "PBds75-1",
+   "fen": "8/p7/8/4Kp2/5Pk1/8/8/8 b - - 0 1",
+   "family": "FAM-DS75-ZZ-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-2",
+   "fen": "8/p7/8/4Kp2/5Pk1/8/8/8 w - - 0 1",
+   "family": "FAM-DS75-ZZ-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-3",
+   "fen": "8/8/8/4Kp2/5Pk1/8/P7/8 w - - 0 1",
+   "family": "FAM-DS75-ZZ-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-4",
+   "fen": "8/8/8/p3Kp2/P4Pk1/8/8/8 w - - 0 1",
+   "family": "FAM-DS75-ZZ-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-5",
+   "fen": "2K5/k1P5/8/8/8/8/5r2/1R6 b - - 0 1",
+   "family": "FAM-DS75-LUC-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-8",
+   "fen": "2K5/k1P5/8/8/8/8/5r2/1R6 w - - 0 1",
+   "family": "FAM-DS75-LUC-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-6",
+   "fen": "2K5/2P5/1k6/8/8/6r1/8/R7 w - - 0 1",
+   "family": "FAM-DS75-LUC-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds75-7",
+   "fen": "2K5/2P5/1k6/8/8/6r1/8/R7 b - - 0 1",
+   "family": "FAM-DS75-LUC-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of a verified position (batch ds75); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBds75-1",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-1",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "a7",
+      "to": [
+       "a6",
+       "a5"
+      ]
+     },
+     "statement": "The black a-pawn can still move (a6 or a5)."
+    }
+   ],
+   "hints": [
+    "Which pawns are locked head to head? Is there any pawn that is not?",
+    "Count the moves each side can make without touching the locked pawns.",
+    "Compare with the same position without the a-pawn: there the side to move loses."
+   ],
+   "explain": "Black wins. The kings and the locked f-pawns are as in the position without the a-pawn (where the side to move loses), but here the a-pawn can still move, which the tablebase result reflects.",
+   "tags": [
+    "node.END.ZUGZWANG",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-ZZ-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.locked-pawns",
+    "idea.zugzwang",
+    "idea.spare-move",
+    "role.failing",
+    "contrast.CG-DS75-ZZ-1"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-ZZ-1",
+   "orientation": "black"
+  },
+  {
+   "id": "IBds75-2",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-2",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "loss",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "With best play the result for the side to move is a loss."
+    }
+   ],
+   "hints": [
+    "Same position as before, but now White is to move.",
+    "Does White have any move that does not give something up?",
+    "Remember who has the spare pawn move."
+   ],
+   "explain": "White loses with best play: the tablebase confirms it. The side with the spare pawn move wins whoever is to move, which is why the mover's identity stopped mattering for Black.",
+   "tags": [
+    "node.END.ZUGZWANG",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-ZZ-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.locked-pawns",
+    "idea.zugzwang",
+    "idea.spare-move",
+    "role.failing",
+    "contrast.CG-DS75-ZZ-1"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-ZZ-1",
+   "orientation": "white"
+  },
+  {
+   "id": "IBds75-3",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-3",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "a2",
+      "to": [
+       "a3",
+       "a4"
+      ]
+     },
+     "statement": "The white a-pawn can still move (a3 or a4)."
+    }
+   ],
+   "hints": [
+    "Look for a pawn that is not part of the locked pair.",
+    "What can White do that Black cannot?",
+    "In the same position without the a-pawn, the side to move loses."
+   ],
+   "explain": "White wins: the tablebase confirms it. The extra a-pawn can move without touching the locked pawns; without it, the side to move loses.",
+   "tags": [
+    "node.END.ZUGZWANG",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-ZZ-2",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.locked-pawns",
+    "idea.zugzwang",
+    "idea.spare-move",
+    "role.failing",
+    "contrast.CG-DS75-ZZ-2"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-ZZ-2",
+   "orientation": "white"
+  },
+  {
+   "id": "IBds75-4",
+   "skill": "END.ZUGZWANG.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-4",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "loss",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "With best play the result for the side to move is a loss."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "a4",
+      "to": []
+     },
+     "statement": "The white a-pawn has no move (it is blocked)."
+    }
+   ],
+   "hints": [
+    "There are two extra pawns here. Can either of them move?",
+    "A pawn that cannot move gives no spare move.",
+    "Compare with the position without the a-pawns."
+   ],
+   "explain": "White loses with best play: the tablebase confirms it. The two extra pawns block each other, so neither side gains a spare move.",
+   "tags": [
+    "node.END.ZUGZWANG",
+    "tier.3",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-ZZ-3",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.locked-pawns",
+    "idea.zugzwang",
+    "idea.mutual-zugzwang",
+    "role.irrelevant",
+    "contrast.CG-DS75-ZZ-3"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-ZZ-3",
+   "orientation": "white"
+  },
+  {
+   "id": "IBds75-5",
+   "skill": "END.LUCENA.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-5",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    }
+   ],
+   "hints": [
+    "Compare with the same position with White to move.",
+    "Who gets to use the move next to the pawn?",
+    "The black king is two files from the pawn, with the white rook on the file between."
+   ],
+   "explain": "With best play the game is drawn: the tablebase confirms it. The same placement with White to move is a win, so here the cut-off by one file works only for the side that has the move.",
+   "tags": [
+    "node.END.LUCENA",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-LUC-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.lucena",
+    "theme.bridge",
+    "role.failing",
+    "contrast.CG-DS75-LUC-1",
+    "tier.4"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-LUC-1",
+   "orientation": "black"
+  },
+  {
+   "id": "IBds75-8",
+   "skill": "END.LUCENA.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-8",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    }
+   ],
+   "hints": [
+    "Compare with the same position with Black to move.",
+    "Which rook moves keep Black's king cut off on the a-file?",
+    "The rook on the b-file holds the black king back by one file."
+   ],
+   "explain": "White wins: the tablebase confirms it. Only Rb2 and Rf1 win; with Black to move the same placement is a draw, so the move decides.",
+   "tags": [
+    "node.END.LUCENA",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-LUC-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.lucena",
+    "theme.bridge",
+    "role.working",
+    "contrast.CG-DS75-LUC-1",
+    "tier.4"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-LUC-1",
+   "orientation": "white"
+  },
+  {
+   "id": "IBds75-6",
+   "skill": "END.LUCENA.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-6",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    }
+   ],
+   "hints": [
+    "Where is the black king in relation to the pawn's file?",
+    "Is it cut off, or does it stand on the pawn's side?",
+    "Ask who has the move."
+   ],
+   "explain": "White wins: the tablebase confirms it. With Black to move in the same placement the game is drawn, so the move decides.",
+   "tags": [
+    "node.END.LUCENA",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-LUC-2",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.lucena",
+    "theme.bridge",
+    "role.working",
+    "contrast.CG-DS75-LUC-2",
+    "tier.4"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-LUC-2",
+   "orientation": "white"
+  },
+  {
+   "id": "IBds75-7",
+   "skill": "END.LUCENA.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds75-7",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    }
+   ],
+   "hints": [
+    "Same placement as before, but Black has the move.",
+    "Look at the black rook: is there a check that drives the white king away from the pawn?",
+    "Compare with the same position with White to move."
+   ],
+   "explain": "With best play the game is drawn: the tablebase confirms it. Black to move has exactly one drawing move, the rook check Rg8+; with White to move the same placement is a win.",
+   "tags": [
+    "node.END.LUCENA",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS75-LUC-2",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.rookEndgame",
+    "idea.lucena",
+    "theme.bridge",
+    "role.failing",
+    "contrast.CG-DS75-LUC-2",
+    "tier.4"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS75-LUC-2",
+   "orientation": "black"
+  }
+ ]
+}

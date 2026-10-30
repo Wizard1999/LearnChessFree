@@ -1,0 +1,461 @@
+{
+ "positions": [
+  {
+   "id": "PSsp6-1",
+   "fen": "8/6pk/4p2p/3p2b1/3PP3/P7/6PP/2q2QK1 b - - 1 39",
+   "family": "FAM-SP6-DEFLECT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of lichess Cmcrt: the white bishop removed, so nothing else guards f1",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-2",
+   "fen": "r2q2k1/1pp2ppp/2n5/6B1/8/1PP5/R2Q1PPP/1K6 b - - 0 1",
+   "family": "FAM-SP6-OVERLOAD",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PA1-066: the white king stands on b1 and also defends a2",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-3",
+   "fen": "r2q2k1/1pp2ppp/2n5/6B1/7P/1PP5/R2Q1PP1/6K1 b - - 0 1",
+   "family": "FAM-SP6-OVERLOAD",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PA1-066: a white pawn on h4 also defends the bishop on g5",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-4",
+   "fen": "4r1k1/5ppp/1Q2p3/8/1P5q/P5R1/2r1N2P/4R1K1 b - - 1 30",
+   "family": "FAM-SP6-REMOVE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PA1-063 family REMDEF-RN: a white pawn on h2 also defends g3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-5",
+   "fen": "8/6pk/4p2p/3p2b1/3PP3/P2B4/6PP/2q2QK1 b - - 1 39",
+   "family": "FAM-SP6-DEFLECT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PSsp6-1: a white bishop on d3 also covers f1",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-6",
+   "fen": "8/6pk/4p2p/3p2b1/3PP3/6N1/P5PP/2q2QK1 b - - 1 39",
+   "family": "FAM-SP6-DEFLECT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PSsp6-1: a white knight on g3 added (and the pawn on a3 moved to a2), so the queen on f1 has a second guard once the king leaves and nothing hangs for Black",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp6-7",
+   "fen": "6k1/4q1p1/6Pp/p7/4Q3/2BRKP2/bP3r2/7R b - - 0 32",
+   "family": "FAM-SP6-DECOY",
+   "provenance": {
+    "kind": "authored",
+    "ref": "edit of PA1-067: a white pawn on f3 added, so it also defends e4",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISsp6-1",
+   "skill": "TAC.DEFLECT.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PSsp6-1",
+   "prompt": "Black to move. Win material by forcing the guard of f1 away.",
+   "answer": {
+    "moves": [
+     "g5e3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5e3"
+      ]
+     },
+     "statement": "...Be3+ is the engine's first choice."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "g5e3",
+      "min": 5
+     },
+     "statement": "...Be3+ wins material along the engine line."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f1",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Only the king on g1 guards the queen on f1."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.deflection",
+    "node.TAC.DEFLECT",
+    "cue.1",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-DEFLECT",
+    "lang.en"
+   ],
+   "hints": [
+    "Which white piece guards the queen on f1?",
+    "Can you give a check that makes that piece leave g1?",
+    "Check the king from e3."
+   ],
+   "explain": "The check on e3 forces the king to h1, which leaves the queen on f1 without a guard. Qxf1 is then mate.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-2",
+   "skill": "TAC.OVERLOAD.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp6-2",
+   "prompt": "Black to move. The white king stands on b1. Does ...Rxa2 still win material? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "a2",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The king and the queen both defend the rook on a2."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 60
+     },
+     "statement": "The engine rates the position as level."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.overload",
+    "node.TAC.OVERLOAD",
+    "cue.2",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-OVERLOAD",
+    "lang.en"
+   ],
+   "hints": [
+    "Count the defenders of the rook on a2.",
+    "Who can recapture on a2 other than the queen?",
+    "Kxa2 leaves the queen free to guard the bishop."
+   ],
+   "explain": "A second piece now defends the rook, so the queen is no longer forced to recapture and keeps guarding the bishop. The queen is not overloaded any more.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-3",
+   "skill": "TAC.OVERLOAD.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp6-3",
+   "prompt": "Black to move. Is there a tactic that wins material?",
+   "answer": {
+    "class": "No"
+   },
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The queen and the pawn on h4 both defend the bishop on g5."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 60
+     },
+     "statement": "The engine rates the position as level."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.overload",
+    "node.TAC.OVERLOAD",
+    "cue.3",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-OVERLOAD",
+    "lang.en"
+   ],
+   "hints": [
+    "List every piece the white queen defends.",
+    "Does the queen have to leave the bishop to recapture?",
+    "Count the defenders of each target."
+   ],
+   "explain": "The pawn on h4 guards the bishop, so the queen can recapture on a2 without giving up the bishop. The queen has only one job that needs it, so nothing is overloaded.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-4",
+   "skill": "TAC.REMOVE-DEFENDER.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp6-4",
+   "prompt": "Black to move. Is there a tactic that wins material?",
+   "answer": {
+    "class": "No"
+   },
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g3",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The knight on e2 and the pawn on h2 both defend the rook on g3."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 1100
+     },
+     "statement": "The engine does not rate the position better than level for Black."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.capturingDefender",
+    "node.TAC.REMOVE-DEFENDER",
+    "cue.3",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-REMOVE",
+    "lang.en"
+   ],
+   "hints": [
+    "Which piece defends the rook on g3?",
+    "Count every defender of the rook.",
+    "What recaptures on g3 if the knight is gone?"
+   ],
+   "explain": "The pawn on h2 also defends the rook on g3. Taking the knight on e2 removes only one of two defenders, so the idea wins nothing.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-5",
+   "skill": "TAC.DEFLECT.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp6-5",
+   "prompt": "Black to move. A white bishop stands on d3. Does ...Be3+ Kh1 Qxf1+ still win for Black? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f1",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The king and the bishop both guard f1."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 60
+     },
+     "statement": "The engine rates the position as level."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.deflection",
+    "node.TAC.DEFLECT",
+    "cue.2",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-DEFLECT",
+    "lang.en"
+   ],
+   "hints": [
+    "After the king goes to h1, who guards the queen on f1?",
+    "Look along the diagonal from d3.",
+    "Qxf1+ is met by which recapture?"
+   ],
+   "explain": "The bishop on d3 sees f1, so after the king leaves the queen is still guarded. Another piece took over the duty.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-6",
+   "skill": "TAC.DEFLECT.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp6-6",
+   "prompt": "Black to move. Is there a tactic that wins material or mates?",
+   "answer": {
+    "class": "No"
+   },
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f1",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The king and the knight on g3 both guard f1."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 60
+     },
+     "statement": "The engine rates the position level."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.deflection",
+    "node.TAC.DEFLECT",
+    "cue.3",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-DEFLECT",
+    "lang.en"
+   ],
+   "hints": [
+    "Which black move gives check?",
+    "After the king moves, who guards the queen on f1?",
+    "Which black move wins material, and what recaptures on f1?"
+   ],
+   "explain": "The knight on g3 also guards f1, so forcing the king away does not leave the queen loose: ...Be3+ Kh1 Qxf1+ Nxf1 is only a queen trade. The deflection wins nothing.",
+   "orientation": "black"
+  },
+  {
+   "id": "ISsp6-7",
+   "skill": "TAC.DECOY.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp6-7",
+   "prompt": "Black to move. Is there a tactic that wins material?",
+   "answer": {
+    "class": "No"
+   },
+   "options": [
+    "Yes",
+    "No"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The king on e3 and the pawn on f3 both defend the queen on e4."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 1100
+     },
+     "statement": "The engine does not rate the position better than level for Black."
+    }
+   ],
+   "review": {
+    "status": "machine-only"
+   },
+   "tags": [
+    "theme.attraction",
+    "node.TAC.DECOY",
+    "cue.3",
+    "tier.3",
+    "kind.authored",
+    "family.FAM-SP6-DECOY",
+    "lang.en"
+   ],
+   "hints": [
+    "What would the white king do after ...Re2+?",
+    "Who else defends the queen on e4?",
+    "Count the defenders of e4 once the king has left."
+   ],
+   "explain": "The pawn on f3 also defends the queen on e4, so luring the king away does not leave the queen loose. The rook sacrifice wins nothing.",
+   "orientation": "black"
+  }
+ ]
+}

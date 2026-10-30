@@ -1,0 +1,144 @@
+{
+  "id": "L-DEF-COUNTER-2",
+  "title": "Counter-attack: choose the moment, avoid the half-way move",
+  "skill": "DEF.COUNTER",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Chooses between counter-attacking and defending by checking whether a supporting piece makes the counter faster",
+    "Sees that moving the supporting piece turns the same counter from winning to losing",
+    "Names the half-hearted third option and rejects it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Counter-attack or defend: count both races** you counted the two races. Now choose the moment. A counter-attack comes when your defence is complete and your threat is faster. Do not drift into the **half-hearted third option**: a move that neither defends properly nor threatens something bigger. At each move say one word aloud before you play: counter or defend."
+    },
+    {
+      "type": "board",
+      "fen": "5r1k/6p1/7p/8/8/3Q2Pb/P5rP/5R1K b - - 1 33",
+      "caption": "White threatens Rxf8 mate. Black has a counter with check.",
+      "line": [
+        {
+          "move": "f8f1",
+          "say": "Rxf1+ takes with check."
+        },
+        {
+          "move": "d3f1",
+          "say": "The queen takes the rook."
+        },
+        {
+          "move": "g2h2",
+          "say": "Rxh2+ checks."
+        },
+        {
+          "move": "h1h2",
+          "say": "The king takes the rook."
+        },
+        {
+          "move": "h3f1",
+          "say": "Bxf1 takes the queen. Black has won a piece."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "f1"
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f8f1"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Rxf1+ is the engine's best move (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "f8f1",
+            "min": 3
+          },
+          "statement": "Along the engine's best line Black comes out at least a piece ahead (depth 16).",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds61-30"
+    },
+    {
+      "type": "card",
+      "text": "**A counter-attack holds** when your move comes with check or a threat he must answer, and a piece of yours supports the follow-up. It **fails** when it is one move slower or loses the supporting piece. The engine's moves in the contrast show this, not a general law: 'the best defence is attack' is a **rule of thumb**, and you have to count before you rely on it."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "Black considers Qf2+. Predict for each: counter-attack or defend? Then check.",
+      "working": "IBds61-15",
+      "failing": "IBds61-16",
+      "irrelevant": "IBds61-17"
+    },
+    {
+      "type": "item",
+      "item": "IBds61-24",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds61-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-722n9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-6ItbB",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.counterAttack",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In your next game, when you are under pressure, write counter or defend before each move. Afterwards, find one move that was neither.",
+      "fields": [
+        {
+          "id": "third",
+          "label": "I played a half-hearted move:",
+          "options": [
+            "yes, I can name one",
+            "no",
+            "not sure"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C23, §8 contrast H (ideas only)",
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-34 (ideas only)",
+    "items IBds61-15..18, IBds61-24 (content/items/lesson-ds61.json); positions: Lichess puzzle ZEjqS (CC0) with one-feature edits; shipped items IL-722n9, IL-6ItbB and the board IL-qkQvR",
+    "depth D2 builds on the lesson \"Counter-attack or defend: count both races\" (L-DEF-COUNTER-1)"
+  ]
+}

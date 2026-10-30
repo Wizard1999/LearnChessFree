@@ -1,0 +1,143 @@
+{
+ "id": "L-END-BREAKTHROUGH-3",
+ "title": "Breakthrough: one tempo flips the result",
+ "skill": "END.BREAKTHROUGH",
+ "depth": "D3",
+ "minutes": 10,
+ "outcomes": [
+  "Counts the pawn moves after the sacrifice to check who queens first",
+  "Predicts that giving the other side the move can turn a win into a loss for the first side",
+  "Checks his count against a verified result and finds which step was miscounted"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In *Breakthrough: who wins when the pawns meet* you predicted results. Now check by counting. After the pawn sacrifice, count the moves each side's remaining passed pawn needs to queen; the side to move takes the first of them. Do this in your head before you answer."
+  },
+  {
+   "type": "item",
+   "item": "IE-BRK-5"
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/4pp2/4PPP1/8/8/K7 w - - 0 1",
+   "caption": "The count for the first position. White to move; Black could also take on f4, and the tablebase says White wins either way.",
+   "line": [
+    {
+     "move": "g4g5",
+     "say": "White pushes g5. Now either black pawn can take a white pawn: this is the sacrifice."
+    },
+    {
+     "move": "f5e4",
+     "say": "Black takes on e4. That pawn needs three moves to queen: e3, e2, e1."
+    },
+    {
+     "move": "g5g6",
+     "say": "White's g-pawn also needs three moves (g6, g7, g8) and has already started: one move ahead."
+    },
+    {
+     "move": "a8a7",
+     "say": "Black's king is far from the g-file and cannot stop the pawn."
+    },
+    {
+     "move": "g6g7",
+     "say": "One step from the last rank."
+    },
+    {
+     "move": "e4e3",
+     "say": "Black's pawn is still one move behind."
+    },
+    {
+     "move": "g7g8q",
+     "say": "White queens first and, by the tablebase, still wins from here."
+    }
+   ],
+   "highlight": [
+    "g8",
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "move": "g4g5",
+      "result": "win"
+     },
+     "statement": "After g5 White wins with best play (tablebase, exact)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The position is a win for White to move (tablebase, exact)."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "The same skeleton, the other side to move",
+   "prompt": "In the first position White, to move, wins. Now Black is to move and nothing else changes. Predict the result for Black, then look at the third position, where only a king moved.",
+   "working": "IE-BRK-11",
+   "failing": "IE-BRK-12",
+   "irrelevant": "IBds72-3"
+  },
+  {
+   "type": "card",
+   "text": "**One tempo can reverse the result.** In these skeletons the side to move wins; give the other side the move and it wins instead. This is true for these positions (tablebase), not a law for all skeletons: kings near the pawns, or pawns further back, can change it. Count first, then check against the position."
+  },
+  {
+   "type": "item",
+   "item": "IE-BRK-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-BRK-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-BRK-10",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.BREAKTHROUGH",
+    "idea.extra-tempo"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Look at the answer you got wrong or were unsure of. Which count was off: your pawn, the other pawn, or who moves first?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "The count that was off:",
+     "options": [
+      "my pawn's count",
+      "the other pawn's count",
+      "who moves first"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "What I will do differently:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.BREAKTHROUGH.json (D3 outcome)",
+  "Items IE-BRK-4 to 12 and IBds72-3: tablebase results (7 pieces); the claim about the side to move holds for these skeletons only"
+ ]
+}

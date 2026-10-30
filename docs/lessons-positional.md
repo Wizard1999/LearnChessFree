@@ -17,7 +17,8 @@ Every contrast changes one feature of a verified base (a pawn, a piece square, a
 | L-POS-DEVELOPMENT-1 | OPN.TEMPO | 5 | Ng8 -> f6; e4 -> e3 | `best_move_in`, `move_loses`, `material_after_move` |
 | L-POS-ACTIVITY-1 | POS.ACTIVITY | 4 | rook behind the pawn v in front | tablebase (exact), `legal_destinations`, `best_move_in` |
 | L-POS-PASSED-1 | POS.PASSED | 5 | Black king in front of the pawn v cut off | tablebase (exact) |
-| L-POS-PLAN-1 | POS.PLAN | 4 | White king g1 -> b1 | `mate_in`, `move_loses`, `eval_range` |
+| L-POS-PLAN-1 | POS.PLAN | 4 | plan target (king g1 on a second skeleton) and carryability; split 2026-10-30 | `mate_in`, `move_loses` |
+| L-POS-PLAN-DIFF-1 | POS.PLAN.DIFF | 7 | White king g1 -> b1, h1, c1; irrelevant a2-a3 | `mate_in`, `move_loses`, `best_move_in` |
 | L-DEF-WAIT-1 | DEF.WAIT | 5 | pawn e5 -> e6 | tablebase (exact, per move) |
 | L-POS-EXCHANGE-1 | POS.EXCHANGE | 4 | which piece takes / which trade | `best_move_in`, `move_loses`, `material_after_move` |
 

@@ -1,0 +1,98 @@
+{
+  "id": "L-POS-PLAN-DIFF-1",
+  "title": "The difference that decides",
+  "skill": "POS.PLAN.DIFF",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Names the biggest differences between the two sides before choosing a move",
+    "Sees that king position can outweigh an extra pawn",
+    "Predicts whether a one-feature change alters the verdict, and which differences do not matter"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Before you look for moves, list the **differences between the two sides**: material, king positions, open lines, weak squares. Each difference suggests a possibility. Then ask which one decides the position. A difference does not always favour the side that seems better: here White has the extra pawn, but White also has the exposed king."
+    },
+    {
+      "type": "board",
+      "fen": "4k1r1/ppp2p1p/3bp3/8/4P2q/5N2/PPPQ1PPP/5RK1 b - - 0 1",
+      "caption": "Black to move. White is a pawn ahead. List the differences between the two sides before you look for a move.",
+      "line": [
+        {
+          "move": "g8g2",
+          "say": "Rxg2+: the rook goes to g2 with check, and the queen is ready to join it on the g-file."
+        },
+        {
+          "move": "g1g2",
+          "say": "The king must take."
+        },
+        {
+          "move": "h4g4",
+          "say": "Check: the king is hunted and Black mates by force."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g8",
+          "to": "g2"
+        },
+        {
+          "from": "h4",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "g2",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "g8g2",
+            "n": 6
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA2-36"
+    },
+    {
+      "type": "card",
+      "text": "The method is easiest when the two sides look alike, because then few differences exist to weigh. Counting material is a *rule of thumb*, and an exposed king can outweigh an extra pawn. Change one feature and the verdict can change; change a feature that plays no part and nothing changes. **Ask of each difference: what does it allow?**"
+    },
+    {
+      "type": "contrast",
+      "title": "One difference changed",
+      "prompt": "Compare each position with the one where Rxg2+ worked. White's king stands on b1 in the second; a pawn stands on a3 in the third. Predict whether the sacrifice still wins, then check.",
+      "working": "IA2-36",
+      "failing": "IA2-37",
+      "irrelevant": "ISsp13-1"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PLAN.DIFF",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you listed the differences: which one did you look at first, material or the kings? On paper, write the three biggest differences in one of your own games."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C06-C07: the difference method; Paulsen-Morphy king pair)",
+    "content/items/lesson-split-sp13.json (ISsp13-1, 2, 4, 5, 6)"
+  ]
+}

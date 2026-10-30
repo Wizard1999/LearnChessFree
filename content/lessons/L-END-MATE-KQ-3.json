@@ -1,0 +1,115 @@
+{
+  "id": "L-END-MATE-KQ-3",
+  "title": "Queen mate on a budget: three questions per move",
+  "skill": "END.MATE-KQ",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Plays king and queen against a lone king from a given start to checkmate inside the stated move budget",
+    "Before each move, checks that the king cannot take the queen and counts the lone king's legal replies",
+    "Tells apart a queen the king can take for nothing from a queen that is protected"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This is the full test. You know the box method from *King and queen against king: shrink the box* and the supported check from *Mate with king and queen: the supported check*. Now you play the whole mate against the engine inside a **move budget**. Before every move ask three things. **Can his king take my queen? How many legal replies has he? Did the box get smaller?** A check that does not shrink the box often wastes budget."
+    },
+    {
+      "type": "board",
+      "fen": "8/2k5/8/3Q4/8/8/8/K7 b - - 1 1",
+      "caption": "After Qd5 the king on c7 has three squares left (b6, b8, c8). The queen is a knight's jump away, so he cannot take her.",
+      "line": [
+        {
+          "move": "c7b6",
+          "say": "Black steps to b6. The queen on d5 is again a knight's jump from his king."
+        },
+        {
+          "move": "a1b2",
+          "say": "White brings the king up. The queen does the cutting off; the king arrives later."
+        },
+        {
+          "move": "b6a7",
+          "say": "Black has a legal reply every time. A quiet move that left him none would be stalemate."
+        },
+        {
+          "move": "b2c3",
+          "say": "Another king step. Count his replies again before the next move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "b6",
+        "b8",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "c7",
+            "to": [
+              "b6",
+              "b8",
+              "c8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds71-1"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds, and when it fails.** The routine works while your queen is out of his reach or protected, and he always has at least one legal move until you mate. It fails when the queen lands next to his king with nothing behind her: he takes her and the game is a draw. *Rule of thumb:* a knight's jump away is safe; next to him, only with your king beside her."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen, the king far away",
+      "prompt": "Black to move in each position. Only White's king moves between the first two. Predict the result for Black each time, then check.",
+      "working": "IBds71-4",
+      "failing": "IBds71-5",
+      "irrelevant": "IBds71-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds71-2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds71-3",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-KQ",
+        "theme.stalemate-trap"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In the play-outs, which of the three questions did you skip when you were in a hurry? What would make you ask it every move?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-KQ.json (D3 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATEKQ-1.json and content/lessons/L-END-MATE-1.json (the earlier lessons this one links to)",
+    "content/items/lesson-ds71.json (play-outs and the queen-safety contrast, tablebase-checked)"
+  ]
+}

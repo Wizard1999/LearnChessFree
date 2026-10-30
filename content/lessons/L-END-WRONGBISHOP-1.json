@@ -1,13 +1,13 @@
 {
   "id": "L-END-WRONGBISHOP-1",
-  "title": "The wrong bishop, and two knights that cannot mate",
+  "title": "The wrong bishop: a rook pawn that cannot win",
   "skill": "END.WRONG-BISHOP",
   "depth": "D1",
-  "minutes": 11,
+  "minutes": 10,
   "outcomes": [
     "Predicts win or draw for a rook pawn with a bishop, from the bishop's colour and the pawn's file",
     "Names what can rescue a 'wrong bishop' win: another pawn file, or a defending king that cannot reach the corner",
-    "Knows that two knights cannot force mate against a bare king, and that a defender's pawn can change that"
+    "Tests a rook-pawn-and-bishop ending for the three conditions before predicting win or draw"
   ],
   "steps": [
     {
@@ -193,12 +193,23 @@
       "item": "IA3-905"
     },
     {
-      "type": "item",
-      "item": "IA3-908"
+      "type": "card",
+      "text": "**Rule of thumb, and when it fails.** A rook pawn with a bishop that does not control the queening corner is a draw *if* the defending king can get to the corner. It fails when the defending king is cut off from the corner (the last position), when the pawn stands on another file, or when the bishop does control the corner. Check the king's distance before you trust the draw."
     },
     {
       "type": "item",
-      "item": "IA3-909"
+      "item": "IA3-906",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-907",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-20",
+      "silent": true
     },
     {
       "type": "item",
@@ -210,7 +221,7 @@
         "node.END.WRONG-BISHOP",
         "cue.3"
       ],
-      "n": 2
+      "n": 3
     },
     {
       "type": "reflect",
@@ -227,8 +238,5 @@
     "sources/sheets/edlasker_chess-strategy.md (K22, K27)",
     "docs/curriculum-map-v1.1.md section 4 (tablebase checks: wrong colour draws, right colour wins, 2N draw)",
     "All positions: own constructions; results from the Lichess tablebase service"
-  ],
-  "also": [
-    "END.THEORY.2N"
   ]
 }

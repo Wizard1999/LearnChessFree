@@ -1,0 +1,114 @@
+{
+  "id": "L-END-MATE-STALEMATE-AVOID-2",
+  "title": "Mating without stalemating: the quick move is the trap",
+  "skill": "END.MATE-STALEMATE-AVOID",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Finds the mate in queen and rook positions near the edge when the quickest-looking move is a stalemate",
+    "Names the stalemating move before playing the mate, by counting the lone king's legal replies after it",
+    "Tells checkmate from stalemate in a one-move pair"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "*Mating without stalemating* taught you to count the lone king's legal replies. Now the positions are mixed: queen and rook, kings near an edge. The trap is the move that looks quickest. It takes away the king's last square but gives no check. Find the mate first. Then name the decoy and count replies after it too. Stalemate is a draw, however much you are ahead."
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-31"
+    },
+    {
+      "type": "board",
+      "fen": "2k5/8/1K1Q4/8/8/8/8/8 b - - 1 1",
+      "caption": "The decoy from that position: Qd6 takes the last squares but gives no check. Black has no legal move, so it is stalemate.",
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "c7"
+        },
+        {
+          "from": "d6",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When it holds, and when it fails.** Counting replies after a quiet move settles it every time, because stalemate needs two things: no check, and no legal move. It fails to help if you stop at the first move that boxes him in. *Rule of thumb:* near a corner the quickest-looking move is suspect; if it leaves no square and no check, look again. Which colour or which edge makes no difference."
+    },
+    {
+      "type": "contrast",
+      "title": "One queen square apart",
+      "prompt": "White to move in each position. The black queen and king stand almost the same. Is it checkmate, stalemate or neither? Predict, then check.",
+      "working": "IBds71-15",
+      "failing": "IBds71-16",
+      "irrelevant": "IBds71-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-61",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-22",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-29",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-33",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-STALEMATE-AVOID",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Count your misses in the silent set: how many of six did you get without a stalemate? The aim is at least nine in ten. For each miss, which reply did you forget to count?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-STALEMATE-AVOID.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATE-STALEMATE-AVOID-1.json (the lesson this one builds on)",
+    "content/items/lesson-ds71.json (the checkmate/stalemate pair, rule-checked)"
+  ]
+}

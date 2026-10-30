@@ -1,0 +1,99 @@
+{
+  "id": "L-END-OPPOSITION-2",
+  "title": "Opposition without a hint: win or draw?",
+  "skill": "END.OPPOSITION",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Decides, with no hint, whether the side with the pawn wins or only draws in a king-and-pawn ending",
+    "Finds the only move that keeps the win, and says which side holds the opposition afterwards",
+    "Spots a position where the defending king is too far away for the opposition to matter"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "*Opposition: one tempo between a win and a draw* showed one pawn winning or drawing by a single king step. Now nobody tells you which. Ask in order: **Whose king stands in front of the pawn? How many squares lie between the kings? Who is to move?** With one square between the kings, the side that is *not* to move holds the opposition. Predict first, then check."
+    },
+    {
+      "type": "item",
+      "item": "IA3-212"
+    },
+    {
+      "type": "board",
+      "fen": "8/8/4k3/8/4K3/4P3/8/8 b - - 1 1",
+      "caption": "After Ke4 the kings face each other with one square between and Black to move. Black must give way, and White wins.",
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When it holds, and when it fails.** *Rule of thumb:* kings facing, one square between, defender to move, attacker's king in front of the pawn: the side with the pawn usually wins. It does not help when the defending king is far away, since the pawn then wins whoever moves. It also has exceptions you met in the first lesson. Count the facing first, then ask whether it matters."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, the defender one file over",
+      "prompt": "White to move. Only the black king differs between the first two positions. Is it a win or a draw? Predict, then check.",
+      "working": "IG-KPK-61",
+      "failing": "IG-KPK-62",
+      "irrelevant": "IG-KPK-65"
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-69",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds71-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds71-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-64",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.OPPOSITION",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each prediction, which of the three questions did you ask first: whose king is in front, how many squares between the kings, or who is to move? Which did you forget?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.OPPOSITION.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-END-OPPOSITION-1.json (the lesson this one builds on)",
+    "content/items/lesson-ds71.json (far-defender pair, tablebase-checked)"
+  ]
+}

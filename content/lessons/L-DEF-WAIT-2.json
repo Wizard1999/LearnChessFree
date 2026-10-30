@@ -1,0 +1,125 @@
+{
+  "id": "L-DEF-WAIT-2",
+  "title": "No threat? Improve a piece before you spend a pawn move",
+  "skill": "DEF.WAIT",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Names the threat a pawn move is meant to stop before playing it",
+    "Plays a useful piece move in positions where nothing needs preventing",
+    "Does not chase a well-placed piece with a pawn when the engine rates the chase clearly worse",
+    "Tells a real threat from a harmless pawn move by asking what happens if he gets a free move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Defence by waiting: when it works** you learned to wait when he has no way forward. Now the move itself. When nothing needs preventing, the tempting spends are pawn moves: a rook pawn to stop a pin, a pawn to chase a piece that is well placed. Each one is a decision you cannot take back. Before any such move ask: **what exactly does this stop, and is that threat real?** If not, improve a piece."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp2bppp/2np1n2/2p5/5B2/2PBP3/PP2NPPP/RN1Q1RK1 b - - 3 9",
+      "caption": "Black would like to chase the bishop on f4 with a pawn.",
+      "line": [
+        {
+          "move": "g7g5",
+          "say": "g5 attacks the bishop."
+        },
+        {
+          "move": "f4g5",
+          "say": "The bishop simply takes the pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g5"
+        }
+      ],
+      "claims": [
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "g7g5",
+            "cp": 200
+          },
+          "statement": "g5 is at least 2 pawns worse than the engine's best move (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "g7g5",
+            "max": -1
+          },
+          "statement": "Along the engine's best-defence line Black ends behind in material.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds61-20"
+    },
+    {
+      "type": "card",
+      "text": "Waiting is right while the position is equal or better and he has no real target; a pawn move that prevents nothing is lost time (a **rule of thumb**). It fails when the threat is real: then you must answer it. It also fails when he has a plan that, once begun, cannot be stopped later; that is the subject of **Prophylaxis: ask what he wants, then decide if it is real**, and this lesson does not test it."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "White has just moved a piece. Predict for each: does the move threaten anything? Then check.",
+      "working": "IBds61-25",
+      "failing": "IBds61-26",
+      "irrelevant": "IBds61-27"
+    },
+    {
+      "type": "item",
+      "item": "IBds61-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds61-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds61-28",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.DEF.WAIT",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In your next game, the next time you want to play a rook pawn or chase a piece with a pawn, write down what the move stops. Afterwards: was that threat real?",
+      "fields": [
+        {
+          "id": "real",
+          "label": "The threat I wrote down was:",
+          "options": [
+            "real",
+            "not real",
+            "I could not name one"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/emlasker_common-sense.md §4.15, §8 item 7, §5 item 2 (ideas and conditions only)",
+    "items IBds61-19, 20, 23, 25, 26, 27, 28 (content/items/lesson-ds61.json); positions from shipped game-derived items and one-feature edits",
+    "depth D2 builds on the lesson \"Defence by waiting: when it works\" (L-DEF-WAIT-1); related: \"Real threats and fictitious ones\" (L-SAF-FICTITIOUS-1)"
+  ]
+}

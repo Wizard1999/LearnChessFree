@@ -1,0 +1,113 @@
+{
+  "id": "L-TAC-DOUBLE-CHECK-1",
+  "title": "Double check",
+  "skill": "TAC.DOUBLE-CHECK",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Explains why only the king can answer a double check",
+    "Finds the move that gives a double check when told to look for one",
+    "Says that a move is no double check when a piece blocks the uncovered line"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **double check** is two checks at once: a piece moves away, uncovers a check from the piece behind it, and gives check itself. You met the uncovering idea in *Discovered attacks and discovered check*.\nOnly the king can answer a double check: one move cannot block or capture two checking pieces."
+    },
+    {
+      "type": "item",
+      "item": "ISsp7-4"
+    },
+    {
+      "type": "board",
+      "fen": "8/6Rp/2k5/P4n2/1P4P1/2r3KP/7B/8 w - - 0 45",
+      "caption": "White to move. Black has just played ...Nxf5+: the knight and the rook both give check.",
+      "line": [
+        {
+          "move": "g3f4",
+          "say": "Only the king can move: a double check cannot be blocked or captured away."
+        },
+        {
+          "move": "f5g7",
+          "say": "The knight takes the rook on g7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          },
+          "statement": "White is in check."
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "g3f2",
+              "g3f4",
+              "g3g2"
+            ]
+          },
+          "statement": "Every legal move is a king move."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "A double check is strongest when the king's flight squares are covered or lead to somewhere worse. It is not mate by itself: list the squares first.\nIt exists only if the uncovered line is open. A rule of thumb: ask what stands between the line and the king. If a piece blocks it, the move is a single check that can be answered by capture."
+    },
+    {
+      "type": "contrast",
+      "title": "The uncovered line must be open",
+      "prompt": "In the second position a black pawn stands on e6. In the third, the black a-pawn has moved one square.",
+      "working": "IL-9MTe7",
+      "failing": "ISsp7-1",
+      "irrelevant": "ISsp7-2"
+    },
+    {
+      "type": "item",
+      "item": "IL-HpDLG",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp7-3",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.doubleCheck",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last double check you found, which squares could the king go to, and which of them were covered? Would the move still work if one of those squares were free?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (idea 29: discovered check, the see-saw, double check)",
+    "docs/curriculum-map-v1.md S3",
+    "Lichess puzzle database (CC0): MlBfV, KuUQg, O6qUt, 0w830 as seed positions",
+    "content/items/lesson-split-sp7.json"
+  ]
+}

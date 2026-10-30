@@ -1,0 +1,128 @@
+{
+  "id": "L-TAC-DECOY-1",
+  "title": "Decoy: luring a piece to a bad square",
+  "skill": "TAC.DECOY",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the sacrifice that forces a piece onto a square where it can be attacked",
+    "Checks that the capture is forced and the follow-up wins at once",
+    "Says what makes the lure fail"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A **decoy** is a sacrifice that lures a piece, often the king, to a square where it can be hit. The opponent is better off taking, and the capture puts the piece where you want it. Ask: which piece do I want on which square, and what makes it go there?"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/4q1p1/6Pp/p7/4Q3/2BRK3/bP3r2/7R b - - 0 32",
+      "caption": "Black to move. The white queen on e4 is defended by the king on e3. Other king moves lose to mate, so taking is White's best try.",
+      "line": [
+        {
+          "move": "f2e2",
+          "say": "The rook offers itself with check."
+        },
+        {
+          "move": "e3e2",
+          "say": "The king takes the rook and leaves e3."
+        },
+        {
+          "move": "e7e4",
+          "say": "The queen takes the queen with check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f2",
+          "to": "e2"
+        },
+        {
+          "from": "e7",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "f2e2",
+            "min": 4
+          },
+          "statement": "...Re2+ followed by ...Qxe4+ wins material along the engine line."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "Only the king on e3 defends the queen on e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-064"
+    },
+    {
+      "type": "card",
+      "text": "A lure needs two things. **The capture must be forced**, or at least better than every other reply. **The follow-up must win at once** on the new square. If the opponent can decline, or another piece can take the offer, the sacrifice is just a lost piece."
+    },
+    {
+      "type": "contrast",
+      "title": "Another piece can take",
+      "prompt": "The white rook stands on d2 instead of d3, so it can take on e2 as well.",
+      "working": "IA1-067",
+      "failing": "IA1-069"
+    },
+    {
+      "type": "item",
+      "item": "IL-k163X"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds:** the offered piece must be taken and the lured piece lands where the follow-up wins. **When it fails:** the offer can be refused, the follow-up line is blocked, or the lured piece has a flight square. As a rule of thumb, check every reply that does not capture."
+    },
+    {
+      "type": "item",
+      "item": "ISsp6-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-n8V6z",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.attraction",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Before you gave up a piece to lure another, did you check what happens if the offer is refused?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md (K3: three ways the count lies)",
+    "docs/curriculum-map-v1.md S3",
+    "sources/sheets/nimzowitsch_my-system.md (idea 19)",
+    "Items IA1-064, IA1-067, IA1-069, ISsp6-7"
+  ]
+}

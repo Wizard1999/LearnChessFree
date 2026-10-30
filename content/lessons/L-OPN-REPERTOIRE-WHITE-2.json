@@ -1,0 +1,155 @@
+{
+ "id": "L-OPN-REPERTOIRE-WHITE-2",
+ "title": "Answer your three most common replies",
+ "skill": "OPN.REPERTOIRE.WHITE",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Reads the three most common replies to his own line from the Openings page data and names the reason for each answer",
+  "Finds a sound move in unlabeled positions after each common reply",
+  "Tells which common replies have many good answers and which have few",
+  "Leaves rare replies unprepared on purpose"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Start a small repertoire from the games you actually face** you listed the lines you meet. Now answer the *replies*. After 1.d4 d5 2.c4 on the Openings page (band 1100-1300, 18,156 games), Black plays ...dxc4 in 38% (6,927), ...e6 in 18% (3,244) and ...Nf6 in 17% (3,063). That is 73% in three replies. ...c6 follows with 13%. Study one answer, then try two."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+   "caption": "After 2...e6: develop, then decide the centre later.",
+   "line": [
+    {
+     "move": "b1c3",
+     "say": "A knight develops and watches d5 and e4."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black develops too."
+    },
+    {
+     "move": "c1g5",
+     "say": "The bishop pins the knight to the queen."
+    },
+    {
+     "move": "f8e7",
+     "say": "Black unpins by developing the bishop."
+    },
+    {
+     "move": "e2e3",
+     "say": "The pawn opens the f1 bishop."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "g1f3",
+     "say": "The second knight develops."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b1c3",
+       "g1f3",
+       "c4d5",
+       "e2e3",
+       "d1c2"
+      ],
+      "within_cp": 40
+     },
+     "statement": "3.Nc3, 3.Nf3, 3.cxd5, 3.e3 and 3.Qc2 are each within 40 centipawns of the engine's first choice (depth 16)."
+    }
+   ],
+   "highlight": [
+    "c3",
+    "g5",
+    "e3",
+    "f3"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IB83-20"
+  },
+  {
+   "type": "item",
+   "item": "IB83-21"
+  },
+  {
+   "type": "card",
+   "text": "**What the numbers say.** After ...dxc4 and ...e6 many moves work, so write a reason (develop, retake the pawn later) instead of memorising a move. After ...Nf6 fewer moves work. **Rule of thumb:** keep memory for positions where one slip loses; where several moves work, write the reason. Next: many good moves, few, and a rare reply."
+  },
+  {
+   "type": "contrast",
+   "title": "Many good moves, few, or a rare reply",
+   "prompt": "White to move in each position. Predict how many moves work, then check.",
+   "working": "IB83-23",
+   "failing": "IB83-24",
+   "irrelevant": "IB83-27"
+  },
+  {
+   "type": "item",
+   "item": "IB83-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB83-25",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB83-28",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.OPN.REPERTOIRE.WHITE",
+    "cue.3"
+   ],
+   "n": 1,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "plan",
+   "prompt": "Do the same for your own first move. Use the Openings page at your rating, or tally your own games once you have about twenty (small tallies are noisy [H]).",
+   "fields": [
+    {
+     "id": "replies",
+     "label": "My three most common replies after my first two moves (with counts):"
+    },
+    {
+     "id": "answers",
+     "label": "My answer to each, and the reason in one sentence:"
+    },
+    {
+     "id": "slip",
+     "label": "A natural move that loses, in one of those positions (the move, and what refutes it):"
+    },
+    {
+     "id": "skip",
+     "label": "A reply I meet less than once in twenty games, which I will not prepare:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/curriculum-map-v1.md section 2 S8",
+  "docs/council-synthesis.md CD-7 (repertoire driven by the learner's own frequencies)",
+  "sources/sheets/edlasker_chess-strategy.md K13 (prefer simple development to a messy pawn grab) [S]",
+  "Openings page data: app/public/openings core.json, band 1100-1300, node 1.d4 d5 2.c4 (18,156 games), see docs/openings-data.md",
+  "positions: authored by replaying legal moves from the start; engine checks at depth 16 in content/items/lesson-ds83.json"
+ ]
+}

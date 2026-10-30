@@ -8,9 +8,9 @@ Files: `content/lessons/L-END-*.json` (nine of mine), `content/items/lesson-end-
 
 | # | Lesson | Skill (lesson) | Min | Steps (card/board/item/contrast/practice/reflect) | Items | Positions | Play-outs |
 |---|---|---|---|---|---|---|---|
-| 1 | `L-END-MATE-1` Mating a lone king: queen, rook, and the stalemate trap | END.MATE-KQ | 11 | 2/1/8/1/1/1 | 14 | 14 | KR win, KQ win |
+| 1 | `L-END-MATE-1` (split by D24: now only the K+Q supported check; the stalemate part is `L-END-MATE-STALEMATE-AVOID-1`, Mating without stalemating) | END.MATE-KQ | 11 | 2/1/8/1/1/1 | 14 | 14 | KR win, KQ win |
 | 2 | `L-END-OPPOSITION-1` Opposition: one tempo between a win and a draw | END.OPPOSITION | 12 | 2/1/7/2/1/1 | 14 | 12 | win as White, hold as Black |
-| 3 | `L-END-PAWNRACE-1` Pawn races: the square, and who queens first | END.SQUARE | 12 | 2/2/4/2/1/1 | 15 | 15 | race win, hold |
+| 3 | `L-END-PAWNRACE-1` The rule of the square (split 2026-10-30; the race count is now `L-END-PAWN-RACE-1`, Pawn races: count both pawns) | END.SQUARE | 12 | 2/2/4/2/1/1 | 15 | 15 | race win, hold |
 | 4 | `L-END-KINGACTIVE-1` The king as a fighter | END.KING-ACTIVE | 11 | 2/1/5/2/1/1 | 11 | 9 | win, hold |
 | 5 | `L-END-OUTSIDE-1` The outside passed pawn: a decoy | END.OUTSIDE-PASSER | 12 | 2/1/5/1/1/1 | 11 | 9 | win |
 | 6 | `L-END-ZUGZWANG-1` Zugzwang: when having the move is a burden | END.ZUGZWANG | 12 | 2/1/4/2/1/1 | 11 | 8 | win (triangulation), hold |

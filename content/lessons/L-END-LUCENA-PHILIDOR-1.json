@@ -1,18 +1,18 @@
 {
   "id": "L-END-LUCENA-PHILIDOR-1",
-  "title": "Lucena and Philidor: the two rook endings to know",
+  "title": "Lucena: building the bridge",
   "skill": "END.LUCENA",
   "depth": "D1",
-  "minutes": 12,
+  "minutes": 10,
   "outcomes": [
-    "Explains in plain words how the attacker wins with a pawn on the seventh (Lucena) and how the defender draws with the rook on the sixth rank (Philidor)",
+    "Explains in plain words how the attacker wins with a pawn on the seventh when the king stands in front of it and the enemy king is cut off",
     "Avoids two tempting errors in the Lucena position: promoting at once and blocking a check with a loose rook",
-    "Knows the Philidor check from behind needs a rook placement that White's rook cannot punish"
+    "Tells a Lucena-type win from the same arrangement that only draws, and names the feature that changed"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "Two rook endings to know. In **Lucena** the pawn stands on the seventh, your king is in front of it and the enemy king is cut off; you win by getting the king out of the way of checks. In **Philidor** the defender keeps the rook on the sixth rank and checks from behind once the pawn advances. Both are plans with conditions."
+      "text": "**Lucena.** The pawn is on the seventh rank and your king stands in front of it, on the queening square, so the pawn cannot move. The enemy king is cut off: your rook holds a file it may not cross. If your king steps aside, the enemy rook starts checking. You win by moving the king out and sheltering it behind your own rook. It is a plan with conditions, not a reflex."
     },
     {
       "type": "board",
@@ -29,7 +29,7 @@
         },
         {
           "move": "g1g4",
-          "say": "The rook goes to the fourth rank."
+          "say": "The rook goes to the fourth rank, ready to block checks there."
         },
         {
           "move": "h7h6",
@@ -50,6 +50,26 @@
         {
           "move": "f2e2",
           "say": "Black's rook checks again, now along the e-file."
+        },
+        {
+          "move": "e6d6",
+          "say": "The king steps toward the rook."
+        },
+        {
+          "move": "e2d2",
+          "say": "Black checks along the d-file."
+        },
+        {
+          "move": "d6e5",
+          "say": "The king steps up the board, next to the fourth rank."
+        },
+        {
+          "move": "d2e2",
+          "say": "Black checks along the e-file again."
+        },
+        {
+          "move": "g4e4",
+          "say": "The rook blocks on e4 and the king defends it, so Black's rook cannot take it with a win. This shelter is the bridge."
         }
       ],
       "claims": [
@@ -91,28 +111,38 @@
       "item": "IA3-801"
     },
     {
+      "type": "item",
+      "item": "IA3-802"
+    },
+    {
       "type": "card",
-      "text": "**Conditions.** Lucena needs a pawn on the seventh, your king in front and the enemy king cut off. Promoting at once, or blocking a check with a loose rook, throws the win away. **Philidor** is a plan: a rook on the sixth rank is a good default, not the only drawing idea. Its check from behind fails if White's rook can capture it."
+      "text": "**Conditions.** Lucena needs a pawn on the seventh, your king in front of it and the enemy king cut off. Two moves often spoil it: promoting while the enemy rook can take the new queen, and blocking a check with a loose rook (one your king does not defend). The bridge is a block by your own rook, on a square your king defends. Before you count on the win, ask what else about the arrangement matters."
     },
     {
       "type": "contrast",
-      "title": "Same Philidor move, rook one rank apart",
-      "prompt": "White's pawn is on e6. Black plays Ra1. Does it hold if White's rook is on h2? On h1? Predict, then check.",
-      "working": "IA3-808",
-      "failing": "IA3-809",
-      "irrelevant": "IA3-810"
+      "title": "Same arrangement, one file apart",
+      "prompt": "Both positions have the pawn on the seventh, the king in front of it and the enemy king cut off. In one the pawn is on a central file, in the other on the edge file. Which one wins? Predict, then check.",
+      "working": "IE-LUC-1",
+      "failing": "IE-LUC-2"
     },
     {
       "type": "item",
-      "item": "IA3-803"
+      "item": "IE-LUC-39"
     },
     {
       "type": "item",
-      "item": "IA3-805"
+      "item": "IA3-803",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA3-807"
+      "item": "IE-LUC-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-LUC-4",
+      "silent": true
     },
     {
       "type": "item",
@@ -123,7 +153,7 @@
       "tags": [
         "node.END.LUCENA"
       ],
-      "n": 2
+      "n": 3
     },
     {
       "type": "reflect",
@@ -137,11 +167,8 @@
   },
   "sources": [
     "sources/sheets/capablanca_chess-fundamentals.md (CI-21, CI-22: rook-ending cut-off; passive defence is not always wrong)",
-    "sources/sheets/edlasker_chess-strategy.md (K28: the book names neither Lucena nor Philidor)",
     "docs/curriculum-map-v1.1.md section 4 (a Lucena-type position wins)",
-    "All positions: own constructions; results from the Lichess tablebase service"
-  ],
-  "also": [
-    "END.PHILIDOR"
+    "All positions: own constructions; results from the Lichess tablebase service",
+    "Items IA3-801..803, IA3-811, IE-LUC-1..4, IE-LUC-39: results from the Lichess tablebase service"
   ]
 }

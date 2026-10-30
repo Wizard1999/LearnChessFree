@@ -14,7 +14,7 @@ Author worker A1. Labels: **[V]** verified by `tools/validate.py` / `tools/valid
 | L-TAC-FORK-2 | TAC.FORK | D2 | 10 | 9 | queen check-fork / forker captured by its own target / check forks nothing; knight fork / second target defended |
 | L-TAC-PIN-1 | TAC.PIN | D1 | 10 | 8 | absolute pin wins the bishop / king moved, no pin / no pin line; relative pin (legal but costly) |
 | L-TAC-SKEWER-1 | TAC.SKEWER | D1 | 9 | 6 | bishop skewer / attacker undefended next to the king / king off the line; queen skewer with back piece defended |
-| L-TAC-DISCOVER-1 | TAC.DISCOVER | D1 | 11 | 7 | Bxh7+ discovers the rook / move is no check / nothing behind; discovered check; double check |
+| L-TAC-DISCOVER-1 | TAC.DISCOVER | D1 | 9 | 7 | Bxh7+ discovers the rook / move is no check / nothing behind; discovered check (split 30 Oct 2026: double check is now L-TAC-DOUBLE-CHECK-1) |
 | L-TAC-BACKRANK-1 | TAC.BACKRANK | D1 | 10 | 8 | Re8# / luft on h6 / bishop guards e8; luft as the cure; the threat against one's own king |
 | L-TAC-REMOVE-DEFENDER-1 | TAC.REMOVE-DEFENDER | D1 | 12 | 8 | remove / deflect / decoy / overload, one example each; a second defender defeats the removal; decoy fails when another piece can capture |
 | L-TAC-TRAPPED-1 | TAC.TRAPPED | D1 | 9 | 6 | knight on the rim, b4 wins it / one escape square uncovered (cut off, not trapped) |

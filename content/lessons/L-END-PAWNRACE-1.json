@@ -1,18 +1,17 @@
 {
   "id": "L-END-PAWNRACE-1",
-  "title": "Pawn races: the square, and who queens first",
+  "title": "The rule of the square: can the king catch the pawn?",
   "skill": "END.SQUARE",
   "depth": "D1",
-  "minutes": 12,
+  "minutes": 10,
   "outcomes": [
-    "Decides whether a lone king can catch a passed pawn by drawing the pawn's square",
-    "Counts a two-pawn race and sees when the first queen wins the other pawn",
+    "Draws the square for a lone passed pawn and says whether the king catches it when it is his move and when it is the pawn's move",
     "Names two ways the square rule misleads: your own king's help and a pawn on its second rank"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "Can a lone king catch a runaway pawn? Count the pawn's steps to the eighth rank and draw a square with that many squares on a side, starting at the pawn. If the defending king is inside the square, or steps into it on his move, he catches the pawn. This **rule of the square** is a heuristic: it counts only the pawn and the defending king."
+      "text": "Can a lone king catch a runaway pawn? Count the pawn's steps to the eighth rank (for a black pawn, count towards the first rank) and draw a square with that many squares on a side, starting at the pawn. If the defending king is inside the square, or steps into it on his move, he catches the pawn. This **rule of the square** is a heuristic: it counts only the pawn and the defending king."
     },
     {
       "type": "board",
@@ -121,7 +120,7 @@
     },
     {
       "type": "card",
-      "text": "**The square rule has limits.** (1) Your own king can escort the pawn, so a king inside the square may still lose. (2) A pawn on its second rank can move two squares. In a **race** of two pawns, count both: the side that queens first is not automatically winning, so check what the new queen attacks."
+      "text": "**The square rule has limits.** (1) Your own king can escort the pawn, so a king inside the square may still lose. (2) A pawn on its second rank can move two squares, so draw the square from the square it will reach after the double step. Both are limits of a rule of thumb: the square counts only the pawn and the defending king, so check the position before you trust it."
     },
     {
       "type": "contrast",
@@ -131,77 +130,23 @@
       "failing": "IA3-303"
     },
     {
-      "type": "board",
-      "fen": "Q7/8/7k/8/8/8/7p/K7 b - - 0 1",
-      "caption": "A race: White's a-pawn against Black's h-pawn. White has just queened on a8. Black to move.",
-      "line": [
-        {
-          "move": "h2h1q",
-          "say": "Black queens too, with check along the first rank."
-        },
-        {
-          "move": "a8h1",
-          "say": "White's queen takes it along the long diagonal."
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "tablebase",
-          "params": {
-            "result": "loss"
-          },
-          "statement": "With Black to move, Black loses."
-        },
-        {
-          "id": "C2",
-          "type": "tablebase",
-          "params": {
-            "result": "loss",
-            "move": "h2h1q"
-          }
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "h1",
-            "color": "white",
-            "count": 1
-          },
-          "statement": "The white queen on a8 attacks h1."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a8",
-          "to": "h1"
-        }
-      ],
-      "highlight": [
-        "a8",
-        "h1"
-      ]
-    },
-    {
-      "type": "contrast",
-      "title": "Same race, different file",
-      "prompt": "Each pawn needs three moves, White moves first. Does White still win if the pawn is on the b-file? Predict, then check.",
-      "working": "IA3-308",
-      "failing": "IA3-309",
-      "irrelevant": "IA3-310"
+      "type": "item",
+      "item": "IA3-312",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA3-311"
+      "item": "ISsp10-1",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA3-306"
+      "item": "IA3-306",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA3-314"
+      "item": "ISsp10-2"
     },
     {
       "type": "practice",
@@ -214,7 +159,7 @@
     {
       "type": "reflect",
       "kind": "expect",
-      "prompt": "When you predicted, which did you count first: the pawn's steps, the king's steps, or the move? Which one did you forget in the position where you were wrong?"
+      "prompt": "Before you answered, did you draw the square, check whose move it was, and look for a friendly king? Which of the three did you skip in the position where you were wrong?"
     }
   ],
   "review": {
@@ -222,13 +167,8 @@
     "reviewer": null
   },
   "sources": [
-    "sources/sheets/capablanca_chess-fundamentals.md (CI-11: pawn-race counting; first queen may capture)",
     "sources/sheets/edlasker_chess-strategy.md (K24: count each side's moves separately)",
     "sources/sheets/emlasker_common-sense.md (4.18: how fast a passed pawn queens)",
-    "docs/curriculum-map-v1.1.md (END.PAWN-RACE.QUEEN-FIRST)",
     "All positions: own constructions; results from the Lichess tablebase service"
-  ],
-  "also": [
-    "END.PAWN-RACE"
   ]
 }

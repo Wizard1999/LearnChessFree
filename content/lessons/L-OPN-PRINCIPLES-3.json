@@ -1,0 +1,131 @@
+{
+  "id": "L-OPN-PRINCIPLES-3",
+  "title": "Opening habits: one checked failure each",
+  "skill": "OPN.PRINCIPLES",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Gives one checked position where taking the centre fails, one where moving a piece again is right, and one where castling is not the move",
+    "Says which condition made each habit fail: an attacked square, a loose piece, a pawn that only a trade can leave loose",
+    "Recognises a position where none of the three habits fails"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**When the opening habits fail: reasons and conditions** showed that a habit gives way to a threat. Here each habit gets its own checked failure. Start with the centre. A centre pawn is only as good as the square it lands on, so before you push, count the enemy pieces that attack that square. This is a *rule of thumb*: count first, then push."
+    },
+    {
+      "type": "item",
+      "item": "IBds81-1"
+    },
+    {
+      "type": "item",
+      "item": "IBds81-2"
+    },
+    {
+      "type": "card",
+      "text": "Second habit: do not move a piece twice before the others are out. The reason is time, and time is worth little when a piece of yours is loose (attacked and not defended). If the piece that has already moved is the one in danger, moving it again is the development that counts. *Rule of thumb:* a loose piece comes before a new piece."
+    },
+    {
+      "type": "item",
+      "item": "IBds81-3"
+    },
+    {
+      "type": "card",
+      "text": "Third habit: castle early. Castling puts the king away, but it does not defend anything else. Before you castle, ask what a trade could leave loose. A pawn defended only by a piece that can be traded off is the usual case. In the next pair, a position where the d6 pawn defends e5 is set against one where only the c6 knight does."
+    },
+    {
+      "type": "contrast",
+      "title": "Castle now?",
+      "prompt": "Black wants to castle in both positions. Predict whether castling is sound in each, then check.",
+      "working": "IBds81-5",
+      "failing": "IBds81-4"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 6",
+      "caption": "The position from the failing half of the pair. Step through what castling allows.",
+      "line": [
+        {
+          "move": "e8g8",
+          "say": "Black castles."
+        },
+        {
+          "move": "a4c6",
+          "say": "White trades the bishop for the knight."
+        },
+        {
+          "move": "d7c6",
+          "say": "Black recaptures with the d-pawn."
+        },
+        {
+          "move": "f3e5",
+          "say": "The e5 pawn has no defender and White takes it."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "e5"
+            ],
+            "after_moves": [
+              "e8g8",
+              "a4c6",
+              "d7c6"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "e8g8",
+            "cp": 60
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Conditions, one line each. *Centre:* fails when the square is attacked more often than it is defended. *Moving twice:* right when the piece that moved is the one attacked. *Castling:* fails when it leaves a pawn or piece loose after a trade. All three are *rules of thumb*. The next positions do not say which one applies, and in one of them none fails."
+    },
+    {
+      "type": "item",
+      "item": "IBds81-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds81-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.PRINCIPLES",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one of your recent games. Which habit did you follow in the first ten moves, and what did you check about the position before you followed it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/lessons/L-OPN-PRINCIPLES-1.json (conditions taught there, not repeated)",
+    "content/lessons/L-FND-OPENING-1.json (the three habits)",
+    "content/skills/OPN.PRINCIPLES.json (D3 outcome)",
+    "content/items/lesson-ds81.json (checked positions)"
+  ]
+}

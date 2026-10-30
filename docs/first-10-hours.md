@@ -21,7 +21,8 @@ The lessons below are the first 10 hours (lesson minutes added in teaching order
 | 11 | How the queen moves (`L-FND-QUEENKING-1`, tier 0) | 9 | 108 min |
 | 12 | How the rook moves (`L-FND-ROOKBISHOP-1`, tier 0; the old combined lesson, split by rule D24, keeps its id) | 9 | 117 min |
 | 13 | Observe: one unsure moment, and what you actually saw (`L-SELF-1-1`, tier 0) | 9 | 126 min |
-| 14 | Mating a lone king: queen, rook, and the stalemate trap (`L-END-MATE-1`, tier 1) | 11 | 137 min |
+| 14 | Mate with king and queen: the supported check (`L-END-MATE-1`, tier 1; the old combined lesson, split by rule D24, keeps its id) | 10 | 136 min |
+| 14b | Mating without stalemating (`L-END-MATE-STALEMATE-AVOID-1`, tier 1; taught right after 14) | 10 | 146 min |
 | 15 | King and queen against king: shrink the box (`L-END-MATEKQ-1`, tier 1) | 11 | 148 min |
 | 16 | King and rook against king: cut off and close in (`L-END-MATEKR-1`, tier 1) | 10 | 158 min |
 | 17 | Opposition: one tempo between a win and a draw (`L-END-OPPOSITION-1`, tier 1) | 12 | 170 min |
@@ -55,20 +56,21 @@ The lessons below are the first 10 hours (lesson minutes added in teaching order
 | 45 | Real threats and fictitious ones (`L-SAF-FICTITIOUS-1`, tier 2) | 11 | 458 min |
 | 46 | Explain it, and say how sure you are (`L-SELF-2-1`, tier 2) | 11 | 469 min |
 | 47 | Back-rank mate, and luft as the cure (`L-TAC-BACKRANK-1`, tier 2) | 10 | 479 min |
-| 48 | Discovered attacks, discovered check and double check (`L-TAC-DISCOVER-1`, tier 2) | 11 | 490 min |
-| 49 | Forks: one move, two targets (`L-TAC-FORK-1`, tier 2) | 8 | 498 min |
-| 50 | Forks with pawns and queens, and when they fail (`L-TAC-FORK-2`, tier 2) | 10 | 508 min |
-| 51 | Pins: cannot move, or should not move (`L-TAC-PIN-1`, tier 2) | 10 | 518 min |
-| 52 | Skewers: the king moves, the piece behind falls (`L-TAC-SKEWER-1`, tier 2) | 9 | 527 min |
-| 53 | A king in the centre: open the lines before he hides (`L-ATK-CENTER-1`, tier 3) | 10 | 537 min |
-| 54 | Count before you attack: attack now, not yet, or no (`L-ATK-SUPERIORITY-1`, tier 3) | 11 | 548 min |
-| 55 | Write the candidate list: forcing moves, one quiet move, a reason each (`L-CAL-CANDIDATES-1`, tier 3) | 12 | 560 min |
-| 56 | Track the line: what moved, what is gone, what is attacked (`L-CAL-VISUALIZE-1`, tier 3) | 12 | 572 min |
-| 57 | Pawn cover: what a pawn push in front of your king gives away (`L-DEF-SHELTER-1`, tier 3) | 10 | 582 min |
-| 58 | The pawn breakthrough: giving pawns to make a passed pawn (`L-END-BREAKTHROUGH-1`, tier 3) | 11 | 593 min |
-| 59 | Key squares: where the king must get to (`L-END-KEYSQ-1`, tier 3) | 11 | 604 min |
-| 60 | King and pawn against king: the king leads (`L-END-KPK-1`, tier 3) | 12 | 616 min |
-| 61 | Two bishops against a lone king (`L-END-MATE-2B-1`, tier 3) | 12 | 628 min |
+| 48 | Discovered attacks and discovered check (`L-TAC-DISCOVER-1`, tier 2) | 9 | 488 min |
+| 48b | Double check (`L-TAC-DOUBLE-CHECK-1`, tier 2) | 9 | 497 min |
+| 49 | Forks: one move, two targets (`L-TAC-FORK-1`, tier 2) | 8 | 505 min |
+| 50 | Forks with pawns and queens, and when they fail (`L-TAC-FORK-2`, tier 2) | 10 | 515 min |
+| 51 | Pins: cannot move, or should not move (`L-TAC-PIN-1`, tier 2) | 10 | 525 min |
+| 52 | Skewers: the king moves, the piece behind falls (`L-TAC-SKEWER-1`, tier 2) | 9 | 534 min |
+| 53 | A king in the centre: open the lines before he hides (`L-ATK-CENTER-1`, tier 3) | 10 | 544 min |
+| 54 | Count before you attack: attack now, not yet, or no (`L-ATK-SUPERIORITY-1`, tier 3) | 11 | 555 min |
+| 55 | Write the candidate list: forcing moves, one quiet move, a reason each (`L-CAL-CANDIDATES-1`, tier 3) | 12 | 567 min |
+| 56 | Track the line: what moved, what is gone, what is attacked (`L-CAL-VISUALIZE-1`, tier 3) | 12 | 579 min |
+| 57 | Pawn cover: what a pawn push in front of your king gives away (`L-DEF-SHELTER-1`, tier 3) | 10 | 589 min |
+| 58 | The pawn breakthrough: giving pawns to make a passed pawn (`L-END-BREAKTHROUGH-1`, tier 3) | 11 | 600 min |
+| 59 | Key squares: where the king must get to (`L-END-KEYSQ-1`, tier 3) | 11 | 611 min |
+| 60 | King and pawn against king: the king leads (`L-END-KPK-1`, tier 3) | 12 | 623 min |
+| 61 | Two bishops against a lone king (`L-END-MATE-2B-1`, tier 3) | 12 | 635 min |
 | 5b | Stalemate: no move, but no check (`L-FND-STALEMATE-1`, tier 0) | 9 | 55 min |
 | 9b | How the king moves (`L-FND-PIECE-KING-1`, tier 0) | 10 | 102 min |
 | 12b | How the bishop moves (`L-FND-PIECE-BISHOP-1`, tier 0; taught right after the rook) | 10 | 118 min |

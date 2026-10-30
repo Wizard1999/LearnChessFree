@@ -1,0 +1,119 @@
+{
+  "id": "L-END-PHILIDOR-1",
+  "title": "Philidor: the passive defence that works",
+  "skill": "END.PHILIDOR",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Explains in plain words how the defender holds the draw: the rook stays on the sixth rank until the pawn advances, then checks from behind",
+    "Sets up the defence and says what triggers the switch to checking from behind",
+    "Recognises a rook placement that White's king and rook can punish, and says why the draw is lost"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Philidor.** The attacker has a pawn on the fifth rank, the defender's king stands in front of it, and the defender looks passive. Even so, the draw is there. Keep the rook on the sixth rank, counted from the attacker's side, so the enemy king cannot cross it. Wait. When the pawn advances to the sixth, the rook swings behind and checks from a distance. Passive defence is not always wrong; it is right here, and it is a plan with conditions."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/r3P3/3K4/8/8/7R/8 b - - 0 1",
+      "caption": "Philidor with the pawn on e6, Black to move: Black holds the draw. Ra1 is one of several drawing moves.",
+      "line": [
+        {
+          "move": "a6a1",
+          "say": "The rook leaves the sixth rank for the first rank, far behind White's king and pawn. From there it can check along the files."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Black holds the draw from the start position."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "a6a1"
+          }
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a6",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "e8",
+        "a6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA3-805"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** The rook holds the sixth rank until the pawn moves; that is a good default, not the only drawing idea. Before you switch to checking, ask what White's rook attacks and where White's king can step. Some rook squares lose, for example when White's rook can take yours or when the rook stands where it cannot hold the king back. Check each placement; do not rely on a single rank."
+    },
+    {
+      "type": "contrast",
+      "title": "Same Philidor move, rook one rank apart",
+      "prompt": "White's pawn is on e6. Black plays Ra1. Does it hold if White's rook is on h2? On h1? Predict, then check.",
+      "working": "IA3-808",
+      "failing": "IA3-809",
+      "irrelevant": "IA3-810"
+    },
+    {
+      "type": "item",
+      "item": "IE-PHI-25"
+    },
+    {
+      "type": "item",
+      "item": "IA3-807",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-PHI-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-PHI-2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-812"
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.PHILIDOR"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Where did passive defence feel wrong to you? In which position was the rook's rank, or the square it checks from, the thing you had not looked at?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-21, CI-22: rook-ending cut-off; passive defence is not always wrong)",
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-22, section 5 item 25: passive defence is not always wrong)",
+    "docs/curriculum-map-v1.1.md section 4 (a Lucena-type position wins)",
+    "Items IA3-805..812, IE-PHI-2, IE-PHI-3, IE-PHI-25 and the board position: results from the Lichess tablebase service"
+  ]
+}

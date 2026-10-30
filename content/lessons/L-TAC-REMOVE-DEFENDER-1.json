@@ -1,93 +1,30 @@
 {
   "id": "L-TAC-REMOVE-DEFENDER-1",
-  "title": "Attacking the defender: remove, deflect, decoy, overload",
+  "title": "Removing the defender",
   "skill": "TAC.REMOVE-DEFENDER",
   "depth": "D1",
-  "minutes": 12,
+  "minutes": 9,
   "outcomes": [
-    "Finds the capture that removes the only defender",
-    "Tells removal, deflection, decoy and overload apart",
-    "Counts the defenders and their jobs before attacking one",
-    "Says when a second defender or a capturing piece defeats the idea"
+    "Finds the capture that takes away the only defender of a piece",
+    "Counts the defenders of the target before capturing one",
+    "Says why a second defender or a cheaper recapture defeats the idea"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "A defended piece is only safe while its defender can do its job. Attack the defender and the piece falls. There are four ways: **remove** it by capturing it, **deflect** it by forcing it to move, **decoy** it by luring it to a bad square, **overload** it by giving it two jobs."
-    },
-    {
-      "type": "board",
-      "fen": "6k1/4q1p1/6Pp/p7/4Q3/2BRK3/bP3r2/7R b - - 0 32",
-      "caption": "Black to move. The white queen on e4 is defended by the king on e3.",
-      "line": [
-        {
-          "move": "f2e2",
-          "say": "The rook offers itself with check."
-        },
-        {
-          "move": "e3e2",
-          "say": "The king takes the rook and leaves e3."
-        },
-        {
-          "move": "e7e4",
-          "say": "The queen takes the queen with check."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f2",
-          "to": "e2"
-        },
-        {
-          "from": "e7",
-          "to": "e4"
-        }
-      ],
-      "highlight": [
-        "e4",
-        "e3"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "material_after_move",
-          "params": {
-            "move": "f2e2",
-            "min": 4
-          },
-          "statement": "...Re2+ followed by ...Qxe4+ wins material along the engine line."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e4",
-            "color": "white",
-            "count": 1
-          },
-          "statement": "Only the king on e3 defends the queen on e4."
-        }
-      ]
+      "text": "A defended piece is only safe while its defender stays. If one piece does all the defending, **capture that defender** and the target is left without protection. This is *removing the defender*. It is a capture, so it is the plainest of the ways to attack a defence. Look for the defender first, then ask what captures it."
     },
     {
       "type": "item",
       "item": "IA1-062"
     },
     {
-      "type": "item",
-      "item": "IA1-063"
-    },
-    {
-      "type": "item",
-      "item": "IA1-064"
-    },
-    {
-      "type": "item",
-      "item": "IA1-065"
-    },
-    {
       "type": "card",
-      "text": "Before you attack a defender, count.\n**Is it the only defender?** A second defender ends the idea.\n**What are all its jobs?** An overloaded piece cannot keep two.\n**What stands on the square after the exchanges?** Recount before you commit."
+      "text": "Taking the defender is a trade, and a trade can go wrong. Before you capture, count: **who else defends the target?** And **what can recapture on the square you capture on?** The idea works only if the target ends up with no defender after the exchange."
+    },
+    {
+      "type": "item",
+      "item": "IL-HJlw6"
     },
     {
       "type": "contrast",
@@ -97,8 +34,8 @@
       "failing": "IA1-066"
     },
     {
-      "type": "item",
-      "item": "IA1-067"
+      "type": "card",
+      "text": "**When it holds:** the target has one defender and you can capture it; after the trades the target is still unprotected. **When it fails:** a second piece defends the target, or the defender is guarded so that your capture loses more than it wins. As a rule of thumb, count both before you take."
     },
     {
       "type": "item",
@@ -107,7 +44,12 @@
     },
     {
       "type": "item",
-      "item": "IA1-069",
+      "item": "ISsp6-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-7e5N5",
       "silent": true
     },
     {
@@ -119,25 +61,9 @@
       "n": 3
     },
     {
-      "type": "practice",
-      "tags": [
-        "theme.deflection",
-        "cue.3"
-      ],
-      "n": 3
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "theme.attraction",
-        "cue.3"
-      ],
-      "n": 3
-    },
-    {
       "type": "reflect",
       "kind": "unsure",
-      "prompt": "When a piece looked defended, did you list every job of the defender before you attacked it?"
+      "prompt": "When a piece looked defended, did you count every defender before you captured one?"
     }
   ],
   "review": {
@@ -146,13 +72,8 @@
   },
   "sources": [
     "sources/sheets/edlasker_chess-strategy.md (K3: three ways the count lies)",
-    "sources/sheets/nimzowitsch_my-system.md (idea 27: exchange on the pinning square)",
     "docs/curriculum-map-v1.md S3",
-    "Lichess puzzle database (CC0): UULzT, x4ly6, D9ufo, lTEq0, PKmeH as seed positions"
-  ],
-  "also": [
-    "TAC.DEFLECT",
-    "TAC.DECOY",
-    "TAC.OVERLOAD"
+    "sources/sheets/nimzowitsch_my-system.md (idea 27: exchange on the pinning square)",
+    "Items IA1-062, IA1-066, IA1-068, ISsp6-4"
   ]
 }

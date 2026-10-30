@@ -1,0 +1,796 @@
+{
+  "positions": [
+    {
+      "id": "PSsp9-1",
+      "fen": "7k/5KQ1/8/8/8/8/8/8 b - - 0 1",
+      "family": "FAM-SP9-SUPPORT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Qg7 with the king on f7 protecting the queen",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp9-2",
+      "fen": "7k/6Q1/4K3/8/8/8/8/8 b - - 0 1",
+      "family": "FAM-SP9-SUPPORT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "same, white king on e6 instead of f7",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp9-3",
+      "fen": "k7/1QK5/8/8/8/8/8/8 b - - 0 1",
+      "family": "FAM-SP9-SUPPORT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "mirror image in the a8 corner",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp9-4",
+      "fen": "7k/8/5K2/8/8/8/8/2Q5 w - - 0 1",
+      "family": "FAM-SP9-NOMATE",
+      "provenance": {
+        "kind": "authored",
+        "ref": "K+Q v K, queen far away: no mate in one",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp9-5",
+      "fen": "k7/2Q3K1/8/8/8/8/8/8 w - - 0 1",
+      "family": "FAM-SP9-NOMATE",
+      "provenance": {
+        "kind": "authored",
+        "ref": "K+Q v K, queen close to the king but every check is unprotected: no mate in one",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp9-6",
+      "fen": "1k6/3Q4/2K5/8/8/8/8/8 w - - 0 1",
+      "family": "FAM-SP9-SUPPORT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "K+Q v K, one supported mate among unprotected checks",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ISsp9-1",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PSsp9-1",
+      "prompt": "Black to move, and White has just played Qg7 with the white king on f7. Checkmate, stalemate, or neither?",
+      "answer": {
+        "class": "checkmate",
+        "options": [
+          "checkmate",
+          "stalemate",
+          "neither"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "checkmate"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g7",
+            "color": "white",
+            "count": 1
+          }
+        }
+      ],
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.2",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "Is the black king in check? Which squares next to it are free?",
+        "Can the king take the queen on g7?",
+        "The white king on f7 protects the queen, and the queen covers every other square."
+      ],
+      "explain": "The queen checks, the king on f7 protects her, and g8, h7 and g7 are all unavailable: checkmate.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      },
+      "contrast_group": "CG-SP9-SUPPORT"
+    },
+    {
+      "id": "ISsp9-2",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PSsp9-2",
+      "prompt": "The white king is on e6 instead of f7. White has just played the same Qg7. Black to move: checkmate, stalemate, or neither?",
+      "answer": {
+        "class": "neither",
+        "options": [
+          "checkmate",
+          "stalemate",
+          "neither"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "h8g7"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g7",
+            "color": "white",
+            "count": 0
+          }
+        }
+      ],
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.2",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "Is the black king in check? Is the queen protected?",
+        "Look at g7: does any white piece besides the queen defend it?",
+        "Nothing protects the queen, so the king can capture her."
+      ],
+      "explain": "Black is in check, but the queen on g7 is unprotected and the king captures her: this is neither mate nor stalemate.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      },
+      "contrast_group": "CG-SP9-SUPPORT"
+    },
+    {
+      "id": "ISsp9-3",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PSsp9-3",
+      "prompt": "The black king is in the a8 corner and the white king is on c7. White has just played Qb7. Black to move: checkmate, stalemate, or neither?",
+      "answer": {
+        "class": "checkmate",
+        "options": [
+          "checkmate",
+          "stalemate",
+          "neither"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "checkmate"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b7",
+            "color": "white",
+            "count": 1
+          }
+        }
+      ],
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.2",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "Is the black king in check? Which squares next to it are free?",
+        "Can the king take the queen on b7?",
+        "The king on c7 protects the queen, so the king has no square."
+      ],
+      "explain": "The same shape in the other corner: the queen checks, the king on c7 protects her, and the black king has no move: checkmate.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      },
+      "contrast_group": "CG-SP9-SUPPORT"
+    },
+    {
+      "id": "ISsp9-4",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "PSsp9-4",
+      "prompt": "White to move. Look for the strongest move. Predict: can White checkmate on this move, yes or no?",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "c1c7",
+            "n": 2
+          }
+        },
+        {
+          "id": "C3",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6f7"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6e7"
+          }
+        },
+        {
+          "id": "C5",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6g6"
+          }
+        },
+        {
+          "id": "C6",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6e6"
+          }
+        },
+        {
+          "id": "C7",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6g5"
+          }
+        },
+        {
+          "id": "C8",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6f5"
+          }
+        },
+        {
+          "id": "C9",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f6e5"
+          }
+        },
+        {
+          "id": "C10",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c8"
+          }
+        },
+        {
+          "id": "C11",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c7"
+          }
+        },
+        {
+          "id": "C12",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1h6"
+          }
+        },
+        {
+          "id": "C13",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c6"
+          }
+        },
+        {
+          "id": "C14",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1g5"
+          }
+        },
+        {
+          "id": "C15",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c5"
+          }
+        },
+        {
+          "id": "C16",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1f4"
+          }
+        },
+        {
+          "id": "C17",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c4"
+          }
+        },
+        {
+          "id": "C18",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1e3"
+          }
+        },
+        {
+          "id": "C19",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c3"
+          }
+        },
+        {
+          "id": "C20",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1a3"
+          }
+        },
+        {
+          "id": "C21",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1d2"
+          }
+        },
+        {
+          "id": "C22",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1c2"
+          }
+        },
+        {
+          "id": "C23",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1b2"
+          }
+        },
+        {
+          "id": "C24",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1h1"
+          }
+        },
+        {
+          "id": "C25",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1g1"
+          }
+        },
+        {
+          "id": "C26",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1f1"
+          }
+        },
+        {
+          "id": "C27",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1e1"
+          }
+        },
+        {
+          "id": "C28",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1d1"
+          }
+        },
+        {
+          "id": "C29",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1b1"
+          }
+        },
+        {
+          "id": "C30",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c1a1"
+          }
+        }
+      ],
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.3",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "Is the black king in check after any queen move that also keeps the queen safe?",
+        "Count the squares next to the black king that the queen can reach in one move.",
+        "The queen is far from the king; no single move gives mate."
+      ],
+      "explain": "No legal move is checkmate. White still wins, for example with Qc7, which forces mate in two.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ISsp9-5",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "PSsp9-5",
+      "prompt": "White to move. The queen is next to the black king. Predict: can White checkmate on this move, yes or no?",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7h8"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7g8"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7f8"
+          }
+        },
+        {
+          "id": "C5",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7h7"
+          }
+        },
+        {
+          "id": "C6",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7f7"
+          }
+        },
+        {
+          "id": "C7",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7h6"
+          }
+        },
+        {
+          "id": "C8",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7g6"
+          }
+        },
+        {
+          "id": "C9",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "g7f6"
+          }
+        },
+        {
+          "id": "C10",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7d8"
+          }
+        },
+        {
+          "id": "C11",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c8"
+          }
+        },
+        {
+          "id": "C12",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7b8"
+          }
+        },
+        {
+          "id": "C13",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7f7"
+          }
+        },
+        {
+          "id": "C14",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7e7"
+          }
+        },
+        {
+          "id": "C15",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7d7"
+          }
+        },
+        {
+          "id": "C16",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7b7"
+          }
+        },
+        {
+          "id": "C17",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7a7"
+          }
+        },
+        {
+          "id": "C18",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7d6"
+          }
+        },
+        {
+          "id": "C19",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c6"
+          }
+        },
+        {
+          "id": "C20",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7b6"
+          }
+        },
+        {
+          "id": "C21",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7e5"
+          }
+        },
+        {
+          "id": "C22",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c5"
+          }
+        },
+        {
+          "id": "C23",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7a5"
+          }
+        },
+        {
+          "id": "C24",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7f4"
+          }
+        },
+        {
+          "id": "C25",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c4"
+          }
+        },
+        {
+          "id": "C26",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7g3"
+          }
+        },
+        {
+          "id": "C27",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c3"
+          }
+        },
+        {
+          "id": "C28",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7h2"
+          }
+        },
+        {
+          "id": "C29",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c2"
+          }
+        },
+        {
+          "id": "C30",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "c7c1"
+          }
+        }
+      ],
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.3",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "Which queen moves give check? Can the black king capture the queen after each one?",
+        "Your king is on g7, far from the queen. What protects a checking queen on b7 or a7?",
+        "No check is protected, so the king takes the queen every time."
+      ],
+      "explain": "Every check, such as Qb7+ or Qa7+, is met by the king capturing the unprotected queen. There is no mate in one; White first brings the king closer, for example with Kf6.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ISsp9-6",
+      "skill": "END.MATE-KQ.D1",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PSsp9-6",
+      "prompt": "White to move. Find checkmate in one. Not every check is protected.",
+      "answer": {
+        "moves": [
+          "d7b7"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d7b7",
+            "n": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d7c8"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d7a7"
+          }
+        }
+      ],
+      "feedback_by_move": {
+        "d7c8": "Qc8+ gives check but nothing protects the queen, so the king captures her: a draw (tablebase: draw).",
+        "d7a7": "Qa7+ gives check but nothing protects the queen, so the king captures her: a draw (tablebase: draw)."
+      },
+      "tags": [
+        "theme.endgame",
+        "kind.authored",
+        "tier.1",
+        "lang.en",
+        "set.mate-core",
+        "cue.3",
+        "node.END.MATE-KQ"
+      ],
+      "hints": [
+        "List the checks. After each, can the black king capture the queen?",
+        "Your king on c6 protects some squares next to it. Which check lands on one of them?",
+        "Qb7 is protected by the king on c6 and covers a8, a7 and c8."
+      ],
+      "explain": "Qb7# is checkmate: the king on c6 protects the queen, and a8, a7, c8 and c7 are all covered. Qc8+ and Qa7+ lose the queen.",
+      "orientation": "auto",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      }
+    }
+  ]
+}

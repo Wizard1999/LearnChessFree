@@ -1,0 +1,128 @@
+{
+  "id": "L-END-ZUGZWANG-2",
+  "title": "Zugzwang: who is to move, and is there a spare move?",
+  "skill": "END.ZUGZWANG",
+  "depth": "D2",
+  "minutes": 13,
+  "outcomes": [
+    "Predicts win, draw or loss for the side to move in unlabeled king-and-pawn positions with locked pawns",
+    "Recognises a movable pawn as a spare move that breaks the mutual zugzwang",
+    "Says when the side to move does not decide the result"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Zugzwang: when having the move is a burden** you met positions where the side to move loses. Now they arrive unlabeled. Two questions decide: **who is to move**, and **does either side have a spare move**, a pawn or king move that gives nothing away? Predict for the side to move before you look."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/4pK2/3kP3/8/8/8/8 b - - 0 1",
+      "caption": "Black to move. The tablebase says every Black move loses; one line is shown.",
+      "line": [
+        {
+          "move": "d5c5",
+          "say": "Black's king steps away; the pawn on e6 now has no defender."
+        },
+        {
+          "move": "f6e6",
+          "say": "White's king takes the pawn on e6."
+        },
+        {
+          "move": "c5c6",
+          "say": "Black's king steps to c6."
+        },
+        {
+          "move": "e6f6",
+          "say": "White's king goes back to f6 and guards the pawn on e5."
+        },
+        {
+          "move": "c6b5",
+          "say": "Black's king steps to b5."
+        },
+        {
+          "move": "e5e6",
+          "say": "White pushes the pawn."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          },
+          "statement": "Black to move loses with best play."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IE-ZZ-30"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** With locked pawns and only the kings free, the side to move may lose or win. **When it fails:** a pawn that can still move is a spare move, and here the side that owns one wins the waiting game, but only while it has safe moves and the enemy king cannot reach it. Blocked pawns give none. Rule of thumb: count spare moves before king moves."
+    },
+    {
+      "type": "contrast",
+      "title": "Extra pawns, three ways",
+      "prompt": "The kings and the locked f-pawns are the same in all three. Predict each result for the side to move, then check.",
+      "working": "IE-ZZ-1",
+      "failing": "IBds75-3",
+      "irrelevant": "IBds75-4"
+    },
+    {
+      "type": "item",
+      "item": "IBds75-1"
+    },
+    {
+      "type": "item",
+      "item": "IBds75-2"
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, other side to move",
+      "prompt": "Predict: does it matter who moves here? Then check.",
+      "working": "IE-ZZ-18",
+      "failing": "IE-ZZ-19"
+    },
+    {
+      "type": "item",
+      "item": "IE-ZZ-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-ZZ-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-ZZ-22",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.ZUGZWANG",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each answer: did you ask who is to move, and did you look for a pawn that could still move? Which of the two did you forget in the position you got wrong?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.ZUGZWANG.json (D2 outcome)",
+    "Lesson 'Zugzwang: when having the move is a burden' (D1)",
+    "All positions: own constructions or generated; every result from the Lichess tablebase service"
+  ]
+}

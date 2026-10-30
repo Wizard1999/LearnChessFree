@@ -1,0 +1,200 @@
+{
+ "id": "L-END-KEYSQ-2",
+ "title": "Key squares: predict the result",
+ "skill": "END.KEYSQ",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Predicts win or draw in a K+P position by finding the key squares and counting king steps with the side to move",
+  "Names the rook-pawn exception and tests it before counting",
+  "Recognises a position with extra pieces, where the key-square rule does not decide"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Key squares: where the king must get to** you marked key squares. Now predict results with no hint. Ask in order: where are the pawn's key squares, two ranks ahead? Can the attacking king reach one, counting who moves first? Is the pawn on an edge file, or are there extra pieces? This is a **rule of thumb**; the tablebase has the last word."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/1k6/5P2/8/5K2/8 w - - 0 1",
+   "caption": "White to move. The key squares of the f4 pawn are e6, f6 and g6. The king walks there while the pawn waits.",
+   "line": [
+    {
+     "move": "f2g3",
+     "say": "White's king steps to g3."
+    },
+    {
+     "move": "b5c6",
+     "say": "Black's king steps to c6."
+    },
+    {
+     "move": "g3h4",
+     "say": "White's king steps to h4."
+    },
+    {
+     "move": "c6d7",
+     "say": "Black's king steps to d7."
+    },
+    {
+     "move": "h4h5",
+     "say": "White's king steps to h5."
+    },
+    {
+     "move": "d7e8",
+     "say": "Black's king steps to e8."
+    },
+    {
+     "move": "h5g6",
+     "say": "White's king reaches g6, a key square of the f4 pawn."
+    },
+    {
+     "move": "e8f8",
+     "say": "Black's king steps to f8."
+    },
+    {
+     "move": "g6f6",
+     "say": "White's king stands on f6, also a key square, and the pawn has not moved."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f6",
+    "g6"
+   ],
+   "arrows": [
+    {
+     "from": "f2",
+     "to": "g3"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f2g3"
+     },
+     "statement": "Kg3 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f2g1"
+     },
+     "statement": "Kg1 does not win."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4f5"
+     },
+     "statement": "The push f5 does not win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-15"
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-17"
+  },
+  {
+   "type": "card",
+   "text": "It holds with only a king and pawn against a king, the pawn off the edge, and an honest count that includes who moves first. It stops one step short of a key square (the move decides), with an edge-file pawn (the defender runs for the corner), and with extra pieces. \"A king directly in front of the pawn cannot be beaten\" is a **rule of thumb**; check key squares instead."
+  },
+  {
+   "type": "contrast",
+   "title": "Same position, other side to move",
+   "prompt": "In the first position White to move wins. Predict the second, where Black is to move instead, and the third, where only the White king stands one file over.",
+   "working": "IE-KEYSQ-25",
+   "failing": "IE-KEYSQ-26",
+   "irrelevant": "IB73-1"
+  },
+  {
+   "type": "contrast",
+   "title": "A centre pawn or an edge pawn",
+   "prompt": "In the first position the side with the pawn wins. Predict the second, with the pawn on the edge file, and the third, where only the king has moved.",
+   "working": "IE-KEYSQ-20",
+   "failing": "IE-KEYSQ-19",
+   "irrelevant": "IB73-2"
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-23",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-29",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KEYSQ-30",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-3",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KEYSQ",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each prediction: did you find the key squares first, count the king steps, and check the file of the pawn and the move? Which step did you skip most often?",
+   "fields": [
+    {
+     "id": "skipped",
+     "label": "The step I skipped most:",
+     "options": [
+      "the key squares",
+      "counting king steps",
+      "who is to move",
+      "the edge file / extra pieces"
+     ]
+    },
+    {
+     "id": "surprise",
+     "label": "A result that surprised me and why:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.KEYSQ.json (D2 outcome, conditions, contrasts; the node cites E. Lasker K23 and Capablanca, not re-read for this lesson)",
+  "Lesson L-END-KEYSQ-1 (D1) is linked, not repeated",
+  "All results: Lichess tablebase claims in content/items/lesson-ds73.json and the shipped items IE-KEYSQ-15..30; board line from a local exact K+P solver cross-checked against 44 shipped tablebase answers"
+ ]
+}

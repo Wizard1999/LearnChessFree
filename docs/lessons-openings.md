@@ -15,7 +15,8 @@ Validator results at hand-in [V]: all 8 item files pass 100% of their claims (62
 | `L-OPN-STRUCTURE-1` | OPN.STRUCT D1 | IA4-081..087 | Say that two move orders can reach one structure; pick plan-consistent moves in Carlsbad, isolated-d-pawn and open-centre positions; see that a push (b4) belongs to a structure |
 | `L-GAME-GUESS-1` | GAME.GUESS D1 | IA4-101..106 | Commit to a move before the reveal in the Opera Game, compare with engine and plan |
 | `L-GAME-OWN-1` | GAME.OWN D1 | IA4-121..125 | Mark up to three critical moments before an engine, and check the marks against routine / slip / blunder bands |
-| `L-OPN-REPERTOIRE-1` | OPN.REPERTOIRE.WHITE D1 (items split WHITE / BLACK) | IA4-141..148 | Start a repertoire from the openings he actually faces; read an openings table for frequency, not worth; separate forcing lines (remember) from flexible positions (understand) |
+| `L-OPN-REPERTOIRE-1` | OPN.REPERTOIRE.WHITE D1 (split 30 Oct 2026: one lesson per node) | IA4-141, 144, 145, 148, ISsp12-1..5 | A White repertoire from his own games; forcing positions (remember the move) against flexible ones (remember the plan) |
+| `L-OPN-REPERTOIRE-BLACK-1` | OPN.REPERTOIRE.BLACK D1 | IA4-142, 143, 146, 147, ISsp12-10..15 | A Black repertoire against 1.e4 and 1.d4; reading the Openings page for frequency, not worth; checking that a reply is sound |
 
 ## Sources and rights
 * Games: the Opera Game move list (L-GAME-GUESS-1) is read from Edward Lasker, *Chess Strategy* (1915), `sources/raw/edlasker_chess-strategy_gutenberg5614.txt` lines 1417-1560 (US public domain per `library/REGISTRY.md`), checked move by move against python-chess [V]. The beginner's game in L-OPN-NONDEV-1 / L-GAME-OWN-1 is from lines 1311-1416 of the same file (the engine confirms it ends in mate). Moves are facts; all commentary is mine. The sample game in L-GAME-OWN-1 (Elephant Trap line) is a well-known move sequence used as practice, not a quoted record.

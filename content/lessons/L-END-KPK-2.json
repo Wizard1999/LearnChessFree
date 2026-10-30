@@ -1,0 +1,214 @@
+{
+ "id": "L-END-KPK-2",
+ "title": "King and pawn against king: predict the family",
+ "skill": "END.KPK",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Predicts win or draw for K+P v K positions that differ in side to move, king placement and pawn file",
+  "Changes one fact at a time and says whether the result flips",
+  "Recognises a change that leaves the result alone"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **King and pawn against king: the king leads** the plan was king first, pawn only when needed. Now predict results in a family of positions where one fact changes at a time: who is to move, where the kings stand, which file the pawn is on. Check them in that order. It is a **rule of thumb**; the tablebase decides each case."
+  },
+  {
+   "type": "board",
+   "fen": "5k2/8/8/3KP3/8/8/8/8 w - - 0 1",
+   "caption": "White to move. Both king moves in front of the pawn win. The push e6 only draws.",
+   "line": [
+    {
+     "move": "d5e6",
+     "say": "White's king steps to e6."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black's king steps to e8."
+    },
+    {
+     "move": "e6f6",
+     "say": "White's king steps to f6."
+    },
+    {
+     "move": "e8f8",
+     "say": "Black's king steps to f8."
+    },
+    {
+     "move": "e5e6",
+     "say": "Only now does the pawn advance, with the king beside it."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black's king steps to e8."
+    },
+    {
+     "move": "e6e7",
+     "say": "The pawn reaches e7, defended by the king on f6."
+    },
+    {
+     "move": "e8d7",
+     "say": "Black's king attacks the pawn."
+    },
+    {
+     "move": "f6f7",
+     "say": "White's king steps to f7, guarding e8 and the pawn."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black's king steps to d6."
+    },
+    {
+     "move": "e7e8q",
+     "say": "Now the pawn queens, guarded by the king."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5e6"
+     },
+     "statement": "Ke6 wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5d6"
+     },
+     "statement": "Kd6 wins."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5e6"
+     },
+     "statement": "The push e6 does not win."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5c6"
+     },
+     "statement": "Kc6 does not win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-21"
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-23"
+  },
+  {
+   "type": "card",
+   "text": "Three facts change the answer in this lesson. The side to move: one tempo turns a win into a draw. The king positions relative to the pawn. The file: an edge-file pawn lets the defender run for the corner. How far the pawn has gone changes which squares the king needs, so rank can flip a result too; this lesson changes the other three facts. A change that leaves the result alone is as worth noticing as one that flips it."
+  },
+  {
+   "type": "contrast",
+   "title": "One tempo",
+   "prompt": "In the first position Black to move wins. Predict the second, where White is to move instead, and the third, where only the White king stands one file over.",
+   "working": "IE-KPK-5",
+   "failing": "IE-KPK-6",
+   "irrelevant": "IB73-7"
+  },
+  {
+   "type": "contrast",
+   "title": "Centre file or edge file",
+   "prompt": "In the first position White wins. Predict the second, which is the same placement one file to the left, and the third, where only the Black king has moved.",
+   "working": "IB73-4",
+   "failing": "IB73-5",
+   "irrelevant": "IB73-6"
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-3",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-7",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KPK",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each prediction: did you note the side to move first, then the kings, then the file? Which fact flipped a result you expected to hold?",
+   "fields": [
+    {
+     "id": "fact",
+     "label": "The fact that flipped a result:",
+     "options": [
+      "the side to move",
+      "the king placement",
+      "the pawn file"
+     ]
+    },
+    {
+     "id": "note",
+     "label": "One position I got wrong and why:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.KPK.json (D2 outcome, conditions, contrasts, misconceptions; the node cites Capablanca CI-06/07 and E. Lasker K23, not re-read for this lesson)",
+  "Lesson L-END-KPK-1 (D1) is linked, not repeated",
+  "All results: Lichess tablebase claims (content/items/lesson-ds73.json and the shipped IE-KPK-3..28)"
+ ]
+}

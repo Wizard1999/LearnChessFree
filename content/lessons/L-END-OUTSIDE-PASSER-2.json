@@ -1,0 +1,227 @@
+{
+ "id": "L-END-OUTSIDE-PASSER-2",
+ "title": "The outside passed pawn: does it win, or is it too close?",
+ "skill": "END.OUTSIDE-PASSER",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Decides in unlabeled pawn endings whether an outside passed pawn wins, by counting the passer's distance from the kings and each king's steps",
+  "Finds the only move that keeps a won outside-passer ending won",
+  "Recognises a passer that stands too close to the kings and predicts the draw"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **The outside passed pawn: a decoy for the enemy king** you saw the plan. Now decide without help. Count three things: how far the passed pawn is from both kings, the steps each king needs to reach the pawns on the other wing, and whose move it is. If the kings face each other, see **Opposition: one tempo between a win and a draw**. A passer standing near the kings is not a decoy."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/5p2/2K2P2/P5k1/8/8 w - - 0 1",
+   "caption": "White to move. Only a4 keeps the win. One line is shown.",
+   "line": [
+    {
+     "move": "a3a4",
+     "say": "The outside pawn advances."
+    },
+    {
+     "move": "g3f4",
+     "say": "Black's king takes the f4 pawn."
+    },
+    {
+     "move": "a4a5",
+     "say": "The a-pawn runs on."
+    },
+    {
+     "move": "f4e4",
+     "say": "Black's king heads for the a-pawn."
+    },
+    {
+     "move": "a5a6",
+     "say": "Two moves from queening."
+    },
+    {
+     "move": "e4e5",
+     "say": "Black's king keeps running."
+    },
+    {
+     "move": "a6a7",
+     "say": "One move from queening."
+    },
+    {
+     "move": "e5d6",
+     "say": "Black's king is still far from the a-pawn."
+    },
+    {
+     "move": "c4d4",
+     "say": "White's king turns towards the f5 pawn."
+    },
+    {
+     "move": "d6c6",
+     "say": "Black's king reaches c6."
+    },
+    {
+     "move": "a7a8q",
+     "say": "The a-pawn queens with check."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Exact result for the side to move (Lichess tablebase)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "a3a4",
+      "result": "win"
+     },
+     "statement": "a4: result win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "c4b3",
+      "result": "draw"
+     },
+     "statement": "Kb3: result draw."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "move": "c4b4",
+      "result": "draw"
+     },
+     "statement": "Kb4: result draw."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "move": "c4b5",
+      "result": "draw"
+     },
+     "statement": "Kb5: result draw."
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "move": "c4c3",
+      "result": "draw"
+     },
+     "statement": "Kc3: result draw."
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "move": "c4c5",
+      "result": "draw"
+     },
+     "statement": "Kc5: result draw."
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "move": "c4d3",
+      "result": "draw"
+     },
+     "statement": "Kd3: result draw."
+    },
+    {
+     "id": "C9",
+     "type": "tablebase",
+     "params": {
+      "move": "c4d4",
+      "result": "draw"
+     },
+     "statement": "Kd4: result draw."
+    },
+    {
+     "id": "C10",
+     "type": "tablebase",
+     "params": {
+      "move": "c4d5",
+      "result": "draw"
+     },
+     "statement": "Kd5: result draw."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-8"
+  },
+  {
+   "type": "card",
+   "text": "**It wins when** the defending king must run after the passer and the other king then reaches the pawns first (*rule of thumb*). **It fails when** the passer stands near the kings: the defending king can stop it and still guard his own pawns. Equal pawn counts do not decide, and a pawn on a nearby file can look the same and behave differently. The next pairs differ by one feature."
+  },
+  {
+   "type": "contrast",
+   "title": "The same pawns, the passer nearer the kings",
+   "prompt": "The first position is won. Move the passer nearer the centre, or one king one step, and predict each result.",
+   "working": "IE-OUT-9",
+   "failing": "IE-OUT-10",
+   "irrelevant": "IBds74-29"
+  },
+  {
+   "type": "contrast",
+   "title": "Another pair",
+   "prompt": "The first position is won. Move the passer nearer the centre, or one king one file, and predict each result.",
+   "working": "IE-OUT-12",
+   "failing": "IE-OUT-13",
+   "irrelevant": "IBds74-30"
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-15",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-2",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-6",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OUTSIDE-PASSER",
+    "idea.outside-passed-pawn",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "In the positions you got wrong, did you misjudge how close the passer was to the kings, count a king's steps wrongly, or forget whose move it was?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.OUTSIDE-PASSER.json (D2 outcome, conditions, contrasts)",
+  "sources/sheets/edlasker_chess-strategy.md section 4 K24 (idea only)",
+  "All positions: shipped IE-OUT families (generated by tools/endgames/gen_pawn3.py) and own variants; all results and the only-move claims from the Lichess tablebase"
+ ]
+}

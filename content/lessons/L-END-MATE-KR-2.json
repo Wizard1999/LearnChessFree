@@ -1,0 +1,161 @@
+{
+  "id": "L-END-MATE-KR-2",
+  "title": "Rook mate in two: the quiet first move",
+  "skill": "END.MATE-KR",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds a mate in two with king and rook when the first move is a king step or a rook waiting move",
+    "Decides whether a rook check wins at once or whether a quiet move must come first",
+    "Rejects the first move that leaves the lone king no legal move and no check"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Start from *King and rook against king: cut off and close in*. In a **mate in two** the first move is often quiet. The last move is a rook check along the edge, with your king covering the squares next to the lone king. If that check does not mate now, ask which quiet move forces it next turn: a **king step**, or a **waiting move** with the rook. Checking at once is not always best."
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/2K5/8/8/8/8/3R4 w - - 0 1",
+      "caption": "Kc7 is a quiet king step. Whatever Black plays, the rook mates on the next move.",
+      "line": [
+        {
+          "move": "c6c7",
+          "say": "A quiet king step. It checks nothing, but it takes away b8 and b7."
+        },
+        {
+          "move": "a8a7",
+          "say": "Black's only move."
+        },
+        {
+          "move": "d1a1",
+          "say": "Ra1 is checkmate: the rook checks along the a-file and the king covers the rest."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "c7"
+        },
+        {
+          "from": "d1",
+          "to": "a1"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "c6c7",
+            "n": 2
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-53"
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/5K2/8/8/8/R7/8 w - - 0 1",
+      "caption": "Ra8+ at once only chases the king to h7. Kg6 first, then Ra8 is mate.",
+      "line": [
+        {
+          "move": "f6g6",
+          "say": "The quiet move. The king now covers g7 and h7."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black's only move."
+        },
+        {
+          "move": "a2a8",
+          "say": "Ra8 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "g6"
+        },
+        {
+          "from": "a2",
+          "to": "a8"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "a2a8"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "f6g6",
+            "n": 2
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-57"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds, and when it fails.** A quiet first move works when, whatever the lone king answers, your rook can check on the edge for mate, and he still has a legal move now. It fails if the quiet move leaves him none: that is stalemate. And it is not needed when a check already mates. *Rule of thumb:* look for a mate in one first; if there is none, ask which quiet move makes one."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, the white king one step off",
+      "prompt": "White to move in each position. Only the white king (or the rook's square) differs. Is there a checkmate in one? Predict, then check.",
+      "working": "IBds71-7",
+      "failing": "IBds71-8",
+      "irrelevant": "IBds71-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-69",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-73",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-65",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-KR",
+        "theme.mateIn2"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you moved, did you look for a mate in one first? In which position did a hasty check tempt you, and what did you do instead?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-KR.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATEKR-1.json (the lesson this one builds on)",
+    "content/items/lesson-ds71.json (the mate-in-one-or-quiet-move contrast; engine- and rule-checked)"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+ "id": "L-END-KING-ACTIVE-3",
+ "title": "The king as a fighting piece: push first when the push wins",
+ "skill": "END.KING-ACTIVE",
+ "depth": "D3",
+ "minutes": 12,
+ "outcomes": [
+  "Counts a pawn's moves to queen against the enemy king's moves to the queening square",
+  "Finds the pawn push that wins by force when any king step only draws",
+  "Predicts that moving the enemy bishop changes whether the push works"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "You know when the king should come out (*The king as a fighting piece: bring it out only when it is safe*). Now a race: a passed pawn against a king that may catch it. **Count** the pawn's moves and the king's moves to the queening square. Then ask what a bishop or rook can do: a check costs a move."
+  },
+  {
+   "type": "item",
+   "item": "IBds72-11"
+  },
+  {
+   "type": "card",
+   "text": "**Push first.** In these positions only the pawn push wins; any king move gives the bishop or rook time to get in front of the pawn, and the result drops to a draw. A king step onto the piece's line can even come with a check, which costs another move. Before a king step ask: does the pawn queen by force right now? Rule of thumb; the tablebase decides each position."
+  },
+  {
+   "type": "contrast",
+   "title": "The bishop changes square",
+   "prompt": "In the first position the push b7 is best. Now the bishop stands on h1; does the push b7 still win? Predict, then look at the third position, where only the black king moved.",
+   "working": "IBds72-12",
+   "failing": "IBds72-13",
+   "irrelevant": "IBds72-14"
+  },
+  {
+   "type": "item",
+   "item": "IBds72-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds72-19",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KING-ACTIVE",
+    "idea.check-tempo"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you count the pawn's moves first, or look for the enemy check first? Which one saved you?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I looked first at:",
+     "options": [
+      "the count",
+      "the check",
+      "both"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "The check I missed:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.KING-ACTIVE.json (D3 outcome)",
+  "Positions IBds72-11 to 14, 17 and 19 are constructed and found by engine screening; the push-wins and king-steps-draw claims are tablebase results (exact, 7 pieces or fewer); the check statements are rules claims"
+ ]
+}

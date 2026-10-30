@@ -1,0 +1,176 @@
+{
+ "id": "L-END-KPK-3",
+ "title": "King and pawn against king: name the deciding condition",
+ "skill": "END.KPK",
+ "depth": "D3",
+ "minutes": 14,
+ "outcomes": [
+  "Names the controlling condition of a K+P v K result and tests it by changing only that fact",
+  "Plays out a won position and a drawn one against the tablebase-backed opponent"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "After **King and pawn against king: predict the family** you can say what the result is. Now say why. Often one fact decides a result: change it and the result flips. Look for it: who is to move; which king reaches the squares in front of the pawn; the edge file and corner; a pawn pushed too early. Name it, then test it. First, hold a draw."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/8/8/2P5/4k3/1K6 b - - 0 1",
+   "caption": "Black to move. Only Kd3 holds the draw here; the other king moves lose.",
+   "line": [
+    {
+     "move": "e2d3",
+     "say": "Black's king steps to d3, beside the pawn, and attacks it."
+    },
+    {
+     "move": "b1b2",
+     "say": "White's king steps to b2 to defend the pawn."
+    }
+   ],
+   "highlight": [
+    "d3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "Black can hold the draw from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2d3"
+     },
+     "statement": "Kd3 holds the draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e2f3"
+     },
+     "statement": "Kf3 loses."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e2e3"
+     },
+     "statement": "Ke3 loses."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IB73-10"
+  },
+  {
+   "type": "card",
+   "text": "Naming a condition is a claim you can test: change only that fact and predict again. If the result does not change, that fact was not what decided this position; try another. Compare the next three positions, then write one sentence for each result you play. These are claims about positions, not general laws."
+  },
+  {
+   "type": "contrast",
+   "title": "Which fact decides?",
+   "prompt": "In the first position White to move wins. Predict the second, where only the move changes, and the third, where the pawn is one square further.",
+   "working": "IE-KPK-13",
+   "failing": "IE-KPK-14",
+   "irrelevant": "IE-KPK-15"
+  },
+  {
+   "type": "item",
+   "item": "IB73-9"
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-KPK-8",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "For each of the last three positions, name the controlling condition: the one fact that, if changed, would flip the result. Then test it in your head.",
+   "fields": [
+    {
+     "id": "c9",
+     "label": "Position with the White king on c7, Black to move:",
+     "options": [
+      "the side to move",
+      "the king reaches the squares in front first",
+      "the pawn is on the edge file",
+      "the pawn was pushed too early"
+     ]
+    },
+    {
+     "id": "c10",
+     "label": "The same position with White to move:",
+     "options": [
+      "the side to move",
+      "the king reaches the squares in front first",
+      "the pawn is on the edge file",
+      "the pawn was pushed too early"
+     ]
+    },
+    {
+     "id": "c8",
+     "label": "The h-pawn position:",
+     "options": [
+      "the side to move",
+      "the king reaches the squares in front first",
+      "the pawn is on the edge file",
+      "the pawn was pushed too early"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.KPK",
+    "cue.4"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which condition did you name correctly before you played, and which did you only see afterwards?",
+   "fields": [
+    {
+     "id": "before",
+     "label": "A condition I named before playing:"
+    },
+    {
+     "id": "after",
+     "label": "A condition I only saw afterwards:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.KPK.json (D3 outcome, misconceptions)",
+  "Lessons L-END-KPK-1 and L-END-KPK-2 are linked, not repeated",
+  "Results and play-out goals: Lichess tablebase claims (content/items/lesson-ds73.json; shipped IE-KPK-8..15); board line from a local exact K+P solver cross-checked against shipped tablebase answers"
+ ]
+}

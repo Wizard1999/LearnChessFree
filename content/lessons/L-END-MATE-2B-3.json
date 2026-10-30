@@ -1,0 +1,102 @@
+{
+ "id": "L-END-MATE-2B-3",
+ "title": "Two bishops: the quickest mate",
+ "skill": "END.MATE-2B",
+ "depth": "D3",
+ "minutes": 13,
+ "outcomes": [
+  "Chooses the quickest mating move among winning moves, and does not stop at a move that merely wins",
+  "Checks his own move count against the mate-in figure the tablebase and engine confirm"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A mate is counted in moves, and moves that all win can differ in length. After **Two bishops against a lone king** and **Two bishops: choose the waiting move**, the new skill is comparing candidates by length and checking your count against the tablebase figure. Each answer here gives the mate-in number it rests on. Compare the three positions, then find the quickest mate."
+  },
+  {
+   "type": "card",
+   "text": "Three practice positions. Find the quickest mate in each, then compare your move count with the mate-in figure in the answer."
+  },
+  {
+   "type": "item",
+   "item": "IB73-23"
+  },
+  {
+   "type": "item",
+   "item": "IB73-24"
+  },
+  {
+   "type": "item",
+   "item": "IB73-25"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the first of the three positions you just solved, how many White moves does the quickest mate take, counting the move you chose? The answer rests on the engine and the tablebase.",
+   "fields": [
+    {
+     "id": "count",
+     "label": "Moves to mate:",
+     "type": "number",
+     "answer": 5,
+     "tolerance": 0
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "A way to search: list the winning moves, count the lone king's legal moves after each, and try first the move that brings your least active piece closer without taking the last square. This is a rule of thumb; the mate-in figure in the answer decides. If you took more moves than the answer, find where you lost time. A longer win is still a win; stalemate is not."
+  },
+  {
+   "type": "item",
+   "item": "IB73-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-M2B-8"
+  },
+  {
+   "type": "item",
+   "item": "IE-M2B-10"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-2B",
+    "cue.4"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write the number of moves you needed in each play-out and the budget shown. Where did you spend moves that a quicker plan would not?",
+   "fields": [
+    {
+     "id": "used",
+     "label": "Moves I used in the longest play-out:",
+     "type": "number"
+    },
+    {
+     "id": "lost",
+     "label": "The move where I lost time:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-2B.json (D3 outcome)",
+  "Lessons L-END-MATE-2B-1 and L-END-MATE-2B-2 are linked, not repeated",
+  "Mate-in figures: engine at depth 16 (mate_in claims) and Lichess tablebase distance to mate, in content/items/lesson-ds73.json; play-outs IE-M2B-8 and IE-M2B-10 from the shipped bank"
+ ]
+}

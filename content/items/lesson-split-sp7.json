@@ -1,0 +1,317 @@
+{
+  "positions": [
+    {
+      "id": "PSsp7-1",
+      "fen": "r6r/1pp1kpp1/p3pb1p/4N3/8/2P2b2/PP3PPP/2KRR3 w - - 0 16",
+      "family": "FAM-SP7-DC",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Lichess puzzle 9MTe7 position (CC0) with a black pawn added on e6: the e-file is blocked",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp7-2",
+      "fen": "r6r/1pp1kpp1/5b1p/p3N3/8/2P2b2/PP3PPP/2KRR3 w - - 0 16",
+      "family": "FAM-SP7-DC",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Lichess puzzle 9MTe7 position (CC0) with Black's a-pawn moved from a6 to a5: an irrelevant change",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp7-3",
+      "fen": "r6r/1pp1kpp1/p4b1p/4N3/8/2P2b2/PP3PPP/2KR1R2 w - - 0 16",
+      "family": "FAM-SP7-DC",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Lichess puzzle 9MTe7 position (CC0) with the white rook moved from e1 to f1: nothing is uncovered, so no double check",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp7-4",
+      "fen": "8/6Rp/2k5/P4P2/1P4P1/2r1n1KP/7B/8 b - - 0 44",
+      "family": "FAM-SP7-DC",
+      "provenance": {
+        "kind": "lichess_puzzle",
+        "ref": "lichess.org/training/KuUQg (FEN after the opponent's first move); same position as PA1-050",
+        "licence": "CC0"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ISsp7-1",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PSsp7-1",
+      "prompt": "White to move. A black pawn now stands on e6. Is Ng6+ checkmate? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5g6"
+          },
+          "statement": "Ng6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e5g6"
+          },
+          "statement": "Ng6+ is check but not checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e5g6",
+            "cp": 300
+          },
+          "statement": "Ng6+ is at least 3 pawns worse than the best move (depth 16)."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "family.FAM-SP7-DC",
+        "lang.en"
+      ],
+      "hints": [
+        "Is the rook on e1 still looking at the king?",
+        "What stands between the rook and the king now?",
+        "If only the knight gives check, what can capture it?"
+      ],
+      "explain": "The pawn on e6 blocks the rook's line, so Ng6+ is a single check, and a pawn can capture the knight. Only the knight checks, so this is no double check.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white",
+      "options": [
+        "yes",
+        "no"
+      ]
+    },
+    {
+      "id": "ISsp7-2",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PSsp7-2",
+      "prompt": "White to move. Black's a-pawn stands on a5 instead of a6. Is Ng6+ still checkmate? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5g6"
+          },
+          "statement": "Ng6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e5g6",
+            "n": 1
+          },
+          "statement": "Ng6 is checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "Right now the knight on e5 blocks the rook on e1 from the king on e7."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "family.FAM-SP7-DC",
+        "lang.en"
+      ],
+      "hints": [
+        "What stands between the rook on e1 and the king on e7?",
+        "Does the pawn move on the a-file change anything on the e-file or around the king?",
+        "Count the checks that Ng6 gives."
+      ],
+      "explain": "The knight on e5 blocks the rook. Ng6 gives check with the knight and uncovers check from the rook, so only the king may move, and the king has no safe square. The a-pawn plays no part, so the result is the same with the pawn on a6.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white",
+      "options": [
+        "yes",
+        "no"
+      ]
+    },
+    {
+      "id": "ISsp7-3",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "PSsp7-3",
+      "prompt": "White to move. The white rook stands on f1 instead of e1. Does Ng6+ win material or mate? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5g6"
+          },
+          "statement": "Ng6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e5g6"
+          },
+          "statement": "Ng6+ is check but not checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e5g6",
+            "cp": 300
+          },
+          "statement": "Ng6+ is at least 3 pawns worse than the best move (depth 16)."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.3",
+        "kind.authored",
+        "tier.3",
+        "family.FAM-SP7-DC",
+        "lang.en"
+      ],
+      "hints": [
+        "Which white pieces give check after Ng6?",
+        "Is anything on the e-file now?",
+        "If only the knight gives check, the king can capture it or another piece can."
+      ],
+      "explain": "With the rook on f1 nothing is uncovered when the knight moves, so Ng6+ is a single check that Black answers by capturing the knight. This is no double check.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white",
+      "options": [
+        "yes",
+        "no"
+      ]
+    },
+    {
+      "id": "ISsp7-4",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PSsp7-4",
+      "prompt": "Black to move. Find the double check that wins the rook on g7.",
+      "answer": {
+        "moves": [
+          "e3f5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e3f5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e3f5",
+            "min": 5
+          },
+          "statement": "...Nxf5+ followed by ...Nxg7 wins a rook and a pawn for a pawn along the engine line."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e3f5"
+            ]
+          },
+          "statement": "...Nxf5+ is the engine's first choice."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Right now the white king is not in check: the knight on e3 blocks the rook."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.2",
+        "family.FAM-SP7-DC",
+        "lang.en"
+      ],
+      "hints": [
+        "Your rook on c3 and the white king on g3 stand on the same rank. What is in between?",
+        "Move the blocker with a check of its own.",
+        "A knight on f5 attacks g3."
+      ],
+      "explain": "The knight on e3 blocks the rook on c3 from the king on g3. ...Nxf5+ gives check with the knight and uncovers the rook's check at the same time. Only the king can answer a double check, and the knight then takes the rook on g7.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "black"
+    }
+  ]
+}

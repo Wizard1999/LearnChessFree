@@ -1,0 +1,151 @@
+{
+ "id": "L-END-OUTSIDE-PASSER-3",
+ "title": "The outside passed pawn: change one thing, predict the result",
+ "skill": "END.OUTSIDE-PASSER",
+ "depth": "D3",
+ "minutes": 13,
+ "outcomes": [
+  "Predicts whether a passed pawn standing nearer the kings still wins, and checks the prediction",
+  "Predicts whether one king one step further changes a win into a draw, by recounting that king's steps",
+  "Tells a one-step change that matters from one that does not"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "You have judged one position at a time. Now compare two that differ by one thing and predict how the result moves. Two changes matter here: the passed pawn nearer the kings, and a king one step further from the pawns he must reach. A king step is a move to a neighbouring square, and the steps between two squares are the bigger of the file gap and the rank gap. Count, predict, then check."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/6p1/P1k3P1/6K1/8/8 w - - 0 1",
+   "caption": "White to move wins. One line is shown: the king marches first.",
+   "line": [
+    {
+     "move": "g3f3",
+     "say": "The king marches first."
+    },
+    {
+     "move": "c4c5",
+     "say": "Black's king heads for the a-pawn."
+    },
+    {
+     "move": "f3e4",
+     "say": "White's king keeps going towards the g-pawn."
+    },
+    {
+     "move": "c5c6",
+     "say": "Black's king runs on."
+    },
+    {
+     "move": "a4a5",
+     "say": "Now the a-pawn advances."
+    },
+    {
+     "move": "c6b7",
+     "say": "Black's king is nearly at the a-pawn."
+    },
+    {
+     "move": "e4f5",
+     "say": "White's king is next to the g-pawn."
+    },
+    {
+     "move": "b7a8",
+     "say": "Black's king reaches the corner."
+    },
+    {
+     "move": "f5g5",
+     "say": "White's king takes the g-pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Exact result for the side to move (Lichess tablebase)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "g3f3",
+      "result": "win"
+     },
+     "statement": "The first move keeps the result."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-29"
+  },
+  {
+   "type": "card",
+   "text": "**Counting a change.** Move one king one step and recount its steps to the pawns it must reach. If that decides the race, a win becomes a draw; if the step changes nothing, the result stays. A passer nearer the kings is a weaker decoy, because the defending king reaches it sooner (*rule of thumb*). Predict each pair first, then check."
+  },
+  {
+   "type": "contrast",
+   "title": "The passer nearer the kings",
+   "prompt": "Black wins the first position with the far a-pawn. Move the passer nearer the kings, or one king one step, and predict each result.",
+   "working": "IE-OUT-18",
+   "failing": "IE-OUT-19",
+   "irrelevant": "IBds74-33"
+  },
+  {
+   "type": "contrast",
+   "title": "A king one step further",
+   "prompt": "White wins the first position. Move one king one step and predict each result.",
+   "working": "IE-OUT-22",
+   "failing": "IBds74-31",
+   "irrelevant": "IBds74-32"
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-33",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-34",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-OUT-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-36",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-35",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OUTSIDE-PASSER",
+    "idea.passer-too-close",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which one-step change did you predict wrongly? Count the steps again: how many did that king need before the step, and how many after?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.OUTSIDE-PASSER.json (D3 outcome)",
+  "All positions: shipped IE-OUT families and own one-step variants; every result from the Lichess tablebase (claims in content/items/lesson-ds74.json)"
+ ]
+}

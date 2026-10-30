@@ -1,0 +1,174 @@
+{
+ "id": "L-END-MATE-2B-2",
+ "title": "Two bishops: choose the waiting move",
+ "skill": "END.MATE-2B",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Counts the lone king's legal moves after each quiet bishop move and avoids stalemate",
+  "Keeps both bishops safe from the king while mating",
+  "Recognises that two bishops on one colour cannot mate"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Two bishops against a lone king** you learned the colours, the helping king and the stalemate warning. Now choose between moves that all look quiet. Before each one, count the lone king's legal moves after it, and check that each bishop is safe from the king. Often one quiet move wins and its neighbour is stalemate. This is a habit of checking, not a formula. Watch the waiting move."
+  },
+  {
+   "type": "board",
+   "fen": "k7/5B2/K7/8/1B6/8/8/8 w - - 0 1",
+   "caption": "White to move mates in three. The waiting move Be6 leaves Black a move; Bd6 here would be stalemate.",
+   "line": [
+    {
+     "move": "f7e6",
+     "say": "A waiting move: Black keeps exactly one legal king move."
+    },
+    {
+     "move": "a8b8",
+     "say": "Black's king steps to b8."
+    },
+    {
+     "move": "b4d6",
+     "say": "White's bishop goes to d6."
+    },
+    {
+     "move": "b8a8",
+     "say": "Black's king steps to a8."
+    },
+    {
+     "move": "e6d5",
+     "say": "The bishop gives mate."
+    }
+   ],
+   "highlight": [
+    "a7",
+    "b7",
+    "b8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "f7e6",
+      "n": 3
+     },
+     "statement": "Be6 forces mate in three (engine)."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f7e6"
+     },
+     "statement": "Be6 keeps the win."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b4d6"
+     },
+     "statement": "Bd6 does not win."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Three bishop moves from one position",
+   "prompt": "White has played one of three bishop moves from the board position. Is Black checkmated, stalemated or neither after each?",
+   "working": "IB73-19",
+   "failing": "IB73-20",
+   "irrelevant": "IB73-21"
+  },
+  {
+   "type": "card",
+   "text": "Two checks, both exact. Count: if the lone king has no legal move and is not in check, it is stalemate and the game is drawn. Look: a bishop the king can capture, with nothing defending it, is a loose piece, and losing it can throw the win away. Also check the colours first. Two bishops on the same colour cannot mate, whatever the kings do."
+  },
+  {
+   "type": "item",
+   "item": "IB73-13"
+  },
+  {
+   "type": "item",
+   "item": "IB73-14"
+  },
+  {
+   "type": "item",
+   "item": "IB73-15",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB73-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBe1-52",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-2B",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each move: did you count the lone king's legal moves after it, and look at both bishops? Which check did you forget?",
+   "fields": [
+    {
+     "id": "counted",
+     "label": "I counted the king's moves:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "forgot",
+     "label": "What I forgot to check:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-2B.json (D2 outcome, conditions, contrasts; the node cites Capablanca CI-02, not re-read for this lesson)",
+  "Lesson L-END-MATE-2B-1 (D1) is linked, not repeated",
+  "All positions: own constructions; mates by the engine (depth 16), stalemate and loose pieces by the rules, results by the Lichess tablebase (claims in content/items/lesson-ds73.json)"
+ ]
+}

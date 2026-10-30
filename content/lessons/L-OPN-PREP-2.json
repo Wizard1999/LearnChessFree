@@ -1,0 +1,153 @@
+{
+ "id": "L-OPN-PREP-2",
+ "title": "Recall the line after a gap and after a changed order",
+ "skill": "OPN.PREP",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Recalls a five-ply forcing line after other items have intervened",
+  "Recognises a transposition into a prepared line and plays the prepared move",
+  "Tells a transposition that reaches a flexible position from one that reaches the prepared line, and does not schedule the flexible one"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Remember the forcing lines, understand the rest** you sorted lines into exact recall and understanding. Two skills follow. First, **recall after a gap**: a line you studied a minute ago proves little. Second, **a transposition**: the same position can arrive by another move order. Study one line now; you will be asked for it again after other items, and by another route."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/pp3ppp/2p2n2/nB1Pp1N1/8/8/PPPP1PPP/RNBQK2R w KQkq - 0 7",
+   "caption": "Two Knights, after 6.Bb5+ c6: take, retreat, step away.",
+   "line": [
+    {
+     "move": "d5c6",
+     "say": "White takes the pawn on c6; this is the move to recall."
+    },
+    {
+     "move": "b7c6",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "b5e2",
+     "say": "The bishop retreats to a safe square."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black asks the knight on g5 a question."
+    },
+    {
+     "move": "g5h3",
+     "say": "The knight steps away from the h6 pawn and heads for f4."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d5c6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "7.dxc6 is the engine's first choice (depth 16); every other move is more than 40 centipawns lower."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "h3",
+      "piece": "N",
+      "after_moves": [
+       "d5c6",
+       "b7c6",
+       "b5e2",
+       "h7h6",
+       "g5h3"
+      ]
+     },
+     "statement": "After the five moves the white knight stands on h3."
+    }
+   ],
+   "highlight": [
+    "c6",
+    "g5"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IB83-40"
+  },
+  {
+   "type": "item",
+   "item": "IB83-41"
+  },
+  {
+   "type": "card",
+   "text": "**Why the gap is the point.** On the Drill page a right answer returns after 1, 2, 4, 8, 16 or 32 days; a miss returns tomorrow. The bet is that recall after a gap sticks better than rereading; this project has not tested that on you [H]. **Rule of thumb:** schedule only forcing lines. Next, a position reached by another order: ask whether it is your prepared one."
+  },
+  {
+   "type": "item",
+   "item": "IB83-45",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB83-42",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB83-43",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB83-44",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.OPN.PREP",
+    "cue.3"
+   ],
+   "n": 1,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "plan",
+   "prompt": "Put one forcing line from your repertoire on the Drill page (My repertoire on the Openings page). Plan the gaps on paper; the app does the scheduling, not the transposition check.",
+   "fields": [
+    {
+     "id": "line",
+     "label": "The forcing line, and the position where one slip loses:"
+    },
+    {
+     "id": "dates",
+     "label": "Dates for recalling it without looking (1, 2, 4, 8 days from today):"
+    },
+    {
+     "id": "orders",
+     "label": "Other move orders that reach the same position (check them on the Openings page, where transpositions are merged):"
+    },
+    {
+     "id": "not",
+     "label": "A line I will not schedule because many moves work there:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/curriculum-map-v1.md section 2 S8 (OPN.PREP)",
+  "docs/council-synthesis.md CD-7, Round 7 (retrieval and spacing suit forced lines)",
+  "app/src/lib/drill.ts (Drill intervals, as read for L-OPN-PREP-1)",
+  "Openings page data: app/public/openings core.json (1.e4 e5 2.Bc4 Nf6 reached by transposition is a named node there), see docs/openings-data.md",
+  "positions: authored by replaying legal moves from the start; engine checks at depth 16 in content/items/lesson-ds83.json. The spacing effect itself is a design bet [H], not tested here."
+ ]
+}

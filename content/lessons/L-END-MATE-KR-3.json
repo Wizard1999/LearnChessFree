@@ -1,0 +1,113 @@
+{
+  "id": "L-END-MATE-KR-3",
+  "title": "Rook mate on a budget: cut off, king up, check",
+  "skill": "END.MATE-KR",
+  "depth": "D3",
+  "minutes": 13,
+  "outcomes": [
+    "Plays king and rook against a lone king from a given start to checkmate inside the stated move budget",
+    "Keeps the rook out of the lone king's reach or protected by the king on every move",
+    "Finishes without stalemating the lone king"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "Two lessons come first: *King and rook against king: cut off and close in* and *Rook mate in two: the quiet first move*. The whole mate is: **cut off** the king with the rook, **bring your king**, face his king, **check on the edge**. Now you do it from a given start against the engine, inside a **budget**. Each move ask: *Is the rook out of his reach? Is he still cut off? Can he still move?*"
+    },
+    {
+      "type": "board",
+      "fen": "3k4/R7/8/8/8/8/8/7K b - - 1 1",
+      "caption": "The rook on a7 cuts off the seventh rank. The king on d8 has only c8 and e8, so he can only shuffle along the back rank.",
+      "line": [
+        {
+          "move": "d8e8",
+          "say": "He shuffles. The rook keeps the whole seventh rank."
+        },
+        {
+          "move": "h1h2",
+          "say": "White spends the free moves on the king, walking it toward the action."
+        },
+        {
+          "move": "e8f8",
+          "say": "Still only the back rank."
+        },
+        {
+          "move": "h2g3",
+          "say": "Another king step. The rook has not moved."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a7",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "c8",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d8",
+            "to": [
+              "c8",
+              "e8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds71-10"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds, and when it fails.** The plan works on any edge. The rook is safe while your king protects her or she stays out of his king's reach. It fails when she stands next to his king with nothing behind her: he takes her. *Rule of thumb:* use the rook's free moves to keep the cut-off, and move the king when the rook is already safe."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, the king close or far",
+      "prompt": "Black to move in each position. In the second the rook stands one step from the king. Predict the result for Black each time, then check.",
+      "working": "IBds71-12",
+      "failing": "IBds71-13",
+      "irrelevant": "IBds71-14",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds71-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-75",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-KR",
+        "theme.stalemate-trap"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which part of the rook mate cost you the most moves: the cut-off, the king walk, or the last check? How sure are you that you could do it again in the budget? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-KR.json (D3 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATEKR-1.json and content/lessons/L-END-MATE-KR-2.json",
+    "content/items/lesson-ds71.json (play-outs and the rook-reach contrast, tablebase-checked)"
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "id": "L-END-MATE-STALEMATE-AVOID-1",
+  "title": "Mating without stalemating",
+  "skill": "END.MATE-STALEMATE-AVOID",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Tells checkmate, stalemate and neither apart at a glance",
+    "Counts the lone king's legal moves before every move that is not mate",
+    "Picks the move that restricts the king but leaves it a legal move, and rejects the stalemating one"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A winning side can throw the game away in one move. If the lone king is **not in check** and has **no legal move**, the game is a draw by stalemate, however much material you have. So before every move that is not checkmate, ask one question: **after my move, can Black still make a legal move?** The danger is highest on an edge or in a corner."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/8/8/8/3Q4/5K2/7k w - - 0 1",
+      "caption": "White to move. Qh3 is checkmate. Qg3 takes away every square without giving check, so it is stalemate and a draw.",
+      "line": [
+        {
+          "move": "d3h3",
+          "say": "Check along the h-file; the white king covers g1 and g2, so Black has no legal move and is in check: checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d3h3",
+            "n": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d3g3"
+          }
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d3",
+          "to": "h3"
+        }
+      ],
+      "highlight": [
+        "h1",
+        "g3"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/8/7k/3Q4/8/5K2/8/8 w - - 0 1",
+      "caption": "White to move: mate in three by quiet moves. Qg5+ and Qh5+ are not stalemate; they simply lose the queen to the king, so they only draw.",
+      "line": [
+        {
+          "move": "d5g8",
+          "say": "A quiet queen move, a knight's move from the king, with no check."
+        },
+        {
+          "move": "h6h5",
+          "say": "Black's king steps to h5."
+        },
+        {
+          "move": "g8g7",
+          "say": "Another quiet queen move. The white king stays on f3."
+        },
+        {
+          "move": "h5h4",
+          "say": "Black's king steps to h4."
+        },
+        {
+          "move": "g7g4",
+          "say": "The white king guards g4, so the queen mates."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "d5g8",
+            "n": 3
+          }
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d5g5"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d5h5"
+          }
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "g8"
+        },
+        {
+          "from": "g8",
+          "to": "g7"
+        },
+        {
+          "from": "g7",
+          "to": "g4"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "h6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA3-101"
+    },
+    {
+      "type": "card",
+      "text": "**Count the king's moves after your move.** Check and a legal reply: play on. Check and no reply: checkmate. No check and no reply: stalemate. This holds for queen and rook alike. *Rule of thumb:* a quiet queen move a knight's jump from the cornered king often takes the last square, so count first. It is only a guide: the next pair shows it failing."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen move, one king step apart",
+      "prompt": "White plays Qg6 in both. Black's king is on h7 or on h8. Predict the result each time, then check.",
+      "working": "IA3-106",
+      "failing": "IA3-107",
+      "irrelevant": "IA3-108"
+    },
+    {
+      "type": "item",
+      "item": "IA3-102"
+    },
+    {
+      "type": "item",
+      "item": "IA3-104"
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-1"
+    },
+    {
+      "type": "item",
+      "item": "IA3-105",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MSA-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-111",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-ENDMATE-25",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-103",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-109",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA3-114",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-STALEMATE-AVOID",
+        "cue.2"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which question did you skip before a quiet move: could Black still move, or was the king in check? What will you ask first next time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-01, CI-03: ideas only)",
+    "docs/reconciliation-pasted-curriculum.md (END.MATE-STALEMATE-AVOID as an explicit D2 item)",
+    "content/skills/END.MATE-STALEMATE-AVOID.json (conditions and contrasts)",
+    "All positions: own constructions; results from the Lichess tablebase service and the validator"
+  ]
+}

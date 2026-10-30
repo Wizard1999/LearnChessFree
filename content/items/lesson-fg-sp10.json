@@ -1,0 +1,154 @@
+{
+ "positions": [
+  {
+   "id": "PSsp10-1",
+   "fen": "8/7k/8/8/8/8/1P6/7K w - - 0 1",
+   "family": "FAM-SP10-DOUBLE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch sp10; Pb2 Kh1 v Kh7, White to move: only the double step wins; checked with the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp10-2",
+   "fen": "8/8/7k/8/2P5/8/8/7K b - - 0 1",
+   "family": "FAM-SP10-HOLD",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored for batch sp10; Pc4 Kh1 v Kh6, Black to move: Kg5/Kg6/Kg7 draw; checked with the Lichess tablebase",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISsp10-1",
+   "skill": "END.SQUARE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PSsp10-1",
+   "prompt": "White to move. The pawn is on its second rank and the white king is far away. Only one move wins. Which?",
+   "answer": {
+    "moves": [
+     "b2b4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b2b4"
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "b2b3"
+     }
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h1g1"
+     }
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h1g2"
+     }
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h1h2"
+     }
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.advancedPawn",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "cue.3",
+    "node.END.SQUARE",
+    "task.find_move"
+   ],
+   "hints": [
+    "A pawn on its second rank may move two squares at once.",
+    "Count the pawn's moves from b4, not from b2. Then ask whether Black's king can reach the square.",
+    "b2-b4."
+   ],
+   "explain": "The double step saves a move: from b4 the pawn needs four more, and Black's king cannot get into its square. After the single step b3 the pawn is one move behind and the tablebase shows only a draw.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "ISsp10-2",
+   "skill": "END.SQUARE.D2",
+   "cue": 4,
+   "task": "play_out",
+   "position": "PSsp10-2",
+   "prompt": "You are Black. The white pawn needs four moves to queen. Step into its square and hold the draw.",
+   "answer": {
+    "goal": "hold",
+    "max_moves": 40
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The goal (hold) is achievable: the tablebase result for the side to move is a draw."
+    }
+   ],
+   "tags": [
+    "theme.endgame",
+    "theme.pawnEndgame",
+    "theme.advancedPawn",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "cue.4",
+    "node.END.SQUARE",
+    "task.play_out"
+   ],
+   "hints": [
+    "Count the pawn's steps and draw its square from c4.",
+    "The square reaches the g-file. Which king moves land on it?",
+    "Kg5, Kg6 or Kg7, then keep your king in front of the pawn."
+   ],
+   "explain": "The tablebase says Black can draw from here; Kg5, Kg6 and Kg7 are the only drawing first moves.",
+   "orientation": "black",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  }
+ ]
+}

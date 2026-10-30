@@ -1,13 +1,13 @@
 {
   "id": "L-TAC-DISCOVER-1",
-  "title": "Discovered attacks, discovered check and double check",
+  "title": "Discovered attacks and discovered check",
   "skill": "TAC.DISCOVER",
   "depth": "D1",
-  "minutes": 11,
+  "minutes": 9,
   "outcomes": [
     "Finds a discovered attack or discovered check when told to look for one",
     "Checks that the moving piece makes a threat the opponent must answer",
-    "Recognises a double check and knows that only the king can answer it"
+    "Says that a discovered attack fails when the move is no check and nothing is uncovered"
   ],
   "steps": [
     {
@@ -16,114 +16,64 @@
     },
     {
       "type": "board",
-      "fen": "4q1k1/ppp2ppp/8/8/4B3/8/PPP2PPP/4R1K1 w - - 0 1",
-      "caption": "White to move. The bishop stands in front of the rook on the e-file.",
+      "fen": "8/Qp3kp1/2b1p3/8/2P5/5rP1/P3R1K1/8 b - - 0 37",
+      "caption": "Black to move. The rook on f3 stands in front of the bishop on c6.",
       "line": [
         {
-          "move": "e4h7",
-          "say": "The bishop takes with check and uncovers the rook's attack on the queen."
+          "move": "f3a3",
+          "say": "The rook moves away with a threat of its own, and the bishop now gives check."
         },
         {
-          "move": "g8h7",
-          "say": "Black must answer the check."
+          "move": "g2h2",
+          "say": "White must answer the check; the king steps aside."
         },
         {
-          "move": "e1e8",
+          "move": "a3a7",
           "say": "The rook takes the queen."
         }
       ],
       "arrows": [
         {
-          "from": "e4",
-          "to": "h7"
+          "from": "f3",
+          "to": "a3"
         },
         {
-          "from": "e1",
-          "to": "e8"
+          "from": "c6",
+          "to": "g2"
         }
       ],
       "highlight": [
-        "e8"
+        "a7"
       ],
       "claims": [
         {
           "id": "C1",
           "type": "material_after_move",
           "params": {
-            "move": "e4h7",
-            "min": 5
+            "move": "f3a3",
+            "min": 9
           },
-          "statement": "Bxh7+ followed by Rxe8 wins the queen."
+          "statement": "...Ra3+ followed by ...Rxa7 wins the queen."
         },
         {
           "id": "C2",
           "type": "attackers",
           "params": {
-            "square": "e8",
-            "color": "white",
+            "square": "g2",
+            "color": "black",
             "count": 0
           },
-          "statement": "The bishop blocks the rook's line to the queen."
+          "statement": "Right now the rook on f3 blocks the bishop's line to the king."
         }
       ]
     },
     {
       "type": "item",
-      "item": "IA1-047"
+      "item": "IL-YDXdq-c1"
     },
     {
       "type": "card",
-      "text": "Check two things first.\n**Does the moving piece make a threat the opponent must answer?** A check or a big capture. If not, the opponent just takes what you uncovered.\n**Does the uncovered piece attack something it can win?**\nA **double check** is two checks at once: only the king can move."
-    },
-    {
-      "type": "board",
-      "fen": "8/6Rp/2k5/P4n2/1P4P1/2r3KP/7B/8 w - - 0 45",
-      "caption": "White to move. Black has just played ...Nxf5+: the knight and the rook both give check.",
-      "line": [
-        {
-          "move": "g3f4",
-          "say": "Only the king can move: a double check cannot be blocked or captured away."
-        },
-        {
-          "move": "f5g7",
-          "say": "The knight takes the rook on g7."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f5",
-          "to": "g7"
-        }
-      ],
-      "highlight": [
-        "g3"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          },
-          "statement": "White is in check."
-        },
-        {
-          "id": "C2",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "g3f2",
-              "g3f4",
-              "g3g2"
-            ]
-          },
-          "statement": "Every legal move is a king move."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IA1-051"
+      "text": "Check two things first.\n**Does the moving piece make a threat the opponent must answer?** A check or a big capture. If not, the opponent just takes what you uncovered.\n**Does the uncovered piece attack something it can win?** A discovered check is the strongest case: the opponent has to answer the check before anything else (a rule of thumb, not a guarantee: it does not always win material)."
     },
     {
       "type": "contrast",
@@ -165,8 +115,5 @@
     "sources/sheets/nimzowitsch_my-system.md (idea 29: discovered check, the see-saw, double check)",
     "docs/curriculum-map-v1.md S3",
     "Lichess puzzle database (CC0): MlBfV, KuUQg, O6qUt as seed positions"
-  ],
-  "also": [
-    "TAC.DOUBLE-CHECK"
   ]
 }

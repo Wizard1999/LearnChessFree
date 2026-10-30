@@ -1,0 +1,124 @@
+{
+  "id": "L-END-MINOR-2",
+  "title": "Minor-piece endings: same-coloured or opposite-coloured bishops?",
+  "skill": "END.MINOR",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Separates same-coloured from opposite-coloured bishop endings before counting pawns",
+    "Predicts the result band (win or draw) when only the colour of one bishop differs",
+    "Finds the bishop move in same-coloured endings that the tablebase confirms"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Bishop against knight: count the wings** you compared two kinds of minor piece. Now both sides have a bishop. First question: do they run on the **same colour** of squares or on **opposite colours**? Same-coloured bishops can attack or trade each other. Opposite-coloured bishops never meet. Test it on the next position."
+    },
+    {
+      "type": "board",
+      "fen": "8/B7/1P3b2/7K/8/7k/8/8 w - - 0 1",
+      "caption": "Same-coloured bishops, White a pawn up. White wins; one line is shown.",
+      "line": [
+        {
+          "move": "b6b7",
+          "say": "White pushes the pawn; Black's bishop cannot stop it from the front."
+        },
+        {
+          "move": "f6e5",
+          "say": "Black's bishop heads for the long diagonal to hold the queening square."
+        },
+        {
+          "move": "a7b6",
+          "say": "White's bishop steps to b6, in front of the pawn's route, on the same colour as Black's bishop."
+        },
+        {
+          "move": "e5h2",
+          "say": "Black's bishop swings to h2."
+        },
+        {
+          "move": "h5g5",
+          "say": "White's king steps toward the centre."
+        },
+        {
+          "move": "h2g3",
+          "say": "Black's bishop goes to g3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White wins from the start position."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ISocb-1"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** With bishops on the same colour, the side with the extra pawn can often win, because the bishops can meet and the king and bishop can work together against the pawn. **When it fails:** with opposite colours the bishops cannot challenge each other, and the extra pawn often does not win. Rule of thumb: ask about the colours first, then count pawns. Predict a one-feature change next."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawns, one bishop changes colour",
+      "prompt": "Predict each result, then check.",
+      "working": "IE-MIN-1",
+      "failing": "IE-MIN-2"
+    },
+    {
+      "type": "contrast",
+      "title": "Again: bishop colour only",
+      "prompt": "Predict each result, then check.",
+      "working": "IE-MIN-5",
+      "failing": "IE-MIN-6"
+    },
+    {
+      "type": "item",
+      "item": "IE-MIN-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MIN-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISocb-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-BaM59",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MINOR",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Did you check the colours of the bishops before you counted pawns? In which position did a colour change your answer?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MINOR.json (D2 outcome)",
+    "Lesson 'Bishop against knight: count the wings' (D1)",
+    "All positions: generated, own constructions or Lichess puzzles; every result from the Lichess tablebase service"
+  ]
+}

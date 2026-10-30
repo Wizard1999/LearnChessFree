@@ -1,27 +1,27 @@
 {
   "id": "L-POS-PLAN-1",
-  "title": "Plans: find the difference, check it is carryable",
+  "title": "A plan the position supports",
   "skill": "POS.PLAN",
   "depth": "D1",
   "minutes": 9,
   "outcomes": [
-    "Lists the differences between the two sides before choosing a plan",
-    "Sees that king position can outweigh an extra pawn",
-    "Checks whether the target of a plan is still there after one change"
+    "Names the feature of the position that a plan is aimed at",
+    "Checks that the pieces can carry the plan out",
+    "Recognises a position where a capture decides and no plan is needed"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "A plan comes from the position, not from habit. List the **differences between the two sides**: material, king positions, open lines, weak squares. Ask which difference gives you something to aim at. Then check that the plan is **carryable:** do you have the pieces to execute it, and does the opponent have time to stop it?"
+      "text": "A plan is a **direction**, and it needs a reason: a feature of the position to aim at, such as an exposed king, an open file or a weak pawn. Before you commit, ask two questions. **What is the plan aimed at?** And **can my pieces carry it out** before the opponent can stop it?"
     },
     {
       "type": "board",
-      "fen": "4k1r1/ppp2p1p/3bp3/8/4P2q/5N2/PPPQ1PPP/5RK1 b - - 0 1",
-      "caption": "Black to move. White is a pawn ahead. What are the differences?",
+      "fen": "4k1r1/pp3p1p/2pb4/3p4/4P2q/5N2/PPPQ1PPP/5RK1 b - - 0 1",
+      "caption": "Black to move. The feature is White's king on g1; the rook and queen are the pieces that can carry the plan.",
       "line": [
         {
           "move": "g8g2",
-          "say": "Rxg2+: the rook and queen both aim at g2."
+          "say": "Rxg2+: the rook goes to g2 with check, and the queen is ready to join it on the g-file."
         },
         {
           "move": "g1g2",
@@ -52,38 +52,48 @@
           "type": "mate_in",
           "params": {
             "move": "g8g2",
-            "n": 6
+            "n": 7
           }
         }
       ]
     },
     {
       "type": "item",
-      "item": "IA2-36"
+      "item": "ISsp13-3"
     },
     {
       "type": "card",
-      "text": "The same attack needs the same target. If the key difference changes, the plan can vanish: ask **what is it aimed at, and is that still there?** Material is only one difference; king safety and open lines can outweigh it. Change one thing in the position and check whether your plan survives."
+      "text": "A plan holds only while its target is there. Move the king and the same attack aims at nothing. As a *rule of thumb*, name the target and the pieces before the first move, and check again after every opponent move. Where a capture or check decides at once, calculate it first; the attack in this lesson was found by calculating, because the target was an exposed king."
     },
     {
       "type": "contrast",
       "title": "Same attack, the king has moved",
-      "prompt": "White's king stands on b1 instead of g1. Does the rook sacrifice on g2 still work? Predict first, then check.",
-      "working": "IA2-36",
-      "failing": "IA2-37"
+      "prompt": "In the second position White's king stands on b1 instead of g1. Does the plan on g2 survive? Predict first, then check.",
+      "working": "IA2-38",
+      "failing": "IA2-39"
     },
     {
       "type": "item",
-      "item": "IA2-38"
+      "item": "ISsp13-7",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA2-39"
+      "item": "ISsp13-8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PLAN",
+        "cue.3"
+      ],
+      "n": 4
     },
     {
       "type": "reflect",
-      "kind": "expect",
-      "prompt": "Before you listed the differences: which one did you look at first, material or the kings?"
+      "kind": "confidence",
+      "prompt": "Before you chose a move, could you say what your plan was aimed at? How sure were you? (low / medium / high)"
     }
   ],
   "review": {
@@ -91,11 +101,9 @@
     "reviewer": null
   },
   "sources": [
-    "sources/sheets/znosko-borovsky_middle-game.md (C06-C07: character and the difference method; Paulsen-Morphy king pair)",
     "sources/sheets/capablanca_chess-fundamentals.md (CI-36: a plan must be carryable)",
-    "sources/sheets/edlasker_chess-strategy.md (K30: strategy needs tactical feasibility; K33 'unsound plan' NOT taught)"
-  ],
-  "also": [
-    "POS.PLAN.DIFF"
+    "sources/sheets/znosko-borovsky_middle-game.md (C09: a plan is a general direction, revised from time to time)",
+    "sources/sheets/edlasker_chess-strategy.md (K30: strategy needs tactical feasibility; K33 'unsound plan' NOT taught)",
+    "content/items/lesson-split-sp13.json (ISsp13-3, ISsp13-7, ISsp13-8)"
   ]
 }

@@ -1,0 +1,224 @@
+{
+  "id": "L-OPN-NOVELTY-2",
+  "title": "Prepare for one opponent",
+  "skill": "OPN.NOVELTY",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Predicts an opponent's move from evidence, and names which kind of evidence it was (his own games, or rating-band statistics)",
+    "Prepares a reply to a predicted move and checks that the reply stands out from the other sensible moves",
+    "Tells when a prepared reply is worth memorising and when it is not",
+    "Writes a one-page preparation note for a named opponent, with a plan B"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The lesson \"A new move you can explain\" was about one move. This one is about one person. **Preparing for an opponent** asks three questions. Which move will he play? Your best evidence is his own past games; rating-band statistics are the fallback. Does that move cost him something you can name? And what do you play if he does something else? Start with how habits change with rating."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Open the Openings page and play 1.d4 d5 2.e4. Read the percent of games that continue 2...e5, in two bands (online Lichess games, September 2026).",
+      "fields": [
+        {
+          "id": "low",
+          "label": "Percent playing 2...e5 at 1100-1300:",
+          "type": "number",
+          "answer": 21,
+          "tolerance": 1
+        },
+        {
+          "id": "high",
+          "label": "Percent playing 2...e5 at 1700-1900:",
+          "type": "number",
+          "answer": 6,
+          "tolerance": 1
+        },
+        {
+          "id": "who",
+          "label": "If you meet a 1200 player and a 1800 player, for which is a prepared reply to 2...e5 more likely to be used, and why?"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/3p4/3PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 2 4",
+      "caption": "After 1.e4 c6 2.d4 d5 3.Nc3 Nf6, White to move; you can find 3...Nf6 on the Openings page, played in 18% of games at 1100-1300 and 7% at 1700-1900. Model note: reason, e5 attacks the knight (checked); evidence, Stockfish 19 Lite, depth 16, one thread, puts e5 first and at least 80 centipawns ahead of Bd3 (checked); unproven, the lines after 4...Ne4.",
+      "line": [
+        {
+          "move": "e4e5",
+          "say": "The pawn attacks the knight on f6."
+        },
+        {
+          "move": "f6e4",
+          "say": "The knight jumps to e4."
+        },
+        {
+          "move": "c3e4",
+          "say": "Nxe4 takes the knight."
+        },
+        {
+          "move": "d5e4",
+          "say": "dxe4 recaptures; the knights are traded."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4e5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "e5 is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f1d3",
+            "cp": 80
+          },
+          "statement": "Bd3 is at least 80 centipawns below e5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "white",
+            "count": 1,
+            "after_move": "e4e5"
+          },
+          "statement": "After e5 one white piece attacks the knight on f6."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "min": 100,
+            "max": 300
+          },
+          "statement": "The engine rates the position at least one pawn in White's favour (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds84-1"
+    },
+    {
+      "type": "card",
+      "text": "**When a prepared reply pays.** Each condition is a rule of thumb. He repeats the move: several of his games, not one. The gap is real: the next-best reply is clearly lower (here, 40 centipawns or more at depth 16). You can reach the position and remember the follow-up. It fails when he plays something else, when your sample is two games, or when many replies score alike. Then rely on understanding; see \"Remember the forcing lines, understand the rest\"."
+    },
+    {
+      "type": "contrast",
+      "title": "Prepare, or just play?",
+      "prompt": "The same position except for his third move. In which does a prepared reply stand out from the other sensible moves? Predict, then check.",
+      "working": "IBds84-2",
+      "failing": "IBds84-3"
+    },
+    {
+      "type": "card",
+      "text": "**Ladder of evidence for a prediction.** Best: three or more of his games with the same colour, all with this move. Next: his games in other openings, which show his tastes. Last: rating-band statistics, which describe players like him, not him. Each step down is weaker, so write down which one you used. Then add a plan B: the move you play if he deviates. Predict first, then try one more prepared reply."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Five of his games as Black against 1.e4: e5, e5, c5, e5, e5. A new game: what do you expect, and which rung of the evidence ladder is this?",
+      "fields": [
+        {
+          "id": "pred",
+          "label": "Expected reply:"
+        },
+        {
+          "id": "rung",
+          "label": "Evidence type (his games, his other openings, band statistics):"
+        }
+      ],
+      "feedback": "The expected reply is 1...e5, on five games of his own, which is the top rung. 1...c5 is the plan B to prepare."
+    },
+    {
+      "type": "item",
+      "item": "IBds84-4"
+    },
+    {
+      "type": "item",
+      "item": "IBds84-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds84-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds84-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.OPN.NOVELTY",
+        "theme.opening"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "The app has no store of an opponent's games, so this is a paper exercise. Pick a real or imagined opponent and write the note. If a field stays empty, the note is not finished.",
+      "fields": [
+        {
+          "id": "evidence",
+          "label": "His games or statistics I used (how many, which colour):"
+        },
+        {
+          "id": "pred",
+          "label": "The move I predict, and the position it comes from:"
+        },
+        {
+          "id": "cost",
+          "label": "What it costs him, with engine, depth and gap:"
+        },
+        {
+          "id": "reply",
+          "label": "My prepared reply:"
+        },
+        {
+          "id": "planb",
+          "label": "My plan B if he plays something else:"
+        },
+        {
+          "id": "unproven",
+          "label": "What I did not check:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/OPN.NOVELTY.json",
+    "L-OPN-NOVELTY-1",
+    "L-OPN-PREP-1",
+    "app/public/openings (Lichess standard rated games, CC0, September 2026, online play)",
+    "items IBds84-1 to IBds84-7"
+  ]
+}

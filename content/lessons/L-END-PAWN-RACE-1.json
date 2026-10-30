@@ -1,0 +1,135 @@
+{
+  "id": "L-END-PAWN-RACE-1",
+  "title": "Pawn races: count both pawns",
+  "skill": "END.PAWN-RACE",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Decides whether a lone king can catch a running pawn by counting the pawn's moves and the king's moves",
+    "Counts a pawn's moves to the last rank, double step included, and says who is to move",
+    "Decides who wins a race of two pawns by counting both and checking what the first new queen attacks",
+    "Says why queening first is not a win by itself"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A pawn race is a **counting problem**. Count each pawn's moves to the last rank: one move per rank, except that a pawn on its home rank may cover its first two ranks in one move. A king's distance to a square is the larger of the file gap and the rank gap. And ask **whose move it is**: the side to move spends its first move first. A pawn that arrives with no king in reach queens."
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-1"
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-4"
+    },
+    {
+      "type": "card",
+      "text": "**When counting works**: both pawns are free to run and no king is near enough to interfere. **When it fails:** a king close to a pawn changes the count (the lesson *The rule of the square* shows how), and the first queen may be captured or checked at once. If the first queen has no check or capture, the other pawn queens one move later and the race may be only a draw."
+    },
+    {
+      "type": "board",
+      "fen": "Q7/8/7k/8/8/8/7p/K7 b - - 0 1",
+      "caption": "A race: White's a-pawn against Black's h-pawn. White has just queened on a8. Black to move.",
+      "line": [
+        {
+          "move": "h2h1q",
+          "say": "Black queens too, with check along the first rank."
+        },
+        {
+          "move": "a8h1",
+          "say": "White's queen takes it along the long diagonal."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          },
+          "statement": "With Black to move, Black loses."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "h2h1q"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h1",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The white queen on a8 attacks h1."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "h1"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "h1"
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Same race, different file",
+      "prompt": "Each pawn needs three moves, White moves first. Does White still win if the pawn is on the b-file? Predict, then check.",
+      "working": "IA3-308",
+      "failing": "IA3-309",
+      "irrelevant": "IA3-310"
+    },
+    {
+      "type": "item",
+      "item": "IA3-311",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-22",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-KPK-25",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.PAWN-RACE",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "When you predicted, which did you count first: the pawn's steps, the king's steps, or the move? Which one did you forget in the position where you were wrong?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md (CI-11: pawn-race counting; first queen may capture)",
+    "sources/sheets/edlasker_chess-strategy.md (K24: count each side's moves separately)",
+    "docs/curriculum-map-v1.1.md (END.PAWN-RACE)",
+    "All positions: own constructions or generated; results from the Lichess tablebase service"
+  ]
+}

@@ -1,0 +1,141 @@
+{
+ "id": "L-END-MATE-MATERIAL-2",
+ "title": "Which armies can force mate: with a pawn or a piece left",
+ "skill": "END.MATE-MATERIAL",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Classifies an unlabeled ending as a win or a draw when the defender keeps a pawn or a single minor piece",
+  "Shows with a one-feature change (the pawn removed) that two knights win against king and pawn but not against a bare king",
+  "Tells a rook against a bishop or a knight apart from a queen against one minor piece, and names the fork that can win the piece"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Which armies can force mate** you sorted armies against a bare king. Now the defender may keep a pawn or a piece, and nobody labels the position. Ask three things: what does the defender have besides the king, what does the attacker have, and can a fork or a spare pawn move change the picture? Counting values (1/3/3/5/9) is only a *rule of thumb* here. The tablebase has the last word. First, a fork."
+  },
+  {
+   "type": "board",
+   "fen": "4K3/8/8/3n4/7R/8/3k4/8 w - - 0 1",
+   "caption": "White to move wins. One line is shown.",
+   "line": [
+    {
+     "move": "h4d4",
+     "say": "The rook gives check and attacks the knight at the same time."
+    },
+    {
+     "move": "d2e3",
+     "say": "Black's king leaves the check and attacks the rook."
+    },
+    {
+     "move": "d4d5",
+     "say": "The rook takes the knight."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Exact result for the side to move (Lichess tablebase)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "h4d4",
+      "result": "win"
+     },
+     "statement": "The first move keeps the result."
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "white",
+      "count": 1,
+      "after_move": "h4d4"
+     },
+     "statement": "After Rd4 the rook gives check.",
+     "id": "C3"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1,
+      "after_move": "h4d4"
+     },
+     "statement": "After Rd4 the rook attacks the knight.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds74-1"
+  },
+  {
+   "type": "card",
+   "text": "**Ask before you count.** A defender's pawn that still has moves can keep him from being stalemated, so two knights can win against king and pawn where they cannot against a bare king (*rule of thumb*; the tablebase confirms the pair below, not the reason). Against a single piece, ask whether the attacker can fork king and piece with check, and whether the defender's king and piece protect each other. Queen and rook against one minor piece are different questions."
+  },
+  {
+   "type": "contrast",
+   "title": "Two knights, with and without the pawn",
+   "prompt": "Two knights against king and pawn win here. Take the pawn off, or mirror the board, and predict each result.",
+   "working": "IBds74-2",
+   "failing": "IBds74-3",
+   "irrelevant": "IBds74-4"
+  },
+  {
+   "type": "item",
+   "item": "IBds74-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-9",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.MATE-MATERIAL",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which kind of position did you misjudge or feel unsure about: a pawn that still has moves, a queen against a minor piece, or a rook against a minor piece? What will you ask first next time?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.MATE-MATERIAL.json (D2 outcome, conditions, contrasts)",
+  "docs/curriculum-map-v1.1.md section 3 (K+2N and K+B+N facts)",
+  "All positions: own constructions screened by random sampling; every result is from the Lichess tablebase (claims in content/items/lesson-ds74.json); the fork line is a tablebase line"
+ ]
+}

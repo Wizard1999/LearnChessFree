@@ -1,0 +1,234 @@
+{
+ "id": "L-OPN-STRUCT-2",
+ "title": "Name the structure whatever the move order",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Names the pawn structure of an unlabeled position from the pawns alone, whichever move order reached it",
+  "Shows that two different move orders can reach one position, and that a pawn break can change the structure",
+  "Answers 'none of these five' when the pawns fit no named structure"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **An opening is a route to a structure and its plans** you named structures from lines. Now the move order changes. Different orders can reach the *same* pawns, and similar-looking positions can have different pawns. **The pawns name the structure, not the move list.** Watch one order, then meet the other."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/4p3/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3",
+   "caption": "Order A: 1.d4 d5 2.c4 e6, then six more moves.",
+   "line": [
+    {
+     "move": "b1c3",
+     "say": "White develops a knight toward the centre."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black develops a knight too."
+    },
+    {
+     "move": "c4d5",
+     "say": "White trades the c-pawn for the d5 pawn."
+    },
+    {
+     "move": "e6d5",
+     "say": "Black recaptures with the e-pawn."
+    },
+    {
+     "move": "c1g5",
+     "say": "The bishop pins the knight to the queen."
+    },
+    {
+     "move": "c7c6",
+     "say": "Black supports d5 with the c-pawn."
+    },
+    {
+     "move": "e2e3",
+     "say": "White opens the bishop on f1 with e3."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "P",
+      "after_moves": [
+       "b1c3",
+       "g8f6",
+       "c4d5",
+       "e6d5",
+       "c1g5",
+       "c7c6",
+       "e2e3"
+      ]
+     },
+     "statement": "White has a pawn on d4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "P",
+      "after_moves": [
+       "b1c3",
+       "g8f6",
+       "c4d5",
+       "e6d5",
+       "c1g5",
+       "c7c6",
+       "e2e3"
+      ]
+     },
+     "statement": "White has a pawn on e3."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c6",
+      "piece": "p",
+      "after_moves": [
+       "b1c3",
+       "g8f6",
+       "c4d5",
+       "e6d5",
+       "c1g5",
+       "c7c6",
+       "e2e3"
+      ]
+     },
+     "statement": "Black has a pawn on c6."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "p",
+      "after_moves": [
+       "b1c3",
+       "g8f6",
+       "c4d5",
+       "e6d5",
+       "c1g5",
+       "c7c6",
+       "e2e3"
+      ]
+     },
+     "statement": "Black has a pawn on d5."
+    },
+    {
+     "id": "C5",
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ],
+      "after_moves": [
+       "b1c3",
+       "g8f6",
+       "c4d5",
+       "e6d5",
+       "c1g5",
+       "c7c6",
+       "e2e3"
+      ]
+     },
+     "statement": "After the seven moves the c-file is half open for White and the e-file half open for Black."
+    }
+   ],
+   "highlight": [
+    "c6",
+    "d5",
+    "d4",
+    "e3"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IB83-1"
+  },
+  {
+   "type": "item",
+   "item": "IB83-2"
+  },
+  {
+   "type": "card",
+   "text": "**When the name holds.** A name needs only the pawns on the c-, d- and e-files, for both sides. It stops holding when a break or exchange changes those pawns (the next three positions show it). The list is short, so a position can fit *none* of the names. **Rule of thumb:** read the pawns first, then ask which plan they ask for."
+  },
+  {
+   "type": "contrast",
+   "title": "Same name, or changed by a break?",
+   "prompt": "Predict the structure of each position, then check.",
+   "working": "IB83-3",
+   "failing": "IB83-4",
+   "irrelevant": "IB83-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-STRUCT-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-STRUCT-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-STRUCT-21",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.OPN.STRUCT",
+    "cue.3"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "plan",
+   "prompt": "Take one opening you play. Find two move orders that reach it, or one move order that can reach two structures. Use the Openings page (transpositions are merged there) to see which orders are common at your rating.",
+   "fields": [
+    {
+     "id": "orders",
+     "label": "Two move orders (write the first six moves of each):"
+    },
+    {
+     "id": "pawns",
+     "label": "The pawns on the c-, d- and e-files, for both sides, in the position they reach:"
+    },
+    {
+     "id": "name",
+     "label": "The structure's name, and the plan it asks for:"
+    },
+    {
+     "id": "change",
+     "label": "One break or exchange that would change the structure, and what it turns into:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/curriculum-map-v1.md section 2 S8 (OPN.STRUCT.D2)",
+  "content/skills/OPN.STRUCT.json",
+  "Structure definitions: Maroczy, IQP, Advance French as in the shipped IP-STRUCT items; Carlsbad as used here (White d4+e3 and no c-pawn, Black c6+d5 and no e-pawn) differs from the app working definition in POS.STRUCTURE.CARLSBAD, which requires a black e6 pawn: flagged for Andrew (QUESTIONS-AND-GATES); that node and IP-STRUCT-3 need fixing",
+  "Openings page data (transpositions merged): app/public/openings, docs/openings-data.md",
+  "positions: authored by replaying legal moves from the start; validator claims in content/items/lesson-ds83.json"
+ ]
+}

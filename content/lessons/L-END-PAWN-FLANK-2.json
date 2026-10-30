@@ -1,0 +1,189 @@
+{
+ "id": "L-END-PAWN-FLANK-2",
+ "title": "Pawns on both wings: count, then stop or ignore",
+ "skill": "END.PAWN-FLANK",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Counts the moves of the free pawn and the king's steps to the enemy advance before choosing between stopping it and ignoring it",
+  "Predicts that moving one king by one step can change a win into a draw, and checks the prediction",
+  "Finds the winning first move in a position where stopping wins and the push does not"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Pawns on both wings: push, stop or march the king** you chose a first move. Now count it. For each plan, count your own moves and the enemy king's steps to the pawns he must stop. Stopping a counter-advance costs time; ignoring it can cost a pawn or the race. *Rule of thumb*: stop when your king reaches the advance in time and the push would be slower; push when the push is faster. One king step can flip the verdict."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/1p6/3k2pP/8/1P2K3/8/8 w - - 0 1",
+   "caption": "White to move. Only h6 wins; every other move draws. One line is shown.",
+   "line": [
+    {
+     "move": "h5h6",
+     "say": "White ignores Black's g-pawn and pushes the free h-pawn."
+    },
+    {
+     "move": "d5c5",
+     "say": "Black's king turns to the queenside."
+    },
+    {
+     "move": "h6h7",
+     "say": "One more move to queen."
+    },
+    {
+     "move": "c5d5",
+     "say": "Black's king steps back."
+    },
+    {
+     "move": "h7h8q",
+     "say": "The h-pawn queens."
+    },
+    {
+     "move": "g5g4",
+     "say": "Black pushes his own pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Exact result for the side to move (Lichess tablebase)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "b3b4",
+      "result": "draw"
+     },
+     "statement": "b4: result draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "e3d2",
+      "result": "draw"
+     },
+     "statement": "Kd2: result draw."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "move": "e3d3",
+      "result": "draw"
+     },
+     "statement": "Kd3: result draw."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "move": "e3e2",
+      "result": "draw"
+     },
+     "statement": "Ke2: result draw."
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "move": "e3f2",
+      "result": "draw"
+     },
+     "statement": "Kf2: result draw."
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "move": "e3f3",
+      "result": "draw"
+     },
+     "statement": "Kf3: result draw."
+    },
+    {
+     "id": "C8",
+     "type": "tablebase",
+     "params": {
+      "move": "h5h6",
+      "result": "win"
+     },
+     "statement": "h6: result win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-FLK-1"
+  },
+  {
+   "type": "card",
+   "text": "**The verdict flips.** In the next positions the same pawns and one king step give opposite results: a king one file nearer or further changes the count. Do not copy a pattern from one position. Predict win or draw first, then check; the tablebase result is the test, and the counts are a *rule of thumb* for predicting it."
+  },
+  {
+   "type": "contrast",
+   "title": "Black's king one file nearer",
+   "prompt": "In the first position White wins. Move Black's king one step and predict each result.",
+   "working": "IE-FLK-16",
+   "failing": "IBds74-22",
+   "irrelevant": "IBds74-23"
+  },
+  {
+   "type": "contrast",
+   "title": "White's king one step nearer",
+   "prompt": "In the first position Black wins. Move White's king one step and predict each result.",
+   "working": "IE-FLK-8",
+   "failing": "IBds74-24",
+   "irrelevant": "IBds74-25"
+  },
+  {
+   "type": "item",
+   "item": "IBds74-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-28",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-FLK-24",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.PAWN-FLANK",
+    "cue.3",
+    "idea.stronger-flank"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which pair surprised you most: the king that made a win into a draw, or the one that changed nothing? What would you count first in a new position?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.PAWN-FLANK.json (D2 outcome, conditions, contrasts)",
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-08, CI-09: ideas only; all positions are our own)",
+  "All results and first moves from the Lichess tablebase (claims in content/items/lesson-ds74.json and the shipped IE-FLK items)"
+ ]
+}

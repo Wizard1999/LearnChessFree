@@ -1,0 +1,131 @@
+{
+  "id": "L-ATK-PAWNSTORM-2",
+  "title": "Storm now or bring more pieces first: and label the choice",
+  "skill": "ATK.PAWNSTORM",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Chooses between storming now and bringing more pieces first by checking what the push attacks and whether your own pieces are safe",
+    "Separates a storm the engine supports (sound) from a risk that cannot be checked (practical)",
+    "Sees that the same push loses when one of your own pieces is left hanging"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Pawn storms: the lever, the pieces behind it, the defenders near** you found the lever. Now choose: **storm now** or **bring more pieces first**. A storm is sound when the engine's checks support it; it is only practical when you hope a human defends badly. Label each choice honestly: this app can check *sound*, not *practical*."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pp4p1/2q5/1b2pPPQ/3p4/2P5/PP5P/2KR1R2 w - - 1 23",
+      "caption": "Kings on opposite wings. White's queen and both rooks are close to the kingside.",
+      "line": [
+        {
+          "move": "g5g6",
+          "say": "The g-pawn pushes. This is the lever."
+        },
+        {
+          "move": "f8f6",
+          "say": "Black's rook attacks the new pawn."
+        },
+        {
+          "move": "h5h7",
+          "say": "Qh7+ is check, and the pawn on g6 protects the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "g6"
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5g6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "g6 is the engine's best move (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 250,
+            "max": 3000
+          },
+          "statement": "The engine rates the position at least 2.5 pawns in White's favour (depth 16).",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ISattack-storm-2"
+    },
+    {
+      "type": "card",
+      "text": "**Sound** means the engine's best moves include the storm at depth 16, as in the board. **Practical** means you take a risk because a human may err; nothing here can confirm it, so call it a guess. A storm fails when the barrier is intact and his pieces are near, or when yours have not arrived. Defending against his storm is the next lesson."
+    },
+    {
+      "type": "contrast",
+      "title": "One position, three small changes",
+      "prompt": "White considers the pawn push c6. Predict for each: storm now or bring pieces first? Then check.",
+      "working": "IBds61-11",
+      "failing": "IBds61-12",
+      "irrelevant": "IBds61-13"
+    },
+    {
+      "type": "item",
+      "item": "IBds61-14",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-E0I3U",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-0U7ZE",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.pawnStorm",
+        "cue.3"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Next time you push a pawn at a king, write one word before you push: sound or practical. Afterwards, check the engine in My games. Which will you write more often?",
+      "fields": [
+        {
+          "id": "label",
+          "label": "The word I expect to write more often:",
+          "options": [
+            "sound",
+            "practical",
+            "I cannot tell"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/edlasker_chess-strategy.md §4 K18, §8 item 20 (ideas only)",
+    "sources/sheets/znosko-borovsky_middle-game.md §4 C30 (ideas only)",
+    "items IBds61-11..14 (content/items/lesson-ds61.json); positions: Lichess puzzle Bgtul (CC0) with one-feature edits; shipped items ISattack-storm-2, IL-E0I3U, IL-0U7ZE and the board IL-LHWZv",
+    "depth D2 builds on the lesson \"Pawn storms: the lever, the pieces behind it, the defenders near\" (L-ATK-PAWNSTORM-1)"
+  ]
+}

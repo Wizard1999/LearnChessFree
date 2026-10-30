@@ -1,0 +1,151 @@
+{
+ "id": "L-END-SQUARE-2",
+ "title": "The rule of the square: the exact count",
+ "skill": "END.SQUARE",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Counts the pawn's moves to queen (with the double step from the second rank) and the defending king's steps to the queening square",
+  "Applies the count with the right allowance for whose move it is and predicts win or draw in unlabeled positions",
+  "Names the case where the count does not apply: the pawn's own king stands near the pawn or its queening square"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **The rule of the square: can the king catch the pawn?** you drew a square. Now count. n: the pawn's moves to queen (from the second rank use the double step: b2 and b3 give 5). k: the king's steps to the queening square (the bigger of the file gap and the rank gap). King to move: he stops the pawn if k is at most n + 1; pawn to move: if k is at most n."
+  },
+  {
+   "type": "board",
+   "fen": "7K/8/8/8/8/7k/1P6/8 w - - 0 1",
+   "caption": "White to move wins. The pawn needs 5 moves, the king 6 steps. One line is shown.",
+   "line": [
+    {
+     "move": "b2b4",
+     "say": "The double step. The pawn needs 4 more moves to queen."
+    },
+    {
+     "move": "h3g4",
+     "say": "Black's king is now 5 steps from b8."
+    },
+    {
+     "move": "b4b5",
+     "say": "3 more moves."
+    },
+    {
+     "move": "g4f5",
+     "say": "4 steps from b8."
+    },
+    {
+     "move": "b5b6",
+     "say": "2 more moves."
+    },
+    {
+     "move": "f5e6",
+     "say": "3 steps from b8."
+    },
+    {
+     "move": "b6b7",
+     "say": "1 more move."
+    },
+    {
+     "move": "e6d7",
+     "say": "2 steps from b8."
+    },
+    {
+     "move": "b7b8q",
+     "say": "The pawn queens. The king is two steps away and cannot take the queen."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "Exact result for the side to move (Lichess tablebase)."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "b2b4",
+      "result": "win"
+     },
+     "statement": "The first move keeps the result."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds74-10"
+  },
+  {
+   "type": "card",
+   "text": "**The extra step, and when the count holds.** The extra step is the new queen: a king beside it takes it. The count uses only the pawn and the defending king, so it holds when the pawn's own king is far away (*rule of thumb*; the tablebase checks every position here). It fails when that king is near the pawn or near the queening square: he can escort the pawn or guard the new queen. The double step adds nothing: b2 and b3 both give 5."
+  },
+  {
+   "type": "contrast",
+   "title": "Whose move is it?",
+   "prompt": "White wins here with the move: the pawn needs 5 moves and the king 6 steps. Change one thing and predict each result.",
+   "working": "IBds74-11",
+   "failing": "IBds74-12",
+   "irrelevant": "IBds74-13"
+  },
+  {
+   "type": "contrast",
+   "title": "A pawn one rank further back",
+   "prompt": "With Black to move the pawn on b4 wins: 4 moves against 6 steps. Change one thing and predict each result.",
+   "working": "IBds74-14",
+   "failing": "IBds74-15",
+   "irrelevant": "IBds74-16"
+  },
+  {
+   "type": "item",
+   "item": "IBds74-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-19",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-20",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds74-21",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.SQUARE",
+    "cue.3"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "In the positions you got wrong, did you miscount the pawn's moves, the king's steps, or forget whose move it was? Which of the three will you write down first next time?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.SQUARE.json (D2 outcome, conditions, contrasts)",
+  "sources/sheets/edlasker_chess-strategy.md section 4 K24 (idea only)",
+  "The count rule: own formulation, checked on 48 lone-pawn positions against the Lichess tablebase (white king on h8, pawn on the b-file) [V]; all item positions are own constructions with tablebase results"
+ ]
+}
