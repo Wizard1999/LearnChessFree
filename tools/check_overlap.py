@@ -25,7 +25,9 @@ def used(l):
         if st.get("type") == "practice": s.add("tags:" + "|".join(sorted(st.get("tags", []))))
     return s
 sets = {l["id"]: used(l) for l in lessons}
+series = {l["id"]: l.get("series") for l in lessons}   # lessons of one deep series (for example the Dragon course) may revisit their own key positions
 for a, b in itertools.combinations(lessons, 2):
+    if series[a["id"]] and series[a["id"]] == series[b["id"]]: continue
     x, y = sets[a["id"]], sets[b["id"]]
     if not x or not y: continue
     j = len(x & y) / min(len(x), len(y))
@@ -39,7 +41,7 @@ try:
         for iid in {x for x in sets[l["id"]] if not x.startswith("tags:")}:
             if iid in items: by_fen.setdefault(fen_key(items[iid]), set()).add(l["id"])
     for k, ls in by_fen.items():
-        if len(ls) > 1: problems.append(f"same position in several lessons {sorted(ls)}: {k}")
+        if len(ls) > 1 and len({series[i] for i in ls}) > 1 or (len(ls) > 1 and not series[sorted(ls)[0]]): problems.append(f"same position in several lessons {sorted(ls)}: {k}")
 except FileNotFoundError:
     print("note: app/public/content/items.json missing, position check skipped (run tools/build_content.py)")
 for p in problems: print("OVERLAP", p)
