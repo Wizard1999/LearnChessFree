@@ -1,0 +1,196 @@
+{
+  "id": "L-CAL-TREE-2",
+  "title": "One pass through the tree: a verdict for each branch, once",
+  "skill": "CAL.TREE",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Builds a tree in a fixed order, forcing candidates first, with one verdict word per branch",
+    "Does not reopen a finished branch unless a missed reply turns up",
+    "Compares his verdicts with the engine line afterwards, verdict against verdict",
+    "Recognises a quiet position where a tree finds little"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Fill each branch once.** In *The analysis tree: fill each cell once* you built a table. Now the lines are five plies and the positions are unlabeled. Work in a fixed order: forcing candidates first, each reply in turn, one verdict word at the end of each branch. **Do not reopen a finished branch** unless you find a reply you missed. Afterwards compare your verdicts with the engine line, verdict against verdict. Seven matches in ten is the target."
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/2Q2rpp/p7/1p6/2n1q3/1BP4P/P5P1/5R1K w - - 0 24",
+      "caption": "White to move. A tree with three rows. Qxf7+ ends in mate in three. Rxf7 does not mate; the engine puts it near +0.6 for White (depth 16), so a table would mark it slower, not bad. Bxc4 gives up the attack and the engine rates it about -6.9 for White. Row one is the only row with the word mates, so the tree is finished after one pass.",
+      "line": [
+        {
+          "move": "c7f7",
+          "say": "Qxf7+ takes the rook on f7, with check. Gone: the black rook."
+        },
+        {
+          "move": "g8h8",
+          "say": "Kh8: the king steps aside, in the engine line."
+        },
+        {
+          "move": "f7f8",
+          "say": "Qf8+: the queen goes to f8 with check."
+        },
+        {
+          "move": "a8f8",
+          "say": "Rxf8: the a8 rook takes the queen. Gone: the White queen."
+        },
+        {
+          "move": "f1f8",
+          "say": "Rxf8 is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c7f7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f7",
+            "piece": "r"
+          },
+          "statement": "A black rook stands on f7."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "c7f7",
+            "n": 3
+          },
+          "statement": "Qxf7+ forces checkmate within three moves (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "f1f7",
+            "cp": 800
+          },
+          "statement": "Rxf7 is at least 8 pawns worse than the mating line Qxf7+ (depth 16); it does not mate."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "b3c4",
+            "cp": 800
+          },
+          "statement": "Rxf7 is at least 8 pawns worse than the mating line Qxf7+ (depth 16); it does not mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "f7"
+        },
+        {
+          "from": "f1",
+          "to": "f7"
+        },
+        {
+          "from": "b3",
+          "to": "c4"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-34ljW-L"
+    },
+    {
+      "type": "card",
+      "text": "**Two ways it breaks.** One: you go back over a branch you already judged because the next one feels uncertain. That repeats work and starves the new branch. Write the verdict and move on. Two: you stop because the list of replies looks complete; a reply you never thought of makes the table look finished when it is not. In a quiet position few branches end in a verdict. Both are rules of thumb."
+    },
+    {
+      "type": "contrast",
+      "title": "Same row, one knight added",
+      "prompt": "In the first position the Qxf2+ row ends in mate. In the second a white knight stands on f4 and everything else is the same. Fill the Qxf2+ row first: is it still best? In the third, would a tree find anything?",
+      "working": "IL-dkzGv-L",
+      "failing": "IBds41-15",
+      "irrelevant": "IBds41-16"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next three are silent: no hints and no engine line before you answer. Fill your table on paper first. Not every position has a tree worth building; say so when it does not. Hints on request only is planned, not built."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the three silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the three right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-1ml3g-L",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-CjMez-L",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.TREE",
+        "cue.3"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Revisit count: ten minutes, away from the app.** Take five positions with a forcing line from a puzzle book. For each draw a table and put a tick beside each branch when you judge it. Each time you go back to a ticked branch, make a mark. After five positions count the marks: your aim is zero. Then check with the engine or the book. A mark is not an error, only a sign of thinking inertia."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one revisit count. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "marks",
+          "label": "After the five positions: revisit marks:",
+          "type": "number"
+        },
+        {
+          "id": "match",
+          "label": "Positions where my verdicts matched the answer, out of 5:",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/CAL.TREE.json (D2 outcome: builds the tree without revisiting a branch, reaches the engine verdict on 7 of 10)",
+    "builds on L-CAL-TREE-1 (the table and the worst cell)",
+    "docs/council-synthesis.md Round 3 (Kotov: each branch once; Aagaard: avoid repeated rechecking) [R]; sources/sheets/emlasker_common-sense.md 4.13 [S]",
+    "The app cannot see whether a learner revisited a branch; that part is a paper routine. Verdict agreement with the engine is checked by the item claims only.",
+    "positions: Lichess puzzles (CC0); one-feature edit: white knight added on f4 to puzzle dkzGv; two quiet opening positions written for this lesson"
+  ]
+}

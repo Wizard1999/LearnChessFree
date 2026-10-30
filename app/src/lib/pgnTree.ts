@@ -1,7 +1,7 @@
 // A move tree with variations, comments and NAG marks: parse a PGN into it, write it back out. chess.js validates every move.
 import { Chess } from 'chess.js'
 
-export interface TNode { id: number; parent: number | null; san: string; uci: string; fen: string; ply: number; kids: number[]; comment?: string; nag?: number; /** Engine score from a [%eval] comment, centipawns from White's point of view (mate as 2000). */ evalCp?: number }
+export interface TNode { /** Clock after the move, in seconds, from a [%clk h:mm:ss] comment. */ clk?: number; id: number; parent: number | null; san: string; uci: string; fen: string; ply: number; kids: number[]; comment?: string; nag?: number; /** Engine score from a [%eval] comment, centipawns from White's point of view (mate as 2000). */ evalCp?: number }
 export interface Tree { nodes: TNode[]; headers?: Record<string, string> }
 
 export const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
@@ -41,6 +41,8 @@ export function parsePgn(text: string): Tree | string {
     if (tok[0] === '{') {
       const ev = tok.match(/\[%eval\s+(#?)(-?[\d.]+)\]/)
       if (ev) t.nodes[cur].evalCp = ev[1] ? (+ev[2] > 0 ? 2000 : -2000) : Math.round(parseFloat(ev[2]) * 100)
+      const ck = tok.match(/\[%clk\s+(\d+):(\d{2}):(\d{2}(?:\.\d+)?)\]/)
+      if (ck) t.nodes[cur].clk = +ck[1] * 3600 + +ck[2] * 60 + parseFloat(ck[3])
       const c = tok.slice(1, -1).replace(/\[%[^\]]*\]/g, '').trim()
       if (c) t.nodes[cur].comment = t.nodes[cur].comment ? `${t.nodes[cur].comment} ${c}` : c
     } else if (tok[0] === ';') { /* line comment: ignored */ }

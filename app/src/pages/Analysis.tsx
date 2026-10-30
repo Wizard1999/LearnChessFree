@@ -402,6 +402,13 @@ export function Analysis() {
 
   const evalPoints = mainline.map((id, i) => ({ id, i, cp: evals[epdOf(tree.nodes[id].fen)] }))
   const haveGraph = evalPoints.filter(p => p.cp !== undefined).length >= 2
+  // time spent per move: the drop of that side's clock since its previous move (an increment can make it negative, so it is floored at 0)
+  const timePoints = mainline.map((id, i) => {
+    const n = tree.nodes[id]; const prev = i >= 2 ? tree.nodes[mainline[i - 2]] : undefined
+    return { id, i, white: n.ply % 2 === 1, spent: n.clk !== undefined && prev?.clk !== undefined ? Math.max(0, prev.clk - n.clk) : undefined }
+  })
+  const haveClocks = timePoints.filter(p => p.spent !== undefined).length >= 4
+  const maxSpent = Math.max(1, ...timePoints.map(p => p.spent ?? 0))
   const editFen = editing ? `${editPlacement.current} ${editing.turn} - - 0 1` : fen
 
   return (
@@ -535,6 +542,16 @@ export function Analysis() {
                 {marks.mistakes.length > 0 && <div className="row"><button type="button" onClick={() => nextMistake(-1)}>◀ Previous mistake</button><button type="button" onClick={() => nextMistake(1)}>Next mistake ▶</button><button type="button" className="primary" onClick={() => startRetry(marks.mistakes[0])}>Learn from your mistakes</button></div>}
                 {retry && (() => { const n = tree.nodes[retry.id]; const pf = tree.nodes[n.parent ?? 0].fen; const bu = bests[epdOf(pf)]; const bsan = bu ? (() => { try { return new Chess(pf).move({ from: bu.slice(0, 2), to: bu.slice(2, 4), promotion: bu[4] }).san } catch { return null } })() : null; const nextId = marks.mistakes[marks.mistakes.indexOf(retry.id) + 1]
                   return <div className="card" role="status"><p><strong>Your turn.</strong> In the game, {new Chess(pf).turn() === 'w' ? 'White' : 'Black'} played {n.san}, which lost ground. Find a better move on the board.</p>{retry.verdict && <p>{retry.verdict}</p>}<div className="row">{bsan && <button type="button" onClick={() => setRetry({ ...retry, verdict: `The engine preferred ${bsan}.` })}>Show the answer</button>}{nextId !== undefined && <button type="button" onClick={() => startRetry(nextId)}>Next mistake</button>}<button type="button" onClick={() => setRetry(null)}>Stop</button></div></div> })()}
+              </>
+            )}
+            {haveClocks && (
+              <>
+                <h3 className="small">Time per move <span className="muted">(from the clock comments in the PGN; White above the line, Black below)</span></h3>
+                <svg className="evalgraph timegraph" viewBox={`0 0 ${Math.max(1, mainline.length - 1) * 10} 100`} preserveAspectRatio="none" role="img" aria-label={`Time spent per move; the longest was ${Math.round(maxSpent)} seconds`}>
+                  <rect x="0" y="0" width="100%" height="100%" className="graphbg" />
+                  <line x1="0" x2={Math.max(1, mainline.length - 1) * 10} y1="50" y2="50" className="graphmid" />
+                  {timePoints.filter(p => p.spent !== undefined && p.i > 0).map(p => { const h = (p.spent! / maxSpent) * 46; return <rect key={p.id} x={p.i * 10 - 4} y={p.white ? 50 - h : 50} width="8" height={h} className={p.id === cur ? 'graphcur' : p.white ? 'timewhite' : 'timeblack'} onClick={() => setCur(p.id)} /> })}
+                </svg>
               </>
             )}
             {haveGraph && (

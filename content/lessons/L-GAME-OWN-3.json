@@ -1,0 +1,139 @@
+{
+  "id": "L-GAME-OWN-3",
+  "title": "What I saw and what was there, with lines written",
+  "skill": "GAME.OWN",
+  "depth": "D3",
+  "minutes": 14,
+  "outcomes": [
+    "Writes two separate notes for a position: what he saw and what was there",
+    "Writes a short variation for each, with both sides' moves",
+    "Records positions where the two notes agree without inventing a gap"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This builds on **Annotate your own game before the engine** and on **Five games in a row, one gap sentence per moment**. There you stated how big a gap was. Now you separate its two sides. **What I saw** is only what you looked at in the game. **What was there** is what a measurement finds. Write both for at least three positions per game, each with a short line of moves for both sides."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqk2r/ppp2p2/2np3p/2b1p3/2B1n1pP/3P2B1/PPP2PPN/RN1QK2R w KQkq - 0 10",
+      "caption": "Black has just played Nxe4. Replay White's reply and the check that follows, then stop. Black's note will say what he saw.",
+      "line": [
+        {
+          "move": "d3e4",
+          "say": "dxe4: the pawn simply takes the knight."
+        },
+        {
+          "move": "c5f2",
+          "say": "Bxf2+ is check and takes a pawn."
+        },
+        {
+          "move": "e1f2",
+          "say": "The king takes the bishop."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d3e4"
+            ]
+          },
+          "statement": "dxe4 is the engine's best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 300
+          },
+          "statement": "The position is at least 300 centipawns in White's favour (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds91-10"
+    },
+    {
+      "type": "card",
+      "text": "Compare the two notes. **Saw:** a pawn on h4 that the queen could take. **Was there:** a defender, the bishop on g3. The line is what makes the note usable: *Qxh4 Bxh4*, and the queen is gone for a pawn. A note without a line is an opinion; with a line, someone can replay it and find where it breaks. The line is written from your side of the board first, then the opponent's reply."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Pick one of the three positions. Write the 'what I saw' column as a player in a hurry would, then the 'what was there' column, each with a line of at least two moves for each side."
+    },
+    {
+      "type": "card",
+      "text": "**When this holds.** You write 'what I saw' before the engine is opened, from memory of the game, including what you did not look at. *Rule of thumb:* if the two columns read the same, you probably copied one into the other. **When it fails:** a line you could not have seen at the board goes in the 'saw' column. **When it does not apply:** quiet positions, where many moves are fine and the columns agree. Write 'agree' and move on."
+    },
+    {
+      "type": "contrast",
+      "title": "Where the gap lives",
+      "prompt": "Two of these positions hold a move that was there to be found; one is quiet. Predict which is which, then check.",
+      "working": "IBds91-8",
+      "failing": "IBds91-9",
+      "irrelevant": "IBds91-12"
+    },
+    {
+      "type": "card",
+      "text": "Now without notes. In these positions nothing tells you whether a tactic is hiding. Look first, write the 'saw' column, then decide whether there is anything more. Sometimes the honest answer is that both columns agree."
+    },
+    {
+      "type": "item",
+      "item": "IBds91-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds91-11",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.GAME.OWN",
+        "theme.annotation",
+        "saw-was-there"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan the next annotation. Keep it short and written.",
+      "fields": [
+        {
+          "id": "positions",
+          "label": "The three positions of my last game I will annotate (move numbers):"
+        },
+        {
+          "id": "saw",
+          "label": "What I saw there (before any engine), with a line each:"
+        },
+        {
+          "id": "was",
+          "label": "What was there (after the engine), with a line each:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "How sure are you that your 'what I saw' columns were written from the game and not rebuilt from the engine's lines? Write low, medium or high."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/council-synthesis.md CD-12",
+    "content/skills/GAME.OWN.json (D3 outcome)",
+    "items IBds91-7 to IBds91-12 (authored practice games, engine depth 16)"
+  ]
+}

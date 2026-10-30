@@ -43,3 +43,12 @@ describe('pgn evals', () => {
     expect(t.nodes[b].comment).toBe('a comment')
   })
 })
+
+describe('clock comments', () => {
+  it('reads [%clk] into seconds on the move it follows', () => {
+    const r = parsePgn('1. e4 {[%clk 0:03:00]} e5 {[%clk 0:02:59.5]} 2. Nf3 {[%clk 0:02:50]} *')
+    if (typeof r === 'string') throw new Error(r)
+    const clocks = r.nodes.filter(n => n.id > 0).map(n => n.clk)
+    expect(clocks).toEqual([180, 179.5, 170])
+  })
+})

@@ -1,13 +1,9 @@
 {
- "updated": "2026-10-30T11:01+00:00",
- "overall": 54,
- "tasksDone": 86,
- "tasksTotal": 172,
+ "updated": "2026-10-30T13:26+00:00",
+ "overall": 59,
+ "tasksDone": 102,
+ "tasksTotal": 183,
  "building": [
-  {
-   "phase": "Phase 2b: Square control map (Andrew's idea, 29 October 2026)",
-   "text": "Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet"
-  },
   {
    "phase": "Phase 2b: Square control map (Andrew's idea, 29 October 2026)",
    "text": "Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not"
@@ -45,12 +41,12 @@
    "text": "Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md"
   },
   {
-   "phase": "Phase 6e: Sources library (plan: docs/library-plan.md)",
-   "text": "Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending)"
+   "phase": "Phase 5: Lessons (one per skill node; see the metric above)",
+   "text": "Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored."
   },
   {
-   "phase": "Phase 5c: One building block per lesson (Andrew, 30 October 2026)",
-   "text": "Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference"
+   "phase": "Phase 6e: Sources library (plan: docs/library-plan.md)",
+   "text": "Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending)"
   },
   {
    "phase": "Phase 5d: Deeper lessons (D2 and D3), in-depth lessons for every system (Andrew's request)",
@@ -68,10 +64,6 @@
   },
   {
    "phase": "Phase 2: The app",
-   "text": "Mission completion screen"
-  },
-  {
-   "phase": "Phase 2: The app",
    "text": "Adversarial code review of the app and fixes"
   },
   {
@@ -83,12 +75,16 @@
    "text": "Full-course walkthrough in the browser as a first-time learner"
   },
   {
-   "phase": "Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)",
-   "text": "Lesson links drawn as a second edge layer; keyboard route between connected skills; clicking a lesson in the list highlights its node"
+   "phase": "Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37)",
+   "text": "Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape"
   },
   {
-   "phase": "Phase 2b: Square control map (Andrew's idea, 29 October 2026)",
-   "text": "Value-aware version; derived views (outposts and holes, space, king zone, safe squares for each piece)"
+   "phase": "Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37)",
+   "text": "Separate discovery from assessment: later checks mix unrelated positions, no theme label, include quiet moves and declined tactics"
+  },
+  {
+   "phase": "Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)",
+   "text": "Lesson links drawn as a second edge layer; keyboard route between connected skills; clicking a lesson in the list highlights its node"
   }
  ],
  "waiting": [
@@ -99,6 +95,10 @@
   {
    "phase": "Phase 0: Design, research and governance",
    "text": "Baseline measurement before starting (gate G1)"
+  },
+  {
+   "phase": "Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37)",
+   "text": "Pilot the first stages with true beginners and record where they need outside explanations (needs people; gate G1)"
   },
   {
    "phase": "Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`)",
@@ -326,8 +326,8 @@
      "text": "Mission warm-up (per-mission test-out, no penalty), mastery-challenge nudge on Today, overall wheel and challenge on the All missions tab"
     },
     {
-     "state": "todo",
-     "text": "Mission completion screen"
+     "state": "done",
+     "text": "Mission completion screen (a completion banner on the section panel and a certificate on Progress exist.)"
     },
     {
      "state": "todo",
@@ -350,9 +350,53 @@
      "text": "Analysis page (More \u2192 Analysis): move tree with variations, eval bar and graph, clickable engine lines, whole-game analysis with accuracy, opening names, PGN/FEN import and export, saved games, control map. Not yet: board editor, tablebase lookup, engine-vs-you training from a position"
     }
    ],
-   "done": 22,
+   "done": 23,
    "total": 26,
-   "percent": 85
+   "percent": 88
+  },
+  {
+   "title": "Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37)",
+   "tasks": [
+    {
+     "state": "done",
+     "text": "Build the recommended path in 8 stages, hand-ordered for the first three, topologically checked against prerequisites (`tools/build_path.py`, `content/path.json`)"
+    },
+    {
+     "state": "done",
+     "text": "Lesson list defaults to the path; subject sections kept as a reference view"
+    },
+    {
+     "state": "done",
+     "text": "Fix the named errors: piece-value arithmetic wording, fork intro, \"loose\" definitions, pawn-shield wording, square-naming lesson, bishop-before-rook reference, safety habit examines the intended move"
+    },
+    {
+     "state": "done",
+     "text": "Backward-reference and over-broad-claim audit of all lessons in path order (text-only edits; structural problems listed for follow-up) Done: all lessons read in path order, about 40 text edits, ten named errors fixed; structural issues listed in the audit report."
+    },
+    {
+     "state": "todo",
+     "text": "Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape"
+    },
+    {
+     "state": "done",
+     "text": "Make reflection specific and occasional (name the missed defender, reconstruct the mistaken line) instead of repeated confidence ratings First pass done over all lessons (specific follow-up questions); a reflect-step redesign is not done."
+    },
+    {
+     "state": "todo",
+     "text": "Separate discovery from assessment: later checks mix unrelated positions, no theme label, include quiet moves and declined tactics"
+    },
+    {
+     "state": "done",
+     "text": "Distribute the thinking loop (V2 to V6) so each procedure is introduced when a problem shows its use; confirm with the path (the recommended path puts V1 at stage 2, V2 at 3 and V4 to V6 in stages 5 to 6)"
+    },
+    {
+     "state": "todo",
+     "text": "Pilot the first stages with true beginners and record where they need outside explanations (needs people; gate G1)"
+    }
+   ],
+   "done": 6,
+   "total": 9,
+   "percent": 67
   },
   {
    "title": "Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)",
@@ -372,11 +416,19 @@
     {
      "state": "todo",
      "text": "Lesson links drawn as a second edge layer; keyboard route between connected skills; clicking a lesson in the list highlights its node"
+    },
+    {
+     "state": "done",
+     "text": "Map as main workspace: full-width canvas, compact section row, stronger sectors, \"Your next step\" marker, labels that thin with zoom, camera remembered across lessons, four-question skill panel (D38)"
+    },
+    {
+     "state": "done",
+     "text": "Map: milestone rings with ability labels, broad region grouping, corner minimap, search, back-to-previous-view, connection explanations (\"why?\" shows the needed depth and its checked outcome), skill list synced with the map"
     }
    ],
-   "done": 3,
-   "total": 4,
-   "percent": 75
+   "done": 5,
+   "total": 6,
+   "percent": 83
   },
   {
    "title": "Phase 2b: Square control map (Andrew's idea, 29 October 2026)",
@@ -386,8 +438,8 @@
      "text": "Control map toggle on boards: per-square counts and blue/orange tint, in lesson boards, move-by-move steps, exercise answers, game review and the Contrast lab (off in tests and in Play on purpose)"
     },
     {
-     "state": "doing",
-     "text": "Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet"
+     "state": "done",
+     "text": "Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet Done in control map v2 (x-rays, pins, exchange value, 30 Oct 2026)."
     },
     {
      "state": "todo",
@@ -398,9 +450,9 @@
      "text": "Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not"
     }
    ],
-   "done": 1,
+   "done": 2,
    "total": 4,
-   "percent": 50
+   "percent": 62
   },
   {
    "title": "Phase 3: Curriculum graph",
@@ -582,8 +634,8 @@
      "text": "Course: famous games analysed (each game verified move by move; original commentary)"
     },
     {
-     "state": "todo",
-     "text": "Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)"
+     "state": "done",
+     "text": "Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons) Ten openings now."
     },
     {
      "state": "done",
@@ -602,8 +654,8 @@
      "text": "Coverage audit script (tools/coverage_audit.py) and a by-level misconceptions note (docs/misconceptions-by-level.md); both from recall, to be replaced by real syllabi and learner data"
     },
     {
-     "state": "todo",
-     "text": "Check that every listed misconception has a practice exercise; write the missing ones"
+     "state": "doing",
+     "text": "Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored."
     },
     {
      "state": "todo",
@@ -614,9 +666,9 @@
      "text": "Readability pass: text size, fewer nested boxes, stronger secondary text (first round; review on real screens)"
     }
    ],
-   "done": 12,
+   "done": 13,
    "total": 24,
-   "percent": 62
+   "percent": 69
   },
   {
    "title": "Phase 6: Data",
@@ -786,8 +838,8 @@
      "text": "Cue-1 and cue-2 siblings for convert, over-protection, opposite-bishop, attack and square-control items (about 26 new practice items)"
     },
     {
-     "state": "todo",
-     "text": "A dedicated opposite-coloured-bishops skill node and lesson (the items currently sit in L-END-MINOR-1)"
+     "state": "done",
+     "text": "A dedicated opposite-coloured-bishops skill node and lesson (the items currently sit in L-END-MINOR-1) (END.OCB, L-END-OCB-1, 30 Oct 2026)"
     },
     {
      "state": "todo",
@@ -798,15 +850,15 @@
      "text": "Strong-player review (G3) of explanations; beta feedback from Andrew's friends and site stands in until then"
     }
    ],
-   "done": 2,
+   "done": 3,
    "total": 6,
-   "percent": 33
+   "percent": 50
   },
   {
    "title": "Phase 3d: Analysis page, what remains",
    "tasks": [
     {
-     "state": "todo",
+     "state": "done",
      "text": "Clock times from PGN comments and a time-per-move graph"
     },
     {
@@ -822,9 +874,9 @@
      "text": "Opening explorer pages using the master statistics for the whole Openings page"
     }
    ],
-   "done": 0,
+   "done": 1,
    "total": 4,
-   "percent": 0
+   "percent": 25
   },
   {
    "title": "Phase 6g: Famous games, wave 2 (29 October 2026)",
@@ -846,21 +898,21 @@
    "title": "Phase 5c: One building block per lesson (Andrew, 30 October 2026)",
    "tasks": [
     {
-     "state": "doing",
-     "text": "Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference"
+     "state": "done",
+     "text": "Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference (all 13 done, 30 Oct 2026)"
     },
     {
      "state": "todo",
      "text": "After the split: lesson count and first-10-hours table updated, progress on old ids kept for the first block of each split"
     },
     {
-     "state": "todo",
+     "state": "done",
      "text": "A check that no lesson has an `also` list (one block per lesson) unless a documented exception"
     }
    ],
-   "done": 0,
+   "done": 2,
    "total": 3,
-   "percent": 17
+   "percent": 67
   },
   {
    "title": "Phase 5d: Deeper lessons (D2 and D3), in-depth lessons for every system (Andrew's request)",
@@ -870,7 +922,7 @@
      "text": "188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance"
     },
     {
-     "state": "todo",
+     "state": "done",
      "text": "Update the Square control lesson text for control map v2 (pins and x-rays are now handled; the lesson says \"pins are ignored\")"
     },
     {
@@ -878,9 +930,9 @@
      "text": "Optional engine check for one square (the sacrifice and tactics cases the control map cannot see)"
     }
    ],
-   "done": 0,
+   "done": 1,
    "total": 3,
-   "percent": 17
+   "percent": 50
   },
   {
    "title": "Phase 6h: Culture courses (30 October 2026)",
@@ -1032,13 +1084,13 @@
   }
  ],
  "metrics": {
-  "skills": 205,
-  "lessons": 408,
-  "nodesWithLesson": 205,
-  "nodesWithItems": 180,
-  "itemsShipped": 8186,
+  "skills": 206,
+  "lessons": 425,
+  "nodesWithLesson": 206,
+  "nodesWithItems": 182,
+  "itemsShipped": 8295,
   "itemsWaiting": 0,
-  "itemsNeedHuman": 3319,
+  "itemsNeedHuman": 3428,
   "itemsHumanReviewed": 0,
   "openings": {
    "games": 4752291,
@@ -1090,8 +1142,8 @@
    {
     "id": "S7",
     "name": "Endgames",
-    "nodes": 37,
-    "withLesson": 37,
+    "nodes": 38,
+    "withLesson": 38,
     "withItems": 36
    },
    {
@@ -1106,14 +1158,14 @@
     "name": "Game study",
     "nodes": 7,
     "withLesson": 7,
-    "withItems": 2
+    "withItems": 3
    },
    {
     "id": "S10",
     "name": "Practical performance",
     "nodes": 9,
     "withLesson": 9,
-    "withItems": 1
+    "withItems": 2
    },
    {
     "id": "S11",

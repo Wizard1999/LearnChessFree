@@ -1,0 +1,76 @@
+{
+  "id": "END.OCB",
+  "title": "Opposite-coloured bishop endings",
+  "strand": "S7",
+  "tier": 4,
+  "origin": "split-from-END.MINOR",
+  "depths": {
+    "D0": {
+      "outcome": "Explains why opposite-coloured bishops can never challenge each other, so the defender's bishop and king can hold squares that the attacker's bishop cannot touch.",
+      "prereqs": []
+    },
+    "D1": {
+      "outcome": "Predicts win or draw in opposite-coloured bishop endings that differ by one feature (a second pawn, the pawn's advance, the defending king's blockade square, rooks on the board), and states the rule of thumb with its exceptions.",
+      "prereqs": [
+        "END.MINOR.D1"
+      ]
+    },
+    "D2": {
+      "outcome": "In unlabeled endings, finds the defending set-up (king in front of the pawn, bishop guarding the key diagonal) or the winning try (two pawns far enough apart, a pawn on the seventh, a rook trade avoided), and separates bishops-only from bishops-with-rooks.",
+      "prereqs": [
+        "END.OCB.D1",
+        "END.KING-ACTIVE.D2"
+      ]
+    },
+    "D3": {
+      "outcome": "Verifies each claim with the tablebase and predicts the effect of adding a pawn, moving the defending king, or adding a rook on each side.",
+      "prereqs": [
+        "END.OCB.D2"
+      ]
+    }
+  },
+  "misconceptions": [
+    "Opposite-coloured bishops always draw.",
+    "Two pawns up always wins with opposite-coloured bishops."
+  ],
+  "sources": [
+    "sources/sheets/capablanca_chess-fundamentals.md §4 CI-17, CI-19; §5 item 26; §8 item 8",
+    "sources/sheets/edlasker_chess-strategy.md §4 K27",
+    "All positions: own constructions with results from the Lichess tablebase [V] (7 pieces at most)"
+  ],
+  "rating": {
+    "grade": "G0",
+    "note": "expert estimate; tier=4"
+  },
+  "conditions": [
+    "Each side has one bishop and the bishops stand on opposite colours.",
+    "The defending king can reach the square in front of the pawn, or the squares of the other colour that the attacking bishop cannot guard.",
+    "Pieces added to the board (rooks) change the verdict: the attacker gains winning chances that bishops alone do not give."
+  ],
+  "condition_sources": [
+    "CAP CI-17 (c); CAP CI-19",
+    "EDL K27 (d)",
+    "tablebase [V]"
+  ],
+  "contrasts": [
+    "The same extra pawn with a pawn on the seventh and the king ahead of it: the attacker wins.",
+    "Two connected pawns on adjacent files: the defender's blockade fails.",
+    "Same-coloured bishops, where the bishops can meet and the extra pawn usually tells."
+  ],
+  "contrast_kinds": [
+    "fails",
+    "fails",
+    "irrelevant"
+  ],
+  "contrast_sources": [
+    "tablebase [V]",
+    "tablebase [V]",
+    "CAP CI-17"
+  ],
+  "soft_prereqs": [
+    "POS.BISHOPS.D1"
+  ],
+  "soft_prereq_notes": {
+    "POS.BISHOPS.D1": "knowing what a bishop controls by colour is the base of every opposite-colour verdict"
+  }
+}

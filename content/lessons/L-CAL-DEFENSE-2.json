@@ -1,0 +1,186 @@
+{
+  "id": "L-CAL-DEFENSE-2",
+  "title": "Test the capture: hidden resource or none",
+  "skill": "CAL.DEFENSE",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Finds the reply that refutes a tempting capture or check in an unlabeled position",
+    "Accepts the move when a real search finds no resource, and says why the search ended",
+    "Notices that one extra defender can turn a winning capture into a mistake",
+    "Stops searching when the move mates, and reads a forced reply to its end"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Run the test on every tempting move.** In *The opponent's best reply* you looked for his check, capture and threat. Now the positions are unlabeled and you decide: **does a hidden resource refute the move, or is it sound?** Both answers are results. Finding nothing after a real search is not failure. A quick tell: after your move, which of his pieces has a new capture, or a defender it lacked before?"
+    },
+    {
+      "type": "board",
+      "fen": "3r3r/1pq1bBp1/3p3k/3Pp3/4Q1Pp/7P/PPP5/2KR3R b - - 16 28",
+      "caption": "Black to move and tempted by Qxc2+, a check that takes a pawn. Ask first: what is his best reply? Kxc2 is legal: the king takes the queen, which is then loose. The engine rates Qxc2+ at least 6 pawns worse than Black's best move, Bg5 (depth 16).",
+      "line": [
+        {
+          "move": "c7c2",
+          "say": "Qxc2+: the queen takes the pawn and gives check."
+        },
+        {
+          "move": "c1c2",
+          "say": "Kxc2: the king takes the queen. Nothing of Black defends c2."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c7c2"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "c2"
+            ],
+            "after_moves": [
+              "c7c2"
+            ]
+          },
+          "statement": "After Qxc2+ Black's only loose piece is the queen on c2."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "c7c2",
+            "cp": 600
+          },
+          "statement": "Qxc2+ is at least 6 pawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e7g5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is Bg5 (depth 16)."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "c2"
+        },
+        {
+          "from": "c1",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "c2"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-bjbvK-p"
+    },
+    {
+      "type": "card",
+      "text": "**When the search pays and when it stops.** Run it on every capture or check you mean to play when the position is critical. Stop when the move is checkmate: no reply exists. If his reply is forced, the search gets shorter, not finished: read that line to its end. Do not trust *I see no defence*; list his checks, captures and threats once more. The hidden resource is often a recapture by a forgotten piece, or a check that gains time. A rule of thumb, not a guarantee."
+    },
+    {
+      "type": "contrast",
+      "title": "Same capture, one pawn added",
+      "prompt": "In the first position Bxh7+ is best. In the second a black pawn stands on d4 and everything else is the same. Predict first: is Bxh7+ still best? In the third, does any reply need looking for?",
+      "working": "IL-wbvIe-p",
+      "failing": "IBds41-12",
+      "irrelevant": "IBds41-13"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next four are silent: no hints and no engine line before you answer. Some tempting moves are sound, some are refuted, and one may need no search. Say what his best reply is before you answer, even for a move you think is sound. Hints on request only is planned, not built."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the four silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the four right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-oIV34-p",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-C2Byk-p",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-MOWTX-p",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-14",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.DEFENSE",
+        "theme.bestDefence"
+      ],
+      "n": 3
+    },
+    {
+      "type": "card",
+      "text": "**Reply ledger: one week, in your own games.** Before every capture or check you play, write his best reply on your scoresheet. After the game, mark each *expected* or *surprised*. Look at the surprises: was the reply a check, a recapture, or a quiet move? Whatever type comes up most is the one to add to your scan. Whether the ledger improves your play is unknown; the count shows how often your guess was wrong."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one reply ledger. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "games",
+          "label": "Games I will keep the ledger in:",
+          "type": "number"
+        },
+        {
+          "id": "expected",
+          "label": "After the games: replies I expected:",
+          "type": "number"
+        },
+        {
+          "id": "surprised",
+          "label": "After the games: replies that surprised me:",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/CAL.DEFENSE.json (D2 outcome: finds the refutation when a hidden resource exists, accepts the line when none does)",
+    "builds on L-CAL-DEFENSE-1 (the opponent's best reply)",
+    "docs/council-synthesis.md Round 3 (Dvoretsky: look for the opponent's best resource) [R]; sources/sheets/emlasker_common-sense.md 4.16 [S]",
+    "positions: Lichess puzzles (CC0); one-feature edit: black pawn added on d4 to puzzle wbvIe; mate-in-one positions taken four plies into puzzles XDilA and ppS3k"
+  ]
+}

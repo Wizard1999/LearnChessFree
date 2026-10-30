@@ -3,36 +3,37 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 54%** (86 of 172 tasks done, in-progress tasks count half). Updated 2026-10-30T11:01+00:00 UTC.
+**Overall: 59%** (102 of 183 tasks done, in-progress tasks count half). Updated 2026-10-30T13:26+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
 | Phase 0: Design, research and governance | 9/11 | 82% |
 | Phase 1: Verification tooling | 6/8 | 75% |
-| Phase 2: The app | 22/26 | 85% |
-| Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md) | 3/4 | 75% |
-| Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 1/4 | 50% |
+| Phase 2: The app | 23/26 | 88% |
+| Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37) | 6/9 | 67% |
+| Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md) | 5/6 | 83% |
+| Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 2/4 | 62% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
 | Phase 3b: Design (from the Design Doctrine; see `docs/design-direction.md`) | 3/10 | 30% |
 | Phase 4: Exercise bank | 4/8 | 62% |
-| Phase 5: Lessons (one per skill node; see the metric above) | 12/24 | 62% |
+| Phase 5: Lessons (one per skill node; see the metric above) | 13/24 | 69% |
 | Phase 6: Data | 2/3 | 67% |
 | Phase 6b: Motivation (local, no server) | 4/5 | 80% |
 | Phase 6e: Sources library (plan: docs/library-plan.md) | 7/9 | 83% |
 | Phase 6f: Top-level game data (Andrew, 29 October 2026: all of it, now back to the beginning) | 2/4 | 50% |
 | Phase 3c: The simplicity pass (design: docs/design-simplicity-pass.md) | 0/7 | 0% |
-| Phase 5b: Follow-ups from the review waves (29 October 2026) | 2/6 | 33% |
-| Phase 3d: Analysis page, what remains | 0/4 | 0% |
+| Phase 5b: Follow-ups from the review waves (29 October 2026) | 3/6 | 50% |
+| Phase 3d: Analysis page, what remains | 1/4 | 25% |
 | Phase 6g: Famous games, wave 2 (29 October 2026) | 1/2 | 50% |
-| Phase 5c: One building block per lesson (Andrew, 30 October 2026) | 0/3 | 17% |
-| Phase 5d: Deeper lessons (D2 and D3), in-depth lessons for every system (Andrew's request) | 0/3 | 17% |
+| Phase 5c: One building block per lesson (Andrew, 30 October 2026) | 2/3 | 67% |
+| Phase 5d: Deeper lessons (D2 and D3), in-depth lessons for every system (Andrew's request) | 1/3 | 50% |
 | Phase 6h: Culture courses (30 October 2026) | 3/4 | 75% |
 | Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md) | 1/9 | 11% |
 | Phase 6c: Courses on top of the core (design: docs/course-families.md) | 0/5 | 0% |
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 205 of 205 skill nodes have a lesson (100%); 180 nodes have 10 or more shipped exercises; 8186 exercises ship, 0 wait for validation; 0 items reviewed by a person, 3319 flagged for human review.
+**Coverage (computed from the files):** 206 of 206 skill nodes have a lesson (100%); 182 nodes have 10 or more shipped exercises; 8295 exercises ship, 0 wait for validation; 0 items reviewed by a person, 3428 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -42,17 +43,17 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S4 Calculation | 8 | 8 | 8 |
 | S5 Positional play and planning | 50 | 50 | 49 |
 | S6 Attack, sacrifice and defense | 19 | 19 | 17 |
-| S7 Endgames | 37 | 37 | 36 |
+| S7 Endgames | 38 | 38 | 36 |
 | S8 Openings and structures | 12 | 12 | 12 |
-| S9 Game study | 7 | 7 | 2 |
-| S10 Practical performance | 9 | 9 | 1 |
+| S9 Game study | 7 | 7 | 3 |
+| S10 Practical performance | 9 | 9 | 2 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet; Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference; 188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance
+**Building now:** Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored.; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); 188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance
 
-**Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Mission completion screen; Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review
+**Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review; Full-course walkthrough in the browser as a first-time learner
 
-**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Beginner test: five beginners and five club players (gate G11), fix what two or more stumble on; Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
+**Waiting on you (gates and questions):** Strong-player review of explanations (gate G3, G6, G8); Baseline measurement before starting (gate G1); Pilot the first stages with true beginners and record where they need outside explanations (needs people; gate G1); Identity study: three comparable treatments to choose from (question Q10); Usability rounds with real people (gate G11); Beginner test: five beginners and five club players (gate G11), fix what two or more stumble on; Strong-player review of the slice (gate G3); Web version online (gate G10) and the exe tested on a second machine; Put the receiver on Andrew's host and test one submission (gate G14); First testers and the evaluation plan started (gate G11); Course data model and a Courses view in the Course tab (question Q12); Turn on Pages in the repository settings (gate G10); Choose a name and a content licence (questions Q3, Q4); Optional sign-in to sync progress across devices (question Q11: needs a hosting and account choice); Baseline games and placement (gate G1)
 
 <!-- PROGRESS:END -->
 
@@ -100,7 +101,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Roadmap page in the app
 - [x] Missions: progress donut, five levels per skill, block map of the whole course, skills up next, mastery challenge (`docs/missions-design.md`)
 - [x] Mission warm-up (per-mission test-out, no penalty), mastery-challenge nudge on Today, overall wheel and challenge on the All missions tab
-- [ ] Mission completion screen
+- [x] Mission completion screen (a completion banner on the section panel and a certificate on Progress exist.)
 - [ ] Adversarial code review of the app and fixes
 - [ ] Accessibility and mobile fixes from the review
 - [ ] Full-course walkthrough in the browser as a first-time learner
@@ -111,11 +112,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Build the recommended path in 8 stages, hand-ordered for the first three, topologically checked against prerequisites (`tools/build_path.py`, `content/path.json`)
 - [x] Lesson list defaults to the path; subject sections kept as a reference view
 - [x] Fix the named errors: piece-value arithmetic wording, fork intro, "loose" definitions, pawn-shield wording, square-naming lesson, bishop-before-rook reference, safety habit examines the intended move
-- [~] Backward-reference and over-broad-claim audit of all lessons in path order (text-only edits; structural problems listed for follow-up)
+- [x] Backward-reference and over-broad-claim audit of all lessons in path order (text-only edits; structural problems listed for follow-up) Done: all lessons read in path order, about 40 text edits, ten named errors fixed; structural issues listed in the audit report.
 - [ ] Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape
-- [ ] Make reflection specific and occasional (name the missed defender, reconstruct the mistaken line) instead of repeated confidence ratings
+- [x] Make reflection specific and occasional (name the missed defender, reconstruct the mistaken line) instead of repeated confidence ratings First pass done over all lessons (specific follow-up questions); a reflect-step redesign is not done.
 - [ ] Separate discovery from assessment: later checks mix unrelated positions, no theme label, include quiet moves and declined tactics
-- [ ] Distribute the thinking loop (V2 to V6) so each procedure is introduced when a problem shows its use; confirm with the path
+- [x] Distribute the thinking loop (V2 to V6) so each procedure is introduced when a problem shows its use; confirm with the path (the recommended path puts V1 at stage 2, V2 at 3 and V4 to V6 in stages 5 to 6)
 - [ ] Pilot the first stages with true beginners and record where they need outside explanations (needs people; gate G1)
 
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
@@ -128,7 +129,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
 - [x] Control map toggle on boards: per-square counts and blue/orange tint, in lesson boards, move-by-move steps, exercise answers, game review and the Contrast lab (off in tests and in Play on purpose)
-- [~] Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet
+- [x] Click a square: attackers and defenders listed (pins ignored); x-rays and the exchange outcome not yet Done in control map v2 (x-rays, pins, exchange value, 30 Oct 2026).
 - [ ] Value-aware version; derived views (outposts and holes, space, king zone, safe squares for each piece)
 - [~] Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not
 
@@ -177,12 +178,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Contrast step: show the baseline result and ask the irrelevant item, as the lesson cards promise (review finding on the g2 lessons)
 - [ ] Read-through of all lessons for voice, order and consistency
 - [ ] Course: famous games analysed (each game verified move by move; original commentary)
-- [ ] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons)
+- [x] Courses: deep dives into each common opening (built on the openings data, no overlap with other lessons) Ten openings now.
 - [x] Overlap check in the curriculum tools (tools/check_overlap.py; found 3 duplicate lesson pairs, listed in docs/review-findings-pending.md)
 - [~] Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md
 - [x] Lesson pages show Connected lessons (builds on, uses, leads to, seen in a course), derived from the skill graph
 - [x] Coverage audit script (tools/coverage_audit.py) and a by-level misconceptions note (docs/misconceptions-by-level.md); both from recall, to be replaced by real syllabi and learner data
-- [ ] Check that every listed misconception has a practice exercise; write the missing ones
+- [~] Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored.
 - [ ] Advanced club-style courses
 - [x] Readability pass: text size, fewer nested boxes, stronger secondary text (first round; review on real screens)
 
@@ -229,12 +230,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] A genuine triangulation example (none exists in the single-pawn families searched; needs a richer generator or a human)
 - [x] Cue-1 and cue-2 siblings for the doubled-pawn items (4 new)
 - [x] Cue-1 and cue-2 siblings for convert, over-protection, opposite-bishop, attack and square-control items (about 26 new practice items)
-- [ ] A dedicated opposite-coloured-bishops skill node and lesson (the items currently sit in L-END-MINOR-1)
+- [x] A dedicated opposite-coloured-bishops skill node and lesson (the items currently sit in L-END-MINOR-1) (END.OCB, L-END-OCB-1, 30 Oct 2026)
 - [ ] Resolve the last overlap pair (L-FND-THREAT-1 and L-LOOP-V1-1): keep the first, deepen the second
 - [ ] Strong-player review (G3) of explanations; beta feedback from Andrew's friends and site stands in until then
 
 ## Phase 3d: Analysis page, what remains
-- [ ] Clock times from PGN comments and a time-per-move graph
+- [x] Clock times from PGN comments and a time-per-move graph
 - [ ] Move labels beyond mistakes: best, book, brilliant (needs a stated rule and a check)
 - [ ] Multi-chapter studies; image export; keyboard shortcut help
 - [ ] Opening explorer pages using the master statistics for the whole Openings page
@@ -244,13 +245,13 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Wave 3: older public-domain games and endgame classics; opening deep dives; history and meta course (needs a named human reviewer for history claims)
 
 ## Phase 5c: One building block per lesson (Andrew, 30 October 2026)
-- [~] Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference
+- [x] Split the 13 lessons that bundle several skill nodes: 5 of 13 done (special rules into en passant, promotion and draws; rook and bishop; queen and king; capture and piece values; check and stalemate); 8 left: the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference (all 13 done, 30 Oct 2026)
 - [ ] After the split: lesson count and first-10-hours table updated, progress on old ids kept for the first block of each split
-- [ ] A check that no lesson has an `also` list (one block per lesson) unless a documented exception
+- [x] A check that no lesson has an `also` list (one block per lesson) unless a documented exception
 
 ## Phase 5d: Deeper lessons (D2 and D3), in-depth lessons for every system (Andrew's request)
 - [~] 188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance
-- [ ] Update the Square control lesson text for control map v2 (pins and x-rays are now handled; the lesson says "pins are ignored")
+- [x] Update the Square control lesson text for control map v2 (pins and x-rays are now handled; the lesson says "pins are ignored")
 - [ ] Optional engine check for one square (the sacrifice and tactics cases the control map cannot see)
 
 ## Phase 6h: Culture courses (30 October 2026)

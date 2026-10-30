@@ -1,0 +1,206 @@
+{
+  "id": "L-CAL-BLIND-2",
+  "title": "Hold a seven-ply line with a quiet move in the middle",
+  "skill": "CAL.BLIND",
+  "depth": "D2",
+  "minutes": 14,
+  "outcomes": [
+    "Enters a seven-ply line with the pieces hidden, including quiet moves of his own",
+    "Rebuilds the whole list of moved, gone and attacked pieces after the quiet move",
+    "Notices that one added piece can break a line that was held correctly",
+    "Skips blind effort when one look at the board gives the move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**The quiet move is the weak point.** In *Hold the line in your head: six plies, nothing moved* you learned to rebuild your list after a quiet move. Now the quiet move is yours, in the middle of a seven-ply line, and the pieces vanish before you enter it. After each move say: *what moved, what is gone, what is attacked now.* The node asks for eight plies; the items here are seven."
+    },
+    {
+      "type": "board",
+      "fen": "5rk1/p4p1p/5p2/4p3/4P2N/8/qr2QPPP/3R2K1 w - - 0 21",
+      "caption": "White to move. Seven plies, nothing moved. The quiet move is the third ply: Nf5 takes nothing, and the knight does not attack h8. Rebuild your list there. Qg4+ forces mate in four (depth 16). The opponent's replies are the engine's choice, not a claim about every reply.",
+      "line": [
+        {
+          "move": "e2g4",
+          "say": "Qg4+: check on the g-file. Nothing is taken."
+        },
+        {
+          "move": "g8h8",
+          "say": "Kh8: the king steps to the corner."
+        },
+        {
+          "move": "h4f5",
+          "say": "Nf5: the quiet move. Nothing is taken. Rebuild the whole list."
+        },
+        {
+          "move": "f8g8",
+          "say": "Rg8: the rook offers itself on g8."
+        },
+        {
+          "move": "g4g8",
+          "say": "Qxg8+: the queen takes the rook with check. Gone: the black rook."
+        },
+        {
+          "move": "h8g8",
+          "say": "Kxg8: the king takes the queen. Gone: the White queen."
+        },
+        {
+          "move": "d1d8",
+          "say": "Rd8 is checkmate on the back rank."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e2g4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e2g4",
+            "n": 4
+          },
+          "statement": "Qg4+ forces checkmate within four moves (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "f5",
+            "piece": "empty"
+          },
+          "statement": "The f5 square is empty, so Nf5 takes nothing."
+        },
+        {
+          "id": "C4",
+          "type": "piece_attacks",
+          "params": {
+            "square": "f5",
+            "excludes": [
+              "h8"
+            ],
+            "after_moves": [
+              "e2g4",
+              "g8h8",
+              "h4f5"
+            ]
+          },
+          "statement": "After Nf5 the knight does not attack h8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "g4"
+        },
+        {
+          "from": "h4",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "f5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds41-21"
+    },
+    {
+      "type": "card",
+      "text": "**When it works, and when to just look.** Holding a line works when you can already follow five plies reliably. It breaks at the first quiet move, where nothing leaves the board and the old picture silently stays in your head, and when you carry too many branches. When one move gives the answer, look at the board: a mate in one needs no blind effort. Seven plies is a rule of thumb. Nothing here shows that blind practice improves play over the board."
+    },
+    {
+      "type": "contrast",
+      "title": "Same start, one knight added",
+      "prompt": "In the first position Rxh3+ starts a forced mate. In the second a white knight stands on g3 and everything else is the same. Hold the old line to its third ply: what breaks? In the third, no line needs holding.",
+      "working": "IL-lrmqa-Lb",
+      "failing": "IBds41-18",
+      "irrelevant": "IBds41-19"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The next three are silent: no hints, no engine. In two, the pieces vanish after 30 seconds and you enter seven plies, both sides; you may type the moves. The app checks the line you enter and cannot see where your picture went wrong. The third is a mate in one. Hints on request only is planned, not built."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the three silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the three right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds41-22",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.BLIND",
+        "mode.blind"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Blind line sheet: fifteen minutes, away from the app.** Take five mate-in-four or mate-in-three puzzles from a book, each with at least one quiet move of yours in the solution. Touch nothing. Write the full line, then one sentence for the position after the quiet move: what moved, what is gone, what is attacked. Set up the position and check both. Count the lines that matched."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one blind line sheet. The first target is 7 right out of 10 lines over two sheets. I do not know that this drill improves play; your count shows how well you hold lines now. This note stays on this device.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "The puzzles will come from:",
+          "options": [
+            "a puzzle book or site",
+            "diagrams in a chess book",
+            "my own games"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "right",
+          "label": "After the sheet: lines that matched, out of 5:",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/CAL.BLIND.json (D2 outcome: finds a refutation eight plies deep that needs a quiet move in the middle, no board manipulation)",
+    "builds on L-CAL-BLIND-1 (six plies, nothing moved) and L-CAL-VISUALIZE-2",
+    "sources/sheets/capablanca_chess-fundamentals.md CI-17 (d) [S]",
+    "Honest limit: every shipped and new item here is seven plies (a mate in four with the opponent's first move excluded); no item reaches the eight plies of the node outcome. The new items come from Lichess puzzles tagged quiet move (CC0) and were checked with mate_in claims.",
+    "positions: Lichess puzzles 2H6ce, HYyBt, 8JWgt, Ref3S, lrmqa, YbxNT, LSuEm (CC0); one-feature edit: white knight added on g3 to puzzle lrmqa"
+  ]
+}

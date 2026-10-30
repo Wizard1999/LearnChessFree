@@ -1,0 +1,265 @@
+{
+  "id": "L-OD-SCANDINAVIAN-1",
+  "course": "opening-deep-dives",
+  "title": "The Scandinavian Defence: tempi against open lines",
+  "skill": "OPN.TEMPO",
+  "depth": "D2",
+  "uses": [
+    "OPN.TEMPO",
+    "OPN.PRINCIPLES",
+    "OPN.STRUCT",
+    "OPN.PUNISH"
+  ],
+  "minutes": 12,
+  "outcomes": [
+    "Finds the developing move that attacks the queen after 1.e4 d5 2.exd5 Qxd5",
+    "Chooses a developing move for White when ahead in development, and a catching-up move for Black",
+    "Tells a position where the queen is attacked from one where nothing attacks it before retreating"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**The Scandinavian Defence** starts 1.e4 d5 2.exd5 Qxd5 (ECO B01). Black removes White's e-pawn at once, so lines open: the e-file for White, the d-file for Black, and the c8 bishop is free. The price: after 3.Nc3 the queen must move. This lesson is about that trade. It assumes *Tempo: choosing the move that gains one* and *An opening is a route to a structure and its plans*."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "The Main Line of the Scandinavian, step by step.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White takes space in the centre."
+        },
+        {
+          "move": "d7d5",
+          "say": "Black attacks the e-pawn at once. This is the Scandinavian Defence (ECO B01)."
+        },
+        {
+          "move": "e4d5",
+          "say": "White captures the pawn."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black recaptures with the queen. The e-file is now half-open for White, the d-file for Black."
+        },
+        {
+          "move": "b1c3",
+          "say": "White develops and attacks the queen. Black must spend a move on it."
+        },
+        {
+          "move": "d5a5",
+          "say": "The queen moves again. It has now moved twice, and the queen on a5 attacks the knight on c3."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre and opens the bishop on c1."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops a second piece."
+        },
+        {
+          "move": "c7c6",
+          "say": "Black plays a pawn move that covers b5 and d5 and leaves c7 free for the queen."
+        },
+        {
+          "move": "f1c4",
+          "say": "White develops the bishop with a free diagonal."
+        },
+        {
+          "move": "c8f5",
+          "say": "Black's c8 bishop comes out; its diagonal was open since the d-pawn left."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "open_files",
+          "params": {
+            "half_open_white": [
+              "e"
+            ],
+            "half_open_black": [
+              "d"
+            ],
+            "after_moves": [
+              "e2e4",
+              "d7d5",
+              "e4d5",
+              "d8d5"
+            ]
+          },
+          "statement": "After 2...Qxd5 the e-file is half-open for White (no white e-pawn) and the d-file is half-open for Black (no black d-pawn)."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "c8",
+            "mode": "legal",
+            "count": 5,
+            "after_moves": [
+              "e2e4",
+              "d7d5",
+              "e4d5",
+              "d8d5"
+            ]
+          },
+          "statement": "After 2...Qxd5 the bishop on c8 has 5 legal moves: its diagonal is open."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "d7d5",
+              "e4d5",
+              "d8d5",
+              "b1c3"
+            ]
+          },
+          "statement": "After 3.Nc3 one white piece, the knight, attacks the queen on d5."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e2e4",
+              "d7d5",
+              "e4d5",
+              "d8d5",
+              "b1c3",
+              "d5a5",
+              "d2d4"
+            ]
+          },
+          "statement": "After 4.d4 one black piece, the queen on a5, attacks the knight on c3."
+        },
+        {
+          "id": "C5",
+          "type": "eval_range",
+          "params": {
+            "min": 0,
+            "max": 110,
+            "after_moves": [
+              "e2e4",
+              "d7d5",
+              "e4d5",
+              "d8d5",
+              "b1c3",
+              "d5a5",
+              "d2d4",
+              "g8f6",
+              "g1f3",
+              "c7c6",
+              "f1c4",
+              "c8f5"
+            ]
+          },
+          "statement": "After 6...Bf5 the engine (depth 16) rates the position between level and 1.1 pawns in White's favour."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "c3"
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What strong players chose.** In master data (329,379 games, both players 2,500 or more), 1,687 of the 142,147 games that began 1.e4 went on with 1...d5. After 3.Nc3, Black played ...Qa5 in 598 games, ...Qd6 in 379, ...Qd8 in 207 and ...Qe5+ in 87. Online (a sample of 4,752,291 Lichess blitz, rapid and classical games, September 2026): ...Qa5 35,176, ...Qd8 33,957, ...Qe6+ 12,969. These count games; none is an evaluation."
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-1"
+    },
+    {
+      "type": "card",
+      "text": "**White's plan.** After the queen retreats, White has one piece developed and Black none besides the queen. White's job is to keep developing and take the centre before Black catches up. *Rule of thumb:* when you are ahead in development, make moves that develop; do not chase. On a5 the queen attacks the knight on c3, so the c3 knight needs care."
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-2"
+    },
+    {
+      "type": "card",
+      "text": "**Black's plan.** Black has spent two moves on the queen, so the job is to catch up: a knight to f6, ...c6 or ...Bf5, then castling. Black's gains: the c8 bishop has open diagonals and the d-file is half-open. In the 3.Nc3 lines of this lesson the engine rated ...Bg4 and the queen checks below the quiet moves; after 3.Nf3 it is different (see the contrast)."
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-3"
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-4"
+    },
+    {
+      "type": "card",
+      "text": "**When this holds.** *Rule of thumb:* an early queen often costs a tempo when a developing move can attack it. Here that is 3.Nc3. It does not apply when nothing attacks the queen: after 3.Nf3 the engine's first choice at depth 16 is a developing move, not a queen move. Ask: is my queen attacked, and who has more pieces out?"
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen, different knight square",
+      "prompt": "Three positions, one question: is the engine's first choice a queen move? Predict each, then check.",
+      "working": "IODscandinavian-8",
+      "failing": "IODscandinavian-9",
+      "irrelevant": "IODscandinavian-10"
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODscandinavian-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "opening.scandinavian"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last three positions, what did you check first: whether the queen was attacked, or who had more pieces out? Which Scandinavian line will you look up in the Openings explorer in the app, and which of the game counts surprised you?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "app/public/masters/stats.json (top-level games, both players 2,500+, 329,379 games; counts quoted exactly)",
+    "app/public/openings/core.json (Lichess standard rated games, September 2026, 4,752,291 blitz, rapid and classical games, 8 rating bands; ECO names from lichess-org/chess-openings, CC0)",
+    "content/items/lesson-od-scandinavian.json (every move line replayed with python-chess; all claims machine-checked, engine depth 16)",
+    "content/skills/OPN.TEMPO.json, OPN.PRINCIPLES.json, OPN.STRUCT.json, OPN.PUNISH.json (core ideas, linked by name, not re-taught)",
+    "docs/course-families.md (course design)"
+  ]
+}

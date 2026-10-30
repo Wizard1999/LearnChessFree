@@ -1,0 +1,120 @@
+{
+ "id": "L-END-OCB-1",
+ "title": "Opposite-coloured bishops: when a pawn up is not enough",
+ "skill": "END.OCB",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Predicts win or draw in opposite-coloured bishop endings that differ by one feature (pawn count, how far the pawn has advanced, the defending king's square, rooks on the board)",
+  "States the rule of thumb (opposite-coloured bishops often draw even a pawn or two up) and the blockade that explains it",
+  "Names features that break the rule: the defending king far from the pawn, connected pawns, and rooks that add checks and attacks"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "A bishop only ever travels on squares of one colour. If the two bishops run on **opposite colours**, they can never attack or trade each other, and neither can chase the other away. A pawn up is usually a big advantage; here it often is not. Test the idea on the first position before you trust it."
+  },
+  {
+   "type": "item",
+   "item": "IOCB-1"
+  },
+  {
+   "type": "item",
+   "item": "ISocb-2"
+  },
+  {
+   "type": "card",
+   "text": "**Material often draws.** Even two pawns up can be a draw. The reason is the **blockade**: the defending king stands in front of the pawn, on a square of the colour that the attacker's bishop cannot touch. The attacker's bishop cannot drive it away, and the defender's bishop guards the rest."
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/3P4/6K1/8/8/2b4B/8 w - - 0 1",
+   "caption": "White has an extra pawn on d6; the Black king stands in front of it. The tablebase says this is a draw. White tries the push, and the king just takes the pawn on a light square that White's dark-squared bishop cannot guard.",
+   "line": [
+    {
+     "move": "d6d7",
+     "say": "White pushes the pawn to the seventh rank."
+    },
+    {
+     "move": "d8d7",
+     "say": "The king captures it: d7 is a light square, and White's bishop runs on dark squares."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play from here the result is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "After d7 the result is still a draw."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Move the defender's king",
+   "prompt": "The same pawn on d6, the same bishops. In the first position the Black king is far away, in the second it stands in front of the pawn, and in the third White's king has also moved a square sideways. Predict each result before you check.",
+   "working": "IBocb-2",
+   "failing": "IBocb-1",
+   "irrelevant": "IBocb-3"
+  },
+  {
+   "type": "item",
+   "item": "IBocb-6",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "**The defender's king is the key piece.** Far from the pawn, it loses the race. In front of the pawn, the blockade holds. When the attacker has more than one pawn, the blockade has to cope with both. Check this on three more tablebase positions: some win, some draw. Look at the pawns first, then the king."
+  },
+  {
+   "type": "item",
+   "item": "IOCB-2"
+  },
+  {
+   "type": "item",
+   "item": "IOCB-3"
+  },
+  {
+   "type": "item",
+   "item": "ISocb-3"
+  },
+  {
+   "type": "card",
+   "text": "**Rooks change the picture.** With only bishops, the blockade is a draw. Add a rook for each side and the attacker gets checks, skewers and a second piece to attack with. That does not make every case a win: the next two positions add rooks to the same blockade. Predict each."
+  },
+  {
+   "type": "item",
+   "item": "IBocb-4"
+  },
+  {
+   "type": "item",
+   "item": "IBocb-5"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you looked at the result, what was your first guess in each position, and what did you look at first: the colours of the bishops, the pawn count, where the defending king stood, or the rooks? Which of these did you forget in the position where you were wrong?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-17, CI-19: bishop endings; ideas only)",
+  "sources/sheets/edlasker_chess-strategy.md (K27)",
+  "docs/curriculum-map-v1.1.md (END.MINOR, opposite-coloured bishops)",
+  "All positions: own constructions, results from the Lichess tablebase service [V] (7 pieces at most); the rule of thumb is a tendency, not a proof [I]"
+ ]
+}

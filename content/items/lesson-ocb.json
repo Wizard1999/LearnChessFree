@@ -1,0 +1,460 @@
+{
+ "positions": [
+  {
+   "id": "PBocb-1",
+   "fen": "8/8/3P4/6K1/8/k7/2b4B/8 w - - 0 1",
+   "family": "FAM-OCB-BLOCKADE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction from a tablebase-checked search: one extra pawn on d6, opposite-coloured bishops, Black king far away on a3; win, only d7 wins [V tablebase]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBocb-2",
+   "fen": "3k4/8/3P4/6K1/8/8/2b4B/8 w - - 0 1",
+   "family": "FAM-OCB-BLOCKADE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBocb-1 with the Black king moved to d8 in front of the pawn; draw, every White move draws [V tablebase]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBocb-3",
+   "fen": "3k4/8/3P4/7K/8/8/2b4B/8 w - - 0 1",
+   "family": "FAM-OCB-BLOCKADE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBocb-2 with the White king moved from g5 to h5; draw [V tablebase]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBocb-4",
+   "fen": "1r1k4/8/3P4/6K1/7R/8/2b4B/8 w - - 0 1",
+   "family": "FAM-OCB-ROOKS",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBocb-2 plus a rook each (Rb8, Rh4), found by a tablebase search among quiet placements; win, only Rh8+ wins [V tablebase]",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBocb-5",
+   "fen": "3k4/8/3P4/6K1/4R3/3r4/2b4B/8 w - - 0 1",
+   "family": "FAM-OCB-ROOKS",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBocb-2 plus a rook each (Rd3, Re4); draw, every White move draws [V tablebase]",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "skill": "END.OCB.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "White to move, one pawn up: a pawn on d6, and the bishops are on opposite colours. Black's king is far away, on a3. With best play, is it a win, a draw or a loss for White? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d6d7"
+     },
+     "statement": "After d7 White still wins."
+    }
+   ],
+   "hints": [
+    "Find the pawn's queening square and its colour, then find which Black piece can reach it.",
+    "The Black king is on a3, many files from the pawn. Can it get to d8 or d7 in time?",
+    "Black's bishop cannot stop the pawn from the front, and the king is too far."
+   ],
+   "explain": "A win. The tablebase says d7 is the only winning move. The pawn reaches the seventh rank and the Black king is too far away to blockade it, so the opposite-coloured bishops do not save Black. The 'always a draw' guess fails here.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-BLOCKADE",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.failing"
+   ],
+   "contrast_group": "CG-OCB-BLOCKADE",
+   "feedback_by_move": {
+    "h2g1": "This drops the win: the pawn must advance now, and the tablebase says the position is then only a draw."
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-1",
+   "position": "PBocb-1",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.OCB.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "The same position, but Black's king stands on d8, directly in front of the pawn. White to move. With best play, is it a win, a draw or a loss for White? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "After d7 the position is still a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5f6"
+     },
+     "statement": "After Kf6 the position is still a draw."
+    }
+   ],
+   "hints": [
+    "What changed from the last position: the pieces, or only where one king stands?",
+    "The pawn needs d7 and d8. Who controls those squares now?",
+    "White's bishop and Black's bishop never share a square colour, so White's bishop cannot drive the king off."
+   ],
+   "explain": "A draw. The Black king blockades the pawn on its own file, and the tablebase says every White move draws. The extra pawn cannot get past the king, and the bishop on the other colour cannot help to dislodge it.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-BLOCKADE",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "contrast_group": "CG-OCB-BLOCKADE",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-2",
+   "position": "PBocb-2",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.OCB.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "Black's king is on d8 in front of the pawn, as before, but White's king has stepped from g5 to h5. White to move. With best play, is it a win, a draw or a loss for White? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result is a draw."
+    }
+   ],
+   "hints": [
+    "Compare this with the previous position: which piece moved?",
+    "Does a king that is already too far from the pawn change what the Black king blockade does?"
+   ],
+   "explain": "A draw, as in the blockade position. Moving the White king one square sideways, far from the pawn, changes nothing: the blockade is what decides this family.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-BLOCKADE",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.irrelevant"
+   ],
+   "contrast_group": "CG-OCB-BLOCKADE",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-3",
+   "position": "PBocb-3",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.OCB.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "Back to the blockade position (Black king on d8, pawn on d6) but each side now also has a rook: White's is on h4, Black's on b8. White to move. With best play, is it a win, a draw or a loss for White? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play White wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "h4h8"
+     },
+     "statement": "After Rh8+ White still wins."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "After d7 the result is only a draw."
+    }
+   ],
+   "hints": [
+    "Look at the Black rook and Black king on the same rank. Is there a check on that rank?",
+    "A rook can give a check that a bishop of the wrong colour cannot.",
+    "Which White move gives check along the eighth rank?"
+   ],
+   "explain": "A win. Without the rooks this blockade is a draw, but here Rh8 is check, and after the king steps aside the rook takes Black's rook. The tablebase says Rh8 is the only winning move (d7 only draws). Rooks bring checks and attacks that the bishops alone do not.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-ROOKS",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.failing"
+   ],
+   "feedback_by_move": {
+    "d6d7": "The pawn advance only draws here; the rook check on the eighth rank is the move."
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-4",
+   "position": "PBocb-4",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.OCB.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "The blockade position again with a rook each, White's on e4 and Black's on d3. White to move. With best play, is it a win, a draw or a loss for White? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d6d7"
+     },
+     "statement": "After d7 the position is still a draw."
+    }
+   ],
+   "hints": [
+    "Is there a check or a capture that wins something?",
+    "Rooks change the verdict only when they give White a way in. Count what the rooks attack."
+   ],
+   "explain": "A draw. Rooks can add winning chances, but not automatically: here Black's rook and king still hold the blockade and the tablebase says every White move draws. The rooks change the verdict only when they give the attacker a concrete way in.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-OCB-ROOKS",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops",
+    "role.working"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-5",
+   "position": "PBocb-5",
+   "orientation": "white"
+  },
+  {
+   "skill": "END.OCB.D1",
+   "cue": 2,
+   "task": "find_move",
+   "prompt": "White to move; Black's king is far from the pawn on d6. Find the move that keeps the win.",
+   "answer": {
+    "moves": [
+     "d6d7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d6d7"
+     },
+     "statement": "d7 keeps the win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h2g1"
+     },
+     "statement": "Bg1 lets the win go: the result is a draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5f6"
+     },
+     "statement": "Kf6 lets the win go: the result is a draw."
+    }
+   ],
+   "hints": [
+    "Count how many moves the pawn needs, and how many Black needs to reach its path.",
+    "One move gives Black no time to bring the king or bishop to the queening square."
+   ],
+   "explain": "d7. The tablebase says it is the only winning move; the king and bishop moves all let Black draw. Pushing at once is right because the Black king cannot reach the blockade square in time.",
+   "tags": [
+    "node.END.OCB",
+    "tier.4",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-OCB-BLOCKADE",
+    "lang.en",
+    "task.find_move",
+    "theme.endgame",
+    "theme.bishopEndgame",
+    "idea.opposite-bishops"
+   ],
+   "feedback_by_move": {
+    "h2g1": "This is a draw: the tablebase says only d7 keeps the win.",
+    "g5f6": "This is a draw: the tablebase says only d7 keeps the win."
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "id": "IBocb-6",
+   "position": "PBocb-1",
+   "orientation": "white"
+  }
+ ]
+}

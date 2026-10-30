@@ -1,0 +1,475 @@
+{
+ "id": "L-OD-LONDON-1",
+ "course": "opening-deep-dives",
+ "title": "London System: one setup against many replies",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "POS.STRUCTURE.CHAIN",
+  "OPN.SETUP",
+  "OPN.TRAPS"
+ ],
+ "minutes": 13,
+ "outcomes": [
+  "Follows one line that reaches the London setup (bishop on f4 outside the pawn chain, pawns on d4 and e3, then Nf3, c3 and Bd3)",
+  "Chooses a plan for White (Bg3 or a trade when the bishop is challenged, Ne5 when it is supported) and checks the plan against the exact position instead of the habit",
+  "Chooses a way for Black to challenge the f4 bishop (Bd6 or Nh5) and checks which move the engine rates within 0.4 pawn",
+  "Asks what the opponent's last move attacks before playing a setup move such as c3"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**The London System** starts 1.d4 d5 2.Bf4. The bishop develops *outside* the pawn chain before e3 closes the diagonal, then White plays e3, Nf3, c3 and Bd3 against many replies. In our online data (4,752,291 games, September 2026), 117,073 reach 1.d4 d5 2.Bf4 (ECO D00, Accelerated London System) and 37,891 reach 1.d4 Nf6 2.Bf4. Pawn chains are taught in the chain lesson; here the question is what this setup asks of each side."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "caption": "Start position. Step through one line of the London System. Other moves are possible; this line shows how the setup arises.",
+   "line": [
+    {
+     "move": "d2d4",
+     "say": "White opens with the d-pawn."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black answers in kind."
+    },
+    {
+     "move": "c1f4",
+     "say": "The bishop comes out before the pawn on e3 can block it. From f4 it attacks c7."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black develops a knight."
+    },
+    {
+     "move": "e2e3",
+     "say": "The pawn on e3 defends both d4 and the bishop on f4."
+    },
+    {
+     "move": "e7e6",
+     "say": "Black opens the diagonal for the bishop on f8."
+    },
+    {
+     "move": "g1f3",
+     "say": "White develops the kingside knight."
+    },
+    {
+     "move": "f8d6",
+     "say": "Black offers to trade: the bishop on d6 attacks the bishop on f4."
+    },
+    {
+     "move": "f4g3",
+     "say": "White keeps the bishop and it still looks at d6 from the edge of the pawn chain."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles kingside."
+    },
+    {
+     "move": "f1d3",
+     "say": "The second bishop aims along the diagonal at h7."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black attacks the pawn on d4."
+    },
+    {
+     "move": "c2c3",
+     "say": "White supports d4 with the c-pawn."
+    },
+    {
+     "move": "b8c6",
+     "say": "A second attacker joins on d4. Count: two attackers, three defenders."
+    }
+   ],
+   "highlight": [
+    "f4",
+    "e3",
+    "d4",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "P",
+      "after_moves": [
+       "d2d4"
+      ]
+     },
+     "statement": "d4 holds the white pawn."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "p",
+      "after_moves": [
+       "d2d4",
+       "d7d5"
+      ]
+     },
+     "statement": "d5 holds the black pawn."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f4",
+      "includes": [
+       "c7"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4"
+      ]
+     },
+     "statement": "The bishop on f4 attacks c7."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e3",
+      "includes": [
+       "d4",
+       "f4"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3"
+      ]
+     },
+     "statement": "The pawn on e3 defends d4 and f4."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f8",
+      "includes": [
+       "d6"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6"
+      ]
+     },
+     "statement": "The bishop on f8 now sees d6."
+    },
+    {
+     "id": "C6",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d6",
+      "includes": [
+       "f4"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6"
+      ]
+     },
+     "statement": "The bishop on d6 attacks f4."
+    },
+    {
+     "id": "C7",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g3",
+      "includes": [
+       "d6"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3"
+      ]
+     },
+     "statement": "The bishop on g3 attacks d6."
+    },
+    {
+     "id": "C8",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8"
+      ]
+     },
+     "statement": "The black king is on the kingside."
+    },
+    {
+     "id": "C9",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "h7"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3"
+      ]
+     },
+     "statement": "The bishop on d3 attacks h7."
+    },
+    {
+     "id": "C10",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c5",
+      "includes": [
+       "d4"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3",
+       "c7c5"
+      ]
+     },
+     "statement": "The pawn on c5 attacks d4."
+    },
+    {
+     "id": "C11",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c3",
+      "includes": [
+       "d4"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3",
+       "c7c5",
+       "c2c3"
+      ]
+     },
+     "statement": "The pawn on c3 defends d4."
+    },
+    {
+     "id": "C12",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c6",
+      "includes": [
+       "d4"
+      ],
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3",
+       "c7c5",
+       "c2c3",
+       "b8c6"
+      ]
+     },
+     "statement": "The knight on c6 attacks d4."
+    },
+    {
+     "id": "C13",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3",
+       "c7c5",
+       "c2c3",
+       "b8c6"
+      ]
+     },
+     "statement": "At the end of the line d4 is defended three times (pawns on e3 and c3, knight on f3)."
+    },
+    {
+     "id": "C14",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "d2d4",
+       "d7d5",
+       "c1f4",
+       "g8f6",
+       "e2e3",
+       "e7e6",
+       "g1f3",
+       "f8d6",
+       "f4g3",
+       "e8g8",
+       "f1d3",
+       "c7c5",
+       "c2c3",
+       "b8c6"
+      ]
+     },
+     "statement": "At the end of the line d4 is attacked twice by Black (pawn on c5, knight on c6)."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What strong players chose** (results of games, not evaluations). Source: our masters data, 329,379 games, both players 2500 or more. After 1.d4 d5 (30,060 games with a next move) White played 2.c4 in 22,757, 2.Nf3 in 5,216 and 2.Bf4 in 1,094 (White won 452, 339 drawn, Black won 303). After 2...Nf6 3.e3, Black played ...c5 in 626 games (268 White wins, 177 draws, 181 Black wins) and ...e6 in 356 (144, 124, 88). Samples are small; results also reflect the players."
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-1"
+  },
+  {
+   "type": "card",
+   "text": "**White's plan (rule of thumb).** The bishop on f4 defends e5, so a knight can go there when Black's setup allows it. In the masters data, after 4.Nf3 Bd6 White played Nbd2 in 330 games, Bg3 in 211, Ne5 in 116 and Bxd6 in 57. A plan can fail when Black's last move creates a new threat. Check the exact position: the contrast step shows one Black move that flips it."
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-2"
+  },
+  {
+   "type": "card",
+   "text": "**Black's plan (rule of thumb).** The bishop on f4 is defended by the e3 pawn, so Black cannot win it, but Black can offer a trade with ...Bd6 or ...Nh5. Another try is ...c5 with ...Nc6, pressing on d4. The next item is a position from that setup."
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-3"
+  },
+  {
+   "type": "card",
+   "text": "**A typical mistake.** A setup move can be so automatic that you stop checking. With Black's queen on b6, the usual c3 leaves b2 attacked and lets Black take the pawn at no cost. Before any setup move ask what the opponent's last move attacks, and whether your move deals with it."
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-4"
+  },
+  {
+   "type": "contrast",
+   "title": "One move flips the plan",
+   "prompt": "In all three positions White considers Ne5. Predict for each whether the engine rates it within 0.4 pawn of its best move, then check. The second position differs from the first only in Black's last move. The third adds one extra move for each side on the far wings.",
+   "working": "IODlondon-8",
+   "failing": "IODlondon-9",
+   "irrelevant": "IODlondon-10"
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODlondon-7",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Think about the positions you played without hints. Before you chose a move, what did you check? Write one line for each side.",
+   "fields": [
+    {
+     "id": "white",
+     "label": "As White: what I checked before a setup move"
+    },
+    {
+     "id": "black",
+     "label": "As Black: what I checked before challenging the bishop"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Move orders and names: app/public/openings (core.json, ECO D00 and D02 names; visit counts summed over the 8 rating bands, 4,752,291 online games, September 2026) [V]",
+  "Masters statistics: app/public/masters/stats.json (329,379 games, both players 2500 or more, built 2026-10-29); counts quoted exactly from the tree rows [V]",
+  "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-london.json and this lesson's board claims [V]",
+  "Positions: replayed from opening move sequences with python-chess; provenance in content/items/lesson-od-london.json",
+  "Core skills used: content/skills/OPN.STRUCT.json, POS.STRUCTURE.CHAIN.json, OPN.SETUP.json, OPN.TRAPS.json; docs/course-families.md (course design)"
+ ]
+}

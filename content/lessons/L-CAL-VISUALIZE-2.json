@@ -1,0 +1,241 @@
+{
+  "id": "L-CAL-VISUALIZE-2",
+  "title": "Three plies, nothing moved: is a piece loose at the end?",
+  "skill": "CAL.VISUALIZE",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Follows a line of three plies (move, reply, move) with no piece moved and names the loose pieces at the end",
+    "Asks after every ply which piece lost a defender, not only which piece moved",
+    "Tells a loose piece that arrived there by moving from one that was uncovered",
+    "Recognises a position where one look is enough and no line needs holding"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Add the reply.** In *Track the line: what moved, what is gone, what is attacked* you followed a line you were given. Now it has three plies: your move, the opponent's answer, your next move, and you decide at the end: is any piece **loose** (attacked, not defended)? Two causes: a piece lands on an attacked square, or a defender leaves or is captured. After every ply ask: *who lost a defender?* Target: 7 right out of 10."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pppp1ppp/5n2/4p3/2BPP3/8/PPP2PPP/RNBQK1NR b KQkq - 0 3",
+      "caption": "Black to move. Hold three plies: exd4, Nf3, Nxe4. At the end White has no loose piece. Black's pawn on d4 is loose: the queen and the knight attack it and nothing defends it. The pawn took something and was left behind.",
+      "line": [
+        {
+          "move": "e5d4",
+          "say": "exd4: the pawn takes on d4. Gone: the White d-pawn. White's e4 pawn is now loose."
+        },
+        {
+          "move": "g1f3",
+          "say": "Nf3 develops and attacks the d4 pawn. Nothing was taken."
+        },
+        {
+          "move": "f6e4",
+          "say": "Nxe4 takes the loose pawn. Gone: the White e-pawn. The d4 pawn is still loose."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "e4"
+            ],
+            "after_moves": [
+              "e5d4"
+            ]
+          },
+          "statement": "After exd4 White's loose pieces are exactly: e4."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e5d4",
+              "g1f3"
+            ]
+          },
+          "statement": "After Nf3 two White men attack d4."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "e4",
+            "piece": "P"
+          },
+          "statement": "A White pawn stands on e4 before the line."
+        },
+        {
+          "id": "C5",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [],
+            "after_moves": [
+              "e5d4",
+              "g1f3",
+              "f6e4"
+            ]
+          },
+          "statement": "After the three plies White has no loose piece."
+        },
+        {
+          "id": "C6",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "d4"
+            ],
+            "after_moves": [
+              "e5d4",
+              "g1f3",
+              "f6e4"
+            ]
+          },
+          "statement": "After the three plies Black's loose pieces are exactly: d4."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e5d4",
+              "g1f3",
+              "f6e4"
+            ]
+          },
+          "statement": "Two White men attack d4 at the end."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d4"
+        },
+        {
+          "from": "f3",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "d4"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds41-4"
+    },
+    {
+      "type": "card",
+      "text": "**Where tracking fails, and when it is not needed.** It fails at captures (a piece that left the board still seems to defend) and at moves that uncover an attack. It is not needed when one look is enough: a piece loose now is loose now. Three plies is a rule of thumb for this level; accuracy past the first capture matters more than length. Tracking with the board in view still counts as practice."
+    },
+    {
+      "type": "contrast",
+      "title": "Same three plies, one pawn added",
+      "prompt": "The line is the same in the first two positions: ...d4, Rd3, ...Rc8. In the first a black pawn stands on e5; in the second it does not. Predict: does Black end with a loose piece? In the third, no line is needed.",
+      "working": "IBds41-7",
+      "failing": "IBds41-8",
+      "irrelevant": "IBds41-10"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next four are silent: no hints. Some ask you to tap the loose pieces, some ask only yes or no, and some may need no line at all. The app checks the squares and cannot see where your picture went wrong. Hints on request only is planned, not built."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the four silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to get this many of the four right:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds41-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-11",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.VISUALIZE",
+        "mode.visualise"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Three-ply trace sheet: ten minutes, away from the app.** From a book diagram or one of your own games, pick ten positions with a move you might play. Touch nothing. Write your move, his best reply, your next move, then *loose at the end:* and name the pieces, or write none. Set the position up and check. Count the sheets that match. The first target is 7 out of 10."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one trace sheet for this week. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "The ten positions will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "diagrams in a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "right",
+          "label": "After the sheet: sheets that matched the board, out of 10:",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/CAL.VISUALIZE.json (D2 outcome: decide whether a three-ply line leaves a piece loose without moving pieces, 7 of 10)",
+    "builds on L-CAL-VISUALIZE-1 (what moved, what is gone, what is attacked)",
+    "Items are authored: the loose-piece sets after three plies are checked by the validator claim loose_pieces; the lines are the engine's main lines (depth 16) from the source positions. The outcome says \"loses a piece\"; these items check the weaker, exact fact \"is a piece loose at the end\".",
+    "positions: project items and Lichess puzzles (CC0); one-feature edit: black pawn added on e5 to IB3-512"
+  ]
+}

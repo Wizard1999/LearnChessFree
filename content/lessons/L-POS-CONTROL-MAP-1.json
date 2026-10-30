@@ -6,7 +6,7 @@
   "minutes": 9,
   "outcomes": [
     "Reads the n-m counts and the blue or orange tint of the control map on any square",
-    "Names what the map leaves out: pins and x-rays",
+    "Explains what the map adds (x-rays, pins, the exchange result, safe value) and what it still cannot see (sacrifices, tactics, king safety)",
     "Glances at the map before moving, starting with the landing square"
   ],
   "steps": [
@@ -91,12 +91,12 @@
     },
     {
       "type": "card",
-      "text": "The map is a **rule-based count, not a verdict**. A blue square does not mean White wins a fight there; it only says White has more pieces looking at it. Two things it leaves out, on purpose: **pins** (a pinned piece still counts) and **x-rays** (a piece behind another piece does not count). Check both by eye."
+      "text": "The map does more than count. It adds **x-rays** (a rook behind a rook, a bishop behind its own pawn), skips a piece **pinned** to its king unless the capture stays on the pin line, and plays out the exchange with piece values to show who wins a capture there and each side's **safe value**. It still cannot see sacrifices, tactics, or king safety beyond that exchange. Read it as a strong hint, not a verdict."
     },
     {
       "type": "contrast",
       "title": "Same map, different truth",
-      "prompt": "Both boards show f3 as 0-1 with a black knight on e5. Only one rook has moved. Can the knight capture on f3? Predict first, then check.",
+      "prompt": "Both boards have a black knight on e5 that looks at f3. Only one rook has moved. A plain count gives f3 as 0-1 in both. Can the knight really capture on f3? Predict first, then check. (The current map already knows about the pin.)",
       "working": "I-CMAP-4",
       "failing": "I-CMAP-3"
     },
@@ -106,7 +106,7 @@
     },
     {
       "type": "card",
-      "text": "Make the map a **habit before you move**, in this order. First, the square you want to land on: is Black's number above zero? Second, your own pieces: any whose Black number is higher than yours? Third, a quick look for pins and pieces lined up behind others. It takes seconds and replaces a vague worry with two numbers."
+      "text": "Make the map a **habit before you move**, in this order. First, the square you want to land on: is Black's number above zero, and does the exchange favour Black? Second, your own pieces: any whose Black number is higher than yours? Third, look for what the map cannot see: a sacrifice, a fork, a threat to your king. Note that opening the map during a test or game counts as a hint."
     },
     {
       "type": "board",
@@ -172,7 +172,7 @@
     {
       "type": "reflect",
       "kind": "confidence",
-      "prompt": "Which of the three limits of the map (pins, x-rays, 'a number is not a verdict') would you have forgotten? How will you remind yourself to check it?"
+      "prompt": "Which of the three map limits (pins, x-rays, a number is not a verdict) would you have forgotten in the last position? Name the square it would have misled you about, then rate your confidence (low / medium / high)."
     }
   ],
   "review": {
@@ -180,7 +180,7 @@
     "reviewer": null
   },
   "sources": [
-    "app/src/lib/control.ts (definition of the map, by the project)",
+    "app/src/lib/controlV2.ts (definition of the map v2, by the project)",
     "docs/authoring-guide.md (vocabulary: attacked, defended)",
     "Linked, not re-taught: L-SAF-COUNT-1, L-FND-COUNT-1, L-SAF-COUNT-FUTURE-1, L-POS-CENTER-CONTROL-1"
   ]

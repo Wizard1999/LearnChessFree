@@ -1,0 +1,207 @@
+{
+  "id": "L-CAL-CANDIDATES-2",
+  "title": "Score your list: is the best move on it?",
+  "skill": "CAL.CANDIDATES",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Writes at most four candidates before moving and checks afterwards whether the best move was on the list",
+    "Keeps a quiet move on a list that is otherwise only checks and captures",
+    "Notices when a capture, not a check, belongs on the list",
+    "Leaves a one-legal-move position out of the count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Same list, now with a score.** In *Write the candidate list: forcing moves, one quiet move, a reason each* you learned to write the list. Now it is tested. Before you move, write at most four moves. After the answer ask one question: **was the best move on my list?** Hits out of ten, not how careful the list felt, is your number. The target for this level is 8 out of 10."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/2p3pp/3ppr2/1P3p2/2PP2Pq/4PB2/3Q1PP1/5RK1 b - - 0 22",
+      "caption": "Black to move. A) Qxg4 and B) Qxf2+ take material. C) Rh6 takes nothing and gives no check: it is the quiet move. A list of captures and checks alone misses C. Rh6 forces mate in two (engine, depth 16): after any reply, Qh1# or Qh2#. A and B do not mate; both lose the queen.",
+      "line": [
+        {
+          "move": "f6h6",
+          "say": "Rh6 takes nothing and gives no check. It threatens Qh2 and Qh1, both mate."
+        },
+        {
+          "move": "f3a8",
+          "say": "Ba8 is the engine's reply; the opponent's replies are its choice, not a claim about every reply."
+        },
+        {
+          "move": "h4h1",
+          "say": "Qh1 is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6h6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h6",
+            "piece": "empty"
+          },
+          "statement": "The h6 square is empty, so Rh6 takes nothing."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "f6h6",
+            "n": 2
+          },
+          "statement": "Rh6 forces checkmate within two moves (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "move_loses",
+          "params": {
+            "move": "h4g4",
+            "cp": 800
+          },
+          "statement": "Qxg4 is at least 8 pawns worse than Rh6 (depth 16)."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "h4f2",
+            "cp": 800
+          },
+          "statement": "Qxf2+ is at least 8 pawns worse than Rh6 (depth 16)."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "h6"
+        },
+        {
+          "from": "h4",
+          "to": "g4"
+        },
+        {
+          "from": "h4",
+          "to": "f2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-K4mb5-L"
+    },
+    {
+      "type": "card",
+      "text": "**What the score tells you.** A miss says the best move was not on the list, not why. Read each miss: was it a quiet move, a capture you skipped because a check looked stronger, or a piece you were not watching? A position with one legal move cannot be scored; leave it out. Four is a cap: a fifth move means you are not pruning. Four moves and the hit target are rules of thumb."
+    },
+    {
+      "type": "contrast",
+      "title": "Same check, one black rook added",
+      "prompt": "In the first position the check d7+ is best. In the second a black rook stands on d4 and everything else is the same. In each, write your list and predict the best move. In the third, count the legal moves before you list.",
+      "working": "IL-0g443-L",
+      "failing": "IBds41-1",
+      "irrelevant": "IBds41-2"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** Each exercise has three hints. The next four are silent: no hints and no engine line before you answer. Write your list on paper before you move, then score it: hit or miss. One of the four may have only one legal move; if so, leave it out of your count. Hints on request only, once you solve unlabeled items without them, is planned, not built."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the four silent exercises, commit to a number. This note stays on this device.",
+      "fields": [
+        {
+          "id": "expect",
+          "label": "I expect to hit this many (not counting a one-move position):",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-ahgx4-L",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-N8FyW-L",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds41-24",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.CAL.CANDIDATES",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "card",
+      "text": "**Miss sheet: ten minutes, away from the app.** Take ten positions with a decision, from your own games or a puzzle book. Cover the answer, write at most four candidates for each, uncover. Count hits. For each miss, write the type of the missing move: quiet, capture, check, or other. After ten positions the most common type is the habit to correct. The first target is 8 hits out of 10."
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Plan one miss sheet for this week. This note stays on this device; nothing checks it.",
+      "fields": [
+        {
+          "id": "source",
+          "label": "The ten positions will come from:",
+          "options": [
+            "my own games",
+            "a puzzle book or site",
+            "diagrams in a chess book"
+          ]
+        },
+        {
+          "id": "when",
+          "label": "When (day and time):"
+        },
+        {
+          "id": "hits",
+          "label": "After the sheet: hits out of ten:",
+          "type": "number"
+        },
+        {
+          "id": "type",
+          "label": "The most common type of missing move:",
+          "options": [
+            "quiet",
+            "capture",
+            "check",
+            "other",
+            "no misses"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/CAL.CANDIDATES.json (D2 outcome: best move on a list of at most four in 8 of 10 unlabeled positions)",
+    "builds on L-CAL-CANDIDATES-1 (the list and its purposes) and L-LOOP-V3-1 (the short list kept in the head)",
+    "docs/council-synthesis.md Round 3 and CD-3 (candidate lists) [R]",
+    "positions: Lichess puzzles (CC0); one-feature edit: black rook added on d4 to puzzle 0g443; forced single-reply positions taken one ply into puzzles NK1nU and JcNkB"
+  ]
+}
