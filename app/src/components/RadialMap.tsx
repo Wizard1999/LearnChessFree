@@ -186,7 +186,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         </div>
       )}
       </div>
-      <svg ref={svg} className="mapsvg" viewBox={vb} role="group" aria-label="Curriculum map"
+      <svg ref={svg} className={`mapsvg${highlightStrand ? ' hasHi' : ''}`} viewBox={vb} role="group" aria-label="Curriculum map"
         onPointerDown={e => {
           if (ptrs.current.size === 0) { suppressClick.current = false; pinch.current = null; moved.current = false }
           ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); lastType.current = e.pointerType;
