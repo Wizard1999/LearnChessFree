@@ -1,0 +1,53 @@
+name: Check
+
+# Why this exists, separately from pages.yml:
+#
+# The live app deploys from Vercel on every push to main, and its build is
+# `tsc -b && vite build`. So a type error does not merely fail a build — it
+# freezes the deployed site on the last commit that compiled, silently, while
+# pushes keep succeeding. That happened: seven type errors rode in with one
+# commit and the site sat nineteen commits behind before anyone noticed it
+# was stale.
+#
+# This runs the same checks on every push so the failure is visible here,
+# immediately, instead of being inferred later from a site that will not
+# update. It deploys nothing — pages.yml stays manual, because GitHub Pages
+# is not enabled and a deploy job would fail for the wrong reason.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      # Run the typechecker on its own first: `npm run build` would hit the
+      # same errors, but reports them behind a failed build rather than as
+      # the type errors they are.
+      - run: npx tsc -b --force
+      - run: npm test
+      # Built the way Vercel builds it, base and all, so this catches a
+      # problem that only appears in the deployed configuration.
+      - run: npm run build
+        env:
+          VITE_BASE: /Scholarmate/
