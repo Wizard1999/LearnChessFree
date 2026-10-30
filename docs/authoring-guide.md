@@ -1,5 +1,7 @@
 # Authoring guide: how to write a lesson that is allowed to ship
 
+> **Depth bar for lessons beyond the beginner blocks: `docs/lesson-depth-standard.md`. Check with `tools/check_depth.py`.**
+
 This is the bar for every lesson and item in `content/`. It exists because the same mistakes keep appearing in chess teaching material (including ours): unconditioned rules, unchecked positions, explanations that sound right but aren't proven.
 
 ## The shape of a lesson (see `content/lessons/L-TAC-FORK-1.json` as the exemplar)
