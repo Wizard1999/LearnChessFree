@@ -227,6 +227,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Five more annotated games: Capablanca-Marshall 1918, Lasker-Capablanca 1914, Fischer-Spassky 1972 game 6, Short-Timman 1991, Tal-Botvinnik 1960 game 6 (13 course lessons in all; scores checked against several sources, game dates and endings stated only where sources agree)
 - [ ] Wave 3: older public-domain games and endgame classics; opening deep dives; history and meta course (needs a named human reviewer for history claims)
 
+## Phase 5c: One building block per lesson (Andrew, 30 October 2026)
+- [ ] Split the 13 lessons that bundle several skill nodes (`also` lists): special rules (en passant, promotion, draws), rook and bishop, queen and king, capture and piece values, check and stalemate, the four defender-removal tactics, discovered and double check, Lucena and Philidor, queen mate and stalemate avoidance, square and pawn race, wrong bishop and two knights, white and black repertoire, plan and plan difference
+- [ ] After the split: lesson count and first-10-hours table updated, progress on old ids kept for the first block of each split
+- [ ] A check that no lesson has an `also` list (one block per lesson) unless a documented exception
+
 ## Phase 6d: Release 0.1, the first 10 hours (docs/first-10-hours.md)
 - [ ] Review and fix pass on the 59 lessons of the slice (several batches are in progress)
 - [ ] Strong-player review of the slice (gate G3)
