@@ -17,13 +17,15 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const R = layout.radius + 40
   const navigate = useNavigate()
   const [hov, setHov] = useState<string | null>(null)
-  const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null)
+  const [tip, setTip] = useState<{ id: string; corner: 'br' | 'bl' } | null>(null)
   const hideTimer = useRef<number | undefined>(undefined)
   const showTip = (id: string, el: Element) => {
     window.clearTimeout(hideTimer.current); setHov(id)
     const box = svg.current?.parentElement?.getBoundingClientRect(), r = el.getBoundingClientRect()
     if (!box) return
-    setTip({ id, x: Math.min(Math.max(8, r.right - box.left + 10), box.width - 310), y: Math.min(Math.max(8, r.top - box.top - 10), box.height - 220) })
+    // the card lives in a corner of the map (bottom right by default, bottom left when the skill is down there), never at the pointer, so it never hides the links
+    const nearBR = r.left - box.left > box.width - 340 && r.top - box.top > box.height - 250
+    setTip({ id, corner: nearBR ? 'bl' : 'br' })
   }
   const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null) }, 220) }
   const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
@@ -193,7 +195,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         const steps = Object.fromEntries(ls.map(l => [l.id, l.steps.length]))
         const allDone = ls.length > 0 && ls.every(l => doneBy.get(l.id)?.done)
         return (
-          <div className="maptip" style={{ left: tip.x, top: tip.y }} role="tooltip" onMouseEnter={() => window.clearTimeout(hideTimer.current)} onMouseLeave={hideTip}>
+          <div className={`maptip ${tip.corner}`} role="tooltip" onMouseEnter={() => window.clearTimeout(hideTimer.current)} onMouseLeave={hideTip}>
             <h3>{p?.title ?? tip.id}</h3>
             <p className="small muted">{sk?.strand} {strandNames[sk?.strand ?? ''] ?? ''} · tier {sk?.tier} · {LEVEL_NAMES[Math.min(4, p?.level ?? 0)]}{p?.due ? ' · refresher due' : ''}{p?.assumed ? ' · assumed from a test-out' : ''}</p>
             <p className="small">{ls.length === 0 ? 'No lesson for this skill yet.' : `${ls.filter(l => doneBy.get(l.id)?.done).length} of ${ls.length} lesson${ls.length === 1 ? '' : 's'} finished`}</p>
