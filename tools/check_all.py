@@ -105,6 +105,7 @@ def main():
     node_lessons = collections.Counter()
     for l in lessons.values():
         node_lessons[l.get("skill")] += 1
+        if l.get("also"): errs.append(f"lesson {l['id']}: has an 'also' list; one building block per lesson (split it, D36)")
         for extra in l.get("also", []):
             node_lessons[extra] += 1
             if skills and extra not in skills: errs.append(f"lesson {l['id']}: also-skill {extra} is not in the skill graph")
