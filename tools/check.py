@@ -21,7 +21,7 @@ STAGES += [
     ("skill graph", PY + ["tools/check_graph.py", "--strict"], ROOT, "0 errors"),
     ("build content", PY + ["tools/build_content.py"], ROOT, None),
     ("overlap (at most 1 known)", PY + ["tools/check_overlap.py"], ROOT, "1 overlaps"),
-    ("typescript", [NPX, "tsc", "--noEmit"], ROOT / "app", None),
+    ("typescript", [NPX, "tsc", "-b", "--force"], ROOT / "app", None),
     ("tests + route smoke + cross-checks", [NPX, "vitest", "run"], ROOT / "app", "failed" and None),
     ("app build", [NPX, "vite", "build"], ROOT / "app", None),
 ]

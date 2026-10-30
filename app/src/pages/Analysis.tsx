@@ -8,7 +8,7 @@ import { getEngine, resetEngine, scoreText, type EngineLine } from '../engine'
 import { destsFor, flipTurn } from '../lib/play'
 import { db, type GameRec } from '../db'
 import { loadOpenings, nameOf, children as openingChildren, cnt, type OGraph } from '../lib/openingsData'
-import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree } from '../lib/pgnTree'
+import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree, type TNode } from '../lib/pgnTree'
 import { mastersFor, type MasterInfo, type MasterRow } from '../lib/masters'
 import { pieceCount, probeTablebase, TB_TEXT, type TbResult } from '../lib/tablebase'
 
@@ -383,7 +383,7 @@ export function Analysis() {
     const out: ReactNode[] = []
     let id: number | undefined = startId; let first = true
     for (let guard = 0; id !== undefined && guard < 800; guard++) {
-      const n = tree.nodes[id]
+      const n: TNode = tree.nodes[id]
       const { number, white } = moveNumber(tree, n)
       const label = white ? `${number}.` : first ? `${number}...` : ''
       const mk = marks.m.get(id) ?? ''

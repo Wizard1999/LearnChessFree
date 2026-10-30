@@ -70,7 +70,7 @@ export function moveNumber(t: Tree, n: TNode): { number: number; white: boolean 
 /** Writes the tree as PGN movetext with variations, comments and NAGs. */
 export function writePgn(t: Tree): string {
   const out: string[] = []
-  const head = { Event: '?', Site: '?', Date: '????.??.??', Round: '?', White: '?', Black: '?', Result: '*', ...(t.headers ?? {}) }
+  const head: Record<string, string> = { Event: '?', Site: '?', Date: '????.??.??', Round: '?', White: '?', Black: '?', Result: '*', ...(t.headers ?? {}) }
   if (t.nodes[0].fen !== START_FEN) { head.SetUp = '1'; head.FEN = t.nodes[0].fen }
   for (const [k, v] of Object.entries(head)) out.push(`[${k} "${v}"]`)
   const line = (id: number, forceNum: boolean): string => {
