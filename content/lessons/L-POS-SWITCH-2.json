@@ -1,0 +1,159 @@
+{
+  "id": "L-POS-SWITCH-2",
+  "title": "Switching wings: is the defence really slow?",
+  "skill": "POS.SWITCH",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Checks both conditions before swinging a heavy piece: it can reach the wing, and his pieces have not yet come over",
+    "Tells a working swing from one that fails because a defender has already arrived, and from a position with no wing to switch to",
+    "Does not treat a legal swing as a good one without looking at where his queen and rooks stand"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Switching wings: can the heavy piece cross, and should it?* you checked whether a rook could cross. The harder half is the opponent. A switch needs two things at once: **mobile** pieces (the rook or queen reaches the other wing in a move or two) and a **slow defence** (his pieces have not yet come over). If a defender already stands on that wing, the swing usually comes too late. In this lesson the kingside means the e-, f-, g- and h-files. The board shows a swing that works."
+    },
+    {
+      "type": "board",
+      "fen": "2rr2k1/1p1bbp1p/pq2p1p1/3pP3/3P1P2/3B1N2/PP4PP/RQR3K1 w - - 3 20",
+      "caption": "White to move. Black's queen and rooks stand on the queenside, and White's rook can reach the f-file in one move.",
+      "line": [
+        {
+          "move": "c1f1",
+          "say": "Rf1: the rook reaches the f-file, a kingside file, in one move, and at depth 16 the engine ranks it first."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "f1"
+        }
+      ],
+      "highlight": [
+        "b6",
+        "c8",
+        "d8",
+        "c1",
+        "f1"
+      ],
+      "claims": [
+        {
+          "type": "king_wing",
+          "params": {
+            "color": "black",
+            "wing": "kingside"
+          },
+          "statement": "Black's king is on the kingside.",
+          "id": "C1"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "b6",
+            "piece": "q"
+          },
+          "statement": "Black's queen is on b6.",
+          "id": "C2"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "c8",
+            "piece": "r"
+          },
+          "statement": "A Black rook is on c8.",
+          "id": "C3"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "d8",
+            "piece": "r"
+          },
+          "statement": "A Black rook is on d8.",
+          "id": "C4"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "c1",
+            "piece": "R"
+          },
+          "statement": "White's rook is on c1.",
+          "id": "C5"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "c1f1"
+          },
+          "statement": "Rf1 is legal.",
+          "id": "C6"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1f1",
+              "c1d1",
+              "c1e1"
+            ],
+            "within_cp": 45
+          },
+          "statement": "At depth 16 the best move is Rf1; Rd1 and Re1 are also within 0.4 pawns of it.",
+          "id": "C7"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB59-4"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Swing when your piece can reach the wing and his queen and rooks are still elsewhere. It fails when one of them has already arrived, or when you have no demonstration to keep his pieces busy. The app reads piece placement and the engine's ranking, not his plans. Next: the same position three times, with one change each."
+    },
+    {
+      "type": "contrast",
+      "title": "Slow defence, fast defence, nothing to swing",
+      "prompt": "Predict which statement fits each position. In the second, Black's queen moved from c7 to f8; in the third, White's rook moved from a1 to e1. Then name the one change that flipped the verdict between the first two.",
+      "working": "IB59-1",
+      "failing": "IB59-2",
+      "irrelevant": "IB59-3"
+    },
+    {
+      "type": "item",
+      "item": "IB59-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-6",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.SWITCH",
+        "tpl.ds59-sw-prac"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in one of your games, find a moment when you swung a rook or queen to the other wing. Write where his queen and rooks stood one move before, and whether his defence was slow or already there."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.SWITCH.json (idea from Capablanca CI-33, recalled [R])",
+    "content/lessons/L-POS-SWITCH-1.json (the legal-swing check is taught there)",
+    "content/items/lesson-ds59.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+ "id": "L-END-QUEEN-PAWN-2",
+ "title": "Queen against a pawn: find the stalemate save, or the winning approach",
+ "skill": "END.QUEEN-PAWN",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Finds the one move that holds the draw for the side with the pawn when a stalemate resource exists",
+  "Finds a winning queen move for the stronger side in positions where the pawn does not hold",
+  "Predicts win or draw when only the pawn's file changes"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Queen against a pawn on the seventh: when it is only a draw** you learned which files can hold. Now you choose the move. The side with the pawn looks for a move after which the only sensible capture leaves it with no legal move and not in check: stalemate. The queen's side must not allow it, and uses checks or pins to bring its king closer."
+  },
+  {
+   "type": "board",
+   "fen": "8/6Q1/2K5/8/8/8/2kp4/8 w - - 0 1",
+   "caption": "White to move wins. The tablebase confirms three winning queen moves: Qg2, Qg6 and Qh7. Qg6+ and Qh7+ give check; Qg2 pins the pawn to the king along the second rank.",
+   "highlight": [
+    "d2",
+    "c2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White, to move, wins."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "g7g2",
+      "result": "win"
+     },
+     "statement": "Qg2 keeps the win."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "g7g6",
+      "result": "win"
+     },
+     "statement": "Qg6 keeps the win."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "move": "g7h7",
+      "result": "win"
+     },
+     "statement": "Qh7 keeps the win."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-19"
+  },
+  {
+   "type": "card",
+   "text": "**When the stalemate save works.** The pawn is on the seventh and the move that looks worst, queening, is the only one that holds in these examples. **When it fails.** The same kind of position with the pawn on another file, as in the next pair. Rule of thumb: check the file, then the king distances, then count the queen's checks. The tablebase decides; do not guess."
+  },
+  {
+   "type": "contrast",
+   "title": "The pawn's file changes",
+   "prompt": "Predict each result, then check.",
+   "working": "IBds76-8",
+   "failing": "IBds76-9"
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-25",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "**Winning side.** First pin the pawn to its king along the pawn's rank, or give checks that push the king away from the queening square. Then bring your own king closer. In the next positions, ask: which queen move pins or checks?"
+  },
+  {
+   "type": "item",
+   "item": "IBds76-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds76-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds76-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-24"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.QUEEN-PAWN",
+    "theme.stalemate-resource",
+    "cue.2"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which side were you playing in each position, and what did you look at first: the pawn's file, or the kings' distance to it?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.QUEEN-PAWN.json (D2 outcome)",
+  "Lesson 'Queen against a pawn on the seventh: when it is only a draw' (D1)",
+  "Positions: shipped items and batch ds76 items; every result from the Lichess tablebase"
+ ]
+}

@@ -1,0 +1,149 @@
+{
+  "id": "L-POS-STRUCTURE-HANGING-2",
+  "title": "Hanging pawns: advance, wait or exchange?",
+  "skill": "POS.STRUCTURE.HANGING",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Chooses between advancing, waiting and exchanging hanging pawns in unlabeled positions, using the engine's first choice as the reference",
+    "Tells a position where the advance is first choice from one where a quiet move is, and from one where the pawns are not hanging"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Hanging pawns: hold, advance or exchange* you met the three plans. Now choose between them in positions with no label. The engine's first choice at depth 16 is our reference: sometimes a pawn advances, sometimes a piece makes a quiet move, sometimes the pair is exchanged. Rule of thumb: advance when it gains something concrete and the advance square is not already held. Exchanging is the third plan; here it is only one option among three, so check what each plan gains before choosing."
+    },
+    {
+      "type": "board",
+      "fen": "r6r/3nkp2/6pp/3qPp2/1ppP4/5N2/P4PPP/R2QR1K1 b - - 1 21",
+      "caption": "Black to move. Black has hanging pawns on b4 and c4 (side by side, no friendly pawns on the neighbouring files, no enemy pawns on their files).",
+      "line": [
+        {
+          "move": "c4c3",
+          "say": "c3 advances the pawn. After it, 0 of White's pieces attack c3 and 1 of Black's defend it; the engine accepts the advance."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "c3"
+        }
+      ],
+      "highlight": [
+        "b4",
+        "c4",
+        "c3"
+      ],
+      "claims": [
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "hanging_pair",
+            "color": "black",
+            "squares": [
+              "b4",
+              "c4"
+            ]
+          },
+          "statement": "Black's hanging pawns: b4 and c4.",
+          "id": "C1"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "c4c3"
+          },
+          "statement": "c3 is legal.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "white",
+            "count": 0,
+            "after_move": "c4c3"
+          },
+          "statement": "After c3, 0 of White's pieces attack c3.",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "black",
+            "count": 1,
+            "after_move": "c4c3"
+          },
+          "statement": "After c3, 1 of Black's pieces defend c3.",
+          "id": "C4"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4c3"
+            ],
+            "within_cp": 45
+          },
+          "statement": "At depth 16 c3 is the engine's best move.",
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB59-64"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** The advance needs a purpose and a square he cannot easily control. Waiting is right when neither advance nor exchange gains anything yet. Exchanging gives up the pair's activity, so ask what each plan gains before you choose. Pawns that are not hanging do not belong here at all. Next: one position three times, with one change each."
+    },
+    {
+      "type": "contrast",
+      "title": "Advance, wait, not hanging",
+      "prompt": "Predict which statement fits each position. In the second, a White rook moved from a1 to e3; in the third, a Black pawn was added on a7. Then name the one change that flipped the verdict between the first two.",
+      "working": "IB59-61",
+      "failing": "IB59-62",
+      "irrelevant": "IB59-63"
+    },
+    {
+      "type": "item",
+      "item": "IB59-65",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-66",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-72",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.HANGING",
+        "tpl.ds59-hang2-prac"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in My games find a position where you had two pawns side by side with no neighbours. Write which of the three plans you chose, what the engine ranked first, and one thing the other plans would have cost."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.HANGING.json (idea from Nimzowitsch, My System, recalled [R])",
+    "content/lessons/L-POS-STRUCTURE-HANGING-1.json (the three plans are taught there)",
+    "content/items/lesson-ds59.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

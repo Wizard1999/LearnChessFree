@@ -1,0 +1,166 @@
+{
+  "id": "L-END-WRONG-BISHOP-3",
+  "title": "The wrong-coloured bishop: another file or a second pawn",
+  "skill": "END.WRONG-BISHOP",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Predicts what changes when the pawn is not a rook pawn, or when a second pawn is added, and states the claim before checking it",
+    "Distinguishes a second pawn on the same file, on another file and on the far wing in verified examples",
+    "Writes down which claim was checked by the tablebase and which is only a rule of thumb"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You know the rook-pawn corner draw from **The wrong bishop: a rook pawn that cannot win** and the family reading from **The wrong-coloured bishop: win or draw from the family**. Now change one thing: a pawn on another file, or a second pawn. Predict the result, say the claim in one sentence, then compare with the checked result. Start with the base case."
+    },
+    {
+      "type": "item",
+      "item": "IB79-30"
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/PPK5/8/8/8/2B5 w - - 0 1",
+      "caption": "White to move, with pawns on a5 and b5. Predict first, then step through.",
+      "line": [
+        {
+          "move": "a5a6",
+          "say": "a6: the a-pawn advances."
+        },
+        {
+          "move": "a8a7",
+          "say": "Ka7: the king stays in front of the pawns."
+        },
+        {
+          "move": "c1a3",
+          "say": "Ba3: the bishop takes up the diagonal."
+        },
+        {
+          "move": "a7a8",
+          "say": "Ka8: the king goes back to the corner."
+        },
+        {
+          "move": "b5b6",
+          "say": "b6: the second pawn advances."
+        },
+        {
+          "move": "a8b8",
+          "say": "Kb8: the king steps along the back rank."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "b6"
+        }
+      ],
+      "highlight": [
+        "a5",
+        "b5",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White to move wins."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "move": "a5a6",
+            "result": "win"
+          },
+          "statement": "a6 keeps the win."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "move": "c5d5",
+            "result": "win"
+          },
+          "statement": "Kd5 also keeps the win."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** In these examples a second pawn on the same file leaves the draw; a second pawn on another file wins, and so does a pawn on the far wing. Rule of thumb: ask which pawns can reach a file the corner king does not guard. One pawn that is not a rook pawn offers no corner draw: the single-pawn items below win. Verified for these positions only."
+    },
+    {
+      "type": "contrast",
+      "title": "Add or move one thing",
+      "prompt": "The base position is a draw. Predict each variant, then check: a second pawn on the same file, a second pawn on the b-file, and the white king one step to the right.",
+      "working": "IB79-31",
+      "failing": "IB79-32",
+      "irrelevant": "IB79-34"
+    },
+    {
+      "type": "item",
+      "item": "IB79-33",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-37",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.WRONG-BISHOP",
+        "cue.4"
+      ],
+      "n": 2
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "For one position write your claim in a sentence: the files of the pawns, whether the bishop covers the queening corner, and where the defending king is. Then compare with the checked result. The app shows checked results; it does not look anything up for you while you play.",
+      "fields": [
+        {
+          "id": "claim",
+          "label": "My claim before checking:"
+        },
+        {
+          "id": "match",
+          "label": "The checked result matched my claim:",
+          "options": [
+            "yes",
+            "no",
+            "partly"
+          ]
+        },
+        {
+          "id": "rule",
+          "label": "A rule of thumb I should not trust yet:"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "content/skills/END.WRONG-BISHOP.json (D3 outcome and contrasts)",
+    "Board and items IB79-30 to IB79-34: positions built with python-chess and checked against the Lichess tablebase by tools/validate.py (content/items/lesson-ds79.json)",
+    "Shipped items IE-WB-9, IE-WB-23, IE-WB-37 (tablebase claims; non-rook pawns); cue-4 play-out practice from the shipped bank",
+    "Builds on L-END-WRONGBISHOP-1 and L-END-WRONG-BISHOP-2; the second-pawn results are verified examples, not a general theorem"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  }
+}

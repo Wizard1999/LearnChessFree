@@ -1,0 +1,132 @@
+{
+  "id": "L-END-TRANSITION-2",
+  "title": "Which ending to enter: keep, avoid or force the queen trade",
+  "skill": "END.TRANSITION",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "In an unlabeled queen ending, names the ending the queen trade leads to and checks it before choosing",
+    "Separates three cases: the trade wins, the trade only draws, no move wins",
+    "Finds a move that keeps the win when the trade does not"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Which ending to enter: check the trade first** the trade was handed to you. Now nobody says it is there. Look for every queen trade, name the ending each leads to, check that ending, and compare it with keeping the queens on. The result is one of three: the trade wins, the trade only draws, or nothing wins at all."
+    },
+    {
+      "type": "board",
+      "fen": "4Q3/8/4qP2/4k3/8/2K5/8/8 w - - 0 1",
+      "caption": "White to move, with an extra pawn on f6. The trade Qxe6+ looks natural, but the ending after it is only a draw; f7 keeps the win.",
+      "line": [
+        {
+          "move": "e8e6",
+          "say": "Qxe6+: the queens come off with check."
+        },
+        {
+          "move": "e5e6",
+          "say": "Kxe6: Black recaptures with the king, next to the f6 pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White to move wins."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "move": "e8e6",
+            "result": "draw"
+          },
+          "statement": "The trade Qxe6+ gives up the win: the result is a draw."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "move": "f6f7",
+            "result": "win"
+          },
+          "statement": "f7 keeps the win."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB79-11"
+    },
+    {
+      "type": "card",
+      "text": "**The decision.** Rule of thumb: name the ending the trade leads to and check it first. If the trade wins, it is one winning move among others. If it only draws and another move wins, play the other move. If nothing wins, check that the trade does not lose. An extra pawn alone does not make a trade good; the king squares decided it. Verified for the positions shown."
+    },
+    {
+      "type": "item",
+      "item": "IB79-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB79-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB79-13",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.TRANSITION",
+        "task.find_move"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each answer: did you name the ending after the trade and check it, or did you trade because you were ahead? Which position surprised you?",
+      "fields": [
+        {
+          "id": "named",
+          "label": "I named the ending before trading:",
+          "options": [
+            "every time",
+            "sometimes",
+            "not yet"
+          ]
+        },
+        {
+          "id": "surprise",
+          "label": "What surprised me:"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "content/skills/END.TRANSITION.json (D2 outcome, conditions and contrasts)",
+    "Board and items IB79-8 to IB79-13: queen-and-pawn endings found by search and checked against the Lichess tablebase by tools/validate.py (content/items/lesson-ds79.json)",
+    "Items IB79-8 to IB79-13 only (no shipped item at this depth is unused by L-END-TRANSITION-1)",
+    "Builds on L-END-TRANSITION-1; the opponent's side of the choice (allowing or avoiding a trade) is not taught here"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  }
+}

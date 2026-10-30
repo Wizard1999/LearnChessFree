@@ -1,0 +1,153 @@
+{
+  "id": "L-POS-STRUCTURE-HANGING-3",
+  "title": "Hanging pawns: when the advance or the exchange backfires",
+  "skill": "POS.STRUCTURE.HANGING",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Predicts whether advancing a hanging pawn is rated far worse than the best move, using the attackers and defenders of the advance square",
+    "Predicts whether exchanging the pair is acceptable or a move too soon",
+    "Knows that a counting rule is a rule of thumb and checks it with the engine reading"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Hanging pawns: hold, advance or exchange* and *Hanging pawns: advance, wait or exchange?* you chose a plan. Now predict what it costs when it goes wrong. An advance into squares his pieces already control tends to lose ground; an exchange a move too soon gives up the pair's activity. Rule of thumb: count the attackers and defenders of the advance square. The board shows an advance the engine rates far worse."
+    },
+    {
+      "type": "board",
+      "fen": "1qr3k1/r3bppp/4bnn1/2pp4/5N2/P3P1NP/1B1QBPP1/2RR2K1 b - - 0 24",
+      "caption": "Black to move. Black has hanging pawns on c5 and d5 (side by side, no friendly pawns on the neighbouring files, no enemy pawns on their files).",
+      "line": [
+        {
+          "move": "d5d4",
+          "say": "d4 is legal, but the engine rates it at least 210 centipawns worse than its best move. 3 of White's pieces attack d4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "d5",
+        "d4"
+      ],
+      "claims": [
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "hanging_pair",
+            "color": "black",
+            "squares": [
+              "c5",
+              "d5"
+            ]
+          },
+          "statement": "Black's hanging pawns: c5 and d5.",
+          "id": "C1"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d5d4"
+          },
+          "statement": "d4 is legal.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 3,
+            "after_move": "d5d4"
+          },
+          "statement": "After d4, 3 of White's pieces attack d4.",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 1,
+            "after_move": "d5d4"
+          },
+          "statement": "After d4, 1 of Black's pieces defend d4.",
+          "id": "C4"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "d5d4",
+            "cp": 210
+          },
+          "statement": "At depth 16 d4 scores at least 210 centipawns worse than the best move.",
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB59-84"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** An advance fails when his pieces hold the square and yours cannot hit them, or when his blockaders stand well. An exchange fails when you could have waited and kept the option. Counting attackers is a rule of thumb: two positions can have the same count and different verdicts. When they do, look for what else changed, such as a piece that now attacks the pawn or a loose piece. The engine's ranking is the check. Next: one position three times, with one change each."
+    },
+    {
+      "type": "contrast",
+      "title": "Advance works, advance fails, not hanging",
+      "prompt": "Predict which statement fits each position. In the second, the White bishop moved from d3 to c2; in the third, a Black pawn was added on c7. Then name the one change that flipped the verdict between the first two.",
+      "working": "IB59-81",
+      "failing": "IB59-82",
+      "irrelevant": "IB59-83"
+    },
+    {
+      "type": "item",
+      "item": "IB59-88"
+    },
+    {
+      "type": "item",
+      "item": "IB59-85",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-86",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-87",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.HANGING",
+        "tpl.ds59-hang3-prac"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): pick one of your games with an advanced pawn pair. Write what you expected the move to cost. After the engine pass in My games, write the real drop and one square his pieces controlled."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.HANGING.json (ideas from Nimzowitsch, My System, recalled [R])",
+    "content/lessons/L-POS-STRUCTURE-HANGING-2.json and L-POS-STRUCTURE-HANGING-1.json (the plans)",
+    "content/items/lesson-ds59.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)",
+    "IB59-87 and IB59-88 are pawn exchanges in positions with no loose piece (checked with loose_pieces); only 10 corpus positions had a hanging pair with a pawn capture available, so IB59-87 is an authored edit (a white pawn added on b4) [V]."
+  ]
+}

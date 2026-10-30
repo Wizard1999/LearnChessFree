@@ -1,0 +1,588 @@
+{
+ "positions": [
+  {
+   "id": "PBds710-1",
+   "fen": "8/8/2KQ4/8/r5k1/8/8/8 w - - 0 1",
+   "family": "FAM-DS710-QR-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-2",
+   "fen": "8/8/2KQ4/8/r5k1/8/8/8 b - - 0 1",
+   "family": "FAM-DS710-QR-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-3",
+   "fen": "8/8/4QK2/8/1k5r/8/8/8 w - - 0 1",
+   "family": "FAM-DS710-QR-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-4",
+   "fen": "8/8/8/8/3k4/Q5K1/8/2r5 b - - 0 1",
+   "family": "FAM-DS710-QR-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-5",
+   "fen": "8/8/4k3/r7/8/2K3Q1/8/8 b - - 0 1",
+   "family": "FAM-DS710-QR-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-6",
+   "fen": "2Q5/8/4r3/8/8/8/7K/5k2 b - - 0 1",
+   "family": "FAM-DS710-QR-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-7",
+   "fen": "4k3/K7/Q7/8/8/8/8/6r1 w - - 0 1",
+   "family": "FAM-DS710-QR-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds710-8",
+   "fen": "7r/8/k7/8/8/4QK2/8/8 b - - 0 1",
+   "family": "FAM-DS710-QR-6",
+   "provenance": {
+    "kind": "authored",
+    "ref": "own construction (batch ds710); result from the Lichess tablebase",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBds710-1",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-1",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "Does the queen's side have a check or a queen move that the rook cannot answer with a check of its own?",
+    "Compare with the same position with the other side to move."
+   ],
+   "explain": "White wins with best play (tablebase). White has the move, so the rook never gets the first check; the position is the same as the next one except for who moves.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame",
+    "role.working",
+    "contrast.CG-DS710-1"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS710-1"
+  },
+  {
+   "id": "IBds710-2",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-2",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a4a6"
+     },
+     "statement": "After Ra6+ the position is a draw."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "d6",
+      "piece": "K",
+      "after_moves": [
+       "a4a6",
+       "c6c7",
+       "a6d6",
+       "c7d6"
+      ]
+     },
+     "statement": "After Ra6+ Kc7 Rxd6 the white king recaptures on d6."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "Ask whether the rook's side has a check that also attacks the queen, and whether the queen's king stands next to the queen.",
+    "If the rook could win the queen, would the queen's king take the rook back? Then count what is left on the board."
+   ],
+   "explain": "The tablebase says draw. Black has the move and plays Ra6+. If the king steps to c7 the rook takes the queen and the king takes the rook, so only the two kings remain. Only the move changed from the previous position.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame",
+    "role.failing",
+    "kind.side-to-move-flip",
+    "contrast.CG-DS710-1"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS710-1",
+   "orientation": "black"
+  },
+  {
+   "id": "IBds710-3",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-3",
+   "prompt": "White to move. With best play from both sides, is the result a win, a draw or a loss for white? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "This is the first position of the group seen from the other side of the board.",
+    "Does the left-right mirror change anything about checks, queens or kings?"
+   ],
+   "explain": "White wins (tablebase). The position is the first one of the group reflected left to right, which changes no rule of the game, so the result is the same.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-1",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame",
+    "role.irrelevant",
+    "kind.mirror",
+    "contrast.CG-DS710-1"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-DS710-1"
+  },
+  {
+   "id": "IBds710-4",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-4",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c1c3"
+     },
+     "statement": "After Rc3+ the position is a draw."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "k",
+      "after_moves": [
+       "c1c3",
+       "a3c3",
+       "d4c3"
+      ]
+     },
+     "statement": "After Rc3+ Qxc3 the black king recaptures on c3."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "Ask whether the rook's side has a check that also hits the queen, and which king would recapture on the check square.",
+    "If the queen takes the rook on c3, which king takes the queen back?"
+   ],
+   "explain": "The tablebase says draw. Rc3+ forks the king on g3 and the queen on a3. If the queen takes the rook, the black king on d4 takes the queen, so only bare kings remain. If the king moves instead, the rook takes the queen.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-2",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame",
+    "role.failing"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "black"
+  },
+  {
+   "id": "IBds710-5",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-5",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "win",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "With best play the result for the side to move is a win."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "a5a3"
+     },
+     "statement": "After Ra3+ the rook's side wins."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "g3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a5a3",
+       "c3c2"
+      ]
+     },
+     "statement": "After Ra3+ Kc2 the black rook attacks the queen on g3."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "Look for a rook check that also attacks the queen. Is the queen defended by its king?",
+    "Count the squares between the white king and the queen. Can the king step off the third rank and still guard it?"
+   ],
+   "explain": "Black, the side with the rook, wins (tablebase). Ra3+ checks the king on c3, and every king move leaves the third rank, so the rook then takes the queen on g3. No king stands next to the queen to take the rook back.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-3",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "black"
+  },
+  {
+   "id": "IBds710-6",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds710-6",
+   "prompt": "Black to move. With best play from both sides, is the result a win, a draw or a loss for black? Predict, then check.",
+   "options": [
+    "win",
+    "draw",
+    "loss"
+   ],
+   "answer": {
+    "outcome": "loss",
+    "options": [
+     "win",
+     "draw",
+     "loss"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "With best play the result for the side to move is a loss."
+    }
+   ],
+   "hints": [
+    "Find the queen, the rook and both kings. Who is to move?",
+    "Does Black have any check that also attacks the queen?",
+    "Look at the distance between the rook and its king."
+   ],
+   "explain": "Black loses (tablebase), even with the move. Black's only checks (Re2+, Rh6+) attack nothing of White's but the king, so there is no skewer or fork and Black loses.",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS710-QR-4",
+    "lang.en",
+    "task.predict_outcome",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "black"
+  },
+  {
+   "id": "IBds710-7",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 4,
+   "task": "play_out",
+   "position": "PBds710-7",
+   "prompt": "White to move. This position is won with best play. Convert it: checkmate the opponent within 28 moves.",
+   "answer": {
+    "goal": "win",
+    "max_moves": 28
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "The goal is achievable: the tablebase result for the side to move is a win."
+    }
+   ],
+   "hints": [
+    "Before each queen move ask whether the rook has a check that also attacks the queen.",
+    "Use checks that keep your queen and king on different lines from the rook, and drive the king and rook apart.",
+    "Count your moves: if you are not winning the rook within a few moves, you are probably giving checks that gain nothing."
+   ],
+   "explain": "The tablebase confirms a win for White; the move budget of 28 is more than the tablebase's distance to mate (27 plies).",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.4",
+    "kind.authored",
+    "family.FAM-DS710-QR-5",
+    "lang.en",
+    "task.play_out",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBds710-8",
+   "skill": "END.THEORY.QvR.D3",
+   "cue": 4,
+   "task": "play_out",
+   "position": "PBds710-8",
+   "prompt": "Black to move. With best play this position is a draw, but the opponent plays at full strength. Hold the draw.",
+   "answer": {
+    "goal": "hold",
+    "max_moves": 30
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The goal is achievable: the tablebase result for the side to move is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h8h3"
+     },
+     "statement": "After Rh3+ the position is still a draw."
+    }
+   ],
+   "hints": [
+    "You are the side with the rook and the queen is stronger. Look for a check, not a quiet move.",
+    "Which rook check also attacks the queen that stands next to its king?",
+    "If the rook takes the queen and the king takes the rook, what is left on the board?"
+   ],
+   "explain": "The tablebase confirms the draw. Rh3+ holds the draw (checked by the tablebase).",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "tier.6",
+    "cue.4",
+    "kind.authored",
+    "family.FAM-DS710-QR-6",
+    "lang.en",
+    "task.play_out",
+    "theme.endgame",
+    "idea.queen-v-rook",
+    "theme.queenEndgame"
+   ],
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "orientation": "black"
+  }
+ ]
+}

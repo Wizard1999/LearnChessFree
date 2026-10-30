@@ -1,0 +1,145 @@
+{
+ "id": "L-POS-STRUCTURE-CARLSBAD-2",
+ "title": "Minority attack, e-pawn break or a waiting move",
+ "skill": "POS.STRUCTURE.CARLSBAD",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Chooses between the minority attack, the e-pawn break and a waiting move in positions where nobody names the plan",
+  "Checks whether the pieces are ready before the b-pawn is pushed, and sees that one displaced piece can change the answer",
+  "Recognises a position that only looks like the structure because White still has a c-pawn"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Carlsbad structure: the minority attack and its limits** you met the structure and its two plans. Now choose in a real position: the minority attack b4, the e-pawn break e4, or a waiting move that improves a piece. Rule of thumb: start b4 when the pieces are placed and nothing is left loose by the push; otherwise wait or play in the centre."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqrnk1/pp2bppp/2p2n2/3p2B1/3P4/2NBPN2/PPQ2PPP/R4RK1 w - - 8 11",
+   "caption": "White to move. Carlsbad structure, but the pieces are not placed yet: the plan b4 would come too early.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "A waiting move: it gives the bishop a retreat and starts no pawn plan yet."
+    }
+   ],
+   "claims": [
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "P"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "P"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "c6",
+      "piece": "p"
+     },
+     "id": "C3"
+    },
+    {
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ]
+     },
+     "id": "C4"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h2h3",
+       "a1b1",
+       "a2a4",
+       "a1e1",
+       "a1c1",
+       "f3e5"
+      ],
+      "within_cp": 40
+     },
+     "id": "C5"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "b2b4",
+      "cp": 70
+     },
+     "id": "C6"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds58-15"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb, with conditions.** The minority attack needs a target (the c6 pawn after the exchange), time (the other side has no faster plan) and pieces placed so that b4 does not run into a counter. When one is missing, the e-pawn break or a waiting move is the plan. The next three positions differ by one feature; the question is always: is b4 reasonable?"
+  },
+  {
+   "type": "contrast",
+   "title": "Same structure, the same pawn push",
+   "prompt": "Predict for each position whether b4 is a reasonable move. In the second and third, one Black bishop stands on another square.",
+   "working": "IBds58-28",
+   "failing": "IBds58-29",
+   "irrelevant": "IBds58-30"
+  },
+  {
+   "type": "item",
+   "item": "IODqgd-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-17",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.STRUCTURE.CARLSBAD",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which of the three, target, time or placed pieces, was hardest for you to judge in this lesson? Write one thing you will check first next time."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.STRUCTURE.CARLSBAD.json (D2 outcome; plans recalled [R], need strong-player review)",
+  "content/lessons/L-POS-STRUCTURE-CARLSBAD-1.json (the lesson 'Carlsbad structure: the minority attack and its limits'; not re-taught here)",
+  "shipped item IODqgd-10 (content/items/lesson-od-qgd.json)",
+  "content/items/lesson-ds58.json (positions are legal move sequences from the start position or one-feature edits, every claim machine-checked; engine depth 16)"
+ ]
+}

@@ -1,0 +1,163 @@
+{
+  "id": "L-END-TRIANGULATION-2",
+  "title": "Triangulation: decide before you walk the king",
+  "skill": "END.TRIANGULATION",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Decides in a locked-pawn king ending whether the direct king step or a three-square detour keeps the win, by asking who would be to move",
+    "Predicts win or draw for look-alike placements that differ by one king square (verified examples)",
+    "States the three checks before walking the king: the target placement, the free squares, the defender's spare move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Triangulation: a king detour that passes the move** you found the three-square detour when told to. Now decide *before* you move. Ask three questions. Which placement do I want, with the opponent to move? If I walk straight there, who is to move? Are the squares of a three-square walk free and safe? Next, a position where the direct step fails and the detour wins."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/3K1p2/5P1k/8/8/8/8 w - - 0 1",
+      "caption": "White to move; the pawns on f5 and f6 are locked. The direct step Ke6 loses, a quiet king move on d5 only draws, and Ke7 wins.",
+      "line": [
+        {
+          "move": "d6e7",
+          "say": "Ke7: the king steps away from e6 instead of onto it."
+        },
+        {
+          "move": "h5g5",
+          "say": "Black has to move its king; it cannot pass."
+        },
+        {
+          "move": "e7e6",
+          "say": "Ke6: the square of the direct step, now with Black to move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "e7"
+        },
+        {
+          "from": "e7",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "e7",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White to move wins."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "move": "d6e7",
+            "result": "win"
+          },
+          "statement": "Ke7 keeps the win."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "move": "d6e6",
+            "result": "loss"
+          },
+          "statement": "The direct step Ke6 loses."
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "move": "d6d5",
+            "result": "draw"
+          },
+          "statement": "Kd5 only draws."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB79-4"
+    },
+    {
+      "type": "card",
+      "text": "**When it works.** The detour wins only if the target placement exists, the three squares are free and safe, and the defender cannot also spare a move. Rule of thumb: first ask who is to move after the direct step; if that would be you in zugzwang, look for the detour. The tablebase results here are verified for these examples only. Why the drawn look-alikes draw is your question to answer: check whether Black has a move to spare. Opposition stays the first tool."
+    },
+    {
+      "type": "contrast",
+      "title": "Move one king by one square",
+      "prompt": "In the first position White wins. Predict the result when the black king stands one square higher, then when it stands one file further away. Then check.",
+      "working": "IB79-1",
+      "failing": "IB79-2",
+      "irrelevant": "IB79-3"
+    },
+    {
+      "type": "item",
+      "item": "IB79-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB79-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB79-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-TRI-26",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.TRIANGULATION",
+        "task.predict_outcome"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each answer: did you work out who would be to move after the direct step, and did you look for Black's spare move? Which look-alike drew when you expected a win?",
+      "fields": [
+        {
+          "id": "asked",
+          "label": "I checked who would be to move:",
+          "options": [
+            "every time",
+            "sometimes",
+            "not yet"
+          ]
+        },
+        {
+          "id": "spare",
+          "label": "A position where the walk did not win, and what I noticed:"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "content/skills/END.TRIANGULATION.json (D2 outcome, conditions and contrasts; the node cites Lasker and Nimzowitsch, not re-read for this lesson)",
+    "Board, IB79-1 to IB79-7: locked-pawn positions found with tools/endgames/lockedkp.py and checked against the Lichess tablebase by tools/validate.py (content/items/lesson-ds79.json)",
+    "Shipped item IE-TRI-26 (tablebase claim)",
+    "Builds on L-END-TRIANGULATION-1; the explanation of why the look-alikes draw is left as a question, not asserted"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  }
+}

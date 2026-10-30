@@ -1,0 +1,158 @@
+{
+ "id": "L-END-THEORY-QvR-3",
+ "title": "Queen against rook: play it out within a budget",
+ "skill": "END.THEORY.QvR",
+ "depth": "D3",
+ "minutes": 13,
+ "outcomes": [
+  "Plays out queen against rook within a move budget against the tablebase, as the queen side",
+  "Holds the draw as the rook side when a check hits the queen and a king stands ready to recapture",
+  "Predicts win, draw or loss for the unlabeled position, including positions where the rook side wins or the queen wins despite the rook moving first"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Queen against rook: force the king away from its rook** you learned the method. Here you **play it out** against the tablebase, where every move costs. A tablebase gives the result with best play, not how many moves a person needs, so you set a move budget yourself.\nThe extra queen does not win by itself: the rook's side has one trick, shown next."
+  },
+  {
+   "type": "board",
+   "fen": "r7/8/7k/8/8/2KQ4/8/8 b - - 0 1",
+   "caption": "Black, the side with the rook, to move. The queen is stronger, yet this is a draw. Step through the one resource: a check that skewers king and queen.",
+   "line": [
+    {
+     "move": "a8a3",
+     "say": "Ra3+ is check along the third rank. The queen stands behind the king on that rank, so when the king steps off the rank, the rook attacks the queen (a skewer)."
+    },
+    {
+     "move": "c3c2",
+     "say": "The king steps off the rank to c2. The rook now attacks the queen, but the king stands next to it. Any king move that is not next to d3 loses the queen."
+    },
+    {
+     "move": "a3d3",
+     "say": "The rook takes the queen."
+    },
+    {
+     "move": "c2d3",
+     "say": "The king takes the rook. Only the two kings are left."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a8",
+     "to": "a3"
+    },
+    {
+     "from": "a3",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "d3",
+    "c2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "Black to move draws."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "a8a3"
+     },
+     "statement": "After Ra3+ the position is still a draw."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "d3",
+      "piece": "K",
+      "after_moves": [
+       "a8a3",
+       "c3c2",
+       "a3d3",
+       "c2d3"
+      ]
+     },
+     "statement": "After Ra3+ Kc2 Rxd3 the white king recaptures on d3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-QVR-16"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** The rook's side draws when it has the move and gives a check that hits the queen, directly or after the king steps aside, and the trade leaves only bare kings. That needs a king next to the capture square: the queen's king (previous board) or the rook's own. **When it fails:** no king covers that square, so the rook wins the queen free; or no check hits the queen, so the queen's side wins. Before each queen move, ask whether the rook has such a check."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pieces, one change",
+   "prompt": "Predict each result, then check. The next position changes who moves; the third only reflects the board left to right.",
+   "working": "IBds710-1",
+   "failing": "IBds710-2",
+   "irrelevant": "IBds710-3"
+  },
+  {
+   "type": "item",
+   "item": "IBds710-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds710-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds710-6",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "Now play against full-strength defence. **Plan before move one:** list the rook's checks, then pick a check that does not leave your queen where the rook can fork it. **Budget:** the move count shown is more than the tablebase's own distance to mate. If you have spent a third of it without winning the rook, stop and look for the check you missed."
+  },
+  {
+   "type": "item",
+   "item": "IE-QVR-17"
+  },
+  {
+   "type": "item",
+   "item": "IBds710-7"
+  },
+  {
+   "type": "item",
+   "item": "IBds710-8"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "cue.4"
+   ],
+   "n": 2
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which of your play-outs used most of its budget? Name the move after which the win became slow, and the check you would try first next time."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.THEORY.QvR.json (D3 outcome)",
+  "Lesson 'Queen against rook: force the king away from its rook' (D1)",
+  "Items IE-QVR-16, IE-QVR-17 (tablebase-backed, generated) and IBds710-1 to IBds710-8 (own constructions, results from the Lichess tablebase)"
+ ]
+}

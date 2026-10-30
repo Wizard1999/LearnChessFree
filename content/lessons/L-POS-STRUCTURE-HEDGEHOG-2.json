@@ -1,0 +1,169 @@
+{
+  "id": "L-POS-STRUCTURE-HEDGEHOG-2",
+  "title": "The hedgehog: break, wait or hold the line",
+  "skill": "POS.STRUCTURE.HEDGEHOG",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Decides in an unlabeled hedgehog position whether the cramped side's break is ready or whether to wait with a useful move",
+    "Counts who can recapture on the break square and then compares the count with the engine, knowing a recapture alone does not make a break ready",
+    "As the space side, tests c5 and e5 before pushing instead of treating the strike as a duty",
+    "Notices a position that is not the hedgehog (a White d-pawn) and does not apply the waiting logic to it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *The hedgehog: waiting until the break is ready* you met the structure and the idea of waiting. This lesson trains the decision itself, with nobody naming the plan: **break now, wait with a useful move**, or, for the space side, **hold or strike**. Start by counting who can recapture on the break square. Counting is a rule of thumb that rules breaks out; you will check each verdict against the engine."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pbqn1ppp/1p1ppn2/8/1PP1PB2/2PB1N2/2Q2PPP/R4RK1 b - - 5 13",
+      "caption": "Black to move, in the hedgehog. The break b5 looks natural, and White's c4 pawn attacks it. Count first: who can recapture on b5?",
+      "line": [
+        {
+          "move": "b6b5",
+          "say": "b5: the natural break. White's c4 pawn attacks it."
+        },
+        {
+          "move": "c4b5",
+          "say": "cxb5. No Black pawn can recapture, because the a-pawn stands on a7, not a6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "b5"
+        }
+      ],
+      "highlight": [
+        "b5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "b6",
+            "piece": "p"
+          },
+          "statement": "b6 holds the black pawn."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c4",
+            "piece": "P"
+          },
+          "statement": "c4 holds the white pawn."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "b5",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One White pawn (on c4) attacks b5."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "b5",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "b6b5",
+              "c4b5"
+            ]
+          },
+          "statement": "After b5 cxb5 no Black pawn can recapture on b5."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "b6b5",
+            "cp": 200
+          },
+          "statement": "b5 is at least 2.0 pawns worse than the engine's best move at depth 16."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBg3-40"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** No recapture usually means *wait*: improve a piece, or play ...a6 first so that ...b5 has a pawn behind it. A recapture is necessary, not sufficient: pieces matter too, so the engine can still reject a break the count allows. Rule of thumb: break when the count is level, your pieces cover the break square and no tactic punishes it; otherwise a quiet move costs little."
+    },
+    {
+      "type": "contrast",
+      "title": "Two positions, two verdicts",
+      "prompt": "These are two unrelated positions; do not expect one cause. Predict d5 in each, then check.",
+      "working": "IBg3-38",
+      "failing": "IBg3-39"
+    },
+    {
+      "type": "card",
+      "text": "**The space side.** White chooses between holding the space and striking with c5 or e5, and a strike has a price. Test it before you push: ask what the pawn leaves behind and who can take it. Improving moves are a rule of thumb, not a duty. Whatever the structure, check it is the one you think it is before you apply a plan."
+    },
+    {
+      "type": "item",
+      "item": "IBds510-1",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-4",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.HEDGEHOG",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. Before each break, what did you count, and did the engine agree? Write one line each.",
+      "fields": [
+        {
+          "id": "count",
+          "label": "What I counted before a break"
+        },
+        {
+          "id": "miss",
+          "label": "A time the count and the engine disagreed, and what I had missed"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.HEDGEHOG.json (D2 outcome, conditions; plans recalled [R], no sheet describes them)",
+    "content/items/lesson-ds510.json (positions from Lichess standard rated games, January 2013 sample, CC0; engine claims at depth 16)",
+    "shipped items IBg3-38, IBg3-39, IBg3-40 (content/items/lesson-g3.json)"
+  ],
+  "authorNotes": "The contrast step is a stand-in: IBg3-38 and IBg3-39 are two different real positions, not a one-feature pair. Building a one-feature pair is a follow-up task."
+}

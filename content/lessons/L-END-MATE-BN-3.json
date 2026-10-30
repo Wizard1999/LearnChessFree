@@ -1,0 +1,108 @@
+{
+  "id": "L-END-MATE-BN-3",
+  "title": "Bishop and knight: checking the count against the tablebase",
+  "skill": "END.MATE-BN",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Works out from the halfmove clock how many half-moves remain, and tests a plan against the tablebase's half-move count",
+    "Finds the move that keeps a win inside a tight count",
+    "Counts the moves of his own mate against the budget"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The count is arithmetic. The halfmove clock counts half-moves since the last capture or pawn move, and at 100 either player may claim a draw. The tablebase tells how many more half-moves the win needs at best. **The win holds if the clock plus that number is at most 100.** First the sum: one move by each side adds two half-moves."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "The clock reads 64. How many more moves of his own can White make before the clock reaches 100?",
+      "fields": [
+        {
+          "id": "moves",
+          "label": "White's remaining moves:",
+          "type": "number",
+          "answer": 18,
+          "tolerance": 0
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Now test the sum on a real position. The win needs 57 half-moves, so the clock is the only thing that changes in the first two positions below; the third is reflected left to right. Predict each result."
+    },
+    {
+      "type": "contrast",
+      "title": "The sum is exact",
+      "prompt": "White to move, bishop and knight against a lone king. The tablebase says the win needs 57 half-moves. The clock is 43 in the first position and 44 in the second; the third is the first reflected left to right. Predict each result.",
+      "working": "IBds78-14",
+      "failing": "IBds78-15",
+      "irrelevant": "IBds78-16"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb:** when the sum is close to 100, every move must be among the fastest. A move that looks as good can still cost the win. In the next two positions the clock leaves almost no spare time, so find the move that loses none. The third position is a different question: can the count be met at all?"
+    },
+    {
+      "type": "card",
+      "text": "No short method finds the fastest move. When the clock is high, prefer the move that keeps both pieces and the king together and cuts the king's escape squares, and check it with the tablebase after you answer."
+    },
+    {
+      "type": "item",
+      "item": "IBds78-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds78-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds78-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-MBN-8"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the position you just played, how many of your own moves did the mate take? Compare it with the move limit named in the exercise.",
+      "fields": [
+        {
+          "id": "used",
+          "label": "My moves to mate:",
+          "type": "number"
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-BN",
+        "theme.mate",
+        "cue.4"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which step of the method do you trust least when the clock is high: choosing the corner, bringing the knight into play, or counting? Choose one, and make a note to test it in My games or against the engine."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-BN.json (D3 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATE-BN-1.json and L-END-MATE-BN-2.json (taught there, not repeated)",
+    "items IBds78-9..14 in content/items/lesson-ds78.json (tablebase claims with the halfmove clock, checked by tools/validate.py; half-move counts quoted from the tablebase service)",
+    "shipped item IE-MBN-8 (play-out against the engine with a move budget)"
+  ]
+}

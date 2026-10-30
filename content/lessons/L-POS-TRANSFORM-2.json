@@ -1,0 +1,203 @@
+{
+  "id": "L-POS-TRANSFORM-2",
+  "title": "Favourable transformations: choose the exchange or break",
+  "skill": "POS.TRANSFORM",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "In an unlabeled position names a capture that damages the opponent's pawns and checks it against the engine instead of assuming it is good",
+    "Names what the exchange costs (the bishop pair, a piece) next to what it gains",
+    "Declines a trade that changes the structure when the engine rates it clearly worse than the alternatives"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Transformations: change the structure, check the price* you named a trade and its cost. Now you **choose**: in positions nobody labels, decide whether an exchange that damages the opponent's pawns is worth playing, or whether another plan is better. A trade is a candidate, never an obligation. This lesson drills trades; giving up a weak pawn of your own is not practised here."
+    },
+    {
+      "type": "board",
+      "fen": "2r1kb1r/pp1b1ppp/1qn1p2n/3pP3/3P4/2N1BN2/PPQ2PPP/R3KB1R w KQk - 5 10",
+      "caption": "White to move. Bxh6 gives a bishop for a knight and changes Black's pawns. Look at the structure afterwards, then at the price.",
+      "line": [
+        {
+          "move": "e3h6",
+          "say": "The bishop takes the knight on h6."
+        },
+        {
+          "move": "g7h6",
+          "say": "The g-pawn recaptures: Black's h-pawns are doubled and isolated, and f7 is backward."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": []
+          },
+          "statement": "Before the exchange Black's doubled pawns: none."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "h6",
+              "h7"
+            ],
+            "after_moves": [
+              "e3h6",
+              "g7h6"
+            ]
+          },
+          "statement": "After Bxh6 gxh6, Black's doubled pawns: h6 and h7."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "isolated",
+            "color": "black",
+            "squares": []
+          },
+          "statement": "Before the exchange Black's isolated pawns: none."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_set",
+          "params": {
+            "kind": "isolated",
+            "color": "black",
+            "squares": [
+              "h6",
+              "h7"
+            ],
+            "after_moves": [
+              "e3h6",
+              "g7h6"
+            ]
+          },
+          "statement": "After Bxh6 gxh6, Black's isolated pawns: h6 and h7."
+        },
+        {
+          "id": "C5",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "white",
+              "black"
+            ]
+          },
+          "statement": "Before the exchange the bishop pair belongs to: white and black."
+        },
+        {
+          "id": "C6",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "black"
+            ],
+            "after_moves": [
+              "e3h6",
+              "g7h6"
+            ]
+          },
+          "statement": "After the exchange the bishop pair belongs to: black."
+        },
+        {
+          "id": "C7",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e3h6"
+            ],
+            "within_cp": 30
+          },
+          "statement": "At depth 16 Bxh6 is within 0.3 pawns of the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6x-21"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** A trade helps when the damaged pawns can be attacked and the price (the bishop pair, a piece you need) is small. It fails when the opponent's pieces can defend the damage, or when another move is simply stronger. Rule of thumb: name the gain and the price before the trade, then test it. Compare the two positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "Two positions, two verdicts",
+      "prompt": "Two different positions where the same Bxc6 bxc6 would damage Black's pawns. Find the engine's choice in each, then see whether the trade was it.",
+      "working": "IBds510-60",
+      "failing": "IBds510-63"
+    },
+    {
+      "type": "item",
+      "item": "IBds510-61",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-64",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-62",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-65",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.TRANSFORM",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. Write one line each.",
+      "fields": [
+        {
+          "id": "gain",
+          "label": "The gain and the price I named before a trade"
+        },
+        {
+          "id": "declined",
+          "label": "A trade I declined, and what I played instead"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.TRANSFORM.json (D2 outcome and conditions)",
+    "content/items/lesson-ds510.json (positions from Lichess standard rated games, January 2013 sample, CC0; engine claims at depth 16, structure claims exact)",
+    "shipped item IBp6x-21 (content/items/lesson-p6x.json)"
+  ],
+  "authorNotes": "The contrast step is a stand-in: IBds510-60 and IBds510-63 are unrelated positions, not a one-feature pair. Building a one-feature pair is a follow-up task."
+}

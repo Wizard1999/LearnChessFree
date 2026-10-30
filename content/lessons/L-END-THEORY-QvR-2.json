@@ -1,0 +1,149 @@
+{
+ "id": "L-END-THEORY-QvR-2",
+ "title": "Queen against rook: win or fortress?",
+ "skill": "END.THEORY.QvR",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "In an unlabeled queen-against-rook position, predicts win or draw and finds the winning move where one exists",
+  "Recognises the verified drawn setup with the rook on a7, a pawn on b7 and the king beside them, and the changes that break it",
+  "Does not assume the extra queen wins by itself"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Queen against rook: force the king away from its rook** you separated rook and king. The new question comes first: can the queen win at all? The general fortress test is in **Fortresses: when more material cannot break through**. Here we only meet one queen-against-rook case where the tablebase says draw, and the changes that break it."
+  },
+  {
+   "type": "board",
+   "fen": "2k5/rp6/8/8/8/2K5/8/7Q w - - 0 1",
+   "caption": "White to move. The rook on a7, the pawn on b7 and the king on c8 stand together. The tablebase says draw; Qh8+ keeps the draw.",
+   "line": [
+    {
+     "move": "h1h8",
+     "say": "Qh8+: check along the eighth rank."
+    },
+    {
+     "move": "c8d7",
+     "say": "Kd7: the king steps off the rank."
+    },
+    {
+     "move": "h8h3",
+     "say": "Qh3+: check along the diagonal to d7."
+    },
+    {
+     "move": "d7c7",
+     "say": "Kc7: the king steps next to the pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "h1",
+     "to": "h8"
+    }
+   ],
+   "highlight": [
+    "a7",
+    "b7",
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "With best play the position is a draw."
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "move": "h1h8",
+      "result": "draw"
+     },
+     "statement": "Qh8+ keeps the draw."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "move": "h1h3",
+      "result": "draw"
+     },
+     "statement": "Qh3 keeps the draw."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-QVR-10"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** The extra queen does not win by itself. In the verified examples the draw holds with the black king on c8 beside its rook and pawn and the queen on d1 or e1. Put the king on b8 or far away, or the queen where it attacks the rook, and White wins. Rule of thumb: before you plan the separating check, ask whether rook, pawn and king stand together. These results are verified for these positions only."
+  },
+  {
+   "type": "contrast",
+   "title": "Fortress or not",
+   "prompt": "White is to move in each position. Predict the result, then check. Only one piece differs from the first.",
+   "working": "IB79-14",
+   "failing": "IB79-15",
+   "irrelevant": "IB79-16"
+  },
+  {
+   "type": "item",
+   "item": "IB79-17",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IB79-18",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-QVR-12",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.THEORY.QvR",
+    "kind.puzzle"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you ask if rook, pawn and king stand together, or did you start looking for checks? Which change surprised you?",
+   "fields": [
+    {
+     "id": "asked",
+     "label": "I asked 'can the queen win at all?' first:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "surprise",
+     "label": "What surprised me:"
+    }
+   ]
+  }
+ ],
+ "sources": [
+  "content/skills/END.THEORY.QvR.json (D2 outcome, conditions and contrasts)",
+  "Board and items IB79-14 to IB79-18: queen against rook and pawn found by tablebase search and checked by tools/validate.py (content/items/lesson-ds79.json)",
+  "Shipped items IE-QVR-10 and IE-QVR-12 (tablebase claims)",
+  "Builds on L-END-THEORY-QvR-1; this is one verified fortress family, not a complete list of fortresses, and no general rule for it is claimed"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ }
+}

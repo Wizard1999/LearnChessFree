@@ -1,0 +1,90 @@
+{
+ "id": "L-END-QUEEN-PAWN-3",
+ "title": "Queen against a pawn: test the verdict, then move one king",
+ "skill": "END.QUEEN-PAWN",
+ "depth": "D3",
+ "minutes": 10,
+ "outcomes": [
+  "Gives a win, draw or loss for queen against a pawn and checks it against the tablebase instead of trusting the file rule",
+  "Predicts whether one step of the queen's king turns a draw into a win",
+  "Recognises a position where the stalemate resource is not in play because the pawn is far from queening"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "The lesson *Queen against a pawn on the seventh: when it is only a draw* gave a rule of thumb: with the stronger king far away, a rook or bishop pawn can draw by stalemate. Here you **test the verdict**: say win, draw or loss for the side to move, then compare with the tablebase, which is exact for seven pieces or fewer. Then see what **one king step** does."
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-7"
+  },
+  {
+   "type": "card",
+   "text": "**One step can flip a draw.** In the tested set-ups, one step closer turned a draw into a win. A step to a square no nearer (a4 to b3) left the draw standing. Rule of thumb for a pawn on the seventh with its own king beside it, not a law: the tablebase decides each position."
+  },
+  {
+   "type": "contrast",
+   "title": "One king step",
+   "prompt": "The pawn stands on c7 in all three. In the second position the black king is on a4. In the first it has stepped to a5, nearer the pawn. In the third it stepped to b3 instead. Predict each result for the side to move, then check.",
+   "working": "IBds77-1",
+   "failing": "IE-QP-16",
+   "irrelevant": "IBds77-2"
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds77-3",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-QP-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds77-4",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.QUEEN-PAWN",
+    "cue.3"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: what did you rely on first, the pawn's file or the distance of the kings? Which of the two did the tablebase prove wrong at least once?",
+   "fields": [
+    {
+     "id": "first",
+     "label": "I relied first on:",
+     "options": [
+      "the file",
+      "the king distance",
+      "both"
+     ]
+    },
+    {
+     "id": "wrong",
+     "label": "The check that corrected me:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.QUEEN-PAWN.json (D3 outcome)",
+  "Positions PBds77-1 to 4 are constructed; every result is a tablebase result (exact, 7 pieces or fewer); the king-step statements describe only the tested positions"
+ ]
+}

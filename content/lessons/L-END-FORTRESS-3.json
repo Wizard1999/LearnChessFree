@@ -1,0 +1,126 @@
+{
+  "id": "L-END-FORTRESS-3",
+  "title": "Testing a claimed fortress: name the break",
+  "skill": "END.FORTRESS",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Tests a claimed fortress by looking for a loose piece, an entry square and a check, and names the breaking move when there is one",
+    "Predicts whether a one-feature change breaks a fortress or leaves it standing",
+    "Uses the tablebase verdict as the test: a drawn verdict means no break exists, a won verdict means one does"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Fortresses: when more material cannot break through* you built a fortress, and in *Fortresses: aim for one, or find the break* you judged them. Now someone claims one, and you must **prove or break it**. Look for a loose piece (attacked and not defended), an entry square nobody covers, and a check that attacks a second piece. If you find a break, name the move. Start with a position where a black piece is loose."
+    },
+    {
+      "type": "board",
+      "fen": "2k5/1p3Q2/8/5r2/8/2K5/8/8 w - - 0 1",
+      "caption": "White to move, queen against rook and pawn. The black rook on f5 is attacked by the queen along the f-file and no black piece defends it.",
+      "line": [
+        {
+          "move": "f7f5",
+          "say": "Qxf5+ takes the loose rook with check: the claimed set-up fails here."
+        }
+      ],
+      "highlight": [
+        "f5"
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "f5"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "f5"
+            ]
+          },
+          "statement": "The rook on f5 is Black's only loose piece."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "White wins with best play."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "win",
+            "move": "f7f5"
+          },
+          "statement": "Qxf5+ keeps the win."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb:** a fortress stands while every entry square is covered, no piece is loose, and the defender keeps a safe waiting move. A break is a check or a capture that removes one of those. A one-square change can create a break, so test each claim. Predict the three positions: the first is a fortress that holds."
+    },
+    {
+      "type": "contrast",
+      "title": "One change at a time",
+      "prompt": "White to move in each. The first is a drawn fortress. In the second the black rook has moved; in the third the white king has moved. Predict each result.",
+      "working": "IBds78-1",
+      "failing": "IBds78-2",
+      "irrelevant": "IBds78-3"
+    },
+    {
+      "type": "item",
+      "item": "IBds78-4"
+    },
+    {
+      "type": "card",
+      "text": "**The test.** Each exercise here is checked against the tablebase, which gives the exact result for seven pieces or fewer. A drawn verdict means no break exists. A won verdict means one does, and the moves that keep the win show where. Now take the defender's side: find a move that holds."
+    },
+    {
+      "type": "item",
+      "item": "IBds78-5"
+    },
+    {
+      "type": "item",
+      "item": "IBds78-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds78-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.FORTRESS",
+        "theme.drawing-setup",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Pick an ending from your own games where you were worse and wanted a fortress. Which check would you run first: the entry squares, the loose pieces or the waiting move? Write the check, or note that you have no such ending yet and look for one in My games."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.FORTRESS.json (D3 outcome, conditions, contrasts)",
+    "content/lessons/L-END-FORTRESS-1.json and L-END-FORTRESS-2.json (taught there, not repeated)",
+    "items IBds78-1..7 in content/items/lesson-ds78.json (tablebase claims checked by tools/validate.py); the board is an own position checked by loose_pieces and tablebase claims"
+  ]
+}

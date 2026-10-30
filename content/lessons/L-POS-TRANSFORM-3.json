@@ -1,0 +1,202 @@
+{
+  "id": "L-POS-TRANSFORM-3",
+  "title": "Favourable transformations: predict the structure",
+  "skill": "POS.TRANSFORM",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Before a trade, predicts which pawns become doubled, isolated or passed, who keeps the bishop pair and whether a file opens, then checks the prediction against the starting position",
+    "Says 'none of these' when a trade changes none of those features",
+    "Separates the prediction of a structure from the verdict on the trade, and checks the verdict with the engine",
+    "Counts the pieces left after a trade as a paper check of the phase (the app does not verify phase)"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Transformations: change the structure, check the price* you named a trade and its cost, and in *Favourable transformations: choose the exchange or break* you picked trades in unlabeled positions. Now **predict first**: before you trade, write what the structure will be afterwards (doubled, isolated or passed pawns, the bishop pair, an open file), then compare with the position after the recapture. The phase (how many pieces are left) is yours to count on paper."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp1n3p/2pbp1p1/3p1p2/2PPn3/1P2P1P1/PB1NNPBP/R2Q1RK1 w - - 2 11",
+      "caption": "White to move. Predict the structure after the trade on e4, then watch the recapture.",
+      "line": [
+        {
+          "move": "d2e4",
+          "say": "The knight takes on e4."
+        },
+        {
+          "move": "d5e4",
+          "say": "The d-pawn recaptures: Black now has pawns on e4 and e6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d2",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": []
+          },
+          "statement": "Before the exchange Black's doubled pawns: none."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "e4",
+              "e6"
+            ],
+            "after_moves": [
+              "d2e4",
+              "d5e4"
+            ]
+          },
+          "statement": "After the exchange Black's doubled pawns: e4 and e6."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "squares": []
+          },
+          "statement": "Before the exchange White's doubled pawns: none."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "squares": [],
+            "after_moves": [
+              "d2e4",
+              "d5e4"
+            ]
+          },
+          "statement": "After the exchange White's doubled pawns: none."
+        },
+        {
+          "id": "C5",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "white",
+              "black"
+            ]
+          },
+          "statement": "Before the exchange the bishop pair belongs to: white and black."
+        },
+        {
+          "id": "C6",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "white",
+              "black"
+            ],
+            "after_moves": [
+              "d2e4",
+              "d5e4"
+            ]
+          },
+          "statement": "After the exchange the bishop pair belongs to: white and black."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-EXCH-10"
+    },
+    {
+      "type": "item",
+      "item": "IP-EXCH-14"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** A structure prediction is a claim about pawns and pieces, not a verdict. The same structural change can be good in one position and poor in another, and some trades change none of the features you check. Rule of thumb: a damaged pawn only matters if you can attack it. Compare the two positions below, which differ in one piece."
+    },
+    {
+      "type": "contrast",
+      "title": "Same structure change, different verdict",
+      "prompt": "White to move in both positions. Bxf6 gxf6 doubles Black's pawns in both. They differ in one piece. Predict whether Bxf6 is a good move in each, then check.",
+      "working": "IBp6x-19",
+      "failing": "IBp6x-20"
+    },
+    {
+      "type": "item",
+      "item": "IP-EXCH-19"
+    },
+    {
+      "type": "item",
+      "item": "IBds510-40",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-42",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-41",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-43",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.TRANSFORM",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick the last trade you predicted. Write your prediction before the check, then what the check showed. For the phase, count the pieces (not pawns) each side has after the trade.",
+      "fields": [
+        {
+          "id": "pred",
+          "label": "What I predicted"
+        },
+        {
+          "id": "result",
+          "label": "What the check showed"
+        },
+        {
+          "id": "phase",
+          "label": "Pieces left for each side after the trade (my count)"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.TRANSFORM.json (D3 outcome)",
+    "content/items/lesson-ds510.json (positions from Lichess standard rated games, January 2013 sample, CC0; before/after structure claims are exact, no engine)",
+    "shipped items IP-EXCH-10, IP-EXCH-13, IP-EXCH-14, IP-EXCH-19 (tools/positional/gen_exchange.py), IBp6x-19, IBp6x-20"
+  ]
+}

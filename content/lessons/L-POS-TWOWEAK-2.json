@@ -1,0 +1,175 @@
+{
+  "id": "L-POS-TWOWEAK-2",
+  "title": "Two weaknesses: press, switch or keep the siege",
+  "skill": "POS.TWOWEAK",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "In an unlabeled position decides between pressing the weakness he already attacks and switching to a second one, and prefers the move that keeps the first attack alive",
+    "Tests the second-target move against the engine instead of assuming that a new target is progress",
+    "Says when no weak pawn exists, so there is nothing to switch to"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Two weaknesses: add a second target* you found a move that adds a second weak pawn to your attack. Now you **choose**: keep pressing the first weakness, or switch to a second one. The aim is to keep the first attack alive so the opponent cannot fix it while the new target appears. Rule of thumb: a move that keeps the old attack and adds a new one is a candidate; test it, because a new target is not progress by itself."
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/ppp1rp1p/2n2qp1/3p4/3P4/2PB1P1P/PP3QRP/R6K b - - 3 18",
+      "caption": "Black to move. Black already attacks the isolated pawn on f3. White's h-pawns are weak too. Which move keeps the first attack and adds another?",
+      "line": [
+        {
+          "move": "f6f4",
+          "say": "Qf4 keeps the attack on f3 and adds one on h2."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f4",
+          "to": "f3"
+        },
+        {
+          "from": "f4",
+          "to": "h2"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "h2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "isolated",
+            "color": "white",
+            "includes": [
+              "f3",
+              "h2"
+            ]
+          },
+          "statement": "The white pawns on f3 and h2 are isolated."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f3",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Black attacks f3 once now."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Black attacks h2 0 times now."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f3",
+            "color": "black",
+            "count": 1,
+            "after_move": "f6f4"
+          },
+          "statement": "After Qf4, Black attacks f3 once."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 1,
+            "after_move": "f6f4"
+          },
+          "statement": "After Qf4, Black attacks h2 once."
+        },
+        {
+          "id": "C6",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6f4"
+            ],
+            "within_cp": 30
+          },
+          "statement": "At depth 16 Qf4 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp6x-11"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** Switching works when the new attack keeps the old one and costs nothing elsewhere. It fails when the move that adds the target gives something up, and it does not apply when the opponent has no weak pawn. Rule of thumb: if the opponent can fix the first weakness, look for a second one he cannot fix at the same time. Compare the two positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "Two positions, two verdicts",
+      "prompt": "Two unrelated positions. In each a move adds a second attack while the first stays. Find the engine's choice, then see whether the second-target move was it.",
+      "working": "IBds510-20",
+      "failing": "IBds510-22"
+    },
+    {
+      "type": "item",
+      "item": "IBds510-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6x-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBp6x-13",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.TWOWEAK",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. Write one line each.",
+      "fields": [
+        {
+          "id": "keep",
+          "label": "How I checked that my move kept the first attack alive"
+        },
+        {
+          "id": "none",
+          "label": "What told me a position had no second target"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.TWOWEAK.json (D2 outcome and conditions)",
+    "content/items/lesson-ds510.json (positions from Lichess standard rated games, January 2013 sample, CC0; engine claims at depth 16)",
+    "shipped items IBp6x-11, IBp6x-12, IBp6x-13 (content/items/lesson-p6x.json)"
+  ],
+  "authorNotes": "The contrast step is a stand-in: IBds510-20 and IBds510-22 are unrelated positions, not a one-feature pair. Building a one-feature pair is a follow-up task."
+}

@@ -1,0 +1,153 @@
+{
+  "id": "L-POS-STRUCTURE-KID-2",
+  "title": "The King's Indian chain: start, prepare or slow",
+  "skill": "POS.STRUCTURE.KID",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "In an unlabeled chain position decides whether his own break is ready to start or should be prepared first, and names a quiet move as a candidate when neither break is ready",
+    "Checks whether the break pawn can even move (a knight on f6 blocks ...f5) before counting the race",
+    "Does not push the c-pawn or f-pawn merely because it is the structure's usual plan, and tests it first",
+    "Handles the chain with the colours reversed"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *The King's Indian chain: two wings, two breaks, one race* you named each side's break and its support. Now, in unlabeled positions, you decide whether to **start** your break or to **prepare** it, and what a quiet move does to the race. The engine checks whether starting is rejected; what a quiet move prepares or slows is for you to name. Rule of thumb: ask which attack is ready first."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/p3qp2/bp1p2pp/n1pPp3/Q1P1P3/P1P5/3NBPPP/RR4K1 b - - 1 18",
+      "caption": "Black to move. The f-pawn can move because f6 is clear. White's own c-pawn break is blocked by the Black pawn on c5.",
+      "line": [
+        {
+          "move": "f7f5",
+          "say": "f5 hits e4. The engine rates it within 0.4 pawns of its best move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "f6",
+            "piece": "empty"
+          },
+          "statement": "f6 is empty."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c5",
+            "piece": "p"
+          },
+          "statement": "c5 holds the black pawn."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "f7f5"
+          },
+          "statement": "f5 is a legal move."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f7f5",
+              "g8h8",
+              "a8e8",
+              "h6h5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 f5, Kh8, Rae8 and h5 are all within 0.4 pawns of the engine's best move, and the best move is one of them."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBg3-50"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** A break is *ready* when its pawn can move, its support is in place and the opponent has no faster threat. If it is not ready, the choice is to prepare it (a supporting pawn or piece) or to slow the other wing. Rule of thumb: starting early costs a pawn when the support is missing. Compare the two positions below, where one pawn differs."
+    },
+    {
+      "type": "contrast",
+      "title": "What preparing buys",
+      "prompt": "White to move in both positions. They differ in one pawn (b4 or b2). Predict whether c5 is a good move in each, then check.",
+      "working": "IBg3-50",
+      "failing": "IBg3-51"
+    },
+    {
+      "type": "item",
+      "item": "IBds510-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-7",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "The chain also comes with the colours reversed: then Black owns the space and White's pawns attack on the other wing. The same three jobs apply, but check which pawn is the break before you test it. The next positions are mixed. Decide each on its own: is the break ready, or is another job first?"
+    },
+    {
+      "type": "item",
+      "item": "IBds510-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds510-8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.KID",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think about the positions you played without hints. For each, was the right job to start, to prepare or to slow the other side? Write one line each.",
+      "fields": [
+        {
+          "id": "job",
+          "label": "How I told start, prepare and slow apart"
+        },
+        {
+          "id": "miss",
+          "label": "A break I wanted to play that the engine rejected, and why"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.KID.json (D2 outcome and conditions; the app's own definition, plans recalled [R])",
+    "content/items/lesson-ds510.json (positions from Lichess standard rated games, January 2013 sample, CC0; engine claims at depth 16)",
+    "shipped items IBg3-50, IBg3-51 (content/items/lesson-g3.json)"
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "id": "L-POS-STRUCTURE-DOUBLED-2",
+  "title": "Doubled pawns: create them or avoid them?",
+  "skill": "POS.STRUCTURE.DOUBLED",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Decides, in unlabeled positions, whether a capture that doubles your own pawns is worth it, using what it buys and what it costs",
+    "Tells a capture the engine accepts from one it rates far worse, and a position where no pawn would be doubled",
+    "Writes down, on paper, one way to make an opponent advance his doubled pawns"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Doubled pawns: count what they buy* you listed what doubled pawns buy. Now you decide without labels. Before a capture that doubles your own pawns, ask what it buys (bishop pair, open file, central control) and what it costs. Rule of thumb: doubled pawns are weak when they must advance or stand alone; while they stay still they can hold. The board shows a capture the engine accepts."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/1p3pbp/3p1npn/4p3/p3PP2/2N2N1P/PPP1B1P1/R2Q1RBK b - - 2 15",
+      "caption": "Black to move. The capture exf4 is possible. It would leave Black with doubled pawns on f4 and f7.",
+      "line": [
+        {
+          "move": "e5f4",
+          "say": "exf4 doubles the pawns on f4 and f7, but no White piece can take f4, and the c- and e-files open for Black's rooks."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "f4",
+        "f7",
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e5f4"
+          },
+          "statement": "exf4 is legal.",
+          "id": "C1"
+        },
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "f4",
+              "f7"
+            ],
+            "after_move": "e5f4"
+          },
+          "statement": "After exf4, Black's doubled pawns: f4 and f7.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f4",
+            "color": "white",
+            "count": 0,
+            "after_move": "e5f4"
+          },
+          "statement": "After exf4, no White piece attacks f4.",
+          "id": "C3"
+        },
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "f4",
+              "f7"
+            ],
+            "after_moves": [
+              "e5f4",
+              "g1d4"
+            ]
+          },
+          "statement": "After exf4 and White's best reply Bd4, the doubled pawns on f4 and f7 remain.",
+          "id": "C4"
+        },
+        {
+          "type": "open_files",
+          "params": {
+            "open": [],
+            "half_open_white": [
+              "d",
+              "f"
+            ],
+            "half_open_black": [
+              "c",
+              "e"
+            ],
+            "after_move": "e5f4"
+          },
+          "statement": "After exf4 the c-file and e-file are half-open for Black.",
+          "id": "C5"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e5f4"
+            ],
+            "within_cp": 45
+          },
+          "statement": "At depth 16 exf4 is the engine's best move.",
+          "id": "C6"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ISdoubled-1"
+    },
+    {
+      "type": "item",
+      "item": "ISdoubled-2"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Accept doubled pawns when the capture opens a file or gains the bishop pair or the centre. Avoid them when the pawns would be isolated, blocked or forced forward. To profit from the opponent's doubled pawns, a classic idea [R] is to make him advance them first; the app cannot check that, so the last step is paper. Next: one position three times, with one change each."
+    },
+    {
+      "type": "contrast",
+      "title": "Worth it, not worth it, nothing to weigh",
+      "prompt": "Predict which statement fits each position. In the second, Black's queen moved from b6 to a6; in the third, the White pawn on c3 is gone. Then name the one change that flipped the verdict between the first two.",
+      "working": "IB59-41",
+      "failing": "IB59-42",
+      "irrelevant": "IB59-43"
+    },
+    {
+      "type": "item",
+      "item": "ISdoubled-4",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.STRUCTURE.DOUBLED",
+        "tpl.ds59-dbl-prac"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in My games, find a position where the opponent has doubled pawns. Write the move that would make him advance one of them, and what he would give up if he did."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.STRUCTURE.DOUBLED.json (ideas from Nimzowitsch and Lasker, recalled [R])",
+    "content/lessons/L-POS-STRUCTURE-DOUBLED-1.json (what doubled pawns buy is taught there)",
+    "content/items/sib-doubled.json (ISdoubled-1 to 4 and the board position, Lichess January 2013 sample, CC0). In each, the capturing pawn cannot be taken on the next move [V: python-chess attackers on the capture square are empty]. The earlier silent items IBp4-15, IBp4-17 and IB59-44 were dropped because the doubling there disappears after the recapture or never arises; a search of the corpus for a lasting-doubling accepted capture found none to replace them [V], so this lesson has one silent item.",
+    "content/items/lesson-ds59.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "id": "L-POS-RESTRAINT-2",
+  "title": "Restraint: is the break real enough to spend a move?",
+  "skill": "POS.RESTRAINT",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Checks whether an enemy pawn break is real (a push backed by a pawn that meets one of your pawns) before spending a move on it",
+    "Tells a restraining move that fits from one that fails because it costs something elsewhere, and from a position with no break at all",
+    "Does not add an attacker or move a rook to a closed file just because the move is available"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Restraint: guard the square his pawn wants* you added an attacker to the square an enemy pawn wants. Now ask whether the move is worth a tempo. A break is **real** when an enemy pawn can push to the square with a pawn behind it, and the push would meet one of your pawns. A restraining move, such as a rook behind a closed file, costs a move. Rule of thumb: pay it only for a real break."
+    },
+    {
+      "type": "board",
+      "fen": "r3k2r/ppqn1pp1/2pb1p1p/3p4/7P/2PP2P1/PPQNPP2/R3K1NR b KQkq - 4 11",
+      "caption": "Black to move. A white pawn stands on c3 and could push to c4 with a pawn behind it. 1 of Black's pieces attack c4.",
+      "line": [
+        {
+          "move": "d7e5",
+          "say": "Ne5: now 2 of Black pieces attack c4 instead of 1, and the engine accepts the move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "c3",
+        "c4"
+      ],
+      "claims": [
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "c3",
+            "piece": "P"
+          },
+          "statement": "White's pawn is on c3.",
+          "id": "C1"
+        },
+        {
+          "type": "pawn_attackers",
+          "params": {
+            "square": "c4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "1 White pawn defends c4.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "1 of Black's pieces attack c4 now.",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 2,
+            "after_move": "d7e5"
+          },
+          "statement": "After Ne5, 2 of Black's pieces attack c4.",
+          "id": "C4"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6f5",
+              "d7e5"
+            ],
+            "within_cp": 45
+          },
+          "statement": "At depth 16 the best move is f5; the accepted moves (f5 and Ne5) are all within 0.4 pawns of it.",
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB59-24"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb, with conditions.** Restrain when the push is possible, backed by a pawn, and your extra attacker costs you nothing else. It fails when the restraining move leaves a piece short of a defender, and it is wasted when no pawn can push at all. Counting attackers is a rule of thumb; the engine reading is the check here. Next: one position three times, with one change each."
+    },
+    {
+      "type": "contrast",
+      "title": "Real break, move costs too much, no break",
+      "prompt": "Predict which statement fits each position. In the second, a White rook moved from f1 to f3; in the third, the White pawn on b3 is gone. Then name the one change that flipped the verdict between the first two.",
+      "working": "IB59-21",
+      "failing": "IB59-22",
+      "irrelevant": "IB59-23"
+    },
+    {
+      "type": "item",
+      "item": "IB59-25",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB59-26",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.RESTRAINT",
+        "tpl.ds59-rs-prac"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Paper exercise (the app does not check it): in one of your games find an enemy pawn that could push. Write the square, who backs the push, and whether one move of yours would add an attacker. Then write whether the break was real."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.RESTRAINT.json (ideas from Nimzowitsch, My System, recalled [R])",
+    "content/lessons/L-POS-RESTRAINT-1.json (adding an attacker is taught there)",
+    "content/items/lesson-ds59.json (positions from Lichess standard rated games, January 2013 sample, CC0; one-feature edits are marked authored)"
+  ]
+}

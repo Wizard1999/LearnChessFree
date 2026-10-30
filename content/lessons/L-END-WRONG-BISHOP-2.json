@@ -1,0 +1,172 @@
+{
+  "id": "L-END-WRONG-BISHOP-2",
+  "title": "The wrong-coloured bishop: win or draw from the family",
+  "skill": "END.WRONG-BISHOP",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "In an unlabeled position with a rook pawn and a bishop, predicts win, draw or loss from the pawn file, the bishop's colour and the defender's king distance",
+    "Finds a king move that keeps the draw for the defender",
+    "Recognises the stalemate resource next to the corner"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The wrong bishop: a rook pawn that cannot win** you learned why the corner draw exists. Now read an unlabeled position as a family. Check three features: the file of the pawn, the colour of the bishop against the queening square, and how far the defending king is from the corner. Next: a defender who walks his king towards the corner."
+    },
+    {
+      "type": "board",
+      "fen": "3k4/8/8/P7/8/8/8/2B1K3 b - - 0 1",
+      "caption": "Black to move. A rook pawn on a5 and a bishop on c1 face the black king on d8. The tablebase says draw; Kc7 holds, Ke7 and Ke8 lose.",
+      "line": [
+        {
+          "move": "d8c7",
+          "say": "Kc7: the king heads for the queening corner."
+        },
+        {
+          "move": "a5a6",
+          "say": "a6: the pawn advances."
+        },
+        {
+          "move": "c7b6",
+          "say": "Kb6: the king attacks the pawn."
+        },
+        {
+          "move": "a6a7",
+          "say": "a7: the pawn steps on."
+        },
+        {
+          "move": "b6a7",
+          "say": "Kxa7: the king takes the pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d8",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "d8",
+        "a8",
+        "a5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "With best play the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "move": "d8c7",
+            "result": "draw"
+          },
+          "statement": "Kc7 keeps the draw."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "move": "d8e7",
+            "result": "loss"
+          },
+          "statement": "Ke7 loses."
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "move": "d8e8",
+            "result": "loss"
+          },
+          "statement": "Ke8 loses."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB79-20"
+    },
+    {
+      "type": "card",
+      "text": "**Conditions.** The draw needs a rook pawn, a bishop that cannot cover the queening square, and a defending king near enough. Remove one and the result can change: a king one step further, or a bishop of the other colour. Rule of thumb: ask whether the defending king can reach b7 or b8 before the pawn reaches a7; Black to move can spend one more move than White. Checked only on the examples here (Ke8 draws, Kf8 loses)."
+    },
+    {
+      "type": "contrast",
+      "title": "Move the defender's king",
+      "prompt": "Same pawn, same bishop and same black king in both positions; only the white (defending) king differs. Predict each result, then check.",
+      "working": "IE-WB-29",
+      "failing": "IE-WB-32"
+    },
+    {
+      "type": "contrast",
+      "title": "Change the bishop",
+      "prompt": "Same pawn, same black king on e8, Black to move. Only the bishop changes. Predict each result, then check.",
+      "working": "IB79-23",
+      "failing": "IB79-22"
+    },
+    {
+      "type": "item",
+      "item": "IA3-910"
+    },
+    {
+      "type": "item",
+      "item": "IB79-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-15",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IE-WB-22",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.WRONG-BISHOP",
+        "task.predict_outcome"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each answer: did you check the file, the bishop's colour and the king's distance? Which of the three did you forget most often?",
+      "fields": [
+        {
+          "id": "checked",
+          "label": "I checked all three features:",
+          "options": [
+            "every time",
+            "sometimes",
+            "not yet"
+          ]
+        },
+        {
+          "id": "forgot",
+          "label": "The one I forgot most:"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "content/skills/END.WRONG-BISHOP.json (D2 outcome, conditions and contrasts; cites Capablanca and Lasker, not re-read for this lesson)",
+    "Board and items IB79-20 to IB79-23: positions built with python-chess and checked against the Lichess tablebase by tools/validate.py (content/items/lesson-ds79.json)",
+    "Shipped items IE-WB-29, IE-WB-32, IE-WB-15, IE-WB-22, IA3-910",
+    "Builds on L-END-WRONGBISHOP-1; the king-distance count is a rule of thumb, not a proven formula"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  }
+}

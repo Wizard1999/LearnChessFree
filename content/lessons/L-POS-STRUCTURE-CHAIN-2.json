@@ -1,0 +1,140 @@
+{
+ "id": "L-POS-STRUCTURE-CHAIN-2",
+ "title": "Base or head: choosing the lever for each side",
+ "skill": "POS.STRUCTURE.CHAIN",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Names the base and the head of a chain in an unlabeled position and picks the lever that attacks the base rather than the head",
+  "Tells a position with a chain from one without, before choosing a lever",
+  "As the chain's owner, chooses the move that answers the other side's plan instead of pushing a lever at once"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Pawn chains: hit the base, not the head** you learned the words and the lever. Now choose in positions where nobody tells you the plan. Rule of thumb: each side usually plays against the base of the other side's chain, and the owner often has to deal with the other side's plan before pushing a lever of their own. Start by naming the base: the pawn that defends another and that no pawn defends."
+  },
+  {
+   "type": "board",
+   "fen": "rn2kbnr/ppq2ppp/2p1p3/3pPb2/3P4/5N2/PPP1BPPP/RNBQK2R b KQkq - 0 5",
+   "caption": "Black to move in a Caro-Kann Advance. White's chain is d4 and e5; d4 is the base, e5 the head.",
+   "line": [
+    {
+     "move": "c6c5",
+     "say": "c5 attacks the base d4, the pawn that no pawn defends."
+    },
+    {
+     "move": "c2c3",
+     "say": "White supports the base with c3."
+    },
+    {
+     "move": "b8c6",
+     "say": "A second attacker joins on d4."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "chain_base",
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_move": "c6c5"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c6c5",
+       "a7a6",
+       "g8e7",
+       "h7h6",
+       "f7f6",
+       "b8d7"
+      ],
+      "within_cp": 40
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds58-18"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb, with conditions.** A lever at the base works only when there is a chain to hit; without one it hits nothing. It also needs preparation: pieces that attack the same pawn. The chain's owner does not wait to be hit; the owner often needs the move that answers the other side's plan (a solid move may be better than a lever). The three positions below differ by one feature, and the lever is the same each time."
+  },
+  {
+   "type": "contrast",
+   "title": "Same lever, the chain changes",
+   "prompt": "Predict for each position whether ...c5 is a reasonable move. In the second a White bishop stands on another square; in the third a Black bishop does.",
+   "working": "IBds58-31",
+   "failing": "IBds58-32",
+   "irrelevant": "IBds58-33"
+  },
+  {
+   "type": "item",
+   "item": "IBds58-19",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-20",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-21",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.STRUCTURE.CHAIN",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you push a lever at a chain, write its name: base or head. Then write whether your pieces are ready. Which do you expect to get wrong more often?",
+   "fields": [
+    {
+     "id": "wrong",
+     "label": "The one I expect to get wrong:",
+     "options": [
+      "base or head",
+      "pieces ready",
+      "neither"
+     ]
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.STRUCTURE.CHAIN.json (D2 outcome; sheets Nimzowitsch ideas 30-31 and Capablanca CI-38, recalled [R], not re-read in this session)",
+  "content/lessons/L-POS-STRUCTURE-CHAIN-1.json (the lesson 'Pawn chains: hit the base, not the head'; not re-taught here)",
+  "content/items/lesson-ds58.json (positions are legal move sequences from the start position or one-feature edits, every claim machine-checked; engine depth 16)"
+ ]
+}

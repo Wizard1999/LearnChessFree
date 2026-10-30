@@ -1,0 +1,124 @@
+{
+ "id": "L-POS-STRUCTURE-MAROCZY-2",
+ "title": "Hold or release: is the break ready?",
+ "skill": "POS.STRUCTURE.MAROCZY",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Counts how many White pawns attack d5 before and after a pawn push and says whether the push releases the bind",
+  "As the cramped side, checks whether the pawn that would stand on b5 has a defender before choosing ...b5",
+  "Chooses between holding the bind, a quiet move and a trade in positions where nobody names the plan",
+  "Recognises a position that is not the bind at all"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **The Maroczy bind: what it holds back, and what it costs** you met the bind and its price. Now decide in a position: should the owner hold it or release it, and is the cramped side's break ready? A pawn push by the owner changes how many White pawns attack d5 and b5. Count first. Rule of thumb: hold the bind unless a push wins something concrete."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/2np1np1/8/2PNP3/2N1B3/PP1QBPPP/R4RK1 w - - 4 11",
+   "caption": "White to move. Two White pawns (c4, e4) attack d5. The push c5 would be a way to release the bind.",
+   "line": [
+    {
+     "move": "c4c5",
+     "say": "c5 leaves e4 as the only pawn attacking d5: the grip on d5 is halved."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 2
+     },
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1,
+      "after_move": "c4c5"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "c4c5",
+      "cp": 100
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds58-8"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb, with conditions.** The cramped side's break is ready when the pawn that makes it has a defender for each attacker. A pawn on b5 is attacked by c4; a Black pawn on a6 defends it. A pawn on d5 is attacked by c4 and e4 and needs two defenders. Pieces behind the break matter too."
+  },
+  {
+   "type": "contrast",
+   "title": "Same bind, the same break",
+   "prompt": "Predict for each position whether ...b5 is a reasonable move. In the second, one Black pawn is on another square; in the third, one White rook is.",
+   "working": "IBds58-9",
+   "failing": "IBds58-10",
+   "irrelevant": "IBds58-11"
+  },
+  {
+   "type": "item",
+   "item": "IBds58-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-13",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-14",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.STRUCTURE.MAROCZY",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you play ...b5 or ...d5 in a bind next time, write the number of attackers and the number of defenders of the break square. Which count do you expect to forget more often?",
+   "fields": [
+    {
+     "id": "forget",
+     "label": "The count I expect to forget:",
+     "options": [
+      "attackers",
+      "defenders",
+      "neither"
+     ]
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.STRUCTURE.MAROCZY.json (D2 outcome, conditions and contrasts; plans recalled [R], need strong-player review)",
+  "content/lessons/L-POS-STRUCTURE-MAROCZY-1.json (the lesson 'The Maroczy bind: what it holds back, and what it costs'; not re-taught here)",
+  "content/items/lesson-ds58.json (positions are legal move sequences from the start position or one-feature edits, every claim machine-checked; engine depth 16)"
+ ]
+}

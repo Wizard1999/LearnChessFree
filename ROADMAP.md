@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 54%** (86 of 172 tasks done, in-progress tasks count half). Updated 2026-10-30T04:09+00:00 UTC.
+**Overall: 54%** (86 of 172 tasks done, in-progress tasks count half). Updated 2026-10-30T11:01+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -32,7 +32,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 205 of 205 skill nodes have a lesson (100%); 172 nodes have 10 or more shipped exercises; 7610 exercises ship, 0 wait for validation; 0 items reviewed by a person, 2771 flagged for human review.
+**Coverage (computed from the files):** 205 of 205 skill nodes have a lesson (100%); 180 nodes have 10 or more shipped exercises; 8186 exercises ship, 0 wait for validation; 0 items reviewed by a person, 3319 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -40,10 +40,10 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S2 Safety and the thinking loop | 12 | 12 | 12 |
 | S3 Tactics | 24 | 24 | 24 |
 | S4 Calculation | 8 | 8 | 8 |
-| S5 Positional play and planning | 50 | 50 | 47 |
-| S6 Attack, sacrifice and defense | 19 | 19 | 16 |
+| S5 Positional play and planning | 50 | 50 | 49 |
+| S6 Attack, sacrifice and defense | 19 | 19 | 17 |
 | S7 Endgames | 37 | 37 | 36 |
-| S8 Openings and structures | 12 | 12 | 7 |
+| S8 Openings and structures | 12 | 12 | 12 |
 | S9 Game study | 7 | 7 | 2 |
 | S10 Practical performance | 9 | 9 | 1 |
 | S11 Self-direction | 7 | 7 | 0 |

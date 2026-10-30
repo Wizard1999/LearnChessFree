@@ -1,0 +1,71 @@
+{
+  "id": "L-POS-REASSESS-2",
+  "title": "Which move changed the position?",
+  "skill": "POS.REASSESS",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Spots the opponent move that touches something the old plan needs",
+    "Keeps the plan when the opponent's move changed nothing it needs",
+    "Re-picks the plan after a change instead of continuing the old one"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *A new valuation after every change* you restated the plan after a stated change. Here nobody tells you what changed. Look at the opponent's last move and ask: **does it touch a square, a piece or a pawn that my plan needs?** If it does, re-pick the plan. If it does not, keep it. Switching plans every move is as bad as never switching."
+    },
+    {
+      "type": "item",
+      "item": "IBds57-20"
+    },
+    {
+      "type": "card",
+      "text": "A move can change the evaluation in two ways: it creates something to capture or attack (a piece left loose, a new pawn), or it removes a square your plan needs. A quiet king move or a rook shuffle usually does neither. As a *rule of thumb*, name the changed fact in one sentence before you switch."
+    },
+    {
+      "type": "contrast",
+      "title": "Did the plan survive?",
+      "prompt": "Board 1: White planned Ne2 and Black played ...Kh8. Is Ne2 still good? Board 2: Black played ...e5 instead. Is Ne2 still good? Board 3: Black played the quiet ...Qd7 in a similar position. Is there anything to re-pick? Predict each, then check.",
+      "working": "IBds57-21",
+      "failing": "IBds57-22",
+      "irrelevant": "IBds57-34"
+    },
+    {
+      "type": "item",
+      "item": "IBds57-23",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds57-24",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds57-25",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.REASSESS",
+        "cue.3"
+      ],
+      "n": 2,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "For each silent position, what was the plan and what was the opponent's last move? Did you change the plan, and what fact had changed?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/lessons-positional.md (weaknesses section); content/skills/POS.REASSESS.json (D2 outcome)",
+    "items: IBds57-20..25 and IBds57-34 (authored sequences made by playing one opponent move in a position; the plan moves are named in the prompts and are not claims about any game)"
+  ]
+}

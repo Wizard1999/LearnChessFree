@@ -1,0 +1,88 @@
+{
+ "id": "L-END-OPPOSITION-DISTANT-2",
+ "title": "Distant and lateral opposition: count the squares, then test who is to move",
+ "skill": "END.OPPOSITION.DISTANT",
+ "depth": "D2",
+ "minutes": 10,
+ "outcomes": [
+  "Counts the squares between the kings (a pawn's square included) on a rank or a file",
+  "Predicts how the result changes when only the side to move changes",
+  "Recognises a position where the side to move does not change the result"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Distant opposition: the same fight from afar** you kept the opposition from a distance. Now the choice: **close** (one square between the kings) or **distant** (three or five squares between)? **Lateral** means the kings stand on one rank, sideways. A pawn on that line occupies a square, so the close form can be out of reach. Count first, then ask who is to move."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/1k2p2K/4P3/8/8/8/8 w - - 0 1",
+   "caption": "Kings on the sixth rank with five squares between them; one of those squares holds Black's pawn. White to move wins (tablebase).",
+   "highlight": [
+    "b6",
+    "h6",
+    "e6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White, to move, wins."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IE-DIST-17"
+  },
+  {
+   "type": "card",
+   "text": "**When it matters.** The kings face each other on one line and the pawns are locked, so the side to move may have to give way. **When it fails.** In some positions the side to move does not decide the result at all. Do not assume the count alone decides it: in the first board the side to move wins. Count the squares, then test both sides to move."
+  },
+  {
+   "type": "contrast",
+   "title": "Kings on the second rank: who profits from the move?",
+   "prompt": "Predict each result, then check.",
+   "working": "IE-DIST-22",
+   "failing": "IE-DIST-23"
+  },
+  {
+   "type": "item",
+   "item": "IE-DIST-20",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-DIST-21",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.OPPOSITION.DISTANT",
+    "tier.4",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "In the last positions, what did you check first: the squares between the kings, or the side to move? Where did your order of checks fail?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.OPPOSITION.DISTANT.json (D2 outcome)",
+  "Lessons 'Distant opposition: the same fight from afar' (D1) and 'Opposition: one tempo between a win and a draw'",
+  "All results: Lichess tablebase via the item and step claims",
+  "Note for the reviewer: the shared DIST item hint (odd count, the side NOT to move holds the opposition) does not fit the five-square board where the side to move wins; all items are predict_outcome, none asks for a king move"
+ ]
+}

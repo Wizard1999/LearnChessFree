@@ -1,0 +1,146 @@
+{
+ "id": "L-POS-STRUCTURE-IQP-2",
+ "title": "Trade or keep: who should exchange pieces against the isolated pawn",
+ "skill": "POS.STRUCTURE.IQP",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Finds the blockade square in front of an isolated pawn and sees that the trade changes the structure",
+  "Decides whether a trade is reasonable for the side without the isolated pawn, and sees that a near-copy can reverse the answer",
+  "Chooses a move in unlabeled positions with an isolated pawn, including one where the pawn is not isolated"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Isolated queen's pawn: pieces on or pieces off** you met the two plans. Now place the pieces and choose the trades. Rule of thumb: the side without the isolated pawn puts a piece, often a knight, on the blockade square in front of it and trades the other pieces; the owner keeps pieces on. First find the blockade square: tap it."
+  },
+  {
+   "type": "item",
+   "item": "IP-PAWNS-40"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/pp2bppp/4p3/3n4/3P4/P1NB1N2/1P3PPP/R1BQ1RK1 b - - 0 9",
+   "caption": "Black to move. White's isolated pawn is on d4 and Black's knight stands on the blockade square d5. Black can trade it for White's knight.",
+   "line": [
+    {
+     "move": "d5c3",
+     "say": "The blockading knight takes on c3."
+    },
+    {
+     "move": "b2c3",
+     "say": "The b-pawn recaptures. Now c3 defends d4, so d4 is no longer isolated; the a-pawn is."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "isolated",
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "isolated",
+      "color": "white",
+      "squares": [
+       "a3"
+      ],
+      "after_moves": [
+       "d5c3",
+       "b2c3"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "white",
+      "includes": [
+       "d4"
+      ],
+      "after_moves": [
+       "d5c3",
+       "b2c3"
+      ]
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c8d7",
+       "b8c6",
+       "b8d7",
+       "d5c3",
+       "d5f6",
+       "e7f6"
+      ],
+      "within_cp": 40
+     },
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb, with conditions.** Trading the blockading knight is not free: it can leave the isolated pawn supported and give the owner open lines. Whether a trade suits the side without the pawn depends on where the pieces stand, and a near-copy can reverse the answer. The three positions below differ by one White piece. The question is the same: is ...Nxc3 reasonable?"
+  },
+  {
+   "type": "contrast",
+   "title": "Same trade, one move different",
+   "prompt": "Predict for each position whether the trade ...Nxc3 is a reasonable move. In the second and third, one White piece stands on another square.",
+   "working": "IBds58-22",
+   "failing": "IBds58-23",
+   "irrelevant": "IBds58-24"
+  },
+  {
+   "type": "item",
+   "item": "IBds58-25",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-27",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.STRUCTURE.IQP",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "When a trade is offered in a position with an isolated pawn, what are the first two things you will check? How sure are you that you will check them before you take?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.STRUCTURE.IQP.json (D2 outcome; sheets Nimzowitsch idea 42 and Capablanca CI-44, recalled [R], not re-read in this session)",
+  "content/lessons/L-POS-STRUCTURE-IQP-1.json (the lesson 'Isolated queen's pawn: pieces on or pieces off'; not re-taught here)",
+  "shipped item IP-PAWNS-40 (content/items/pos-squares-1.json)",
+  "content/items/lesson-ds58.json (positions are legal move sequences from the start position or one-feature edits, every claim machine-checked; engine depth 16)"
+ ]
+}

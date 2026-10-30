@@ -1,0 +1,113 @@
+{
+ "id": "L-END-PHILIDOR-3",
+ "title": "Philidor gone wrong: which rook squares lose",
+ "skill": "END.PHILIDOR",
+ "depth": "D3",
+ "minutes": 11,
+ "outcomes": [
+  "Predicts, for a given rook square, whether the defence still draws or loses",
+  "Spots a quick loss: a check along the back rank that wins the defending rook",
+  "States that a rook square is checked one position at a time, not by a single rank rule"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "You know the defence from **Philidor: the passive defence that works** and the attacker's goal from *Lucena: building the bridge*. Now see how a wrong rook square costs the game. Some squares lose at once to a skewer: a check along the back rank when your king stands between the two rooks. Look at one, then predict the twin."
+  },
+  {
+   "type": "board",
+   "fen": "r1k5/8/8/2P5/1K6/8/7R/8 w - - 0 1",
+   "caption": "Black's rook stands on a8 with the king beside it. White to move wins (tablebase). One line is shown.",
+   "highlight": [
+    "a8",
+    "c8"
+   ],
+   "line": [
+    {
+     "move": "h2h8",
+     "say": "Rook check along the eighth rank. Black's king stands between the two rooks."
+    },
+    {
+     "move": "c8b7",
+     "say": "The king steps off the rank, so the rook on a8 is attacked."
+    },
+    {
+     "move": "c5c6",
+     "say": "The pawn gives check and pulls the king away."
+    },
+    {
+     "move": "b7c6",
+     "say": "The king takes the pawn."
+    },
+    {
+     "move": "h8a8",
+     "say": "White takes the rook on a8 and is a rook up."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White, to move, wins."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds76-6"
+  },
+  {
+   "type": "card",
+   "text": "**When a rook square is wrong.** The attacker gets a check or a skewer, or the king can pass the rook and walk to the pawn. **When it is not wrong.** Many placements still draw. Rule of thumb: ask what the attacker's rook can check, then whether your rook can still reach the sixth rank. Test each placement; do not trust a single-rank rule."
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn and kings, the rook steps from the sixth rank to the seventh",
+   "prompt": "Predict each result, then check.",
+   "working": "IE-PHI-19",
+   "failing": "IE-PHI-20"
+  },
+  {
+   "type": "item",
+   "item": "IBds76-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds76-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-PHI-22"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.PHILIDOR",
+    "idea.wrong-rook",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Write one rule you used to separate losing rook squares from drawing ones. Which position in this lesson would break it?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.PHILIDOR.json (D3 outcome)",
+  "Lessons 'Philidor: the passive defence that works' (D1) and 'Lucena: building the bridge' (D1)",
+  "Positions: shipped items and batch ds76 items; every result from the Lichess tablebase",
+  "Coverage gap for the reviewer: D3 outcome (reach a Lucena position) only partly covered; IE-PHI-20 is the one positional pair, the other wrong-rook wins are one-move tactics"
+ ]
+}

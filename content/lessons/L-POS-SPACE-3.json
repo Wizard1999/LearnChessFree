@@ -1,0 +1,128 @@
+{
+ "id": "L-POS-SPACE-3",
+ "title": "Space has a price: the holes and the freeing break",
+ "skill": "POS.SPACE",
+ "depth": "D3",
+ "minutes": 11,
+ "outcomes": [
+  "Finds the holes that advanced pawns leave behind",
+  "Checks whether the lever that would free the cramped side is ready, by looking at the pawn that supports it",
+  "Tells a position where the space edge is safe from one where pushing further costs something",
+  "Recognises a position with no space edge and no freeing break to worry about"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Space: count the safe squares, then look for the lever** you counted space. Now ask what space costs. Pawns pushed far leave **holes** behind them: squares none of that side's pawns can attack, now or by advancing. The cramped side asks one question: is my freeing lever ready? Rule of thumb: before a lever, check that the pawn it attacks cannot simply punish the push, and that you can recapture on the square it lands on."
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/1nn1p3/4Pb2/2PP4/2N1BN2/PP2B1PP/R2QK2R b KQkq - 3 10",
+   "caption": "Black to move. White's pawns on c4, d4 and e5 take a lot of space, and the f-pawn is gone. The lever ...f6 attacks the head e5. The engine still prefers White, but ...f6 is the cramped side's best way to cut the edge.",
+   "line": [
+    {
+     "move": "f7f6",
+     "say": "The lever attacks e5, the pawn that holds the space."
+    },
+    {
+     "move": "e5f6",
+     "say": "White takes the pawn on f6."
+    },
+    {
+     "move": "e7f6",
+     "say": "The bishop recaptures. The space pawn on e5 is gone and Black has room."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e8g8",
+       "f7f6"
+      ],
+      "within_cp": 40
+     },
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_move": "f7f6"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "holes",
+     "params": {
+      "color": "white",
+      "includes": [
+       "d3",
+       "e3",
+       "e4"
+      ]
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds58-1"
+  },
+  {
+   "type": "card",
+   "text": "**Rule of thumb, with conditions.** A space edge leaves holes, and the cramped side can hit it with a lever. Here White stays better after the lever; it only reduces the edge. A lever is ready when the push runs into no tactic and you can recapture on the lever square (here the queen can, once the e-pawn has left e7). In the second position the e-pawn stands on e7 and ...f6 is rated clearly worse; we know the difference, not the full reason."
+  },
+  {
+   "type": "contrast",
+   "title": "Same space, the same lever",
+   "prompt": "Predict for each position whether ...f6 is a reasonable move. In the second, one Black pawn is on another square; in the third, one White piece is.",
+   "working": "IBds58-2",
+   "failing": "IBds58-3",
+   "irrelevant": "IBds58-4"
+  },
+  {
+   "type": "item",
+   "item": "IBds58-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds58-7",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.SPACE",
+    "cue.3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "In your next game where you have more space, write two things: which squares your advanced pawns left behind, and which lever the other side has. How sure are you that you will check both before you push another pawn?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.SPACE.json (D3 outcome, conditions and contrasts; sheets ZB C20, Nimzowitsch ideas 36 and 38, recalled [R], not re-read in this session)",
+  "content/lessons/L-POS-SPACE-1.json (the lesson 'Space: count the safe squares, then look for the lever'; not re-taught here)",
+  "content/items/lesson-ds58.json (positions are legal move sequences from the start position or one-feature edits, every claim machine-checked; engine depth 16)",
+  "docs/content-schema.md structure claims `holes` and `pawn_attackers`"
+ ]
+}

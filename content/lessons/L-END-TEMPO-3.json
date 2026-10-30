@@ -1,0 +1,98 @@
+{
+ "id": "L-END-TEMPO-3",
+ "title": "Spare moves: mutual zugzwang and the catch in the count",
+ "skill": "END.TEMPO",
+ "depth": "D3",
+ "minutes": 10,
+ "outcomes": [
+  "Predicts the result of a locked pawn ending from the count of free squares and checks it against the tablebase",
+  "Recognises mutual zugzwang: the same position is lost for whoever is to move",
+  "Sees that a pawn on its starting square can change the count"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "The lesson *Spare moves: who runs out first?* counted free squares between two h-pawns. Now look at the same position with **either** side to move. In a **mutual zugzwang** whoever has the move is worse off. Predict first, then check: the tablebase gives the exact result. Start with White to move."
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-1"
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-2"
+  },
+  {
+   "type": "card",
+   "text": "**Count, then check.** With no free square between the pawns, the side to move loses here. With one free square, the side to move wins. Rule of thumb: an even number of free squares means the mover gives way, an odd number means the mover wins. It holds only while both kings are tied to their squares and no pawn can still double-step. Change any of that and recount, or look the position up in the tablebase."
+  },
+  {
+   "type": "contrast",
+   "title": "The count of free squares",
+   "prompt": "White is to move in all three. The first has one free square between the g-pawns. In the second the black pawn has moved down one square. The third is the first position mirrored left to right. Predict each result, then check.",
+   "working": "IBds77-5",
+   "failing": "IBds77-16",
+   "irrelevant": "IBds77-17"
+  },
+  {
+   "type": "card",
+   "text": "**The catch.** A pawn on its starting square may move one square or two. That is an extra choice, and it can change who runs out of moves first. Before you count free squares, look at each pawn's square. In the next positions the plain count may mislead you: predict, then check."
+  },
+  {
+   "type": "item",
+   "item": "IBds77-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds77-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IE-TMP-14",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.END.TEMPO",
+    "cue.3"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before each answer: did you look at each pawn's starting square before you counted? Which position would you have got wrong without that look?",
+   "fields": [
+    {
+     "id": "look",
+     "label": "I checked the starting squares:",
+     "options": [
+      "every time",
+      "sometimes",
+      "not at all"
+     ]
+    },
+    {
+     "id": "missed",
+     "label": "The position I would have got wrong:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/END.TEMPO.json (D3 outcome)",
+  "Positions PBds77-5, 6, 8, 16 and 17 are constructed; all results are tablebase results (exact, 6 pieces); the double-step statements describe only the tested positions"
+ ]
+}

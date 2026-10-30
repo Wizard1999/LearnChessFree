@@ -1,0 +1,97 @@
+{
+  "id": "L-END-MATE-BN-2",
+  "title": "Bishop and knight: pick the corner, keep the count",
+  "skill": "END.MATE-BN",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Reads the bishop's colour and names the pair of corners the mate can be given in, in an unlabeled position",
+    "Keeps a won position won by choosing moves that fit inside the fifty-move count",
+    "Recognises a position where the corner idea does not apply"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Bishop and knight against a lone king: the right corner* you learned the two phases and the colour rule. Now the positions come without labels. Before the first move run two checks: the **bishop's colour** names the corners you may aim for, and the **halfmove clock** says how much time is left. Keep the win in the next two positions."
+    },
+    {
+      "type": "item",
+      "item": "IE-MBN-1"
+    },
+    {
+      "type": "item",
+      "item": "IE-MBN-3"
+    },
+    {
+      "type": "card",
+      "text": "**Rule of thumb:** aim for the corner whose colour matches your bishop, and do not spend half-moves you cannot afford. A lone king beside the wrong corner can cost many extra half-moves. With the clock at 60 you have 40 half-moves left. The clock is the same in all three positions below; predict each result."
+    },
+    {
+      "type": "contrast",
+      "title": "Which corner, with the clock at 60",
+      "prompt": "White to move, bishop and knight against a lone king, halfmove clock 60 in every position. In the second only the black king has moved; in the third the whole board is reflected left to right. Predict win, draw or loss for each.",
+      "working": "IBds78-10",
+      "failing": "IBds78-11",
+      "irrelevant": "IBds78-12"
+    },
+    {
+      "type": "item",
+      "item": "IBds78-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds78-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds78-13",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.END.MATE-BN",
+        "cue.3"
+      ],
+      "n": 3,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each position: did you read the bishop's colour and the clock before you chose a plan? Which of the two did you forget more often?",
+      "fields": [
+        {
+          "id": "colour",
+          "label": "I read the bishop's colour first:",
+          "options": [
+            "every time",
+            "sometimes",
+            "not yet"
+          ]
+        },
+        {
+          "id": "clock",
+          "label": "I looked at the halfmove clock:",
+          "options": [
+            "every time",
+            "sometimes",
+            "not yet"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/END.MATE-BN.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-END-MATE-BN-1.json (corner rule and clock taught there, not repeated)",
+    "items IBds78-3..8 in content/items/lesson-ds78.json (piece_on and tablebase claims checked by tools/validate.py; the corner rule itself is a textbook rule [R], stated in the first lesson)",
+    "shipped items IE-MBN-1, IE-MBN-3 (generated, tablebase claims)"
+  ]
+}
