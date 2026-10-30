@@ -45,6 +45,8 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const [correct, setCorrect] = useState<boolean | null>(null)
   const [wrongs, setWrongs] = useState(0)
   const [hintsShown, setHintsShown] = useState(0)
+  // switching on the control map while answering is an aid like a hint: it is recorded as one and lowers the credit the answer earns
+  const [controlUsed, setControlUsed] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [conf, setConf] = useState<'low' | 'medium' | 'high' | undefined>(undefined)
@@ -114,13 +116,13 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
     try {
       await db.attempts.add({
         itemId: item.id, skillKey: item.skill, cue: item.cue, family: item.family, correct: ok, firstAttempt: first,
-        hints: hintsShown, timeMs: Date.now() - start.current, confidence: conf, source, ts: Date.now(),
-        unprompted: item.cue >= 3 && hintsShown === 0 && !loopOpened && !loopShown, silent,
+        hints: hintsShown + (controlUsed ? 1 : 0), aids: controlUsed ? ['controlMap'] : undefined, timeMs: Date.now() - start.current, confidence: conf, source, ts: Date.now(),
+        unprompted: item.cue >= 3 && hintsShown === 0 && !controlUsed && !loopOpened && !loopShown, silent,
         scan: loopOpened ? offered : loopShown ? [loopShown] : undefined,
         alt: alt || undefined,
       })
       if (!loopShown && offered.length > 0) {
-        const next = afterMixedItem(loopState, offered, ok && first && hintsShown === 0, loopOpened)
+        const next = afterMixedItem(loopState, offered, ok && first && hintsShown === 0 && !controlUsed, loopOpened)
         setLoopState(next); await saveLoop(next)
       }
     } catch { /* storage unavailable: the lesson still works */ }
@@ -131,7 +133,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
     void record(ok, wrongs === 0, alt)
     setCorrect(ok); setPhase('done')
     if (shown) setShownFen(shown)
-    result.current = { correct: ok && wrongs === 0, hints: hintsShown, wrongs, timeMs: Date.now() - start.current }
+    result.current = { correct: ok && wrongs === 0, hints: hintsShown + (controlUsed ? 1 : 0), wrongs, timeMs: Date.now() - start.current }
   }
   const wrong = (msg: string) => {
     if (wrongs === 0) void record(false, true)
@@ -241,7 +243,8 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       <LoopPanel levels={phase === 'answer' ? loopLevels : []} shown={!!loopShown} open={loopOpened} onOpen={() => setLoopOpened(true)} />
       <ChessBoard
         key={boardKey}
-        controlMap={phase === 'done'}
+        controlMap
+        onControlUse={() => setControlUsed(true)}
         fen={phase === 'done' ? shownFen : studying || hidden.length === 0 ? curFen : hidePieces(curFen, hidden)}
         orientation={orientation}
         movable={movable}

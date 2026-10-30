@@ -114,7 +114,7 @@ export function PlayGame({ startFen, humanColor, botId, maxMoves, allowHint = tr
   return (
     <div className="playgame">
       <ChessBoard fen={fen} orientation={humanColor} movable={movable} lastMove={last} check={chess.current.isCheck()}
-        shapes={hintMove ? [{ from: hintMove.slice(0, 2), to: hintMove.slice(2, 4), brush: 'yellow' }] : []} label="Game board" />
+        shapes={hintMove ? [{ from: hintMove.slice(0, 2), to: hintMove.slice(2, 4), brush: 'yellow' }] : []} label="Game board" controlMap onControlUse={() => setHintsUsed(h => h + 1)} />
       <p className="muted small" aria-live="polite">
         {end ? end.reason : thinking ? `${bot.label} is thinking…` : humanTurn ? 'Your move.' : 'Waiting…'} · Opponent: {bot.label}. {bot.note}
       </p>

@@ -38,10 +38,12 @@ export interface Props {
   apiRef?: { current: Api | null }
   /** Offers the control-map toggle (who attacks and defends every square). Off by default so a test never shows it. */
   controlMap?: boolean
+  /** Called the first time the control map is switched on: in a test or a game that use counts as a hint. */
+  onControlUse?: () => void
 }
 
 /** Thin React wrapper around Chessground (GPL-3.0-or-later): rendering, drag/touch input, arrows, highlights. */
-export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false}: Props) {
+export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false, onControlUse }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const api = useRef<Api | null>(null)
   const cb = useRef({ movable, picker, edit })
@@ -106,6 +108,9 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     return () => ro.disconnect()
   }, [controlMapOn])
   const [picked, setPicked] = useState<string | null>(null)
+  const [hoverSq, setHoverSq] = useState<string | null>(null)
+  const [inspect, setInspect] = useState(false)
+  const usedOnce = useRef(false)
   const map = useMemo(() => (showControl && controlMapOn ? controlMap(fen) : null), [showControl, controlMapOn, fen])
   const cells = useMemo(() => {
     const files = orientation === 'white' ? 'abcdefgh' : 'hgfedcba'
@@ -114,9 +119,15 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   }, [orientation])
   return (
     <div className={controlMapOn ? 'board-wrap hascontrol' : 'board-wrap'} style={controlMapOn ? { marginBottom: barH + 14 } : undefined} role="img" aria-label={label ?? 'Chess board'}>
-      <div ref={el} className="board" />
+      <div ref={el} className="board" onMouseMove={map && !inspect ? (e => {
+        // the map never blocks the pieces: the square under the pointer is read from where it is, so pieces stay movable while the map shows
+        const r = (e.currentTarget as HTMLElement).getBoundingClientRect()
+        const fi = Math.min(7, Math.max(0, Math.floor(((e.clientX - r.left) / r.width) * 8))), ri = Math.min(7, Math.max(0, Math.floor(((e.clientY - r.top) / r.height) * 8)))
+        const sqn = cells[ri * 8 + fi]
+        setHoverSq(h => (h === sqn ? h : sqn))
+      }) : undefined} onMouseLeave={() => setHoverSq(null)} />
       {map && (
-        <div className="controlmap" aria-label="Square control map">
+        <div className={inspect ? 'controlmap inspecting' : 'controlmap'} aria-label="Square control map">
           {cells.filter(sq => ALL_SQUARES.includes(sq)).map(sq => {
             const c = map.get(sq)!
             const strength = Math.min(1, Math.abs(c.score) / 6)
@@ -131,9 +142,10 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       )}
       {controlMapOn && (
         <div className="controlbar" ref={barRef}>
-          <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
-          {map && picked && <span className="controldetail" role="status">{describeControl(map.get(picked)!)}</span>}
-          {map && !picked && <span className="controldetail muted" role="note">Blue: White holds the square more strongly. Orange: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Tap a square for details.</span>}
+          <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { if (!showControl && !usedOnce.current) { usedOnce.current = true; onControlUse?.() } setShowControl(v => !v); setPicked(null); setHoverSq(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
+          {map && <button type="button" className="controltoggle" aria-pressed={inspect} onClick={() => { setInspect(v => !v); setPicked(null) }} title="For touch screens: tap squares to read them. Turn off to move pieces.">{inspect ? 'Moving is off: tap squares' : 'Tap squares to inspect'}</button>}
+          {map && (picked ?? hoverSq) && <span className="controldetail" role="status">{describeControl(map.get((picked ?? hoverSq)!)!)}</span>}
+          {map && !picked && !hoverSq && <span className="controldetail muted" role="note">Blue: White holds the square more strongly. Orange: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Point at a square to read it (touch screens: use the inspect button).</span>}
         </div>
       )}
     </div>

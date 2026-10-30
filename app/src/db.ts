@@ -21,6 +21,8 @@ export interface Attempt {
   scan?: string[]
   /** The answer was not in the item's accepted set but the engine rated it as sound (find-the-move items at cue 3+). */
   alt?: boolean
+  /** Aids used besides the numbered hints, for example 'controlMap' (counted as one hint). */
+  aids?: string[]
 }
 export interface Reflection { id?: number; kind: string; lessonId?: string; data: Record<string, string>; ts: number }
 export interface LessonProgress { lessonId: string; step: number; done: boolean; ts: number; /** Marked done by the learner without doing it. */ skipped?: boolean }
