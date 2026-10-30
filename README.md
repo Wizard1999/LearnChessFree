@@ -27,4 +27,7 @@ Status (2026-10-24): working app and content pipeline built; autonomous build in
 ## Run it with one click (Windows)
 Download `desktop/ChessSchool.exe` and double-click it. Nothing to install. It is portable: the program serves the site from inside itself and keeps your progress in a `ChessSchoolData` folder created next to it. Copy or move the folder anywhere (a USB stick works), and delete everything by putting the folder in the recycle bin. If the folder is read-only, progress is kept in your user profile instead and the tray notice says so. It opens in Microsoft Edge or Google Chrome (one of them must be installed). Right-click the tray icon to quit. Rebuild: `powershell -File desktopuild-exe.ps1`.
 
+## Keeping it up to date
+`docs/maintenance.md` is the routine: **`tools/check.py`** runs everything that must stay true (content validation, skill graph, tests including a smoke test of every page and cross-checks that every lesson is on the map, in the lists and in a course), **`tools/status.py`** says what is stale and how to fix it, **`tools/refresh_data.py`** is the monthly game-data update. Design rules for every page: `docs/design-simplicity-pass.md`. Map design: `docs/map-radial-design.md`. Licences and the free-forever pledge: `LICENSES.md`, `FREE-FOREVER.md`.
+
 Created by Andrew Valentine. See NOTICE.
