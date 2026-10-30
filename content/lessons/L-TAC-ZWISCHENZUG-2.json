@@ -1,0 +1,126 @@
+{
+  "id": "L-TAC-ZWISCHENZUG-2",
+  "title": "In-between moves in exchanges: yours and theirs",
+  "skill": "TAC.ZWISCHENZUG",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Finds the in-between check or capture in a mixed exchange",
+    "Re-counts an exchange after the forcing move before relying on it",
+    "Does not rely on a recapture that the opponent can sidestep with a forcing move",
+    "Recognises an exchange where the plain recapture is best"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *In-between moves: a check or capture first* you found the forcing move before a recapture. In exchanges both sides can play one.\n**Before you rely on a recapture:** can the opponent play a check or capture first?\n**Before you play your own in-between move:** after it, does the original capture still win what you expected?\nCount again after every forcing move."
+    },
+    {
+      "type": "board",
+      "fen": "8/pR3rk1/4p1b1/4P1p1/3n3p/P4B1P/1P4PB/6K1 b - - 0 32",
+      "caption": "Black to move. The rooks on b7 and f7 attack each other, and the bishop on f3 defends the rook on b7. The knight on d4 attacks that bishop.",
+      "line": [
+        {
+          "move": "d4f3",
+          "say": "The knight takes with check, an in-between move."
+        },
+        {
+          "move": "g2f3",
+          "say": "Suppose White takes the knight."
+        },
+        {
+          "move": "f7b7",
+          "say": "Now the rook takes the rook on b7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "f3"
+        },
+        {
+          "from": "f7",
+          "to": "b7"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "b7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d4f3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is Nxf3+ (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4f3",
+            "min": 6
+          },
+          "statement": "Along the engine's best-defence line Nxf3+ nets Black at least six points of material."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-FWmxP"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the forcing move leaves your original capture available and the target cannot escape with a tempo. **Rule of thumb:** look at checks first, because the reply is forced.\n**When it fails:** a pawn or piece now guards the target, so the capture wins nothing, or the opponent has a forcing move of their own. Recount after the forcing move."
+    },
+    {
+      "type": "contrast",
+      "title": "Same in-between check, one new guard",
+      "prompt": "Predict first: in the second position a white pawn stands on b3 instead of b4.",
+      "working": "IL-fauUz",
+      "failing": "IBds33-17"
+    },
+    {
+      "type": "item",
+      "item": "IL-LK2Ls",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-jSQGY",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.intermezzo",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the exchanges where you relied on a recapture, did you ask what the opponent could play first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.ZWISCHENZUG.json (D2 outcome, conditions; note: conditions are ours and engine-checked)",
+    "shipped items IL-FWmxP, IL-fauUz, IL-LK2Ls, IL-jSQGY",
+    "authored items IBds33-17, IBds33-18 (engine-checked)"
+  ]
+}

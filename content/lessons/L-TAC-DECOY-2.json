@@ -1,0 +1,142 @@
+{
+  "id": "L-TAC-DECOY-2",
+  "title": "Decoy: lure the piece, then check the line",
+  "skill": "TAC.DECOY",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Finds a decoy sacrifice that mates or wins in an unlabeled set",
+    "Checks that the follow-up line is open",
+    "Rejects the sacrifice when the king has another square",
+    "Answers 'no tactic' when the lure leads nowhere"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Attacking the defender: remove, deflect, decoy, overload** the decoy was named for you. A decoy sacrifice lures a piece, often the king, onto a square where the next move punishes it. Before you sacrifice, ask two things: is the capture forced, and does the line your follow-up needs stay open? Solve this one, then follow the line."
+    },
+    {
+      "type": "item",
+      "item": "IL-Zqty8"
+    },
+    {
+      "type": "board",
+      "fen": "4Rrk1/3Q1ppp/p2p4/2pP4/2p2q2/PP5P/6P1/7K w - - 0 29",
+      "caption": "White to move.",
+      "line": [
+        {
+          "move": "e8f8",
+          "say": "The rook takes on f8 with check."
+        },
+        {
+          "move": "g8f8",
+          "say": "The king takes the rook."
+        },
+        {
+          "move": "d7d8",
+          "say": "The queen mates on d8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "f8"
+        },
+        {
+          "from": "d7",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "f8",
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e8f8"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is among the accepted moves, and every accepted move is within 40 centipawns of it (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e8f8",
+            "n": 2
+          },
+          "statement": "Rxf8+ forces checkmate in 2 or fewer against the engine's best defence."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "b3c4",
+            "cp": 600
+          },
+          "statement": "bxc4 is at least 6 pawns worse than the best move (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A decoy holds when** the lured piece must take (a king in check often has no other move; other pieces can refuse) and the follow-up works on the new square. List every reply, not only the capture. A blocked line or one extra flight square turns the same sacrifice into a lost piece."
+    },
+    {
+      "type": "contrast",
+      "title": "Same sacrifice, one change each",
+      "prompt": "Predict first. In the first position, ...Rxf1+ lures the king. In the second, a white bishop stands on e4. In the third, the black knight stands on a8. Which still works?",
+      "working": "IL-YVTnU",
+      "failing": "IBds32-7",
+      "irrelevant": "IBds32-8"
+    },
+    {
+      "type": "item",
+      "item": "IL-lsBXP",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds32-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds32-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-tzYWM",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.attraction",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In the positions where you rejected the sacrifice, what exactly did the opponent have that you had to find first: a flight square, a block, or a refusal?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.DECOY.json (D2 outcome and conditions)",
+    "content/lessons/L-TAC-REMOVE-DEFENDER-1.json (D1, not repeated)",
+    "Lichess puzzle database (CC0) for the shipped items; content/items/lesson-ds32.json (one-feature edits of Lichess positions, validated)"
+  ]
+}

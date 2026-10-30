@@ -1,0 +1,136 @@
+{
+  "id": "L-TAC-ZWISCHENZUG-3",
+  "title": "In-between moves: recount with their check",
+  "skill": "TAC.ZWISCHENZUG",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Lists the checks and captures of both sides before trusting an exchange count",
+    "Predicts which side gains once the best in-between move of each side has been played",
+    "Tells a position where a check changes the count from one where it does not"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson follows **In-between moves: a check or capture first** and **In-between moves in exchanges: yours and theirs**. Before you trust a count such as 'I take, he takes, I take again', list the **checks and captures of both sides** at each step, then recount. The question is not only 'do I have a check?' but 'who gains once every check has been played?'"
+    },
+    {
+      "type": "board",
+      "fen": "5rbk/R5R1/7p/8/1P6/4K3/6PP/r7 w - - 0 33",
+      "caption": "White to move. Both white rooks are aimed at the black rook on a1 and the bishop on g8.",
+      "line": [
+        {
+          "move": "g7g8",
+          "say": "Rxg8+ is check, so the rook takes the bishop with tempo."
+        },
+        {
+          "move": "f8g8",
+          "say": "Black takes the rook back."
+        },
+        {
+          "move": "a7a1",
+          "say": "Now the second rook takes the black rook: a rook and a bishop for a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g8"
+        },
+        {
+          "from": "a7",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "g8",
+        "a1"
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g7g8"
+            ]
+          },
+          "statement": "The engine's best move is Rxg8+ (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "a1",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The rook on a7 attacks the black rook on a1.",
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "g7g8",
+            "min": 1
+          },
+          "statement": "Along the engine line White ends material ahead.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB34-11"
+    },
+    {
+      "type": "card",
+      "text": "**The check pays** when your second capture is still there afterwards and the opponent has no check of their own. **Rule of thumb:** before relying on a count, list both sides' checks.\n**It fails** when the target is no longer attacked, or when the opponent's check wins back enough to level the count.\nRecount after every forcing move, for both sides."
+    },
+    {
+      "type": "contrast",
+      "title": "One change, and the count changes",
+      "prompt": "Same pieces, one change each time. Predict who gains, then check.",
+      "working": "IL-AOksf",
+      "failing": "IB34-10",
+      "irrelevant": "IB34-20"
+    },
+    {
+      "type": "item",
+      "item": "IL-LK2Ls",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-tSd91",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB34-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.intermezzo",
+        "kind.puzzle",
+        "tier.2"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "When you counted a capture sequence in the silent positions, did you list the opponent's checks as well as your own? Which side's checks did you forget first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.ZWISCHENZUG.json (outcomes for D3, conditions, contrasts; the node notes that no synthesis sheet covers this motif)",
+    "items IB34-10..12 and IB34-20 (authored, content/items/lesson-ds34.json; one-feature edits of Lichess puzzle AOksf; IB34-11 shown as a standalone failing example)",
+    "Lichess puzzle database (CC0): AOksf, LK2Ls, tSd91"
+  ]
+}

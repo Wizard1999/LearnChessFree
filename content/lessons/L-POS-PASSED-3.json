@@ -1,0 +1,106 @@
+{
+  "id": "L-POS-PASSED-3",
+  "title": "Passed pawns: change one feature, or wait?",
+  "skill": "POS.PASSED",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Predicts how one changed feature (a pawn on a neighbouring file, the rook's place) alters a passed-pawn verdict",
+    "Recognises a position where pushing the passed pawn is premature",
+    "Decides in an unlabeled position when to leave the passed pawn alone"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson builds on **A passed pawn: push, support or hold back?** Now you predict what one change does. Three features matter: a pawn on a neighbouring file can stop a pawn from being passed at all, the rook's place can turn a win into a draw, and a push can come too early. Predict first in every pair, then check."
+    },
+    {
+      "type": "contrast",
+      "title": "One pawn on the neighbouring file",
+      "prompt": "Only one White pawn differs. Is the black pawn on d4 still passed in the second position? Predict, then check.",
+      "working": "IP-PAWNS-131",
+      "failing": "IP-PAWNS-132"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-133"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-134"
+    },
+    {
+      "type": "card",
+      "text": "**Rook behind the passed pawn** is a *rule of thumb*: a rook on the pawn's file, behind it, keeps its power as the pawn advances, and a rook in front of it can be in the way. Test it. In the next pair only the White rook moves, and the tablebase gives the exact answer."
+    },
+    {
+      "type": "contrast",
+      "title": "Rook behind or in front",
+      "prompt": "Only the White rook differs. Is the second position still a win? Predict, then check.",
+      "working": "IBds54-20",
+      "failing": "IBds54-21"
+    },
+    {
+      "type": "item",
+      "item": "IBds54-22"
+    },
+    {
+      "type": "item",
+      "item": "IBds54-23"
+    },
+    {
+      "type": "item",
+      "item": "IBds54-24"
+    },
+    {
+      "type": "item",
+      "item": "IBds54-25"
+    },
+    {
+      "type": "card",
+      "text": "**A push can be premature.** If the pawn steps into a square the enemy controls, or you have a better move, leave it. Two other features, a *protected* pawn and the quality of the blockader, matter in practice, but the app has no check for them yet: treat them as notes for your own review of games."
+    },
+    {
+      "type": "item",
+      "item": "IBds54-13",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-25",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.PASSED",
+        "contrast.failing"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Think of one of your own games with a passed pawn. Write what you would change in that position (the protecting pawn, the rook, the blockader) to make pushing right or wrong, and note that this is your own paper prediction.",
+      "fields": [
+        {
+          "id": "feature",
+          "label": "The feature I would change:"
+        },
+        {
+          "id": "effect",
+          "label": "I predict the effect would be:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.PASSED.json (D3 outcome)",
+    "lesson L-POS-PASSED-2",
+    "items IP-PAWNS-131..134 (pawn_set claims), IBds54-20..25 (tablebase), IBds54-13 (engine depth 16 + move_loses)"
+  ]
+}

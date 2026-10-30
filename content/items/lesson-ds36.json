@@ -1,0 +1,318 @@
+{
+ "positions": [
+  {
+   "id": "PB36-1",
+   "fen": "1Rn3rr/8/k1p1p3/P1Bp1p2/3P3p/5p1P/5P1K/R7 w - - 0 35",
+   "family": "FAM-B36-QM-W",
+   "provenance": {
+    "kind": "lichess_puzzle",
+    "ref": "lichess.org/training/sXlw5 (position after the opponent's first move)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PB36-2",
+   "fen": "1R4rr/8/k1p1p3/P1Bp1p2/3P3p/5p1P/5P1K/R7 w - - 0 35",
+   "family": "FAM-B36-QM-F",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of Lichess puzzle sXlw5 (black knight c8 removed)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PB36-3",
+   "fen": "1Rn3rr/8/k1p1p3/P1Bp1p2/3P3p/5p2/5P1K/R7 w - - 0 35",
+   "family": "FAM-B36-QM-I",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of Lichess puzzle sXlw5 (white pawn h3 removed)",
+    "licence": "CC0"
+   }
+  },
+  {
+   "id": "PB36-4",
+   "fen": "1Rn3rr/P7/k1p1p3/P1Bp1p2/3P3p/5p1P/5P1K/R7 w - - 0 35",
+   "family": "FAM-B36-QM-M",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of Lichess puzzle sXlw5 (white pawn added on a7)",
+    "licence": "CC0"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IB36-1",
+   "skill": "TAC.QUIET-MOVE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB36-1",
+   "prompt": "White to move. Is the quiet move Rab1 (no check, no capture) White's best move here? Predict, then check.",
+   "answer": {
+    "outcome": "yes"
+   },
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a1b1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Rab1 is the engine's first choice and every other move is clearly worse (depth 16).",
+     "id": "C1"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "a1b1",
+      "min": 5
+     },
+     "statement": "Along the engine's best line Rab1 nets White at least five points of material.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "b8",
+      "color": "black",
+      "count": 0,
+      "after_move": "a1b1"
+     },
+     "statement": "After Rab1 no black piece attacks the rook on b8: the knight on c8 blocks the rook on g8.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "theme.quietMove",
+    "node.TAC.QUIET-MOVE",
+    "cue.2",
+    "kind.authored",
+    "tier.5",
+    "family.FAM-B36-QM-W",
+    "lang.en"
+   ],
+   "hints": [
+    "Before you trust a quiet move, find Black's best check and best capture after it.",
+    "Who could take the rook on b8, and what stands in the way?",
+    "The knight on c8 blocks the g8 rook, so the rook on b8 is safe."
+   ],
+   "explain": "After Rab1 Black has no check or capture that hurts, and the engine rates Rab1 far above every other move. The knight on c8 shields the rook on b8, so the quiet move holds.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B36-QM",
+   "options": [
+    "yes",
+    "no"
+   ]
+  },
+  {
+   "id": "IB36-2",
+   "skill": "TAC.QUIET-MOVE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB36-2",
+   "prompt": "White to move. The black knight on c8 is missing. Does the quiet move Rab1 still work? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "b8",
+      "color": "black",
+      "count": 1,
+      "after_move": "a1b1"
+     },
+     "statement": "After Rab1 a black rook attacks the rook on b8 along the eighth rank.",
+     "id": "C1"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "a1b1",
+      "cp": 800
+     },
+     "statement": "Rab1 is much worse than the best move (depth 16).",
+     "id": "C2"
+    },
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "b8b6",
+      "n": 8
+     },
+     "statement": "The check Rb6+ forces checkmate (long, but forced).",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "theme.quietMove",
+    "node.TAC.QUIET-MOVE",
+    "cue.2",
+    "kind.authored",
+    "tier.5",
+    "family.FAM-B36-QM-F",
+    "lang.en"
+   ],
+   "hints": [
+    "A quiet move gives Black a free move. What could Black capture?",
+    "Look at the eighth rank: what stands between the g8 rook and the rook on b8?",
+    "With the knight gone, the g8 rook takes on b8."
+   ],
+   "explain": "Without the knight on c8 the rook on b8 is attacked by the rook on g8. After Rab1 Black simply takes it, and the engine rates the quiet move far below the best. A quiet move works only when the opponent's free move (a capture here) does not hurt.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B36-QM",
+   "options": [
+    "yes",
+    "no"
+   ]
+  },
+  {
+   "id": "IB36-3",
+   "skill": "TAC.QUIET-MOVE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB36-3",
+   "prompt": "White to move. The white pawn on h3 has been removed (everything else is as in the first position). Is the quiet move Rab1 still White's best? Predict, then check.",
+   "answer": {
+    "outcome": "yes"
+   },
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a1b1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Rab1 is the engine's first choice and every other move is clearly worse (depth 16).",
+     "id": "C1"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "a1b1",
+      "min": 4
+     },
+     "statement": "Along the engine's best line Rab1 nets White at least four points of material.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "b8",
+      "color": "black",
+      "count": 0,
+      "after_move": "a1b1"
+     },
+     "statement": "After Rab1 no black piece attacks the rook on b8: the knight on c8 still blocks the rook on g8.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "theme.quietMove",
+    "node.TAC.QUIET-MOVE",
+    "cue.2",
+    "kind.authored",
+    "tier.5",
+    "family.FAM-B36-QM-I",
+    "lang.en"
+   ],
+   "hints": [
+    "Does the missing pawn touch the quiet move, or the rook on b8?",
+    "The rook on b8 is still shielded by the knight on c8.",
+    "The h3 pawn is far from the action, so Rab1 still works."
+   ],
+   "explain": "The pawn on h3 plays no part in the idea. The knight on c8 still shields the rook on b8 and Rab1 stays far above every other move. A change that does not touch the key squares leaves the answer unchanged.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B36-QM",
+   "options": [
+    "yes",
+    "no"
+   ]
+  },
+  {
+   "id": "IB36-4",
+   "skill": "TAC.QUIET-MOVE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PB36-4",
+   "prompt": "White to move. A white pawn stands on a7 (and everything else is as in the first position). Is the quiet move Rab1 still White's best? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "a7a8q",
+      "n": 2
+     },
+     "statement": "a8=Q+ forces checkmate in two.",
+     "id": "C1"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a7a8q"
+      ],
+      "within_cp": 40
+     },
+     "statement": "a8=Q+ is the engine's first choice (depth 16).",
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "a1b1",
+      "cp": 1000
+     },
+     "statement": "The forced mate beats Rab1 by a wide margin.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "theme.quietMove",
+    "node.TAC.QUIET-MOVE",
+    "cue.2",
+    "kind.authored",
+    "tier.5",
+    "family.FAM-B36-QM-M",
+    "lang.en"
+   ],
+   "hints": [
+    "Does White have a check that wins at once?",
+    "The pawn on a7 can promote with check on a8.",
+    "a8=Q+ Na7 and then the queen takes on a7: checkmate."
+   ],
+   "explain": "The pawn on a7 promotes with check, the knight can only block on a7 and the queen takes it with mate. When a forcing line mates there is no reason to give the opponent a free move.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "contrast_group": "CG-B36-QM-MATE",
+   "options": [
+    "yes",
+    "no"
+   ]
+  }
+ ]
+}

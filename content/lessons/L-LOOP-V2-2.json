@@ -1,0 +1,103 @@
+{
+  "id": "L-LOOP-V2-2",
+  "title": "Does a forcing move work, or does none?",
+  "skill": "LOOP.V2",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Lists the checks, captures and threats for the side to move before choosing",
+    "Tests each forcing move against the opponent's best answer",
+    "Finds the forcing move that works when one exists",
+    "Says that no forcing move helps when none does, and plays a quiet move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "\"Checks, captures, threats: look at the forcing moves first\" gave you the list. Now you must **decide**. Test each forcing move against the opponent's best answer: can the checking piece be taken, what does the capture lose, can the threat be met with a bigger one? If one passes, play it. If **none** passes, say so and play a calm move."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/8/8/8/PP3PPP/3Q2K1 w - - 0 1",
+      "caption": "White to move. List the forcing moves, then test the best one.",
+      "line": [
+        {
+          "move": "d1d8",
+          "say": "Qxd8+ is both a capture and a check. Black has no way out: it is checkmate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d1d8",
+            "n": 1
+          },
+          "statement": "Qxd8 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "d8"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-G2UGg"
+    },
+    {
+      "type": "card",
+      "text": "A forcing move limits the replies, which is why it comes first; it does not make the move good. **Rule of thumb:** test a check by asking what can capture the checking piece. Test a capture by counting. In a quiet position the list is empty or every item fails. Then the honest answer is that no forcing move helps."
+    },
+    {
+      "type": "contrast",
+      "title": "Same check, one change",
+      "prompt": "White to move. Decide whether the check wins. Predict, then check.",
+      "working": "IBds21-13",
+      "failing": "IBds21-14",
+      "irrelevant": "IBds21-15"
+    },
+    {
+      "type": "item",
+      "item": "IL-6dbYB",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds21-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds21-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.LOOP.V2",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which forcing move did you most want to play but could not justify? What was the answer that refuted it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/LOOP.V2.json (D2 outcome, contrasts)",
+    "docs/lessons-loop-self.md (weaknesses)",
+    "items IL-* (Lichess puzzles, CC0), IBds21-13..15, 19, 20 (authored)"
+  ]
+}

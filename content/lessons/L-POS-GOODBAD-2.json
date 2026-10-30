@@ -1,0 +1,145 @@
+{
+ "id": "L-POS-GOODBAD-2",
+ "title": "Bad piece: retreat, reroute or trade",
+ "skill": "POS.GOODBAD",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Chooses between retreating, rerouting with a threat and trading a passive piece",
+  "Checks what the new square costs before moving a cramped piece",
+  "Sees when the engine's best moves are not about the cramped piece at all"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "*Good and bad pieces: now, and later* taught you to find the worst piece. This lesson asks what to do about it. Three tools: **retreat** it to a better square, **reroute** it so it also threatens something, or **trade** it for a piece that matters more. Sometimes the answer is none of them."
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1rk1/pp1b1ppp/2pbp3/8/3PB3/P7/1PP3PP/R1BQNRK1 w - - 0 1",
+   "caption": "White to move. The knight on e1 has 2 legal moves and no job there.",
+   "line": [
+    {
+     "move": "e1f3",
+     "say": "Nf3 reroutes the knight to a central square, where it has 5 legal moves instead of 2."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e1",
+      "piece": "N"
+     },
+     "statement": "The White knight stands on e1."
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "e1",
+      "mode": "legal",
+      "count": 2
+     },
+     "statement": "The knight on e1 has 2 legal moves."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "f3",
+      "mode": "legal",
+      "count": 5,
+      "after_move": "e1f3"
+     },
+     "statement": "After Nf3 the knight has 5 legal moves."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1f3",
+       "e4d3",
+       "d1e2"
+      ]
+     },
+     "statement": "Nf3 is among the engine's best moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds53-7"
+  },
+  {
+   "type": "item",
+   "item": "IBds53-8"
+  },
+  {
+   "type": "card",
+   "text": "**When each tool fits.** *Retreat* when the new square is better, not only safer. *Reroute* when no enemy pawn attacks the new square and the piece gains squares or a target. *Trade* when the enemy piece is the stronger one. **Rule of thumb:** first ask whether the piece already has a job where it stands, then ask what the new square costs. Sometimes the engine's best moves leave the cramped piece alone: another move matters more. Several moves can be right."
+  },
+  {
+   "type": "contrast",
+   "title": "Same knight, one pawn moved",
+   "prompt": "White wants to free the knight with Ng4. Predict whether that still works after each change to a Black pawn, then check.",
+   "working": "IBds53-16",
+   "failing": "IBds53-17",
+   "irrelevant": "IBds53-18"
+  },
+  {
+   "type": "item",
+   "item": "IBds53-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-14",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-13",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.GOODBAD",
+    "tpl.ds53-gb2"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "In the positions you missed, was the engine's best move a retreat, a reroute, a trade, or a move by another piece, and which did you reach for first?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.GOODBAD.json (D2 outcome, conditions, contrasts)",
+  "sources/sheets/znosko-borovsky_middle-game.md (C13: remedies for a bad piece, idea only)",
+  "items of this lesson: engine claims at the recorded depth"
+ ]
+}

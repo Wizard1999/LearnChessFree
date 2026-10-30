@@ -1,0 +1,186 @@
+{
+  "id": "L-LOOP-V6-2",
+  "title": "Verify from his seat: find the flaw in your own choice",
+  "skill": "LOOP.V6",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Verifies the chosen move a second time from the opponent's side before playing it",
+    "Checks in a different order from the one that found the move: his checks, then captures, then quiet threats",
+    "Finds a quiet refutation that a search of checks and captures misses",
+    "Recognises when there is nothing to verify (one legal move) or no flaw to find"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Cross out, then check from the other side** taught you to eliminate and then verify. The second look has a sharper job here: verify the move you have chosen **a second time, from the opponent's seat, in a different order** from the one that found it, and look for a flaw you did not see. Play the move in your head, then say: it is his move."
+    },
+    {
+      "type": "board",
+      "fen": "r1b1q1kb/pp2n3/2n3p1/1B1p1pNp/8/4B2Q/PPP3PP/R4RK1 b - - 1 20",
+      "caption": "Your first choice has passed a look at his captures and checks. Verify it from his seat.",
+      "line": [
+        {
+          "move": "h8b2",
+          "say": "Your candidate: Bxb2, a capture. It passes a quick look at his captures and checks."
+        },
+        {
+          "move": "a1b1",
+          "say": "His reply Rab1 is quiet: it captures nothing and gives no check. Against it Bxb2 ends far below f4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h8",
+          "to": "b2"
+        },
+        {
+          "from": "a1",
+          "to": "b1"
+        }
+      ],
+      "highlight": [
+        "b1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "h8b2",
+            "cp": 300
+          },
+          "statement": "Bxb2 is at least 300 centipawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f5f4"
+            ]
+          },
+          "statement": "f4 is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "b1",
+            "piece": "empty",
+            "after_moves": [
+              "h8b2"
+            ]
+          },
+          "statement": "After Bxb2 the square b1 is empty, so Rab1 captures nothing."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "h8b2",
+              "a1b1"
+            ]
+          },
+          "statement": "After Bxb2 Rab1 the king is not attacked, so Rab1 gives no check."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds22-15"
+    },
+    {
+      "type": "card",
+      "text": "**The order matters.** You found the move by looking at your own forcing moves; going over the same line again repeats the same blind spot. Change the order: his checks, then his captures, then the quiet moves that make a threat. **Rule of thumb:** spend this second look on decisions that are critical and cannot be taken back. It adds nothing when only one move is legal."
+    },
+    {
+      "type": "item",
+      "item": "IBds22-16"
+    },
+    {
+      "type": "contrast",
+      "title": "A forcing flaw, a reply to a check, nothing to verify",
+      "prompt": "Predict first: in which position does a look at his checks and captures find the flaw, in which is the flaw found by listing the replies to a check, and in which is there nothing to verify? Then check.",
+      "working": "IBds22-18",
+      "failing": "IBds22-17",
+      "irrelevant": "IBds22-19"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** There is no checklist panel at this level. Hints are available on request; silent items turn hints and the engine off. The routine is yours: before a critical move in your own games, write what you checked from his side and in what order. My games lets you mark critical moments first. The next three items are silent; one may have no flaw."
+    },
+    {
+      "type": "item",
+      "item": "IBds22-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds22-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds22-22",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Look back at the silent items and at one critical move in a game of your own. This record is for you; it is not scored.",
+      "fields": [
+        {
+          "id": "chosen",
+          "label": "The move I chose, and how I found it:"
+        },
+        {
+          "id": "order",
+          "label": "In what order did I check from his side?",
+          "options": [
+            "checks, captures, quiet moves",
+            "the same order as my own line",
+            "I did not check from his side"
+          ]
+        },
+        {
+          "id": "flaw",
+          "label": "Did the second look find a flaw?",
+          "options": [
+            "yes",
+            "no",
+            "not sure"
+          ]
+        },
+        {
+          "id": "missed",
+          "label": "The kind of move I would have missed:",
+          "options": [
+            "a check",
+            "a capture",
+            "a quiet move",
+            "none"
+          ]
+        },
+        {
+          "id": "unchecked",
+          "label": "What I did not check:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/LOOP.V6.json (D2 outcome, conditions, contrasts)",
+    "docs/lessons-loop-self.md",
+    "docs/council-synthesis.md Round 3 (elimination and verification, recalled [R])",
+    "positions: Lichess puzzle database (CC0); engine and rules checks (content/items/lesson-ds22.json)"
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "id": "L-FND-DRAWS-2",
+  "title": "Sorting endings: won, drawn or play on",
+  "skill": "FND.DRAWS",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Tells a position drawn at once for lack of material from one that is only drawn with best play",
+    "Recognises endings that look drawn but are won, such as king, bishop and knight against a king",
+    "Sorts a mixed ending into won, drawn now or play on"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**En passant, promotion and draws** listed the ways a game ends drawn. This lesson sorts endings by material. There are three boxes. **Drawn now:** no sequence of legal moves can reach mate, so the game ends by rule. **Won:** the stronger side can force mate. **Play on:** mate is possible, but nobody can force it. Ask the questions in that order."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/2B1K3 w - - 0 1",
+      "caption": "King and one bishop against a bare king.",
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "c1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "With best play the position is a draw (tablebase)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds13-25"
+    },
+    {
+      "type": "card",
+      "text": "**What decides the box.** Pieces that cannot mate, like one bishop or one knight, give a draw at once. Bishops that all stay on one colour cannot mate either, but only when no knights, rooks, queens or pawns are on the board. But king, bishop and knight against a king is a **win**, and two knights against a king is not forced, yet not drawn by rule. Counting pieces is a **rule of thumb**: check colours and pawns."
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishops, one change",
+      "prompt": "Black has a bishop too. Predict first: what happens when it stands on the other colour?",
+      "working": "IBds13-26",
+      "failing": "IBds13-27",
+      "irrelevant": "IBds13-28"
+    },
+    {
+      "type": "item",
+      "item": "IBds13-29",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-30",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-31",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-32",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.DRAWS",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which endings did you first call drawn and then change your mind about? What made you change it? Rate how sure you were overall. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.DRAWS.json (D2 outcome, conditions, contrasts)",
+    "docs/first-hours.md session 3",
+    "items IBds13-25..36 (authored, content/items/lesson-ds13.json; the result for best play is tablebase-checked, the drawn-now rule is checked with python-chess by the item builder and by a named human reviewer still to come)"
+  ]
+}

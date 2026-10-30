@@ -1,0 +1,127 @@
+{
+  "id": "L-LOOP-V1-2",
+  "title": "The safety scan with the prompts off",
+  "skill": "LOOP.V1",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Runs both scan questions without a prompt in mixed positions",
+    "Answers a real threat with a move that stops it",
+    "Spends the move on a plan when the last move threatened nothing",
+    "Tells a real attack from an attack on a defended piece"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In \"The safety scan: look before you move\" and \"Before every move: two questions\" the questions were put to you. Now they are not. In mixed positions, some with a threat and some without, ask them yourself. **Ignore a real threat** and you lose material. **Answer a threat that is not there** and you lose a move. Both mistakes cost."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp3ppp/8/2n5/3N4/4P3/PP3PPP/2R3K1 w - - 0 1",
+      "caption": "White to move. The rook on d8 faces the knight on d4. Is that a threat?",
+      "line": [
+        {
+          "move": "c1c5",
+          "say": "The pawn on e3 defends the knight on d4. The knight on c5 is loose, so the rook takes it."
+        },
+        {
+          "move": "d8d4",
+          "say": "If Black takes anyway..."
+        },
+        {
+          "move": "e3d4",
+          "say": "...the pawn takes back. Black gave a rook for a knight, on top of the knight lost on c5."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": []
+          },
+          "statement": "No White piece is loose."
+        },
+        {
+          "id": "C2",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "c5"
+            ]
+          },
+          "statement": "The knight on c5 is the only loose Black piece."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c1c5",
+            "min": 3
+          },
+          "statement": "Rxc5 wins at least a knight along the engine line."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "d4"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds21-16"
+    },
+    {
+      "type": "card",
+      "text": "**The question behind both mistakes:** after a quiet move from me, can the opponent win material or mate? Check loose pieces and mate threats first. An attack on a piece that is defended is a threat only if the attacker is worth *less* than the target (a rule of thumb; count to be sure). When there is no threat, spend the move on your plan."
+    },
+    {
+      "type": "contrast",
+      "title": "Same attack, one change",
+      "prompt": "Black's rook faces the knight. Decide whether White must react. Predict, then check.",
+      "working": "IBds21-10",
+      "failing": "IBds21-11",
+      "irrelevant": "IBds21-12"
+    },
+    {
+      "type": "item",
+      "item": "IBds21-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds21-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.LOOP.V1",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In your next game, mark two moves: one where you found a threat and one where you decided there was none. Write both on paper. What did each cost you in time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/LOOP.V1.json (D2 outcome, contrasts)",
+    "docs/lessons-loop-self.md (weaknesses: phantom threats)",
+    "items IBds21-10..12, 16..18 (authored; 16..18 from Lichess games, CC0), board engine-checked"
+  ]
+}

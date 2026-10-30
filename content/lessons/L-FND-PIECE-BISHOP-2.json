@@ -1,0 +1,127 @@
+{
+  "id": "L-FND-PIECE-BISHOP-2",
+  "title": "The bishop in a busy position",
+  "skill": "FND.PIECE.BISHOP",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Names the piece on a given square before using its rule, with no hint in the prompt",
+    "Taps every square that bishop can reach in a crowded position",
+    "Stops each diagonal at the first piece in the way: before an own piece, on an enemy piece",
+    "Says that a piece on the bishop's own rank or file does not change its moves"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The rook and the bishop** you were told \"bishop\". In a game nobody tells you. The new step comes first: **name the piece on the square**, then trace its lines. For a bishop that means four diagonals, one at a time, each stopped by the first piece in the way. Try it on the board."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5p2/8/2p5/8/4B3/1P6/6K1 w - - 0 1",
+      "caption": "The piece on e3 is a bishop. Eight squares, and the diagonal towards c5 ends on a black pawn.",
+      "line": [
+        {
+          "move": "e3c5",
+          "say": "The bishop takes the pawn on c5 and stops there; it cannot go on to b6."
+        },
+        {
+          "move": "g8h7",
+          "say": "Black moves the king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "c5"
+        },
+        {
+          "from": "e3",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "c1",
+        "c5",
+        "d2",
+        "d4",
+        "f2",
+        "f4",
+        "g5",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e3",
+            "to": [
+              "c1",
+              "c5",
+              "d2",
+              "d4",
+              "f2",
+              "f4",
+              "g5",
+              "h6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-66"
+    },
+    {
+      "type": "card",
+      "text": "Trace each diagonal until something is in the way. An **own** piece stops the bishop one square before it. An **enemy** piece can be taken, and then the bishop stops. A rook or pawn on the bishop's own rank or file is on none of its diagonals. *Rule of thumb:* if you marked a square past a piece, recheck that line."
+    },
+    {
+      "type": "contrast",
+      "title": "One change at a time",
+      "prompt": "Predict the squares first. The first position is the reference. In the second, one black pawn has been added. In the third, a rook has moved. Which answer changes, and which does not?",
+      "working": "IBds12-1",
+      "failing": "IBds12-2",
+      "irrelevant": "IBds12-3"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-68",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-69",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.BISHOP",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you tapped squares in the silent items, did you first say which piece it was? Which diagonal did you check last, and did you skip it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.BISHOP.json (D2 outcome)",
+    "content/lessons/L-FND-ROOKBISHOP-1.json",
+    "content/items/lesson-ds12.json",
+    "rules of chess (python-chess legal move generation, via tools/validate.py)"
+  ]
+}

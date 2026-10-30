@@ -1,0 +1,137 @@
+{
+  "id": "L-TAC-MATE-PATTERNS-2",
+  "title": "Mate or not mate: run the checklist",
+  "skill": "TAC.MATE-PATTERNS",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Finds mate in one or two in unlabeled positions",
+    "Says 'no mate' when a flight square is open",
+    "Says 'no mate' when a line the pattern needs is blocked or the entry is missing",
+    "Runs the checklist on each check instead of trusting a look-alike"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Named mates and the conditions behind them** the family was named. Now nothing is. A mating pattern is a checklist: every flight square covered or blocked, the checker safe from capture, the check unblockable. Run the checklist on each check. The answer is sometimes 'no mate'. Find the move here, then follow the line."
+    },
+    {
+      "type": "item",
+      "item": "IL-mRkNC"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1p3pp1/p5p1/4R3/6P1/4P2P/1q1r1Q2/6K1 w - - 0 30",
+      "caption": "White to move.",
+      "line": [
+        {
+          "move": "e5e8",
+          "say": "The rook checks on the back rank."
+        },
+        {
+          "move": "g8h7",
+          "say": "The king steps to h7."
+        },
+        {
+          "move": "f2h4",
+          "say": "The queen mates on h4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "e8"
+        },
+        {
+          "from": "f2",
+          "to": "h4"
+        }
+      ],
+      "highlight": [
+        "g8",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e5e8"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is among the accepted moves, and every accepted move is within 40 centipawns of it (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e5e8",
+            "n": 2
+          },
+          "statement": "Re8+ forces checkmate in 2 or fewer against the engine's best defence."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "f2d2",
+            "cp": 600
+          },
+          "statement": "Qxd2 is at least 6 pawns worse than the best move (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Run the checklist for each check.** List the king's flight squares: is each covered or blocked? Can the checking piece be taken? Can the check be blocked? One open square makes the check not mate. A sacrifice that opens the king's cover works only if something covers the weak point. A pattern that looks right from a diagram can fail by one square."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pattern, one change each",
+      "prompt": "Predict first. The first position is a mate. In the second, the black pawn stands on h6, not h7. In the third, the black rook stands on c8. Which is still mate?",
+      "working": "IL-cGFSN",
+      "failing": "IBds32-10",
+      "irrelevant": "IBds32-11"
+    },
+    {
+      "type": "item",
+      "item": "IL-wRml7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds32-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-HzBgF",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.mate",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "When you said 'no mate', how sure were you that you had checked every flight square? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.MATE-PATTERNS.json (D2 outcome and conditions)",
+    "content/lessons/L-TAC-MATEPATTERNS-1.json (D1, not repeated)",
+    "Lichess puzzle database (CC0) for the shipped items; content/items/lesson-ds32.json (one-feature edits of Lichess positions, validated)"
+  ]
+}

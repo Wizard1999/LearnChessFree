@@ -1,0 +1,189 @@
+{
+ "id": "L-POS-MAJORITY-3",
+ "title": "Majority: the count, the kings and the move",
+ "skill": "POS.MAJORITY",
+ "depth": "D3",
+ "minutes": 13,
+ "outcomes": [
+  "Checks a majority against king distance and who is to move before trusting the count",
+  "Predicts a win, a draw or a king-first move in 3 against 2 endings",
+  "Says when the numbers on the wing do not matter"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "You can now decide win or draw (see *Majority: win or draw, then which pawn*). The count is only one of three things. **Two more decide:** how near the enemy king is to the pawns, and **who is to move** (a tempo idea, as in *Opposition: one tempo between a win and a draw*). Look at one win, then at what changes."
+  },
+  {
+   "type": "board",
+   "fen": "8/1k3p2/8/6p1/6P1/4P3/5P2/3K4 w - - 0 1",
+   "caption": "White to move: three pawns against two on the kingside, the Black king far away on b7.",
+   "line": [
+    {
+     "move": "f2f4",
+     "say": "f4 offers an exchange. If Black takes, e3 recaptures and White has two pawns to Black's one."
+    },
+    {
+     "move": "g5f4",
+     "say": "Black takes on f4."
+    },
+    {
+     "move": "e3f4",
+     "say": "White recaptures. The numbers on the wing are now two against one."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f2",
+     "to": "f4"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "f2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 3
+     },
+     "statement": "White has three pawns on the kingside."
+    },
+    {
+     "id": "C2",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 2
+     },
+     "statement": "Black has two pawns on the kingside."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White to move wins (tablebase, exact)."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f2f4"
+     },
+     "statement": "After f4 White still wins."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e3e4"
+     },
+     "statement": "After e4 the result for White is only a draw."
+    },
+    {
+     "id": "C6",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 2,
+      "after_moves": [
+       "f2f4",
+       "g5f4",
+       "e3f4"
+      ]
+     },
+     "statement": "After the exchange White has two pawns on the kingside."
+    },
+    {
+     "id": "C7",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 1,
+      "after_moves": [
+       "f2f4",
+       "g5f4",
+       "e3f4"
+      ]
+     },
+     "statement": "After the exchange Black has one pawn on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds53-27"
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawns, same kings, a tempo apart",
+   "prompt": "Three against two on the kingside. Predict the result in each position, then check.",
+   "working": "IBds53-19",
+   "failing": "IBds53-20",
+   "irrelevant": "IBds53-21"
+  },
+  {
+   "type": "card",
+   "text": "**Three cases in these positions.** Black king far from the pawns: White wins whoever moves. King in the middle distance: the side to move decides, a tempo question like the opposition. King close to the pawns: only a draw, even with White to move. **Rule of thumb:** count the majority first, then the kings, then the tempo; each can overrule the one before."
+  },
+  {
+   "type": "item",
+   "item": "IBds53-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-23",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-24",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-25",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-26",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.MAJORITY",
+    "tpl.ds53-maj3"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which of the three decided the positions you got wrong: the count, the king distance or the tempo?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.MAJORITY.json (D3 outcome, conditions)",
+  "tablebase positions of this lesson (Lichess tablebase service, exact)",
+  "content/lessons/L-END-OPPOSITION-1.json (opposition, linked not re-taught)"
+ ]
+}

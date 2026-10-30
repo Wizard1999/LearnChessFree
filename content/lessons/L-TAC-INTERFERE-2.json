@@ -1,0 +1,157 @@
+{
+  "id": "L-TAC-INTERFERE-2",
+  "title": "Interference: does the cut win?",
+  "skill": "TAC.INTERFERE",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the interposing move that wins material or comes with check, in a mixed set",
+    "Rejects an interposition whose piece is simply captured with gain",
+    "Rejects a cut when no square lies between the two pieces or nothing attacks the piece that lost its defender"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson follows **Interference: cut the line between two pieces**, which taught how to find the interposing move. Now sort the candidates. An interposition **wins** when the interposed piece is safe or comes with check, when the line it cuts was the only defence, and when something attacks the piece that lost its defender. For the price of the interposed piece, see **Interference: what the interposed piece costs**."
+    },
+    {
+      "type": "board",
+      "fen": "k3B3/8/1q3b2/1P6/5K2/2Q5/1P6/8 w - - 0 1",
+      "caption": "White to move. The black queen defends the bishop along the sixth rank.",
+      "line": [
+        {
+          "move": "e8c6",
+          "say": "Bc6+ lands between queen and bishop, with check. The pawn and the queen protect it."
+        },
+        {
+          "move": "a8b8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "c3f6",
+          "say": "Qxf6: the bishop has lost its only defender."
+        },
+        {
+          "move": "b6f2",
+          "say": "Black counters with a check on the f-file."
+        },
+        {
+          "move": "c6f3",
+          "say": "The bishop blocks and White keeps the extra piece."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "c6"
+        },
+        {
+          "from": "c3",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "f6",
+        "b6"
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e8c6"
+            ]
+          },
+          "statement": "The engine's best move is Bc6+ (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The queen on b6 defends the bishop on f6.",
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "black",
+            "count": 0,
+            "after_move": "e8c6"
+          },
+          "statement": "After Bc6 the queen no longer defends the bishop.",
+          "id": "C3"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c6",
+            "color": "white",
+            "count": 2,
+            "after_move": "e8c6"
+          },
+          "statement": "Two white pieces protect the bishop on c6.",
+          "id": "C4"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-Fh8ln-c1"
+    },
+    {
+      "type": "card",
+      "text": "**The cut wins** when the line was the only defence, the interposed piece is safe or gives check, and something attacks the piece that lost its protector. **Rule of thumb:** count attackers and protectors of the interposed square and the target.\n**It fails** when your piece is captured with gain, when no square lies between the two pieces, or when nothing attacks the piece that lost its protector."
+    },
+    {
+      "type": "contrast",
+      "title": "Same cut, one change",
+      "prompt": "In the second position the bishop is missing; in the third a distant piece has moved. Predict whether Rh4 still wins, then check.",
+      "working": "IB34-13",
+      "failing": "IB34-14",
+      "irrelevant": "IB34-21"
+    },
+    {
+      "type": "item",
+      "item": "IB34-15"
+    },
+    {
+      "type": "item",
+      "item": "IB34-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB34-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.interference",
+        "kind.puzzle",
+        "tier.2"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, before you interposed, did you check that the line you cut was really the only defence? (The practice puzzles carry Lichess's automatic theme label, which is not always an exact fit.)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.INTERFERE.json (outcomes for D2, conditions, contrasts)",
+    "items IB34-13..17 and IB34-21 (authored, content/items/lesson-ds34.json; IB34-14, IB34-15 and IB34-21 are one-feature edits of IB34-13)",
+    "Lichess puzzle database (CC0): Fh8ln"
+  ]
+}

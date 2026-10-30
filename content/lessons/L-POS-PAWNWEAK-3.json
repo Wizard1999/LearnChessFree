@@ -1,0 +1,79 @@
+{
+  "id": "L-POS-PAWNWEAK-3",
+  "title": "One feature flips the verdict",
+  "skill": "POS.PAWNWEAK",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Predicts how one changed feature (a neighbouring pawn, an extra defender) flips a pawn verdict",
+    "Fixes a backward pawn first, then counts attackers against defenders",
+    "Says which check a change breaks: fixed, reachable or counted"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In the last lesson (*Weak, harmless or compensated: rating a pawn*) you asked: can it advance, can my pieces reach it, does anything pay for it? Today the first two become *fixed* and *reachable*, and you add *counted*: attackers against defenders. A verdict can flip when **one feature** changes: a neighbouring pawn arrives, a defender is added, a file closes. Predict the flip before you look. Open files and the bishop pair flip verdicts too; you meet those in your own games.."
+    },
+    {
+      "type": "contrast",
+      "title": "Isolated or not?",
+      "prompt": "Only one pawn has moved. Predict whether the white b-pawn is still isolated, then check.",
+      "working": "IP-PAWNS-119",
+      "failing": "IP-PAWNS-120"
+    },
+    {
+      "type": "contrast",
+      "title": "Backward or not?",
+      "prompt": "Only one pawn has moved. Predict whether the black a-pawn is still backward, then check.",
+      "working": "IP-PAWNS-125",
+      "failing": "IP-PAWNS-126"
+    },
+    {
+      "type": "card",
+      "text": "To win a backward pawn, work in two steps. **Fix it:** check that the square in front of it is attacked by a pawn, so it cannot run. **Then count:** attackers against defenders, with the king counting as a defender. As a *rule of thumb*, you need more attackers than it has defenders, and no exchange may cost you more counting value than you take."
+    },
+    {
+      "type": "contrast",
+      "title": "Fixed, then counted",
+      "prompt": "Only the black king has moved, from g8 to f7. Predict whether Rxe6 still wins a pawn.",
+      "working": "IBds55-4",
+      "failing": "IBds55-5"
+    },
+    {
+      "type": "card",
+      "text": "A fixed pawn is not automatically lost. An extra defender, even the king, can turn a win into nothing, and a neighbour that can still protect the pawn means it is not backward at all. For each change, ask which check it breaks: **fixed**, **reachable** or **counted**."
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "tpl.pair-back"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you looked, how sure were you which feature would flip the verdict? Which of the three checks did the change break? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.PAWNWEAK.json (D3 outcome, conditions, contrasts)",
+    "content/lessons/L-POS-PAWNWEAK-2.json (linked, not repeated)",
+    "content/items/lesson-ds55.json (IBds55-4, IBds55-5, machine-checked)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K16, K26"
+  ]
+}

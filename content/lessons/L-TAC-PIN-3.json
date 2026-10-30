@@ -1,0 +1,130 @@
+{
+  "id": "L-TAC-PIN-3",
+  "title": "Is the pin real, and can you win the piece?",
+  "skill": "TAC.PIN",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Judges whether a pin is real by asking whether the pinned piece may still move on the line",
+    "Wins a pinned piece by adding attackers, using the cheapest attacker first",
+    "Predicts how one extra defender changes the count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "From **Pins: cannot move, or should not move** you know what a pin is. Now judge whether it is real and how to win the piece. A knight pinned to the king cannot move at all. A pinned rook or bishop may still slide along the pin line, even capture the pinner. The best attacker of a pinned piece is a **pawn**, because the piece cannot run."
+    },
+    {
+      "type": "board",
+      "fen": "3k4/ppp5/4b3/3n4/8/4P3/PPP3PP/3R2K1 w - - 0 1",
+      "caption": "White to move. The knight on d5 is pinned to the king by the rook on d1.",
+      "line": [
+        {
+          "move": "e3e4",
+          "say": "The pawn attacks the pinned knight. The knight cannot move away."
+        },
+        {
+          "move": "d8e7",
+          "say": "The king steps off the file, ending the pin, but it is White's move."
+        },
+        {
+          "move": "e4d5",
+          "say": "The pawn takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "e4"
+        },
+        {
+          "from": "d1",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e3e4"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "mobility",
+          "params": {
+            "square": "d5",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight has no legal move: it is pinned.",
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "e3e4",
+            "min": 3
+          },
+          "statement": "e4 wins the knight along the engine line.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-CQxki"
+    },
+    {
+      "type": "card",
+      "text": "To win a pinned piece, multiply attackers and count: attackers against defenders, cheapest capture first. **Rule of thumb:** one extra defender can turn a win into an even trade, so recount whenever the position changes. Also check whether the pinned piece can slide along the line: if it can, it is only half pinned and an attack does not trap it."
+    },
+    {
+      "type": "contrast",
+      "title": "One more defender",
+      "prompt": "Only a black pawn has been added. Predict whether Nxd5 still wins material.",
+      "working": "IBds31-14",
+      "failing": "IBds31-15"
+    },
+    {
+      "type": "item",
+      "item": "IL-RwoHy",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds31-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-1BJ4d",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.pin",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you attacked the pinned piece, did you check whether it could move along the line, and did you recount the defenders? (low / medium / high confidence)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.PIN.json (D3 outcome, conditions, contrasts)",
+    "L-TAC-PIN-1 (idea taught there, not repeated)",
+    "Lichess puzzle database (CC0): CQxki, RwoHy, 1BJ4d"
+  ]
+}

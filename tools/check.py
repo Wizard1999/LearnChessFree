@@ -17,7 +17,7 @@ quick = "--quick" in sys.argv
 STAGES = []
 if not quick: STAGES.append(("lessons validate", PY + ["tools/validate_lessons.py"], ROOT, "ALL LESSONS PASSED"))
 STAGES += [
-    ("check_all", PY + ["tools/check_all.py"], ROOT, " 0 errors"),
+    ("check_all", PY + ["tools/check_all.py"], ROOT, "0 errors"),
     ("skill graph", PY + ["tools/check_graph.py", "--strict"], ROOT, "0 errors"),
     ("build content", PY + ["tools/build_content.py"], ROOT, None),
     ("overlap (at most 1 known)", PY + ["tools/check_overlap.py"], ROOT, "1 overlaps"),

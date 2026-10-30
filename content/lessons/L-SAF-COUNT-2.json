@@ -1,0 +1,135 @@
+{
+  "id": "L-SAF-COUNT-2",
+  "title": "Take it or leave it: the running balance",
+  "skill": "SAF.COUNT",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Keeps a running balance (won minus lost) while playing a capture sequence through",
+    "Decides whether to start the captures on a defended piece, judging at the best place to stop",
+    "Chooses the cheapest capturing piece first when several can take",
+    "Says when the count is not needed (a piece with no defender)"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You have met counting in \"Is this piece safe? Loose pieces and counting\", and the cases where a count lies in \"Counting attackers and defenders\". Here you make the **decision**. Play the captures out and keep a **running balance**: what you have won minus what you have lost after each capture. Start only if the balance ends above zero at the best place to stop."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/ppp2ppp/4p3/3n4/2P5/2N5/PP3PPP/R4RK1 w - - 0 1",
+      "caption": "White to move. The knight on d5 is attacked twice and defended once. Keep the balance.",
+      "line": [
+        {
+          "move": "c4d5",
+          "say": "The pawn takes the knight. Balance: +3."
+        },
+        {
+          "move": "e6d5",
+          "say": "The pawn takes back. Balance: +2."
+        },
+        {
+          "move": "c3d5",
+          "say": "The knight takes that pawn. Balance: +3. Black has nothing left to take with."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Two White pieces attack d5."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One Black piece defends d5."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c4d5",
+            "min": 3
+          },
+          "statement": "Starting with the pawn, White comes out at least 3 points ahead along the best defence."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "d5"
+        },
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-COUNT-46"
+    },
+    {
+      "type": "card",
+      "text": "**When the balance can mislead.** Counting values are a *rule of thumb*. You may stop an exchange early, so read the balance at your best stopping point. The cheapest capturer goes first. Pinned and overloaded defenders are the subject of \"Counting attackers and defenders\". If a piece has no defender at all, there is no balance to keep: just check that taking it leaves nothing of yours loose."
+    },
+    {
+      "type": "contrast",
+      "title": "Same count, one change",
+      "prompt": "Two attackers, one defender in each. Only the first capture, or an extra piece, changes. Predict, then check.",
+      "working": "IBds21-1",
+      "failing": "IBds21-2",
+      "irrelevant": "IBds21-3"
+    },
+    {
+      "type": "item",
+      "item": "IG-COUNT-59",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-COUNT-70",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-COUNT-52",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.COUNT",
+        "task.take-or-not"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In the last positions, did you write the balance or guess from the number of pieces? Which step did you skip first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/lessons-t0.md (weaknesses: pawn-first counting)",
+    "content/skills/SAF.COUNT.json (D2 outcome, conditions)",
+    "items IG-COUNT-* (generated, tablebase and engine checked), IBds21-1..3 (authored)"
+  ]
+}

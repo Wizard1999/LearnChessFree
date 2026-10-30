@@ -1,0 +1,139 @@
+{
+  "id": "L-TAC-STALEMATE-TRICK-3",
+  "title": "Stalemate conditions: spare moves and the promoted piece",
+  "skill": "TAC.STALEMATE-TRICK",
+  "depth": "D3",
+  "minutes": 12,
+  "outcomes": [
+    "Predicts whether a stalemate still arises after one change to the position",
+    "Says how a spare pawn move removes a stalemate and how a blocked pawn does not",
+    "Chooses the promoted piece that avoids the stalemate",
+    "Recognises a king with room to move, where stalemate cannot arise"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You can already find a stalemate (*Stalemate as a rescue*, *Stalemate in mixed endings: save the draw, avoid the trap*). Now you predict what one change does. Three conditions decide it:\n**Spare moves:** any pawn or piece that can move.\n**The promoted piece:** a queen can stalemate where a rook still wins.\n**A pawn that cannot move** gives no spare move."
+    },
+    {
+      "type": "board",
+      "fen": "8/5P1k/8/5K2/8/8/8/8 w - - 0 1",
+      "caption": "White promotes on f8. The piece chosen decides the result.",
+      "line": [
+        {
+          "move": "f7f8r",
+          "say": "The rook leaves the g7 square free, so Black is not stalemated."
+        },
+        {
+          "move": "h7g7",
+          "say": "The black king moves and attacks the rook."
+        },
+        {
+          "move": "f8a8",
+          "say": "The rook steps away; king and rook win against a lone king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "f8",
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win",
+            "move": "f7f8r"
+          },
+          "statement": "After f8=R White wins (tablebase)."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "f7f8q"
+          },
+          "statement": "After f8=Q the game is drawn, by stalemate (tablebase)."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "h7",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "f7f8q"
+          },
+          "statement": "After f8=Q the black king has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds33-6"
+    },
+    {
+      "type": "item",
+      "item": "IBds33-7"
+    },
+    {
+      "type": "item",
+      "item": "IBds33-8"
+    },
+    {
+      "type": "card",
+      "text": "**When a stalemate holds:** the side to move has no legal move with any piece and is not in check. **Rule of thumb:** a king on the edge, with no other black piece able to move.\n**When it fails:** a pawn or piece that can move; a different promoted piece; a king with room. Before you rely on a stalemate, list every legal move of the side to move."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen move, one spare move",
+      "prompt": "Predict first: in the second position the black pawn is on h7, where it can move.",
+      "working": "IBds33-11",
+      "failing": "IBds33-12"
+    },
+    {
+      "type": "item",
+      "item": "IBds33-13",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-10",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.stalemateTrick",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which condition did you check first: the spare moves, the promoted piece or the pawn that could not move? Which did you forget?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.STALEMATE-TRICK.json (D3 outcome, conditions, contrasts)",
+    "tablebase claims on every authored item",
+    "authored items IBds33-6 to IBds33-13 (tablebase and mobility checked)"
+  ]
+}

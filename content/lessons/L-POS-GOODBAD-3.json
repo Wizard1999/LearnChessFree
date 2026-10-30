@@ -1,0 +1,145 @@
+{
+ "id": "L-POS-GOODBAD-3",
+ "title": "One pawn move and the bishop: which rule holds",
+ "skill": "POS.GOODBAD",
+ "depth": "D3",
+ "minutes": 12,
+ "outcomes": [
+  "Predicts whether a given pawn move costs a bishop moves, by checking its colour and its diagonals",
+  "Tells the count rule (pawns on the bishop's colour) from the bishop's actual moves",
+  "Says which of the two bishop-and-pawn colour rules has support here, and at what evidence grade"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In *Good and bad pieces: now, and later* you counted a bishop's squares. A count rule says: a bishop is **bad** when more than half its side's pawns stand on its colour, so a pawn move can change the verdict, and sometimes the verdict and the real moves disagree. Two rules compete: keep pawns off your own bishop's colour, or put pawns on the colour of the enemy bishop. Test the first on a board."
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/pp2bppp/2n1pn2/8/3P4/2PBPN2/PP3PPP/R1BQ1RK1 w - - 0 9",
+   "caption": "White to move. The bishop on d3 moves on light squares.",
+   "line": [
+    {
+     "move": "e3e4",
+     "say": "e4 stands on the bishop's diagonal: 10 legal moves become 6, yet the count rule still calls it good (3 of 8 pawns)."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d3",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d3",
+      "piece": "B"
+     },
+     "statement": "The White bishop stands on d3."
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "d3",
+      "mode": "legal",
+      "count": 10
+     },
+     "statement": "The bishop has 10 legal moves."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "d3",
+      "mode": "legal",
+      "count": 6,
+      "after_move": "e3e4"
+     },
+     "statement": "After e4 it has 6."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_colours",
+     "params": {
+      "color": "white",
+      "light": 2,
+      "dark": 6
+     },
+     "statement": "White has 2 pawns on light squares and 6 on dark squares."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_colours",
+     "params": {
+      "color": "white",
+      "light": 3,
+      "dark": 5,
+      "after_move": "e3e4"
+     },
+     "statement": "After e4: 3 on light squares and 5 on dark squares."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-28"
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-29"
+  },
+  {
+   "type": "card",
+   "text": "**What the checks show.** Rule one (keep your pawns off your own bishop's colour) comes from Capablanca's book [S], one source, and a pawn on the bishop's diagonal cost it moves here [V]; whether it wins games is untested [H]. Rule two (pawns on the enemy bishop's colour) is a hypothesis [H]. The count is a **rule of thumb**: a pawn on the bishop's colour off its diagonals may cost nothing."
+  },
+  {
+   "type": "contrast",
+   "title": "Same bishop, three pawn moves",
+   "prompt": "White moves one pawn. Predict whether the bishop on d3 has fewer legal moves afterwards, then check.",
+   "working": "IBds53-1",
+   "failing": "IBds53-3",
+   "irrelevant": "IBds53-5"
+  },
+  {
+   "type": "item",
+   "item": "IBds53-2",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds53-4",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.GOODBAD",
+    "tpl.pair-gb"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Take one game of yours. For each bishop, write the count rule's verdict and how many legal moves it had at move 20. Do they agree? (A paper exercise you run yourself.)"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.GOODBAD.json (D3 outcome, conditions: the enemy-colour rule is a hypothesis)",
+  "sources/sheets/capablanca_chess-fundamentals.md (own-colour rule, idea only)",
+  "items IP-PIECES-28 and IP-PIECES-29 and the authored family of this batch"
+ ]
+}

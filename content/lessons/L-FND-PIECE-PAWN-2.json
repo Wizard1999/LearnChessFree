@@ -1,0 +1,121 @@
+{
+  "id": "L-FND-PIECE-PAWN-2",
+  "title": "The pawn in a busy position",
+  "skill": "FND.PIECE.PAWN",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Names the piece on a given square, and which way it moves, before using its rule",
+    "Taps every square a pawn can move to, including a pawn on its starting rank",
+    "Says that a pawn with a piece directly in front of it cannot move forward but may still capture diagonally",
+    "Says that an attacked square is still a legal destination for a pawn"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The pawn: moves and captures are different** you were told \"pawn\". Now nobody says it. Name the piece first and check its colour: white pawns move up the board, black pawns down. Then ask two separate questions. Forward: is the square empty? Diagonal: does an enemy piece stand there? On the starting rank, check the second square too."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/5n2/3b4/4P3/4K3 w - - 0 1",
+      "caption": "The piece on e2 is a pawn on its starting rank. Forward squares e3 and e4 are empty, and the bishop on d3 can be taken.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "The pawn advances two squares: both e3 and e4 were empty."
+        },
+        {
+          "move": "e8d7",
+          "say": "Black moves the king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e3"
+        },
+        {
+          "from": "e2",
+          "to": "e4"
+        },
+        {
+          "from": "e2",
+          "to": "d3"
+        }
+      ],
+      "highlight": [
+        "d3",
+        "e3",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e2",
+            "to": [
+              "d3",
+              "e3",
+              "e4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-211"
+    },
+    {
+      "type": "card",
+      "text": "Forward moves need empty squares; a piece directly ahead blocks the pawn and cannot be taken. Diagonal moves are only captures, onto an enemy piece. The two-square step needs both squares empty and the pawn on its starting rank. A pawn may move to a square an enemy piece attacks. *Rule of thumb:* answer the forward question and the diagonal question separately."
+    },
+    {
+      "type": "contrast",
+      "title": "Blocked, free, distant",
+      "prompt": "Predict first. In the first position the pawn is on its starting rank. In the second, a black piece stands directly in front of it. In the third, a black rook has been added on g4. Does the pawn lose a square?",
+      "working": "IBds12-11",
+      "failing": "IBds12-12",
+      "irrelevant": "IBds12-13"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-208",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-214",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.PAWN",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "With a black pawn in the silent items, did you remember which way it moves before you looked for squares? What did you check first, forward or diagonal?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.PAWN.json (D2 outcome)",
+    "content/lessons/L-FND-PAWN-1.json",
+    "content/items/lesson-ds12.json",
+    "rules of chess (python-chess legal move generation, via tools/validate.py)"
+  ]
+}

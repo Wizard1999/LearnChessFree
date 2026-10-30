@@ -1,0 +1,115 @@
+{
+  "id": "L-FND-PIECE-KNIGHT-2",
+  "title": "The knight in a busy position, on the edge and in the corner",
+  "skill": "FND.PIECE.KNIGHT",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Names the piece on a given square before using its rule, with no hint in the prompt",
+    "Taps every square a knight can jump to in a crowded position, leaving out squares held by its own pieces",
+    "Counts fewer than eight jumps for a knight on the edge or in the corner",
+    "Says that pieces beside the knight do not block it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The knight: the piece that jumps** you were told \"knight\". Now nobody says it. Name the piece first, then write down its eight possible jumps from the square. Cross out a jump that would leave the board and a jump onto your own piece. Pieces in between never matter. Try it on the edge."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/8/8/8/7N/5P2/6P1/6K1 w - - 0 1",
+      "caption": "The piece on h4 is a knight on the edge. Four jumps would be possible, but two land on its own pawns.",
+      "line": [
+        {
+          "move": "h4g6",
+          "say": "The knight jumps to g6."
+        },
+        {
+          "move": "g8h7",
+          "say": "Black's king steps next to it, so the knight is attacked."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h4",
+          "to": "f5"
+        },
+        {
+          "from": "h4",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "h4",
+            "to": [
+              "f5",
+              "g6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-178"
+    },
+    {
+      "type": "card",
+      "text": "A knight has up to eight jumps. On the edge it has fewer, in the corner at most two, because the other landing squares are off the board. Your own pieces take away only the squares they stand on. Pieces next to the knight, or on the squares between, change nothing. *Rule of thumb:* list the eight jumps, then cross out; do not guess the shape."
+    },
+    {
+      "type": "contrast",
+      "title": "Centre, edge, neighbours",
+      "prompt": "Predict first. In the first position the knight is in the middle of a crowd. In the second, it stands on the edge. In the third, a pawn beside it has moved. What changes?",
+      "working": "IBds12-7",
+      "failing": "IBds12-8",
+      "irrelevant": "IBds12-9"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-176",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-177",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-10",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KNIGHT",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "When the knight stood on the edge, did you start from eight jumps and cross out, or did you only look for squares that were free?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.KNIGHT.json (D2 outcome)",
+    "content/lessons/L-FND-KNIGHT-1.json",
+    "content/items/lesson-ds12.json",
+    "rules of chess (python-chess legal move generation, via tools/validate.py)"
+  ]
+}

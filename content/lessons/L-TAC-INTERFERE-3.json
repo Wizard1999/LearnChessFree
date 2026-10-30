@@ -1,0 +1,121 @@
+{
+  "id": "L-TAC-INTERFERE-3",
+  "title": "Interference: what the interposed piece costs",
+  "skill": "TAC.INTERFERE",
+  "depth": "D3",
+  "minutes": 10,
+  "outcomes": [
+    "Counts the attackers and the defenders of the interposed piece before choosing an interference",
+    "Says whether the opponent can capture the interposed piece and so restore the cut line",
+    "Predicts how a missing defender or one extra attacker changes the verdict"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson follows **Interference: cut the line between two pieces**, which taught how to find the interposing move. Now put a price on it.\nBefore you interpose, ask: can the opponent simply capture the interposed piece? If they can, does the capture put a piece back on the cut line? A **defended** interposed piece can still be taken with gain when it is attacked more often than it is defended."
+    },
+    {
+      "type": "board",
+      "fen": "1q4k1/5pp1/2P5/8/5n2/8/3Q1P2/5BK1 w - - 0 1",
+      "caption": "White to move. The pawn can step onto c7, between the black queen and the knight on f4. Nothing defends c7.",
+      "line": [
+        {
+          "move": "c6c7",
+          "say": "The pawn cuts the diagonal and attacks the queen."
+        },
+        {
+          "move": "b8c7",
+          "say": "The queen takes the pawn for nothing. From c7 it defends the knight again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b8",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "c7",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "white",
+            "count": 0,
+            "after_move": "c6c7"
+          },
+          "statement": "Nothing defends the pawn on c7."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "c6c7",
+            "max": 0
+          },
+          "statement": "Along the engine line the interference wins nothing."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds35-1"
+    },
+    {
+      "type": "card",
+      "text": "**It holds** when the interposed piece cannot be taken with gain and the cut line was the target's only defence.\n**It fails** when the piece is undefended, or attacked more often than defended, so the capturer lands back on the line.\n**Rule of thumb:** count attackers and defenders of the interposed square first; an attacker of lower counting value than the interposed piece wins material even against a defender."
+    },
+    {
+      "type": "contrast",
+      "title": "Same interference, one change",
+      "prompt": "Same position and the same pawn move, one change each time. Predict, then check.",
+      "working": "IBds35-1",
+      "failing": "IBds35-4",
+      "irrelevant": "IBds35-2"
+    },
+    {
+      "type": "item",
+      "item": "IBds35-5"
+    },
+    {
+      "type": "item",
+      "item": "IBds35-6"
+    },
+    {
+      "type": "item",
+      "item": "IB1-013",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB1-015",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.interference",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you interposed in the silent positions, what did you count: attackers of the interposed piece, its defenders, or only the line you wanted to cut? Which of the three did you skip?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.INTERFERE.json (D3 outcome, conditions, contrasts; the node notes that no synthesis sheet covers this motif)",
+    "items IBds35-1..6 (IBds35-4 is the missing-defender half of the contrast; IBds35-5/6 the extra-attacker pair) (authored, content/items/lesson-ds35.json; edits of the position of IB1-010), IB1-013, IB1-015 (content/items/lesson-b1.json)",
+    "lesson L-TAC-INTERFERE-1 (the idea and the find-the-move step are taught there)"
+  ]
+}

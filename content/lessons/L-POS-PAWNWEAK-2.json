@@ -1,0 +1,136 @@
+{
+  "id": "L-POS-PAWNWEAK-2",
+  "title": "Weak, harmless or compensated: rating a pawn",
+  "skill": "POS.PAWNWEAK",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Applies the stop-square condition before calling a pawn backward",
+    "Checks that the attacker's pieces can reach a fixed pawn",
+    "Says which of the three checks a pawn fails: can it advance, can my pieces reach it, does anything pay for it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You can already name weak pawns and test whether one is a target (see the lesson *Weak pawns: targets only if you can attack them*). Now you give a **verdict**. A pawn that looks weak is a **real weakness** (it cannot move, your pieces can reach it), **harmless** (you have no way to attack it) or **compensated** (the owner has something that pays for it)."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/p2bbppp/1pp1pn2/2p5/2PP4/2N1PN2/PP3PPP/R1BQ1RK1 w - - 0 1",
+      "caption": "White to move. Black's c-pawns are doubled, but Black has both bishops, and the engine rates the position within eight tenths of a pawn of equal. Treat the doubled pawns as compensated here, not as a clear target: the bishop pair is the candidate for what pays, though the engine score alone does not prove that.",
+      "line": [
+        {
+          "move": "b2b3",
+          "say": "White plays a quiet move; this does not settle the verdict."
+        },
+        {
+          "move": "c5d4",
+          "say": "Black trades one of the doubled pawns, which shows the doubling can be undone."
+        },
+        {
+          "move": "e3d4",
+          "say": "White recaptures."
+        },
+        {
+          "move": "c6c5",
+          "say": "Black advances the other c-pawn and keeps the bishop pair."
+        }
+      ],
+      "highlight": [
+        "c5",
+        "c6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "c6",
+              "c5"
+            ]
+          },
+          "statement": "Black's pawns on c6 and c5 are doubled."
+        },
+        {
+          "id": "C2",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "black"
+            ]
+          },
+          "statement": "Black owns both bishops and White does not."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -80,
+            "max": 80
+          },
+          "statement": "The engine rates the position within about eight tenths of a pawn of equal."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-46"
+    },
+    {
+      "type": "card",
+      "text": "A pawn is **backward** only if the square in front of it, its *stop square*, is attacked by an enemy pawn. If it can step forward safely it is not fixed, and a rook on its file wins nothing. Ask in this order: **Can it advance? Can my pieces reach it? Does the owner have something that pays for it?** As a *rule of thumb*, only a pawn that fails the first two tests is a real weakness."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one feature changed",
+      "prompt": "Only one thing differs between these three positions: the pawn that controls c5, or the pawn on c3. Predict each verdict, then check.",
+      "working": "IBds55-1",
+      "failing": "IBds55-2",
+      "irrelevant": "IBds55-3"
+    },
+    {
+      "type": "item",
+      "item": "IP-PAWNS-52"
+    },
+    {
+      "type": "card",
+      "text": "**Compensated** means something else on the board pays for the weakness. The bishop pair and an open file are the usual candidates (a *rule of thumb*, not a law). Doubled pawns, like Black's c-pawns in the first diagram, hurt only if a piece can attack them. Rate again whenever the position changes."
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-MIX-2",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "tpl.weak-count",
+        "cue.2"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you counted, which of the three checks (can it advance, can my pieces reach it, what pays for it) did you do first, and which did you skip?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.PAWNWEAK.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-POS-PAWNWEAK-1.json (core lesson, linked, not repeated)",
+    "content/items/lesson-ds55.json (IBds55-1 to IBds55-3, machine-checked)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K16, K26"
+  ]
+}

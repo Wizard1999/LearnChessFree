@@ -1,0 +1,129 @@
+{
+  "id": "L-POS-BREAKS-2",
+  "title": "Pawn breaks: break now or prepare first?",
+  "skill": "POS.BREAKS",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Chooses between playing the break and a preparatory move by counting attackers and defenders of the break square",
+    "Rejects a break when an enemy piece newly attacks the break square",
+    "Names the files a break opens and the rooks that could use them",
+    "Tells a pawn advance that attacks nothing from a real break"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Pawn breaks: ready or premature?** you tested whether one break was ready. Now you choose between two moves: the break itself, or a **preparatory move** that adds a defender of the break square or takes an attacker away. Count the attackers and defenders of the square the pawn lands on. Then ask what the break opens, and **who** can use the opened line first."
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/3bppbp/2np1np1/2p5/1pP1P3/pP1P1NNP/P3BPP1/BR1QR1K1 w - - 2 16",
+      "caption": "White to move. The pawn on d3 can step to d4 and offer an exchange against c5.",
+      "line": [
+        {
+          "move": "d3d4",
+          "say": "The break: the pawn attacks c5 and offers an exchange."
+        },
+        {
+          "move": "c5d4",
+          "say": "Black takes."
+        },
+        {
+          "move": "f3d4",
+          "say": "White recaptures. Now White has no d-pawn and Black has no c-pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d3",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4e5",
+              "d3d4"
+            ]
+          },
+          "statement": "d4 is among the engine's top two moves."
+        },
+        {
+          "type": "open_files",
+          "params": {
+            "half_open_white": [
+              "d"
+            ],
+            "half_open_black": [
+              "c"
+            ],
+            "after_moves": [
+              "d3d4",
+              "c5d4",
+              "f3d4"
+            ]
+          },
+          "statement": "After the exchange the d-file is half-open for White and the c-file is half-open for Black: the break opens a line for both sides."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-85"
+    },
+    {
+      "type": "card",
+      "text": "Preparation is cheap when the count is against you. *Rule of thumb:* if the break square is attacked more often than it is defended, add a defender or remove an attacker first; if the count is level or better and no pin or capture on the opened line punishes the push, break. A break opens a line for **both** sides, so look at his rooks as well as yours."
+    },
+    {
+      "type": "contrast",
+      "title": "Same break, one piece different",
+      "prompt": "In the first position White can play d5 now. In the second only the Black knight differs (on b6 instead of f8): break, or prepare? The third position asks a different question: does the pawn attack anything? Predict, then check.",
+      "working": "IP-QUIET-67",
+      "failing": "IBds56-8",
+      "irrelevant": "IBds56-9"
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIETX-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-83",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds56-23",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.BREAKS",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of the two positions where White could play d5: the Black knight stood on f8 in one and on b6 in the other. What did you count, and which side's rooks would have used the opened files?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 4, 8, 35)",
+    "sources/sheets/emlasker_common-sense.md (4.12; item 6)",
+    "content/lessons/L-POS-BREAKS-1.json; content/items/lesson-ds56.json (IBds56-8, 9, 23); shipped items IP-QUIET-24, 67, 83, 85, IP-QUIETX-11"
+  ]
+}

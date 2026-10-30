@@ -1,0 +1,142 @@
+{
+  "id": "L-TAC-STALEMATE-TRICK-2",
+  "title": "Stalemate in mixed endings: save the draw, avoid the trap",
+  "skill": "TAC.STALEMATE-TRICK",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Finds the stalemate resource for the losing side when the theme is not named",
+    "Avoids the quiet move that stalemates when ahead",
+    "Counts the opponent's legal moves after a candidate move before playing it",
+    "Recognises an ending where stalemate cannot arise"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Stalemate as a rescue* you were told to look for the stalemate. Now the theme is not named and either side may need the idea.\n**Behind:** can I give up a piece so that, after it is taken, I have no legal move and am not in check?\n**Ahead:** does my quiet move leave the opponent with no legal move?\nBoth are one count of the legal moves of the side that would be left to move."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/8/6K1/6Q1/8/8/8/8 w - - 0 1",
+      "caption": "White to move. Two quiet queen moves would stalemate Black.",
+      "line": [
+        {
+          "move": "g5d8",
+          "say": "Checkmate: the king on g6 covers g7 and h7, and the queen covers the back rank."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "g8",
+        "h6",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "g5d8",
+            "n": 1
+          },
+          "statement": "Qd8 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "g5h6"
+          },
+          "statement": "Qh6 would be a stalemate: the tablebase gives a draw."
+        },
+        {
+          "id": "C3",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "g5f6"
+          },
+          "statement": "Qf6 would be a stalemate: the tablebase gives a draw."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG2-ST-025"
+    },
+    {
+      "type": "item",
+      "item": "IG2-ST-006"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** the opponent has to take the piece (a check forces it) or has nothing better, and afterwards the side to move has no legal move with any piece and is not in check. **Rule of thumb:** it happens mostly with a king on the edge or in a corner.\n**Test before every quiet move:** one black pawn or piece that can still move ends the stalemate, for the trick and for the trap."
+    },
+    {
+      "type": "contrast",
+      "title": "The same queen move, one spare move",
+      "prompt": "Predict first: a black pawn stands on a7 in the second position.",
+      "working": "IBds33-1",
+      "failing": "IBds33-4"
+    },
+    {
+      "type": "item",
+      "item": "IG2-ST-016",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG2-ST-021",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-IG0mA",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.stalemateTrick",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last positions, did you count the opponent's legal moves before you moved, or after you saw the board?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.STALEMATE-TRICK.json (D2 outcome)",
+    "tablebase and mate_in claims on every item",
+    "shipped items IG2-ST-025, -006, -016, -021 and puzzle IL-IG0mA",
+    "authored items IBds33-1 to IBds33-5"
+  ]
+}

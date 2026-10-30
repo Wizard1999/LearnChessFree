@@ -1,0 +1,274 @@
+{
+  "id": "L-OD-CARO-KANN-1",
+  "course": "opening-deep-dives",
+  "title": "Caro-Kann Defense: the bishop outside, and three branches",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "POS.STRUCTURE.CHAIN",
+    "POS.BREAKS",
+    "OPN.PRINCIPLES"
+  ],
+  "minutes": 13,
+  "outcomes": [
+    "Names the Advance, Classical and Exchange branches by their move orders",
+    "Finds the break that attacks the base of the chain (...c5) and the h-pawn push that harasses a bishop on g6",
+    "Tells when ...c5 is premature (no ...e6 yet) and when it does not exist (Exchange structure)",
+    "Reads game counts from master and online data as results, not evaluations"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**The Caro-Kann Defense** starts 1.e4 c6 2.d4 d5. Black supports d5 with the c-pawn, so the bishop on c8 can still leave the pawns before ...e6 (compare the French, where ...e6 comes first).\nOur opening data names three main branches: **Advance** (3.e5), **Classical** (3.Nc3 dxe4 4.Nxe4 Bf5) and **Exchange** (3.exd5 cxd5). Pawn chains and breaks are taught elsewhere (the chain and breaks lessons); here we use them in one opening."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+      "caption": "Advance Variation. Black to answer 3.e5 after 1.e4 c6 2.d4 d5; step through the usual first moves.",
+      "line": [
+        {
+          "move": "e4e5",
+          "say": "The pawns on d4 and e5 now form a chain. Its base is d4."
+        },
+        {
+          "move": "c8f5",
+          "say": "Black's bishop goes outside the chain, before the e-pawn can shut its diagonal."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops and adds a second defender to d4."
+        },
+        {
+          "move": "e7e6",
+          "say": "The pawn supports d5. The bishop is already outside it."
+        },
+        {
+          "move": "f1e2",
+          "say": "White brings out the last minor piece on the kingside. Think about what Black's c-pawn can do next."
+        }
+      ],
+      "highlight": [
+        "d4",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4e5"
+          },
+          "statement": "3.e5 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "chain_base",
+            "color": "white",
+            "squares": [
+              "d4"
+            ],
+            "after_moves": [
+              "e4e5"
+            ]
+          },
+          "statement": "After 3.e5 the pawn on d4 is the base of a chain: it defends e5 and no pawn defends it."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e4e5",
+              "c8f5",
+              "g1f3"
+            ]
+          },
+          "statement": "After 4.Nf3 two white pieces defend d4 (queen and knight)."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you see numbers: in top-level games (both players rated 2,500 or more) that reached 1.e4 c6 2.d4 d5, which third move for White was played most often?",
+      "fields": [
+        {
+          "id": "third",
+          "label": "My guess:",
+          "options": [
+            "3.e5",
+            "3.exd5",
+            "3.Nc3",
+            "3.Nd2"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Results of games, not evaluations.** Our master set (329,379 games, both players 2,500+) holds 9,271 games that reached 1.e4 c6 2.d4 d5; in 9,266 of them White played a third move. Third moves: 3.e5 in 5,097, 3.exd5 in 1,693, 3.Nc3 in 1,422, 3.Nd2 in 739, 3.f3 in 315. After 3.e5 the results were 1,975 White wins, 1,757 draws, 1,365 Black wins.\nOnline (Lichess, September 2026, 1900-2100 band, 20,943 games at this position): 3.exd5 in 6,827, 3.e5 in 6,264, 3.Nc3 in 5,029."
+    },
+    {
+      "type": "reflect",
+      "kind": "evidence",
+      "prompt": "In the master set 3.e5 was played most often. Does that show 3.e5 is White's best move? In one sentence: what do the counts show, and what do they not show?"
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-1"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pp2pppp/2p5/3p4/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3",
+      "caption": "Classical Variation: 3.Nc3 dxe4 4.Nxe4 Bf5 5.Ng3 Bg6 6.h4. Watch what White's h-pawn threatens.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "White defends e4 with a knight and keeps the centre pawns."
+        },
+        {
+          "move": "d5e4",
+          "say": "Black takes the pawn on e4."
+        },
+        {
+          "move": "c3e4",
+          "say": "White retakes. No chain exists in this variation."
+        },
+        {
+          "move": "c8f5",
+          "say": "The bishop comes out at once, before ...e6, and attacks the knight."
+        },
+        {
+          "move": "e4g3",
+          "say": "The knight steps aside and keeps an eye on the bishop's diagonal."
+        },
+        {
+          "move": "f5g6",
+          "say": "The bishop keeps its diagonal, one square back."
+        },
+        {
+          "move": "h2h4",
+          "say": "White's rook pawn heads for g6: after h5 it would attack the bishop. Black to move; what should Black do about it?"
+        }
+      ],
+      "highlight": [
+        "g6",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "b1c3",
+              "d5e4",
+              "c3e4",
+              "c8f5"
+            ]
+          },
+          "statement": "After 4...Bf5 the bishop attacks the knight on e4."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "b1c3",
+              "d5e4",
+              "c3e4"
+            ]
+          },
+          "statement": "After 4.Nxe4 no black pawn attacks the knight on e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-2"
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-5"
+    },
+    {
+      "type": "card",
+      "text": "**When these ideas hold.** In the checked pair, ...c5 is the engine's top move after ...e6 and loses at least 80 centipawns before it (depth 16). In the Classical, after h4 the engine picks ...h6; ...Nf6, ...Nd7 and ...e6 lose at least 150.\n**Question to ask:** has the supporting move been played? Here ...e6 comes before ...c5. Bringing the bishop out first is a choice that keeps its diagonal open, not a law. In the Exchange structure the c-pawn is gone, so ...c5 does not exist. Check the position first."
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-12"
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-6"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the c5 break sound yet?",
+      "prompt": "Predict, then check.",
+      "working": "IODcarokann-9",
+      "failing": "IODcarokann-10",
+      "irrelevant": "IODcarokann-11"
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-3",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IODcarokann-8",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which part is least clear: the base of the chain as the target, the order of ...e6 and ...c5, or the h-pawn push in the Classical? Then, if you like, open the Openings explorer at 1.e4 c6 2.d4 d5, switch the rating band chips, and compare how the share of 3.e5, 3.exd5 and 3.Nc3 changes. (The explorer shows online games only; the master counts above are not in it.)",
+      "fields": [
+        {
+          "id": "unclear",
+          "label": "Least clear:",
+          "options": [
+            "the base of the chain",
+            "order of ...e6 and ...c5",
+            "the h-pawn push",
+            "none"
+          ]
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/items/lesson-od-caro-kann.json (positions replayed from the move sequences; claims engine-checked at depth 16)",
+    "app/public/masters/stats.json (329,379 top-level games, both players 2,500+; counts quoted exactly)",
+    "app/public/openings (Lichess standard rated games, September 2026, blitz/rapid/classical; ECO names and band counts)",
+    "docs/course-families.md (opening deep-dive template)"
+  ]
+}

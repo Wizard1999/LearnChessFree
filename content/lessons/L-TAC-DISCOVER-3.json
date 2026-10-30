@@ -1,0 +1,117 @@
+{
+  "id": "L-TAC-DISCOVER-3",
+  "title": "Choosing the masking piece's move",
+  "skill": "TAC.DISCOVER",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Chooses the move of the masking piece that does the most harm: a capture, a check or the strongest threat",
+    "Checks whether the uncovered line can be blocked or answered",
+    "Recognises that a discovered attack on a non-king piece gives the opponent a free move"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Discovered attacks, discovered check and double check** you found the uncovering move. At this depth the question is *which* move the uncovering piece makes. It moves with tempo, so it can capture, check, or make the strongest threat. Then look at the uncovered line: can the opponent block it or answer it first?"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/pp3ppp/8/3q4/8/4N3/PPP2PPP/4R1K1 w - - 0 1",
+      "caption": "White to move. The knight on e3 hides the rook on e1 from the king on e8.",
+      "line": [
+        {
+          "move": "e3d5",
+          "say": "The knight captures the queen and uncovers check from the rook."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king must answer the check, and White is a queen up."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "d5"
+        },
+        {
+          "from": "e1",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "e8"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e3d5"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "e3d5",
+            "min": 9
+          },
+          "statement": "Nxd5+ wins the queen for nothing along the engine line.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-5rtEq"
+    },
+    {
+      "type": "card",
+      "text": "Three checks before you play. **Is the uncovered target the king?** Then the opponent has no time for anything else. **If it is another piece,** can it capture first, move away with a threat, or trade? A discovered attack without check gives the opponent one free move. **Can the line be blocked?** **Rule of thumb:** pick the masking move that does the most harm, then verify the line."
+    },
+    {
+      "type": "contrast",
+      "title": "Check, or no check?",
+      "prompt": "Only the black king has moved. Predict whether the discovered attack still wins the queen.",
+      "working": "IL-B42Cy",
+      "failing": "IBds31-7"
+    },
+    {
+      "type": "item",
+      "item": "IL-Ur5gE",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds31-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-98Qdk",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.discoveredAttack",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before moving the masking piece, did you ask whether it gave check? How sure were you? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.DISCOVER.json (D3 outcome, conditions, contrasts)",
+    "L-TAC-DISCOVER-1 (idea taught there, not repeated)",
+    "Lichess puzzle database (CC0): B42Cy, 5rtEq, Ur5gE, 98Qdk, 1Jonk. The see-saw is not covered here."
+  ]
+}

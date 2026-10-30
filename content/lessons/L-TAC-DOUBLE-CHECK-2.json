@@ -1,0 +1,112 @@
+{
+  "id": "L-TAC-DOUBLE-CHECK-2",
+  "title": "Finding the double check in a mixed set",
+  "skill": "TAC.DOUBLE-CHECK",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the double check that mates or wins material when no theme is named",
+    "Lists the king's flight squares to decide whether the double check finishes",
+    "Says that a move is not a double check when a piece blocks the uncovered line"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "From **Discovered attacks, discovered check and double check** you know a double check is two checks from one move. Now you must find one in a mixed set, and say so when there is none. Scan for a piece that stands in front of a line to the king and could also give check by moving. Then count the king's squares: it can only move, so look for covered flight squares."
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/p2n2pp/2p1R3/8/2QP4/3q1r2/R4PPP/2B3K1 w - - 1 25",
+      "caption": "White to move. One rook move gives two checks.",
+      "line": [
+        {
+          "move": "e6e8",
+          "say": "The rook checks along the eighth rank and uncovers the queen's check from c4 along the diagonal."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "e8"
+        },
+        {
+          "from": "c4",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e6e8"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "e6e8",
+            "n": 1
+          },
+          "statement": "Re8 is checkmate.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-J67PW"
+    },
+    {
+      "type": "card",
+      "text": "Against a double check, capturing and blocking are impossible: only a king move is legal. Three questions before you play. Does the moving piece itself give check? Is the uncovered line really open? Are all the king's flight squares covered? **Rule of thumb:** if a double check does not mate, count what the forced king move gives up, since the king may simply step to a better square."
+    },
+    {
+      "type": "contrast",
+      "title": "Is it still a double check?",
+      "prompt": "One pawn stands on e7. Predict whether Nf6+ is checkmate.",
+      "working": "IL-0w830",
+      "failing": "IBds31-5"
+    },
+    {
+      "type": "item",
+      "item": "IL-oy52i",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds31-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-gxOat",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.doubleCheck",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "plan",
+      "prompt": "Which did you check first: the second line, or the king's flight squares? What would you check first next time?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.DOUBLE-CHECK.json (D2 outcome, conditions, contrasts)",
+    "L-TAC-DISCOVER-1 (double check first taught there)",
+    "Lichess puzzle database (CC0): 14Dd9, J67PW, 0w830, oy52i, gxOat, plus a hand-edited copy of J67PW"
+  ]
+}

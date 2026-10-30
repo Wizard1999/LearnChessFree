@@ -1,65 +1,71 @@
 {
-  "id": "FND.PIECE.PAWN",
-  "title": "How the pawn moves",
-  "strand": "S1",
-  "tier": 0,
-  "origin": "map-v1",
-  "depths": {
-    "D0": {
-      "outcome": "Says that a pawn moves straight forward, never backward, captures one square diagonally forward, and may move two squares on its first move.",
-      "prereqs": []
-    },
-    "D1": {
-      "outcome": "When told 'pawn', marks every square a pawn can move to: forward onto empty squares only, diagonally forward only to capture.",
-      "prereqs": [
-        "FND.BOARD.D1"
-      ]
-    },
-    "D2": {
-      "outcome": "In a busy position where the piece is not named, marks every square the pawn can move to, including a blocked pawn and one on its starting rank.",
-      "prereqs": [
-        "FND.PIECE.PAWN.D1"
-      ]
-    },
-    "D3": {
-      "outcome": "Says in how many moves a pawn can reach a given square, counting captures that change its file.",
-      "prereqs": [
-        "FND.PIECE.PAWN.D2"
-      ]
-    }
+ "id": "FND.PIECE.PAWN",
+ "title": "How the pawn moves",
+ "strand": "S1",
+ "tier": 0,
+ "origin": "map-v1",
+ "depths": {
+  "D0": {
+   "outcome": "Says that a pawn moves straight forward, never backward, captures one square diagonally forward, and may move two squares on its first move.",
+   "prereqs": []
   },
-  "misconceptions": [
-    "The pawn captures straight ahead.",
-    "A pawn can always move two squares.",
-    "A pawn can move backward or sideways.",
-    "A pawn may move diagonally onto an empty square."
-  ],
-  "sources": [
-    "docs/first-hours.md",
-    "docs/curriculum-map-v1.md"
-  ],
-  "rating": {
-    "grade": "G0",
-    "note": "expert estimate; tier=0"
+  "D1": {
+   "outcome": "When told 'pawn', marks every square a pawn can move to: forward onto empty squares only, diagonally forward only to capture.",
+   "prereqs": [
+    "FND.BOARD.D1"
+   ]
   },
-  "conditions": [
-    "A pawn moves straight forward onto an empty square (two squares from its starting rank if both are empty).",
-    "It captures one square diagonally forward, only onto an enemy piece; a piece directly in front blocks it and cannot be captured."
-  ],
-  "condition_sources": [
-    "rules",
-    "rules"
-  ],
-  "contrasts": [
-    "A pawn facing an enemy piece directly ahead cannot move forward and cannot take it, but it may still capture diagonally.",
-    "An enemy piece two squares ahead does not stop a pawn from making its one-square move."
-  ],
-  "contrast_kinds": [
-    "fails",
-    "irrelevant"
-  ],
-  "contrast_sources": [
-    "rules",
-    "rules"
-  ]
+  "D2": {
+   "outcome": "In a busy position where the piece is not named, marks every square the pawn can move to, including a blocked pawn and one on its starting rank.",
+   "prereqs": [
+    "FND.PIECE.PAWN.D1"
+   ]
+  },
+  "D3": {
+   "outcome": "Says in how many moves a pawn can reach a given square, counting captures that change its file.",
+   "prereqs": [
+    "FND.PIECE.PAWN.D2"
+   ]
+  }
+ },
+ "misconceptions": [
+  "The pawn captures straight ahead.",
+  "A pawn can always move two squares.",
+  "A pawn can move backward or sideways.",
+  "A pawn may move diagonally onto an empty square."
+ ],
+ "sources": [
+  "docs/first-hours.md",
+  "docs/curriculum-map-v1.md"
+ ],
+ "rating": {
+  "grade": "G0",
+  "note": "expert estimate; tier=0"
+ },
+ "conditions": [
+  "A pawn moves straight forward onto an empty square (two squares from its starting rank if both are empty).",
+  "It captures one square diagonally forward, only onto an enemy piece; a piece directly in front blocks it and cannot be captured."
+ ],
+ "condition_sources": [
+  "rules",
+  "rules"
+ ],
+ "contrasts": [
+  "A pawn facing an enemy piece directly ahead cannot move forward and cannot take it, but it may still capture diagonally.",
+  "An enemy piece two squares ahead does not stop a pawn from making its one-square move."
+ ],
+ "contrast_kinds": [
+  "fails",
+  "irrelevant"
+ ],
+ "contrast_sources": [
+  "rules",
+  "rules"
+ ],
+ "soft_prereqs": [
+  "FND.PIECE.KNIGHT.D1"
+ ],
+ "soft_prereq_notes": {
+  "FND.PIECE.KNIGHT.D1": "taught last of the pieces: its moves and its captures differ, which is easier once every other piece moves and captures the same way"
+ }
 }

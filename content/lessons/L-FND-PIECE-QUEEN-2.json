@@ -1,0 +1,155 @@
+{
+  "id": "L-FND-PIECE-QUEEN-2",
+  "title": "The queen in a busy position",
+  "skill": "FND.PIECE.QUEEN",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Names the piece on a given square before using its rule, with no hint in the prompt",
+    "Taps every square a queen can reach by tracing its eight lines separately",
+    "Says that the queen does not jump like a knight",
+    "Says that a blocker on one line does not stop the queen on the other lines"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The queen and the king** you were told \"queen\". Now nobody says it. Name the piece first. Then trace its **eight lines** one by one: four along ranks and files, four along diagonals. Each line stops before an own piece, or on the first enemy piece, which can be taken."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3n4/8/2Q1P3/8/4K3 w - - 0 1",
+      "caption": "The piece on c3 is a queen. Its pawn on e3 and king on e1 stop two lines one square early. The knight on d5 is on none of its lines.",
+      "line": [
+        {
+          "move": "c3a5",
+          "say": "The queen slides up-left along the diagonal to a5."
+        },
+        {
+          "move": "e8d7",
+          "say": "Black moves the king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "c8"
+        },
+        {
+          "from": "c3",
+          "to": "h8"
+        },
+        {
+          "from": "c3",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "a1",
+        "a3",
+        "a5",
+        "b2",
+        "b3",
+        "b4",
+        "c1",
+        "c2",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "d2",
+        "d3",
+        "d4",
+        "e5",
+        "f6",
+        "g7",
+        "h8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "c3",
+            "to": [
+              "a1",
+              "a3",
+              "a5",
+              "b2",
+              "b3",
+              "b4",
+              "c1",
+              "c2",
+              "c4",
+              "c5",
+              "c6",
+              "c7",
+              "c8",
+              "d2",
+              "d3",
+              "d4",
+              "e5",
+              "f6",
+              "g7",
+              "h8"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-101"
+    },
+    {
+      "type": "card",
+      "text": "The queen moves as a rook and a bishop together. Each of the eight lines is blocked on its own: an own piece ends it one square early, and an enemy piece is the last square. A blocker on one line leaves the other seven untouched. *Rule of thumb:* count the lines you traced; eight, even if some are empty."
+    },
+    {
+      "type": "contrast",
+      "title": "Lines, jumps, blockers",
+      "prompt": "Predict first. The first position asks for every square. The second asks one yes/no question about a square a knight could reach from the same square. In the third, a pawn moved next to the queen: which of the queen's other lines are still open?",
+      "working": "IBds12-14",
+      "failing": "IBds12-15",
+      "irrelevant": "IBds12-16"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-104",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-107",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.QUEEN",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent items, did you trace all eight lines, or did you stop once you had a long list? Which line did you check last?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.QUEEN.json (D2 outcome)",
+    "content/lessons/L-FND-QUEENKING-1.json",
+    "content/items/lesson-ds12.json",
+    "rules of chess (python-chess legal move generation, via tools/validate.py)"
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "L-FND-ENPASSANT-2",
+  "title": "Is en passant possible right now?",
+  "skill": "FND.ENPASSANT",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Decides from the last move alone whether en passant is possible",
+    "Lists a pawn's moves including the en passant capture",
+    "Does not allow en passant for a pawn that arrived earlier or by single steps"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **En passant, promotion and draws** you captured en passant when told to. Now decide for yourself whether it is possible. Ask: did an enemy pawn just move two squares in its last move? Did it land right beside my pawn? If both are yes, my pawn may capture it, landing on the square it jumped over. Only the last move counts: the game before that does not."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/2p5/8/3P4/8/8/8/4K3 b - - 0 1",
+      "caption": "Black jumps two squares and lands beside the pawn on d5. White may take it as if it had moved one square.",
+      "line": [
+        {
+          "move": "c7c5",
+          "say": "Black's pawn jumps two squares and lands beside White's pawn."
+        },
+        {
+          "move": "d5c6",
+          "say": "White captures en passant: the pawn lands on c6 and the black pawn leaves c5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "c5"
+        },
+        {
+          "from": "d5",
+          "to": "c6"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "c6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c7c5"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-EP-8"
+    },
+    {
+      "type": "card",
+      "text": "To list a pawn's moves, go in order: straight ahead, diagonal captures of pieces that are there, then the last move. As a **rule of thumb** the en passant square is the empty square the enemy pawn passed over. It stops being available after one move. The same pawns side by side give a different answer if the pawn arrived earlier or by single steps."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawns, different last move",
+      "prompt": "Predict first: can White capture en passant when Black has just jumped, when the pawn has been there for a while, and when other pieces are far away?",
+      "working": "IBds11-17",
+      "failing": "IBds11-18",
+      "irrelevant": "IBds11-19"
+    },
+    {
+      "type": "item",
+      "item": "IBds11-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-EP-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-EP-14",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-EP-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-EP-21",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.ENPASSANT",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In a real game you must remember the opponent's last move, since the board does not show it. How sure are you that you would notice a two-square jump beside your pawn? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.ENPASSANT.json (D2 outcome)",
+    "content/lessons/L-FND-SPECIAL-1.json (taught there, not repeated)",
+    "items IG-EP-*, IBds11-17..21 (claims checked by tools/validate.py)"
+  ]
+}

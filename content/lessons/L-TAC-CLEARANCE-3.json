@@ -1,0 +1,133 @@
+{
+  "id": "L-TAC-CLEARANCE-3",
+  "title": "Clearance: take the threat away",
+  "skill": "TAC.CLEARANCE",
+  "depth": "D3",
+  "minutes": 11,
+  "outcomes": [
+    "Names the threat of a vacating move before relying on the line it opens",
+    "Predicts what happens to a clearance when its check or its follow-up piece is taken away",
+    "Tells a clearance that still works after a change from one that no longer does"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson builds on **Clearance: step aside with a threat** and **Clearance: win, mate, or only retreat?**. A clearance needs a vacating move the opponent must answer, and a line that leads somewhere. Test it by *removal*: take the threat away in your head, or the piece that would use the line. If the opponent gets a free move, or the line leads nowhere, the idea fails."
+    },
+    {
+      "type": "board",
+      "fen": "4Q3/1p4R1/1ppk1q1p/5r2/8/PB6/1P5P/7K b - - 0 37",
+      "caption": "Black to move. The rook on f5 stands in front of its own queen.",
+      "line": [
+        {
+          "move": "f5f1",
+          "say": "Rf1+ is check, so White has no time to cover f3."
+        },
+        {
+          "move": "g7g1",
+          "say": "White blocks with the rook."
+        },
+        {
+          "move": "f6f3",
+          "say": "The queen travels down the cleared file: Qf3 is mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "f1"
+        },
+        {
+          "from": "f6",
+          "to": "f3"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "f6",
+        "h1"
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f5f1"
+            ]
+          },
+          "statement": "The engine's best move is Rf1+ (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "h1",
+            "color": "black",
+            "count": 1,
+            "after_move": "f5f1"
+          },
+          "statement": "After Rf1 the rook gives check to the king on h1.",
+          "id": "C2"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "f5f1",
+            "n": 2
+          },
+          "statement": "Rf1+ forces checkmate in 2 or fewer against the engine's best defence.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IB34-06"
+    },
+    {
+      "type": "card",
+      "text": "**The removal test.**\n**1.** Name the threat of the vacating move: a check, a capture, or an attack on something bigger.\n**2.** Name what the opened line reaches.\n**3.** Remove one of them and ask: does the opponent now have a free move to cover?\n**Rule of thumb:** a vacating move with no forcing threat usually hands the opponent a free move, and the clearance fails."
+    },
+    {
+      "type": "contrast",
+      "title": "Same clearance, one change at a time",
+      "prompt": "Each position changes one thing about the working position (rook on e2, Qxf6 check). Predict whether the queen move still wins, then check.",
+      "working": "IB34-05",
+      "failing": "IB34-04",
+      "irrelevant": "IB34-18"
+    },
+    {
+      "type": "item",
+      "item": "IB34-07",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB34-08",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.clearance",
+        "cue.3",
+        "tier.2"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you took the threat away in your head, which part was hardest to judge: whether the move was still forcing, or whether a piece still stood behind the one that moved?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.CLEARANCE.json (outcomes for D3, conditions, contrasts)",
+    "items IB34-04..08 and IB34-18 (authored, content/items/lesson-ds34.json; one-feature edits of Lichess puzzle fUjM0)",
+    "Lichess puzzle database (CC0): 4xH9q (board), fUjM0"
+  ]
+}

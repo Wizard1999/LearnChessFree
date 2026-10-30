@@ -1,0 +1,196 @@
+{
+  "id": "L-FND-MATE1-3",
+  "title": "Mates that need a closer look",
+  "skill": "FND.MATE1",
+  "depth": "D3",
+  "minutes": 13,
+  "outcomes": [
+    "Finds a mate in one that uses a smothered king, a discovered or double check, or a promotion",
+    "Tests each check for king moves, capture and block before calling it mate",
+    "Rejects look-alikes that have a free square, a capture or a block"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Checkmate in one: four patterns** the mates were easy to see. Some need a closer look. First the **smothered mate**: a knight checks a king whose own pieces fill every neighbouring square. A knight's check cannot be blocked, so test two things: can the knight be captured, and does the king have a free square?"
+    },
+    {
+      "type": "board",
+      "fen": "kr6/pp6/8/1N6/8/8/8/6K1 w - - 0 1",
+      "caption": "The king's own rook and pawns fill every square next to it.",
+      "line": [
+        {
+          "move": "b5c7",
+          "say": "Nc7 checks. Nothing captures the knight, and the king has no free square."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "a7",
+        "b7",
+        "b8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "b5c7",
+            "n": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds14-3"
+    },
+    {
+      "type": "card",
+      "text": "**Discovered check:** a piece moves away and uncovers a check from the piece behind it. If the moving piece also checks, that is a **double check**, and only a king move answers it: capturing or blocking does not help. Test captures anyway: a knight that the king can simply take is no mate."
+    },
+    {
+      "type": "board",
+      "fen": "6rk/7p/8/4N3/8/8/1B6/6K1 w - - 0 1",
+      "caption": "The knight stands on the bishop's diagonal.",
+      "line": [
+        {
+          "move": "e5g6",
+          "say": "Ng6 checks, and the bishop's diagonal is open too. Two checks; the king has no square."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "g6"
+        },
+        {
+          "from": "b2",
+          "to": "h8"
+        }
+      ],
+      "highlight": [
+        "h8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e5g6",
+            "n": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds14-6"
+    },
+    {
+      "type": "card",
+      "text": "A **promotion** can be the checking move. The new piece decides whether it is mate, so test each choice: queen, rook, knight. A knight's check cannot be blocked and ignores pieces standing in the way, so a knight can mate where a queen does not."
+    },
+    {
+      "type": "board",
+      "fen": "6bn/5Ppk/8/7K/8/8/8/8 w - - 0 1",
+      "caption": "The pawn can become a queen or a knight on f8.",
+      "line": [
+        {
+          "move": "f7f8n",
+          "say": "The knight attacks h7 and nothing can take it. The king's own pieces fill g8, h8 and g7, and the white king covers g6 and h6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "f7f8n",
+            "n": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f7f8q"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds14-8"
+    },
+    {
+      "type": "card",
+      "text": "These mates hold when, after the check, the king has no free square, the checker cannot be taken (for a double check, only a king move counts), and no piece can step in the way.\n\n**Rule of thumb:** with a king boxed in by its own pieces, look first for a knight check, a discovered check or a promotion. It fails when one neighbouring square is open or a piece can interpose."
+    },
+    {
+      "type": "contrast",
+      "title": "Same knight, one pawn changed",
+      "prompt": "Predict first for each: is there a mate in one?",
+      "working": "IBds14-1",
+      "failing": "IBds14-2",
+      "irrelevant": "IBds14-12"
+    },
+    {
+      "type": "item",
+      "item": "IBds14-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-11",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.MATE1",
+        "theme.mate-closer-look"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Some of the last positions looked like a mate but were not. Which escape did you check last: king move, capture or block? How sure were you of each answer?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.MATE1.json (D3 outcome, conditions)",
+    "content/lessons/L-FND-MATE1-2.json (the method)",
+    "items in content/items/lesson-ds14.json (rules and engine claims)"
+  ]
+}

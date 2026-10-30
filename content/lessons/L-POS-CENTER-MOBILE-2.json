@@ -1,0 +1,123 @@
+{
+  "id": "L-POS-CENTER-MOBILE-2",
+  "title": "The free centre pawn: break, set up, or neither?",
+  "skill": "POS.CENTER.MOBILE",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Decides in an unlabeled position between the break, the piece set-up and neither",
+    "Rejects a break that an enemy rook or piece on the open line has made premature",
+    "Tells that a pawn that is already attacked, or blocked, is not a free centre pawn"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **A free pawn in the centre: break it or restrain it** you met the free pawn and its two answers. Here nobody names the answer. For each position ask three questions. Is the pawn free: no enemy pawn attacks it, and it can advance? If so, is the break ready: count its attackers and defenders. If not, which set-up of pieces watches the square in front?"
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/2qn1ppp/p1pb1nb1/1p4B1/3P4/1BN1RN1P/PP2QPP1/4R1K1 b - - 4 16",
+      "caption": "Black to move. White's pawn on d4 is free. Black's pieces are developed behind the c-pawn.",
+      "line": [
+        {
+          "move": "c6c5",
+          "say": "The break: the pawn attacks d4."
+        },
+        {
+          "move": "d4c5",
+          "say": "White takes."
+        },
+        {
+          "move": "d6c5",
+          "say": "The bishop recaptures and the free pawn is gone."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "claims": [
+        {
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No Black pawn attacks the pawn on d4."
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "c5",
+            "includes": [
+              "d4"
+            ],
+            "after_move": "c6c5"
+          },
+          "statement": "After c5 the pawn attacks d4."
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6c5"
+            ]
+          },
+          "statement": "c5 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBp2-39"
+    },
+    {
+      "type": "card",
+      "text": "A break needs a clear line. A rook on the file behind the break square adds an attacker, and a pawn that has moved cannot come back. *Rule of thumb:* when the count is not in your favour, play the set-up and let the enemy pawn come to you. A pawn that is already attacked, or blocked, is not free: there is nothing to prepare, and neither answer applies."
+    },
+    {
+      "type": "contrast",
+      "title": "The same free pawn, one rook different",
+      "prompt": "In both positions Black can break against the free pawn on d4 with e5. In the second position only a White rook differs (on e3 instead of d1). What is best in each, and why? Predict, then check.",
+      "working": "IBp2-38",
+      "failing": "IBds56-10"
+    },
+    {
+      "type": "item",
+      "item": "IBds56-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds56-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.CENTER.MOBILE",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the last two positions you were asked whether the pawn on d4 was free. Which of the two parts did you check first, the attackers or the pawn's ability to move?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/nimzowitsch_my-system.md (ideas 4, 36; item 3)",
+    "content/lessons/L-POS-CENTER-MOBILE-1.json; content/items/lesson-ds56.json (IBds56-10 to IBds56-12); shipped items IBp2-37, IBp2-38, IBp2-39"
+  ]
+}

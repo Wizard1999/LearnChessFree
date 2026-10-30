@@ -1,0 +1,169 @@
+{
+  "id": "L-LOOP-V3-2",
+  "title": "Test each candidate against the best reply",
+  "skill": "LOOP.V3",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Tests each candidate against the opponent's best reply instead of the reply that suits the plan",
+    "Finds a surviving move on a self-made list in positions where the first idea fails",
+    "Keeps a quiet move on the list when forcing candidates fail",
+    "Recognises a position where the first idea is right, or the move is forced, and stops listing"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You have met the candidate list in **Candidates and short lines**. This lesson adds one test: does a candidate **survive the opponent's best reply**? Judge it against his strongest answer, not the one you hope for. Often the first idea fails this test and a different move on the list passes. Your job is to find that move before you play."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/p5pp/1pp5/3pB3/3PpPBb/PQN1P3/1P4q1/2RK1R2 b - - 4 22",
+      "caption": "The first idea is a forcing move. Does it survive the reply?",
+      "line": [
+        {
+          "move": "g2g4",
+          "say": "Candidate one: Qxg4+, a capture. It is forcing, so it comes first on the list."
+        },
+        {
+          "move": "d1c2",
+          "say": "A reply to test: Kc2. Against it Qxg4+ ends far below Qxf1+, the engine's first choice."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g2",
+          "to": "g4"
+        },
+        {
+          "from": "d1",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "g4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "g2g4",
+            "cp": 300
+          },
+          "statement": "Qxg4+ is at least 300 centipawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2f1"
+            ]
+          },
+          "statement": "Qxf1+ is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "max": -200
+          },
+          "statement": "With best play the side to move stands at least two pawns better (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds22-2"
+    },
+    {
+      "type": "card",
+      "text": "**When this pays.** Testing every candidate against its best reply costs time. It pays when the position is not forced and more than one plan is plausible. **Rule of thumb:** test the forcing candidate first; if it fails, move down the list. Keep a quiet move on the list: sometimes it is the only one that survives. It is wasted when the first idea is plainly right or only one move is legal."
+    },
+    {
+      "type": "item",
+      "item": "IBds22-3"
+    },
+    {
+      "type": "contrast",
+      "title": "The list pays, the quiet survivor, nothing to list",
+      "prompt": "Predict first: in which position does a forcing move fail and another forcing move survive, in which is a quiet move the only survivor, and in which is there nothing to list? Then check.",
+      "working": "IBds22-4",
+      "failing": "IBds22-1",
+      "irrelevant": "IBds22-8"
+    },
+    {
+      "type": "card",
+      "text": "**What the app does for you now, and when it stops.** The candidate-list box from **Candidates and short lines** stays beside the board in mixed practice, hidden until you open it; the app notes when you do. The next three items are silent: no hints and no engine. One of them may need no list at all."
+    },
+    {
+      "type": "item",
+      "item": "IBds22-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds22-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds22-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.LOOP.V3",
+        "cue.3"
+      ],
+      "n": 3
+    },
+    {
+      "type": "reflect",
+      "kind": "review",
+      "prompt": "Look back at the silent items. This record is for you; it is not scored.",
+      "fields": [
+        {
+          "id": "first",
+          "label": "My first idea was (move):"
+        },
+        {
+          "id": "reply",
+          "label": "The reply that tested it:"
+        },
+        {
+          "id": "survived",
+          "label": "Did the first idea survive its best reply?",
+          "options": [
+            "yes",
+            "no",
+            "not sure"
+          ]
+        },
+        {
+          "id": "quiet",
+          "label": "Was a quiet move on my list?",
+          "options": [
+            "yes",
+            "no"
+          ]
+        },
+        {
+          "id": "unchecked",
+          "label": "What I did not check:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/LOOP.V3.json (D2 outcome, conditions, contrasts)",
+    "docs/lessons-loop-self.md (earlier Thinking Loop lessons)",
+    "sources/sheets/nimzowitsch_my-system.md idea 32 (quiet moves are neither threats nor parries), ideas only",
+    "positions: Lichess puzzle database (CC0); engine checks at depth 16 (content/items/lesson-ds22.json)"
+  ]
+}

@@ -1,0 +1,163 @@
+{
+ "id": "L-POS-OPENFILE-2",
+ "title": "Open files: choose the file, check the entry",
+ "skill": "POS.OPENFILE",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Names the entry square and checks whether the opponent covers it before choosing a file",
+  "Tells an open file from a half-open file and from a file closed by pawns of both colours",
+  "Sees that an open file is open to both rooks, so it matters who can use it first"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Open files: find the entry square** you were told to use a file. Now decide for yourself. For each open or half-open file ask three things.\n**Where would my rook land? Who covers that square? Whose rook can use the file first?**\nA file with no pawns is open to both sides. A half-open file, with only an enemy pawn on it, is the one to press."
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-81"
+  },
+  {
+   "type": "board",
+   "fen": "3r1rk1/p1p2pp1/1nB4p/2b5/3p4/1P3P2/PBP3PP/3RRK2 w - - 2 21",
+   "caption": "White to move. The e-file holds no pawn of either colour.",
+   "line": [
+    {
+     "move": "e1e5",
+     "say": "The rook takes the open e-file and attacks the bishop on c5."
+    },
+    {
+     "move": "c5d6",
+     "say": "Black moves the attacked bishop to d6, where it attacks the rook."
+    },
+    {
+     "move": "e5a5",
+     "say": "The rook must move again, for example to a5."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "c5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e1e5"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "e"
+      ],
+      "after_move": "e1e5"
+     },
+     "statement": "After Re5 the e-file is still open: no pawn of either colour."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1,
+      "after_move": "e1e5"
+     },
+     "statement": "After Re5 the bishop on c5 is attacked by the rook."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1e5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Re5 is the engine's first choice."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e1e5",
+       "c5d6"
+      ]
+     },
+     "statement": "After Re5 Bd6 the bishop attacks the rook on e5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-16"
+  },
+  {
+   "type": "card",
+   "text": "A file is worth taking when you have a rook for it and something to aim at: a pawn or an entry square. It is worth little when pawns of both colours close it, or the enemy covers the entry square. An open file is open to both rooks, so ask who gets there first.\n**Rule of thumb:** name the entry square first; enter only when nothing covers it."
+  },
+  {
+   "type": "contrast",
+   "title": "Same plan, the file or the entry changes",
+   "prompt": "In the first position Rac1 takes an open file. In the next two, the file is closed, or the entry square is covered. Is the plan still good? Predict each answer, then check.",
+   "working": "IP-QUIET-61",
+   "failing": "IBds51-8",
+   "irrelevant": "IBds51-7"
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-30",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-70",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-MIX-37",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.OPENFILE",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the last position: which file did you pick, which square did you name as the entry, and did you check who covers it before you chose?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/lessons/L-POS-OPENFILE-1.json (Open files: find the entry square)",
+  "sources/sheets/nimzowitsch_my-system.md (ideas 6-8: files, entry squares)",
+  "sources/sheets/edlasker_chess-strategy.md (K20: open files)",
+  "sources/sheets/znosko-borovsky_middle-game.md (C27: who benefits from the open line)",
+  "items IP-QUIET-*, IP-MIX-37 (shipped), IBds51-7..8 (this batch)"
+ ]
+}

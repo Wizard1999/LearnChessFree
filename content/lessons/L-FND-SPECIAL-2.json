@@ -1,0 +1,139 @@
+{
+  "id": "L-FND-SPECIAL-2",
+  "title": "Which special move, if any?",
+  "skill": "FND.SPECIAL",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Says which special move (castling, en passant, promotion) the side to move has, when nobody names it",
+    "Checks each special move's own condition instead of stopping at the first that fits",
+    "Answers 'none' when a condition fails, and 'more than one' when two hold"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Castling, and when you cannot** and **En passant, promotion and draws** you were told which special move to look for. Here nobody says. Run the same list each time: *castling* (unmoved king and rook, clear path, king not in check, and not passing over or landing on an attacked square), *en passant* (the last move was a two-square pawn move beside your pawn), *promotion* (a pawn on its seventh rank with a legal move). The answer can be one, several or none."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/P7/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "Two kinds of special move are legal here.",
+      "line": [
+        {
+          "move": "a7a8q",
+          "say": "The pawn promotes. Castling is also legal, so two special moves are on offer."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a7",
+          "to": "a8"
+        },
+        {
+          "from": "e1",
+          "to": "g1"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "a7a8q"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds14-25"
+    },
+    {
+      "type": "card",
+      "text": "Each special move has its own condition, so check them separately. Pieces in place is not enough: an attacked square, a king that moved earlier, or a pawn move that was not the last move can each cancel one.\n\n**Rule of thumb:** read the prompt for the last move before judging en passant, since the board alone cannot show it. 'None' is a common answer in play."
+    },
+    {
+      "type": "contrast",
+      "title": "Castling: same pieces, one rook added",
+      "prompt": "Predict first for each: which special move, if any?",
+      "working": "IBds14-14",
+      "failing": "IBds14-15",
+      "irrelevant": "IBds14-16"
+    },
+    {
+      "type": "contrast",
+      "title": "En passant: same pawns, a different last move",
+      "prompt": "Predict first for each: which special move, if any?",
+      "working": "IBds14-17",
+      "failing": "IBds14-18",
+      "irrelevant": "IBds14-19"
+    },
+    {
+      "type": "item",
+      "item": "IBds14-22",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-24",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-26",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds14-20",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.SPECIAL",
+        "theme.special-mixed"
+      ],
+      "n": 4,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "For the last five positions, did you run all three checks (castling, en passant, promotion) or stop at the first one that looked right? Which answer were you least sure of?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.SPECIAL.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-FND-CASTLE-1.json and L-FND-SPECIAL-1.json (the single moves it combines)",
+    "rules of chess (castling, en passant, promotion conditions), checked by legal-move claims",
+    "items in content/items/lesson-ds14.json"
+  ]
+}

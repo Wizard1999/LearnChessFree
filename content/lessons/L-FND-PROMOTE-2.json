@@ -1,0 +1,114 @@
+{
+  "id": "L-FND-PROMOTE-2",
+  "title": "Can this pawn promote now?",
+  "skill": "FND.PROMOTE",
+  "depth": "D2",
+  "minutes": 9,
+  "outcomes": [
+    "Says whether a pawn can promote on this move, straight ahead or by capture",
+    "Spots a pawn that is blocked ahead but can still promote by capturing",
+    "Does not count a pawn that is not yet on the seventh rank, or a capture of its own piece"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**En passant, promotion and draws** showed what a pawn becomes. This lesson asks an earlier question: **can it promote on this move?** A pawn promotes only when it moves to the last rank. It gets there straight ahead if that square is empty, or by capturing an enemy piece one square diagonally ahead. Check the square ahead first, then both diagonals."
+    },
+    {
+      "type": "board",
+      "fen": "2r1r1k1/3P4/8/8/8/8/8/K7 w - - 0 1",
+      "caption": "The white pawn on d7 has three ways to reach the last rank: d8, c8 and e8.",
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "c8"
+        }
+      ],
+      "highlight": [
+        "c8",
+        "d8",
+        "e8"
+      ],
+      "line": [
+        {
+          "move": "d7c8q",
+          "say": "The pawn takes the rook on c8 and becomes a queen."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "c8",
+              "d8",
+              "e8"
+            ]
+          },
+          "statement": "The pawn on d7 can reach exactly c8, d8 and e8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds13-7"
+    },
+    {
+      "type": "card",
+      "text": "**Three questions.** Is the pawn on the seventh rank (the second, for Black)? Is the square straight ahead empty? Is an **enemy** piece on a diagonal square ahead? A yes to the second or third means it can promote. Your own piece on a diagonal does not count, and a piece standing far from these three squares changes nothing."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "Predict first: what happens to the pawn on e7 when the e8 square is no longer empty?",
+      "working": "IBds13-8",
+      "failing": "IBds13-9",
+      "irrelevant": "IBds13-10"
+    },
+    {
+      "type": "item",
+      "item": "IBds13-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-13",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-17",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PROMOTE",
+        "task.predict_outcome",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which question did you skip, the one about the square ahead or the two diagonals? Did you forget the capture in any position? Write what you will check first next time."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PROMOTE.json (D2 outcome, conditions, contrasts)",
+    "docs/first-hours.md",
+    "items IBds13-7..13 (authored, content/items/lesson-ds13.json, rules-checked); IG-PROMO-17 (generated, reused)"
+  ]
+}

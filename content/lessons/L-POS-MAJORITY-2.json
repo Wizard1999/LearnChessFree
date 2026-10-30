@@ -1,0 +1,167 @@
+{
+ "id": "L-POS-MAJORITY-2",
+ "title": "Majority: win or draw, then which pawn",
+ "skill": "POS.MAJORITY",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Decides whether a pawn majority wins or only draws before choosing a move",
+  "Chooses the first pawn move and checks it against the Black king's position",
+  "Recognises a wing where equal pawn numbers give no majority"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "*Pawn majorities: the candidate and the kings* showed that the candidate usually leads. Now decide before you move: **win or draw?** Count the majority, then find the enemy king. If it stands in front of your pawns, the natural push can draw. Then pick the first move and *check it*."
+  },
+  {
+   "type": "board",
+   "fen": "8/5pp1/5k2/8/8/8/1K3PPP/8 w - - 0 1",
+   "caption": "White to move: three pawns against two on the kingside. The Black king stands in front of them.",
+   "line": [
+    {
+     "move": "f2f3",
+     "say": "f3 keeps the win, though it is neither the candidate nor the middle pawn. h4 or h3 only draw; g4 loses."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f2",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "f6",
+    "h2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 3
+     },
+     "statement": "White has three pawns on the kingside."
+    },
+    {
+     "id": "C2",
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 2
+     },
+     "statement": "Black has two pawns on the kingside."
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White to move wins (tablebase, exact)."
+    },
+    {
+     "id": "C4",
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f2f3"
+     },
+     "statement": "After f3 White still wins."
+    },
+    {
+     "id": "C5",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h2h4"
+     },
+     "statement": "After h4 the result for White is only a draw."
+    },
+    {
+     "id": "C6",
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h2h3"
+     },
+     "statement": "After h3 the result for White is only a draw."
+    },
+    {
+     "id": "C7",
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "g2g4"
+     },
+     "statement": "After g4 White loses."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-END-2"
+  },
+  {
+   "type": "card",
+   "text": "**Conditions.** A majority wins when it can make a passed pawn that the enemy king cannot stop in time. That depends on the kings, not only on the count. **Rule of thumb:** the candidate leads, the middle pawn waits, *unless* the enemy king stands in front: then calculate. With equal pawns on the wing there is no majority to convert."
+  },
+  {
+   "type": "contrast",
+   "title": "Same first move, three positions",
+   "prompt": "White plays a4 (the candidate) in each position. Predict the result with best play, then check.",
+   "working": "IBds53-28",
+   "failing": "IBds53-29",
+   "irrelevant": "IBds53-30"
+  },
+  {
+   "type": "item",
+   "item": "IP-END-9"
+  },
+  {
+   "type": "item",
+   "item": "IP-END-14"
+  },
+  {
+   "type": "item",
+   "item": "IBds53-31",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-MIX-83",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-MIX-89",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.MAJORITY",
+    "source.tablebase"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Before you moved, did you check where the enemy king stood? Rate how sure you are that a majority wins when you can name the candidate."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.MAJORITY.json (D2 outcome, conditions, contrasts)",
+  "tablebase positions of this lesson (Lichess tablebase service, exact)",
+  "sources/sheets/nimzowitsch_my-system.md (majority and candidate, idea only)"
+ ]
+}

@@ -1,0 +1,121 @@
+{
+  "id": "L-POS-IMBALANCES-2",
+  "title": "Imbalances: who has the easier game?",
+  "skill": "POS.IMBALANCES",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Fills the list for an unlabeled position, predicts which side the engine will rate at least half a pawn higher (or neither), and checks the prediction",
+    "Picks a plan that uses an open or half-open file",
+    "Recognises an entry (the bishop pair) that looks like an edge but gives none",
+    "Recognises a position decided by a forcing move, where the list does not matter"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Imbalances: fill the list, then use one** you listed the differences. Now answer two questions without a prompt: **which side has the easier game**, and **which plan uses the difference that favours it**? Write the list, pick the one difference you can use soon, then check it against the moves. In these items 'easier' means the engine rates that side at least half a pawn higher."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/3nbppp/bq2pn2/p2p4/1P6/P1P1PN2/1B1NBPPP/R2Q1RK1 b - - 3 12",
+      "caption": "Black to move. The list: the c-file has no Black pawn, and White's pawn on c3 stands on it.",
+      "line": [
+        {
+          "move": "f8c8",
+          "say": "A rook goes to the half-open file, where it faces the c3 pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "c8"
+        }
+      ],
+      "highlight": [
+        "c3"
+      ],
+      "claims": [
+        {
+          "type": "open_files",
+          "params": {
+            "half_open_black": [
+              "b",
+              "c"
+            ]
+          },
+          "statement": "The b-file and the c-file are half-open for Black."
+        },
+        {
+          "type": "moves_where",
+          "params": {
+            "property": "rook_to_half_open_file",
+            "moves": [
+              "a8b8",
+              "a8c8",
+              "f8b8",
+              "f8c8"
+            ]
+          },
+          "statement": "These four moves put a Black rook on a half-open file."
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f8c8"
+            ]
+          },
+          "statement": "Rfc8 is the engine's best move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds56-13"
+    },
+    {
+      "type": "card",
+      "text": "Read the verdict the way you read a break: by what you can use. *Rule of thumb:* an edge counts when you can use it soon, for example a rook that can reach the open file or pawns that control squares the enemy needs. An entry that cancels out, or that you cannot use, adds nothing. If a forcing move exists, play it first and compare the two sides afterwards."
+    },
+    {
+      "type": "contrast",
+      "title": "Three different positions",
+      "prompt": "Three different positions, one question each. Decide first whether the list gives White an edge, Black an edge, or neither, or whether a forcing move makes the list beside the point. Then check.",
+      "working": "IBds56-15",
+      "failing": "IBds56-14",
+      "irrelevant": "IBds56-17"
+    },
+    {
+      "type": "item",
+      "item": "IBds56-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds56-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.IMBALANCES",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick a quiet position from one of your own games. Which side do you think is easier to play, which single entry on your list made you think so, and which move would use it? Write it down before you ask the engine."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C01, C04, C05, C07)",
+    "docs/curriculum-map-v1.md (S5 imbalances, [R])",
+    "content/lessons/L-POS-IMBALANCES-1.json; content/items/lesson-ds56.json (IBds56-13 to IBds56-18); shipped positions IP-MIX-21, 55, 113, 116, IP-PAWNS-68, IP-PIECES-36"
+  ]
+}

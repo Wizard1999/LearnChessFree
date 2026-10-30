@@ -1,0 +1,140 @@
+{
+  "id": "L-FND-CAPTURE-2",
+  "title": "Free or defended: who can really recapture?",
+  "skill": "FND.CAPTURE",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Counts only the pieces that can capture on a square as its defenders",
+    "Decides whether a capture is free, wins points or loses points",
+    "Does not treat a nearby enemy piece as a defender"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Taking pieces, and what pieces are worth** you learned to ask whether a piece is guarded. Now look closer. A piece is **loose** when it is attacked and nothing defends it. A defender counts only if it can capture on that very square with its own kind of move. A piece standing right next to the target proves nothing; count the pieces that actually attack the square."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5p2/6pp/2R3b1/8/8/8/6K1 w - - 0 1",
+      "caption": "The rook attacks the bishop on g5. The pawn on h6 defends it. The pawn on g6 stands in front of it but cannot capture on g5.",
+      "line": [
+        {
+          "move": "c5g5",
+          "say": "The rook takes the bishop for 3 points."
+        },
+        {
+          "move": "h6g5",
+          "say": "The h6 pawn recaptures. The g6 pawn could not have. White gave 5 for 3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "g5"
+        },
+        {
+          "from": "h6",
+          "to": "g5"
+        }
+      ],
+      "highlight": [
+        "g5",
+        "g6",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g5",
+            "color": "black",
+            "count": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g5",
+            "color": "white",
+            "count": 1
+          }
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "c5g5",
+            "max": -2
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-CTRST-2"
+    },
+    {
+      "type": "card",
+      "text": "So there are two questions. Is the square defended, by a piece that really attacks it? If it is, compare what you take with what you could lose. As a **rule of thumb**, with the counting values 1, 3, 3, 5, 9, a cheaper piece capturing a defended piece can still win points, and a dearer piece capturing a defended pawn loses them. The values are only a guide."
+    },
+    {
+      "type": "contrast",
+      "title": "Same capture, the defender changes",
+      "prompt": "Predict first: is the capture good when no piece defends the pawn, when a bishop defends it, and when a bishop stands nearby but cannot capture on that square?",
+      "working": "IG-CTRST-4",
+      "failing": "IG-CTRST-5",
+      "irrelevant": "IG-CTRST-6"
+    },
+    {
+      "type": "item",
+      "item": "I-CAP-002",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-10",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CAPTURE",
+        "cue.2"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which kind of nearby piece fooled you most often: a piece of the wrong colour square, a pawn straight in front, or a rook behind a blocker? Name one square where you counted a defender that was not one."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.CAPTURE.json (D2 outcome)",
+    "content/lessons/L-FND-CAPTURE-1.json (taught there, not repeated)",
+    "items IG-CTRST-*, I-CAP-002, IBds11-9..12 (claims checked by tools/validate.py)"
+  ]
+}

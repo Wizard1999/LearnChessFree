@@ -1,0 +1,144 @@
+{
+  "id": "L-POS-TARGET-2",
+  "title": "To chase or to fix: choosing the target",
+  "skill": "POS.TARGET",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Counts a piece's escape squares before kicking it with a pawn",
+    "Recognises when a pawn kick wins the piece and when it only spends a move",
+    "Chooses to fix and attack a target that cannot step aside"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You can find a target that cannot move (see the lesson *Aim at what cannot move away*). Now compare two ways to use a pawn. You can **chase** a piece, which makes it move, or you can **fix** a target and attack it. As a *rule of thumb*, a chase gains time only if the piece has no good square to go to; otherwise you spend a pawn move and the piece steps aside."
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pbq2pb1/1p2p1pp/2p1Pn2/2N5/2PQ1N2/PP1RBPPP/R5K1 w - - 6 18",
+      "caption": "White to move. Black's f7 pawn is backward and cannot move away. Find the way to attack it. The engine rates the position slightly in Black's favour, so this shows how to attack, not that White is winning.",
+      "line": [
+        {
+          "move": "d3d7",
+          "say": "The queen goes to d7 and attacks the backward pawn on f7. Black's queen can take it."
+        },
+        {
+          "move": "c7d7",
+          "say": "Black trades queens."
+        },
+        {
+          "move": "d2d7",
+          "say": "The rook recaptures on d7 and still attacks f7."
+        },
+        {
+          "move": "b7c6",
+          "say": "Black attacks the rook."
+        },
+        {
+          "move": "d7c7",
+          "say": "The rook steps to c7 and keeps pressure on f7 and a7."
+        },
+        {
+          "move": "f8c8",
+          "say": "Black challenges on the c-file."
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "f7"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d3d7"
+            ],
+            "within_cp": 30
+          },
+          "statement": "Qd7 is the engine's best move."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d7",
+            "includes": [
+              "f7"
+            ],
+            "after_move": "d3d7"
+          },
+          "statement": "After Qd7 the queen attacks f7."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "backward",
+            "color": "black",
+            "includes": [
+              "f7"
+            ],
+            "after_move": "d3d7"
+          },
+          "statement": "Black's f7 pawn is backward."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-22"
+    },
+    {
+      "type": "card",
+      "text": "Before a pawn kick, count the escape squares. **No safe square:** the chase can win the piece. **A square as good as the old one:** you have used a move and may have weakened your own pawns. A **fixed** target has no escape squares, which is why fixing and then attacking is the safer plan (a *rule of thumb*). Pushing a piece back can still be good play; it has to be checked, not assumed."
+    },
+    {
+      "type": "contrast",
+      "title": "Same kick, one retreat square",
+      "prompt": "Only one black pawn has moved, from c6 to c7. Predict whether 1.b4 wins the knight, then check.",
+      "working": "IBds55-6",
+      "failing": "IBds55-7"
+    },
+    {
+      "type": "item",
+      "item": "IP-QUIET-37",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds55-18",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "tpl.quiet-target",
+        "cue.3"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you moved, did you count the escape squares of the piece you wanted to kick, or only ask whether you could attack it? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/POS.TARGET.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-POS-TARGET-1.json (core lesson, linked, not repeated)",
+    "content/items/lesson-ds55.json (IBds55-6, IBds55-7, IBds55-18, machine-checked)",
+    "sources/sheets/edlasker_chess-strategy.md §4 K15, K16; §8 item 8"
+  ]
+}

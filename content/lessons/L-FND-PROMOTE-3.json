@@ -1,0 +1,134 @@
+{
+  "id": "L-FND-PROMOTE-3",
+  "title": "Choosing the promotion piece",
+  "skill": "FND.PROMOTE",
+  "depth": "D3",
+  "minutes": 10,
+  "outcomes": [
+    "Checks, before choosing a queen, whether it would stalemate the enemy king",
+    "Chooses a rook in a won ending where the queen would only draw",
+    "Checks whether another piece gives checkmate on the spot"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You know how to promote from **Can this pawn promote now?**. The queen is the usual choice, and **Underpromotion: when a knight or rook beats the queen** covers knight forks. Here you learn two checks to run **before** you pick the piece: does the queen leave the enemy king with **no legal move and no check** (stalemate), and does some other piece give **checkmate** at once?"
+    },
+    {
+      "type": "board",
+      "fen": "8/6P1/7k/8/6K1/8/8/8 w - - 0 1",
+      "caption": "White to move. The pawn is about to promote and the black king stands on h6.",
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "line": [
+        {
+          "move": "g7g8q",
+          "say": "A queen covers g6, g7 and h7, and the white king covers g5 and h5. Black has no legal move and is not in check: stalemate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "g7g8q"
+          },
+          "statement": "Promoting to a queen only draws (tablebase)."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "win",
+            "move": "g7g8r"
+          },
+          "statement": "Promoting to a rook still wins (tablebase)."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "h6",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "g7g8q"
+          },
+          "statement": "After Qg8 the black king has no legal move."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h6",
+            "color": "white",
+            "count": 0,
+            "after_move": "g7g8q"
+          },
+          "statement": "After Qg8 nothing attacks the black king."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-27"
+    },
+    {
+      "type": "card",
+      "text": "**Check list.** Count the enemy king's legal moves after each promotion, and ask whether it is attacked. If, after a promotion, the enemy king would have no legal move and no check, that promotion is a draw. Try another piece: a rook often still wins, but run the same count on it too. Also look for a promotion that gives checkmate immediately. **Rule of thumb:** with no stalemate and no mate in sight, the queen is the safe choice. A boxed-in king is the warning sign."
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "Predict first: how does the answer change when the black king stands in a different place?",
+      "working": "IBds13-14",
+      "failing": "IBds13-15",
+      "irrelevant": "IBds13-16"
+    },
+    {
+      "type": "item",
+      "item": "IBds13-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-21",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PROMOTE",
+        "task.find_move",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you chose a promotion, did you count the enemy king's moves? Which position nearly fooled you, and what was the first thing you noticed about it?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PROMOTE.json (D3 outcome, conditions, contrasts)",
+    "content/skills/FND.STALEMATE.json",
+    "items IBds13-14..17 (authored, content/items/lesson-ds13.json, tablebase-checked); IG-PROMO-21, -27, -28 (generated, reused)"
+  ]
+}

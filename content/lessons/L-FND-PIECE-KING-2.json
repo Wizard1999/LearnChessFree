@@ -1,0 +1,121 @@
+{
+  "id": "L-FND-PIECE-KING-2",
+  "title": "The king in a busy position",
+  "skill": "FND.PIECE.KING",
+  "depth": "D2",
+  "minutes": 12,
+  "outcomes": [
+    "Names the piece on a given square before using its rule, with no hint in the prompt",
+    "Taps every square the king can step to, removing squares next to the enemy king and squares attacked by enemy pieces",
+    "Decides whether an enemy piece next to the king can be taken, by checking whether it is defended",
+    "Ignores distant enemy pieces that attack none of the king's neighbouring squares"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **The queen and the king** you were told \"king\". Now nobody says it. Name the piece first, then list its up to eight neighbouring squares and cross out the unsafe ones: squares next to the enemy king, squares an enemy piece attacks, and enemy pieces that are defended. What remains is the answer."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/8/2k5/8/3K4/8/4r3 w - - 0 1",
+      "caption": "The piece on d3 is a king. The rook on e1 attacks the e-file, and the black king covers c4 and d4.",
+      "line": [
+        {
+          "move": "d3c3",
+          "say": "The king steps to c3, one of three safe squares."
+        },
+        {
+          "move": "e1e8",
+          "say": "Black moves the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d3",
+          "to": "c2"
+        },
+        {
+          "from": "d3",
+          "to": "d2"
+        },
+        {
+          "from": "d3",
+          "to": "c3"
+        }
+      ],
+      "highlight": [
+        "c2",
+        "c3",
+        "d2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d3",
+            "to": [
+              "c2",
+              "c3",
+              "d2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-141"
+    },
+    {
+      "type": "card",
+      "text": "List the king's neighbours, then ask three questions of each: is it my own piece, is it next to the enemy king, is it attacked? An enemy piece on a neighbouring square can be taken only if nothing defends it. A far-away enemy piece matters only if it attacks one of those squares. *Rule of thumb:* check the defenders of a piece before taking it."
+    },
+    {
+      "type": "contrast",
+      "title": "Defended or not",
+      "prompt": "Predict first. In the first position the knight next to the king has no defender. In the second, a pawn has been added. In the third, a rook has moved far away. What does each change do to the king's squares?",
+      "working": "IBds12-4",
+      "failing": "IBds12-5",
+      "irrelevant": "IBds12-6"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-142",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-144",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-19",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KING",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent items, which squares did you cross out first: the ones next to the enemy king or the ones attacked by a piece? Did you ever forget a defender?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.KING.json (D2 outcome)",
+    "content/lessons/L-FND-QUEENKING-1.json",
+    "content/items/lesson-ds12.json",
+    "rules of chess (python-chess legal move generation, via tools/validate.py)"
+  ]
+}

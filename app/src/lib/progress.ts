@@ -109,7 +109,9 @@ function prereqRank(key: string, skills: Map<string, Skill>, seen: Set<string> =
   if (seen.has(key)) return 0
   seen.add(key)
   const i = key.lastIndexOf('.')
-  const pre = skills.get(key.slice(0, i))?.depths[key.slice(i + 1)]?.prereqs ?? []
+  const sk = skills.get(key.slice(0, i))
+  // soft prerequisites order the lessons too (teaching order), though they never gate anything
+  const pre = [...(sk?.depths[key.slice(i + 1)]?.prereqs ?? []), ...(key.endsWith('.D1') ? sk?.soft_prereqs ?? [] : [])]
   const r = pre.length ? 1 + Math.max(...pre.map(k => prereqRank(k, skills, seen))) : 0
   seen.delete(key)
   cache.set(key, r)

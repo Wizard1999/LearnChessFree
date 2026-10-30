@@ -1,0 +1,157 @@
+{
+  "id": "L-TAC-CLEARANCE-2",
+  "title": "Clearance: win, mate, or only retreat?",
+  "skill": "TAC.CLEARANCE",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the vacating move that opens a line and wins material or mates, in a mixed set",
+    "Tells a forcing vacating move from one that only retreats",
+    "Checks what the opened line reaches and whether the king has a flight square"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "This lesson follows **Clearance: step aside with a threat**. Many moves open a line; few are worth playing. Ask three things.\n**1. Is the vacating move forcing?** A check, or a capture with check, leaves the opponent no time.\n**2. What does the opened line reach?** It should lead to mate or to material.\n**3. Is the king's flight covered?** A free square can make the attack fizzle."
+    },
+    {
+      "type": "board",
+      "fen": "4QR2/ppp1p1r1/4q2k/3p3p/6p1/2P1P3/PP4P1/6K1 w - - 0 37",
+      "caption": "White to move. The rook on f8 stands on the square the queen wants.",
+      "line": [
+        {
+          "move": "f8h8",
+          "say": "Rh8+ is check, and the rook leaves f8 with tempo."
+        },
+        {
+          "move": "g7h7",
+          "say": "Black must answer the check; here the rook interposes on h7."
+        },
+        {
+          "move": "e8f8",
+          "say": "Qf8+ uses the square the rook cleared, with another check."
+        },
+        {
+          "move": "h6g6",
+          "say": "The king steps to g6."
+        },
+        {
+          "move": "h8g8",
+          "say": "Rg8+ is check on the g-file. Black can take it with the queen, and that loses the queen."
+        },
+        {
+          "move": "e6g8",
+          "say": "The queen takes the rook."
+        },
+        {
+          "move": "f8g8",
+          "say": "Qxg8+ wins the queen for a rook, with check again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "h8"
+        },
+        {
+          "from": "e8",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "f8",
+        "h6"
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f8h8"
+            ]
+          },
+          "statement": "The engine's best move is Rh8+ (depth 16).",
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "h6",
+            "color": "white",
+            "count": 1,
+            "after_move": "f8h8"
+          },
+          "statement": "After Rh8 the rook gives check to the king on h6.",
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "f8h8",
+            "min": 3
+          },
+          "statement": "Along the engine line White ends material ahead.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-U75uM-c1"
+    },
+    {
+      "type": "card",
+      "text": "**It works when** the vacating move is forcing and the opened line reaches a king with no flight square, or a piece that cannot be defended. **Rule of thumb:** list the moving piece's checks and captures first.\n**It fails when** no piece stands on the opened line, or the king gets a free square once the exchanges end."
+    },
+    {
+      "type": "contrast",
+      "title": "Same clearance, one change",
+      "prompt": "In the second position a white pawn is missing; in the third a distant pawn has moved. Predict each, then check.",
+      "working": "IL-fUjM0",
+      "failing": "IB34-01",
+      "irrelevant": "IB34-19"
+    },
+    {
+      "type": "item",
+      "item": "IB34-02"
+    },
+    {
+      "type": "item",
+      "item": "IL-9VaPJ",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-ba2lv",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IB34-03",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.clearance",
+        "kind.puzzle",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the silent positions, which piece did you test first, and did you check that its move was forcing before you looked at the line it opened? (The practice puzzles carry Lichess's automatic theme label, which is not always an exact fit.)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.CLEARANCE.json (outcomes for D2, conditions, contrasts)",
+    "items IB34-01..03 and IB34-19 (authored, content/items/lesson-ds34.json; one-feature edits of Lichess puzzle fUjM0)",
+    "Lichess puzzle database (CC0): wFAOI (board), fUjM0, 9VaPJ, ba2lv, U75uM"
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "L-TAC-BACKRANK-2",
+  "title": "Back-rank mates for either side",
+  "skill": "TAC.BACKRANK",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Finds the back-rank mate for either side when no theme is named",
+    "Spots when his own back rank is the weakness by asking what the opponent's rook could check with",
+    "Says 'no threat' when a guard or a flight square removes the mate"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You know the pattern from **Back-rank mate, and luft as the cure**. Now it has to work for both sides, with nobody naming it. Before each move ask two questions. Can I check on the enemy first rank, and is that mate? Could the opponent do it to me: does my king have a free square, and does a piece of mine guard my first rank? Look at both kings, every time."
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/5ppp/8/8/8/8/R4PPP/6K1 w - - 0 1",
+      "caption": "White to move. What does Black threaten, and how can White answer?",
+      "line": [
+        {
+          "move": "h2h3",
+          "say": "White makes a luft with the h-pawn, so the king gets the square h2."
+        },
+        {
+          "move": "e8e1",
+          "say": "Black checks on the first rank."
+        },
+        {
+          "move": "g1h2",
+          "say": "The king steps out. It was only a check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "g1"
+      ],
+      "claims": [
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If White passed, ...Re1 would be checkmate.",
+          "id": "C1"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "h2h3"
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-5jMyz"
+    },
+    {
+      "type": "card",
+      "text": "A back-rank mate needs three things together: **no flight square**, **nothing that can capture the checking piece**, and **nothing that can block**. For your own king the same list is a checklist: one guard on the first rank, or one free square, removes the threat. As a **rule of thumb**, make air once a threat appears rather than on every move, because it costs a move and loosens the pawns. Predict before you look."
+    },
+    {
+      "type": "contrast",
+      "title": "Is there a threat to the black king?",
+      "prompt": "Only one feature changes each time. Predict whether White threatens mate.",
+      "working": "IBds31-1",
+      "failing": "IBds31-2",
+      "irrelevant": "IBds31-3"
+    },
+    {
+      "type": "item",
+      "item": "IL-hUCWb",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds31-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-GCRVq",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.backRankMate",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Before you answered, did you check both kings, or only the one you were attacking? (low / medium / high confidence that you did)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.BACKRANK.json (D2 outcome, conditions, contrasts)",
+    "L-TAC-BACKRANK-1 (idea taught there, not repeated)",
+    "Lichess puzzle database (CC0): 5jMyz, hUCWb, GCRVq"
+  ]
+}

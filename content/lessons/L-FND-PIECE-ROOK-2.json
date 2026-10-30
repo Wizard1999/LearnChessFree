@@ -1,0 +1,117 @@
+{
+  "id": "L-FND-PIECE-ROOK-2",
+  "title": "The rook in a busy position",
+  "skill": "FND.PIECE.ROOK",
+  "depth": "D2",
+  "minutes": 9,
+  "outcomes": [
+    "Decides what kind of piece stands on a named square before drawing its lines",
+    "Taps every square the rook can reach when other pieces fill the board",
+    "Says whether a rook can reach a far square, and spots the one piece that stops it"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You already know how a rook slides, from **The rook and the bishop**. Now the board is crowded and nobody tells you which piece to think about. Work in order: first **what piece is it**, then **which lines** does it travel on, then **what stands on each line**: empty, your own piece, or an enemy piece."
+    },
+    {
+      "type": "board",
+      "fen": "5rk1/5ppp/8/3N4/8/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "White rook on d1. Its own knight on d5 and its own king on g1 shorten two of its lines. The black pieces on f8, f7, g7 and h7 are off its lines.",
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "a1",
+        "b1",
+        "c1",
+        "d2",
+        "d3",
+        "d4",
+        "e1",
+        "f1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d1",
+            "to": [
+              "a1",
+              "b1",
+              "c1",
+              "d2",
+              "d3",
+              "d4",
+              "e1",
+              "f1"
+            ]
+          },
+          "statement": "The white rook on d1 can legally move to exactly the highlighted squares."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds13-1"
+    },
+    {
+      "type": "card",
+      "text": "Two checks stop most mistakes. **A piece blocks only if it stands on the rook's own rank or file**, between the rook and the target. And **the first piece on a line ends it**: your own piece means you stop one square short, an enemy piece means you may take it and stop there. If the piece is not a rook at all, none of this applies."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one change",
+      "prompt": "A white knight now stands on e3. Predict first: can the rook still reach g3?",
+      "working": "IBds13-2",
+      "failing": "IBds13-3",
+      "irrelevant": "IBds13-4"
+    },
+    {
+      "type": "item",
+      "item": "IBds13-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-31",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.ROOK",
+        "cue.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the silent round, which squares did you decide by looking at the whole board, and which by walking along each line? Rate how sure you were overall. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.PIECE.ROOK.json (D2 outcome, conditions, contrasts)",
+    "docs/first-hours.md",
+    "items IBds13-1..6 (authored, content/items/lesson-ds13.json, rules-checked); IG-MOVE-28, IG-MOVE-31 (generated, reused)"
+  ]
+}

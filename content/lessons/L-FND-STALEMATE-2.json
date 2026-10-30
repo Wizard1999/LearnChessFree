@@ -1,0 +1,152 @@
+{
+  "id": "L-FND-STALEMATE-2",
+  "title": "Stalemate in mixed positions",
+  "skill": "FND.STALEMATE",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Names a position as check, checkmate, stalemate or ongoing when pieces and pawns are mixed",
+    "Counts the legal moves of every piece, not only the king",
+    "Notices before moving that its own move would stalemate the enemy king"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "**Check, checkmate and stalemate** gave you the definitions. Now the positions are mixed, and you must also look **ahead**. Ask two things: is the king attacked, and does the side to move have **any** legal move, with any piece? And before you move, play your candidate in your head and ask the same two questions about the opponent."
+    },
+    {
+      "type": "board",
+      "fen": "4Q3/8/8/8/8/8/5K2/7k w - - 0 1",
+      "caption": "White to move. Qe5 looks strong because it boxes the king in.",
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "h1",
+        "g1",
+        "g2",
+        "h2"
+      ],
+      "line": [
+        {
+          "move": "e8e5",
+          "say": "The queen covers h2 and the white king covers g1 and g2. Black has no legal move and is not in check: stalemate."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "e8e5"
+          },
+          "statement": "Qe5 only draws (tablebase)."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "h1",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "e8e5"
+          },
+          "statement": "After Qe5 the black king has no legal move."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h1",
+            "color": "white",
+            "count": 0,
+            "after_move": "e8e5"
+          },
+          "statement": "After Qe5 nothing attacks the black king."
+        },
+        {
+          "id": "C4",
+          "type": "mate_in",
+          "params": {
+            "move": "e8h8",
+            "n": 1
+          },
+          "statement": "Qh8 is checkmate."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds13-18"
+    },
+    {
+      "type": "card",
+      "text": "**Count every legal move, not only the king's.** A boxed-in king with a pawn that can still move is simply an ongoing game. The drawn result needs **no legal move at all** and no check. When you are the stronger side, a move that boxes in the king is dangerous exactly when the opponent has nothing else to move."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen, one change",
+      "prompt": "A black pawn appears on a7. Predict first: is the game still drawn?",
+      "working": "IBds13-21",
+      "failing": "IBds13-22",
+      "irrelevant": "IBds13-23"
+    },
+    {
+      "type": "item",
+      "item": "IBds13-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds13-24",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-STATE-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-STATE-47",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-STATE-67",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.3",
+        "task.classify"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the silent round, which answers came from counting every black move, and which from a first glance? Rate how sure you were overall. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.STALEMATE.json (D2 outcome, conditions, contrasts)",
+    "docs/first-hours.md session 2",
+    "items IBds13-18..24 (authored, content/items/lesson-ds13.json, tablebase and rules-checked); IG-STATE-21, -47, -67 (generated, reused)"
+  ]
+}

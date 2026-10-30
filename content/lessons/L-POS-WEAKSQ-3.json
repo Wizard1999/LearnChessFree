@@ -1,0 +1,140 @@
+{
+  "id": "L-POS-WEAKSQ-3",
+  "title": "Holes after a pawn push: who covers them?",
+  "skill": "POS.WEAKSQ",
+  "depth": "D3",
+  "minutes": 10,
+  "outcomes": [
+    "Predicts the new holes a g-pawn push leaves in front of a castled king",
+    "Sees when another pawn still guards a square, so the push creates no hole there",
+    "Picks the bishop square that covers the holes a push leaves",
+    "Checks whether an enemy knight can land on a hole and stay"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Holes: squares your pawns can no longer guard** you found holes already on the board. Now look ahead. A pawn push in front of your castled king makes holes for good, because pawns never move backward. With the e-pawn gone from e7, the push **g6** leaves f6 and h6 unguarded by any pawn. Before you push, list the squares you stop guarding, then ask who could land on them."
+    },
+    {
+      "type": "board",
+      "fen": "r3rbk1/p1q2ppp/1pnpp3/8/3P4/2P2N2/PP1Q1PPP/R1B2RK1 b - - 0 1",
+      "caption": "Black to move. The g-pawn is still on g7 and the bishop is still on f8.",
+      "line": [
+        {
+          "move": "g7g6",
+          "say": "The g-pawn passes f6 and h6. No Black pawn can ever guard either square again."
+        },
+        {
+          "move": "h2h3",
+          "say": "White makes a quiet move. For the moment no Black piece attacks f6."
+        },
+        {
+          "move": "f8g7",
+          "say": "The bishop arrives on g7 and attacks both holes."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "h6"
+      ],
+      "claims": [
+        {
+          "type": "holes",
+          "params": {
+            "color": "black",
+            "includes": [
+              "f6",
+              "h6"
+            ],
+            "after_move": "g7g6"
+          },
+          "statement": "After g6 f6 and h6 are holes in Black's camp."
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "black",
+            "count": 0,
+            "after_move": "g7g6"
+          },
+          "statement": "Right after g6 no Black piece attacks f6."
+        },
+        {
+          "type": "piece_attacks",
+          "params": {
+            "square": "g7",
+            "includes": [
+              "f6",
+              "h6"
+            ],
+            "after_moves": [
+              "g7g6",
+              "h2h3",
+              "f8g7"
+            ]
+          },
+          "statement": "From g7 the bishop attacks both f6 and h6."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds56-1"
+    },
+    {
+      "type": "item",
+      "item": "IBds56-2"
+    },
+    {
+      "type": "card",
+      "text": "A push does not always cost you. If the e-pawn still stands on e7, it guards f6, so g6 leaves only h6. A hole needs a user: it matters when an enemy knight, or a bishop of the right colour, can reach it and stay. *Rule of thumb:* cover the new holes with a bishop or knight before the enemy arrives, or leave the pawn at home."
+    },
+    {
+      "type": "contrast",
+      "title": "The same hole, one piece different",
+      "prompt": "In the first two positions the g-pawn has moved and f6 is a hole; only the Black bishop differs (on b7 or on g7). Can the White knight settle on f6? In the third position the e-pawn stands on e7: is f6 a hole at all? Predict, then check.",
+      "working": "IBds56-3",
+      "failing": "IBds56-4",
+      "irrelevant": "IBds56-5"
+    },
+    {
+      "type": "item",
+      "item": "IBds56-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds56-7",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.POS.WEAKSQ",
+        "tier.3"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Think of your own castled position. Which pawn push in front of your king would leave a hole, and which of your pieces could cover it? Write one line."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "sources/sheets/znosko-borovsky_middle-game.md (C28, C32; contrast D)",
+    "sources/sheets/emlasker_common-sense.md (4.9 weak point / strong point)",
+    "content/lessons/L-POS-WEAKSQ-1.json; content/items/lesson-ds56.json (IBds56-1 to IBds56-7); shipped items IP-SQ-51 to IP-SQ-56"
+  ]
+}

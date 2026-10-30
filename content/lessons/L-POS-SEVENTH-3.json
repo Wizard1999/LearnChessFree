@@ -1,0 +1,143 @@
+{
+ "id": "L-POS-SEVENTH-3",
+ "title": "The seventh rank: is it really absolute?",
+ "skill": "POS.SEVENTH",
+ "depth": "D3",
+ "minutes": 10,
+ "outcomes": [
+  "Checks that the king is cut off and the passed pawn is far advanced before counting a seventh-rank win",
+  "Tells a rook on the seventh that wins from one that draws when one feature changes",
+  "Recognises when the king has already left the back rank so the rank holds nothing"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **The seventh rank: targets and a cut-off king** you saw when a rook on the seventh wins. Here you test the claim that the rank is *absolute*: rook on the seventh, king shut behind it, passed pawn far advanced.\n**Rule of thumb:** before you count on the win, check three things: is the king really cut off, is the pawn far enough forward, and has the defender any other resource? Perpetual-check cases are not covered."
+  },
+  {
+   "type": "board",
+   "fen": "7k/1R6/3P4/8/8/1K6/8/r7 w - - 0 1",
+   "caption": "White to move. The rook is on the seventh, the king is in the corner and the pawn is on d6.",
+   "line": [
+    {
+     "move": "b7e7",
+     "say": "Re7 keeps the rook on the seventh rank and stays near the pawn."
+    },
+    {
+     "move": "a1d1",
+     "say": "Black's rook attacks the pawn from behind."
+    },
+    {
+     "move": "d6d7",
+     "say": "The pawn goes to d7, where the rook on e7 defends it."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b7",
+     "to": "e7"
+    }
+   ],
+   "highlight": [
+    "h8",
+    "d6",
+    "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White wins from the start position (tablebase, exact)."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "b7e7"
+     },
+     "statement": "Re7 keeps the win."
+    },
+    {
+     "type": "mobility",
+     "params": {
+      "square": "h8",
+      "mode": "legal",
+      "count": 1
+     },
+     "statement": "If it were Black's turn, the king on h8 could go only to g8."
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b7e7",
+       "a1d1",
+       "d6d7"
+      ]
+     },
+     "statement": "After d7 the pawn on d7 is defended once, by the rook on e7."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds52-7"
+  },
+  {
+   "type": "card",
+   "text": "The rank is *absolute* only when the conditions are met at once. **Rule of thumb:** king behind the rank, passed pawn far advanced, no other resource for the defender.\nIn the endings you are about to see, a pawn one step back or the king one file over can turn a win into a draw. Counting the king's squares is a start, not a proof."
+  },
+  {
+   "type": "contrast",
+   "title": "Same rook, same king, one pawn step",
+   "prompt": "Predict each position first, then check. In each one, a single feature differs from the first.",
+   "working": "IBds52-1",
+   "failing": "IBds52-2",
+   "irrelevant": "IBds52-3"
+  },
+  {
+   "type": "item",
+   "item": "IBds52-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds52-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds52-6",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.SEVENTH",
+    "cue.2"
+   ],
+   "n": 3,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the last positions, which check did you make first: the king's squares, the pawn's rank, or whether the king had already left the back rank? Which one did you skip, and was it the one that mattered?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/POS.SEVENTH.json (conditions, D3 outcome)",
+  "sources/sheets/nimzowitsch_my-system.md idea 13 (flagged CHECK for 'absolute')",
+  "tablebase positions of this lesson (Lichess tablebase service, exact)",
+  "content/lessons/L-POS-SEVENTH-1.json (the D1 lesson this builds on)"
+ ]
+}

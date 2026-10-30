@@ -1,0 +1,146 @@
+{
+  "id": "L-FND-MATE1-2",
+  "title": "Is there a mate in one?",
+  "skill": "FND.MATE1",
+  "depth": "D2",
+  "minutes": 10,
+  "outcomes": [
+    "Decides whether a mate in one exists in a mixed position, without being told",
+    "Lists the checks and tests each for king moves, capture and block",
+    "Says 'no mate' when every check has an answer"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Checkmate in one: four patterns** you were told to look for a mate. Now nobody says whether one exists, and *no mate* is often the answer.\n\n**Method.** 1) List every check you have: a move that is not a check cannot be mate. 2) Test each check on three escapes: the king moves, the checker is captured, the line is blocked. 3) If every check has an answer, say *no mate*."
+    },
+    {
+      "type": "board",
+      "fen": "8/p7/k7/p4K2/8/5Q2/1B6/8 w - - 0 1",
+      "caption": "Five checks, one mate. Test them one at a time.",
+      "line": [
+        {
+          "move": "f3c6",
+          "say": "Qc6 is the one check with no answer: the king's own pawns hold a7 and a5, and the queen covers the other squares."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "c6"
+        },
+        {
+          "from": "c6",
+          "to": "a6"
+        }
+      ],
+      "highlight": [
+        "a7",
+        "a5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "f3c6",
+            "n": 1
+          }
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f3b7"
+          }
+        },
+        {
+          "id": "C3",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f3d3"
+          }
+        },
+        {
+          "id": "C4",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f3e2"
+          }
+        },
+        {
+          "id": "C5",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "f3f1"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-118"
+    },
+    {
+      "type": "card",
+      "text": "*No mate* is a real answer. It is right when every check has an answer: a free square, a capture or a block.\n\n**Rule of thumb:** if a mate looks easy but one defender stands next to the king, test again before you trust it. A piece that cannot reach the king's squares, the checking piece or the checking line does not change the answer."
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen, one pawn added or moved",
+      "prompt": "Predict first for each: is there a mate in one? Then check your list of checks.",
+      "working": "IG-MATE1-110",
+      "failing": "IG-MATE1-109",
+      "irrelevant": "IBds14-13"
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-111",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-116",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-121",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-124",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MATE1-127",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.MATE1",
+        "cue.3",
+        "kind.generated"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the last five questions, did you list all your checks before answering? Which answer were you least sure of, and why?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.MATE1.json (D2 outcome, conditions, contrasts)",
+    "content/lessons/L-FND-MATE1-1.json (the method it extends)",
+    "items IG-MATE1-109..134 (generated, engine and rules claims)",
+    "items in content/items/lesson-ds14.json"
+  ]
+}

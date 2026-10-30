@@ -1,0 +1,153 @@
+{
+ "id": "L-POS-ACTIVITY-2",
+ "title": "Piece activity: fix the worst piece first",
+ "skill": "POS.ACTIVITY",
+ "depth": "D2",
+ "minutes": 10,
+ "outcomes": [
+  "Lists how many squares each of his pieces reaches and names the worst-placed one before a quiet move",
+  "Prefers the move that most improves that piece over a pawn push, after checking the new square is safe",
+  "Notices when a loose enemy piece makes the activity question moot"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Active and passive pieces** you counted the squares a piece reaches. Now use the count to choose a move. In a quiet position, list your pieces, find the **worst-placed** one (fewest squares, least to do), and ask which move gives it the most. A pawn push needs its own reason; a piece improvement usually has one built in.\n**Rule of thumb:** improve the worst piece before pushing pawns."
+  },
+  {
+   "type": "item",
+   "item": "IP-PIECES-38"
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1npbp/1pn1b1p1/3p4/3P1N2/2P3P1/PP3PBP/RNBQ1RK1 b kq - 1 10",
+   "caption": "Black to move. The bishop on e6 reaches five squares and the knight on f4 attacks it.",
+   "line": [
+    {
+     "move": "e6f5",
+     "say": "The bishop steps out of the knight's attack to f5, where it attacks nine such squares."
+    },
+    {
+     "move": "f1e1",
+     "say": "White makes a quiet rook move."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles; the bishop is already better placed."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e6",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e6f5"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "e6",
+      "mode": "squares",
+      "count": 5
+     },
+     "statement": "The bishop on e6 attacks 5 squares not held by Black."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "f5",
+      "mode": "squares",
+      "count": 9,
+      "after_move": "e6f5"
+     },
+     "statement": "After Bf5 it attacks 9."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e6f5",
+       "e8g8"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Bf5 is within 30 centipawns of the engine's first choice (castling)."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-40"
+  },
+  {
+   "type": "card",
+   "text": "Three checks before you improve a piece.\n**Is the new square safe?** More squares do not help if the piece can be taken.\n**Is something loose or attacked?** Deal with that first.\n**Is the count telling the truth?** Squares are a **rule of thumb**: an advanced piece can have fewer useful squares than a retreated one, and the count ignores what the squares are worth."
+  },
+  {
+   "type": "contrast",
+   "title": "Same bishop, one change",
+   "prompt": "In the first position Black's bishop move is right. In each of the next two, one thing has changed. Predict what it does to the plan, then check.",
+   "working": "IBds51-19",
+   "failing": "IBds51-1",
+   "irrelevant": "IBds51-2"
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-27",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-1",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds51-3",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-32",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.ACTIVITY",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before you counted squares in the last position: which of your pieces did you expect to be the worst placed? Did the count agree, or did a loose piece change the question?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/lessons/L-POS-ACTIVITY-1.json (Active and passive pieces)",
+  "sources/sheets/edlasker_chess-strategy.md (K5: mobility is the value of a piece)",
+  "sources/sheets/emlasker_common-sense.md (pawn moves that need a purpose)",
+  "items IP-QUIET-*, IP-PIECES-38 (shipped), IBds51-1..3 (this batch)"
+ ]
+}

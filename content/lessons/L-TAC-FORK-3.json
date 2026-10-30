@@ -1,0 +1,126 @@
+{
+  "id": "L-TAC-FORK-3",
+  "title": "Counting a fork before you play it",
+  "skill": "TAC.FORK",
+  "depth": "D3",
+  "minutes": 10,
+  "outcomes": [
+    "Checks who can capture the forking piece on its square and whether the capture costs the capturer more",
+    "Predicts how one added piece turns a working fork into a failing one",
+    "Notices when an added piece does not matter"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "You know **Forks: one move, two targets** and **Forks with pawns and queens, and when they fail**. Now count the forking square. Ask who can capture the forking piece, what that capture costs them, and whether you can recapture. A fork wins material only if every reply loses something. Change one feature of a fork and predict again."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/1PN5/3K1k2/8/1r6/8/8 w - - 1 50",
+      "caption": "White to move. One knight move hits the king and the rook.",
+      "line": [
+        {
+          "move": "c6d4",
+          "say": "The knight gives check and attacks the rook on b3. The king guards d4."
+        },
+        {
+          "move": "f5f4",
+          "say": "The king steps away. The rook is still attacked."
+        },
+        {
+          "move": "d4b3",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "d4"
+        },
+        {
+          "from": "d4",
+          "to": "b3"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "b3"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "c6d4"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "c6d4",
+            "min": 5
+          },
+          "statement": "Nd4+ wins the rook for nothing along the engine line.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-JHfLu"
+    },
+    {
+      "type": "card",
+      "text": "On the forking square, count the captures. If a black piece can capture your forking piece and you cannot recapture, the fork fails, whatever the capturer is worth. If you can recapture, compare what each side gives up. **Rule of thumb:** with counting values 3 for a knight and 5 for a rook, a knight traded for a rook gains. Recount after every change."
+    },
+    {
+      "type": "contrast",
+      "title": "The forking square",
+      "prompt": "Only one black piece differs from the first position. Predict whether Nf7+ wins material.",
+      "working": "IBds31-9",
+      "failing": "IBds31-10",
+      "irrelevant": "IBds31-11"
+    },
+    {
+      "type": "item",
+      "item": "IBds31-13"
+    },
+    {
+      "type": "item",
+      "item": "IL-jT1B2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds31-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-Hp6R3",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.fork",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Did you look at the forking square before the targets? What did you check first? (low / medium / high confidence)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.FORK.json (D3 outcome, conditions, contrasts)",
+    "L-TAC-FORK-1 and L-TAC-FORK-2 (taught there, not repeated)",
+    "Lichess puzzle database (CC0): oSH1C, JHfLu, jT1B2, Hp6R3"
+  ]
+}

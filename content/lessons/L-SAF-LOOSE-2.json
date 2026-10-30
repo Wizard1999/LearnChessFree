@@ -1,0 +1,124 @@
+{
+  "id": "L-SAF-LOOSE-2",
+  "title": "How many of your pieces are loose?",
+  "skill": "SAF.LOOSE",
+  "depth": "D2",
+  "minutes": 9,
+  "outcomes": [
+    "Goes through all of own pieces without being told what to look for",
+    "Answers with a number: none, one or two or more",
+    "Separates a loose piece from one that is attacked but defended",
+    "Separates a loose piece from one that is undefended but not attacked"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In \"Loose pieces: what can be taken for free?\" someone told you to find the loose pieces. Now nobody does. After a move, go through **your own pieces one by one** and end with a number: how many are loose? Zero is a real answer. A piece is loose only when it is attacked **and** no piece of its own side defends it."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/p7/1B6/8/8/PPPN1PPP/6K1 w - - 0 1",
+      "caption": "White to move. Two White pieces are loose. What happens if White does not count?",
+      "line": [
+        {
+          "move": "h2h3",
+          "say": "White plays a quiet move and does not count."
+        },
+        {
+          "move": "a6b5",
+          "say": "The pawn takes the bishop for nothing."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "b5",
+              "d2"
+            ]
+          },
+          "statement": "Exactly the bishop on b5 and the knight on d2 are loose."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "h2h3",
+            "max": -3
+          },
+          "statement": "After h3, Black wins at least a minor piece along the engine line."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a6",
+          "to": "b5"
+        },
+        {
+          "from": "d8",
+          "to": "d2"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "d2"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-LOOSE-51"
+    },
+    {
+      "type": "card",
+      "text": "**Two look-alikes.** A piece that is attacked but defended is *not* loose, although the exchange can still go wrong (see the counting lessons). A piece that is undefended but not attacked is *not* loose either; one move can change that. Defenders count from far away, along a file or a diagonal."
+    },
+    {
+      "type": "contrast",
+      "title": "Same position, one change",
+      "prompt": "Count the loose White pieces in each. Predict, then check.",
+      "working": "IBds21-4",
+      "failing": "IBds21-5",
+      "irrelevant": "IBds21-6"
+    },
+    {
+      "type": "item",
+      "item": "IG-LOOSE-43",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-LOOSE-55",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-LOOSE-53",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.LOOSE",
+        "task.loose-count"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "How sure are you that you would catch a loose piece of yours that is defended only from far away? What would help you check?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAF.LOOSE.json (D2 outcome, misconceptions)",
+    "docs/authoring-guide.md (fixed vocabulary)",
+    "items IG-LOOSE-* (generated, rules-checked), IBds21-4..6 (authored)"
+  ]
+}

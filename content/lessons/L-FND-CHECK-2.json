@@ -1,0 +1,131 @@
+{
+  "id": "L-FND-CHECK-2",
+  "title": "Check, checkmate or neither?",
+  "skill": "FND.CHECK",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Says for each position whether the side to move is in check, checkmate or neither",
+    "Closes the three ways out in order before calling checkmate",
+    "Does not call a blocked line a check"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Check, checkmate and stalemate** you found the way out of check. Now classify any position fast. First ask: is the king attacked right now? If not, it is **neither**. If it is, look for the three ways out: capture the checking piece, block the line, move the king. A knight check cannot be blocked. No way out at all is **checkmate**; any way out means only check."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
+      "caption": "The queen checks along h5-e8. Black has exactly one legal move: a pawn blocks on g6.",
+      "line": [
+        {
+          "move": "g7g6",
+          "say": "The pawn blocks the queen's line. Blocking is one of the three ways out."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "e8",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "g7g6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds11-22"
+    },
+    {
+      "type": "card",
+      "text": "The order matters. First find the checker: a line with a piece in the way is not an attack, so an enemy rook behind a pawn gives no check. Pawn and knight checks cannot be blocked. Then ask: can it be captured? can it be blocked? Last, count the king's free squares. Checkmate needs all three closed at once: one free capture, block or square makes it only check. This is a rule of thumb for speed."
+    },
+    {
+      "type": "contrast",
+      "title": "One pawn changes the answer",
+      "prompt": "The rook checks along the back rank. Predict first: checkmate, check or neither with the pawns as shown, with one pawn moved, and with a far-away bishop added?",
+      "working": "IBds11-23",
+      "failing": "IBds11-24",
+      "irrelevant": "IBds11-25"
+    },
+    {
+      "type": "item",
+      "item": "IBds11-26",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-28",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-29",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-31",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-32",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds11-33",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CHECK",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which answer surprised you most: a position that looked like check but was neither, or one that looked like check but was mate? What did you check first?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.CHECK.json (D2 outcome)",
+    "content/lessons/L-FND-CHECK-1.json (taught there, not repeated)",
+    "items IBds11-22..33 (claims checked by tools/validate.py)"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+ "id": "L-TAC-QUIET-MOVE-2",
+ "title": "The quiet move in a combination",
+ "skill": "TAC.QUIET-MOVE",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [
+  "Searches an unlabeled position in a fixed order: checks, captures, threats, then a quiet move",
+  "Finds the quiet move when the forcing moves do not win",
+  "Does not play a quiet move when a forcing line already wins",
+  "Checks the opponent's free reply before trusting a quiet move"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "This lesson builds on **The quiet move: no check, no capture, still decisive**. There you were told a quiet move existed. Now nobody tells you. Use a fixed order:\n1. List your checks.\n2. List your captures.\n3. List your direct threats.\n4. Only if none of these wins, look for a quiet move.\n5. Then give the opponent a free move and find their best check and capture."
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1n1p1/4p3/2bpP1N1/7B/8/PPP2PPP/RN1Q1RK1 w - - 2 12",
+   "caption": "White to move. Run the order: is there a check or a capture that wins? If not, which calm move?",
+   "line": [
+    {
+     "move": "d1h5",
+     "say": "Qh5: no check, no capture. It threatens Qh7+ with the knight on g5 behind it."
+    },
+    {
+     "move": "f8f5",
+     "say": "Black attacks the knight on g5, but the queen is not attacked."
+    },
+    {
+     "move": "h5h7",
+     "say": "Qh7+ is check, and the queen is protected by the knight. Against this defence White nets at least eight points."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d1h5"
+     },
+     "statement": "Qh5 is legal.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "h5",
+      "piece": "empty"
+     },
+     "statement": "The queen goes to an empty square: no capture.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 0,
+      "after_move": "d1h5"
+     },
+     "statement": "No white piece attacks the king on g8 after Qh5: no check.",
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d1h5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Qh5 is the engine's first choice and the next move is far worse (depth 16).",
+     "id": "C4"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "d1h5",
+      "min": 8
+     },
+     "statement": "Along the engine's best line Qh5 nets White at least eight points of material.",
+     "id": "C5"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d1h5",
+       "f8f5",
+       "h5h7"
+      ]
+     },
+     "statement": "After Qh5 Rf5 Qh7 the queen gives check to the king on g8.",
+     "id": "C6"
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "h5"
+    },
+    {
+     "from": "h5",
+     "to": "h7"
+    }
+   ],
+   "highlight": [
+    "h7",
+    "g8"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IL-FdaOG"
+  },
+  {
+   "type": "card",
+   "text": "A quiet move earns its place only when two things are true. **First**, the forcing moves do not win. **Second**, the opponent's free move (best check, best capture) does not hurt. *Rule of thumb:* when a forcing line wins by force, it is usually the safer choice; the quiet move then adds nothing. A quiet move that leaves a piece attacked can lose on the spot."
+  },
+  {
+   "type": "contrast",
+   "title": "Does the quiet move still work?",
+   "prompt": "Each position differs from the first by one small change. Predict for each whether Rab1 is still White's best move, then check.",
+   "working": "IB36-1",
+   "failing": "IB36-2",
+   "irrelevant": "IB36-3"
+  },
+  {
+   "type": "item",
+   "item": "IB36-4"
+  },
+  {
+   "type": "item",
+   "item": "IL-3wiVD",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IL-uvZVN",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IL-q8KuR",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.quietMove",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "On the unlabeled positions, which step of the order did you skip or rush: the forcing list, the quiet-move search, or the check of the opponent's free reply?",
+   "fields": [
+    {
+     "id": "skipped",
+     "label": "Which step did you rush?",
+     "options": [
+      "forcing list",
+      "quiet-move search",
+      "opponent's free reply",
+      "none"
+     ]
+    },
+    {
+     "id": "forcing",
+     "label": "Did you ever play a quiet move when a forcing win existed?",
+     "options": [
+      "yes",
+      "no",
+      "not sure"
+     ]
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/curriculum-map-v1.md §2 S3 (T4-5)",
+  "sources/sheets/capablanca_chess-fundamentals.md §4 CI-51 (G4: the most effective move, not the prettiest) [S]",
+  "sources/sheets/znosko-borovsky_middle-game.md §4 C14 (the threat is stronger than its fulfilment) [S]",
+  "positions: Lichess puzzles (CC0) ARG7j, FdaOG, 3wiVD, uvZVN, q8KuR, sXlw5; authored one-feature edits IB36-2 and IB36-3 of sXlw5; engine evidence at depth 16"
+ ]
+}

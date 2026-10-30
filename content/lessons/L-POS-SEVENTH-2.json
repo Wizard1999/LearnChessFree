@@ -1,0 +1,141 @@
+{
+ "id": "L-POS-SEVENTH-2",
+ "title": "The seventh rank: now, double up, or not at all",
+ "skill": "POS.SEVENTH",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Decides whether to invade the seventh rank now, bring a second rook, or leave it",
+  "Checks that the entry square is not covered and that the rank holds a target",
+  "Notices a rook that attacks two pawns at once from the seventh"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **The seventh rank: targets and a cut-off king** you found the entry square and the targets. Now decide.\n**Invade now:** the entry square is safe and the rook attacks something.\n**Bring the second rook:** one is already there and targets remain.\n**Leave it:** the entry square is covered, or nothing on the rank can be hit.\nA rook attacking two pawns at once is a small fork."
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-97"
+  },
+  {
+   "type": "board",
+   "fen": "2r1r1k1/p4ppp/5b1P/1p6/8/1P1R2B1/P1P3PR/2K5 b - - 0 21",
+   "caption": "Black to move. The e-file is open and the White pawns on c2 and g2 stand on their starting squares.",
+   "line": [
+    {
+     "move": "e8e2",
+     "say": "The rook lands on e2 and attacks the pawns on c2 and g2."
+    },
+    {
+     "move": "c1d1",
+     "say": "White's king steps up to the rook."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "e2"
+    }
+   ],
+   "highlight": [
+    "e2",
+    "c2",
+    "g2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e8e2"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e2",
+      "includes": [
+       "c2",
+       "g2"
+      ],
+      "after_move": "e8e2"
+     },
+     "statement": "On e2 the rook attacks c2 and g2."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e8e2"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Re2 is the engine's first choice."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-92"
+  },
+  {
+   "type": "card",
+   "text": "A rook on the seventh is worth most when the entry square is safe, something there can be attacked, and the enemy is cramped. It does not win by itself: a covered entry square, or a rank with no targets, makes the invasion gain little.\n**Rule of thumb:** check the entry square and the targets before every invasion, and bring the second rook once the first is in."
+  },
+  {
+   "type": "contrast",
+   "title": "Same invasion, one change",
+   "prompt": "In the first position Rd7 is the move. In the next two, the entry square or the targets are different. Predict whether the rook still belongs on the seventh, then check.",
+   "working": "IP-QUIETX-33",
+   "failing": "IBds51-9",
+   "irrelevant": "IBds51-10"
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-93",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-98",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds51-11",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.SEVENTH",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "How sure are you that you would have checked the entry square before invading in the last position? Say what you would look at first."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/lessons/L-POS-SEVENTH-1.json (The seventh rank: targets and a cut-off king)",
+  "sources/sheets/nimzowitsch_my-system.md (ideas 7, 12, 13: seventh rank)",
+  "sources/sheets/edlasker_chess-strategy.md (K20)",
+  "items IP-QUIET-*, IP-QUIETX-* (shipped), IBds51-9..11 (this batch)"
+ ]
+}

@@ -1,0 +1,123 @@
+{
+  "id": "L-TAC-TRAPPED-2",
+  "title": "Trapped, or only cut off? Count the ways out",
+  "skill": "TAC.TRAPPED",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Finds the piece that can be won by trapping in a mixed set",
+    "Counts every way out before calling a piece trapped: retreat, capture, counter-threat",
+    "Tells a piece that is cut off but can retreat from a piece that is lost",
+    "Recognises a piece shut in by its own pawns that nothing attacks"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In *Trapped pieces, and pieces that are only cut off* you counted escape squares. Now count **every way out**:\n**A retreat square** that is safe.\n**Capturing** the attacker or a guard.\n**A counter-threat** that the opponent must answer.\nIf none works, the piece is lost. The same count tells you when your own piece is in danger."
+    },
+    {
+      "type": "board",
+      "fen": "8/7k/6pp/8/3b2N1/6PP/7K/8 b - - 3 52",
+      "caption": "Black to move. The white knight on g4 has few squares.",
+      "line": [
+        {
+          "move": "h6h5",
+          "say": "The pawn attacks the knight. Along the engine line it wins a piece."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h6",
+          "to": "h5"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "h5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h6h5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is h5 (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "h6h5",
+            "min": 3
+          },
+          "statement": "Along the engine's best-defence line h5 nets Black at least a minor piece."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IL-ImZUb"
+    },
+    {
+      "type": "item",
+      "item": "IL-NZVVb"
+    },
+    {
+      "type": "card",
+      "text": "**When it works:** every square the piece can reach is covered or occupied, and no capture or counter-threat frees it. **Rule of thumb:** a piece with no safe move is usually lost.\n**When it fails:** one safe retreat, or a way to capture a guard. A bishop shut in by its own pawns is not trapped if nothing attacks it. Count the ways out of the piece, then attack."
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishop, one blocked square",
+      "prompt": "Predict first: in the second position the white king stands on c2, not b2.",
+      "working": "IBds33-14",
+      "failing": "IBds33-15"
+    },
+    {
+      "type": "item",
+      "item": "IL-t9w9E",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds33-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-h4zk9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-LW7R9",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.trappedPiece",
+        "cue.3"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "When you called a piece trapped, had you counted retreat squares, captures and counter-threats, or only the retreat squares?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.TRAPPED.json (D2 outcome, conditions, contrasts)",
+    "shipped items IL-ImZUb, IL-NZVVb, IL-t9w9E, IL-h4zk9, IL-LW7R9",
+    "authored items IBds33-14 to IBds33-16 (engine-checked)"
+  ]
+}

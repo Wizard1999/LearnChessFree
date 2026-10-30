@@ -1,0 +1,145 @@
+{
+  "id": "L-FND-CASTLE-2",
+  "title": "Can I castle right now?",
+  "skill": "FND.CASTLE",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Goes through the castling conditions in order and names the one that stops castling",
+    "Knows an attacked rook, or an attacked b-square, does not stop castling",
+    "Looks only at the squares the king crosses and lands on for attacks"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Castling, and when you cannot** you met the conditions. Use them as a checklist in this order: has the king or that rook moved (the right is gone for good)? Is any piece between them? Is the king in check now? Is a square the king crosses or lands on attacked? As a **rule of thumb**, go from the cheapest question to the dearest and stop at the first no."
+    },
+    {
+      "type": "board",
+      "fen": "1r2k3/8/8/8/8/8/P1P2PPP/R3K3 w Q - 0 1",
+      "caption": "A black rook attacks b1, yet White can castle queenside: the king uses only e1, d1 and c1.",
+      "line": [
+        {
+          "move": "e1c1",
+          "say": "The king goes to c1 and the rook to d1, although b1 is attacked."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b8",
+          "to": "b1"
+        }
+      ],
+      "highlight": [
+        "b1",
+        "c1",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b1",
+            "color": "black",
+            "count": 1
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 0
+          }
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c1",
+            "color": "black",
+            "count": 0
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBds11-13"
+    },
+    {
+      "type": "card",
+      "text": "Only the king's own path matters. Kingside that is e1, f1, g1; queenside it is e1, d1, c1. An attacked **rook** does not stop castling, and neither does an attacked square beside the queenside rook (b1). But an attacked f1 or d1 does, even if the king would land on a safe square. A lost right never comes back, even if the piece returns."
+    },
+    {
+      "type": "contrast",
+      "title": "A rook is attacked, then a path square, then nothing relevant",
+      "prompt": "Black's rook can stand on h8 or f8, or a knight can stand on a8. Predict first: in which of the three can White castle kingside?",
+      "working": "IBds11-14",
+      "failing": "IBds11-15",
+      "irrelevant": "IBds11-16"
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-21",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-27",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-31",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-CASTLE-13",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.CASTLE",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before each answer, which question of the checklist did you ask first? Which one did you skip, and did skipping it ever give a wrong answer?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/FND.CASTLE.json (D2 outcome)",
+    "content/lessons/L-FND-CASTLE-1.json (taught there, not repeated)",
+    "items IG-CASTLE-*, IBds11-13..16 (claims checked by tools/validate.py)"
+  ]
+}

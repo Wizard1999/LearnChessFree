@@ -1,0 +1,146 @@
+{
+ "id": "L-POS-CONNECT-2",
+ "title": "Connect the rooks, or something sharper?",
+ "skill": "POS.CONNECT",
+ "depth": "D2",
+ "minutes": 10,
+ "outcomes": [
+  "Checks first whether anything of his is attacked and loose, and whether an enemy piece can be taken",
+  "Chooses between a connecting move and a move with a threat or a tempo",
+  "Sees when the rooks are already connected and no connecting move is needed"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Connecting the rooks: a step, not a goal** you saw which pieces stand between the rooks. Here you decide **when**. Ask in this order.\n**Is anything of mine attacked and loose? Can I take something loose? Does a developing move also make a threat?**\nConnecting the rooks is the answer to none of these; it is what you do when they are all quiet."
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-6"
+  },
+  {
+   "type": "board",
+   "fen": "r3k2r/3n2pp/5p2/ppn1p3/3p3N/P2P3P/1PPB1PP1/2K1R2R b kq - 1 18",
+   "caption": "Black to move. No Black piece is loose, and the rooks on a8 and h8 do not yet see each other.",
+   "line": [
+    {
+     "move": "e8g8",
+     "say": "Black castles. The rooks on a8 and f8 now see each other along the back rank."
+    },
+    {
+     "move": "f2f4",
+     "say": "White plays f4, attacking the pawn on e5."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "g8"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "a8",
+    "f8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "No Black piece is loose."
+    },
+    {
+     "id": "C2",
+     "type": "rooks_connected",
+     "params": {
+      "color": "black",
+      "value": false
+     },
+     "statement": "Before castling the king stands between the rooks."
+    },
+    {
+     "id": "C3",
+     "type": "rooks_connected",
+     "params": {
+      "color": "black",
+      "value": true,
+      "after_move": "e8g8"
+     },
+     "statement": "After O-O the rooks are connected."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e8g8",
+       "b5b4",
+       "e8f7"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Castling is among the engine's first choices."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-25"
+  },
+  {
+   "type": "card",
+   "text": "Connecting comes last on the checklist. **Skip it** when a piece of yours is attacked and loose, when an enemy piece can simply be taken, or when a developing move also makes a threat. Castling may be delayed on purpose.\nAnd when the squares between the rooks are already empty, there is nothing left to connect.\n**Rule of thumb:** finish development unless something sharper pays."
+  },
+  {
+   "type": "contrast",
+   "title": "Same position, one change",
+   "prompt": "In the first position castling queenside is the move. In the next two, one thing has changed. Predict whether connecting is still the question, then check.",
+   "working": "IBds51-20",
+   "failing": "IBds51-4",
+   "irrelevant": "IBds51-5"
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIETX-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IP-QUIET-63",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds51-6",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.CONNECT",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Think of a recent game of yours. At which move did you last connect the rooks, and was a piece of yours attacked or a tempo available at the time?"
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/lessons/L-POS-CONNECT-1.json (Connecting the rooks: a step, not a goal)",
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-45, CI-48: development, castling can be delayed)",
+  "docs/first-hours.md (connecting rooks as a remembered basic)",
+  "items IP-QUIET-*, IP-QUIETX-* (shipped), IBds51-4..6 (this batch)"
+ ]
+}

@@ -1,0 +1,132 @@
+{
+  "id": "L-TAC-DEFLECT-2",
+  "title": "Deflection: does the defender have to leave?",
+  "skill": "TAC.DEFLECT",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Finds a deflection that wins material or mates in an unlabeled set",
+    "Checks whether another piece takes over the defender's duty",
+    "Answers 'no tactic' when the duty is shared"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In **Attacking the defender: remove, deflect, decoy, overload** you were told to pull a defender away. Now the position is unlabeled. A deflection needs a defender that *must* move, and a duty that nobody else can take. A check must be answered, so a check can force a piece. A mere offer can be refused. Solve this position, then follow the line."
+    },
+    {
+      "type": "item",
+      "item": "IL-wQzQd"
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/5pp1/1Rb3p1/5n2/1P2N3/2P3P1/5PBP/6K1 b - - 0 28",
+      "caption": "Black to move.",
+      "line": [
+        {
+          "move": "a8a1",
+          "say": "The rook checks along the first rank."
+        },
+        {
+          "move": "g2f1",
+          "say": "White blocks with the bishop."
+        },
+        {
+          "move": "c6e4",
+          "say": "The black bishop takes the knight on e4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "g2",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a8a1"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine's best move is among the accepted moves, and every accepted move is within 40 centipawns of it (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "a8a1",
+            "min": 3
+          },
+          "statement": "Along the engine's best-defence line, Ra1+ nets Black at least 3 points of material (pawn 1, minor piece 3, rook 5, queen 9)."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "c6e4",
+            "cp": 600
+          },
+          "statement": "Bxe4 is at least 6 pawns worse than the best move (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A deflection holds when** the defender cannot refuse (a check must be answered; an offered piece can be left alone), the key square or duty is empty the moment it leaves, and no other piece takes over. After the defender is gone, count what still guards the key square. A second guard is the failing look-alike."
+    },
+    {
+      "type": "contrast",
+      "title": "Same deflection, one change each",
+      "prompt": "Predict first. In the first position, ...Be3+ drives the king away from f1. In the second, the white bishop stands on e2. In the third, the black bishop stands on c8. Which still works?",
+      "working": "IL-Cmcrt",
+      "failing": "IBds32-4",
+      "irrelevant": "IBds32-5"
+    },
+    {
+      "type": "item",
+      "item": "IL-FTLTl",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds32-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-hpwnj",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "theme.deflection",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you played a deflecting move, what did you expect the opponent to do, and did you check a reply that is not the capture?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/TAC.DEFLECT.json (D2 outcome and conditions)",
+    "content/lessons/L-TAC-REMOVE-DEFENDER-1.json (D1, not repeated)",
+    "Lichess puzzle database (CC0) for the shipped items; content/items/lesson-ds32.json (one-feature edits of Lichess positions, validated)"
+  ]
+}

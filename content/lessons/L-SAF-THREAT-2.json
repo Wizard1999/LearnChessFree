@@ -1,0 +1,108 @@
+{
+  "id": "L-SAF-THREAT-2",
+  "title": "Threat or no threat?",
+  "skill": "SAF.THREAT",
+  "depth": "D2",
+  "minutes": 11,
+  "outcomes": [
+    "Imagines a free move for the opponent and lists checks, captures and double attacks",
+    "Names the threat when there is one, including a mate threat",
+    "Says 'none' when the opponent's last move threatens nothing",
+    "Tells a covered square from an open one when judging a fork"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "In \"What did their last move threaten?\" there was always something to find. Now there often is not. Pretend your opponent gets a **free move** and list what they could do: **checks, captures, and moves that attack two things or threaten mate**. If every move on the list fails, the answer is **none**, and you do not spend a move on it."
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/pp3ppp/8/8/8/2N5/PP3PPP/6K1 w - - 0 1",
+      "caption": "White to move. What if Black got a free move?",
+      "line": [
+        {
+          "move": "a2a3",
+          "say": "Suppose White plays a quiet move."
+        },
+        {
+          "move": "e8e1",
+          "say": "Re1 is checkmate: the king has no square and nothing can take or block."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If White passes, Re1 is checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "g1"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IT-tjvc0g3e-16"
+    },
+    {
+      "type": "card",
+      "text": "A threat must gain something next move: material or mate. **Rule of thumb** for the list: is a piece of mine attacked and short of defence, can a check lead to mate, can one move attack two things? A covered square stops a fork. An attacked piece that is also defended may still be a threat: a pawn attacking a defended knight is one. Count to be sure."
+    },
+    {
+      "type": "contrast",
+      "title": "Same shape, one change",
+      "prompt": "Black has just moved. Look for the threat, or say there is none. Predict, then check.",
+      "working": "IBds21-7",
+      "failing": "IBds21-8",
+      "irrelevant": "IBds21-9"
+    },
+    {
+      "type": "item",
+      "item": "IT-91055ozf-32",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IT-6rasfks5-31",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IT-hz68hefk-28",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.THREAT",
+        "kind.game"
+      ],
+      "n": 6
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which was harder for you: spotting a threat that was there, or accepting that there was none? What did you do differently on the second kind?"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "content/skills/SAF.THREAT.json (D2 outcome, contrasts)",
+    "docs/lessons-loop-self.md (weaknesses)",
+    "items IT-* (Lichess games, CC0; rules and engine checked), IBds21-7..9 (authored)"
+  ]
+}

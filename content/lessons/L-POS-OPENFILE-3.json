@@ -1,0 +1,159 @@
+{
+ "id": "L-POS-OPENFILE-3",
+ "title": "Open files: past the pawn in the way",
+ "skill": "POS.OPENFILE",
+ "depth": "D3",
+ "minutes": 12,
+ "outcomes": [
+  "Checks whether a pawn protects the blocking pawn before choosing a method",
+  "Counts attackers against defenders on an unprotected blocker and captures with the cheapest piece first",
+  "Uses a pawn lever on a protected blocker, after checking that the lever square is not covered by another pawn"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "In **Open files: find the entry square** you counted attackers and defenders on a blocking pawn. This lesson picks the method.\n**Capture:** more attackers than defenders, no pawn protecting it, cheapest piece first.\n**Lever:** a pawn protects it, so attack it with a pawn.\n**Sacrifice:** a piece for the entry square. A last resort; this lesson names it but has no checked example."
+  },
+  {
+   "type": "board",
+   "fen": "1kr1r3/pppp2pp/4p3/8/5P2/3P4/PPP1R1PP/1K2R3 w - - 0 1",
+   "caption": "White to move. The pawn on e6 blocks the e-file and a pawn protects it.",
+   "line": [
+    {
+     "move": "f4f5",
+     "say": "The lever: a pawn now attacks the blocker."
+    },
+    {
+     "move": "e6f5",
+     "say": "One possible reply: Black takes the lever."
+    },
+    {
+     "move": "e2e8",
+     "say": "The file is open; the first rook takes on e8."
+    },
+    {
+     "move": "c8e8",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "e1e8",
+     "say": "The second rook recaptures on e8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f4",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e6",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "A Black pawn protects e6."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1,
+      "after_move": "f4f5"
+     },
+     "statement": "After f5 a White pawn attacks e6."
+    },
+    {
+     "id": "C3",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "e"
+      ],
+      "after_moves": [
+       "f4f5",
+       "e6f5"
+      ]
+     },
+     "statement": "After f5 exf5 the e-file has no pawns."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f4f5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "The lever is the engine's first choice."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds51-17"
+  },
+  {
+   "type": "card",
+   "text": "Check in this order.\n**1. Does a pawn protect the blocker?** If not, count attackers against defenders and capture with the cheapest piece first.\n**2. If a pawn protects it,** a capture only loses material. Look for a pawn lever, and check that no other pawn covers the lever square.\n**Rule of thumb:** counts decide the first case, pawns decide the second."
+  },
+  {
+   "type": "contrast",
+   "title": "Same blocker, a pawn behind it",
+   "prompt": "In the second position Black's e-pawn has gone to c7. Does the capture that worked still work? Predict, then check.",
+   "working": "IBds51-12",
+   "failing": "IBds51-13"
+  },
+  {
+   "type": "contrast",
+   "title": "Same lever, a pawn that covers it",
+   "prompt": "In the second position Black's b-pawn stands on b6. Does the lever that worked still work? Predict, then check.",
+   "working": "IBds51-14",
+   "failing": "IBds51-15"
+  },
+  {
+   "type": "item",
+   "item": "IBds51-16",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds51-18",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.POS.OPENFILE",
+    "cue.3"
+   ],
+   "n": 4,
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Pick a game of yours with a closed file (a pawn of each colour on it). Where could a rook go from that file to reach an open one? This idea has no checked positions here yet; answer on paper and compare with the engine later."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/lessons/L-POS-OPENFILE-1.json (Open files: find the entry square)",
+  "sources/sheets/nimzowitsch_my-system.md (ideas 6-9: files, obstructions, levers)",
+  "sources/sheets/edlasker_chess-strategy.md (K20)",
+  "items IBds51-12..18 (this batch, engine-checked)"
+ ]
+}
