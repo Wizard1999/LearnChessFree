@@ -9,7 +9,7 @@ import { db } from '../db'
 import { loadReviewer, reviewFile, saveReviewer, sendReviews, feedbackEndpoint, type Reviewer } from '../lib/feedback'
 import { useContent } from '../lib/content'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { RATE_MAX, RATE_MIN, savePrefs, speakText, useSpeech } from '../lib/readAloud'
+import { RATE_MAX, RATE_MIN, VOICE_BROWSER, VOICE_RECORDED, savePrefs, speakText, useSpeech } from '../lib/readAloud'
 import { EMPTY_LOOP, LOOP_INFO, LOOP_LEVELS, loadLoop, RETIRE_AFTER, saveLoop, type LoopState } from '../lib/loop'
 
 export function SettingsContent() {
@@ -84,11 +84,12 @@ export function SettingsContent() {
       {speech.available && (
         <section className="card">
           <h2>Read aloud</h2>
-          <p className="small muted">Lessons can be read to you by your browser's own voices, best-sounding first. A voice marked online is run by your browser's maker (Microsoft, Google or Apple), which receives the sentence being read; lesson text holds nothing personal. Local voices send nothing. For the most natural sound, use Microsoft Edge (its "Natural" voices) or add Enhanced or Premium voices in your system's speech settings. Turn it on with the Read aloud button at the top of a lesson.</p>
+          <p className="small muted">The recorded voice is generated in advance, plays from this site's own files and sends nothing anywhere. Lessons without a recording use your browser's voice instead. Browser voices are listed best-sounding first. A voice marked online is run by your browser's maker (Microsoft, Google or Apple), which receives the sentence being read; lesson text holds nothing personal. Local voices send nothing. For the most natural sound, use Microsoft Edge (its "Natural" voices) or add Enhanced or Premium voices in your system's speech settings. Turn it on with the Read aloud button at the top of a lesson.</p>
           <div className="row">
             <label className="field"><span className="small muted">Voice</span>
-              <select value={speech.prefs.voice} onChange={e => savePrefs({ voice: e.target.value })}>
-                <option value="">Best available (automatic)</option>
+              <select value={speech.prefs.voice || VOICE_RECORDED} onChange={e => savePrefs({ voice: e.target.value })}>
+                <option value={VOICE_RECORDED}>Natural recorded voice (when available)</option>
+                <option value={VOICE_BROWSER}>Browser voice, best available (automatic)</option>
                 {rankedVoices(speech.voices).map(v => <option key={v.voiceURI} value={v.voiceURI}>{v.name} ({v.lang}){isOnline(v) ? ', online' : ''}</option>)}
               </select></label>
             <label className="field"><span className="small muted">Speed: {speech.prefs.rate.toFixed(1)}x</span>

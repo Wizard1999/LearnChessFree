@@ -36,3 +36,9 @@ Written 30 October 2026. The aim: any update is a short, known routine with one 
 - After UI changes load every route (the smoke test does it); a stale dev-server module can show a false error: touch the file or hard refresh.
 - In shell scripts on Windows, backslashes and quotes in heredocs get mangled; write files with the editor tools and use `chr(92)` for backslashes in Python one-liners.
 - A device's progress lives in the browser's IndexedDB; changing the database schema needs a Dexie version bump and a migration (`app/src/db.ts`).
+
+## Read-aloud audio (built once, shipped as static files)
+Lesson text is voiced at build time by an open-source neural voice (Piper, `en_US-ljspeech-high`, LJ Speech, public domain); the learner's device only plays `app/public/audio/<hash>.ogg` (mono Opus, about 16 kbps). Nothing is synthesised or sent anywhere at run time, so it stays free and needs no special hardware.
+- Refresh after lesson text changes: `node tools/export_speech.mjs` (chunks exactly as `app/src/lib/speech.ts` computes them), then `tools/.venv-tts/Scripts/python.exe -I tools/make_audio.py` (incremental, path order, 70 MB budget; delete `app/public/audio/index.json` and files to rebuild all). Setup of `tools/.venv-tts` is in the header of `tools/make_audio.py`.
+- `python tools/check_audio.py` lists missing, unlisted and stale files and how many lessons are fully voiced (always exits 0). A chunk's file name is the first 12 hex characters of the sha1 of its text, so edited text simply has no audio until the next run.
+- Licence and attribution text: `LICENSES.md` and `NOTICE`.
