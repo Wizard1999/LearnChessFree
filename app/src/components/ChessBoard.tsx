@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { ALL_SQUARES, controlMap, describe as describeControl } from '../lib/control'
+import { ALL_SQUARES } from '../lib/control'
+import { controlMapV2 as controlMap, describeV2 as describeControl } from '../lib/controlV2'
 import { Chessground } from 'chessground'
 import type { Api } from 'chessground/api'
 import type { Config } from 'chessground/config'
@@ -108,11 +109,11 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
         <div className="controlmap" aria-label="Square control map">
           {cells.filter(sq => ALL_SQUARES.includes(sq)).map(sq => {
             const c = map.get(sq)!
-            const strength = Math.min(1, Math.abs(c.net) / 3)
-            const bg = c.net === 0 ? 'transparent' : c.net > 0 ? `rgba(31, 90, 190, ${0.12 + 0.5 * strength})` : `rgba(214, 100, 20, ${0.12 + 0.5 * strength})`
+            const strength = Math.min(1, Math.abs(c.score) / 6)
+            const bg = c.score === 0 ? 'transparent' : c.score > 0 ? `rgba(31, 90, 190, ${0.12 + 0.5 * strength})` : `rgba(214, 100, 20, ${0.12 + 0.5 * strength})`
             return (
               <button key={sq} type="button" className={picked === sq ? 'ctl sel' : 'ctl'} style={{ background: bg }} aria-label={describeControl(c)} onClick={() => setPicked(p => (p === sq ? null : sq))}>
-                <span className="ctlnum">{c.white || c.black ? `${c.white.length}-${c.black.length}` : ''}</span>
+                <span className="ctlnum">{c.white.length || c.black.length ? `${c.white.length}${c.white.some(a => a.xray) ? '+' : ''}-${c.black.length}${c.black.some(a => a.xray) ? '+' : ''}${c.loose.length ? '!' : ''}` : ''}</span>
               </button>
             )
           })}
@@ -122,7 +123,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
         <div className="controlbar">
           <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
           {map && picked && <span className="controldetail" role="status">{describeControl(map.get(picked)!)}</span>}
-          {map && !picked && <span className="controldetail muted" role="note">Blue: White controls more. Orange: Black. Each square: White attackers - Black attackers. Tap a square for details. Pins ignored.</span>}
+          {map && !picked && <span className="controldetail muted" role="note">Blue: White holds the square more strongly. Orange: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Tap a square for details.</span>}
         </div>
       )}
     </div>
