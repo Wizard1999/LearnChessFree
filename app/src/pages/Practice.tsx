@@ -72,21 +72,24 @@ export function Practice() {
       <h1>Practice</h1>
       {!started && (
         <section className="card">
-          <p className="lede">Choose a focus or leave everything on "mixed" to get positions where nobody tells you which idea applies. Fresh positions are preferred over ones you have seen.</p>
-          <div className="grid2">
-            <label className="field"><span className="small muted">Skill (optional)</span>
-              <select value={skill} onChange={e => set('skill', e.target.value)}><option value="">Mixed: all skills</option>{skillKeys.map(k => <option key={k} value={k}>{k}</option>)}</select></label>
-            <label className="field"><span className="small muted">Theme or kind (optional)</span>
-              <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
-            <label className="field"><span className="small muted">Strand (optional)</span>
-              <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
-            <label className="field"><span className="small muted">Which skills</span>
-              <select value={everything ? '1' : ''} onChange={e => set('all', e.target.value)}><option value="">Only skills I have met</option><option value="1">Everything</option></select></label>
-            <label className="field"><span className="small muted">How many</span>
-              <select value={n} onChange={e => set('n', e.target.value)}>{[5, 8, 12, 20].map(x => <option key={x} value={x}>{x}</option>)}</select></label>
-          </div>
-          <label className="check"><input type="checkbox" checked={silentOn} onChange={e => { setSilent(e.target.checked); if (!e.target.checked && params.get('silent')) set('silent', '') }} /> <span><strong>Silent practice</strong>: no hints. This is how you check that you can do it on your own. (Answers and explanations still appear after each exercise.)</span></label>
-          <div className="row"><button type="button" className="primary" onClick={go}>Start</button></div>
+          <p className="lede">Practice gives you positions where nobody tells you which idea applies. Fresh positions come first.</p>
+          <div className="row"><button type="button" className="primary big" onClick={go}>Start mixed practice</button></div>
+          <details className="practiceopts">
+            <summary>Choose what to practise instead</summary>
+            <div className="grid2">
+              <label className="field"><span className="small muted">Skill (optional)</span>
+                <select value={skill} onChange={e => set('skill', e.target.value)}><option value="">Mixed: all skills</option>{skillKeys.map(k => <option key={k} value={k}>{k}</option>)}</select></label>
+              <label className="field"><span className="small muted">Theme or kind (optional)</span>
+                <select value={tag} onChange={e => set('tag', e.target.value)}><option value="">Any</option>{tags.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+              <label className="field"><span className="small muted">Strand (optional)</span>
+                <select value={strand} onChange={e => set('strand', e.target.value)}><option value="">Any</option>{strands.map(t => <option key={t} value={t}>{t}</option>)}</select></label>
+              <label className="field"><span className="small muted">Which skills</span>
+                <select value={everything ? '1' : ''} onChange={e => set('all', e.target.value)}><option value="">Only skills I have met</option><option value="1">Everything</option></select></label>
+              <label className="field"><span className="small muted">How many</span>
+                <select value={n} onChange={e => set('n', e.target.value)}>{[5, 8, 12, 20].map(x => <option key={x} value={x}>{x}</option>)}</select></label>
+            </div>
+            <label className="check"><input type="checkbox" checked={silentOn} onChange={e => { setSilent(e.target.checked); if (!e.target.checked && params.get('silent')) set('silent', '') }} /> <span><strong>Silent practice</strong>: no hints. This is how you check that you can do it on your own. (Answers and explanations still appear after each exercise.)</span></label>
+          </details>
         </section>
       )}
       {started && finished === null && (

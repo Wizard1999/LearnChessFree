@@ -1,0 +1,2 @@
+# Audit: Practice (30 October 2026)
+**Before:** five dropdowns, a checkbox and a Start button before anything could happen. **Change:** one big "Start mixed practice" button; the choices (skill, theme, strand, which skills, how many, silent mode) fold under "Choose what to practise instead". Phone check: no sideways scroll on any page at 375 px (checked 16 routes). **Open:** silent mode deserves a plain-words explanation near the button for first-time users.
