@@ -3,7 +3,7 @@
 body { margin: 0; background: var(--bg); color: var(--text); }
 a { color: var(--accent); }
 h1 { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(1.75rem, 1.3rem + 1.4vw, 2.35rem); line-height: 1.15; margin: 0.4em 0; letter-spacing: -0.01em; } h2 { font-size: 1.2rem; margin: 0.2em 0 0.4em; } h3 { font-size: 1.05rem; margin: 0.2em 0 0.4em; } h4 { margin: 0.8em 0 0.2em; font-size: 0.95rem; }
-.top { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); grid-template-areas: "brand nav settings"; align-items: center; gap: 0.4rem 1rem; padding: 0.55rem 1rem; background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.top { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); grid-template-areas: "brand nav settings"; align-items: center; gap: 0.4rem 1rem; padding: 0.55rem 1rem; background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 100; }
 .brand { grid-area: brand; justify-self: start; white-space: nowrap; font-family: var(--font-editorial); font-weight: 700; text-decoration: none; color: var(--text); font-size: 1.25rem; }
 .top nav { grid-area: nav; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2rem 1rem; }
 .top nav a { text-decoration: none; color: var(--muted); padding: 0.25rem 0.1rem; border-bottom: 2px solid transparent; }
@@ -115,8 +115,8 @@ fieldset.appearance legend { padding: 0; }
 
 .settingsbtn { grid-area: settings; justify-self: end; min-height: 36px; padding: 0.3rem 0.8rem; }
 /* Settings drawer: a panel over the right edge; the page behind stays where it was */
-.drawer-backdrop { position: fixed; inset: 0; background: rgba(23, 28, 34, 0.45); z-index: 40; }
-.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: var(--canvas); color: var(--text); border-left: 1px solid var(--line); box-shadow: -10px 0 30px rgba(0, 0, 0, 0.22); overflow-y: auto; padding: 0.9rem 1.1rem 3rem; z-index: 41; animation: drawer-in 180ms ease-out; }
+.drawer-backdrop { position: fixed; inset: 0; background: rgba(23, 28, 34, 0.45); z-index: 200; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: var(--canvas); color: var(--text); border-left: 1px solid var(--line); box-shadow: -10px 0 30px rgba(0, 0, 0, 0.22); overflow-y: auto; padding: 0.9rem 1.1rem 3rem; z-index: 201; animation: drawer-in 180ms ease-out; }
 .drawer-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; position: sticky; top: -0.9rem; background: var(--canvas); padding: 0.4rem 0; z-index: 1; }
 .drawer-head h2 { font-family: var(--font-editorial); font-size: 1.35rem; margin: 0; }
 @keyframes drawer-in { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -589,3 +589,9 @@ details.practiceopts { margin-top: 1rem; } details.practiceopts > summary { curs
 .maptip { position: absolute; bottom: 0.8rem; top: auto; }
 .maptip.br { right: 0.8rem; left: auto; }
 .maptip.bl { left: 0.8rem; right: auto; }
+
+/* Layer scale (one rule for the whole site): page content and boards 0 to 10, floating panels beside content 20 to 60, the header and every menu that drops from it 100,
+   modal drawers and their backdrop 200 and up. A menu is always above whatever sits inside the page, including the control map and the docks. */
+.top { z-index: 100; }
+.morelist { z-index: 110; }
+.blocktip { z-index: 90; }
