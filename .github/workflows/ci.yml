@@ -1,0 +1,38 @@
+name: Checks
+
+# Runs the deterministic checks on every push and pull request: Python content checks (no engine needed), TypeScript, the tests
+# (including the route smoke test and the data cross-checks) and the build. Free for a public repository. Remove the `push:` trigger
+# to make it run only on pull requests or by hand.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install python-chess zstandard
+      - name: Content checks
+        run: |
+          python -I tools/check_all.py
+          python -I tools/check_graph.py --strict
+          python -I tools/check_overlap.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+        working-directory: app
+      - run: npx tsc --noEmit
+        working-directory: app
+      - run: npm test
+        working-directory: app
+      - run: npm run build
+        working-directory: app
