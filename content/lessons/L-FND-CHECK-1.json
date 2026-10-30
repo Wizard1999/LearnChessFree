@@ -1,13 +1,13 @@
 {
   "id": "L-FND-CHECK-1",
-  "title": "Check, checkmate and stalemate",
+  "title": "Check and checkmate: the three ways out",
   "skill": "FND.CHECK",
   "depth": "D1",
-  "minutes": 12,
+  "minutes": 10,
   "outcomes": [
-    "Gets out of check in one of the three ways, and sees when a way is impossible",
-    "Tells check, checkmate and stalemate apart",
-    "Gives mate without stalemating by accident"
+    "Gets out of check by moving the king, blocking, or capturing the checking piece",
+    "Says 'checkmate' when none of the three ways exists",
+    "Knows a knight's check cannot be blocked"
   ],
   "steps": [
     {
@@ -74,15 +74,15 @@
     },
     {
       "type": "card",
-      "text": "If there is **no** way out of check, it is **checkmate**: the game ends and the player in check loses. If the player to move is **not** in check but has no legal move, it is **stalemate**: the game is a draw. The two look alike, but the results are opposite."
+      "text": "Not every way is always open. A **knight** attacks by jumping, so there is no line to block. If the king has no safe square, nothing can capture the checker and nothing can block, it is **checkmate**: the game ends and the player in check loses. Test all three ways before you say mate."
     },
     {
       "type": "board",
-      "fen": "R5k1/5ppp/8/8/8/8/8/6K1 b - - 0 1",
-      "caption": "The rook checks along the back rank (the row where the pieces start). The king's own pawns block its escape. Checkmate.",
+      "fen": "3R2k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1",
+      "caption": "The rook checks along the back rank (the row where the pieces start). The king's own pawns take away three squares, the rook covers the other two, and nothing can block or capture. Checkmate.",
       "arrows": [
         {
-          "from": "a8",
+          "from": "d8",
           "to": "g8"
         }
       ],
@@ -103,60 +103,45 @@
       ]
     },
     {
-      "type": "item",
-      "item": "IA0-69"
-    },
-    {
-      "type": "item",
-      "item": "IA0-70"
+      "type": "card",
+      "text": "**When it holds.** Check is answered by a king move, a block or a capture, never by ignoring it. Blocking works only against a line (rook, bishop, queen) with a square between; a knight check or a pawn check cannot be blocked. A double check cannot be fixed by one block or one capture, but you meet that later. *Rule of thumb:* list all three ways before you move; do not assume the king can step away, and do not assume a block exists."
     },
     {
       "type": "contrast",
-      "title": "One square, opposite results",
-      "prompt": "The white queen moves from f8 to f7, one square down. Predict first: is the result still checkmate?",
-      "working": "IA0-71",
-      "failing": "IA0-72"
+      "title": "One pawn, opposite results",
+      "prompt": "Same rook check on the back rank. In one position the black pawn stands on f7; in the other it is missing. Predict first: which is checkmate? (The answer list also offers \"stalemate\", the next lesson; neither position is one.)",
+      "working": "IA0-70",
+      "failing": "IA0-69"
     },
     {
       "type": "item",
-      "item": "IA0-73"
+      "item": "IBds11-33",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-74"
+      "item": "IBds11-32",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-75"
-    },
-    {
-      "type": "item",
-      "item": "IA0-76"
-    },
-    {
-      "type": "item",
-      "item": "IA0-77"
+      "item": "IBds11-30",
+      "silent": true
     },
     {
       "type": "practice",
       "tags": [
         "node.FND.CHECK",
-        "kind.generated"
+        "kind.generated",
+        "family.FAM-GEN-STATE-03"
       ],
-      "n": 6
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.FND.STALEMATE",
-        "kind.generated"
-      ],
-      "n": 4
+      "n": 4,
+      "silent": true
     },
     {
       "type": "reflect",
       "kind": "confidence",
-      "prompt": "In the last four questions you were not told what to look for. How sure were you of each answer? (low / medium / high)"
+      "prompt": "In the last questions you were not told what to look for. How sure were you of each answer? (low / medium / high)"
     }
   ],
   "review": {
@@ -166,9 +151,6 @@
   "sources": [
     "docs/first-hours.md session 2",
     "docs/council-synthesis.md CD-1",
-    "sources/sheets/capablanca_chess-fundamentals.md (stalemate care in the elementary mates)"
-  ],
-  "also": [
-    "FND.STALEMATE"
+    "content/skills/FND.CHECK.json (D1 outcome, conditions, contrasts)"
   ]
 }

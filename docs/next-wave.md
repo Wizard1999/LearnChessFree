@@ -10,3 +10,6 @@ Say "go" and I start these in this order, a few agents at a time (the 5-hour win
 
 After each wave: `tools/validate_lessons.py` (no args), `tools/check_all.py`, `tools/check_graph.py --strict`, `tools/check_overlap.py` (stay at 1), `tools/build_content.py`, `npm test`, `npx vite build`; delete any `app/src/_audit_*.test.ts`; `tools/update_roadmap.py`; commit and push (pull `--no-rebase` first). Do NOT start a second copy of a batch while one is running (this caused the p5 collision).
 - After any UI change: load every route (Today, Curriculum x3, Practice, Progress, Analysis, Library, Games, Lab, Plan, Play, Openings, Roadmap, Settings, a lesson, Placement, Drill) and confirm none shows 'This page hit a problem'.
+
+## Generators for the deeper-lessons program (30 October 2026)
+`write-d2.js` (batches `ds11`..: strand + number; arguments are batch ids), `split-lessons.js` (batches `sp1`..`sp13`; `sp1` to `sp5` done), `opening-dives.js`, `culture-courses.js`. The scripts live in the session scratchpad; a copy of each is kept in `tools/workflows-*.js` when committed. The list of skill levels still without a lesson: `tools/.venv/Scripts/python.exe -I -c` over `app/public/content/manifest.json` (`depths_with_items`) against `lessons.json`. Keep the 5-hour usage window in mind: about 1% per minute with ten agents.

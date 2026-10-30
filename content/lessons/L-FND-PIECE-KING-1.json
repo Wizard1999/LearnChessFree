@@ -1,0 +1,135 @@
+{
+  "id": "L-FND-PIECE-KING-1",
+  "title": "How the king moves",
+  "skill": "FND.PIECE.KING",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Taps the squares a king can step to, never onto an attacked square or next to the enemy king",
+    "Decides whether the king can take a neighbouring piece by checking whether it is guarded",
+    "Ignores a distant enemy piece that attacks none of the squares around the king"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **king** moves one square in any direction. He is the piece you must never lose, so there is one extra rule: **a king may never move onto a square the enemy attacks** (a square where an enemy piece could capture). "
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/7r/4K3/8/8/8 w - - 0 1",
+      "caption": "The black rook attacks the whole fifth rank. The king cannot step onto it.",
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d3",
+        "d4",
+        "e3",
+        "f3",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "d3",
+              "d4",
+              "e3",
+              "f3",
+              "f4"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-23"
+    },
+    {
+      "type": "card",
+      "text": "Two kings can never stand on neighbouring squares either: each would attack the other's square. So the squares around the enemy king are off limits, even if no other piece attacks them."
+    },
+    {
+      "type": "item",
+      "item": "IA0-24"
+    },
+    {
+      "type": "card",
+      "text": "The king can capture too, but only if the piece is not guarded. A piece is **guarded** (or defended) when a friendly piece could recapture on its square. **When it holds:** step to free or safely capturable squares. **When it fails:** an attacked square, a square next to the enemy king, or a guarded piece. Ask before you capture: which enemy pieces attack the square I am about to land on?"
+    },
+    {
+      "type": "contrast",
+      "title": "Same capture, one change",
+      "prompt": "Predict first: can the king take the knight each time?",
+      "working": "IA0-25",
+      "failing": "IA0-26",
+      "irrelevant": "ISsp3-4"
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-130",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBds12-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-138",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-139",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KING",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.KING",
+        "cue.3",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the mixed round, you were asked questions without being told the topic. How sure were you of your answers? (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4"
+  ]
+}

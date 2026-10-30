@@ -1,18 +1,18 @@
 {
   "id": "L-FND-SPECIAL-1",
-  "title": "En passant, promotion and draws",
+  "title": "En passant: capture a pawn in passing",
   "skill": "FND.ENPASSANT",
   "depth": "D1",
-  "minutes": 11,
+  "minutes": 9,
   "outcomes": [
-    "Captures en passant, and knows it must be done at once",
-    "Promotes a pawn and checks the promotion square first",
-    "Names the ways a game ends in a draw and spots a draw by lack of material"
+    "Captures en passant when told to, for White and for Black",
+    "Knows the capture must be made on the very next move",
+    "Says when en passant is not available"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "**En passant** means 'in passing'. When an enemy pawn jumps two squares and lands right beside your pawn, you may capture it as if it had moved only one square. You must do it on the very next move, or the chance is gone."
+      "text": "**En passant** means 'in passing'. When an enemy pawn jumps two squares and lands right beside your pawn, you may capture it as if it had moved only one square. Your pawn goes to the square the enemy pawn passed over, and the enemy pawn is removed. You must do it on the very next move, or the chance is gone."
     },
     {
       "type": "board",
@@ -49,42 +49,34 @@
       "item": "IA0-85"
     },
     {
+      "type": "item",
+      "item": "IG-EP-3"
+    },
+    {
       "type": "contrast",
-      "title": "Same pawns, a move later",
-      "prompt": "White did not take at once. Predict first: can White still capture en passant a move later?",
+      "title": "Same pawns, one change",
+      "prompt": "Black has just jumped a pawn from d7 to d5, or it was standing on d5 already. Predict first: can White capture en passant?",
       "working": "IA0-86",
       "failing": "IA0-87"
     },
     {
       "type": "card",
-      "text": "A pawn that reaches the last rank is **promoted**: you choose a queen, rook, bishop or knight. It can promote by moving straight ahead or by capturing diagonally. Before you push, check the promotion square. If an enemy piece attacks it, the new piece can be captured at once."
+      "text": "It works only on the move right after the two-square jump, and only for a pawn beside the jumper. If the enemy pawn arrived earlier, or by single steps, the right is gone; only the last move counts. Other pieces do not change the timing rule. (Like any move, the capture is not allowed if it would leave your own king in check; you meet that later.)"
     },
     {
       "type": "item",
-      "item": "IA0-88"
-    },
-    {
-      "type": "card",
-      "text": "A game is a **draw** when: a player has no legal move and is not in check (stalemate); the same position occurs three times (repetition); fifty moves pass without a capture or a pawn move; there are not enough pieces to checkmate; or both players agree. Do not assume that an extra piece always wins."
-    },
-    {
-      "type": "contrast",
-      "title": "An extra piece is not always enough",
-      "prompt": "Both sides have just a king and White has one extra piece. Predict first: can White win with a rook? With a knight?",
-      "working": "IA0-89",
-      "failing": "IA0-90"
+      "item": "IG-EP-13",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-92"
+      "item": "IG-EP-15",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-93"
-    },
-    {
-      "type": "item",
-      "item": "IA0-94"
+      "item": "IG-EP-16",
+      "silent": true
     },
     {
       "type": "practice",
@@ -95,17 +87,9 @@
       "n": 4
     },
     {
-      "type": "practice",
-      "tags": [
-        "node.FND.PROMOTE",
-        "kind.generated"
-      ],
-      "n": 4
-    },
-    {
       "type": "reflect",
       "kind": "unsure",
-      "prompt": "Which special rule would you be most likely to forget in a real game: castling conditions, en passant, promotion squares, or the draw rules?"
+      "prompt": "Think of a game where a pawn of yours stood beside an enemy pawn. How would you check, before moving, that the enemy pawn had just jumped? Write the check as one question."
     }
   ],
   "review": {
@@ -115,11 +99,8 @@
   "sources": [
     "docs/first-hours.md session 3",
     "docs/council-synthesis.md CD-1, CD-4",
-    "sources/sheets/capablanca_chess-fundamentals.md (draw by stalemate; mating material)"
-  ],
-  "also": [
-    "FND.PROMOTE",
-    "FND.DRAWS",
-    "FND.SPECIAL"
+    "content/skills/FND.ENPASSANT.json (conditions, contrasts)",
+    "items IA0-85..87 and IG-EP-2, 13, 15, 16 (en passant legality verified by the rules claims)",
+    "split from the former combined lesson 'En passant: capture a pawn in passing' (D24, one building block per lesson)"
   ]
 }

@@ -189,6 +189,16 @@
     "ref": "authored: white pawn d4 with a black rook on e5, white king f1 out of its file",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBds12-21",
+   "fen": "8/8/2k5/5p2/1p1K4/2n5/P7/7r w - - 0 1",
+   "family": "FAM-DS12-PIECE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBds12-5 plus a white pawn on a2 (harmless, distant)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -1475,6 +1485,100 @@
     "A pawn captures only one square diagonally forward."
    ],
    "explain": "The rook stands one square diagonally forward from the pawn, so the pawn can take it.",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "IBds12-21",
+   "skill": "FND.PIECE.KING.D2",
+   "cue": 2,
+   "task": "select_squares",
+   "position": "PBds12-21",
+   "prompt": "White to move. Tap every square the piece on d4 can move to.",
+   "answer": {
+    "from": "d4",
+    "squares": [
+     "c4",
+     "d3",
+     "e3",
+     "e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "c4",
+       "d3",
+       "e3",
+       "e5"
+      ]
+     },
+     "statement": "The white piece on d4 can legally move to exactly these squares."
+    },
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d4c5"
+     },
+     "statement": "The king cannot step next to the enemy king (c5).",
+     "id": "C2"
+    },
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The king cannot step next to the enemy king (d5).",
+     "id": "C3"
+    },
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d4e4"
+     },
+     "statement": "The pawn on f5 attacks e4, so the king may not go there.",
+     "id": "C4"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece (the pawn on b4) defends the knight on c3.",
+     "id": "C5"
+    },
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d4c3"
+     },
+     "statement": "The king cannot take a defended knight.",
+     "id": "C6"
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.KING",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-DS12-KING",
+    "lang.en",
+    "task.select_squares",
+    "contrast.failing"
+   ],
+   "hints": [
+    "Compare with the first position: a black pawn appeared on b4.",
+    "Look again at the knight on c3. Does anything defend it now?",
+    "A pawn on b4 attacks c3, so the knight is defended."
+   ],
+   "explain": "A black pawn on b4 defends the knight on c3, so the king may not take it. The white pawn on a2 is far away and changes nothing. The king can step to c4, d3, e3 and e5.",
    "review": {
     "status": "machine-only"
    }

@@ -1,0 +1,238 @@
+{
+ "positions": [
+  {
+   "id": "PISsp3-1",
+   "fen": "k7/8/8/8/3Q4/8/8/4K3 w - - 0 1",
+   "family": "FAM-SP3-QUEEN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored split lesson position, validated",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PISsp3-2",
+   "fen": "k7/8/5P2/8/3Q4/8/8/4K3 w - - 0 1",
+   "family": "FAM-SP3-QUEEN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored split lesson position, validated",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PISsp3-3",
+   "fen": "k7/8/8/8/3Q4/1p6/8/4K3 w - - 0 1",
+   "family": "FAM-SP3-QUEEN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored split lesson position, validated",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PISsp3-4",
+   "fen": "k7/p7/8/3n3p/4K3/8/P6P/8 w - - 0 1",
+   "family": "FAM-KING-CAPTURE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored split lesson position, validated",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISsp3-1",
+   "skill": "FND.PIECE.QUEEN.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PISsp3-1",
+   "prompt": "Can the white queen on d4 go to h8 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d4h8"
+     },
+     "statement": "The diagonal d4-h8 is empty, so the queen can go to h8.",
+     "id": "C1"
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.QUEEN",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-SP3-QUEEN",
+    "lang.en",
+    "task.predict_outcome",
+    "contrast.working"
+   ],
+   "hints": [
+    "Which line from d4 leads toward h8: a rank, a file or a diagonal?",
+    "Trace the diagonal square by square: e5, f6, g7, h8. Is anything on it?"
+   ],
+   "explain": "The diagonal from d4 to h8 has nothing on it (e5, f6 and g7 are empty), so the queen slides all the way.",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp3-2",
+   "skill": "FND.PIECE.QUEEN.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PISsp3-2",
+   "prompt": "A white pawn now stands on f6. Can the white queen on d4 go to h8 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d4h8"
+     },
+     "statement": "The queen's own pawn on f6 blocks the diagonal.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d4e5"
+     },
+     "statement": "The queen can still stop on e5, in front of the pawn.",
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.QUEEN",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-SP3-QUEEN",
+    "lang.en",
+    "task.predict_outcome",
+    "contrast.failing"
+   ],
+   "hints": [
+    "Which line from d4 leads toward h8: a rank, a file or a diagonal?",
+    "Trace the diagonal square by square: e5, f6, g7, h8. Is anything on it?",
+    "Look at what changed: a white pawn on f6 sits on that diagonal."
+   ],
+   "explain": "The pawn on f6 stands on the diagonal. The queen cannot jump over it or land on it, so h8 is out of reach; she can only go as far as e5 on that line.",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp3-3",
+   "skill": "FND.PIECE.QUEEN.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PISsp3-3",
+   "prompt": "A black pawn now stands on b3. Can the white queen on d4 go to h8 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d4h8"
+     },
+     "statement": "The diagonal d4-h8 is still empty.",
+     "id": "C1"
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.QUEEN",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-SP3-QUEEN",
+    "lang.en",
+    "task.predict_outcome",
+    "contrast.irrelevant"
+   ],
+   "hints": [
+    "Which line from d4 leads toward h8: a rank, a file or a diagonal?",
+    "Trace the diagonal square by square: e5, f6, g7, h8. Is anything on it?",
+    "Is the pawn on b3 on the line from d4 to h8?"
+   ],
+   "explain": "The pawn on b3 is not on the diagonal from d4 to h8, and it blocks no other line toward h8, so nothing changes: the queen can still go to h8. The pawn on b3 is a knight's jump away from d4, but the queen does not move like a knight, so it is no obstacle and no target on the way to h8.",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp3-4",
+   "skill": "FND.PIECE.KING.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PISsp3-4",
+   "prompt": "A black pawn appears on h5, far from the knight. Can the white king capture the black knight on d5? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e4d5"
+     },
+     "statement": "The king can capture on d5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece guards d5.",
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.KING",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-KING-CAPTURE",
+    "lang.en",
+    "task.predict_outcome",
+    "contrast.irrelevant"
+   ],
+   "hints": [
+    "Is the knight on a neighbouring square? Yes. So the question is whether d5 is guarded.",
+    "Does the pawn on h5 attack d5 or any square near it?"
+   ],
+   "explain": "The pawn on h5 attacks only g4. No black piece attacks d5, so the king may still take the knight.",
+   "review": {
+    "status": "machine-only"
+   }
+  }
+ ]
+}

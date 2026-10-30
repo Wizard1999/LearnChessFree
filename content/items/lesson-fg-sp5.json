@@ -1,0 +1,137 @@
+{
+  "positions": [
+    {
+      "id": "PSsp5-1",
+      "fen": "k7/2Q5/1K6/7p/8/8/8/8 b - - 0 1",
+      "family": "FAM-SP5-GOES-ON-1",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored for batch sp5; the stalemate of IA0-74 plus a black pawn on h5; checked with python-chess and tools/validate.py",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PSsp5-2",
+      "fen": "7k/5Q2/6K1/8/8/8/8/n7 b - - 0 1",
+      "family": "FAM-SP5-GOES-ON-2",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored for batch sp5; the stalemate of IA0-72 plus a black knight on a1; checked with python-chess and tools/validate.py",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ISsp5-1",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 1,
+      "task": "classify_position",
+      "position": "PSsp5-1",
+      "prompt": "Black to move. What is the result of this position?",
+      "answer": {
+        "class": "The game goes on",
+        "options": [
+          "Checkmate",
+          "Stalemate",
+          "The game goes on"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "Black is not in check and has a legal move."
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "h5h4"
+            ]
+          },
+          "statement": "These are all of Black's legal moves."
+        }
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "The king may have no safe square. Does any other black piece have a legal move?"
+      ],
+      "explain": "The king has no safe square and is not in check, but the pawn on h5 can still move to h4. A side is stalemated only when no piece of it can move, so the game goes on.",
+      "tags": [
+        "node.FND.STALEMATE",
+        "tier.0",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "task.classify_position",
+        "family.FAM-SP5-GOES-ON-1"
+      ],
+      "orientation": "black",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ISsp5-2",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 3,
+      "task": "classify_position",
+      "position": "PSsp5-2",
+      "prompt": "Black to move. What is the result of this position?",
+      "answer": {
+        "class": "The game goes on",
+        "options": [
+          "Checkmate",
+          "Stalemate",
+          "The game goes on"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "Black is not in check and has a legal move."
+        },
+        {
+          "id": "C2",
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "a1b3",
+              "a1c2"
+            ]
+          },
+          "statement": "These are all of Black's legal moves."
+        }
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "The king may have no safe square. Does any other black piece have a legal move?"
+      ],
+      "explain": "The king on h8 has no safe square and is not attacked, but the knight on a1 can move to b3 or c2. Black has a legal move, so the game goes on.",
+      "tags": [
+        "node.FND.STALEMATE",
+        "tier.0",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "task.classify_position",
+        "family.FAM-SP5-GOES-ON-2"
+      ],
+      "orientation": "black",
+      "review": {
+        "status": "machine-only",
+        "reviewer": null
+      }
+    }
+  ]
+}

@@ -10,7 +10,7 @@ The order follows CD-1 (rules through action, then check/mate/stalemate, then sa
 | # | Lesson | Skill.depth | Min | cards/boards/contrasts | Hand items | Practice (generated) |
 |---|---|---|---|---|---|---|
 | 1 | L-FND-BOARD-1 | FND.BOARD.D1 | 7 | 2/1/1 | 9 | FND.BOARD x8 |
-| 2 | L-FND-ROOKBISHOP-1 | FND.PIECE.ROOK.D1 | 9 | 3/2/2 | 12 | ROOK x5, BISHOP x5 |
+| 2 | L-FND-ROOKBISHOP-1 | FND.PIECE.ROOK.D1 | 9 | split: now the rook only; the bishop is L-FND-PIECE-BISHOP-1 (see first-10-hours.md) | | ROOK x5 |
 | 3 | L-FND-QUEENKING-1 | FND.PIECE.QUEEN.D1 | 10 | 3/2/1 | 9 | QUEEN x5, KING x5, cue-3 mix x6 |
 | 4 | L-FND-KNIGHT-1 | FND.PIECE.KNIGHT.D1 | 8 | 2/2/1 | 7 | KNIGHT x6 |
 | 5 | L-FND-PAWN-1 | FND.PIECE.PAWN.D1 | 9 | 2/2/2 | 10 | PAWN x6 |

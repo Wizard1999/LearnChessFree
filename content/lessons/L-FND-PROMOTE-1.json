@@ -1,0 +1,124 @@
+{
+  "id": "L-FND-PROMOTE-1",
+  "title": "Promotion: a pawn on the last rank",
+  "skill": "FND.PROMOTE",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Promotes a pawn to a queen when told, for both colours",
+    "Promotes by capturing when the square ahead is blocked",
+    "Says when a pawn cannot promote on this move",
+    "Notices that a queen is not always the best choice (preview only)"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A pawn that reaches the last rank is **promoted** as part of the same move: you choose a queen, rook, bishop or knight of your own colour, never a king or a pawn. You may have several queens. The pieces you already have do not limit the choice."
+    },
+    {
+      "type": "board",
+      "fen": "k7/6P1/8/8/8/8/8/4K3 w - - 0 1",
+      "caption": "The pawn steps to g8 and becomes a queen.",
+      "line": [
+        {
+          "move": "g7g8q",
+          "say": "The pawn reaches the last rank and becomes a queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g7g8q"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-1"
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-3"
+    },
+    {
+      "type": "card",
+      "text": "A pawn promotes by moving straight ahead onto an empty last-rank square, or by capturing an enemy piece one step diagonally ahead. If a piece blocks the square ahead, look at both diagonals. A pawn cannot capture its own piece, and it must be on the seventh rank (the second, for Black) to promote on this move."
+    },
+    {
+      "type": "item",
+      "item": "IA0-88"
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-7"
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "The pawn stands on d7. Predict first: can it promote on this move?",
+      "working": "ISsp1-1",
+      "failing": "ISsp1-2",
+      "irrelevant": "ISsp1-3"
+    },
+    {
+      "type": "card",
+      "text": "The queen is usually the best choice, as a rule of thumb. Before you promote, check two things: whether the new piece lands on a square the enemy attacks, and whether a queen would leave the enemy king with no legal move and no check, which is stalemate. In rare positions another piece is better, and you will practise that later. The next item is a preview."
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-23"
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-15",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp1-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-PROMO-19",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PROMOTE",
+        "kind.generated"
+      ],
+      "n": 4
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Before you push a pawn to the last rank, which of the two checks would you be most likely to skip: the square ahead and the diagonals, or whether the new piece can be taken or causes stalemate? Write how you will remember it."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 3",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "content/skills/FND.PROMOTE.json (conditions, contrasts)",
+    "items IG-PROMO-1, IG-PROMO-3, IA0-88, IG-PROMO-23 and ISsp1-1..4 (content/items/lesson-split-sp1.json; promotion legality and the mating promotion verified by rules and engine claims)",
+    "split from the former combined lesson 'Promotion: a pawn on the last rank' (D24, one building block per lesson)",
+    "IG-PROMO-7 (capture promotion when the square ahead is blocked)"
+  ]
+}

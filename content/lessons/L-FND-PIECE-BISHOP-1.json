@@ -1,0 +1,111 @@
+{
+  "id": "L-FND-PIECE-BISHOP-1",
+  "title": "How the bishop moves",
+  "skill": "FND.PIECE.BISHOP",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Taps every square a bishop can reach, including captures and blocked diagonals",
+    "Says why a bishop can never reach a square of the other colour or a square straight ahead"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "The **bishop** moves in diagonals, as far as it likes, and cannot jump. A bishop stays on one colour of square for the whole game: one bishop travels on light squares, the other on dark squares. Captures work just like the rook's."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/5p2/8/3B4/8/1P6/4K3 w - - 0 1",
+      "caption": "Four diagonals, but the white pawn on b2 shortens one of them.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "a7",
+        "b6",
+        "c3",
+        "c5",
+        "e3",
+        "e5",
+        "f2",
+        "f6",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d4",
+            "to": [
+              "a7",
+              "b6",
+              "c3",
+              "c5",
+              "e3",
+              "e5",
+              "f2",
+              "f6",
+              "g1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-11"
+    },
+    {
+      "type": "item",
+      "item": "IA0-17"
+    },
+    {
+      "type": "card",
+      "text": "Before you move a bishop, ask three questions. Is the square on one of its diagonals? Is anything standing between? Whose piece, if any, is on the square? Empty or enemy: allowed, and a captured piece ends the slide. Your own piece: not allowed. A bishop also never changes colour, so a square of the other colour is out of reach for good."
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishop, one change",
+      "prompt": "A black pawn stands on f6. Then it becomes White's own pawn. Predict first: can the bishop still go to f6? Then see what a pawn off the diagonal does.",
+      "working": "IA0-14",
+      "failing": "IA0-15",
+      "irrelevant": "ISsp2-9"
+    },
+    {
+      "type": "item",
+      "item": "ISsp2-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp2-8",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.PIECE.BISHOP",
+        "kind.generated"
+      ],
+      "n": 5
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "In the silent round, which answers were guesses? Rate how sure you were overall. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 1",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "content/skills/FND.PIECE.BISHOP.json"
+  ]
+}

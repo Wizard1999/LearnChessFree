@@ -1,0 +1,515 @@
+{
+ "positions": [
+  {
+   "id": "PSsp2-1",
+   "fen": "6k1/8/4p3/8/3R4/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-ROOK-IRREL",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of PA0-10: black pawn added on e6, off the rook's lines",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-2",
+   "fen": "6k1/8/3P4/8/3R4/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-ROOK-OWN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of PA0-10: white pawn on d6",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-3",
+   "fen": "6k1/8/8/8/R3p3/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-ROOK-TAKE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: rook takes along a rank",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-4",
+   "fen": "6k1/8/8/8/R3p3/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-ROOK-TAKE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "same position as PSsp2-3, different target",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-5",
+   "fen": "6k1/p7/8/8/3R4/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-ROOK-DIAG",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PA0-10 position, diagonal target",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-6",
+   "fen": "4k3/8/8/8/3B4/8/7p/4K3 w - - 0 1",
+   "family": "FAM-SP2-BISHOP-STRAIGHT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: bishop, empty board, straight target",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-7",
+   "fen": "4k3/8/3p4/8/3B4/8/8/4K3 w - - 0 1",
+   "family": "FAM-SP2-BISHOP-IRREL",
+   "provenance": {
+    "kind": "authored",
+    "ref": "sibling of IBds12-18: black pawn added on d6, off the diagonal",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-8",
+   "fen": "6k1/8/5p2/8/3B4/8/8/6K1 w - - 0 1",
+   "family": "FAM-SP2-BISHOP-BEHIND",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of PSsp2-7: pawn moved onto the diagonal",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp2-9",
+   "fen": "4k3/8/3p1p2/8/3B4/8/8/4K3 w - - 0 1",
+   "family": "FAM-SP2-BISHOP-IRREL2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "one-feature edit of PA0-12: black pawn added on d6, off the diagonal",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISsp2-1",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-1",
+   "prompt": "A black pawn stands on e6. Can the white rook go to d8 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4d8"
+     },
+     "statement": "The rook slides from d4 to d8: d5, d6 and d7 are empty."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-ROOK-IRREL",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which squares lie between the rook and d8?",
+    "Is the pawn on e6 on the rook's file?"
+   ],
+   "explain": "The pawn on e6 is not on the d-file, so it blocks nothing. d5, d6 and d7 are empty and the rook reaches d8.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-2",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-2",
+   "prompt": "A white pawn stands on d6. Can the white rook go to d6 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d6"
+     },
+     "statement": "The rook cannot land on d6: its own pawn stands there."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The rook can still reach d5."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-ROOK-OWN",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Whose piece stands on d6?",
+    "Can a piece land on a square holding its own piece?"
+   ],
+   "explain": "A piece can never land on a square held by its own piece. The rook can slide as far as d5 and stops there.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-3",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp2-3",
+   "prompt": "The white rook is on a4 and a black pawn stands on e4. Can the rook go to e4 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "a4e4"
+     },
+     "statement": "The rook can capture the pawn on e4: b4, c4 and d4 are empty."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-SP2-ROOK-TAKE",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Count the squares between a4 and e4.",
+    "An enemy piece at the end of the line can be taken."
+   ],
+   "explain": "b4, c4 and d4 are empty and the pawn on e4 is an enemy piece, so the rook takes it and stops there.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-4",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-4",
+   "prompt": "The white rook is on a4 and a black pawn stands on e4. Can the rook go to h4 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "a4h4"
+     },
+     "statement": "The rook cannot get from a4 to h4: the pawn on e4 is in the way."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "a4e4"
+     },
+     "statement": "It can capture the pawn on e4."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-ROOK-TAKE",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is anything on the rank between a4 and h4?",
+    "What happens to squares behind a piece the rook captures?"
+   ],
+   "explain": "The pawn on e4 stops the rook. It can take the pawn but cannot pass it, so f4, g4 and h4 are out of reach in one move.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-5",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-5",
+   "prompt": "Can the white rook go to f6 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4f6"
+     },
+     "statement": "The rook cannot get from d4 to f6: f6 is on neither its rank nor its file."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-ROOK-DIAG",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is f6 on the rank or the file of d4?",
+    "A rook moves only straight."
+   ],
+   "explain": "f6 is not on the d-file or on the fourth rank. A rook never moves diagonally, so it would need two moves.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-6",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-6",
+   "prompt": "Can the white bishop go to d5 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The bishop cannot move straight forward to d5."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4e5"
+     },
+     "statement": "It can go diagonally to e5."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-BISHOP-STRAIGHT",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is d5 on a diagonal of d4?",
+    "Which colour is d4, and which is d5?"
+   ],
+   "explain": "d5 is straight ahead, not on a diagonal. It is also a square of the other colour than d4, which a bishop can never reach.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-7",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-7",
+   "prompt": "A black pawn stands on d6. Can the white bishop go to g7 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4g7"
+     },
+     "statement": "The bishop slides from d4 to g7: e5 and f6 are empty."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-BISHOP-IRREL",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which squares lie between d4 and g7?",
+    "Is the pawn on d6 on that diagonal?"
+   ],
+   "explain": "The pawn on d6 is not on the diagonal d4-g7, so it blocks nothing. e5 and f6 are empty.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-8",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-8",
+   "prompt": "A black pawn stands on f6. Can the white bishop go to g7 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4g7"
+     },
+     "statement": "The bishop cannot get from d4 to g7: the pawn on f6 is in the way."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4f6"
+     },
+     "statement": "It can capture the pawn on f6."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-BISHOP-BEHIND",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is anything on the diagonal between d4 and g7?",
+    "What can the bishop do with an enemy piece in its way?"
+   ],
+   "explain": "The pawn on f6 is on the diagonal. The bishop can take it, but cannot pass it to reach g7.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp2-9",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PSsp2-9",
+   "prompt": "Black pawns stand on f6 and d6. Can the white bishop go to f6 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4f6"
+     },
+     "statement": "The bishop can capture the pawn on f6."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-SP2-BISHOP-IRREL2",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is the pawn on d6 on the diagonal from d4 to f6?",
+    "What happens to a pawn that stands off the bishop's diagonal?"
+   ],
+   "explain": "The pawn on d6 is not on the diagonal d4-f6, so nothing changes; the bishop still takes on f6.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  }
+ ]
+}

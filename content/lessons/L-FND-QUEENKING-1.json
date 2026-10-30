@@ -1,18 +1,18 @@
 {
   "id": "L-FND-QUEENKING-1",
-  "title": "The queen and the king",
+  "title": "How the queen moves",
   "skill": "FND.PIECE.QUEEN",
   "depth": "D1",
-  "minutes": 10,
+  "minutes": 9,
   "outcomes": [
-    "Taps every square a queen can reach",
-    "Knows the king may never step onto an attacked square or next to the enemy king",
-    "Tells which of the pieces on the board can reach or capture on a square"
+    "Taps every square a queen can reach, stopping in front of its own pieces and on the first enemy piece",
+    "Rejects a knight-shaped jump for the queen",
+    "Tells whether a blocker on one line affects the queen's other lines"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "The **queen** is the strongest piece. She moves like a rook and a bishop combined: any distance along a rank, a file or a diagonal. She cannot jump, and she captures the same way: by landing on an enemy piece."
+      "text": "The **queen** is the strongest piece. She moves like a rook and a bishop combined: any distance along a rank, a file or a diagonal. She cannot jump, and she captures the same way: by landing on an enemy piece. That gives her eight lines out of her square."
     },
     {
       "type": "board",
@@ -84,85 +84,39 @@
     },
     {
       "type": "card",
-      "text": "The **king** moves one square in any direction. He is the piece you must never lose, so there is one extra rule: **a king may never move onto a square the enemy attacks** (a square where an enemy piece could capture). That also means two kings can never stand on neighbouring squares."
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/8/7r/4K3/8/8/8 w - - 0 1",
-      "caption": "The black rook attacks the whole fifth rank. The king cannot step onto it.",
-      "arrows": [
-        {
-          "from": "h5",
-          "to": "e5"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "e3",
-        "f3",
-        "f4"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "e3",
-              "f3",
-              "f4"
-            ]
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 1
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IA0-23"
-    },
-    {
-      "type": "item",
-      "item": "IA0-24"
-    },
-    {
-      "type": "card",
-      "text": "The king can capture too, but only if the piece is not guarded. A piece is **guarded** (or defended) when a friendly piece could recapture on its square. Ask before you capture: which enemy pieces attack the square I am about to land on?"
+      "text": "**When it holds:** the queen slides along any of her eight lines until something stops her. A friendly piece stops her one square early; an enemy piece can be captured, and she stops there. **When it fails:** she never moves like a knight, and she cannot jump over anything. Each line is blocked separately, so a blocker on one line leaves the other seven alone."
     },
     {
       "type": "contrast",
-      "title": "Same capture, one change",
-      "prompt": "A black pawn appears on c6. Predict first: can the king still take the knight?",
-      "working": "IA0-25",
-      "failing": "IA0-26"
+      "title": "Same queen, one change",
+      "prompt": "Predict first: can the queen still reach h8 each time?",
+      "working": "ISsp3-1",
+      "failing": "ISsp3-2",
+      "irrelevant": "ISsp3-3"
     },
     {
       "type": "item",
-      "item": "IG-MOVE-100"
+      "item": "IG-MOVE-77"
     },
     {
       "type": "item",
-      "item": "IA0-28"
+      "item": "IG-MOVE-100",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-29"
+      "item": "IG-MOVE-102",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IG-MOVE-136"
+      "item": "IG-MOVE-103",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IG-MOVE-105",
+      "silent": true
     },
     {
       "type": "practice",
@@ -175,19 +129,11 @@
     {
       "type": "practice",
       "tags": [
-        "node.FND.PIECE.KING",
-        "kind.generated"
-      ],
-      "n": 5
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "tier.0",
+        "node.FND.PIECE.QUEEN",
         "cue.3",
         "kind.generated"
       ],
-      "n": 6
+      "n": 5
     },
     {
       "type": "reflect",
@@ -202,8 +148,5 @@
   "sources": [
     "docs/first-hours.md session 1",
     "docs/council-synthesis.md CD-1, CD-4"
-  ],
-  "also": [
-    "FND.PIECE.KING"
   ]
 }

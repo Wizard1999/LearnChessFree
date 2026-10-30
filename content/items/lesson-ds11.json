@@ -329,6 +329,26 @@
     "ref": "authored batch ds11: FAM-DS11-CHECK-10",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBds11-34",
+   "fen": "6rk/5Npp/8/8/8/8/P7/6K1 b - - 0 1",
+   "family": "FAM-DS11-CHECK-9",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBds11-32 plus a white pawn on a2 (harmless, distant)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBds11-35",
+   "fen": "7k/6Q1/5K2/8/8/8/8/8 b - - 0 1",
+   "family": "FAM-DS11-CHECK-10",
+   "provenance": {
+    "kind": "authored",
+    "ref": "PBds11-33 with the white king moved g6-f6",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -2226,6 +2246,116 @@
     "If none of the three works it is checkmate; if one works it is only check."
    ],
    "explain": "The queen checks and the white king defends it, so the black king cannot capture; every escape square is covered. Checkmate.",
+   "orientation": "black",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "IBds11-34",
+   "skill": "FND.CHECK.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PBds11-34",
+   "prompt": "Black to move. Is it check, checkmate or neither?",
+   "answer": {
+    "class": "checkmate",
+    "options": [
+     "check",
+     "checkmate",
+     "neither"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "checkmate"
+     },
+     "statement": "Black is checkmated."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h8",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece attacks the king."
+    }
+   ],
+   "tags": [
+    "node.FND.CHECK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS11-CHECK-9",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the king attacked right now? If not, the answer is neither.",
+    "If it is attacked: can the king move, can the checker be captured, can the line be blocked (a knight cannot be blocked)?",
+    "If none of the three works it is checkmate; if one works it is only check."
+   ],
+   "explain": "The knight on f7 checks and cannot be blocked; the king's own rook and pawns fill its escape squares, and nothing can capture the knight. The white pawn on a2 is far away and changes nothing. Checkmate.",
+   "orientation": "black",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "IBds11-35",
+   "skill": "FND.CHECK.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PBds11-35",
+   "prompt": "Black to move. Is it check, checkmate or neither?",
+   "answer": {
+    "class": "checkmate",
+    "options": [
+     "check",
+     "checkmate",
+     "neither"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "checkmate"
+     },
+     "statement": "Black is checkmated."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h8",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece attacks the king."
+    }
+   ],
+   "tags": [
+    "node.FND.CHECK",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-DS11-CHECK-10",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the king attacked right now? If not, the answer is neither.",
+    "If it is attacked: can the king move, can the checker be captured, can the line be blocked (a knight cannot be blocked)?",
+    "If none of the three works it is checkmate; if one works it is only check."
+   ],
+   "explain": "The queen checks and the white king on f6 defends it, so the black king cannot capture; every escape square is covered. Checkmate.",
    "orientation": "black",
    "review": {
     "status": "machine-only"

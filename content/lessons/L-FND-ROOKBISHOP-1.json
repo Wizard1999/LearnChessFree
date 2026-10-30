@@ -1,13 +1,13 @@
 {
   "id": "L-FND-ROOKBISHOP-1",
-  "title": "The rook and the bishop",
+  "title": "How the rook moves",
   "skill": "FND.PIECE.ROOK",
   "depth": "D1",
   "minutes": 9,
   "outcomes": [
-    "Taps every square a rook or bishop can reach, including captures and blocked lines",
+    "Taps every square a rook can reach, including captures and blocked lines",
     "Predicts whether a line is blocked before moving",
-    "Tells which of two pieces can reach a square when nobody names the piece"
+    "Says why a rook cannot reach a square that is off its rank and file"
   ],
   "steps": [
     {
@@ -65,96 +65,39 @@
       "item": "IA0-10"
     },
     {
-      "type": "card",
-      "text": "The **bishop** moves in diagonals, as far as it likes, and cannot jump. A bishop stays on one colour of square for the whole game: one bishop travels on light squares, the other on dark squares. Captures work just like the rook's."
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/5p2/8/3B4/8/1P6/4K3 w - - 0 1",
-      "caption": "Four diagonals, but the white pawn on b2 shortens one of them.",
-      "arrows": [
-        {
-          "from": "d4",
-          "to": "f6"
-        }
-      ],
-      "highlight": [
-        "a7",
-        "b6",
-        "c3",
-        "c5",
-        "e3",
-        "e5",
-        "f2",
-        "f6",
-        "g1"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_destinations",
-          "params": {
-            "from": "d4",
-            "to": [
-              "a7",
-              "b6",
-              "c3",
-              "c5",
-              "e3",
-              "e5",
-              "f2",
-              "f6",
-              "g1"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IA0-11"
-    },
-    {
-      "type": "card",
-      "text": "Before you move a rook or bishop to a square, ask three questions. Is the square on one of my piece's lines? Is anything standing between? Whose piece, if any, is on the square? Empty or enemy: allowed. Your own piece: not allowed."
-    },
-    {
-      "type": "contrast",
-      "title": "Same rook, one change",
-      "prompt": "A black pawn appears on d6. Predict first: can the rook still reach d8?",
-      "working": "IA0-12",
-      "failing": "IA0-13"
-    },
-    {
-      "type": "contrast",
-      "title": "Same bishop, one change",
-      "prompt": "The pawn on f6 changes colour. Predict first: can the bishop still go to f6?",
-      "working": "IA0-14",
-      "failing": "IA0-15"
-    },
-    {
       "type": "item",
       "item": "IA0-16"
     },
     {
-      "type": "item",
-      "item": "IA0-17"
+      "type": "card",
+      "text": "Before you move a rook, ask three questions. Is the square on its rank or its file? Is anything standing between? Whose piece, if any, is on the square? Empty or enemy: allowed, and a captured piece ends the slide. Your own piece: not allowed. These are rules of the game, not rules of thumb, so they hold in every position."
+    },
+    {
+      "type": "contrast",
+      "title": "Same rook, one change",
+      "prompt": "A black pawn appears on d6. Predict first: can the rook still reach d8? Then see what a pawn on e6 does instead.",
+      "working": "IA0-12",
+      "failing": "IA0-13",
+      "irrelevant": "ISsp2-1"
     },
     {
       "type": "item",
-      "item": "IA0-18"
+      "item": "ISsp2-3",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-19"
+      "item": "ISsp2-4"
     },
     {
       "type": "item",
-      "item": "IA0-20"
+      "item": "ISsp2-2",
+      "silent": true
     },
     {
       "type": "item",
-      "item": "IA0-21"
+      "item": "ISsp2-5",
+      "silent": true
     },
     {
       "type": "practice",
@@ -165,17 +108,9 @@
       "n": 5
     },
     {
-      "type": "practice",
-      "tags": [
-        "node.FND.PIECE.BISHOP",
-        "kind.generated"
-      ],
-      "n": 5
-    },
-    {
       "type": "reflect",
       "kind": "confidence",
-      "prompt": "In the mixed round, which answers were guesses? Rate how sure you were overall. (low / medium / high)"
+      "prompt": "In the silent round, which answers were guesses? Rate how sure you were overall. (low / medium / high)"
     }
   ],
   "review": {
@@ -184,9 +119,7 @@
   },
   "sources": [
     "docs/first-hours.md session 1",
-    "docs/council-synthesis.md CD-1, CD-4"
-  ],
-  "also": [
-    "FND.PIECE.BISHOP"
+    "docs/council-synthesis.md CD-1, CD-4",
+    "content/skills/FND.PIECE.ROOK.json"
   ]
 }

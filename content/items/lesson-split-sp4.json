@@ -1,0 +1,612 @@
+{
+ "positions": [
+  {
+   "id": "PSsp4-1",
+   "fen": "6k1/5ppp/8/3r4/8/4N3/5PPP/6K1 w - - 0 1",
+   "family": "FAM-VALUE-WIN-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: knight takes an undefended rook",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-2",
+   "fen": "6k1/5ppp/8/8/3q4/5N2/5PPP/6K1 w - - 0 1",
+   "family": "FAM-VALUE-WIN-QUEEN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: knight takes an undefended queen",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-3",
+   "fen": "6k1/5ppp/8/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-VALUE-WIN-KNIGHT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: rook takes an undefended knight",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-4",
+   "fen": "6k1/5ppp/2p5/3r4/8/8/5PPP/3Q2K1 w - - 0 1",
+   "family": "FAM-VALUE-QUEEN-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: queen takes a defended rook",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-5",
+   "fen": "6k1/5pp1/4p2p/3r4/8/1B6/5PPP/6K1 w - - 0 1",
+   "family": "FAM-VALUE-BISHOP-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: bishop takes a defended rook (working)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-6",
+   "fen": "6k1/5pp1/4p2p/3r4/8/1Q6/5PPP/6K1 w - - 0 1",
+   "family": "FAM-VALUE-BISHOP-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: queen takes the same defended rook (failing)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-7",
+   "fen": "6k1/5ppp/1b6/8/3R4/4P2P/5PP1/6K1 b - - 0 1",
+   "family": "FAM-VALUE-BISHOP-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: colours reversed (irrelevant)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-8",
+   "fen": "6k1/5pp1/3p3p/4p3/8/5N2/5PPP/6K1 w - - 0 1",
+   "family": "FAM-VALUE-KNIGHT-PAWN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: knight takes a defended pawn",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PSsp4-9",
+   "fen": "6k1/5ppp/2p5/3r4/8/8/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-VALUE-ROOK-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: rook takes a defended rook",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ISsp4-1",
+   "skill": "FND.VALUE.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp4-1",
+   "prompt": "White to move. The knight takes the undefended rook on d5. By the counting values, how many points does White win?",
+   "answer": {
+    "outcome": "5",
+    "options": [
+     "1",
+     "3",
+     "5",
+     "9"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "e3d5",
+      "min": 5,
+      "max": 5
+     },
+     "statement": "Nxd5 wins a rook and nothing is lost back."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece defends the rook."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-VALUE-WIN-ROOK",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which piece is being taken?",
+    "Is anything given up in return?",
+    "A rook has a counting value of five."
+   ],
+   "explain": "Nothing defends the rook, so White wins a whole rook: 5 points by the counting values.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-2",
+   "skill": "FND.VALUE.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp4-2",
+   "prompt": "White to move. The knight takes the undefended queen on d4. By the counting values, how many points does White win?",
+   "answer": {
+    "outcome": "9",
+    "options": [
+     "1",
+     "3",
+     "5",
+     "9"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "f3d4",
+      "min": 9,
+      "max": 9
+     },
+     "statement": "Nxd4 wins a queen and nothing is lost back."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece defends the queen."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-VALUE-WIN-QUEEN",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which piece is being taken?",
+    "Is anything given up in return?",
+    "A queen has a counting value of nine."
+   ],
+   "explain": "Nothing defends the queen, so White wins a whole queen: 9 points by the counting values.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-3",
+   "skill": "FND.VALUE.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PSsp4-3",
+   "prompt": "White to move. The rook takes the undefended knight on d5. By the counting values, how many points does White win?",
+   "answer": {
+    "outcome": "3",
+    "options": [
+     "1",
+     "3",
+     "5",
+     "9"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d5",
+      "min": 3,
+      "max": 3
+     },
+     "statement": "Rxd5 wins a knight and nothing is lost back."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece defends the knight."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-VALUE-WIN-KNIGHT",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which piece is being taken?",
+    "Is anything given up in return?",
+    "A knight has a counting value of three."
+   ],
+   "explain": "Nothing defends the knight, so White wins a whole knight: 3 points.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-4",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-4",
+   "prompt": "White thinks about taking the rook on d5 with the queen. The pawn on c6 will recapture. After the captures, what has happened to White's points?",
+   "answer": {
+    "class": "White loses points",
+    "options": [
+     "White gains points",
+     "White loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d5",
+      "min": -4,
+      "max": -4
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-QUEEN-ROOK",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "A queen is worth far more than a rook by the counting values."
+   ],
+   "explain": "White takes a rook (5) and the pawn takes the queen (9): White is 4 points down.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-5",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-5",
+   "prompt": "White thinks about taking the rook on d5 with the bishop. The pawn on e6 will recapture. After the captures, what has happened to White's points?",
+   "answer": {
+    "class": "White gains points",
+    "options": [
+     "White gains points",
+     "White loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "b3d5",
+      "min": 2,
+      "max": 2
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-BISHOP-ROOK",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "A rook is worth more than a bishop by the counting values."
+   ],
+   "explain": "White takes a rook (5) and the pawn takes the bishop (3): White is 2 points up. The trade is good even though a piece is lost.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-6",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-6",
+   "prompt": "Same position, but now White takes the rook on d5 with the queen. The pawn on e6 will recapture. After the captures, what has happened to White's points?",
+   "answer": {
+    "class": "White loses points",
+    "options": [
+     "White gains points",
+     "White loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "b3d5",
+      "min": -4,
+      "max": -4
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-BISHOP-ROOK",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "Compare what you take with what you can lose."
+   ],
+   "explain": "White takes a rook (5) and the pawn takes the queen (9): White is 4 points down. Only the capturing piece changed.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-7",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-7",
+   "prompt": "Colours are reversed: Black thinks about taking the rook on d4 with the bishop. The pawn on e3 will recapture. After the captures, what has happened to Black's points?",
+   "answer": {
+    "class": "Black gains points",
+    "options": [
+     "Black gains points",
+     "Black loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "b6d4",
+      "min": 2,
+      "max": 2
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-BISHOP-ROOK",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "The values belong to the piece type, not to the colour."
+   ],
+   "explain": "Black takes a rook (5) and the pawn takes the bishop (3): Black is 2 points up. The colour of the pieces changes nothing.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-8",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-8",
+   "prompt": "White thinks about taking the pawn on e5 with the knight. The pawn on d6 will recapture. After the captures, what has happened to White's points?",
+   "answer": {
+    "class": "White loses points",
+    "options": [
+     "White gains points",
+     "White loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "f3e5",
+      "min": -2,
+      "max": -2
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-KNIGHT-PAWN",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "A knight is worth more than a pawn by the counting values."
+   ],
+   "explain": "White takes a pawn (1) and loses a knight (3): White is 2 points down.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "ISsp4-9",
+   "skill": "FND.VALUE.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PSsp4-9",
+   "prompt": "White thinks about taking the rook on d5 with the rook. The pawn on c6 will recapture. After the captures, what has happened to White's points?",
+   "answer": {
+    "class": "Even trade",
+    "options": [
+     "White gains points",
+     "White loses points",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d5",
+      "min": 0,
+      "max": 0
+     },
+     "statement": "The capture and the recapture leave this net result."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one piece defends the captured piece."
+    }
+   ],
+   "tags": [
+    "node.FND.VALUE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-VALUE-ROOK-ROOK",
+    "lang.en",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Is the piece defended? Then you lose the capturing piece next move.",
+    "Add what you take. Subtract what you lose.",
+    "Equal counting values mean an even swap."
+   ],
+   "explain": "White takes a rook (5) and the pawn takes a rook (5): an even trade.",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only"
+   }
+  }
+ ]
+}

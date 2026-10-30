@@ -1,0 +1,210 @@
+{
+  "id": "L-FND-DRAWS-1",
+  "title": "Ways a game is drawn",
+  "skill": "FND.DRAWS",
+  "depth": "D1",
+  "minutes": 9,
+  "outcomes": [
+    "Lists the ways a game can end drawn and says which can be claimed and which are automatic",
+    "Says when a position has occurred for the third time, and what must match (same side to move, same rights)",
+    "Counts the fifty-move clock and says what resets it (a capture or a pawn move, not a check)"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "A game ends drawn in five ways. **Stalemate** (see the lesson *Stalemate: no move, but no check*): automatic. **Not enough pieces** to mate: automatic. **Agreement:** both players say yes. **Repetition** and the **fifty-move rule:** a player must claim them. This lesson covers the last two. **Checked by you, not by the app.** The app has no check for them, so you see the answers after you save."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "From memory: which of the five can a player claim, and which end the game by themselves? Write it down, then compare with the card above.",
+      "fields": [
+        {
+          "id": "claim",
+          "label": "Number of ways that need a claim:",
+          "type": "number",
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+      "caption": "White shuffles the rook; Black shuffles the king. Count how often this starting position comes back.",
+      "line": [
+        {
+          "move": "a1a2",
+          "say": "White moves the rook."
+        },
+        {
+          "move": "e8d8",
+          "say": "Black moves the king."
+        },
+        {
+          "move": "a2a1",
+          "say": "The rook goes home."
+        },
+        {
+          "move": "d8e8",
+          "say": "Position 1 again, White to move: second time."
+        },
+        {
+          "move": "a1a2",
+          "say": "Same moves again."
+        },
+        {
+          "move": "e8d8",
+          "say": "Black repeats."
+        },
+        {
+          "move": "a2a1",
+          "say": "Rook home."
+        },
+        {
+          "move": "d8e8",
+          "say": "Third time. White may claim a draw."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "**Checked by you, not by the app.** Paper exercise. In the line above, count how many times the starting position has occurred after the last move (counting the start itself).",
+      "fields": [
+        {
+          "id": "times",
+          "label": "Times it has occurred:",
+          "type": "number",
+          "answer": 3
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "The position must match in three things: the piece placement, **the side to move**, and the rights (castling and en passant). The three occurrences need not follow one another and need not be in a row."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+      "caption": "The same pieces can stand on the same squares with the other side to move.",
+      "line": [
+        {
+          "move": "a1a2",
+          "say": "Rook to a2."
+        },
+        {
+          "move": "e8d8",
+          "say": "King to d8."
+        },
+        {
+          "move": "a2a3",
+          "say": "Rook to a3."
+        },
+        {
+          "move": "d8e8",
+          "say": "King back to e8."
+        },
+        {
+          "move": "a3a1",
+          "say": "Rook back to a1: the pieces stand as at the start, but now Black is to move."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "**Checked by you, not by the app.** Paper exercise. After the last move, how many times has the exact starting position occurred (White to move)? How many times have the pieces stood on those squares, whoever was to move?",
+      "fields": [
+        {
+          "id": "exact",
+          "label": "Exact starting position (same side to move):",
+          "type": "number",
+          "answer": 1
+        },
+        {
+          "id": "squares",
+          "label": "Same squares, any side to move:",
+          "type": "number",
+          "answer": 2
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3n4/8/8/8/R3K3 w - - 40 60",
+      "caption": "The clock shows 40 half-moves without a capture or pawn move. Each move by either side adds one.",
+      "line": [
+        {
+          "move": "a1a5",
+          "say": "Clock 41."
+        },
+        {
+          "move": "d5c3",
+          "say": "Clock 42."
+        },
+        {
+          "move": "a5c5",
+          "say": "Clock 43."
+        },
+        {
+          "move": "c3d5",
+          "say": "Clock 44."
+        },
+        {
+          "move": "c5d5",
+          "say": "A capture: the clock goes back to 0."
+        },
+        {
+          "move": "e8e7",
+          "say": "Clock 1."
+        },
+        {
+          "move": "d5a5",
+          "say": "Clock 2."
+        },
+        {
+          "move": "e7f6",
+          "say": "Clock 3."
+        },
+        {
+          "move": "a5a6",
+          "say": "This move gives check."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "**Checked by you, not by the app.** Paper exercise. What does the clock show after the last move, which is a check? A draw can be claimed when the clock reaches 100 half-moves; how many more half-moves without a capture or pawn move would be needed from there?",
+      "fields": [
+        {
+          "id": "clock",
+          "label": "Clock after the check:",
+          "type": "number",
+          "answer": 4
+        },
+        {
+          "id": "more",
+          "label": "Half-moves still needed to reach 100:",
+          "type": "number",
+          "answer": 96
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which was harder to keep straight: the side to move in a repetition, or what resets the fifty-move clock? Rate how sure you are of both rules. (low / medium / high)"
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 3 (draws)",
+    "content/skills/FND.DRAWS.json (D1 outcome, conditions, misconceptions)",
+    "the board lines are legal move by move (checked by tools/validate_lessons.py); the repetition and clock answers are rules arithmetic, checked once by script with python-chess when written, not by a claim type",
+    "split from the former combined lesson 'Ways a game is drawn' (D24, one building block per lesson); insufficient material is taught in L-FND-DRAWS-2"
+  ]
+}

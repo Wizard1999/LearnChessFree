@@ -1,0 +1,156 @@
+{
+  "id": "L-FND-VALUE-1",
+  "title": "Piece values: counting what you win and lose",
+  "skill": "FND.VALUE",
+  "depth": "D1",
+  "minutes": 10,
+  "outcomes": [
+    "Says the counting value of each piece and which of two pieces is worth more",
+    "Adds up a capture and recapture to say whether a trade gains, loses or is even",
+    "Knows the values are a rule of thumb and that checkmate beats the count"
+  ],
+  "steps": [
+    {
+      "type": "card",
+      "text": "To compare trades, players give each piece a **counting value**: pawn 1, knight 3, bishop 3, rook 5, queen 9. The king has no value because it is never traded; it is checkmated. The value belongs to the kind of piece, It does not depend on its colour, on the square it stands on, or on which piece takes it. These numbers are a *rule of thumb*, a first guide and not a law."
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-1"
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-2"
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-3"
+    },
+    {
+      "type": "card",
+      "text": "To judge a trade, **add what you take and subtract what you lose**. Taking a piece that is then taken back is a trade. A good trade gives you more points than it costs, even when you lose a piece. Pieces are not counted by number: a knight and a bishop for a rook is 6 for 5, so it gains a point although two pieces change hands for one."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4pp1/4r2p/8/3N4/8/P4PPP/6K1 w - - 0 1",
+      "caption": "A defended rook can still be worth taking with a knight. Add up the swap: what you take, minus what you lose.",
+      "line": [
+        {
+          "move": "d4e6",
+          "say": "The knight takes the rook: White gains 5."
+        },
+        {
+          "move": "f7e6",
+          "say": "The pawn takes the knight: White loses 3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4e6",
+            "min": 2
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-52"
+    },
+    {
+      "type": "item",
+      "item": "IA0-51"
+    },
+    {
+      "type": "contrast",
+      "title": "Same trade, one change",
+      "prompt": "A rook on d5 is defended by a pawn. Predict first what the capture does to White's points. Then see what changes when the capturing piece changes, and when only the colours change.",
+      "working": "ISsp4-5",
+      "failing": "ISsp4-6",
+      "irrelevant": "ISsp4-7"
+    },
+    {
+      "type": "card",
+      "text": "**When it holds.** The counting values compare trades when nothing else is happening. Take more than you give and you gain; equal values give an even trade. **When it fails.** The values do not see everything. Checkmate ends the game whatever the count says, and later you will meet pieces worth more or less than their usual points. Treat the count as a guide, not as proof."
+    },
+    {
+      "type": "item",
+      "item": "IA0-55",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-8",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ISsp4-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IA0-54",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.FND.VALUE",
+        "cue.3"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "A rook for a bishop and a pawn: how many points does it cost you, and how many do you get? Write the net result, then say what you did in a trade you judged by eye.",
+      "fields": [
+        {
+          "id": "net",
+          "label": "Net points for the side giving the rook:",
+          "type": "number",
+          "answer": -1,
+          "tolerance": 0
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/first-hours.md session 2",
+    "docs/council-synthesis.md CD-1, CD-4",
+    "sources/sheets/edlasker_chess-strategy.md (values are conditional)",
+    "sources/sheets/capablanca_chess-fundamentals.md",
+    "content/items/lesson-split-sp4.json (claims check the counting in every trade)"
+  ]
+}
