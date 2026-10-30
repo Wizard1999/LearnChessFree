@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { ALL_SQUARES } from '../lib/control'
 import { controlMapV2 as controlMap, describeV2 as describeControl } from '../lib/controlV2'
 import { Chessground } from 'chessground'
@@ -95,6 +95,16 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   useEffect(() => { api.current?.set(config()); api.current?.setAutoShapes(autoShapes()) })
 
   const [showControl, setShowControl] = useState(false)
+  const barRef = useRef<HTMLDivElement>(null)
+  const [barH, setBarH] = useState(0)
+  // the explanation under the board can be any number of lines: the board keeps exactly that much room below it, so nothing underneath is ever covered
+  useLayoutEffect(() => {
+    const el = barRef.current
+    if (!el || typeof ResizeObserver === 'undefined') return
+    const ro = new ResizeObserver(() => setBarH(el.offsetHeight))
+    ro.observe(el); setBarH(el.offsetHeight)
+    return () => ro.disconnect()
+  }, [controlMapOn])
   const [picked, setPicked] = useState<string | null>(null)
   const map = useMemo(() => (showControl && controlMapOn ? controlMap(fen) : null), [showControl, controlMapOn, fen])
   const cells = useMemo(() => {
@@ -103,7 +113,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     return ranks.split('').flatMap(r => files.split('').map(f => `${f}${r}`))
   }, [orientation])
   return (
-    <div className={controlMapOn ? 'board-wrap hascontrol' : 'board-wrap'} role="img" aria-label={label ?? 'Chess board'}>
+    <div className={controlMapOn ? 'board-wrap hascontrol' : 'board-wrap'} style={controlMapOn ? { marginBottom: barH + 14 } : undefined} role="img" aria-label={label ?? 'Chess board'}>
       <div ref={el} className="board" />
       {map && (
         <div className="controlmap" aria-label="Square control map">
@@ -120,7 +130,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
         </div>
       )}
       {controlMapOn && (
-        <div className="controlbar">
+        <div className="controlbar" ref={barRef}>
           <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { setShowControl(v => !v); setPicked(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
           {map && picked && <span className="controldetail" role="status">{describeControl(map.get(picked)!)}</span>}
           {map && !picked && <span className="controldetail muted" role="note">Blue: White holds the square more strongly. Orange: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Tap a square for details.</span>}
