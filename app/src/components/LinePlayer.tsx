@@ -28,15 +28,16 @@ export function LinePlayer({ fen, line, caption, arrows = [], highlight = [], or
     <figure className="lineplayer">
       {title && <figcaption className="muted small">{title}</figcaption>}
       <ChessBoard fen={data.fens[i]} orientation={orientation ?? sideToMove(fen)} shapes={shapes} highlight={i === 0 ? highlight : []} lastMove={data.lastMoves[i]} label={caption} controlMap />
+      {/* the controls come first and never change size, so they stay where the pointer is while the sentence below changes length */}
+      <div className="row linecontrols">
+        <button type="button" onClick={() => setI(0)} disabled={i === 0} aria-label="Back to start">⏮</button>
+        <button type="button" onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} aria-label="Previous move">◀</button>
+        <button type="button" className="primary" onClick={() => setI(Math.min(n, i + 1))} disabled={i >= n} aria-label="Next move">▶</button>
+        <span className="muted small linecount" aria-live="polite">{i} / {n}</span>
+      </div>
       {caption && i === 0 && <p className="caption">{caption}</p>}
       {say && <p className="caption say">{say}</p>}
       {i > 0 && !say && <p className="caption muted">{data.sans[i - 1]}</p>}
-      <div className="row">
-        <button type="button" onClick={() => setI(0)} disabled={i === 0} aria-label="Back to start">⏮</button>
-        <button type="button" onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} aria-label="Previous move">◀</button>
-        <span className="muted small" aria-live="polite">{i} / {n}</span>
-        <button type="button" className="primary" onClick={() => setI(Math.min(n, i + 1))} disabled={i >= n} aria-label="Next move">Next move ▶</button>
-      </div>
     </figure>
   )
 }
