@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { db, type LessonProgress } from '../db'
 import { layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
+import { BANDS, REGIONS, bandOf } from '../lib/mapRegions'
 import type { Lesson, Skill } from '../types'
 
 interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null }
@@ -30,9 +31,16 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
   // the camera is remembered for the session, so coming back from a lesson lands where the learner was
   const [view, setView] = useState(() => { try { const v = JSON.parse(sessionStorage.getItem('map-view') ?? 'null'); if (v && [v.x, v.y, v.k].every(Number.isFinite)) return v as { x: number; y: number; k: number } } catch { /* storage unavailable */ } return { x: 0, y: 0, k: 3 } })
+  const viewRef = useRef(view); viewRef.current = view
+  const [past, setPast] = useState<{ x: number; y: number; k: number }[]>([])
+  /** A jump (search, a chosen skill, Where I am, Fit all) remembers where the camera was, so Back returns there. */
+  const go = (next: { x: number; y: number; k: number }) => { setPast(p => [...p.slice(-19), viewRef.current]); setView(next) }
+  const back = () => setPast(p => { const last = p[p.length - 1]; if (last) setView(last); return p.slice(0, -1) })
   useEffect(() => { try { sessionStorage.setItem('map-view', JSON.stringify(view)) } catch { /* storage unavailable */ } }, [view])
   const drag = useRef<{ x: number; y: number; vx: number; vy: number } | null>(null)
   const svg = useRef<SVGSVGElement>(null)
+  const [q, setQ] = useState('')
+  const [listOpen, setListOpen] = useState(false)
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
   /** How ready a skill is to be started: the share of its prerequisite skills that are at Level one or better. A skill with none is ready at once. */
   const readiness = useMemo(() => {
@@ -60,7 +68,8 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     if (!highlightStrand) return
     const ns = layout.nodes.filter(n => n.strand === highlightStrand); if (!ns.length) return
     const cx = ns.reduce((t, n) => t + n.x, 0) / ns.length, cy = ns.reduce((t, n) => t + n.y, 0) / ns.length
-    setView({ x: -cx, y: -cy, k: 1.6 })
+    go({ x: -cx, y: -cy, k: 1.6 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [highlightStrand, layout])
   /** When a skill is chosen, bring it into the part of the map that is not covered by a panel, with its neighbours around it. */
   useEffect(() => {
@@ -74,18 +83,18 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
       for (const r of cover('.sidechrome > .sidedrawer.left, .sidechrome > .detaildrawer')) if (r.right > left && r.left < box.left + box.width / 2) left = Math.max(left, r.right)
       for (const r of cover('.sidechrome > .sidedrawer.right')) if (r.left < right && r.right > box.left + box.width / 2) right = Math.min(right, r.left)
       const dx = ((left + right) / 2) - (box.left + box.width / 2)
-      setView(v => { const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); return { x: -n.x + dx * upp, y: -n.y, k } })
+      const v = viewRef.current; const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); go({ x: -n.x + dx * upp, y: -n.y, k })
     }, 80)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [picked])
   const zoom = (f: number) => setView(v => ({ ...v, k: Math.max(0.25, Math.min(6, v.k * f)) }))
-  const fit = () => setView({ x: 0, y: 0, k: 1 })
+  const fit = () => go({ x: 0, y: 0, k: 1 })
   const locate = () => {
     // centre on the first skill that is started but not mastered, else the first not started
     const open = layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises })
     const cand = open.find(n => (progress.get(n.id)?.level ?? 0) > 0) ?? open.sort((a, b) => a.ring - b.ring)[0]
-    if (cand) { setView({ x: -cand.x, y: -cand.y, k: 2 }); onPick(cand.id) }
+    if (cand) { go({ x: -cand.x, y: -cand.y, k: 2 }); onPick(cand.id) }
   }
   // a native, non-passive wheel listener: React's onWheel cannot stop the page from scrolling
   useEffect(() => {
@@ -96,14 +105,32 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   }, [])
   // the skill to do next: the one the path recommends, else the earliest skill that is ready and not yet mastered
   const rec = recommended ?? layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises && (readiness.get(n.id) ?? 0) >= 1 }).sort((a, b) => a.ring - b.ring)[0]?.id ?? null
+  // distance bands: the outer edge of each band is where most of its skills end (85th percentile of their distance from the centre)
+  const bandEdges = useMemo(() => {
+    const out: number[] = []
+    BANDS.forEach((_, b) => {
+      const rs = layout.nodes.filter(n => bandOf(n.tier) === b).map(n => Math.hypot(n.x, n.y)).sort((a, c) => a - c)
+      const r = rs.length ? rs[Math.min(rs.length - 1, Math.floor(rs.length * 0.85))] + 30 : 0
+      out.push(Math.max(r, (out[b - 1] ?? 0) + 60))
+    })
+    return out
+  }, [layout])
+  const hits = useMemo(() => {
+    const t = q.trim().toLowerCase(); if (!t) return []
+    return layout.nodes.map(n => ({ n, title: progress.get(n.id)?.title ?? n.id })).filter(x => x.title.toLowerCase().includes(t) || x.n.id.toLowerCase().includes(t)).slice(0, 8)
+  }, [q, layout, progress])
+  const showSkill = (id: string) => { const n = byId.get(id); if (!n) return; go({ x: -n.x, y: -n.y, k: Math.max(viewRef.current.k, 2.4) }); onPick(id); setQ(''); setListOpen(false) }
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
       <div className="row filters mapbar">
+        <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
         <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in">＋</button>
         <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
         <button type="button" onClick={fit}>Fit all</button>
         <button type="button" onClick={locate}>Where I am</button>
+        <button type="button" onClick={back} disabled={past.length === 0}>‹ Back</button>
+        <button type="button" aria-expanded={listOpen} onClick={() => { setListOpen(o => !o); setQ('') }}>Skill list</button>
         <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
         <span className="small muted">Centre outwards is the reading order of the subjects; the recommended path (Curriculum, All lessons) mixes them by stage. Drag to move, scroll to zoom.</span>
       </div>
@@ -121,7 +148,27 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           return (
             <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`}>
               <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
-              <text x={Math.cos(mid) * (layout.radius - 20)} y={Math.sin(mid) * (layout.radius - 20)} textAnchor="middle" className="wedgelabel">{w.strand} {strandNames[w.strand] ?? ''}</text>
+              <text x={Math.cos(mid) * (layout.radius - 20)} y={Math.sin(mid) * (layout.radius - 20)} textAnchor="middle" className="wedgelabel" opacity={view.k >= 1.2 ? 1 : 0}>{w.strand} {strandNames[w.strand] ?? ''}</text>
+            </g>
+          )
+        })}
+        {/* milestone bands: faint rings labelled with the ability they stand for (orientation only, not a rating) */}
+        {bandEdges.slice(0, -1).map((r, b) => (
+          <g key={`band-${b}`} className="mapband" pointerEvents="none">
+            <circle r={r} fill="none" className="bandring" />
+            <text y={-r + 26} textAnchor="middle" className="bandlabel">{BANDS[b].name}: {BANDS[b].milestone}</text>
+          </g>
+        ))}
+        <text y={-layout.radius + 70} textAnchor="middle" className="bandlabel" pointerEvents="none">{BANDS[BANDS.length - 1].name}: {BANDS[BANDS.length - 1].milestone}</text>
+        {/* broad regions round the outside; readable when the section names are too small */}
+        {REGIONS.map(rg => {
+          const ws = layout.wedges.filter(w => rg.strands.includes(w.strand)); if (!ws.length) return null
+          const from = ws[0].from, to = ws[ws.length - 1].to, mid = (from + to) / 2, r0 = layout.radius + 14
+          const pt = (a: number, r: number) => `${Math.cos(a) * r},${Math.sin(a) * r}`
+          return (
+            <g key={rg.id} className="mapregion" pointerEvents="none">
+              <path d={`M${pt(from + 0.01, r0)} A${r0},${r0} 0 ${to - from > Math.PI ? 1 : 0} 1 ${pt(to - 0.01, r0)}`} className="regionarc" fill="none" />
+              <text x={Math.cos(mid) * (r0 + 52)} y={Math.sin(mid) * (r0 + 52)} textAnchor="middle" className="regionlabel">{rg.name}</text>
             </g>
           )
         })}
@@ -200,6 +247,25 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           )
         })()}
         <circle r={5} className="mapcentre" />
+      </svg>
+      {(hits.length > 0 || listOpen) && (
+        <div className="maplist" role="listbox" aria-label="Skills">
+          {hits.length > 0
+            ? hits.map(h => <button key={h.n.id} type="button" role="option" aria-selected={false} onClick={() => showSkill(h.n.id)}>{h.title} <span className="muted small">· {h.n.strand}</span></button>)
+            : REGIONS.map(rg => (
+              <div key={rg.id}><strong className="small">{rg.name}</strong>
+                {rg.strands.map(st => (
+                  <div key={st}><span className="small muted">{st} {strandNames[st] ?? ''}</span>
+                    <div className="maplistrow">{layout.nodes.filter(n => n.strand === st).sort((a, b) => a.ring - b.ring || a.id.localeCompare(b.id)).map(n => <button key={n.id} type="button" className="link" onClick={() => showSkill(n.id)}>{progress.get(n.id)?.title ?? n.id}</button>)}</div>
+                  </div>))}
+              </div>))}
+        </div>
+      )}
+      <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of the whole map"
+        onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
+        <circle r={layout.radius} className="miniback" />
+        {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === rec ? 26 : 12} className={n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} />)}
+        <rect x={-view.x - R / view.k} y={-view.y - R / view.k} width={(2 * R) / view.k} height={(2 * R) / view.k} className="miniview" />
       </svg>
       {tip && (() => {
         const p = progress.get(tip.id), sk = skills.find(x => x.id === tip.id)

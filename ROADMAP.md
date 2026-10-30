@@ -124,7 +124,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Side panels: progress and challenge dock on the left, the selected skill's information on the right, fixed-width centre, bottom sheet on narrow screens
 - [ ] Lesson links drawn as a second edge layer; keyboard route between connected skills; clicking a lesson in the list highlights its node
 - [x] Map as main workspace: full-width canvas, compact section row, stronger sectors, "Your next step" marker, labels that thin with zoom, camera remembered across lessons, four-question skill panel (D38)
-- [ ] Map: milestone rings with ability labels, broad region grouping, corner minimap, search, back-to-previous-view, connection explanations, mobile list synced with the map
+- [x] Map: milestone rings with ability labels, broad region grouping, corner minimap, search, back-to-previous-view, connection explanations ("why?" shows the needed depth and its checked outcome), skill list synced with the map
 
 ## Phase 2b: Square control map (Andrew's idea, 29 October 2026)
 - [x] Control map toggle on boards: per-square counts and blue/orange tint, in lesson boards, move-by-move steps, exercise answers, game review and the Contrast lab (off in tests and in Play on purpose)

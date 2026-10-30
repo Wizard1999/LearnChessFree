@@ -80,6 +80,7 @@ export function Course() {
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const mission: Mission | undefined = isAll ? undefined : missions.find(m => m.strand === view)
   const current: Mission = mission ?? overall
+  const [why, setWhy] = useState<string | null>(null)
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
@@ -153,11 +154,20 @@ export function Course() {
 
   // what a skill builds on and leads to, read from the prerequisites of its depths
   const links = (id: string) => {
-    const s0 = content.skillById.get(id); if (!s0) return { from: [] as string[], to: [] as string[] }
-    const from = new Set<string>(), to = new Set<string>()
-    for (const dep of Object.values(s0.depths)) for (const k of dep.prereqs ?? []) { const n = k.slice(0, k.lastIndexOf('.')); if (n !== id && content.skillById.has(n)) from.add(n) }
-    for (const o of content.skills) if (o.id !== id) for (const dep of Object.values(o.depths)) if ((dep.prereqs ?? []).some(k => k.slice(0, k.lastIndexOf('.')) === id)) to.add(o.id)
-    return { from: [...from], to: [...to] }
+    const s0 = content.skillById.get(id); const none = { from: [] as string[], to: [] as string[], why: new Map<string, string>() }
+    if (!s0) return none
+    const out = { from: new Set<string>(), to: new Set<string>(), why: new Map<string, string>() }
+    const split = (k: string) => ({ node: k.slice(0, k.lastIndexOf('.')), depth: k.slice(k.lastIndexOf('.') + 1) })
+    // the reason for a link is the checked outcome of the depth that is needed: nothing is written by hand
+    for (const [d, dep] of Object.entries(s0.depths)) for (const k of dep.prereqs ?? []) {
+      const { node: n, depth } = split(k); const p0 = content.skillById.get(n)
+      if (n !== id && p0) { out.from.add(n); if (!out.why.has(n)) out.why.set(n, `${s0.title} at ${d} needs ${p0.title} at ${depth}: ${p0.depths[depth]?.outcome ?? ''}`) }
+    }
+    for (const o of content.skills) if (o.id !== id) for (const [d, dep] of Object.entries(o.depths)) for (const k of dep.prereqs ?? []) {
+      const { node: n, depth } = split(k)
+      if (n === id) { out.to.add(o.id); if (!out.why.has(o.id)) out.why.set(o.id, `${o.title} at ${d} needs ${s0.title} at ${depth}: ${s0.depths[depth]?.outcome ?? ''}`) }
+    }
+    return { from: [...out.from], to: [...out.to], why: out.why }
   }
   const skillName = (id: string) => content.skillById.get(id)?.title ?? id
   const detailPanel = (
@@ -193,8 +203,10 @@ export function Course() {
                 {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
               </div>
               <h3 className="sdh">What it connects to</h3>
-              <p className="small linkrow"><span className="muted">Builds on:</span> {cn.from.length ? cn.from.map(id => <button key={id} type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button>) : <span className="muted">nothing: you can start here</span>}</p>
-              <p className="small linkrow"><span className="muted">Leads to:</span> {cn.to.length ? cn.to.map(id => <button key={id} type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button>) : <span className="muted">no skill after this one yet</span>}</p>
+              <p className="small linkrow"><span className="muted">Builds on:</span> {cn.from.length ? cn.from.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">nothing: you can start here</span>}</p>
+              <p className="small linkrow"><span className="muted">Leads to:</span> {cn.to.length ? cn.to.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">no skill after this one yet</span>}</p>
+              {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
+              {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
               <details><summary>Lessons for this skill ({ls.length})</summary>
                 {ls.map(l => { const pr = lp(l.id); return (
                   <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
