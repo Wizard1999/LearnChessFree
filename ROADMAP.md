@@ -140,6 +140,12 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Record the highest level beaten per lesson, so that merit for higher levels can be decided later (no merit is awarded yet; the data is kept)
 - [ ] Show it quietly: a mark on the lesson and the opening ("played both colours; best win: Maia 1500"), never a gate or a streak
 
+## Phase 2e: Lesson time and the road to the first game (Andrew's question, 31 October 2026)
+- [ ] Replace the invented time constants with measured ones: record time per step in the learner's attempts, and use the median of real timings per step type (until then label every duration "about", [I])
+- [ ] Do not count optional practice pools at full price in the lesson time; count what a learner must do
+- [ ] Shorten the road to the first complete game: legal-play lessons keep their D1 teaching in stage S1, the 'busy position' and 'can I now' drills (D2/D3) move later in a spiral; target about two hours to a first full game against Maia or Stockfish
+- [ ] Offer a 'play a game now' invitation after the basic rules (never a gate)
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
