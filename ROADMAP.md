@@ -146,6 +146,29 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Shorten the road to the first complete game: legal-play lessons keep their D1 teaching in stage S1, the 'busy position' and 'can I now' drills (D2/D3) move later in a spiral; target about two hours to a first full game against Maia or Stockfish
 - [ ] Offer a 'play a game now' invitation after the basic rules (never a gate)
 
+## Phase 2f: Map shows stages as well as subjects (Andrew, 31 October 2026; decision D42)
+- [ ] Rings of the map become the 8 recommended-path stages (same names as the path); slices stay the subjects; a skill sits on the ring of its first lesson's stage
+- [ ] Stage chip row beside the section chips: choosing a stage lights its skills in every slice (same highlight style as sections)
+- [ ] "You are here" ring for the learner's current stage; the panel and hover card say "Stage 3 · First wins"
+- [ ] Hard rule: the whole map is always visible (Fit all) and EVERY node is always clickable and selectable, whatever the stage or zoom
+- [ ] Skills with lessons in several stages sit at their first stage, but the move is an illusion: the panel shows the earlier and later stages of that skill and lets the learner jump to any of them, and the map shows ghost markers on those rings for the selected skill
+
+## Phase 5g: Playing real games as part of the curriculum (Andrew, 31 October 2026; decision D42)
+- [ ] At the appropriate stage the curriculum invites the learner to start playing full games, and then prescribes a daily game against a bot (sometimes from a specific position the current lessons are about), and against people when ready (never a gate; the learner can decline)
+- [ ] Prescriptions adapt: bot strength (Maia level or Stockfish level) from the learner's results, opening positions from the lessons just studied, endgame positions from the endgame stage
+- [ ] The learner's own games feed education planning and training: mistakes by type, time use, openings reached, results by level become inputs to My plan and to what Up next recommends
+- [ ] Playing against people: decide how without accounts or a server (links to Lichess games imported afterwards, or a later optional peer feature); record the decision
+- [ ] Recorded per game: opponent, level, colour, start position, result, date, which lesson it came from (links to the Maia finale games, D41)
+
+## Phase 2g: Fixes from the live-build review of 5bb096 (31 October 2026)
+- [ ] Skill panel bug: a skill's primary action must be its teaching lesson, never a stage check (course lessons such as L-SC-S3-1 carry a core skill and the panel lists every lesson of that skill; exclude course lessons or sort them last; stage checks appear after instruction or as an explicit test-out)
+- [ ] Contrast step: show the original position and move BEFORE asking what changes (forks lesson step 4 asks about "the same square" before the position is shown)
+- [ ] Teaching explanation first, engine verification second: every exercise explanation says which pieces, why, what next, then offers the depth and centipawn evidence
+- [ ] Guided complete game much earlier (see 2e)
+- [ ] Stale interface text: stage numbering Stage 0 in Curriculum vs Stage 1 in Progress; "stub: outcomes only, no items yet" on opening principles; famous games description says eight, there are nineteen; courses listed both as available and as planned
+- [ ] Map readability: readable zoom levels (region names far, skill names medium, connections near); stronger contrast for unstarted nodes; section buttons without horizontal scrolling; selected node, prerequisites and next steps stronger
+- [ ] Develop the adventurous side through the map and milestones while lesson screens stay calm
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
