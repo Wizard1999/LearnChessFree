@@ -133,6 +133,13 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [x] Maia opponent (free, human-like, CPU only) as an option in Play
 - [x] Neural voice audio for lessons (pre-generated, free, static files; browser voice as fallback) 405 of 444 lessons voiced, 70 MB; regenerate after the rewrites.
 
+## Phase 5f: Finale games against Maia (Andrew, 31 October 2026; decision D41; to start when development resumes)
+- [ ] Opening lessons end with an optional finale: play Maia from the opening position the lesson taught, one game as White and one as Black
+- [ ] The learner picks the Maia level (1100 to 1900); it is never required
+- [ ] Record each finale: lesson, colour, Maia level, result, date, and that it was done (kept with the learner's progress, exported with it)
+- [ ] Record the highest level beaten per lesson, so that merit for higher levels can be decided later (no merit is awarded yet; the data is kept)
+- [ ] Show it quietly: a mark on the lesson and the opening ("played both colours; best win: Maia 1500"), never a gate or a streak
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
