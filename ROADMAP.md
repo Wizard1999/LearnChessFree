@@ -138,6 +138,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] The learner picks the Maia level (1100 to 1900); it is never required
 - [ ] Record each finale: lesson, colour, Maia level, result, date, and that it was done (kept with the learner's progress, exported with it)
 - [ ] Record the highest level beaten per lesson, so that merit for higher levels can be decided later (no merit is awarded yet; the data is kept)
+- [ ] Levels below 1100 and above 1900: research Maia-2 (rating-conditioned single model; range, licence and a browser-ready ONNX not yet verified [R]); if it does not reach low enough, add a labelled 'gentle' setting (Maia 1100 with extra random-but-legal slips, never presented as a real lower rating); before stage S3 the finale uses the gentle Stockfish levels from the lesson's position and Maia levels appear later as a choice; always record which opponent and level was used
 - [ ] Show it quietly: a mark on the lesson and the opening ("played both colours; best win: Maia 1500"), never a gate or a streak
 
 ## Phase 2e: Lesson time and the road to the first game (Andrew's question, 31 October 2026)
