@@ -170,6 +170,28 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 - [ ] Map readability: readable zoom levels (region names far, skill names medium, connections near); stronger contrast for unstarted nodes; section buttons without horizontal scrolling; selected node, prerequisites and next steps stronger
 - [ ] Develop the adventurous side through the map and milestones while lesson screens stay calm
 
+## Phase 2h: Findings of the independent review of 31 October 2026 (a long PDF review of live build 5bb096 and repository 396d635; decision D43)
+Technical findings I verified in the code on 31 Oct [V]:
+- [ ] **Mastery mixes guided and independent evidence in one posterior** (`app/src/lib/mastery.ts`): cue 1 and 2 successes add weight to `a` and the unlabelled minimum does not stop a large guided history from overwhelming a small independent sample (the reviewer's arithmetic checks out: Beta(56,1) gives 99.9996 percent, Beta(6,1) gives 73.8 percent). Fix: compute the reliability posterior from cue 3+ evidence only; keep guided attempts for the 'practising' state, recommendations and readiness to try a check; wording "demonstrated in independent checks, with counts and dates"; synthetic regression tests (large guided history, repeated families, hints, placement, long inactivity)
+- [ ] **Confidence calibration uses absolute error** (`independence()` in `app/src/lib/progress.ts`), which rewards extreme confidence (verified: true p 0.7 gives expected error 0.42 reporting 0.7 but 0.34 reporting 0.9). Fix: a proper scoring rule, or simply accuracy by confidence band with sample sizes; show high-confidence mistakes as examples
+- [ ] **A fresh-practice set is not strictly independent**: `pickFresh` in `app/src/lib/select.ts` fills short sets with items from already chosen families. Add a strict-family option for checks and allow a shorter check
+- [ ] **Lesson resume by numeric step index** breaks when a rewrite adds or reorders steps. Stable step ids, lesson revision metadata, a restart-or-mapped-place choice after a structural rewrite, the version stored with completion
+- [ ] **Save failures are swallowed** in the lesson player: show a calm notice and an export option instead of a silent success
+- [ ] **First visit waits for the whole lessons file**: split a compact catalogue (titles, outcomes, stages, durations) from lesson bodies, fetch the lesson and its items on demand, separate size budgets for the shell, the first lesson, the optional opponent and the full offline copy; benchmark time to a usable board; content-addressed filenames instead of a hash query string; a missing course catalogue must not look like an empty one
+- [ ] **Lesson roles**: fields for canonical introduction, continuation, course application and assessment, so the map, search and Up next choose the introduction by design (this also fixes the Forks stage-check routing in 2g)
+- [ ] Review scheduling: track historical accomplishment and current evidence separately (a recent failure must not leave a skill "reliable and refreshed"); use the learner's local day for due dates
+Review proposals accepted:
+- [ ] Practice by purpose (learn with help, retrieve independently, refresh, test a hypothesis) with the result type stored; result vocabulary: correct for this task, sound alternative, useful idea but incomplete calculation, unsuccessful with explanation
+- [ ] Board-first first lesson: a visible board and a meaningful action in the first minute; layered local-storage notice with a backup suggestion after meaningful work
+- [ ] Depth means explanation: readiness = mechanism, conditions, near-miss, unfamiliar use, with step counts as diagnostics only; chapter names and stopping points inside long lessons; prediction only after a worked-example route is offered; transfer checks include positions where the idea does not apply
+- [ ] Maia finale record also keeps the exact start position, assistance settings, content version and whether the game was completed; a beginner invitation passes an explicit gentle default (the play page opens on Stockfish Club today)
+- [ ] Games feeding learning: annotate before the engine; an opportunity log (where the idea could have been used, noticed or not, help, annotation certainty); a short post-game flow (one moment, the original thought, the reply, a possible cause, one follow-up plus a fresh related exercise); recommendations say why
+- [ ] Self-direction in stages: the plan form proposes one goal from a recent lesson or game before showing the full skill selector
+- [ ] Roadmap truth: replace the single overall percentage with a readiness view (beginner journey, core lesson quality, independent assessment, game integration, accessibility, reliability, human review) generated from the same records that register courses; derive course counts from metadata
+- [ ] Evaluation: do not use non-overlapping confidence intervals as the test of change; use a paired analysis and a statistical review before efficacy claims; usability sessions first
+- [ ] Accessibility: real keyboard, screen-reader, narrow-screen and enlarged-text journeys using WCAG 2.2; audio must never play over changed text (version check)
+- [ ] Human review scoped to a release slice: the beginner path, the exemplars, high-traffic practice items
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
