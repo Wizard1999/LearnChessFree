@@ -1,0 +1,454 @@
+{
+ "positions": [
+  {
+   "id": "PHI-LHIENGINESHUMANS1-1",
+   "fen": "r1bqkb1r/pp1n1pp1/2p1pn1p/6N1/3P4/3B1N2/PPP2PPP/R1BQK2R w KQkq - 0 8",
+   "family": "FAM-HI-ENGINES",
+   "provenance": {
+    "kind": "game",
+    "ref": "Deep Blue v Kasparov, New York, game 6, 11 May 1997; position after 7...h6; moves replayed from the Wikipedia article with python-chess",
+    "licence": "facts (game moves)"
+   }
+  },
+  {
+   "id": "PHI-LHIENGINESHUMANS1-2",
+   "fen": "r1b1kb1r/pp1nq1p1/2p1pn1p/8/3P4/3B1N2/PPP2PPP/R1BQ1RK1 w kq - 0 10",
+   "family": "FAM-HI-ENGINES",
+   "provenance": {
+    "kind": "game",
+    "ref": "Deep Blue v Kasparov, game 6, position after 9...fxe6; replayed with python-chess",
+    "licence": "facts (game moves)"
+   }
+  },
+  {
+   "id": "PHI-LHIENGINESHUMANS1-3",
+   "fen": "1r6/5kp1/RqQb1p1p/1p1PpP2/1Pp1B3/2P4P/6P1/5K2 b - - 14 45",
+   "family": "FAM-HI-ENGINES",
+   "provenance": {
+    "kind": "game",
+    "ref": "Deep Blue v Kasparov, game 2, 4 May 1997; position after 45.Ra6; replayed with python-chess from the Wikipedia article",
+    "licence": "facts (game moves)"
+   }
+  },
+  {
+   "id": "PHI-LHIENGINESHUMANS1-4",
+   "fen": "7k/8/6KP/8/8/8/8/5B2 b - - 0 1",
+   "family": "FAM-HI-ENGINES",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Constructed: KBP v K, wrong-colour bishop and rook pawn; tablebase-checked",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PHI-LHIENGINESHUMANS1-5",
+   "fen": "7k/8/6KP/8/8/8/8/6B1 b - - 0 1",
+   "family": "FAM-HI-ENGINES",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Constructed one-feature edit of the previous position (bishop moved to a dark square); tablebase-checked",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IHI-LHIENGINESHUMANS1-1",
+   "skill": "GAME.HISTORY.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PHI-LHIENGINESHUMANS1-1",
+   "prompt": "White to move (Deep Blue, game 6). If the knight on g5 takes the pawn on e6, how many black pieces can take it back?",
+   "answer": {
+    "class": "one",
+    "options": [
+     "none",
+     "one",
+     "two or more"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "g5e6"
+     },
+     "statement": "Nxe6 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g5e6"
+      ]
+     },
+     "statement": "After Nxe6, one black piece can capture the knight on e6."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "f7",
+      "piece": "p"
+     },
+     "statement": "The black pawn on f7 is that piece."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5e6"
+      ]
+     },
+     "statement": "At depth 16 the engine's first choice is Nxe6."
+    }
+   ],
+   "tags": [
+    "node.GAME.HISTORY",
+    "tier.2",
+    "cue.3",
+    "kind.game",
+    "family.FAM-HI-ENGINES",
+    "lang.en",
+    "course.history-and-meta"
+   ],
+   "hints": [
+    "Look at which black pieces attack e6 right now.",
+    "Count attackers of the square e6 once the knight is on it.",
+    "Not a piece: one of the pawns."
+   ],
+   "explain": "Exactly one black piece, the pawn on f7, can take the knight on e6. At depth 16 the engine also ranks the capture first. Depth-limited evidence, not proof.",
+   "orientation": "auto",
+   "source": {
+    "kind": "game",
+    "id": "deep-blue-kasparov-1997"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "none",
+    "one",
+    "two or more"
+   ]
+  },
+  {
+   "id": "IHI-LHIENGINESHUMANS1-2",
+   "skill": "GAME.HISTORY.D1",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PHI-LHIENGINESHUMANS1-2",
+   "prompt": "White to move. If the bishop goes to g6, how many black pieces can capture it there?",
+   "answer": {
+    "class": "none",
+    "options": [
+     "none",
+     "one",
+     "two or more"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d3g6"
+     },
+     "statement": "Bg6+ is legal."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g6",
+      "color": "black",
+      "count": 0,
+      "after_moves": [
+       "d3g6"
+      ]
+     },
+     "statement": "After Bg6+, no black piece attacks the bishop on g6."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d3g6"
+      ]
+     },
+     "statement": "At depth 16 the engine's first choice is Bg6+."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "e8",
+      "piece": "k"
+     },
+     "statement": "The black king stands on e8."
+    }
+   ],
+   "tags": [
+    "node.GAME.HISTORY",
+    "tier.2",
+    "cue.3",
+    "kind.game",
+    "family.FAM-HI-ENGINES",
+    "lang.en",
+    "course.history-and-meta"
+   ],
+   "hints": [
+    "Check each black piece in turn: which squares does it attack?",
+    "Does any black pawn or piece cover g6?",
+    "Also ask what the bishop on g6 attacks."
+   ],
+   "explain": "No black piece covers g6, so the bishop checks the king without being taken; the king must move and loses its right to castle. At depth 16 the engine ranks the check first.",
+   "orientation": "auto",
+   "source": {
+    "kind": "game",
+    "id": "deep-blue-kasparov-1997"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "options": [
+    "none",
+    "one",
+    "two or more"
+   ]
+  },
+  {
+   "id": "IHI-LHIENGINESHUMANS1-3",
+   "skill": "GAME.HISTORY.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PHI-LHIENGINESHUMANS1-3",
+   "prompt": "Black to move (game 2). Find the move the engine ranks first.",
+   "answer": {
+    "moves": [
+     "b6e3"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "b6e3"
+     },
+     "statement": "Qe3 is legal.",
+     "id": "C1"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b6e3"
+      ]
+     },
+     "statement": "At depth 16 the engine's first choice is Qe3.",
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "b6c6",
+      "cp": 200
+     },
+     "statement": "At depth 16 Qxc6 is at least 2 pawns below Qe3.",
+     "id": "C3"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "f1",
+      "piece": "K"
+     },
+     "statement": "The white king stands on f1.",
+     "id": "C4"
+    }
+   ],
+   "tags": [
+    "node.GAME.HISTORY",
+    "tier.2",
+    "cue.3",
+    "kind.game",
+    "family.FAM-HI-ENGINES",
+    "lang.en",
+    "course.history-and-meta"
+   ],
+   "hints": [
+    "Look at White's king on f1 and the queen on b6.",
+    "Which black move brings the queen closer to that king?",
+    "The queen goes to the third rank."
+   ],
+   "explain": "At depth 16 the engine puts the queen move to e3 first and the queen trade on c6 far behind. Whether it holds a draw is the open question of this lesson.",
+   "orientation": "auto",
+   "source": {
+    "kind": "game",
+    "id": "deep-blue-kasparov-1997"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "b6c6": "Trading queens. At depth 16 the engine rates it at least 2 pawns below Qe3."
+   }
+  },
+  {
+   "id": "IHI-LHIENGINESHUMANS1-4",
+   "skill": "GAME.HISTORY.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PHI-LHIENGINESHUMANS1-4",
+   "prompt": "Black to move: White has a bishop and a rook pawn against a bare king. With best play, who wins?",
+   "answer": {
+    "outcome": "draw",
+    "options": [
+     "White wins",
+     "draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "statement": "The 7-man tablebase says the position (Black to move) is a draw.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 160,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates it slightly better for White (about +0.7), not a draw: a score is not the result.",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "f1",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on f1 (a light square).",
+     "id": "C3"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "h6",
+      "piece": "P"
+     },
+     "statement": "A white pawn stands on h6.",
+     "id": "C4"
+    }
+   ],
+   "tags": [
+    "node.GAME.HISTORY",
+    "tier.2",
+    "cue.3",
+    "kind.game",
+    "family.FAM-HI-ENGINES",
+    "lang.en",
+    "course.history-and-meta"
+   ],
+   "hints": [
+    "Look at the corner h8 where Black's king stands.",
+    "Which squares can this bishop ever reach from f1?",
+    "Does it ever control h8?"
+   ],
+   "explain": "The bishop and the promotion corner h8 are on opposite colours, so the bishop can never drive the king from the corner: a draw by the tablebase, though the depth-16 engine score is slightly above level.",
+   "orientation": "auto",
+   "source": {
+    "kind": "game",
+    "id": "deep-blue-kasparov-1997"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IHI-LHIENGINESHUMANS1-5",
+   "skill": "GAME.HISTORY.D1",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PHI-LHIENGINESHUMANS1-5",
+   "prompt": "Black to move: White has a bishop and a rook pawn against a bare king. With best play, who wins?",
+   "answer": {
+    "outcome": "White wins",
+    "options": [
+     "White wins",
+     "draw",
+     "Black wins"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "statement": "The 7-man tablebase says Black, the side to move, loses."
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "g1",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on g1 (a dark square).",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "h6",
+      "piece": "P"
+     },
+     "statement": "A white pawn stands on h6.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.GAME.HISTORY",
+    "tier.2",
+    "cue.3",
+    "kind.game",
+    "family.FAM-HI-ENGINES",
+    "lang.en",
+    "course.history-and-meta"
+   ],
+   "hints": [
+    "Look at the corner h8 where Black's king stands.",
+    "Which squares can this bishop ever reach from g1?",
+    "Does it ever control h8?"
+   ],
+   "explain": "Now the bishop is on the same colour as the corner h8, so it can control the queening square: a win by the tablebase.",
+   "orientation": "auto",
+   "source": {
+    "kind": "game",
+    "id": "deep-blue-kasparov-1997"
+   },
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

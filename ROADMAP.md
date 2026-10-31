@@ -3,7 +3,7 @@
 How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not started. Percentages are computed by `tools/update_roadmap.py` from the boxes below; the metrics come from the actual content files. The same data is shown in the app on the **Roadmap** page. Rule for every session (also in `CLAUDE.md`): when a task finishes, tick it here and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`.
 
 <!-- PROGRESS:START -->
-**Overall: 63%** (113 of 194 tasks done, in-progress tasks count half). Updated 2026-10-30T19:24+00:00 UTC.
+**Overall: 65%** (118 of 194 tasks done, in-progress tasks count half). Updated 2026-10-31T00:43+00:00 UTC.
 
 | Phase | Done | % |
 |---|---|---|
@@ -11,7 +11,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 1: Verification tooling | 6/8 | 75% |
 | Phase 2: The app | 23/26 | 88% |
 | Phase 2d: Recommended learning path and prose audit (simulated-panel review, 30 October 2026; decision D37) | 7/9 | 83% |
-| Phase 5e: Depth over breadth (Andrew's review, 30 October 2026; decision D40) | 1/11 | 27% |
+| Phase 5e: Depth over breadth (Andrew's review, 30 October 2026; decision D40) | 6/11 | 55% |
 | Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md) | 5/6 | 83% |
 | Phase 2b: Square control map (Andrew's idea, 29 October 2026) | 2/4 | 62% |
 | Phase 3: Curriculum graph | 3/4 | 75% |
@@ -34,7 +34,7 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | Phase 7: Release | 1/6 | 17% |
 | Phase 8: Evaluation | 0/3 | 0% |
 
-**Coverage (computed from the files):** 206 of 206 skill nodes have a lesson (100%); 186 nodes have 10 or more shipped exercises; 8594 exercises ship, 8 wait for validation; 0 items reviewed by a person, 3722 flagged for human review.
+**Coverage (computed from the files):** 206 of 206 skill nodes have a lesson (100%); 187 nodes have 10 or more shipped exercises; 8865 exercises ship, 9 wait for validation; 0 items reviewed by a person, 3993 flagged for human review.
 
 | Strand | Nodes | With a lesson | With 10+ exercises |
 |---|---|---|---|
@@ -46,11 +46,11 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 | S6 Attack, sacrifice and defense | 19 | 19 | 18 |
 | S7 Endgames | 38 | 38 | 36 |
 | S8 Openings and structures | 12 | 12 | 12 |
-| S9 Game study | 7 | 7 | 4 |
+| S9 Game study | 7 | 7 | 5 |
 | S10 Practical performance | 9 | 9 | 3 |
 | S11 Self-direction | 7 | 7 | 0 |
 
-**Building now:** Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape Stage checks (one mixed unlabelled check per stage S2-S6) added; per-skill formats (execute a mate, analyse a game) not yet.; Research: Chess Steps method and chess.com's beginner path; citable coaching views from our rights-checked library; The lesson depth standard (`docs/lesson-depth-standard.md`) and `tools/check_depth.py`; Exemplars rebuilt long-form: Sicilian Dragon series (9 lessons), engines and human play course (5 lessons), forks, back-rank mate; Neural voice audio for lessons (pre-generated, free, static files; browser voice as fallback); Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Items for strategy nodes with no checkable fact (plans, prophylaxis, restraint, conversion) Four families authored (plans, conversion, initiative, activity).; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored. 8+ slices authored; see tools/check_misconceptions.py for what is left.; Spoken lessons with AI voices (the lesson scripts are already plain text) Read aloud with the browser voices is built (no AI service).; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); Wave 3: older public-domain games and endgame classics; opening deep dives; history and meta course (needs a named human reviewer for history claims) Six more games added (Morphy-Paulsen, Reti-Tartakower, Samisch-Nimzowitsch, Botvinnik-Capablanca, Karpov-Kasparov 24, Petrosian-Spassky 10).; 188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance
+**Building now:** Give each major skill an independent demonstration suited to it (execute a mate, calculate a reply, choose among mixed positions, analyse a game) instead of one worksheet shape Stage checks (one mixed unlabelled check per stage S2-S6) added; per-skill formats (execute a mate, analyse a game) not yet.; Training items from the map: the Square control lesson (L-POS-CONTROL-MAP-1) with rules-checked tap and count items is written; a hidden-map mode is not; Endgame tablebase items (files built; validation in progress); Attack, defence, sacrifice and calculation items from puzzle themes; Items for strategy nodes with no checkable fact (plans, prophylaxis, restraint, conversion) Four families authored (plans, conversion, initiative, activity).; Tranche 2a: calculation (4 of 7 nodes done and reviewed: candidates, visualize, compare, tree; batch c2 not started); Tranche 2b: positional play (p1-p6 written and validated; review pass unfinished on p3-p6); Tranche 2c: attack, defence, sacrifice, initiative (all batches written and validated; review pass unfinished); Tranche 2d: endgames (all batches written and validated; review pass unfinished); Lessons and exercises for the new gap nodes (written and validated: mate search, exchange sacrifice, practical resistance, knight and rook endings, four structure families; review pass unfinished, see docs/review-findings-pending.md); Resolve overlaps: 65 reduced to 1 (LOOP.V1.D1 pair), plus demonstration boards, thin lessons and item swaps listed in docs/overlaps-to-resolve.md; Check that every listed misconception has a practice exercise; write the missing ones tools/check_misconceptions.py written; 92 exercises still missing across 49 nodes, 8 authored. 8+ slices authored; see tools/check_misconceptions.py for what is left.; Spoken lessons with AI voices (the lesson scripts are already plain text) Read aloud with the browser voices is built (no AI service).; Acquire Tier 1 and verify Tier 2 candidates one by one (5 Gutenberg books stored; Capablanca refused because the file carries a 1949 notice; Wikibooks and the rest pending); Wave 3: older public-domain games and endgame classics; opening deep dives; history and meta course (needs a named human reviewer for history claims) Six more games added (Morphy-Paulsen, Reti-Tartakower, Samisch-Nimzowitsch, Botvinnik-Capablanca, Karpov-Kasparov 24, Petrosian-Spassky 10).; 188 skill levels had exercises but only a basic lesson. Written, reviewed and validated so far: foundations, tactics, safety, calculation and the first positional batches (about 90 lessons; the lesson count is now 306). Batch ids and the generator are in `docs/next-wave.md`; remaining: positional (rest of S5), endgames (S7), openings (S8), attack and defence (S6), game study and practical performance
 
 **Next up:** Independent audit of generated items (second implementation); Skill-graph chess-accuracy audit (adversarial reviewers); Adversarial code review of the app and fixes; Accessibility and mobile fixes from the review; Full-course walkthrough in the browser as a first-time learner
 
@@ -122,16 +122,16 @@ How to read this: `[x]` done, `[~]` in progress (counts as half), `[ ]` not star
 
 ## Phase 5e: Depth over breadth (Andrew's review, 30 October 2026; decision D40)
 - [x] Measure the problem (median lesson 11 steps, 140 words of card text, 1 board; 85 cards with moves in prose): `tools/check_text_notation.py`
-- [~] Research: Chess Steps method and chess.com's beginner path; citable coaching views from our rights-checked library
-- [~] The lesson depth standard (`docs/lesson-depth-standard.md`) and `tools/check_depth.py`
-- [~] Exemplars rebuilt long-form: Sicilian Dragon series (9 lessons), engines and human play course (5 lessons), forks, back-rank mate
+- [x] Research: Chess Steps method and chess.com's beginner path; citable coaching views from our rights-checked library
+- [x] The lesson depth standard (`docs/lesson-depth-standard.md`) and `tools/check_depth.py`
+- [x] Exemplars rebuilt long-form: Sicilian Dragon series (9 lessons), engines and human play course (5 lessons), forks, back-rank mate Dragon series 9, engines course 5, forks, back-rank (31 Oct 2026).
 - [ ] Opening series for the other 17 openings (8 to 10 lessons each, boards first, reasons, plans, model games, teach-back)
 - [ ] Rebuild the culture courses (history and meta, playstyles) and famous-game lessons to the standard
 - [ ] Core skill lessons beyond the beginner blocks expanded to the standard, wave by wave (about 200 lessons)
 - [ ] Beginner blocks (stages S0 to S1) rebuilt against chess.com's beginner path
 - [ ] Teach-it-back step type with a self-check list (app support) and a stage check per course
-- [ ] Maia opponent (free, human-like, CPU only) as an option in Play
-- [~] Neural voice audio for lessons (pre-generated, free, static files; browser voice as fallback)
+- [x] Maia opponent (free, human-like, CPU only) as an option in Play
+- [x] Neural voice audio for lessons (pre-generated, free, static files; browser voice as fallback) 405 of 444 lessons voiced, 70 MB; regenerate after the rewrites.
 
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests

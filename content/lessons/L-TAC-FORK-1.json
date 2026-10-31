@@ -1,54 +1,100 @@
 {
   "id": "L-TAC-FORK-1",
-  "title": "Forks: one move, two targets",
+  "title": "Forks: how to see them, set them up and stop them",
   "skill": "TAC.FORK",
   "depth": "D1",
-  "minutes": 8,
+  "minutes": 42,
   "outcomes": [
-    "Explains why a fork wins material",
-    "Finds a knight fork that wins a queen when told to look for one",
-    "Checks whether a fork actually works before playing it"
+    "Finds a fork for each kind of piece (knight, pawn, queen, bishop, rook, king) and names the two targets",
+    "Checks a fork against the four answers (capture the forker, check first, defend both, move one and defend the other) before relying on it",
+    "Sets up a fork with a forcing move that puts the targets on the forking lines",
+    "Runs a safety scan on their own move and avoids a move that allows a knight fork",
+    "Explains forks to a beginner with the idea, when it works, an example and a warning"
   ],
   "steps": [
     {
+      "type": "item",
+      "item": "IL-47UWV",
+      "silent": true
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Write the move you chose. Then name one reply by the other side that you did NOT test before you moved. Nothing is explained yet.",
+      "fields": [
+        {
+          "id": "move",
+          "label": "My move:"
+        },
+        {
+          "id": "untested",
+          "label": "A reply I did not test:"
+        }
+      ]
+    },
+    {
       "type": "card",
-      "text": "A **fork** is one move that attacks two things at once. A fork makes two threats at once. It wins material only when no single reply meets both threats. Your opponent may capture the forking piece, give a check that gains time, or move one target while defending the other. You must check for these before you rely on a fork.\nAny piece can fork. Knights are the hardest to spot, because their jump attacks squares a bishop or rook line would not."
+      "text": "**This lesson, as four tests you can take yourself.**\n1. **See** a fork, for every kind of piece.\n2. **Check** it against the four answers an opponent can give.\n3. **Set one up** with forcing moves.\n4. **Stop** one against you, and teach it to a beginner.\nA **fork** is one move that makes two threats. It wins only when no single reply meets both."
+    },
+    {
+      "type": "contrast",
+      "title": "Same jump, one change",
+      "prompt": "Black's king now stands on d8. Does the knight jump to the same square still win the queen? Predict first, then check.",
+      "working": "I-FORK-001",
+      "failing": "I-FORK-003"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "What changed between the two positions, and why did it matter?",
+      "fields": [
+        {
+          "id": "changed",
+          "label": "What changed:",
+          "options": [
+            "the queen is better protected",
+            "nothing important",
+            "the knight is pinned",
+            "the king now covers the landing square"
+          ],
+          "answer": "the king now covers the landing square"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACFORK1-1"
     },
     {
       "type": "board",
-      "fen": "4k3/5ppp/q7/3N4/8/7P/5PP1/6K1 w - - 0 1",
-      "caption": "White to move. Watch what the knight does.",
+      "fen": "2r1k3/5ppp/q7/3N4/8/7P/5PP1/6K1 w - - 0 1",
+      "caption": "A third version: one more black piece. Step through the jump.",
       "line": [
         {
           "move": "d5c7",
-          "say": "The knight jumps to c7 and attacks the king and the queen."
+          "say": "The knight lands on c7 and again attacks the king and the queen."
         },
         {
-          "move": "e8d7",
-          "say": "The king must step aside."
-        },
-        {
-          "move": "c7a6",
-          "say": "The knight takes the queen for nothing. White was six points behind and is now a knight ahead."
+          "move": "c8c7",
+          "say": "But the rook on c8 guards c7 and takes the knight. A fork needs a landing square that is safe."
         }
       ],
       "arrows": [
         {
-          "from": "d5",
+          "from": "c8",
           "to": "c7"
         },
         {
           "from": "c7",
-          "to": "a6"
+          "to": "e8"
         },
         {
           "from": "c7",
-          "to": "e8"
+          "to": "a6"
         }
       ],
       "highlight": [
-        "a6",
-        "e8"
+        "c7"
       ],
       "claims": [
         {
@@ -60,37 +106,2637 @@
         },
         {
           "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One black piece, the rook on c8, attacks the landing square c7."
+        },
+        {
+          "id": "C3",
           "type": "material_after_move",
           "params": {
             "move": "d5c7",
-            "min": 8
+            "max": -3
+          },
+          "statement": "Along the engine line the knight jump nets no material."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The idea, with its conditions.** A fork is one move that attacks two targets at once. It usually wins material when the opponent has no single reply that deals with both; you will test four kinds of reply later. Check the landing square first, because a forker that is simply captured for nothing is a classic failure. [I] Znosko-Borovsky separated real from fictitious threats [V-sheet]; treating a fork as two threats and asking about each is my own use of that idea."
+    },
+    {
+      "type": "card",
+      "text": "**[H] Which forks get missed?** Hypothesis, not finding: the knight fork is the one people miss most, because its jump leaves no line between it and its targets, and eyes look for lines. Our own puzzle bank cannot test this. [V, reviewer's recount] Among the 81 single-move fork puzzles in the bank (filter: fork theme, find the move), 30 start with a knight move and 24 with a queen move. That shows what the bank contains, not what players miss."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/5ppp/r7/3N4/8/7P/5PP1/6K1 w - - 0 1",
+      "caption": "Knight map: from c7 the knight touches six squares, and two of them hold the black king and the rook.",
+      "line": [
+        {
+          "move": "d5c7",
+          "say": "The knight lands on c7, where its jumps reach both the king and the rook."
+        },
+        {
+          "move": "e8d7",
+          "say": "The king has to move, because it is in check."
+        },
+        {
+          "move": "c7a6",
+          "say": "Now the knight takes the rook. The check bought the time."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "e8"
+        },
+        {
+          "from": "c7",
+          "to": "a6"
+        },
+        {
+          "from": "c7",
+          "to": "a8"
+        },
+        {
+          "from": "c7",
+          "to": "b5"
+        },
+        {
+          "from": "c7",
+          "to": "d5"
+        },
+        {
+          "from": "c7",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "c7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d5c7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "c7",
+            "squares": [
+              "a6",
+              "a8",
+              "b5",
+              "d5",
+              "e6",
+              "e8"
+            ],
+            "after_move": "d5c7"
+          },
+          "statement": "A knight on c7 attacks exactly these six squares."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "a6",
+            "color": "white",
+            "count": 1,
+            "after_move": "d5c7"
+          },
+          "statement": "The knight attacks the rook on a6."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "d5c7"
+          },
+          "statement": "The knight attacks the king on e8."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "d5c7",
+            "min": 5
+          },
+          "statement": "Along the engine line the jump wins at least a rook."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/8/1PN5/3K1k2/8/1r6/8/8 w - - 1 50",
+      "caption": "An endgame fork. White's pawn on b6 wants to run, and Black's rook stands on b3.",
+      "line": [
+        {
+          "move": "c6d4",
+          "say": "The knight checks the king on f5 and attacks the rook on b3 at once."
+        },
+        {
+          "move": "f5g4",
+          "say": "The king steps aside. Nothing defends the rook."
+        },
+        {
+          "move": "d4b3",
+          "say": "The knight takes the rook, and the b-pawn is free to advance."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "f5"
+        },
+        {
+          "from": "d4",
+          "to": "b3"
+        }
+      ],
+      "highlight": [
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c6d4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6d4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "b3",
+            "color": "white",
+            "count": 1,
+            "after_move": "c6d4"
+          },
+          "statement": "The knight attacks the rook on b3."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 1,
+            "after_move": "c6d4"
+          },
+          "statement": "The knight attacks the king on f5."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "b3",
+            "color": "black",
+            "count": 0,
+            "after_move": "c6d4"
+          },
+          "statement": "No black piece defends the rook on b3."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "c6d4",
+            "min": 5
+          },
+          "statement": "Along the engine line the jump wins the rook."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r3qr2/5p1k/1p3Pp1/2n1N2p/3RPQ1P/P7/1P3P2/1K5R b - - 2 27",
+      "caption": "No check this time: a quiet knight jump. Black to move.",
+      "line": [
+        {
+          "move": "c5e6",
+          "say": "The knight lands where it attacks both the rook on d4 and the queen on f4."
+        },
+        {
+          "move": "f4d2",
+          "say": "The queen has to move."
+        },
+        {
+          "move": "e6d4",
+          "say": "The knight takes the rook."
+        },
+        {
+          "move": "d2d4",
+          "say": "The queen takes the knight. Black has won the exchange, not the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "d4"
+        },
+        {
+          "from": "e6",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c5e6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c5e6"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e6",
+            "squares": [
+              "c5",
+              "c7",
+              "d4",
+              "d8",
+              "f4",
+              "f8",
+              "g5",
+              "g7"
+            ],
+            "after_move": "c5e6"
+          },
+          "statement": "A knight on e6 attacks exactly these squares."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "c5e6",
+            "min": 2
+          },
+          "statement": "Along the engine line the jump nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/5ppp/2n1n3/8/3P4/7P/5PP1/6K1 w - - 0 1",
+      "caption": "Pawn map: a pawn attacks the two squares diagonally ahead of it. A pawn on d5 hits c6 and e6.",
+      "line": [
+        {
+          "move": "d4d5",
+          "say": "The pawn steps forward and attacks both knights."
+        },
+        {
+          "move": "c6d4",
+          "say": "One knight escapes."
+        },
+        {
+          "move": "d5e6",
+          "say": "The pawn takes the other one."
+        },
+        {
+          "move": "f7e6",
+          "say": "Black recaptures the pawn, but White has won a knight for a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "c6"
+        },
+        {
+          "from": "d5",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d4d5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "d5",
+            "squares": [
+              "c6",
+              "e6"
+            ],
+            "after_move": "d4d5"
+          },
+          "statement": "A pawn on d5 attacks exactly c6 and e6."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4d5",
+            "min": 2
+          },
+          "statement": "Along the engine line the pawn move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2rr2k1/p3bppp/4q3/2p5/3p4/1P2P1P1/PBR1QPKP/3R4 b - - 1 25",
+      "caption": "A pawn fork, and what it sets up next. Black to move.",
+      "line": [
+        {
+          "move": "d4d3",
+          "say": "The pawn attacks the queen on e2 and the rook on c2."
+        },
+        {
+          "move": "d1d3",
+          "say": "White takes the pawn with the other rook."
+        },
+        {
+          "move": "e6e4",
+          "say": "The black queen now checks the king and attacks the rook on d3: a second fork."
+        },
+        {
+          "move": "e2f3",
+          "say": "White blocks with the queen."
+        },
+        {
+          "move": "e4d3",
+          "say": "Black takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d3",
+          "to": "e2"
+        },
+        {
+          "from": "d3",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "d3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d4d3"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d4d3"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e2",
+            "color": "black",
+            "count": 1,
+            "after_move": "d4d3"
+          },
+          "statement": "The pawn attacks the queen on e2."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c2",
+            "color": "black",
+            "count": 1,
+            "after_move": "d4d3"
+          },
+          "statement": "The pawn attacks the rook on c2."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d4d3",
+              "d1d3",
+              "e6e4"
+            ]
+          },
+          "statement": "The queen on e4 attacks the king on g2."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "d3",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "d4d3",
+              "d1d3",
+              "e6e4"
+            ]
+          },
+          "statement": "The queen on e4 attacks the rook on d3."
+        },
+        {
+          "id": "C7",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4d3",
+            "min": 4
+          },
+          "statement": "Along the engine line the pawn move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn3r2/ppp2p2/3bk1q1/3p4/3P1P1Q/2P4P/PP4P1/RN3RK1 w - - 4 19",
+      "caption": "A pawn check that forks the king and the queen. White to move.",
+      "line": [
+        {
+          "move": "f4f5",
+          "say": "The pawn checks the king on e6 and attacks the queen on g6."
+        },
+        {
+          "move": "g6f5",
+          "say": "If the queen takes the pawn, that also answers the check."
+        },
+        {
+          "move": "f1f5",
+          "say": "The rook takes the queen."
+        },
+        {
+          "move": "e6f5",
+          "say": "The king takes the rook. White gave a pawn and a rook for the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "e6"
+        },
+        {
+          "from": "f5",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f4f5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f4f5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "white",
+            "count": 1,
+            "after_move": "f4f5"
+          },
+          "statement": "The pawn attacks the queen on g6."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1,
+            "after_move": "f4f5"
+          },
+          "statement": "The pawn attacks the king on e6."
+        },
+        {
+          "id": "C5",
+          "type": "eval_range",
+          "params": {
+            "min": 250
           }
         }
       ]
     },
     {
-      "type": "item",
-      "item": "I-FORK-001"
+      "type": "board",
+      "fen": "r4rk1/1pqbbppp/P2ppn2/8/2B1PP2/2NP1Q2/1BP3PP/R4RK1 b - - 0 14",
+      "caption": "The queen forks from a distance. Black to move.",
+      "line": [
+        {
+          "move": "c7b6",
+          "say": "The queen checks the king along the diagonal and attacks the bishop on b2."
+        },
+        {
+          "move": "f3f2",
+          "say": "White interposes with the queen."
+        },
+        {
+          "move": "b6b2",
+          "say": "The queen takes the bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b6",
+          "to": "g1"
+        },
+        {
+          "from": "b6",
+          "to": "b2"
+        }
+      ],
+      "highlight": [
+        "b6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c7b6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c7b6"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1,
+            "after_move": "c7b6"
+          },
+          "statement": "The queen attacks the king on g1."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "b2",
+            "color": "black",
+            "count": 1,
+            "after_move": "c7b6"
+          },
+          "statement": "The queen attacks the bishop on b2."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "c7b6",
+            "min": 3
+          },
+          "statement": "Along the engine line the queen move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1rr3k1/p5pp/3p1p2/Q7/8/P2n1NP1/1q3P1P/4R1KR w - - 1 24",
+      "caption": "The queen forks along a diagonal and a file. White to move.",
+      "line": [
+        {
+          "move": "a5d5",
+          "say": "The queen checks along the diagonal and attacks the knight on d3 along the file."
+        },
+        {
+          "move": "g8h8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "d5d3",
+          "say": "The queen takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "g8"
+        },
+        {
+          "from": "d5",
+          "to": "d3"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "a5d5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a5d5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_move": "a5d5"
+          },
+          "statement": "The queen attacks the king on g8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d3",
+            "color": "white",
+            "count": 1,
+            "after_move": "a5d5"
+          },
+          "statement": "The queen attacks the knight on d3."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "a5d5",
+            "min": 4
+          },
+          "statement": "Along the engine line the queen move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/5p1p/4qQpk/8/4B3/3N1P2/3K1P1r/8 w - - 10 39",
+      "caption": "A check from a distance, with a loose rook on the same diagonal. White to move.",
+      "line": [
+        {
+          "move": "f6f4",
+          "say": "The queen checks the king on h6 and attacks the rook on h2."
+        },
+        {
+          "move": "h6g7",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "f4h2",
+          "say": "The queen takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f4",
+          "to": "h6"
+        },
+        {
+          "from": "f4",
+          "to": "h2"
+        }
+      ],
+      "highlight": [
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6f4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6f4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "h6",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6f4"
+          },
+          "statement": "The queen attacks the king on h6."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6f4"
+          },
+          "statement": "The queen attacks the rook on h2."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6f4",
+            "min": 5
+          },
+          "statement": "Along the engine line the queen move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1b6/1p1p4/p3p3/P2n4/1r1BB1KP/5P2/3R4 w - - 2 36",
+      "caption": "The bishop forks along its two diagonals: one to the king, one to a rook.",
+      "line": [
+        {
+          "move": "d3c4",
+          "say": "The bishop checks the king along one diagonal and attacks the rook on b3 along the other."
+        },
+        {
+          "move": "d6d5",
+          "say": "Black blocks the check with a pawn."
+        },
+        {
+          "move": "c4b3",
+          "say": "The bishop takes the rook."
+        },
+        {
+          "move": "d4b3",
+          "say": "The knight takes the bishop back."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "g8"
+        },
+        {
+          "from": "c4",
+          "to": "b3"
+        }
+      ],
+      "highlight": [
+        "c4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d3c4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d3c4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_move": "d3c4"
+          },
+          "statement": "The bishop attacks the king on g8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "b3",
+            "color": "white",
+            "count": 1,
+            "after_move": "d3c4"
+          },
+          "statement": "The bishop attacks the rook on b3."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "d3c4",
+            "min": 5
+          },
+          "statement": "Along the engine line the bishop move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r4k1/Q6p/4pp2/4rn1N/1b6/5P1P/6P1/5RK1 b - - 1 38",
+      "caption": "Count what can recapture before you rely on the check. Black to move.",
+      "line": [
+        {
+          "move": "b4c5",
+          "say": "The bishop checks the king and attacks the queen on a7."
+        },
+        {
+          "move": "a7c5",
+          "say": "White's queen may take the bishop."
+        },
+        {
+          "move": "e5c5",
+          "say": "But the rook on e5 takes the queen back. Black gave a bishop for a queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "g1"
+        },
+        {
+          "from": "c5",
+          "to": "a7"
+        },
+        {
+          "from": "e5",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b4c5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b4c5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "a7",
+            "color": "black",
+            "count": 1,
+            "after_move": "b4c5"
+          },
+          "statement": "The bishop attacks the queen on a7."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "black",
+            "count": 1,
+            "after_move": "b4c5"
+          },
+          "statement": "One black piece guards the bishop on c5."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "b4c5",
+            "min": 3
+          },
+          "statement": "Along the engine line the bishop move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6r/2pk1ppp/p7/1p1b2b1/8/2PP1p1P/PP3P2/R2BRNK1 w - - 0 21",
+      "caption": "A rook forks along a rank by climbing to it. White to move.",
+      "line": [
+        {
+          "move": "e1e5",
+          "say": "The rook climbs the e-file and attacks both bishops along the fifth rank."
+        },
+        {
+          "move": "d5b7",
+          "say": "One bishop escapes."
+        },
+        {
+          "move": "e5g5",
+          "say": "The rook takes the other bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d5"
+        },
+        {
+          "from": "e5",
+          "to": "g5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1e5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1e5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1,
+            "after_move": "e1e5"
+          },
+          "statement": "The rook attacks the bishop on d5."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g5",
+            "color": "white",
+            "count": 1,
+            "after_move": "e1e5"
+          },
+          "statement": "The rook attacks the bishop on g5."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "e1e5",
+            "min": 2
+          },
+          "statement": "Along the engine line the rook move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/1b5k/5pp1/p6p/8/8/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "A rook check with a second target on the same rank, on the other side of the king.",
+      "line": [
+        {
+          "move": "e1e7",
+          "say": "The rook checks the king along the seventh rank and attacks the bishop on the other side."
+        },
+        {
+          "move": "h7g8",
+          "say": "The king steps out of check."
+        },
+        {
+          "move": "e7b7",
+          "say": "The rook takes the bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "h7"
+        },
+        {
+          "from": "e7",
+          "to": "b7"
+        }
+      ],
+      "highlight": [
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1e7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 1,
+            "after_move": "e1e7"
+          },
+          "statement": "The rook attacks the king on h7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "b7",
+            "color": "white",
+            "count": 1,
+            "after_move": "e1e7"
+          },
+          "statement": "The rook attacks the bishop on b7."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "e1e7",
+            "min": 4
+          },
+          "statement": "Along the engine line the rook move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/6pp/3k1p2/1p2p3/pP2P3/P2r1P2/2R3PP/1N1n1K2 w - - 7 32",
+      "caption": "A king can fork too, when both pieces are loose and he does not step into a check.",
+      "line": [
+        {
+          "move": "f1e2",
+          "say": "The king steps up and attacks both the rook on d3 and the knight on d1."
+        },
+        {
+          "move": "d3d4",
+          "say": "The rook runs, but it still guards the knight along the file."
+        },
+        {
+          "move": "b1d2",
+          "say": "The white knight blocks that file, so the black knight loses its guard."
+        },
+        {
+          "move": "h7h5",
+          "say": "Black cannot save the knight."
+        },
+        {
+          "move": "e2d1",
+          "say": "The king takes it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "d3"
+        },
+        {
+          "from": "e2",
+          "to": "d1"
+        }
+      ],
+      "highlight": [
+        "e2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f1e2"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d3",
+            "color": "white",
+            "count": 1,
+            "after_move": "f1e2"
+          },
+          "statement": "The king attacks the rook on d3."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "white",
+            "count": 1,
+            "after_move": "f1e2"
+          },
+          "statement": "The king attacks the knight on d1."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "f1e2",
+              "d3d4"
+            ]
+          },
+          "statement": "After the rook move, the rook on d4 still guards the knight on d1."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "f1e2",
+              "d3d4",
+              "b1d2"
+            ]
+          },
+          "statement": "After the white knight blocks the file, nothing guards the knight on d1."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "f1e2",
+            "min": 3
+          },
+          "statement": "Along the engine line the king move nets material."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.ladder"
+      ],
+      "n": 5
     },
     {
       "type": "card",
-      "text": "Not every fork works. Before you jump, ask two questions:\n**Can the forking piece be captured?**\n**Is the second target worth taking?**\nIf the forking piece can simply be taken, the fork costs you the piece."
+      "text": "**A seeing routine.** Search in a fixed order. The Steps method is reported to teach a search routine for each tactic [S, secondary description; manuals not seen]:\n1. List enemy pieces that are loose or worth more than yours.\n2. Find one square that touches two of them.\n3. Can your piece reach it, ideally with check?\n4. Run the four answers.\n[H] I suspect starting from targets beats starting from your own checks. Test both orders later."
     },
     {
-      "type": "contrast",
-      "title": "Same idea, one change",
-      "prompt": "Black's king now stands on d8. Does Nc7 still win the queen? Predict first, then check.",
-      "working": "I-FORK-001",
-      "failing": "I-FORK-003"
+      "type": "board",
+      "fen": "4k3/3q1ppp/8/8/4N3/7P/5PP1/5RK1 w - - 0 1",
+      "caption": "Board A. capture the forker. The knight jump looks like a fork of the king and the queen. Which of the four answers does Black have? Predict, then step through.",
+      "line": [
+        {
+          "move": "e4f6",
+          "say": "The knight checks the king and attacks the queen on d7."
+        },
+        {
+          "move": "g7f6",
+          "say": "The pawn on g7 simply takes the knight. A cheap piece answers an expensive threat. This board showed the answer: capture the forker."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g7",
+          "to": "f6"
+        },
+        {
+          "from": "f6",
+          "to": "d7"
+        },
+        {
+          "from": "f6",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4f6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 1,
+            "after_move": "e4f6"
+          },
+          "statement": "The knight attacks the queen on d7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4f6"
+          },
+          "statement": "The pawn on g7 attacks the knight on f6."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4f6",
+            "max": -3
+          },
+          "statement": "Along the engine line the jump loses material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/3r1ppp/q7/8/8/1N4P1/5PKP/5R2 w - - 0 1",
+      "caption": "Board B. check first. The knight jump attacks the queen and the rook. Which of the four answers does Black have? Predict, then step through.",
+      "line": [
+        {
+          "move": "b3c5",
+          "say": "The knight attacks the queen on a6 and the rook on d7."
+        },
+        {
+          "move": "a6c6",
+          "say": "The queen escapes with check along the long diagonal."
+        },
+        {
+          "move": "g2g1",
+          "say": "The king must answer the check."
+        },
+        {
+          "move": "c6c5",
+          "say": "Now the queen takes the knight. The check bought the tempo. This board showed the answer: check first."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "a6"
+        },
+        {
+          "from": "c5",
+          "to": "d7"
+        },
+        {
+          "from": "c6",
+          "to": "g2"
+        }
+      ],
+      "highlight": [
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b3c5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "a6",
+            "color": "white",
+            "count": 1,
+            "after_move": "b3c5"
+          },
+          "statement": "The knight attacks the queen on a6."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 1,
+            "after_move": "b3c5"
+          },
+          "statement": "The knight attacks the rook on d7."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "b3c5",
+              "a6c6"
+            ]
+          },
+          "statement": "After the queen move, the queen attacks the king on g2."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "b3c5",
+            "max": -3
+          },
+          "statement": "Along the engine line the jump loses material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/6pp/3N1b2/8/8/2b4P/5PP1/5RK1 w - - 0 1",
+      "caption": "Board C. defend both. Here the two targets already guard each other. Which of the four answers does Black have? Predict, then step through.",
+      "line": [
+        {
+          "move": "d6e4",
+          "say": "The knight attacks both bishops, which guard each other along the diagonal."
+        },
+        {
+          "move": "g8f7",
+          "say": "Black can even ignore the fork."
+        },
+        {
+          "move": "e4c3",
+          "say": "The knight takes one bishop."
+        },
+        {
+          "move": "f6c3",
+          "say": "The other bishop takes the knight. A trade, nothing won. This board showed the answer: defend both."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "c3"
+        },
+        {
+          "from": "e4",
+          "to": "f6"
+        },
+        {
+          "from": "f6",
+          "to": "c3"
+        },
+        {
+          "from": "c3",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "c3",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d6e4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "white",
+            "count": 1,
+            "after_move": "d6e4"
+          },
+          "statement": "The knight attacks the bishop on c3."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "white",
+            "count": 1,
+            "after_move": "d6e4"
+          },
+          "statement": "The knight attacks the bishop on f6."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "black",
+            "count": 1,
+            "after_move": "d6e4"
+          },
+          "statement": "A black piece guards the bishop on c3."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "d6e4",
+            "max": 0
+          },
+          "statement": "Along the engine line the jump nets no material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1q3ppp/8/8/b3N3/7P/5PP1/5RK1 w - - 0 1",
+      "caption": "Board D. move one piece and defend the other. Which of the four answers does Black have? Predict, then step through.",
+      "line": [
+        {
+          "move": "e4c5",
+          "say": "The knight attacks the queen on b7 and the bishop on a4."
+        },
+        {
+          "move": "b7b4",
+          "say": "The queen moves and now guards the bishop, and eyes the knight too."
+        },
+        {
+          "move": "c5a4",
+          "say": "The knight takes the bishop."
+        },
+        {
+          "move": "b4a4",
+          "say": "The queen takes the knight back. Another even trade. This board showed the answer: move one and defend the other."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "b7"
+        },
+        {
+          "from": "c5",
+          "to": "a4"
+        },
+        {
+          "from": "b4",
+          "to": "a4"
+        }
+      ],
+      "highlight": [
+        "b4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4c5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b7",
+            "color": "white",
+            "count": 1,
+            "after_move": "e4c5"
+          },
+          "statement": "The knight attacks the queen on b7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "a4",
+            "color": "white",
+            "count": 1,
+            "after_move": "e4c5"
+          },
+          "statement": "The knight attacks the bishop on a4."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "a4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e4c5",
+              "b7b4"
+            ]
+          },
+          "statement": "After the queen move, the queen guards the bishop on a4."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "c5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e4c5",
+              "b7b4"
+            ]
+          },
+          "statement": "After the queen move, the queen attacks the knight on c5."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4c5",
+            "max": 0
+          },
+          "statement": "Along the engine line the jump nets no material."
+        }
+      ]
     },
     {
       "type": "item",
-      "item": "I-FORK-002"
+      "item": "ITAC-LTACFORK1-12"
+    },
+    {
+      "type": "card",
+      "text": "**A fork usually wins when none of the four answers works:** capture the forker, check first, defend both, or move one and defend the other. [I] These four cover the usual replies, not every reply: a bigger counter-threat, such as a mate threat, is a fifth thing to look for. If you find one, write it down; it is a new answer."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.predict"
+      ],
+      "n": 5
+    },
+    {
+      "type": "card",
+      "text": "**Is the guard real?** Edward Lasker warned that a defender can be an illusion: it may be capturable by a cheaper piece, pulled away or pinned [V-sheet]. The same goes for the pieces a fork attacks. Before you rely on a fork, ask who can capture the forker and whether the target is worth more than your piece. Count what can arrive, not only what is there."
+    },
+    {
+      "type": "contrast",
+      "title": "Is the target worth taking?",
+      "prompt": "Both knight jumps check the king and attack a piece on a6. Look at both boards, name the one thing that differs, and predict which jump wins material.",
+      "working": "ITAC-LTACFORK1-13",
+      "failing": "ITAC-LTACFORK1-14"
+    },
+    {
+      "type": "contrast",
+      "title": "Can the opponent check first?",
+      "prompt": "Both knight jumps attack a rook and a bishop. Look at both boards, name the one thing that differs, and predict which jump wins material.",
+      "working": "ITAC-LTACFORK1-15",
+      "failing": "ITAC-LTACFORK1-16"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the landing square guarded?",
+      "prompt": "Both knight jumps check the king and attack the rook. Look at both boards, name the one thing that differs, and predict which jump wins material.",
+      "working": "ITAC-LTACFORK1-17",
+      "failing": "ITAC-LTACFORK1-18"
+    },
+    {
+      "type": "card",
+      "text": "**Setting one up.** Often the fork is not on the board yet. Forcing moves, such as a check, a capture or a threat, leave the opponent no time to choose, so they can drag a king, a queen or a rook onto the forking lines. Ask of each forcing move: where must the reply land, and does that square touch a fork?"
+    },
+    {
+      "type": "board",
+      "fen": "8/p2r1pk1/8/5pN1/6nP/1P4P1/P1R5/7K b - - 4 33",
+      "caption": "A check can drag the king to the fork square. Black to move.",
+      "line": [
+        {
+          "move": "d7d1",
+          "say": "The rook checks, and the white king has to go somewhere."
+        },
+        {
+          "move": "h1g2",
+          "say": "The king steps to g2, a square the black knight can fork from."
+        },
+        {
+          "move": "g4e3",
+          "say": "The knight checks the king and attacks the rook on c2."
+        },
+        {
+          "move": "g2f2",
+          "say": "The king moves again."
+        },
+        {
+          "move": "e3c2",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "d1"
+        },
+        {
+          "from": "e3",
+          "to": "g2"
+        },
+        {
+          "from": "e3",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "e3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d7d1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d7d1",
+              "h1g2",
+              "g4e3"
+            ]
+          },
+          "statement": "The knight attacks the king on g2."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "c2",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d7d1",
+              "h1g2",
+              "g4e3"
+            ]
+          },
+          "statement": "The knight attacks the rook on c2."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "d7d1",
+            "min": 5
+          },
+          "statement": "Along the engine line the check wins material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/5rk1/p1p5/8/PQ3q2/6NP/6PK/8 w - - 1 48",
+      "caption": "A capture can drag a piece to the fork square. White to move.",
+      "line": [
+        {
+          "move": "b4f4",
+          "say": "The queens trade: a capture forces a recapture."
+        },
+        {
+          "move": "f7f4",
+          "say": "The rook recaptures and lands on f4."
+        },
+        {
+          "move": "g3h5",
+          "say": "The knight checks the king on g7 and attacks the rook on f4."
+        },
+        {
+          "move": "g7g6",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "h5f4",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b4",
+          "to": "f4"
+        },
+        {
+          "from": "h5",
+          "to": "g7"
+        },
+        {
+          "from": "h5",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "h5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b4f4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b4f4",
+              "f7f4",
+              "g3h5"
+            ]
+          },
+          "statement": "The knight attacks the king on g7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f4",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b4f4",
+              "f7f4",
+              "g3h5"
+            ]
+          },
+          "statement": "The knight attacks the rook on f4."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "b4f4",
+            "min": 6
+          },
+          "statement": "Along the engine line the queen trade wins material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/p4pp1/1p1P4/5b1p/1N6/8/P4KP1/3R4 w - - 3 38",
+      "caption": "A quiet threat can set it up. White to move.",
+      "line": [
+        {
+          "move": "b4c6",
+          "say": "The knight attacks the rook on d8 and the pawn on a7."
+        },
+        {
+          "move": "d8d7",
+          "say": "The rook moves."
+        },
+        {
+          "move": "c6e7",
+          "say": "The knight jumps again, checking the king and attacking the bishop on f5."
+        },
+        {
+          "move": "g8h7",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "e7f5",
+          "say": "The knight takes the bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "d8"
+        },
+        {
+          "from": "e7",
+          "to": "g8"
+        },
+        {
+          "from": "e7",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "c6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b4c6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_move": "b4c6"
+          },
+          "statement": "The knight attacks the rook on d8."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b4c6",
+              "d8d7",
+              "c6e7"
+            ]
+          },
+          "statement": "The knight attacks the king on g8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b4c6",
+              "d8d7",
+              "c6e7"
+            ]
+          },
+          "statement": "The knight attacks the bishop on f5."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "b4c6",
+            "min": 3
+          },
+          "statement": "Along the engine line the knight move wins material."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.setup"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Royal and discovered forks.** When the king is a target, the check must be answered first, so the other target cannot simply move away. [I] That makes a check fork the cleanest kind; each board below is checked, the generalisation is my inference. A discovered attack adds a free second threat: a piece moves with a threat of its own and uncovers a line behind it."
+    },
+    {
+      "type": "board",
+      "fen": "r1b5/ppkp1Npp/8/2b2P1n/7q/2N1rQ2/PP4PP/R4R1K w - - 10 21",
+      "caption": "A royal fork: the king is one target. White to move.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "The knight checks the king on c7 and attacks the rook on e3."
+        },
+        {
+          "move": "c7b8",
+          "say": "The king must move; the rook cannot."
+        },
+        {
+          "move": "d5e3",
+          "say": "The knight takes the rook."
+        },
+        {
+          "move": "c5e3",
+          "say": "The bishop retakes: the rook was guarded."
+        },
+        {
+          "move": "f3e3",
+          "say": "The queen retakes the bishop. The rook was guarded, but the trade still wins a rook and a bishop for a knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "c7"
+        },
+        {
+          "from": "d5",
+          "to": "e3"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c3d5"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c3d5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "white",
+            "count": 1,
+            "after_move": "c3d5"
+          },
+          "statement": "The knight attacks the king on c7."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e3",
+            "color": "white",
+            "count": 2,
+            "after_move": "c3d5"
+          },
+          "statement": "The knight attacks the rook on e3."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3d5",
+            "min": 2
+          },
+          "statement": "Along the engine line the knight move nets material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/6pp/8/1P3p2/3Pp3/8/r5PK/4qB1R w - - 0 33",
+      "caption": "A discovered fork: a bishop move that uncovers a rook. White to move.",
+      "line": [
+        {
+          "move": "f1c4",
+          "say": "The bishop checks the king and attacks the rook on a2, and it uncovers the rook on h1."
+        },
+        {
+          "move": "g8f8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "h1e1",
+          "say": "The rook takes the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "g8"
+        },
+        {
+          "from": "c4",
+          "to": "a2"
+        },
+        {
+          "from": "h1",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "c4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f1c4"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "white",
+            "count": 1,
+            "after_move": "f1c4"
+          },
+          "statement": "After the bishop moves, the rook on h1 attacks the queen on e1."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_move": "f1c4"
+          },
+          "statement": "The bishop attacks the king on g8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "a2",
+            "color": "white",
+            "count": 1,
+            "after_move": "f1c4"
+          },
+          "statement": "The bishop attacks the rook on a2."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "f1c4",
+            "min": 9
+          },
+          "statement": "Along the engine line the bishop move wins material."
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.royal"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Stopping a fork against you.** Before you move, list the opponent's checks, captures and threats that your move allows. Heisman calls skipping this *Hope Chess* [S]; he also pairs it with finding the threat, then preventing it [S]. For forks, look for squares an enemy knight can reach that touch two of your pieces. Aagaard (as a reviewer of his book reports it) says serious errors often begin when a key candidate is overlooked [S]."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/5n2/1p1k4/6Pn/1P2R3/P6K/8 w - - 0 50",
+      "caption": "White's rook is not attacked, but White considers retreating it to e1. Which squares give a black knight check, and what else does f3 hit?",
+      "line": [
+        {
+          "move": "e3e1",
+          "say": "The rook retreats to the back rank."
+        },
+        {
+          "move": "h4f3",
+          "say": "The knight jumps to f3: a check on the king that also attacks the rook."
+        },
+        {
+          "move": "h2h3",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "f3e1",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h4",
+          "to": "f3"
+        },
+        {
+          "from": "f3",
+          "to": "h2"
+        },
+        {
+          "from": "f3",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e3e1"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e3e1",
+              "h4f3"
+            ]
+          },
+          "statement": "The knight attacks the king on h2."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e3e1",
+              "h4f3"
+            ]
+          },
+          "statement": "The knight attacks the rook on e1."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "e3e1",
+            "max": -5
+          },
+          "statement": "Along the engine line the retreat loses material."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Kg3 keeps the balance (about +0.6 at depth 18 [V]); the rook retreat is far worse. Before any quiet move, list the squares from which an enemy knight gives check, and ask what else each one touches."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.safety"
+      ],
+      "n": 2
+    },
+    {
+      "type": "card",
+      "text": "**Mixed test.** Eight unlabelled positions: some forks, some other tactics, some where no fork works. Aim for 6 of 8; that threshold is our choice, not a research finding. Two of the eight are yes/no, so guessing alone scores about one. If you miss a pin or a skewer, that is another lesson, not a fork failure. Note which search order you used."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.mixed"
+      ],
+      "n": 8
     },
     {
       "type": "reflect",
-      "kind": "confidence",
-      "prompt": "Before you found the move: which reply by the opponent did you not test? Name the piece that could have captured the forking piece. Rate how sure you were that a fork existed. (low / medium / high)"
+      "kind": "expect",
+      "prompt": "Which kind of piece did you miss most often in the mixed test? Eight positions are too few to test the knight idea, so treat this as a note, not a result. Did the order you searched in make a difference?",
+      "fields": [
+        {
+          "id": "missed",
+          "label": "The piece I missed most:",
+          "options": [
+            "knight",
+            "pawn",
+            "queen",
+            "bishop",
+            "rook",
+            "king",
+            "it was a pin or skewer, not a fork",
+            "none"
+          ]
+        },
+        {
+          "id": "order",
+          "label": "Which order felt faster:",
+          "options": [
+            "targets first",
+            "my checks first",
+            "no difference"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two real games.** Byrne v Fischer, New York 1956, and Anderssen v Dufresne, Berlin, usually dated 1852 (the date and status of that game are disputed [S, reviewer's note; not checked here]). Each has a fork-shaped move at a decision point. Predict first: does it win material, and what does the other side hold in reserve? The full games have their own lessons."
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACFORK1-36"
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/pp2ppbp/2p3p1/6B1/3Pn1b1/Q1P2N2/P4PPP/3RKB1R w K - 0 14",
+      "caption": "Byrne v Fischer, New York 1956: White to move at move 14. Black has just taken a pawn on e4. Predict first, then step through.",
+      "line": [
+        {
+          "move": "g5e7",
+          "say": "The bishop forks the queen and the rook. But the rook is guarded twice, by the bishop on g7 and the king, so taking it wins only the exchange."
+        },
+        {
+          "move": "d8b6",
+          "say": "The queen moves and attacks with it, so White has no time to take the rook for free."
+        },
+        {
+          "move": "f1c4",
+          "say": "White develops and eyes f7, though that pawn is defended."
+        },
+        {
+          "move": "e4c3",
+          "say": "The knight takes a pawn and attacks the rook on d1: Black's own fork."
+        },
+        {
+          "move": "e7c5",
+          "say": "White attacks the queen again with the bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "d8"
+        },
+        {
+          "from": "e7",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g5e7"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_move": "g5e7"
+          },
+          "statement": "The bishop on e7 attacks the queen on d8."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "white",
+            "count": 1,
+            "after_move": "g5e7"
+          },
+          "statement": "The bishop on e7 attacks the rook on f8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "d4",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "g5e7",
+              "d8b6"
+            ]
+          },
+          "statement": "The queen on b6 and the bishop on g7 both attack the pawn on d4."
+        },
+        {
+          "id": "C5",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "g5e7",
+              "d8b6",
+              "f1c4"
+            ]
+          },
+          "statement": "The bishop on c4 attacks the pawn on f7."
+        },
+        {
+          "id": "C6",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g5e7",
+              "d8b6",
+              "f1c4",
+              "e4c3"
+            ]
+          },
+          "statement": "The knight on c3 attacks the rook on d1."
+        },
+        {
+          "id": "C7",
+          "type": "attackers",
+          "params": {
+            "square": "b6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "g5e7",
+              "d8b6",
+              "f1c4",
+              "e4c3",
+              "e7c5"
+            ]
+          },
+          "statement": "The bishop on c5 attacks the queen on b6."
+        },
+        {
+          "id": "C8",
+          "type": "material_after_move",
+          "params": {
+            "move": "g5e7",
+            "max": -2
+          },
+          "statement": "Along the engine line the bishop move nets no material."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A fork that wins the exchange can lose the game if the other side gets there first.** After the bishop fork the engine rates the position about 2.9 pawns better for Black at depth 16 [V]. Fischer won this game [R]."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Black can take the knight with the g-pawn. Does White still have something? Decide, then step through the line.",
+      "fields": [
+        {
+          "id": "decide",
+          "label": "My decision:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r2k2r/pbppnppp/1bn5/4P2q/Q3N3/B1PB1N2/P4PPP/R3R1K1 w k - 1 17",
+      "caption": "Anderssen v Dufresne, Berlin, usually dated 1852: the fork that can be captured. White to move.",
+      "line": [
+        {
+          "move": "e4f6",
+          "say": "The knight checks the king on e8 and attacks the queen on h5."
+        },
+        {
+          "move": "g7f6",
+          "say": "The pawn on g7 takes the knight. White has given up a piece."
+        },
+        {
+          "move": "e5f6",
+          "say": "White recaptures with the pawn."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black attacks along the g-file."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "e8"
+        },
+        {
+          "from": "f6",
+          "to": "h5"
+        },
+        {
+          "from": "g7",
+          "to": "f6"
+        }
+      ],
+      "highlight": [
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4f6"
+          }
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "white",
+            "count": 1,
+            "after_move": "e4f6"
+          },
+          "statement": "The knight attacks the queen on h5."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "black",
+            "count": 1,
+            "after_move": "e4f6"
+          },
+          "statement": "The pawn on g7 attacks the knight on f6."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4f6",
+            "max": 0
+          },
+          "statement": "Along the engine line the knight jump nets no material."
+        },
+        {
+          "id": "C5",
+          "type": "move_loses",
+          "params": {
+            "move": "e4f6",
+            "cp": 450
+          },
+          "statement": "The knight jump is worse than the engine's best move at depth 16, so it is a sacrifice, not a plain fork."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The engine's view.** At depth 16 the engine prefers a quieter move (about +5.6) but still rates the sacrifice about +1.0 for White [V]. The move is sound but not the best: a different kind of move, not a mistake."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] A guess, not a finding: Anderssen may have judged that the open lines were worth more than the knight he gave up. A fork that loses the forker can still be right if something more is behind it. What would you want to see on the board before sacrificing the forker?",
+      "fields": [
+        {
+          "id": "see",
+          "label": "What I would want to see:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Three typical mistakes.** Grabbing a fork without testing the replies: the fork square can hide a bigger counter-threat. Forking a target that is defended and cheap. Forgetting that the forker can be taken. Each is a way a fork fails. How common each is in real games is [H]: we have not counted. For each position, find the move that avoids the trap."
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.fork1.mistakes"
+      ],
+      "n": 3
+    },
+    {
+      "type": "card",
+      "text": "**What to remember**\n1. A fork is two threats from one move.\n2. Any piece can fork; the knight is easiest to miss [H].\n3. Find one square that touches two targets.\n4. Check the four answers first.\n5. Forcing moves can set one up.\n6. [I] A king among the targets cannot be saved by moving the other.\n7. Scan the opponent's checks, captures and threats first.\n8. Test yourself unlabelled; retest."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach a beginner. Write four things: the idea in one sentence, when it works, an example they could set up on a board (pieces and squares), and one warning. Self-check, nothing is graded: did you say what a fork is, when it works (name at least one of the four answers), an example, and one typical mistake?",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea:"
+        },
+        {
+          "id": "when",
+          "label": "When it works:"
+        },
+        {
+          "id": "example",
+          "label": "An example to set up:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Optional. [H] Practising the safety scan after you have felt a fork land makes it stick better than learning defence first. Do you agree?",
+      "fields": [
+        {
+          "id": "agree",
+          "label": "Practise the safety scan after a fork has landed:",
+          "options": [
+            "agree",
+            "disagree",
+            "unsure"
+          ]
+        }
+      ]
     }
   ],
   "review": {
@@ -98,8 +2744,13 @@
     "reviewer": null
   },
   "sources": [
-    "docs/first-hours.md",
-    "sources/sheets/znosko-borovsky_middle-game.md (one-feature-change minimal pairs)",
-    "docs/curriculum-map-v1.md S3"
+    "docs/lesson-depth-standard.md (sections 3, 4, 7: class B, anatomy of a deep lesson, conjecture and views)",
+    "docs/first-hours.md and sources/sheets/znosko-borovsky_middle-game.md (baseline ideas, one-feature-change minimal pairs; Znosko-Borovsky on real versus fictitious threats, docs/citable-views.md 5.9 [V-sheet])",
+    "Dan Heisman on Hope Chess and Looking for Trouble (docs/citable-views.md 10.4 to 10.6) [S], paraphrased",
+    "Jacob Aagaard, Excelling at Chess Calculation, on overlooked candidates (docs/citable-views.md 10.7) [S, a reviewer's account], paraphrased",
+    "Edward Lasker, Chess Strategy, on defenders that are illusions and on counting attackers and defenders (docs/citable-views.md 5.8, 10.9) [V-sheet], paraphrased",
+    "docs/competition-chess-steps.md (a named search routine per tactic, labelled then unlabelled mixes, a closing reminder page) [S]; docs/competition-chesscom.md (thin beginner lessons, a coach that names moves without reasons) [S]",
+    "Games: Byrne v Fischer, New York 1956, and Anderssen v Dufresne, Berlin 1852 (moves are facts; sources as cited in L-FG-GAME-CENTURY-1 and L-FG-EVERGREEN-1)",
+    "Positions: engine statements from Stockfish 19 lite single-thread at depth 16 via tools/validate_lessons.py and tools/validate.py; puzzle positions from the Lichess puzzle database (CC0); counts of fork puzzles from app/public/content/items.json (39 items with a single forking first move)"
   ]
 }

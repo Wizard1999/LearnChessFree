@@ -1,0 +1,1637 @@
+{
+ "id": "L-OD-DRAGON-9",
+ "title": "Plan building, the final test, and teaching the Dragon to someone else",
+ "course": "opening-deep-dives",
+ "series": "dragon",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "ATK.PAWNSTORM",
+  "ATK.CASTLED",
+  "POS.PLAN",
+  "POS.PLAN.RACE",
+  "OPN.TEMPO",
+  "OPN.PUNISH"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Given an unfamiliar Dragon position, names the kings' wings, the open and half-open files and the break, and chooses a plan among three or four with a reason",
+  "Tells a position where no Dragon plan applies (a recapture, a same-wing quiet line, a missing f-pawn) from one where it does",
+  "Finds the move that spoils a line, and the tactic that punishes it, in positions from the Dragon",
+  "States in one phrase the single feature that makes a plan work or fail in a pair of positions",
+  "Explains the Dragon to a beginner in four parts (idea, when it works, an example, a warning) and checks the explanation against a four-question list"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**The last Dragon lesson is a workout.** Earlier lessons gave you the structure, the move orders, the main lines and the tactics. Here nothing is labelled. You will choose plans, find the move that spoils a line, and finally teach the opening back to a beginner. Start cold: look at the next board for a full minute, write your plan, and only then read on."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R b - - 10 12",
+   "caption": "Black to move on move 12, in a position taken from our game file. The kings stand on opposite wings and White's king has just stepped to b1. Look at the files, the kings and the knight on e5 before you choose.",
+   "highlight": [
+    "b1",
+    "c8",
+    "e5",
+    "g7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "c"
+      ]
+     },
+     "statement": "The d-file is half-open for White and the c-file is half-open for Black; no file is fully open."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside"
+     },
+     "statement": "White's king is on the queenside."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside"
+     },
+     "statement": "Black's king is on the kingside."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8e8",
+       "e5c4",
+       "a7a6"
+      ],
+      "within_cp": 45
+     },
+     "statement": "Re8, Nc4 and a6 are each within 45 cp of the engine's top move (depth 16), and the engine's top move is among them."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before anything is explained: what is your plan for Black, in one sentence, and what is its first move? Write it down even if you are unsure. Scaffold: name the files, the kings, one break.",
+   "fields": [
+    {
+     "id": "plan",
+     "label": "My plan:"
+    },
+    {
+     "id": "move",
+     "label": "My first move:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the games say** (counts, not verdicts). Our file holds 329,379 games between players rated 2500 or more. Thirty reached this position, and their average ratings are about 3,000 or higher [V]: engine games, so the counts show what engines chose, not what a club player should expect. Black chose the rook step in 13 (3 White wins, 10 draws, no Black win), the knight jump in 9 (8, 1, 0) and the quiet pawn move in 8 (3, 4, 1)."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R b - - 10 12",
+   "caption": "**Plan 1: the quiet rook.** The most common choice in the 30 engine games. The engine's line (depth 16) shows the whole plan: stop the h-pawn, meet the bishop trade, and use the half-open c-file.",
+   "line": [
+    {
+     "move": "f8e8",
+     "say": "The rook from f8 steps to e8, where it backs the pawn on e7."
+    },
+    {
+     "move": "h2h4",
+     "say": "White starts the pawn storm: the h-pawn heads for h5."
+    },
+    {
+     "move": "h7h5",
+     "say": "Black plants a pawn on h5, so White's h-pawn cannot advance further without an exchange on g4."
+    },
+    {
+     "move": "e3h6",
+     "say": "White offers to trade the Dragon bishop, the main guard of the dark squares around the king."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps with tempo and attacks the queen on d2."
+    },
+    {
+     "move": "b3c4",
+     "say": "White removes the knight with the bishop from b3."
+    },
+    {
+     "move": "c8c4",
+     "say": "The rook recaptures on the half-open c-file and attacks the knight on d4."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f8e8",
+       "h2h4",
+       "h7h5",
+       "e3h6",
+       "e5c4"
+      ]
+     },
+     "statement": "After Nc4 the black knight attacks the queen on d2 (1 black attacker)."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f8e8",
+       "h2h4",
+       "h7h5",
+       "e3h6",
+       "e5c4",
+       "b3c4",
+       "c8c4"
+      ]
+     },
+     "statement": "After Rxc4 the rook attacks the knight on d4 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R b - - 10 12",
+   "caption": "**Plan 2: the knight jump at once.** Nine games. Black trades the knight for the bishop that eyed f7 and keeps the rook active on the c-file.",
+   "line": [
+    {
+     "move": "e5c4",
+     "say": "Black jumps at once, attacking the queen on d2 and offering a knight for the bishop."
+    },
+    {
+     "move": "b3c4",
+     "say": "White accepts: the bishop that eyed the pawn on f7 is traded."
+    },
+    {
+     "move": "c8c4",
+     "say": "The rook takes the bishop on c4 and attacks the knight on d4."
+    },
+    {
+     "move": "g2g4",
+     "say": "White presses on with the pawn storm: g4 prepares h4 and h5 with more force."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black replies on the other wing: the pawn gains space and supports the rook on c4."
+    },
+    {
+     "move": "h2h4",
+     "say": "The h-pawn marches on: the race continues."
+    },
+    {
+     "move": "h7h5",
+     "say": "Black blocks it once more."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e5c4"
+      ]
+     },
+     "statement": "After Nc4 the black knight attacks the queen on d2 (1 black attacker)."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e5c4",
+       "b3c4",
+       "c8c4",
+       "g2g4",
+       "b7b5"
+      ]
+     },
+     "statement": "After b5 the black pawn on b5 supports the rook on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R b - - 10 12",
+   "caption": "**Plan 3: the waiting pawn.** Eight games. The same plan, a different first move: a6 prepares the pawn push b5 and takes b5 away from White's pieces. [I] The plans differ less than they look; the structure does the work.",
+   "line": [
+    {
+     "move": "a7a6",
+     "say": "A quiet move that prepares the pawn push b5."
+    },
+    {
+     "move": "h2h4",
+     "say": "White starts the h-pawn storm."
+    },
+    {
+     "move": "h7h5",
+     "say": "Black stops it on the spot."
+    },
+    {
+     "move": "e3h6",
+     "say": "White offers the bishop trade."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps with tempo and attacks the queen."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a7a6",
+       "h2h4",
+       "h7h5",
+       "e3h6",
+       "e5c4"
+      ]
+     },
+     "statement": "After Nc4 the black knight attacks the queen on d2 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A plan-finder in three questions.** Where are the kings, and what does that allow? Which file or square is open to me and closed to him? Which break or piece route reaches it, and how many moves does it take? Emanuel Lasker advised listing each side's plans and counting the moves they need; Jeremy Silman starts from the differences between the two armies. [H] Writing the answers down makes you steadier; we cannot test that yet."
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/2KR1B1R b - - 4 9",
+   "caption": "Questions 1 and 2 on a real position, just after White castles long. The kings stand on opposite wings; the c-file is half-open for Black and the d-file for White. Question 3 is the rest of this lesson.",
+   "highlight": [
+    "c1",
+    "g8",
+    "c8",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "c"
+      ]
+     },
+     "statement": "The c-file is half-open for Black and the d-file is half-open for White."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside"
+     },
+     "statement": "White's king is on the queenside."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside"
+     },
+     "statement": "Black's king is on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqk2r/pp2ppbp/3p1np1/8/3NP3/2N1B3/PPP2PPP/R2QKB1R w KQkq - 2 7",
+   "caption": "Move order is part of the plan. Our file keeps only moves seen at least three times: at this position f3 appears in 455 games (174 White wins, 199 draws, 82 Black wins) and Be2 in 27 (8, 11, 8); every other seventh move was played fewer than three times. You test the move order in question 7.",
+   "highlight": [
+    "e3",
+    "f2",
+    "g4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on e3."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "f2f3"
+     },
+     "statement": "f3 is legal here."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/p3ppbp/2p3p1/3n4/3B4/2N2P2/PPPQ2PP/2KR1B1R b - - 1 12",
+   "caption": "When the d-pawn is exchanged the structure changes. This position was reached in 133 games of our master file (38 White wins, 69 draws, 26 Black wins); Black then chose a bishop trade on d4 in 75 and the pawn push e5 in 47. A plan has to be rebuilt from what is on the board, not from the opening's name.",
+   "highlight": [
+    "d4",
+    "g7",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "d"
+      ],
+      "half_open_white": [
+       "e"
+      ],
+      "half_open_black": [
+       "b"
+      ]
+     },
+     "statement": "After the exchange of both d-pawns the d-file is open."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside"
+     },
+     "statement": "White's king is on the queenside."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Eight plan questions.** Each describes three or four plans in words; you play the first move of the one you choose. Some have two good answers, and one asks for no plan at all. Ask first: are the kings on the same wing or on opposite wings, and is anything simply hanging? After each set of four you see the plans in motion, including the tempting one that fails."
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.dragon",
+    "od.l9a"
+   ],
+   "n": 4
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/2KR1B1R b - - 4 9",
+   "caption": "**Question 1 in motion.** The central break (engine line, depth 16). Black strikes at e4 before White's attack is ready.",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "The pawn attacks e4 at once and opens lines for the pieces."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes, which opens the e-file and the diagonal for the bishop on f1."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight recaptures in the centre and attacks the bishop on e3."
+    },
+    {
+     "move": "d4c6",
+     "say": "White takes the knight on c6 before Black can use it."
+    },
+    {
+     "move": "b7c6",
+     "say": "Black recaptures with the b-pawn, which opens the b-file and supports the knight on d5."
+    },
+    {
+     "move": "e3d4",
+     "say": "The bishop offers a trade on the long diagonal."
+    },
+    {
+     "move": "g7d4",
+     "say": "Black takes the bishop."
+    },
+    {
+     "move": "d2d4",
+     "say": "White recaptures with the queen, now in the centre."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After d5 the black pawn attacks the pawn on e4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d6d5",
+       "e4d5",
+       "f6d5"
+      ]
+     },
+     "statement": "After Nxd5 the knight attacks the bishop on e3 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/2KR1B1R b - - 4 9",
+   "caption": "**The tempting slow plan.** Queen to a5 (engine line, depth 16). Count the moves the queen makes.",
+   "line": [
+    {
+     "move": "d8a5",
+     "say": "The queen attacks the knight on c3."
+    },
+    {
+     "move": "c1b1",
+     "say": "White steps the king to safety. The knight on c3 stays guarded by the b-pawn and the queen."
+    },
+    {
+     "move": "c8d7",
+     "say": "Black develops the bishop."
+    },
+    {
+     "move": "d4b3",
+     "say": "The knight attacks the queen on a5."
+    },
+    {
+     "move": "a5d8",
+     "say": "The queen goes back to where it started."
+    },
+    {
+     "move": "f1e2",
+     "say": "White develops the last minor piece."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8a5",
+       "c1b1"
+      ]
+     },
+     "statement": "After Qa5 Kb1 the knight on c3 has 2 white defenders."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "a5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d8a5",
+       "c1b1",
+       "c8d7",
+       "d4b3"
+      ]
+     },
+     "statement": "After Nb3 the white knight attacks the queen on a5 (1 white attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/2KR3R w - - 9 12",
+   "caption": "**Question 2 in motion.** Safety first (engine line, depth 16). The h4 plan is close (within about 50 cp) and keeps the king where it is; the king step keeps both options.",
+   "line": [
+    {
+     "move": "c1b1",
+     "say": "The king steps off the c-file, where Black's rook is aimed."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps with tempo and attacks the queen."
+    },
+    {
+     "move": "b3c4",
+     "say": "White takes the knight with the bishop."
+    },
+    {
+     "move": "c8c4",
+     "say": "The rook recaptures and attacks the knight on d4."
+    },
+    {
+     "move": "d2d3",
+     "say": "The queen steps out of attack and hits the rook on c4."
+    },
+    {
+     "move": "c4c8",
+     "say": "The rook retreats along the c-file."
+    },
+    {
+     "move": "g2g4",
+     "say": "Now the pawn storm starts, with the king safe on b1."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c1b1",
+       "e5c4",
+       "b3c4",
+       "c8c4",
+       "d2d3"
+      ]
+     },
+     "statement": "After Qd3 the queen attacks the rook on c4 (1 white attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/2KR3R w - - 9 12",
+   "caption": "**The tempting plan that fails.** Bishop to g5 (engine line, depth 16). Bg5 leaves the queen on d2 without bishop cover, so the knight jump gains a tempo; it scores about 50 cp below Kb1.",
+   "line": [
+    {
+     "move": "e3g5",
+     "say": "The bishop leaves e3 and attacks the knight on f6."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps at once and attacks the queen on d2."
+    },
+    {
+     "move": "b3c4",
+     "say": "White takes the knight."
+    },
+    {
+     "move": "c8c4",
+     "say": "The rook recaptures."
+    },
+    {
+     "move": "d2d3",
+     "say": "The queen attacks the rook."
+    },
+    {
+     "move": "c4c5",
+     "say": "The rook steps to c5 and attacks the bishop on g5."
+    },
+    {
+     "move": "h2h4",
+     "say": "White guards the bishop with the h-pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e3g5",
+       "e5c4",
+       "b3c4",
+       "c8c4",
+       "d2d3",
+       "c4c5"
+      ]
+     },
+     "statement": "After Rc5 the rook attacks the bishop on g5 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppbp/p2p1np1/4n3/3NP2P/1BN1BP2/PPPQ2P1/1K1R3R b - - 0 13",
+   "caption": "**Question 3 in motion.** Stop the h-pawn (engine line, depth 16).",
+   "line": [
+    {
+     "move": "h7h5",
+     "say": "Black stops the h-pawn on its fourth rank: it cannot go past h4 without an exchange."
+    },
+    {
+     "move": "e3h6",
+     "say": "White offers to trade the Dragon bishop."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps with tempo and attacks the queen."
+    },
+    {
+     "move": "d2c1",
+     "say": "The queen steps aside and keeps guard of the bishop on h6."
+    },
+    {
+     "move": "g8h7",
+     "say": "The king attacks the bishop on h6."
+    },
+    {
+     "move": "h6g7",
+     "say": "White takes the Dragon bishop first."
+    },
+    {
+     "move": "h7g7",
+     "say": "The king recaptures; the h-file stays shut by the pawn on h5."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h7h5"
+      ]
+     },
+     "statement": "After h5 the black pawn on h5 attacks g4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h6",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "h7h5",
+       "e3h6",
+       "e5c4",
+       "d2c1",
+       "g8h7"
+      ]
+     },
+     "statement": "After Kh7 the bishop on h6 is attacked 2 times by Black."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppbp/p2p1np1/4n3/3NP2P/1BN1BP2/PPPQ2P1/1K1R3R b - - 0 13",
+   "caption": "**The tempting plan that fails.** The queenside push (engine line, depth 16): Black starts a race and ends clearly worse than after h5. [I] The race is not shown to be lost; the engine gap is the evidence.",
+   "line": [
+    {
+     "move": "b7b5",
+     "say": "Black starts the queenside push."
+    },
+    {
+     "move": "h4h5",
+     "say": "The h-pawn is not stopped: it now attacks the pawn on g6."
+    },
+    {
+     "move": "e5c4",
+     "say": "The knight jumps at once."
+    },
+    {
+     "move": "b3c4",
+     "say": "White takes it."
+    },
+    {
+     "move": "c8c4",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "g2g4",
+     "say": "The g-pawn joins the storm."
+    },
+    {
+     "move": "d8c7",
+     "say": "The queen steps to c7 to defend."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b7b5",
+       "h4h5"
+      ]
+     },
+     "statement": "After h5 the white pawn on h5 attacks the pawn on g6."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "b7b5",
+      "cp": 60
+     },
+     "statement": "b5 scores at least 60 cp worse than the engine's best move (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/p3ppbp/2p3p1/3n4/3B4/2N2P2/PPPQ2PP/2KR1B1R b - - 1 12",
+   "caption": "**Question 4 in motion.** Trade the strong bishop (engine line, depth 16). Pawn push e5 was also within 30 cp.",
+   "line": [
+    {
+     "move": "g7d4",
+     "say": "Black trades the Dragon bishop for White's strong bishop."
+    },
+    {
+     "move": "d2d4",
+     "say": "White recaptures with the queen, now in the centre."
+    },
+    {
+     "move": "d8b6",
+     "say": "Black offers a queen trade and attacks the queen on d4."
+    },
+    {
+     "move": "c3a4",
+     "say": "The knight attacks the queen on b6."
+    },
+    {
+     "move": "b6a5",
+     "say": "The queen leaves b6 and attacks the knight on a4."
+    },
+    {
+     "move": "b2b3",
+     "say": "The pawn guards the knight."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g7d4",
+       "d2d4",
+       "d8b6"
+      ]
+     },
+     "statement": "After Qb6 the black queen attacks the queen on d4 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the first four show** [I]. In the Black-to-move questions the best plan hit something White needed soon: the pawn on e4, the h-pawn, the bishop trade. In the White question the best plan removed a danger first, the king step. Slower plans lost time, and with kings on opposite wings time is the currency. [H] On the same wing the currency changes to squares and piece placement. Next: the same-wing case, a move-order point and a plain recapture."
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.dragon",
+    "od.l9b"
+   ],
+   "n": 4
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/4P3/1NN1B3/PPP1BPPP/R2Q1RK1 b - - 7 9",
+   "caption": "**Question 5 in motion.** Same-wing kings (engine line, depth 16): the quiet plan on the queenside and the c-file.",
+   "line": [
+    {
+     "move": "c8e6",
+     "say": "The bishop develops and eyes the knight on b3."
+    },
+    {
+     "move": "f2f4",
+     "say": "White begins kingside expansion."
+    },
+    {
+     "move": "a8c8",
+     "say": "The rook takes the half-open c-file."
+    },
+    {
+     "move": "f4f5",
+     "say": "The pawn attacks the bishop on e6."
+    },
+    {
+     "move": "e6d7",
+     "say": "The bishop steps back; nothing is lost."
+    },
+    {
+     "move": "a2a4",
+     "say": "White starts queenside play too."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "b3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c8e6"
+      ]
+     },
+     "statement": "After Be6 the black bishop attacks the knight on b3 (1 black attacker)."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c8e6",
+       "f2f4",
+       "a8c8",
+       "f4f5"
+      ]
+     },
+     "statement": "After f5 the white pawn on f5 attacks e6."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/4P3/1NN1B3/PPP1BPPP/R2Q1RK1 b - - 7 9",
+   "caption": "**The tempting plan that fails.** The pawn goes to g5 and the bishop on e3 simply takes it, because nothing defends the pawn. [H] With the kings on the same wing, a storm also has no target.",
+   "line": [
+    {
+     "move": "g6g5",
+     "say": "Black starts a storm against a king that is on the same wing as its own."
+    },
+    {
+     "move": "e3g5",
+     "say": "The pawn on g5 is attacked by the bishop on e3 and is taken."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "g6g5"
+      ]
+     },
+     "statement": "After g5 the white bishop attacks the pawn on g5 (1 white attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/p3ppbp/2p2npB/3p4/4P3/2N2P2/PPPQ2PP/2KR1B1R b - - 1 11",
+   "caption": "**Question 6 in motion.** Ignore the offer and hit c3 (engine line, depth 16). Bxh6 and Qc7 were within 30 cp, so Black has a choice.",
+   "line": [
+    {
+     "move": "d8a5",
+     "say": "The queen ignores the offer and attacks the knight on c3."
+    },
+    {
+     "move": "h6g7",
+     "say": "White takes the Dragon bishop."
+    },
+    {
+     "move": "g8g7",
+     "say": "The king recaptures."
+    },
+    {
+     "move": "e4d5",
+     "say": "White removes the pawn from d5."
+    },
+    {
+     "move": "c6d5",
+     "say": "Black recaptures, and the pawn on d5 now faces the knight on c3."
+    },
+    {
+     "move": "g2g4",
+     "say": "White starts the pawn storm."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d8a5"
+      ]
+     },
+     "statement": "After Qa5 the black queen attacks the knight on c3 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqk2r/pp2ppbp/3p1np1/8/3NP3/2N1B3/PPPQ1PPP/R3KB1R b KQkq - 3 7",
+   "caption": "**Question 7 in motion.** The move-order point (engine line, depth 16): without f3 the knight has g4.",
+   "line": [
+    {
+     "move": "f6g4",
+     "say": "The knight attacks the bishop on e3."
+    },
+    {
+     "move": "e3g5",
+     "say": "The bishop steps away and eyes the pawn on e7."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black asks the bishop to decide."
+    },
+    {
+     "move": "g5h4",
+     "say": "The bishop stays on the diagonal."
+    },
+    {
+     "move": "b8c6",
+     "say": "Black develops the queen's knight."
+    },
+    {
+     "move": "d4b3",
+     "say": "White retreats the knight from d4."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f6g4"
+      ]
+     },
+     "statement": "After Ng4 the knight attacks the bishop on e3 (1 black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqk2r/pp2ppbp/3p1np1/8/3NP3/2N1B3/PPPQ1PPP/R3KB1R b KQkq - 3 7",
+   "caption": "**The natural move that allows the main line.** Normal development (engine line, depth 16): fine after f3, but here White plays f3 next and the knight loses the g4 square. The engine prefers the knight jump by about 40 cp: a small edge, not a refutation [I].",
+   "line": [
+    {
+     "move": "b8c6",
+     "say": "Black develops the knight as usual."
+    },
+    {
+     "move": "f2f3",
+     "say": "White plays the move it wanted; the knight can no longer use g4."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "g2g4",
+     "say": "The pawn storm begins, with the Yugoslav set-up in place."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black challenges the knight on d4."
+    },
+    {
+     "move": "e1c1",
+     "say": "White castles long."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b8c6",
+       "f2f3"
+      ]
+     },
+     "statement": "After f3 the white pawn on f3 attacks g4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pp2ppbp/2np2p1/8/3NP1B1/2N1B3/PPPQ1PPP/R3K2R b KQkq - 0 9",
+   "caption": "**Question 8 in motion.** No plan needed (engine line, depth 16): the recapture comes first. Eight games in our master file reached the position after Black's knight jump (5 White wins, 3 draws, no Black win).",
+   "line": [
+    {
+     "move": "c8g4",
+     "say": "The bishop recaptures the knight on g4."
+    },
+    {
+     "move": "f2f3",
+     "say": "White guards e4 and attacks the bishop on g4"
+    },
+    {
+     "move": "g4e6",
+     "say": "The bishop retreats to e6."
+    },
+    {
+     "move": "e1c1",
+     "say": "White castles long."
+    },
+    {
+     "move": "d8a5",
+     "say": "Black's queen attacks the knight on c3."
+    },
+    {
+     "move": "c1b1",
+     "say": "The king steps off the c-file."
+    },
+    {
+     "move": "a8c8",
+     "say": "The rook takes the c-file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g4",
+      "piece": "b",
+      "after_moves": [
+       "c8g4"
+      ]
+     },
+     "statement": "After the recapture a black bishop stands on g4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c8g4",
+       "f2f3"
+      ]
+     },
+     "statement": "After f3 the white pawn on f3 attacks g4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Spot the error.** In each question three moves keep the position and one spoils it. Mikhail Botvinnik advised analysing games, your own included, to find errors; Emanuel Lasker (Common Sense in Chess) argued for placing the weaker alternative beside the right one so the contrast teaches. [H] The spoiler is usually the move that breaks a guard the position quietly relied on. You will see each one punished."
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.dragon",
+    "od.l9err"
+   ],
+   "n": 3
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/6B1/3NP3/2N2P2/PPPQ2PP/R3KB1R b KQ - 4 9",
+   "caption": "**Error 1 punished** (engine line, depth 16). The bishop on e3 used to cover the queen on d2. Once it leaves, the capture on e4 attacks the queen, and the knight on d4 is loose behind it.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "The knight takes the pawn and attacks the queen on d2."
+    },
+    {
+     "move": "d4c6",
+     "say": "White takes first: the knight on c6 attacks the queen on d8."
+    },
+    {
+     "move": "e4d2",
+     "say": "Black takes the queen."
+    },
+    {
+     "move": "c6d8",
+     "say": "White takes the queen on d8."
+    },
+    {
+     "move": "d2f1",
+     "say": "Black takes the rook on f1."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f6e4"
+      ]
+     },
+     "statement": "After Nxe4 the knight attacks the queen on d2 (1 black attacker)."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -250,
+      "max": -20,
+      "depth": 16
+     },
+     "statement": "White's evaluation after Bg5 stays below zero (Black is ahead) at depth 16."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppb1/3p1npp/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R w - - 0 13",
+   "caption": "**Error 2 punished** (engine line, depth 16). The pawn move h6 removes a shelter pawn and gives the bishop on e3 a target.",
+   "line": [
+    {
+     "move": "e3h6",
+     "say": "The bishop takes the pawn and offers a bishop trade."
+    },
+    {
+     "move": "g7h6",
+     "say": "Black takes the bishop."
+    },
+    {
+     "move": "d2h6",
+     "say": "The queen recaptures: the Dragon bishop is gone and the dark squares around the king have no guard."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "e3h6",
+      "min": 1
+     },
+     "statement": "Bxh6 wins at least a pawn for White along the engine's line."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1b2rk1/p3ppbp/1qp3p1/3n4/3B4/2N2P2/PPPQ2PP/2KR1B1R w - - 2 13",
+   "caption": "**Error 3 punished** (engine line, depth 16). Black's queen steps onto the diagonal of the bishop on d4, with the knight on d5 loose to the knight on c3.",
+   "line": [
+    {
+     "move": "c3d5",
+     "say": "The knight takes the knight on d5; the queen on b6 is still attacked by the bishop."
+    },
+    {
+     "move": "c6d5",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "d4b6",
+     "say": "The bishop takes the queen."
+    },
+    {
+     "move": "a7b6",
+     "say": "Black recaptures the bishop."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "b6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The white bishop on d4 attacks the queen on b6 (1 white attacker)."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "c3d5",
+      "min": 4
+     },
+     "statement": "Nxd5 nets White at least 4 points of material along the engine's line."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**One feature at a time.** Znosko-Borovsky's difference method lists what separates two rival positions, and each difference suggests a possibility. Use it now. In the next group the same capture, Nxe4, is tested in three positions that differ in one thing. Predict first. Then do the same for d5, the break from an earlier lesson. Here 'works' means within 40 cp of the engine's best move; in the d5 pair 'loses ground' means at least 80 cp worse."
+  },
+  {
+   "type": "contrast",
+   "title": "When does Nxe4 work?",
+   "prompt": "Predict for each position, then check. One difference matters; one does not.",
+   "working": "IOD-LODDRAGON9-12",
+   "failing": "IOD-LODDRAGON9-13",
+   "irrelevant": "IOD-LODDRAGON9-14"
+  },
+  {
+   "type": "contrast",
+   "title": "Does d5 lose ground?",
+   "prompt": "Predict for each position, then check. One difference matters; one does not.",
+   "working": "IODdragon-7",
+   "failing": "IODdragon-8",
+   "irrelevant": "IODdragon-9"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In one phrase each: which single feature decided the Nxe4 question, and which single feature decided the d5 question?",
+   "fields": [
+    {
+     "id": "nxe4",
+     "label": "For Nxe4:"
+    },
+    {
+     "id": "d5",
+     "label": "For d5:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "caption": "A first tour for a beginner: the first ten moves, one idea per move. It models how to say what each move is for. The plans come later, in your teach-back.",
+   "line": [
+    {
+     "move": "e2e4",
+     "say": "White takes space in the centre and opens lines for the bishop and the queen."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black does not copy: the pawn fights for the centre from the side."
+    },
+    {
+     "move": "g1f3",
+     "say": "White develops a knight and prepares d4."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black guards e5 and frees the bishop on c8."
+    },
+    {
+     "move": "d2d4",
+     "say": "White opens the centre."
+    },
+    {
+     "move": "c5d4",
+     "say": "Black trades a wing pawn for White's central pawn."
+    },
+    {
+     "move": "f3d4",
+     "say": "The knight recaptures and stands in the centre."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black attacks the pawn on e4."
+    },
+    {
+     "move": "b1c3",
+     "say": "White defends e4 and develops."
+    },
+    {
+     "move": "g7g6",
+     "say": "The Dragon move: it prepares the bishop on g7, which will look down the long diagonal."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g6",
+      "piece": "p",
+      "after_moves": [
+       "e2e4",
+       "c7c5",
+       "g1f3",
+       "d7d6",
+       "d2d4",
+       "c5d4",
+       "f3d4",
+       "g8f6",
+       "b1c3",
+       "g7g6"
+      ]
+     },
+     "statement": "A black pawn stands on g6 after ten moves."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "N",
+      "after_moves": [
+       "e2e4",
+       "c7c5",
+       "g1f3",
+       "d7d6",
+       "d2d4",
+       "c5d4",
+       "f3d4",
+       "g8f6",
+       "b1c3",
+       "g7g6"
+      ]
+     },
+     "statement": "A white knight stands on d4 after ten moves."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Mixed final test.** Twelve unlabelled positions follow: three from the opening lesson, then nine new ones. Some ask for a plan, some for a tactic, some for a fact about the structure; in some, several moves are fine. Work without hints and say why before you check. [S] Labelled practice followed by an unlabelled mix is the pattern of the Steps method; [H] it helps here too."
+  },
+  {
+   "type": "item",
+   "item": "IODdragon-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODdragon-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODdragon-10",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.dragon",
+    "od.l9final"
+   ],
+   "n": 9,
+   "silent": true
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/2KR3R w - - 9 12",
+   "caption": "The summary board: every lever on one position (arrows only, no moves). White's levers start from white pieces: the h-pawn, the g-pawn and the bishop trade. Black's start from black pieces: the c-file, the knight jump, the central break and the stop on h5.",
+   "arrows": [
+    {
+     "from": "h2",
+     "to": "h4"
+    },
+    {
+     "from": "g2",
+     "to": "g4"
+    },
+    {
+     "from": "e3",
+     "to": "h6"
+    },
+    {
+     "from": "c8",
+     "to": "c3"
+    },
+    {
+     "from": "e5",
+     "to": "c4"
+    },
+    {
+     "from": "d6",
+     "to": "d5"
+    },
+    {
+     "from": "h7",
+     "to": "h5"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "c"
+      ]
+     },
+     "statement": "The c-file is half-open for Black and the d-file is half-open for White."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside"
+     },
+     "statement": "White's king is on the queenside."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside"
+     },
+     "statement": "Black's king is on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Teach it back.** Imagine a friend who knows how the pieces move and nothing else. You have five minutes and one board. Say four things: the idea of the opening in a sentence, when its plan works, an example position they could set up, and one warning about a typical mistake. [H] Writing for a beginner exposes gaps that a multiple-choice question hides; we cannot test that until Andrew's baseline exists."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write your five-minute explanation in four short parts. No move lists: ideas and pieces.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea of the Dragon, in a sentence:"
+    },
+    {
+     "id": "when",
+     "label": "When the plan works (and when it does not):"
+    },
+    {
+     "id": "example",
+     "label": "An example a beginner could set up on a board:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning, a typical mistake and who makes it:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**One possible answer, not the only one.** 'Black puts a bishop on the long diagonal and castles short, then attacks on the queenside while White attacks the king. It works when the kings sit on opposite wings, so each side races; on the same wing the game is calmer [H]. Set up both kings on opposite wings, a black rook on a half-open file and the bishop on the long diagonal. Warning: if Black pushes pawns in front of its king, White trades the bishop and the dark squares fall.'"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Now explain it to a friend who wants to play the black side, in two minutes.",
+   "fields": [
+    {
+     "id": "friend",
+     "label": "My two-minute talk:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check, no grading.** Read what you wrote. Did you say when the plan works and when it fails? Did you give an example a beginner could set up on a board, naming the pieces? Did you name one mistake and say who makes it? Did you keep to ideas rather than move lists? The app grades nothing: you are the judge, and the next step records your honest answer. Essentials: what the Dragon bishop does, why opposite-side castling makes a race, why stopping the h-pawn and striking with d5 matter."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Tick your honest answer for each question.",
+   "fields": [
+    {
+     "id": "works",
+     "label": "I said when it works and when it fails:",
+     "options": [
+      "yes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "example",
+     "label": "My example could be set up on a board:",
+     "options": [
+      "yes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "mistake",
+     "label": "I named a mistake and who makes it:",
+     "options": [
+      "yes",
+      "not yet"
+     ]
+    },
+    {
+     "id": "ideas",
+     "label": "I used ideas, not move lists:",
+     "options": [
+      "yes",
+      "not yet"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Recap.**\n1. The Dragon trades a slow centre for a fianchetto and the c-file.\n2. In the Yugoslav the kings usually sit on opposite wings: a race.\n3. White's levers: the h-pawn, the g-pawn, the trade on the dark squares.\n4. Black's counters: the c-file, a central break, knight jumps.\n5. Ask: kings, files, break, speed.\n6. Move order: the pawn that guards e4 comes before the queen move.\n7. Same-wing kings: the fight shifts to squares and the c-file [H].\n8. A plan fails by one feature."
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.dragon"
+   ],
+   "n": 6
+  },
+  {
+   "type": "card",
+   "text": "**Where next.** Open L-OD-NAJDORF-1 (Najdorf Sicilian: why a6, two structures, two plans) and L-POS-STRUCTURE-MAROCZY-1 and -2 (the Maroczy bind). [R] The Scheveningen and the Accelerated Dragon have no lesson yet."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "How confident are you that you could now teach the Dragon in five minutes, and which of the eight plan questions would you drill again?",
+   "fields": [
+    {
+     "id": "conf",
+     "label": "Confidence:",
+     "options": [
+      "not yet",
+      "with notes",
+      "yes"
+     ]
+    },
+    {
+     "id": "drill",
+     "label": "The plan question I would drill again (a number):"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "app/public/masters/stats.json (329,379 games, both players 2500+, first 24 plies, moves with fewer than 3 games dropped; counts quoted from the tree rows for the positions after 12.Kb1, 9.O-O-O, 12.Bd4 and after 6...Bg7 and 8...Ng4; the average ratings in the 12.Kb1 rows are about 3,000 and above, so those rows are engine games [V])",
+  "content/items/lesson-od-l-od-dragon-9.json (positions replayed from SAN with python-chess, three contrast positions are one-feature edits; engine claims at depth 16)",
+  "content/items/lesson-od-dragon.json (IODdragon-5, 6, 10 and the d5 contrast IODdragon-7, 8, 9 re-used by id)",
+  "docs/citable-views.md 6.7 (Emanuel Lasker, list each side's plans and count the moves) [V-sheet], 6.12 (Jeremy Silman, imbalances) [S], 6.3 (Znosko-Borovsky, the difference method) [V-sheet], 11.6 (Emanuel Lasker, Common Sense in Chess, lectures 2-4, showed the refuted alternative beside the correct line) [V-sheet], 11.7 (Botvinnik, analyse games for errors) [S]; paraphrased, no quotations",
+  "docs/competition-chess-steps.md (labelled practice then an unlabelled mix; the workbook-and-review pattern) [S]; the claim that it helps retention here is [H]",
+  "docs/lesson-depth-standard.md sections 4 and 6 (teach-it-back with a self-check list); the claim that writing for a beginner tests understanding better than multiple choice is [H]",
+  "[R] The neighbouring openings in the last card are from memory and are not engine- or data-checked"
+ ]
+}

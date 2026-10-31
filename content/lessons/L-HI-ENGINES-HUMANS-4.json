@@ -1,0 +1,1246 @@
+{
+  "id": "L-HI-ENGINES-HUMANS-4",
+  "course": "history-and-meta",
+  "series": "engines",
+  "title": "Engines and humans 4: how people actually play and lose",
+  "skill": "GAME.HISTORY",
+  "depth": "D1",
+  "uses": [
+    "SAF.THREAT",
+    "SAF.LOOSE",
+    "CAL.CANDIDATES"
+  ],
+  "minutes": 35,
+  "outcomes": [
+    "Explains why a model trained on human games can predict human moves, and names one limit of the claim",
+    "Tells the best move, the popular wrong move and the practical move apart in a position, with an engine check",
+    "Counts the good replies a move leaves the opponent and says why that is not the same as the evaluation",
+    "Names the kinds of error in his own games (piece left capturable, missed capture, quiet slip) and the phase where he makes most",
+    "States what the January 2013 sample can show and cannot show (no clocks, depth 8, online play)"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+      "caption": "Black to move after five moves of a well-known opening. Black can take the pawn back with the knight on f6, or send the other knight to a5. Which do most players choose, and which does the engine prefer? Decide first.",
+      "highlight": [
+        "f6",
+        "c6",
+        "d5",
+        "a5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6a5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine (depth 16) prefers the knight to a5."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f6d5",
+            "cp": 70
+          },
+          "statement": "Taking the pawn back is at least 70 centipawns worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the numbers: out of every 100 Black players rated under 1500, how many took the pawn back on d5?",
+      "fields": [
+        {
+          "id": "pct",
+          "label": "My guess (0 to 100):",
+          "type": "number",
+          "answer": 64,
+          "tolerance": 12
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Same position, three rating groups** [V]. In our January 2013 Lichess file (online games, not master chess), Black took the pawn back in 69 of 107 games under 1500, and in 71 of 128 between 1500 and 1899. At 1900 and up, 23 of 28 played the knight to a5; one took the pawn. The top group is small. [I] The capture looks like a free recapture: the choice of someone who looks one move ahead."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+      "caption": "The popular move, and what it allows. White does not need the pawn; White offers a piece to pull Black's king out.",
+      "line": [
+        {
+          "move": "f6d5",
+          "say": "Black wins the pawn back: the choice of 69 of 107 players under 1500."
+        },
+        {
+          "move": "g5f7",
+          "say": "White offers the knight: if the king takes, it leaves its shelter."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes. Later boards show that declining the knight is worse."
+        },
+        {
+          "move": "d1f3",
+          "say": "The queen checks and joins the attack at once."
+        },
+        {
+          "move": "f7e6",
+          "say": "The king steps forward: the engine's choice."
+        },
+        {
+          "move": "b1c3",
+          "say": "White adds another piece to the attack."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "d5"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "f6d5",
+            "cp": 70
+          },
+          "statement": "Taking the pawn back is at least 70 centipawns worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2n2n2/3Pp1N1/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 5",
+      "caption": "The engine's move. Black does not take the pawn back at once; first the knight attacks the bishop.",
+      "line": [
+        {
+          "move": "c6a5",
+          "say": "The knight attacks the bishop on c4. It does not retake the pawn on d5, so Black will be a pawn down for a while."
+        },
+        {
+          "move": "c4b5",
+          "say": "White checks."
+        },
+        {
+          "move": "c7c6",
+          "say": "Black blocks the check with a pawn."
+        },
+        {
+          "move": "d5c6",
+          "say": "White takes."
+        },
+        {
+          "move": "b7c6",
+          "say": "Black recaptures, opening the b-file."
+        },
+        {
+          "move": "b5e2",
+          "say": "The bishop retreats."
+        },
+        {
+          "move": "h7h6",
+          "say": "The pawn asks the knight on g5 to leave."
+        },
+        {
+          "move": "g5f3",
+          "say": "The knight goes back, and Black can push the central pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "a5"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6a5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine (depth 16) prefers Na5."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Count the material** [V]. After the check, the pawn trade on c6 and the recapture, Black has not retaken on d5, so Black is one pawn down. [R] The move 5...Na5 is the Polerio Defence. The line 5...Nxd5 6.Nxf7 is the Fried Liver Attack. Search either name to find the theory."
+    },
+    {
+      "type": "card",
+      "text": "**What Black gets for the pawn** [I]. Quick development of the remaining pieces, an open b-file after the recapture on c6, and a later push of the central pawn that hits the white knight. The engine rates the result about level, which is why it prefers this to the quick recapture. Material alone does not decide a position."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/5n2/nB1Pp1N1/8/8/PPPP1PPP/RNBQK2R b KQkq - 2 6",
+      "caption": "After the knight move and the check, Black has two good replies. A position with several good moves is forgiving: a small slip costs little here.",
+      "highlight": [
+        "b5",
+        "e8",
+        "c7",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c7c6",
+              "c8d7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Both c6 and Bd7 are within 40 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f6d7",
+            "cp": 100
+          },
+          "statement": "Nd7 is at least 100 centipawns worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question.** Engines show the best move. People choose by habit, by what looks safe, by what they saw last week. This lesson asks three things: what does a *human-like* player look like, how does practical play differ from perfect play, and where do club players actually lose games? At the end you name your own two most common kinds of error."
+    },
+    {
+      "type": "card",
+      "text": "**Perfect versus practical.** *Objective* play asks what happens if both sides play perfectly. *Practical* play asks how hard the next move is to find and how likely an error is. [H] A move that is slightly worse on the engine scale but leaves the opponent exactly one good reply can be the better choice against a person. The engine does not count how hard a move is."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2Npp/2n5/3np3/2B5/8/PPPP1PPP/RNBQK2R b KQkq - 0 6",
+      "caption": "Black to move after the knight sacrifice. The engine says White is only about one pawn better, not winning. Count how many accurate moves Black needs in a row.",
+      "line": [
+        {
+          "move": "e8f7",
+          "say": "The engine's choice; other tries, such as the queen to h4, lose far more."
+        },
+        {
+          "move": "d1f3",
+          "say": "White's queen checks."
+        },
+        {
+          "move": "f7e6",
+          "say": "The king must walk forward again."
+        },
+        {
+          "move": "b1c3",
+          "say": "White brings another piece."
+        },
+        {
+          "move": "c6b4",
+          "say": "Black attacks c2 and keeps the knight on d5 defended."
+        },
+        {
+          "move": "c4b3",
+          "say": "The bishop retreats to b3 and still eyes d5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "e6"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e8f7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Taking the knight is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "d8h4",
+            "cp": 250
+          },
+          "statement": "Moving the queen to h4 instead is at least 250 centipawns worse."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 60,
+            "max": 180
+          },
+          "statement": "White's edge is modest: between +0.6 and +1.8 at depth 16."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1b1r/ppp2kpp/2n5/3np3/2B5/5Q2/PPPP1PPP/RNB1K2R b KQ - 1 7",
+      "caption": "Black in check. The engine prefers Ke6 by a wide margin: every other legal reply costs at least 1.6 pawns more. [I] The king on e6 defends the knight on d5, which the queen and bishop attack.",
+      "highlight": [
+        "f7",
+        "e6",
+        "e8",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f7e6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Ke6 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f7e8",
+            "cp": 100
+          },
+          "statement": "Ke8 is at least 100 centipawns worse."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "d8f6",
+            "cp": 100
+          },
+          "statement": "Qf6 is at least 100 centipawns worse."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1b1r/ppp3pp/2n1k3/3np3/2B5/2N2Q2/PPPP1PPP/R1B1K2R b KQ - 3 8",
+      "caption": "Black to move, the third accurate move in a row: king capture, king walk, and now this. The natural knight move to d4 is about a pawn worse. Ncb4 threatens a knight check on c2 that forks the king and the rook on a1 [V by line].",
+      "highlight": [
+        "c6",
+        "b4",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6b4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Ncb4 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c6d4",
+            "cp": 80
+          },
+          "statement": "Nd4 is at least 80 centipawns worse."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] The sacrifice is worth about one pawn on the engine scale, yet it asks three exact moves of the defender. Our file does not show how often defenders found them, so this is a guess about people. Would you play it as White against a 1200 player? Against a 2200 player? Give a reason that is not the engine number.",
+      "fields": [
+        {
+          "id": "a",
+          "label": "Against 1200:"
+        },
+        {
+          "id": "b",
+          "label": "Against 2200:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp3ppp/2p1pn2/q6b/2BP4/2N2N1P/PPP2PP1/R1BQ1RK1 w kq - 1 9",
+      "caption": "White to move. Several moves are within 0.4 pawn of the best on the engine scale, among them a calm developing move and a pawn push that attacks the bishop on h5. Which one asks Black the harder question?",
+      "highlight": [
+        "g2",
+        "g4",
+        "c1",
+        "d2",
+        "h5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2g4",
+              "c1d2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The pawn push and the developing move are both within 40 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h5",
+            "piece": "b"
+          },
+          "statement": "Black's bishop stands on h5."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp3ppp/2p1pn2/q6b/2BP4/2N2N1P/PPPB1PP1/R2Q1RK1 b kq - 2 9",
+      "caption": "After the calm move, Black has many reasonable replies. At least four keep the balance, so a casual choice is fine.",
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a5c7",
+              "a5d8",
+              "b8d7",
+              "f8b4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Four different replies are within 40 centipawns of the best."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp3ppp/2p1pn2/q6b/2BP2P1/2N2N1P/PPP2P2/R1BQ1RK1 b kq - 0 9",
+      "caption": "After the pawn push, Black must find one reply. The two natural tries lose at least 1.0 and 1.5 pawns more. The bishop has to step back.",
+      "line": [
+        {
+          "move": "h5g6",
+          "say": "The engine's move: the bishop keeps its diagonal and the balance."
+        },
+        {
+          "move": "f1e1",
+          "say": "White develops a rook."
+        }
+      ],
+      "highlight": [
+        "h5",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h5g6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Bg6 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "b7b5",
+            "cp": 100
+          },
+          "statement": "b5 is at least 100 centipawns worse."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "f6g4",
+            "cp": 150
+          },
+          "statement": "Nxg4 is at least 150 centipawns worse."
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Two different questions, one structure",
+      "prompt": "These two positions differ in White's last move (bishop to d2, or the pawn push), so this is not a one-feature test. Predict first: in which can Black afford a careless move? Then check.",
+      "working": "IHI-LHIENGINESHUMANS4-3",
+      "failing": "IHI-LHIENGINESHUMANS4-4"
+    },
+    {
+      "type": "card",
+      "text": "**Choosing a practical move** [H]. When two moves are within 0.4 pawn of each other on the engine scale (our threshold, not a law), count the replies that keep the balance after each. One reply means a real question. *Conditions:* both moves must be sound by the engine, the pawn push must not weaken your own king, and you must be able to meet the best defence. [H] Against a strong opponent the extra difficulty buys little."
+    },
+    {
+      "type": "card",
+      "text": "**The Maia idea** [S]. McIlroy-Young, Sen, Kleinberg and Anderson (KDD 2020, arXiv 2006.01855) trained a network on online human games to predict the move a person would choose, not the best move. Their abstract says it predicts human moves much better than standard engines. As I recall, \"human-like\" means the model's top move matches the move played [R, not in the abstract]. The app's Maia covers 1100 to 1900 only [V: maia.ts]."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/3Pp3/4P3/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+      "caption": "A position from our data. Under 1500, 40 of 70 Black players played a knight to d4. The engine says this loses at least 3.5 pawns. Step the line.",
+      "line": [
+        {
+          "move": "c6d4",
+          "say": "The knight lands on a central square: the choice of 40 of 70 players under 1500."
+        },
+        {
+          "move": "c2c3",
+          "say": "A pawn attacks the knight."
+        },
+        {
+          "move": "d8h4",
+          "say": "Black counterattacks with the queen."
+        },
+        {
+          "move": "c3d4",
+          "say": "White takes the knight."
+        },
+        {
+          "move": "h4e4",
+          "say": "Black takes a pawn with check, but has lost a knight for a pawn."
+        },
+        {
+          "move": "g1e2",
+          "say": "White blocks the check with the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "d4",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6e7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nce7 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c6d4",
+            "cp": 350
+          },
+          "statement": "Nd4 is at least 350 centipawns worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/3Pp3/4P3/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+      "caption": "The repair: the knight retreats to e7, a square no white pawn attacks, and the position stays playable.",
+      "line": [
+        {
+          "move": "c6e7",
+          "say": "The knight goes to a square White's pawns do not attack."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops."
+        },
+        {
+          "move": "e7g6",
+          "say": "The knight comes back into play on the other side."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6e7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nce7 is the engine's choice."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/pppp1ppp/5q2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq - 3 3",
+      "caption": "Another popular choice from our data: after an early queen move, 20 of 43 players under 1500 and 47 of 54 between 1500 and 1899 played the pawn to c6. [H] 87 percent in the stronger group looks like a few players repeating a habit; our file cannot tell. Step through what it allows.",
+      "line": [
+        {
+          "move": "c7c6",
+          "say": "The pawn takes a square from the knight on b8."
+        },
+        {
+          "move": "d2d4",
+          "say": "White strikes at the centre."
+        },
+        {
+          "move": "e5d4",
+          "say": "Black takes a pawn."
+        },
+        {
+          "move": "c1g5",
+          "say": "The bishop attacks the queen and develops at once."
+        },
+        {
+          "move": "f6d6",
+          "say": "The queen retreats."
+        },
+        {
+          "move": "f3d4",
+          "say": "White recaptures with a lead in development."
+        }
+      ],
+      "highlight": [
+        "b8",
+        "c6",
+        "c7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8c6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nc6 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c7c6",
+            "cp": 100
+          },
+          "statement": "c6 is at least 100 centipawns worse than the best move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/pppp1ppp/5q2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq - 3 3",
+      "caption": "The engine's way: develop the knight first and let the queen move later.",
+      "line": [
+        {
+          "move": "b8c6",
+          "say": "The knight takes its natural square."
+        },
+        {
+          "move": "c3d5",
+          "say": "White attacks the queen with a knight."
+        },
+        {
+          "move": "f6d8",
+          "say": "The queen steps back."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre."
+        },
+        {
+          "move": "d7d6",
+          "say": "Black supports the e5 pawn."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8c6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nc6 is the engine's choice."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why a human-like model can work** [I]. In the positions you stepped, a large share of players chose the same move: 69 of 107, 40 of 70, 47 of 54 [V]. If one move gets 60 percent, a model that only guesses that move is right 60 percent of the time. That is the pattern Maia learns. [H] Test it yourself: play the Maia opponent and see whether its mistakes match the popular ones."
+    },
+    {
+      "type": "card",
+      "text": "**What a human-like opponent offers.** This app has one: on the Play page, choose the Maia opponent and a rating from 1100 to 1900. It picks a move from what players near that rating would choose (it can also be set to take the most likely move) [V: Play page]. The first use downloads about 18 MB [V: maia.ts]. [H] That may be better practice than a weakened engine, whose moves no person would pick."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] Play one game against the Maia opponent at your own level. Afterwards write one mistake it made that you recognise from human games.",
+      "fields": [
+        {
+          "id": "m",
+          "label": "A mistake that looked human:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**How club players lose: the method** [V for the counts]. I took 600 games from the January 2013 Lichess file with both players rated 1000 to 1499, and 142 with both at 2000 or more. An engine rated each position at depth 8, a rough setting. An error is a drop of 200 centipawns or more. Only the first 50 moves; games under 20 moves and time forfeits left out; opening = first 10 moves; endgame = 30 points of pieces or fewer; lost positions (below -5) not counted."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Predict: in which phase do 1000 to 1499 players make the most errors per move: the opening, the middlegame or the endgame?",
+      "fields": [
+        {
+          "id": "phase",
+          "label": "My prediction:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Errors per 1,000 moves, by phase** [V at depth 8, noisy]\nOpening ▇▇▇ 60\nMiddlegame ▇▇▇▇▇▇▇▇ 156\nEndgame ▇▇▇▇ 77\nAll phases: 104 for the 1000 to 1499 group (3,853 errors in 36,871 moves). The 2000-plus group: 46 (459 in 9,925): opening 7, middlegame 70, endgame 43. Only 142 games, so these swing more. Whether the middlegame lead holds at greater depth is untested."
+    },
+    {
+      "type": "card",
+      "text": "**Kinds of error, 1000 to 1499** [V] (depth 8; rule-based labels, not hand-checked; they overlap)\nReply captures a piece ▇▇▇▇▇▇▇▇ 1,202\nQuiet slip: all the rest ▇▇▇▇▇▇▇ 1,068\nBest move was a capture or check ▇▇▇▇▇▇ 915\nReply captures a pawn ▇▇▇ 530\nAllows mate ▇ 138\n(3,853 errors, so 31, 28, 24, 14 and 4 percent, rounded.) Predict which fits your games best."
+    },
+    {
+      "type": "board",
+      "fen": "r1b1r1k1/1pp2pp1/p1n1p2p/2b2q2/P1B1N3/4PN2/2Q2PPP/1R1R2K1 w - - 2 21",
+      "caption": "Pattern one, from a real game in our sample (both players under 1500): moving a piece that blocks a line. White to move. The two queens are on one diagonal with White's knight between them. Predict what happens if the knight moves.",
+      "line": [
+        {
+          "move": "e4g3",
+          "say": "The knight attacks the queen, but it was blocking the line between the two queens."
+        },
+        {
+          "move": "f5c2",
+          "say": "Black takes the white queen: nothing defended it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "c2",
+        "f5",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Bd3 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "e4g3",
+            "cp": 700
+          },
+          "statement": "Ng3 is at least 700 centipawns worse than the best move."
+        },
+        {
+          "id": "C3",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "c2"
+            ],
+            "after_move": "e4g3"
+          },
+          "statement": "After Ng3 the queen on c2 is loose and White has no other loose piece."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1b1r1k1/1pp2pp1/p1n1p2p/2b2q2/P1B1N3/4PN2/2Q2PPP/1R1R2K1 w - - 2 21",
+      "caption": "The repair: Bd3 is the only move that keeps the balance (about +1.3 at depth 16; every other move is about 2 pawns worse). The bishop defends the knight and stands between the queens.",
+      "line": [
+        {
+          "move": "c4d3",
+          "say": "The bishop defends the knight and stands between the queens."
+        },
+        {
+          "move": "c5e7",
+          "say": "Black retreats the bishop, the engine's main reply."
+        },
+        {
+          "move": "e4d6",
+          "say": "The knight leaves the diagonal and opens the bishop's line to the black queen."
+        },
+        {
+          "move": "e7d6",
+          "say": "Black takes the knight."
+        },
+        {
+          "move": "d3f5",
+          "say": "The bishop takes the queen."
+        },
+        {
+          "move": "e6f5",
+          "say": "Black recaptures the bishop."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Bd3 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f3h4",
+            "cp": 150
+          },
+          "statement": "Nh4, the next-best move, is at least 150 centipawns worse than Bd3."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why it happens** [I]. A piece that blocks a line is easy to forget. Before moving any piece, ask what it stands in front of. [S] Jacob Aagaard, as summarised by a reviewer of *Excelling at Chess Calculation* (2004), says serious errors often start when a key candidate move is overlooked. His point is the overlooked candidate; ours is the forgotten blocker, a related slip."
+    },
+    {
+      "type": "board",
+      "fen": "2kr1r2/pppQ2pp/8/4p3/1PP1P3/P2P3P/1N4P1/5R1K b - - 0 22",
+      "caption": "Pattern two, also from our sample: capturing with the wrong piece. White's queen has just checked on d7, and Black can take it two ways. The rook on d8 is defending the rook on f8. Predict which capture is wrong.",
+      "line": [
+        {
+          "move": "d8d7",
+          "say": "The rook takes, and the rook on f8 loses its defender."
+        },
+        {
+          "move": "f1f8",
+          "say": "White takes the rook with check."
+        },
+        {
+          "move": "d7d8",
+          "say": "Black blocks."
+        },
+        {
+          "move": "f8d8",
+          "say": "White takes the second rook."
+        },
+        {
+          "move": "c8d8",
+          "say": "Black recaptures: both of Black's rooks are gone, for a queen and a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d8",
+          "to": "d7"
+        },
+        {
+          "from": "c8",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "d7",
+        "d8",
+        "f8",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c8d7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Kxd7 is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "d8d7",
+            "cp": 700
+          },
+          "statement": "Rxd7 is at least 700 centipawns worse than the best move."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "One black piece (the rook on d8) defends the rook on f8."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One white piece (the rook on f1) attacks the rook on f8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2kr1r2/pppQ2pp/8/4p3/1PP1P3/P2P3P/1N4P1/5R1K b - - 0 22",
+      "caption": "The right capture. Same queen, same file, different piece. Before taking, ask what the capturing piece is doing now.",
+      "line": [
+        {
+          "move": "c8d7",
+          "say": "The king takes the queen, and the rook on d8 still defends the rook on f8."
+        },
+        {
+          "move": "f1f8",
+          "say": "White takes the rook on f8 anyway."
+        },
+        {
+          "move": "d8f8",
+          "say": "Black recaptures: Black has taken a queen and a rook for one rook."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c8d7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Kxd7 is the engine's choice."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnR5/5k1p/p3p1p1/4p3/2Np4/3P4/2PKNP2/7q b - - 7 28",
+      "caption": "Pattern three, also from our sample: a won position, then one careless move. Black is far ahead and the engine agrees. The knight on b8 is attacked. Predict the natural move, then step what it allows. Qb7 looks natural: it defends the knight and attacks the rook.",
+      "line": [
+        {
+          "move": "h1b7",
+          "say": "The queen defends the attacked knight and attacks the rook."
+        },
+        {
+          "move": "c4d6",
+          "say": "A knight fork of the king and the queen."
+        },
+        {
+          "move": "f7g7",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "d6b7",
+          "say": "The knight takes the queen."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h1",
+          "to": "b7"
+        }
+      ],
+      "highlight": [
+        "b8",
+        "c8",
+        "b7",
+        "d6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8d7",
+              "f7e7",
+              "h1h2"
+            ],
+            "within_cp": 110
+          },
+          "statement": "Nd7, Ke7 and Qh2 are all within 110 centipawns of the best move."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "h1b7",
+            "cp": 900
+          },
+          "statement": "Qb7 is at least 900 centipawns worse than the best move."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -3000,
+            "max": -400
+          },
+          "statement": "Before Qb7, Black stands at least +4 on the engine scale (White's view -4 or lower)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnR5/1q3k1p/p3p1p1/4p3/2Np4/3P4/2PKNP2/8 w - - 8 29",
+      "caption": "After the careless move: White to move. The knight check is the engine's move, and the evaluation has swung from Black far ahead to White far ahead.",
+      "highlight": [
+        "c4",
+        "d6",
+        "b7",
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4d6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Nd6+ is the engine's choice."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 200,
+            "max": 3000
+          },
+          "statement": "After Qb7 White stands at least +2 on the engine scale."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnR5/5k1p/p3p1p1/4p3/2Np4/3P4/2PKNP2/7q b - - 7 28",
+      "caption": "The repair. Before you move, list every check and capture White has: the knight on c4 can check on d6. That makes a queen on b7 unsafe, and the knight on b8 must still be saved. Step the safe move.",
+      "line": [
+        {
+          "move": "b8d7",
+          "say": "The knight leaves the attack and no white check wins anything."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b8d7",
+              "f7e7",
+              "h1h2"
+            ],
+            "within_cp": 110
+          },
+          "statement": "Nd7 is within 110 centipawns of the best move."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Winning positions lose too** [V]. After one of its own moves, a side stood at +3 or better 849 times (counted per side per game) in the 1000 to 1499 sample: it won 575 (68 percent), drew 36, lost 238. At 2000 and up the same figure is 129 of 163 (79 percent). Depth 8 is noisy, so some of these +3 scores are false. In 567 of the 600 games one side made a 300-centipawn error first; that side lost 360 times (63 percent)."
+    },
+    {
+      "type": "card",
+      "text": "**The leader drifts** [S]. Capablanca's Havana example in his book (sections 27 and 28) shows a side ahead drifting into inaccurate moves [V-sheet]. The habit that helps: when ahead, keep asking what the opponent threatens, as you did when behind."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-5",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-6",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-7",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-8",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Time pressure: what the data cannot say.** The 2013 file records the time control, not the clock on each move [V]. Fast games (3 minutes or less per side, estimated as the clock plus 40 moves of increment) against slow ones (8 minutes or more): 102 against 106 errors per 1,000 moves. Time forfeits are not in the sample. [H] Time pressure probably matters, but a game-level label cannot show it. [S via Wikipedia, original unread] Kotov described a calculation trap: too many lines, then too little time."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "[H] Open Games review on your last five games. For each, write the clock at the first big error, the moves left, and the phase. Which pattern do you see? If you do not know the clock, record it from now on.",
+      "fields": [
+        {
+          "id": "t",
+          "label": "Clock at first big error (five games):"
+        },
+        {
+          "id": "ph",
+          "label": "Phase and moves left:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-1",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-2",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS4-12",
+      "silent": true
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "node.SAF.THREAT",
+        "cue.3",
+        "kind.game"
+      ],
+      "n": 6,
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Common mistakes about engines and your errors.** First: believing every red mark means you are bad at chess. [I] Most players have two or three recurring error types, and a long list of flagged moves hides them. Second: ignoring the errors that repeat and studying the one-off blunders. [H] Fixing the top two repeating types probably gains more than learning a new opening. Test it: after ten games, count the kinds again in Games review."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back. Open Games review on your last five games, count the errors by the kinds on the cards, and write your top two. For each: where it happens, what you looked at, what you missed.",
+      "fields": [
+        {
+          "id": "e1",
+          "label": "Error type 1 and a position where it happens:"
+        },
+        {
+          "id": "e2",
+          "label": "Error type 2 and a position where it happens:"
+        },
+        {
+          "id": "fix",
+          "label": "One question I will ask before each move:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back, second part. In three sentences, explain to a friend why the most popular move is sometimes not the best move. Then compare with the model answer on the next card.",
+      "fields": [
+        {
+          "id": "t2",
+          "label": "My three sentences:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Model answer** [I]. The popular move is what many people see first, often a quick recapture or a natural developing move. The best move comes from looking deeper, where the natural move can hide a sacrifice or a fork. So popular tells you what people see; best tells you what holds up."
+    },
+    {
+      "type": "card",
+      "text": "**Self-check, then recap.** Did you name the phase where you lose most, separate a piece left capturable from a quiet slip, give a position for each, and write one question for every move?\n**Remember:** players of different strength choose differently [V]; difficulty matters [H]; errors repeat by kind [I]; the middlegame holds most errors [V at depth 8, noisy]; winning positions get lost [V]; review the first big error."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Which line of the recap changes what you will do in your next game? Write the one change.",
+      "fields": [
+        {
+          "id": "change",
+          "label": "My one change:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "McIlroy-Young, Sen, Kleinberg, Anderson, 'Aligning Superhuman AI with Human Behavior: Chess as a Model System', KDD 2020, arXiv 2006.01855; abstract read on 30 Oct 2026 (no accuracy figures stated in the abstract) [S]",
+    "Maia Chess project (CSSLab, University of Toronto) as described on the app's Play page; the Maia opponent option exists in this app [V]",
+    "Own data: library/data/lichess_db_standard_rated_2013-01.pgn.zst (a month of online games, not master chess); counts and engine study by tools/analysis/hi_engines4/*.py; Stockfish 19 lite, depth 8 for the study, depth 16 for the shown positions; depth-limited numbers are evidence under recorded settings, not proofs [V]",
+    "Positions: opening lines replayed with python-chess; other positions copied from the January 2013 games; all claims in this lesson are checked by tools/validate_lessons.py [V]",
+    "Jacob Aagaard, Excelling at Chess Calculation (2004): serious errors often start when a key candidate is overlooked (paraphrase), docs/citable-views.md 10.7, via a reviewer's account [S]",
+    "Capablanca on the leader who stops thinking (paraphrase), docs/citable-views.md 12.2 [V-sheet]; Kotov on time trouble (paraphrase), docs/citable-views.md 12.12 [S]",
+    "Conjecture marked [H] or [I] in the text is ours; not tested [H]",
+    "Not available: clock times per move (the 2013 file has none); app/public/masters/stats.json (top-level games 2500+) was not used for any number on these cards [V]",
+    "Opening names (Polerio Defence, Fried Liver Attack) recalled, not checked in a source [R]; counts use one exact move order and exclude time forfeits and games under 20 moves [V]"
+  ]
+}

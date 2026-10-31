@@ -1,0 +1,1498 @@
+{
+  "id": "L-HI-ENGINES-HUMANS-5",
+  "course": "history-and-meta",
+  "series": "engines",
+  "title": "Engines and humans 5: top players, centaurs and your own habits",
+  "skill": "GAME.HISTORY",
+  "depth": "D1",
+  "uses": [],
+  "minutes": 30,
+  "outcomes": [
+    "Explains how preparation, advanced chess, freestyle and correspondence chess use engines, naming the source for each fact",
+    "Reads a Berlin endgame structure and says why the position limits attacks",
+    "Chooses between equal engine moves by asking what plan each starts, and says what to do when the opponent leaves the prepared line",
+    "Shows a fortress where material misleads, using a tablebase result",
+    "Writes a plan for their own engine habits with five specific choices"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "caption": "Ten more plies of a line that appears in our top-level games [V]. Whether the players recalled it or worked it out over the board is not in the data [I: at this frequency most were probably prepared]. Step through and watch the moment the queens leave.",
+      "line": [
+        {
+          "move": "e1g1",
+          "say": "White castles: the king is safe and the rook is ready for the e-file."
+        },
+        {
+          "move": "f6e4",
+          "say": "Black takes the e-pawn and accepts an open game."
+        },
+        {
+          "move": "d2d4",
+          "say": "White strikes at the centre and opens lines."
+        },
+        {
+          "move": "e4d6",
+          "say": "The knight retreats to d6, from where it attacks the bishop."
+        },
+        {
+          "move": "b5c6",
+          "say": "The bishop takes the knight so that Black's pawns will be doubled."
+        },
+        {
+          "move": "d7c6",
+          "say": "Black recaptures with the d-pawn; the c-pawns are now doubled."
+        },
+        {
+          "move": "d4e5",
+          "say": "The pawn takes on e5 and attacks the knight on d6."
+        },
+        {
+          "move": "d6f5",
+          "say": "The knight steps away to f5 and eyes the squares d4 and e3."
+        },
+        {
+          "move": "d1d8",
+          "say": "The queens face each other on the open d-file, so White trades them with check."
+        },
+        {
+          "move": "e8d8",
+          "say": "Only the king can recapture: Black's king stays in the middle, but the queens are gone."
+        }
+      ],
+      "claims": [
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -10,
+            "max": 60,
+            "depth": 16
+          },
+          "statement": "At depth 16 the starting position is between -0.1 and +0.6 pawns of level (measured about +0.4).",
+          "id": "C1"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1g1",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is castling or the quiet pawn move d3, within 40 centipawns.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before the numbers: in our database of top-level games (329,379 games, both players rated 2500 or more), take the position after Black's third move, the knight to f6, in this Ruy Lopez. What share of the games that reached it went all the way to the queenless position at the end of the line? Guess, and say how sure you are.",
+      "fields": [
+        {
+          "id": "g",
+          "label": "My guess (such as one in ten) and my confidence:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the data says [V].** Of 4,911 games in which White castled on move four, 4,874 saw Black take the e-pawn. Then 2,263 pushed the d-pawn, 2,240 reached the knight retreat, 1,270 took on c6, and 1,243 reached the queenless position: about one in four of the castling games. Several later moves are forced recaptures, so repeating a line does not prove preparation [I]; that strong players chose it so often suggests it [H]. What is left for a human to decide?"
+    },
+    {
+      "type": "board",
+      "fen": "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - - 0 9",
+      "caption": "The end of the line. Read the structure: doubled pawns, bishops, and who has more pawns on which wing.",
+      "arrows": [
+        {
+          "from": "f8",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "f2",
+        "g2",
+        "h2"
+      ],
+      "claims": [
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "c6",
+              "c7"
+            ]
+          },
+          "statement": "Black's c-pawns are doubled.",
+          "id": "C1"
+        },
+        {
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "black"
+            ]
+          },
+          "statement": "Only Black has the bishop pair.",
+          "id": "C2"
+        },
+        {
+          "type": "pawn_set",
+          "params": {
+            "kind": "majority_side",
+            "color": "white",
+            "squares": [
+              "e5",
+              "f2",
+              "g2",
+              "h2"
+            ]
+          },
+          "statement": "White has four pawns against three on the kingside.",
+          "id": "C3"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 the position is within a quarter of a pawn of level (measured about +0.1).",
+          "id": "C4"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-1"
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-2"
+    },
+    {
+      "type": "card",
+      "text": "**The wall.** With the queens off, nobody has a direct mating attack on Black's king, and White's four-against-three kingside majority needs many moves to create a passed pawn [I]. Black's bishop pair is a lasting asset [I], and the engine rates the position as level [V]. The setup is nicknamed the Berlin Wall [R]. Wikipedia's page on the Berlin Defence says Kramnik played it in four games of his 2000 match with Kasparov, all drawn [R: recalled, not rechecked here]."
+    },
+    {
+      "type": "board",
+      "fen": "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - - 0 9",
+      "caption": "White tries to build an attack. These eight plies are the engine's choice at depth 16 [V]; the score stays within about 0.1 of level. Step through.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "The knight develops towards the centre and heads for the d-file squares."
+        },
+        {
+          "move": "d8e8",
+          "say": "Black's king steps off the d-file before a rook arrives."
+        },
+        {
+          "move": "h2h3",
+          "say": "White gives its own king a flight square before starting the kingside plan."
+        },
+        {
+          "move": "a7a5",
+          "say": "Black gains queenside space; the pawn also stops a white pawn reaching b4 [I]."
+        },
+        {
+          "move": "f1d1",
+          "say": "The rook takes the open d-file."
+        },
+        {
+          "move": "h7h6",
+          "say": "Black gives its king a flight square and stops a knight jump to g5."
+        },
+        {
+          "move": "a2a4",
+          "say": "White fixes the pawn on a5 and keeps the queenside closed."
+        },
+        {
+          "move": "f8e7",
+          "say": "The bishop steps out: Black's pieces are coordinated and the king is safe."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1c3",
+              "f1d1",
+              "a2a4",
+              "h2h3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is one of Nc3, Rd1, a4, h3, all within 40 centipawns.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -30,
+            "max": 40,
+            "depth": 16
+          },
+          "statement": "At depth 16 the position is within 0.4 pawns of level.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - - 0 9",
+      "caption": "A second plausible start: a4 is within 40 centipawns of the best move at depth 16 [V], but the continuation is ours, not the engine's. The score stays near level and no weakness appears [I].",
+      "line": [
+        {
+          "move": "a2a4",
+          "say": "The pawn stops Black's queenside pawns from advancing freely."
+        },
+        {
+          "move": "a7a5",
+          "say": "Black fixes the pawn and keeps it from being attacked."
+        },
+        {
+          "move": "f1d1",
+          "say": "The rook checks along the open file."
+        },
+        {
+          "move": "d8e8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "b1c3",
+          "say": "The knight develops."
+        },
+        {
+          "move": "c8e6",
+          "say": "Black develops the bishop to a square where it also watches c4."
+        },
+        {
+          "move": "f3g5",
+          "say": "The knight jumps at the bishop and threatens a trade."
+        },
+        {
+          "move": "e6c8",
+          "say": "The bishop retreats and stays safe."
+        },
+        {
+          "move": "g5e4",
+          "say": "The knight lands on a central square."
+        },
+        {
+          "move": "h7h6",
+          "say": "Black makes a flight square for the king."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1c3",
+              "f1d1",
+              "a2a4",
+              "h2h3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is one of Nc3, Rd1, a4, h3, all within 40 centipawns.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[I] A player memorises this whole line because an engine says it is level. Name one thing that can still go wrong for them in the game, even though the line is fine.",
+      "fields": [
+        {
+          "id": "risk",
+          "label": "What can still go wrong:"
+        },
+        {
+          "id": "fix",
+          "label": "What knowledge would help me then:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-10"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/ppp2ppp/2p5/4P3/4n3/5N2/PPP2PPP/RNBQ1RK1 w kq - 1 8",
+      "caption": "The opponent leaves the path: a rare knight move (11 of 1,269 replies in our data [V]). Now memory has nothing to say. At depth 16 the engine prefers the queen move by about a third of a pawn (about half a pawn at depth 20) [V]; the first three plies of this line are its choice, the rest are ours. [H] With the queens on, the side ahead in development seems to profit.",
+      "line": [
+        {
+          "move": "d1e2",
+          "say": "The queen steps aside and keeps the queens on: Black's king has not castled."
+        },
+        {
+          "move": "c8f5",
+          "say": "Black develops and protects the knight on e4."
+        },
+        {
+          "move": "f1d1",
+          "say": "The rook takes the open d-file and attacks the queen on d8."
+        },
+        {
+          "move": "d8e7",
+          "say": "The queen leaves the file and eyes the pawn on e5."
+        },
+        {
+          "move": "h2h3",
+          "say": "White makes room for its king and prepares to push a pawn at the bishop."
+        },
+        {
+          "move": "a8d8",
+          "say": "The rook takes the d-file for Black."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d1e2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is the queen move to e2.",
+          "id": "C1"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "d1d8",
+            "cp": 30
+          },
+          "statement": "The queen trade is rated at least 30 centipawns lower (measured 37 at depth 16).",
+          "id": "C2"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 20,
+            "max": 120,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands better by between 0.2 and 1.2 pawns.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-3"
+    },
+    {
+      "type": "card",
+      "text": "**Preparation is memory plus a reason.** Players keep files of engine-checked lines, and a *novelty* is the first move that leaves the files [R]. Engines check lines deeper than a person can calculate, so the first twenty moves can be learned like a poem. [I] The danger is the first move after the poem ends. If you only remember moves, you have nothing to ask; if you know what each side wants, you can still make a plan."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n5/1B2p3/4n3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 0 5",
+      "caption": "The other main road at this point: the rook move. In our data it was played 2,553 times against 2,263 for the pawn push [V]. Another way to reach a level game: White attacks the knight at once and, after Black's knight retreat, regains the e-pawn. The move order differs from the main line.",
+      "line": [
+        {
+          "move": "f1e1",
+          "say": "The rook attacks the knight on e4, which must move."
+        },
+        {
+          "move": "e4d6",
+          "say": "The knight retreats and attacks the bishop."
+        },
+        {
+          "move": "b5f1",
+          "say": "The bishop retreats out of the knight's attack and keeps the e-file under watch."
+        },
+        {
+          "move": "f8e7",
+          "say": "Black develops and prepares to castle."
+        },
+        {
+          "move": "f3e5",
+          "say": "White wins the pawn, for now, with the knight; note the bishop went back first."
+        },
+        {
+          "move": "c6e5",
+          "say": "Black takes the knight."
+        },
+        {
+          "move": "e1e5",
+          "say": "The rook takes back, and the e5 pawn is gone."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles; the engine sees the position as close to level."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f1e1",
+              "d2d4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is Re1 or d4, within 40 centipawns.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -20,
+            "max": 70,
+            "depth": 16
+          },
+          "statement": "At depth 16 the position is within 0.7 pawns of level.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2p1bp1p/p1np1np1/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR2K w - - 0 10",
+      "caption": "A repertoire choice. Engine scores are about level for four quiet moves. First candidate: h3. Step through the engine's line.",
+      "line": [
+        {
+          "move": "h2h3",
+          "say": "A quiet move: it takes g4 from Black's bishop, so d4 will not be met by a pin."
+        },
+        {
+          "move": "c8e6",
+          "say": "Black offers a bishop trade."
+        },
+        {
+          "move": "d2d4",
+          "say": "White strikes in the centre now that the pin is off."
+        },
+        {
+          "move": "e6b3",
+          "say": "Black takes the bishop on b3."
+        },
+        {
+          "move": "a2b3",
+          "say": "White recaptures and opens the a-file for a rook."
+        },
+        {
+          "move": "e5d4",
+          "say": "Black takes the centre pawn."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h2h3",
+              "a2a4",
+              "d2d4",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is one of h3, a4, d4, d3, all within 40 centipawns.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 90,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2p1bp1p/p1np1np1/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR2K w - - 0 10",
+      "caption": "Second candidate from the same position: a4, hitting the b5 pawn from the side. Different plan, similar score.",
+      "line": [
+        {
+          "move": "a2a4",
+          "say": "The pawn attacks b5 and asks Black to decide what to do with its queenside."
+        },
+        {
+          "move": "b5b4",
+          "say": "Black pushes past and gains space."
+        },
+        {
+          "move": "h2h3",
+          "say": "White makes luft and keeps g4 away from Black's bishop."
+        },
+        {
+          "move": "a8b8",
+          "say": "The rook supports the advanced pawn."
+        },
+        {
+          "move": "d2d4",
+          "say": "White opens the centre."
+        },
+        {
+          "move": "b4c3",
+          "say": "Black captures, and the b-file becomes a battleground."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h2h3",
+              "a2a4",
+              "d2d4",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 a4 is one of four moves within 40 centipawns of the best.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 90,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2p1bp1p/p1np1np1/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR2K w - - 0 10",
+      "caption": "Third candidate: the direct d4. Again a different story.",
+      "line": [
+        {
+          "move": "d2d4",
+          "say": "White challenges e5 at once."
+        },
+        {
+          "move": "c8g4",
+          "say": "Black pins the knight on f3 and adds pressure on d4."
+        },
+        {
+          "move": "c1e3",
+          "say": "The bishop develops and guards d4, so the pin has less bite."
+        },
+        {
+          "move": "e5d4",
+          "say": "Black trades pawns."
+        },
+        {
+          "move": "c3d4",
+          "say": "White recaptures and keeps a pawn in the centre."
+        },
+        {
+          "move": "c6a5",
+          "say": "The knight attacks the bishop on b3."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h2h3",
+              "a2a4",
+              "d2d4",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 d4 is one of four moves within 40 centipawns of the best.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 90,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What each move is for [I].** h3 takes g4 from Black's bishop, so d4 can follow without a pin; the risk is a slow start. a4 hits b5; the risk is that b4 then gains Black space. d4 fights for the centre at once; the risk is opening lines before the pieces are ready. d3 keeps things solid; the risk is passivity. Black's usual plans: knight to a5 to challenge the bishop, c5 for space, a bishop move such as g4 or b7, rook to e8."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-11"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Copying the engine means playing the top-listed move. Asking about plans means choosing the one whose plan you understand. For one of the three candidates, fill in the questions you would ask.",
+      "fields": [
+        {
+          "id": "m",
+          "label": "The candidate I would pick and why:"
+        },
+        {
+          "id": "my",
+          "label": "The plan it starts for me:"
+        },
+        {
+          "id": "their",
+          "label": "Their best plan against it:"
+        },
+        {
+          "id": "off",
+          "label": "What I do if they leave my preparation:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2p1bp1p/p1np1np1/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR2K w - - 0 10",
+      "caption": "Engine-last in practice: before you ask the machine, write your own candidates. Mark them here (arrows show three of them), then check the list.",
+      "arrows": [
+        {
+          "from": "h2",
+          "to": "h3"
+        },
+        {
+          "from": "a2",
+          "to": "a4"
+        },
+        {
+          "from": "d2",
+          "to": "d4"
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h2h3",
+              "a2a4",
+              "d2d4",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the four quiet moves are all within 40 centipawns of the best.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-4"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Pick the plan that your chosen move starts.",
+      "fields": [
+        {
+          "id": "plan",
+          "label": "My move started this plan:",
+          "options": [
+            "take g4 from Black's bishop so d4 can come",
+            "attack Black's queenside pawns",
+            "claim the centre at once",
+            "keep everything solid and wait"
+          ]
+        },
+        {
+          "id": "risk",
+          "label": "The risk of that plan:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Advanced chess.** Kasparov and Topalov played a 3-3 advanced-chess match, each with a computer beside them, in León in 1998 [S: Wikipedia]. Kasparov later argued, in a 2010 essay, that a person plus a machine plus a good process can beat either alone [R, not checked against the full text]. People who combine human and machine this way are called *centaurs* [R]."
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/3n1ppp/p3q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 0 16",
+      "caption": "A tactic from Morphy's Opera Game (Paris, 1858) [R]. A machine finds mates like this at once [I], so in centaur play the human's time goes to plans. The mate in two, on a board.",
+      "line": [
+        {
+          "move": "b3b8",
+          "say": "The queen gives check and offers itself; the knight is the only piece that can take it."
+        },
+        {
+          "move": "d7b8",
+          "say": "The knight takes the queen, and in doing so leaves the d-file."
+        },
+        {
+          "move": "d1d8",
+          "say": "The rook mates: the bishop on g5 guards d8, and the king has no flight square."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "b8"
+        },
+        {
+          "from": "d1",
+          "to": "d8"
+        }
+      ],
+      "claims": [
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "b3b8",
+            "n": 2
+          },
+          "statement": "The queen move to b8 leads to a forced mate in two.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-8"
+    },
+    {
+      "type": "card",
+      "text": "**Freestyle.** In this lesson freestyle means human-plus-engine teams, not the shuffled-start Chess960 format also sold under that name [S]. Wikipedia dates the idea to a 2004 blitz event [S, to confirm]. Kasparov's 2010 essay, known to me only from a summary [R], describes a 2005 online tournament won by two amateurs with several computers, ahead of grandmaster teams. His reading: a better *process* won. [H] One tournament shows what is possible, not what usually happens."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Classify each practice: preparation, centaur or advanced chess, correspondence chess, or cheating. Choose one label for each.",
+      "fields": [
+        {
+          "id": "a",
+          "label": "Studying an engine-checked opening file before a game:",
+          "options": [
+            "preparation",
+            "centaur",
+            "correspondence",
+            "cheating"
+          ]
+        },
+        {
+          "id": "b",
+          "label": "A player and a program choose moves together in a game whose rules allow it:",
+          "options": [
+            "preparation",
+            "centaur",
+            "correspondence",
+            "cheating"
+          ]
+        },
+        {
+          "id": "c",
+          "label": "Asking an engine for the move during an over-the-board game that bans engines:",
+          "options": [
+            "preparation",
+            "centaur",
+            "correspondence",
+            "cheating"
+          ]
+        },
+        {
+          "id": "d",
+          "label": "A game by post or server where the federation allows engines:",
+          "options": [
+            "preparation",
+            "centaur",
+            "correspondence",
+            "cheating"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Check yourself.** Studying a file is preparation. Playing with a program under the rules is centaur or advanced chess. Correspondence chess is run by a federation: the ICCF allows engines and tablebases, even in its World Championship, and Wikipedia says draw rates are very high [S]. An engine in a game that bans it is cheating. The event's rules decide."
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+      "caption": "Correspondence thinking [H]: the main line is level, but there is a quieter option that keeps more pieces on. Step through the d3 line; the engine rates it about as well.",
+      "line": [
+        {
+          "move": "d2d3",
+          "say": "A quiet reply: the centre stays closed and no queen trade is on offer."
+        },
+        {
+          "move": "f8c5",
+          "say": "Black develops to the active diagonal."
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles; both kings are safe."
+        },
+        {
+          "move": "d7d6",
+          "say": "The pawn supports e5 and shuts the bishop's diagonal."
+        },
+        {
+          "move": "c2c3",
+          "say": "White prepares d4 to build a centre."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles too; the middlegame begins with all the pieces on."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e1g1",
+              "d2d3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 castling and d3 are both within 40 centipawns of the best move.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp2ppp/2np1n2/1Bb1p3/4P3/2PP1N2/PP3PPP/RNBQ1RK1 w - - 1 7",
+      "caption": "The same line a few moves on. The engine sees a small plus for White, and many pieces for both sides to misplace. [H] A player who wants to win without risk may choose this kind of line over the queenless one.",
+      "line": [
+        {
+          "move": "b1d2",
+          "say": "The knight develops and prepares d4 with a piece supporting it."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black asks the bishop what it wants to do."
+        },
+        {
+          "move": "b5a4",
+          "say": "The bishop retreats and keeps its place on the diagonal."
+        },
+        {
+          "move": "c5a7",
+          "say": "The black bishop retreats to a safe square behind its pawns."
+        },
+        {
+          "move": "h2h3",
+          "say": "White makes room for its king and keeps options open."
+        },
+        {
+          "move": "c6e7",
+          "say": "Black heads the knight for g6, towards the kingside."
+        }
+      ],
+      "claims": [
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 0,
+            "max": 70,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C1"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b1d2",
+              "h2h3",
+              "f1e1"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is Nbd2, h3 or Re1.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Rules and the human part.** ICCF rules on engine use differ by event; check the current rules [S, not confirmed here]. What a human adds in such games is, I suggest, choosing which line to enter and when to deviate [H], and managing time over a long game [H]."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/8/4k3/3r4/4PK2/8/R7 b - - 0 1",
+      "caption": "Rook and pawn against rook, Black to move. The tablebase says draw, but only some rook moves hold it: ...Rd3 holds, ...Rd1 loses [V]. Why only some? That is beyond this lesson [I]: a tablebase never errs here, a human must know the technique. [H] A correspondence player who sees a drawn line tries to avoid it earlier.",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "d3"
+        }
+      ],
+      "claims": [
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "The tablebase says Black, to move, holds the draw.",
+          "id": "C1"
+        },
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "d4d3"
+          },
+          "statement": "The rook move to d3 keeps the draw.",
+          "id": "C2"
+        },
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "d4d1"
+          },
+          "statement": "The rook move to d1 loses.",
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] When engine help is universal, the edge shifts from knowing moves to choosing plans and managing what your opponent finds hard. Do you agree? Give one reason for and one against.",
+      "fields": [
+        {
+          "id": "pro",
+          "label": "One reason for:"
+        },
+        {
+          "id": "con",
+          "label": "One reason against:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Where numbers mislead.** An engine score is one number. [I] Without a tablebase, it can look winning on a fortress that cannot be won; here the tablebase solves each position for us, and the lesson is that counting material is not a verdict. [H] People may still add the most in long plans where the score hardly changes; our boards are tablebase positions, not human wins. Predict the three positions below."
+    },
+    {
+      "type": "contrast",
+      "title": "Does the wrong-coloured bishop save the lone king?",
+      "prompt": "Predict first. The first position is a bishop and h-pawn against a bare king, the bishop on a light square. In the second the bishop stands on a dark square, the colour of h8. In the third the white king stands one rank further back, on f5. Which change matters?",
+      "working": "IHI-LHIENGINESHUMANS5-5",
+      "failing": "IHI-LHIENGINESHUMANS5-6",
+      "irrelevant": "IHI-LHIENGINESHUMANS5-7"
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/5K2/7P/4B3/8/8/8 b - - 0 1",
+      "caption": "Now the explanation for the first position: step through how the lone king holds. The draw is confirmed by the tablebase [V].",
+      "line": [
+        {
+          "move": "h8g8",
+          "say": "The king steps along the edge."
+        },
+        {
+          "move": "h5h6",
+          "say": "The pawn advances."
+        },
+        {
+          "move": "g8h8",
+          "say": "The king returns to the corner, where it has a safe square."
+        },
+        {
+          "move": "f6g6",
+          "say": "White's king approaches."
+        },
+        {
+          "move": "h8g8",
+          "say": "The king steps out again while it can."
+        },
+        {
+          "move": "h6h7",
+          "say": "The pawn gives check, and the only legal reply is the king back to h8."
+        },
+        {
+          "move": "g8h8",
+          "say": "Stalemate: White cannot make progress, because the bishop can never cover the corner h8. White's mistake is lack of progress, not a blunder [I]."
+        }
+      ],
+      "claims": [
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "The tablebase says the position is a draw with Black to move.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/5K2/7P/3B4/8/8/8 b - - 0 1",
+      "caption": "Why the dark bishop wins: step through the tablebase's fastest line (Black resists as long as it can). The bishop can cover squares near the corner, so White can wait a move; the wrong-coloured bishop cannot [I].",
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "h8"
+        }
+      ],
+      "line": [
+        {
+          "move": "h8h7",
+          "say": "Black's king steps out of the corner."
+        },
+        {
+          "move": "d4e3",
+          "say": "The bishop goes to a dark square where it can protect the pawn on h6 later [I]."
+        },
+        {
+          "move": "h7g8",
+          "say": "The king goes back towards the corner."
+        },
+        {
+          "move": "h5h6",
+          "say": "The pawn advances, protected by the bishop."
+        },
+        {
+          "move": "g8h7",
+          "say": "Black attacks the pawn."
+        },
+        {
+          "move": "f6f7",
+          "say": "White's king steps up; the pawn is still protected."
+        },
+        {
+          "move": "h7h8",
+          "say": "Black returns to the corner."
+        },
+        {
+          "move": "f7g6",
+          "say": "White's king takes g6, covering h7 and g7."
+        },
+        {
+          "move": "h8g8",
+          "say": "The black king steps out."
+        },
+        {
+          "move": "e3c5",
+          "say": "The bishop swings to c5, covering f8, so the black king loses a square."
+        },
+        {
+          "move": "g8h8",
+          "say": "Black returns to the corner."
+        },
+        {
+          "move": "c5a3",
+          "say": "A waiting move that keeps f8 covered: Black must step out and the pawn advances with check [I]."
+        }
+      ],
+      "claims": [
+        {
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          },
+          "statement": "The tablebase says Black, to move, loses.",
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1npbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 w - - 1 9",
+      "caption": "A closed King's Indian: the centre is locked and four moves score almost the same. First plan: White plays on the queenside. The first seven plies are the engine's choice at depth 16 after Rb1 [V]; the last is ours.",
+      "line": [
+        {
+          "move": "a1b1",
+          "say": "The rook prepares the pawn push on the queenside, where White has space [I]."
+        },
+        {
+          "move": "a7a5",
+          "say": "Black slows the push by challenging b4."
+        },
+        {
+          "move": "a2a3",
+          "say": "White prepares b4 anyway, so a pawn there will be supported."
+        },
+        {
+          "move": "f6e8",
+          "say": "The knight clears the f-pawn's path and defends the squares around it [I]."
+        },
+        {
+          "move": "b2b4",
+          "say": "White starts the plan."
+        },
+        {
+          "move": "f7f5",
+          "say": "Black starts its own plan on the other wing."
+        },
+        {
+          "move": "f3d2",
+          "say": "The knight re-routes towards the queenside and keeps e4 defended."
+        },
+        {
+          "move": "e8f6",
+          "say": "Black's knight returns to attack e4."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e1",
+              "a1b1",
+              "a2a3",
+              "c1e3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is one of Ne1, Rb1, a3, Be3, all within 40 centipawns.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 80,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1npbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 w - - 1 9",
+      "caption": "Second plan from the same position: develop the bishop and meet Black's pawn break first. The first two plies are the engine's at depth 16 [V]; the rest are ours [I]. The engine gives no verdict between the plans; it only says both are fine.",
+      "line": [
+        {
+          "move": "c1e3",
+          "say": "The bishop develops and watches the dark squares."
+        },
+        {
+          "move": "f6g4",
+          "say": "Black's knight jumps at the bishop."
+        },
+        {
+          "move": "e3c1",
+          "say": "The bishop retreats to its original square and keeps the pawn structure together [I]."
+        },
+        {
+          "move": "f7f5",
+          "say": "Black pushes the kingside pawn."
+        },
+        {
+          "move": "a2a4",
+          "say": "White gains space on the queenside."
+        },
+        {
+          "move": "c7c5",
+          "say": "Black prepares a break on the other side."
+        },
+        {
+          "move": "h2h3",
+          "say": "White drives the knight back."
+        },
+        {
+          "move": "g4f6",
+          "say": "Black's knight returns."
+        }
+      ],
+      "claims": [
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e1",
+              "a1b1",
+              "a2a3",
+              "c1e3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 Be3 is one of four moves within 40 centipawns of the best.",
+          "id": "C1"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 80,
+            "depth": 16
+          },
+          "statement": "At depth 16 White stands slightly better.",
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The usual plan split [R].** In closed King's Indian positions like this, White typically plays on the queenside with pawn pushes such as b4 and c5, while Black plays on the kingside with f5 and later g5. This is widely taught; I have not checked it against a named book here. [I] That is why Rb1 and a3 serve one wing, while Be3 and Ne1 prepare for Black's f-pawn push."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS5-9"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] When four plans score the same, the engine is not the teacher. What would you use instead? Write one question you would ask of the position, and say whether you disagree with this hypothesis.",
+      "fields": [
+        {
+          "id": "q",
+          "label": "My question for the position:"
+        },
+        {
+          "id": "dis",
+          "label": "I agree or disagree because:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Human-like play.** Maia networks are trained on Lichess games to play the move a human of a given rating would choose, not the best move [V: our research notes]; our Play page offers one as an optional opponent [V: project docs]. [H] A model of human error could help in two ways: training against the mistakes you will really meet, and fair-play checks that ask whether a move looks like what a player of that rating would do. No evidence here that it works; it is a hypothesis."
+    },
+    {
+      "type": "card",
+      "text": "**What coaches say [S, not checked against the books].** Per Wikipedia and a chess.com article, Jeremy Silman puts a tactical check first and holds that engine analysis shows what to play but not why. Per a chess.com blog review of Aagaard's *Excelling at Chess Calculation* (2004), he argues that the worst errors often come when a key candidate move is overlooked. [I] Both fit *engine-last*. Neither is a top player describing his own engine use; that part is [H] here."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "From what you have read, name one thing an engine cannot tell you and one it tells you better than you can.",
+      "fields": [
+        {
+          "id": "cant",
+          "label": "An engine cannot tell me:"
+        },
+        {
+          "id": "can",
+          "label": "An engine does better than me at:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Risks.** [I] If the engine always names the move, you stop practising the search for candidates. [H] A second risk is trusting a number: a score does not say which plan your opponent will find hard. The third is fair play: using an engine where it is banned breaks the rules and the point of playing. Rules differ by event, since some allow engines, so check before you use one."
+    },
+    {
+      "type": "card",
+      "text": "**Your engine habits.** A habit is a rule you decide in advance. Fill in the form: when you check, what you write first, what you look for, how often, and what you never do. Make each answer short enough to follow when you are tired. [H] A plan you will keep beats a perfect plan you will not."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Your engine-habits plan: five choices.",
+      "fields": [
+        {
+          "id": "when",
+          "label": "I check the engine:",
+          "options": [
+            "after the game",
+            "only on moves I marked",
+            "during a game where it is allowed",
+            "never"
+          ]
+        },
+        {
+          "id": "first",
+          "label": "Before I look I write down:"
+        },
+        {
+          "id": "look",
+          "label": "When I look I ask:",
+          "options": [
+            "what is the best move",
+            "what is my opponent's threat",
+            "what pattern did I miss",
+            "what plan does the line show"
+          ]
+        },
+        {
+          "id": "often",
+          "label": "How often I do this (per week):",
+          "type": "number"
+        },
+        {
+          "id": "never",
+          "label": "What I never do with an engine:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Scenarios. For each, would you use an engine, and when? Choose and give a reason.",
+      "fields": [
+        {
+          "id": "s1",
+          "label": "You blundered a piece in last night's rapid game and want to know why:",
+          "options": [
+            "use it now",
+            "use it after writing my own view",
+            "do not use it"
+          ]
+        },
+        {
+          "id": "s2",
+          "label": "You are 20 moves into a live over-the-board game and unsure:",
+          "options": [
+            "use it now",
+            "use it after writing my own view",
+            "do not use it"
+          ]
+        },
+        {
+          "id": "s3",
+          "label": "You are building a repertoire move for next week's tournament:",
+          "options": [
+            "use it now",
+            "use it after writing my own view",
+            "do not use it"
+          ]
+        },
+        {
+          "id": "why",
+          "label": "My reasons, in one line each:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "True or not supported? For each statement choose one label: supported by a source named in this course, contradicted, or not supported.",
+      "fields": [
+        {
+          "id": "t1",
+          "label": "Kasparov and Topalov drew an advanced chess match 3-3 in 1998.",
+          "options": [
+            "supported",
+            "contradicted",
+            "not supported"
+          ]
+        },
+        {
+          "id": "t2",
+          "label": "Kasparov won the 1997 match against Deep Blue.",
+          "options": [
+            "supported",
+            "contradicted",
+            "not supported"
+          ]
+        },
+        {
+          "id": "t3",
+          "label": "Freestyle chess began with Kasparov's 1998 match.",
+          "options": [
+            "supported",
+            "contradicted",
+            "not supported"
+          ]
+        },
+        {
+          "id": "t4",
+          "label": "Kramnik's four Berlin games against Kasparov in 2000 were all drawn.",
+          "options": [
+            "supported",
+            "contradicted",
+            "not supported"
+          ]
+        },
+        {
+          "id": "t5",
+          "label": "Maia networks are widely used by federations to catch cheats.",
+          "options": [
+            "supported",
+            "contradicted",
+            "not supported"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Answers.** The first is supported (Wikipedia). The second is contradicted: according to the sources in lesson 1, Deep Blue won in 1997. The third is contradicted: Wikipedia places the start of freestyle in a 2004 blitz event by Ingo Althoefer and Timo Klaustermeyer. The fourth is supported by Wikipedia as I recall it [R]. The fifth is not supported: we have no source, and our own note calls the idea a hypothesis."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back. Imagine a beginner asks: should I use an engine to learn chess? Write the answer you would give.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea in one sentence:"
+        },
+        {
+          "id": "when",
+          "label": "When an engine helps:"
+        },
+        {
+          "id": "hurt",
+          "label": "When an engine hurts:"
+        },
+        {
+          "id": "ex",
+          "label": "One example from this lesson that a beginner could set up on a board:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Self-check.** Did you say when an engine helps and when it hurts? Did you give an example a beginner could set up on a board, such as the bishop and h-pawn against a bare king? Did you name one risk and one rule of your own? Did you mark what you know and what you only suspect? A sample strong answer: 'Write your own view first, then check [I]; an engine finds tactics well but cannot say what you understand.' The app does not grade this."
+    },
+    {
+      "type": "card",
+      "text": "**Recap.**\n- Engines changed preparation: lines are memorised deep, so know *why* each side plays them.\n- Level scores hide different plans; you choose.\n- Centaur and correspondence chess show process can matter.\n- Some positions, like fortresses, fool the count.\n- Think first, engine last (this series: lesson 1 on history, lesson 2 on what engines see and miss, and this one).\n- [H] People may still add most in long plans.\n- Write your habits down."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "Pick the weakest point from the self-check and one habit you will try in your next ten games.",
+      "fields": [
+        {
+          "id": "weak",
+          "label": "My weakest point:"
+        },
+        {
+          "id": "habit",
+          "label": "The habit I will try, and when I will review it:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "app/public/masters/stats.json: 329,379 top-level games (both players 2500+), built 2026-10-29; counts of the Berlin Defence line quoted exactly from the tree [V]",
+    "Wikipedia 'Advanced chess' (first Advanced Chess match, Kasparov v Topalov, Leon, June 1998, 3-3; the 2004 freestyle origin is recalled from the page and marked to confirm) [S/R]",
+    "Wikipedia 'Correspondence chess' (the ICCF allows engines and tablebases, including in the World Championship; high draw rates) [S]",
+    "Wikipedia 'Berlin Defence' (Kramnik played it four times against Kasparov in 2000, all drawn; recalled and not rechecked this session, so labelled [R]; the claim that Kasparov cited Kramnik's preparation was removed) [R]",
+    "Kasparov, 'The Chess Master and the Computer', New York Review of Books, 11 Feb 2010: known only through a page summary, not the full essay; the lesson labels its use [R] and quotes nothing",
+    "docs/citable-views.md entries 10.13 (Silman, via Wikipedia and a chess.com article) and 10.7 (Aagaard, via a chess.com blog review): the books were not read here [S]",
+    "docs/council-synthesis.md CD-15 and docs/running-and-deploying.md (Maia: human-like network trained on Lichess games; optional opponent in the Play page) [V]",
+    "content/items/lesson-hi-l-hi-engines-humans-5.json: positions replayed with python-chess; engine claims Stockfish 19 lite, depth 16 (evidence under recorded limits, not proof); tablebase claims from the Lichess tablebase",
+    "The Opera Game moves are recalled [R] and legality-checked; venue and date are recalled, not checked against a PGN [R]",
+    "Conjecture is labelled [H] or [I] in the text and is not a claim about what any named person believed",
+    "Closed King's Indian plan split (White queenside, Black kingside) is widely taught; recalled, no named book checked [R]"
+  ]
+}

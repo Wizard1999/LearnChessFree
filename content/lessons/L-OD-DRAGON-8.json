@@ -1,0 +1,2426 @@
+{
+ "id": "L-OD-DRAGON-8",
+ "title": "Model games, and what to do when it goes wrong",
+ "course": "opening-deep-dives",
+ "series": "dragon",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "ATK.PAWNSTORM",
+  "ATK.CASTLED",
+  "OPN.TEMPO",
+  "OPN.PUNISH",
+  "DEF.DIAGNOSE",
+  "DEF.TRADES",
+  "POS.PLAN.RACE",
+  "SAC.EXCHANGE"
+ ],
+ "minutes": 45,
+ "outcomes": [
+  "Predicts the next move at twelve decision points in three real Dragon games and names the turning point of each, with the engine's evaluation before and after",
+  "Explains in a sentence per phase what each side is doing in a Yugoslav race and in a quiet Classical game",
+  "Names three typical Black slips (a delayed rook, ...d5 mistimed, a capture that opens the g-file) and plays the repair in each",
+  "Names three typical White slips (the slow rook move, Bh6 without support, the queen on e2) and finds the repair in each",
+  "Reads game counts from our data and says what they do and do not show"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "6k1/1p3p2/p5p1/6P1/3b1P2/P5p1/P1Q2q2/1K1R4 w - - 0 33",
+   "caption": "Final position of game 2 in this lesson (Durarbayli - Mchedlishvili, Konya, July 2012, a Turkish league match between two players rated above 2,500). White to move has a rook for a bishop, yet the game is lost. Why? Look at the black queen on f2, the pawn on g3 and the white king. How do you think this game was decided?",
+   "highlight": [
+    "f2",
+    "g3",
+    "d4",
+    "b1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "max": -250
+     },
+     "statement": "The engine (depth 16) rates the final position as clearly better for Black."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "b"
+     },
+     "statement": "Black's bishop stands on d4."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "d1",
+      "piece": "R"
+     },
+     "statement": "White's rook stands on d1."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "f2",
+      "piece": "q"
+     },
+     "statement": "Black's queen stands on f2."
+    },
+    {
+     "id": "C5",
+     "type": "piece_on",
+     "params": {
+      "square": "g3",
+      "piece": "p"
+     },
+     "statement": "Black's pawn stands on g3."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before any moves: how do you think this game was decided? Pick the most likely story. We return to your guess at the end of the lesson.",
+   "fields": [
+    {
+     "id": "story",
+     "label": "My guess:",
+     "options": [
+      "A quick attack on the king decided it",
+      "A sacrifice on the open file decided it",
+      "A blunder in a quiet position decided it",
+      "A long endgame grind decided it",
+      "No idea yet"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question.** What decided real Dragon games, and how do you repair the typical worse positions? You will step through three games between players rated above 2,500, predict decision points, and name each turning point. Then you meet the usual mistakes of both sides and look for the repair. At the end you will teach it back: what decided each game, one typical mistake per side, and its repair. Capablanca left variations in his own book for the reader to work out; do the same: predict before you press."
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/R3K2R b KQ - 4 9",
+   "caption": "GAME 1: Iordachescu - Mchedlishvili (Konya, 14 July 2012; ratings 2636 and 2656; White won). The first 17 plies are the Yugoslav set-up of the earlier lessons; we start after 9.Bc4. Purposes are the usual textbook ideas [R]; engine claims are [V] at depth 16.",
+   "line": [
+    {
+     "move": "c8d7",
+     "say": "Black develops the bishop and frees the back rank, so a rook can reach the c-file."
+    },
+    {
+     "move": "e1c1",
+     "say": "White castles long: the kings are on opposite wings, so each side can throw pawns at the other king."
+    },
+    {
+     "move": "a8c8",
+     "say": "The rook takes the half-open c-file and eyes the knight on c3, Black's first target."
+    },
+    {
+     "move": "c4b3",
+     "say": "The bishop steps back from c4, where a black knight would hit it, and keeps the diagonal to f7."
+    },
+    {
+     "move": "c6e5",
+     "say": "The knight heads for c4 to trade the bishop and watches f3 and g4."
+    },
+    {
+     "move": "c1b1",
+     "say": "The king leaves the c-file, so tricks along it lose their sting, and the h-pawn is free to advance."
+    },
+    {
+     "move": "a7a6",
+     "say": "Black prepares ...b5, the pawn lever that opens lines toward the white king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c8",
+     "to": "c3"
+    },
+    {
+     "from": "e5",
+     "to": "c4"
+    }
+   ],
+   "highlight": [
+    "c8",
+    "c3",
+    "b1",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "after_moves": [
+       "c8d7",
+       "e1c1"
+      ]
+     },
+     "statement": "After castling long White's king is on the queenside."
+    },
+    {
+     "id": "C2",
+     "type": "open_files",
+     "params": {
+      "half_open_black": [
+       "c"
+      ],
+      "after_moves": [
+       "c8d7",
+       "e1c1",
+       "a8c8"
+      ]
+     },
+     "statement": "The c-file is half open for Black."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e5",
+      "includes": [
+       "c4",
+       "d3",
+       "f3",
+       "g4"
+      ],
+      "after_moves": [
+       "c8d7",
+       "e1c1",
+       "a8c8",
+       "c4b3",
+       "c6e5"
+      ]
+     },
+     "statement": "The knight on e5 attacks c4, d3, f3 and g4."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "b1",
+      "piece": "K",
+      "after_moves": [
+       "c8d7",
+       "e1c1",
+       "a8c8",
+       "c4b3",
+       "c6e5",
+       "c1b1"
+      ]
+     },
+     "statement": "After Kb1 the white king stands on b1."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**One plan per side.** White: push the h-pawn and the g-pawn at the black king, then use the half-open h- or g-file for the rooks. Black: pressure the c3 knight and the c-file, then break with ...b5 toward the white king. Both plans are pawn races. [H] A guess to test: the side that is one move faster in the race wins more often. The next board counts a real race move by move, and the three games test the guess; three games prove nothing."
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-1"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppbp/p2p1np1/4n3/3NP2P/1BN1BP2/PPPQ2P1/1K1R3R b - - 0 13",
+   "caption": "Same game, moves 13 and 14. Count the tempi: White needs g4 and a capture; Black needs ...b4 and a break on the c-file.",
+   "line": [
+    {
+     "move": "h7h5",
+     "say": "Black blocks the h-pawn and prepares to open lines against the king."
+    },
+    {
+     "move": "d1g1",
+     "say": "White places the rook on the g-file, ready to push the g-pawn and open it."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black counters on the queenside: the b-pawn starts the race toward White's king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g1",
+     "to": "g4"
+    }
+   ],
+   "highlight": [
+    "g1",
+    "g4",
+    "b5",
+    "h5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g1",
+      "piece": "R",
+      "after_moves": [
+       "h7h5",
+       "d1g1"
+      ]
+     },
+     "statement": "The white rook stands on g1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "b5",
+      "piece": "p",
+      "after_moves": [
+       "h7h5",
+       "d1g1",
+       "b7b5"
+      ]
+     },
+     "statement": "Black's pawn stands on b5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-2"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-3"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppb1/p2p1np1/1p2n2p/3NP2P/1BN1BP2/PPPQ2P1/1K4RR w - - 0 15",
+   "caption": "WORKED TEMPO COUNT. White needs two moves to open the g-file for the rook on g1: the g-pawn advances, then takes on h5. Black needs two moves to start hitting the king: the b-pawn attacks the knight, then the a-pawn heads for a4. White moves first, so White arrives first by one tempo. [H] The engine agrees only modestly: about +0.6 for White here. One position proves nothing.",
+   "line": [
+    {
+     "move": "g2g4",
+     "say": "White move 1: the pawn attacks h5."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black move 1: the pawn attacks the knight on c3."
+    },
+    {
+     "move": "c3e2",
+     "say": "The knight steps away and heads for the kingside."
+    },
+    {
+     "move": "a6a5",
+     "say": "Black move 2: the a-pawn heads for a4."
+    },
+    {
+     "move": "g4h5",
+     "say": "White move 2: the g-file is open. White opened it first."
+    },
+    {
+     "move": "f6h5",
+     "say": "Black recaptures; the race now turns on who strikes next."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g2",
+     "to": "g4"
+    },
+    {
+     "from": "b5",
+     "to": "b4"
+    }
+   ],
+   "highlight": [
+    "g1",
+    "g4",
+    "b4",
+    "h5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g2g4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers g4 at this point."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "g1",
+      "piece": "R"
+     },
+     "statement": "The white rook stands on g1."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "h5",
+      "piece": "n",
+      "after_moves": [
+       "g2g4",
+       "b5b4",
+       "c3e2",
+       "a6a5",
+       "g4h5",
+       "f6h5"
+      ]
+     },
+     "statement": "After the six moves a black knight stands on h5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppb1/p2p1np1/1p2n2p/3NP1PP/1BN1BP2/PPPQ4/1K4RR b - - 0 15",
+   "caption": "Moves 15 and 16. The g-file has opened, and White's rook now stares at the g6 pawn.",
+   "line": [
+    {
+     "move": "a6a5",
+     "say": "Black keeps the race going: the pawn heads for a4, though it is not yet a threat."
+    },
+    {
+     "move": "g4h5",
+     "say": "White takes: the g-pawn has traded itself for the h-pawn, so the g-file is open to the white rook."
+    },
+    {
+     "move": "f6h5",
+     "say": "Black recaptures with the knight, which now stands far from the c-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g1",
+     "to": "g6"
+    }
+   ],
+   "highlight": [
+    "g1",
+    "g6",
+    "h5",
+    "a5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a6a5",
+       "g4h5",
+       "f6h5"
+      ]
+     },
+     "statement": "The white rook on g1 attacks g6 along the open g-file."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "h5",
+      "piece": "n",
+      "after_moves": [
+       "a6a5",
+       "g4h5",
+       "f6h5"
+      ]
+     },
+     "statement": "Black's knight stands on h5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-4"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppb1/3p2p1/pp2n2n/3NP2P/1BN1BP2/PPPQ4/1K4RR w - - 0 17",
+   "caption": "Moves 17 to 20. Both attacks are rolling: count each side's next two moves before you read the answer.",
+   "line": [
+    {
+     "move": "f3f4",
+     "say": "The pawn attacks the knight and prepares to open the f-file."
+    },
+    {
+     "move": "a5a4",
+     "say": "Black's pawn attacks the bishop on b3: a tempo, before Black deals with the knight."
+    },
+    {
+     "move": "b3d5",
+     "say": "The bishop leaves the attacked square with a threat on f7."
+    },
+    {
+     "move": "b5b4",
+     "say": "The pawn attacks the knight on c3."
+    },
+    {
+     "move": "c3e2",
+     "say": "The knight steps aside and heads for the kingside."
+    },
+    {
+     "move": "e7e6",
+     "say": "Black attacks the bishop, trying to win a tempo back."
+    },
+    {
+     "move": "f4e5",
+     "say": "White takes the knight and opens the f-file."
+    },
+    {
+     "move": "d6e5",
+     "say": "Black recaptures and opens the d-file against the white queen."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "e6"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d5",
+    "e6",
+    "g6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "p",
+      "after_moves": [
+       "f3f4",
+       "a5a4",
+       "b3d5",
+       "b5b4",
+       "c3e2",
+       "e7e6",
+       "f4e5",
+       "d6e5"
+      ]
+     },
+     "statement": "After the exchange on e5 a black pawn stands on e5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e2",
+      "piece": "N",
+      "after_moves": [
+       "f3f4",
+       "a5a4",
+       "b3d5",
+       "b5b4",
+       "c3e2"
+      ]
+     },
+     "statement": "White's knight stands on e2."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-5"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3b1pb1/4p1p1/3Bp2n/pp1NP2P/4B3/PPPQN3/1K4RR w - - 0 21",
+   "caption": "The combination in the game: captures on g7, f8 and d5. Count the material before and after.",
+   "line": [
+    {
+     "move": "d4f5",
+     "say": "White offers the knight; the bishop on d5 is attacked as well, so Black must choose."
+    },
+    {
+     "move": "e6d5",
+     "say": "Black takes the bishop. This is the game move; the engine prefers ...gxf5 (see the item before)."
+    },
+    {
+     "move": "f5g7",
+     "say": "The knight takes the bishop on g7 and breaks the king's cover."
+    },
+    {
+     "move": "g8g7",
+     "say": "The king recaptures."
+    },
+    {
+     "move": "e3h6",
+     "say": "The bishop checks and drives the king to the h-file."
+    },
+    {
+     "move": "g7h7",
+     "say": "The king steps to h7."
+    },
+    {
+     "move": "h6f8",
+     "say": "The bishop takes the rook."
+    },
+    {
+     "move": "d8f8",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "d2d5",
+     "say": "White wins a pawn and Black's king has lost its cover. [I]"
+    }
+   ],
+   "highlight": [
+    "g7",
+    "f8",
+    "d5",
+    "h7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "Q",
+      "after_moves": [
+       "d4f5",
+       "e6d5",
+       "f5g7",
+       "g8g7",
+       "e3h6",
+       "g7h7",
+       "h6f8",
+       "d8f8",
+       "d2d5"
+      ]
+     },
+     "statement": "After the sequence White's queen stands on d5."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "d4f5",
+       "e6d5",
+       "f5g7",
+       "g8g7",
+       "e3h6",
+       "g7h7"
+      ]
+     },
+     "statement": "Black's king is on the kingside after Kh7."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3b1pb1/4p1p1/3Bp2n/pp1NP2P/4B3/PPPQN3/1K4RR w - - 0 21",
+   "caption": "REWIND ONE MOVE. Before the knight jump to f5 White stood better: the engine's first choice is the exchange sacrifice on g6 (about +1.1), and the game move leaves the position near level (about +0.1). So White's jump threw away half a pawn or more, and Black's capture on d5 then gave it back.",
+   "line": [
+    {
+     "move": "g1g6",
+     "say": "The rook takes the pawn. This is the engine's first choice [V]."
+    },
+    {
+     "move": "f7g6",
+     "say": "Black takes the rook: the exchange is given for a pawn and open lines."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g1",
+     "to": "g6"
+    }
+   ],
+   "highlight": [
+    "g1",
+    "g6",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g1g6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers Rxg6 here."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "d4f5",
+      "cp": 30
+     },
+     "statement": "The game move Nf5 is worse than Rxg6 by at least 30 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-24",
+   "claims": []
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3b1pb1/4p1p1/3BpN1n/pp2P2P/4B3/PPPQN3/1K4RR b - - 1 21",
+   "caption": "TURNING POINT of game 1: the position after 21.Nf5, Black to move. The engine reads about 0.0, so White's edge is largely gone. The game move, taking on d5, hands White more than a pawn again.",
+   "highlight": [
+    "f5",
+    "d5",
+    "g6",
+    "e6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 40
+     },
+     "statement": "Turning point of game 1: after Nf5 the engine (depth 16) rates the position between -0.4 and +0.4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What decided game 1.** Two moves. White's jump to f5 threw away a lead of half a pawn or more, and Black's capture of the bishop on d5 gave it back: afterwards White is better by more than a pawn [V, depth 16]. Baseline: these Yugoslav positions score about +0.5 to +0.9 for White before the swings, so 'level' is already a drop for White [V]. [I] The tactic worked because the g-file was open and the g6 cover was gone."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppb1/p2p1np1/4n2p/3NP2P/1BN1BP2/PPPQ2P1/1K1R3R w - - 0 14",
+   "caption": "Game 1 and game 2 reach this very position after 13...h5. White to move: the rook to g1 (game 1) or the bishop to g5 (game 2). Depth 16 ranks Bh6 first, then g4 and Rdg1 within 25 centipawns; Bg5 is 15 to 50 behind. All are playable, so the two games split at a near-equal choice.",
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "g1"
+    },
+    {
+     "from": "e3",
+     "to": "g5"
+    }
+   ],
+   "highlight": [
+    "g1",
+    "g5",
+    "e3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e3h6",
+       "g2g4",
+       "d1g1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) puts Bh6, g4 and Rdg1 within 40 centipawns of one another; Bh6 comes first."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside"
+     },
+     "statement": "White's king is on the queenside."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside"
+     },
+     "statement": "Black's king is on the kingside."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "e3g5",
+      "cp": 10
+     },
+     "statement": "The game-2 move Bg5 is at least 10 centipawns behind the best move."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Game 2: the same position, another road.** Black's 13th move leaves White a choice. The engine's first choices are Bh6 and Rdg1; neither game played Bh6. In game 1 the rook went to g1; in game 2 the bishop went to g5 to threaten the f6 knight, a playable move a little behind. That difference did not decide anything yet: look at what each side did when the attack met resistance."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppb1/p2p1np1/4n2p/3NP2P/1BN1BP2/PPPQ2P1/1K1R3R w - - 0 14",
+   "caption": "GAME 2: Durarbayli - Mchedlishvili (Konya, 18 July 2012; ratings 2576 and 2656; Black won). The same Black player as in game 1 (Mchedlishvili), four days later and with the opposite result. Purposes are the usual textbook ideas [R]; engine claims are [V] at depth 16.",
+   "line": [
+    {
+     "move": "e3g5",
+     "say": "White threatens to trade the bishop for the f6 knight, the main defender of the king."
+    },
+    {
+     "move": "f8e8",
+     "say": "The rook leaves f8 to guard e7 against the capture on f6 and keeps the e-file ready."
+    },
+    {
+     "move": "g2g4",
+     "say": "White opens the g-file: the pawn attacks h5, and the rook on h1 eyes the h-file behind the h4 pawn."
+    },
+    {
+     "move": "h5g4",
+     "say": "Black captures: the h-file is open, but now the h4 pawn can advance with tempo."
+    },
+    {
+     "move": "f3f4",
+     "say": "The pawn attacks the knight on e5 and leaves the pawn on g4 alone for now."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "f6"
+    },
+    {
+     "from": "f4",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "g5",
+    "f6",
+    "e5",
+    "f4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e3g5"
+      ]
+     },
+     "statement": "The bishop on g5 attacks the knight on f6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "f4",
+      "piece": "P",
+      "after_moves": [
+       "e3g5",
+       "f8e8",
+       "g2g4",
+       "h5g4",
+       "f3f4"
+      ]
+     },
+     "statement": "After f4 White's pawn stands on f4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e3g5",
+       "f8e8",
+       "g2g4",
+       "h5g4",
+       "f3f4"
+      ]
+     },
+     "statement": "The pawn on f4 attacks the knight on e5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-6"
+  },
+  {
+   "type": "board",
+   "fen": "2rqr1k1/1p1bppb1/p2p1np1/4n1B1/3NPPpP/1BN5/PPPQ4/1K1R3R b - - 0 16",
+   "caption": "Moves 16 and 17. Look at the diagonal a3-f8 and the knight on c4: what does the move after this do to White's king?",
+   "line": [
+    {
+     "move": "e5c4",
+     "say": "The knight attacks the queen and the b2 pawn at once, and offers to trade the bishop."
+    },
+    {
+     "move": "d2e2",
+     "say": "The queen steps aside to e2. The engine prefers Qd3 here, which keeps the queen on the d-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c4",
+     "to": "d2"
+    },
+    {
+     "from": "c4",
+     "to": "a3"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "d2",
+    "b2",
+    "a3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e5c4"
+      ]
+     },
+     "statement": "After Nc4 the black knight attacks the queen on d2."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "a3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e5c4",
+       "d2e2"
+      ]
+     },
+     "statement": "After Qe2 the black knight attacks a3, b2 and b6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-7"
+  },
+  {
+   "type": "board",
+   "fen": "2rqr1k1/1p1bppb1/p2p1np1/6B1/2nNPPpP/1BN5/PPP1Q3/1K1R3R b - - 2 17",
+   "caption": "Move 17. Count the material: Black has given a knight for nothing so far. What is the second half of the combination?",
+   "line": [
+    {
+     "move": "c4a3",
+     "say": "The knight sacrifices itself with check: the b2 pawn must capture or the king moves."
+    },
+    {
+     "move": "b2a3",
+     "say": "White takes: the pawn leaves b2 and the knight on c3 is no longer protected by it."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c8",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "a3",
+    "b1",
+    "c3",
+    "b2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c4a3",
+       "b2a3"
+      ]
+     },
+     "statement": "After bxa3 the white knight on c3 is attacked by the black rook on c8."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 0,
+      "after_moves": [
+       "c4a3",
+       "b2a3"
+      ]
+     },
+     "statement": "No white pawn defends the knight on c3."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "b2",
+      "piece": "empty",
+      "after_moves": [
+       "c4a3",
+       "b2a3"
+      ]
+     },
+     "statement": "The b2 square is empty after bxa3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-8"
+  },
+  {
+   "type": "board",
+   "fen": "2rqr1k1/1p1bppb1/p2p1np1/6B1/3NPPpP/PBN5/P1P1Q3/1K1R3R b - - 0 18",
+   "caption": "Moves 18 to 20. Black has a rook on c3 with check threats; count the pieces that attack b3.",
+   "line": [
+    {
+     "move": "c8c3",
+     "say": "The rook takes the knight and attacks the bishop on b3: the sacrifice has been repaid."
+    },
+    {
+     "move": "e4e5",
+     "say": "White attacks the knight on f6 and hopes to attack on the e-file; h5 was the engine's choice."
+    },
+    {
+     "move": "d8c8",
+     "say": "Black adds the queen to the c-file and eyes the bishop and the c2 square."
+    },
+    {
+     "move": "h1e1",
+     "say": "White brings the second rook to the e-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "b3"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "b3",
+    "e5",
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "b3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c8c3"
+      ]
+     },
+     "statement": "The black rook on c3 attacks the bishop on b3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "r",
+      "after_moves": [
+       "c8c3"
+      ]
+     },
+     "statement": "After Rxc3 the black rook stands on c3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-9"
+  },
+  {
+   "type": "board",
+   "fen": "2q1r1k1/1p1bppb1/p2p1np1/4P1B1/3N1PpP/PBr5/P1P1Q3/1K1RR3 b - - 2 20",
+   "caption": "Moves 20 to 22. After the sacrifice Black needs to bring more pieces than White can defend with: count attackers on the white king's area.",
+   "line": [
+    {
+     "move": "c3b3",
+     "say": "The exchange sacrifice: rook for bishop, with check, to destroy the last piece covering the king."
+    },
+    {
+     "move": "d4b3",
+     "say": "The knight takes. The b-pawn is gone and the bishop that covered the king's diagonal has been traded."
+    },
+    {
+     "move": "d7c6",
+     "say": "The bishop develops with an eye on e4 and the long diagonal."
+    },
+    {
+     "move": "e5f6",
+     "say": "White takes the knight on f6."
+    },
+    {
+     "move": "e7f6",
+     "say": "Black recaptures and the e-file is open for both rooks."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "g2"
+    }
+   ],
+   "highlight": [
+    "b3",
+    "c6",
+    "f6",
+    "b1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "b3",
+      "piece": "N",
+      "after_moves": [
+       "c3b3",
+       "d4b3"
+      ]
+     },
+     "statement": "After the knight recaptures it stands on b3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c6",
+      "piece": "b",
+      "after_moves": [
+       "c3b3",
+       "d4b3",
+       "d7c6"
+      ]
+     },
+     "statement": "Black's bishop stands on c6."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rqr1k1/1p1bppb1/p2p1np1/6B1/2nNPPpP/1BN5/PPP1Q3/1K1R3R b - - 2 17",
+   "caption": "FIRST SLIP of game 2, the position after 17.Qe2. The engine reads about 0.0. With the queen on d3 it would read about +0.6, so Qe2 gives up about half a pawn. The big swing comes two moves later (see the next board).",
+   "highlight": [
+    "e2",
+    "d3",
+    "a3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -65,
+      "max": 15
+     },
+     "statement": "After Qe2 the engine (depth 16) rates the position between -0.65 and +0.15, about level."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What decided game 2.** Two moments. [V] White's queen to e2 gave up about half a pawn, because the queen on d3 would have avoided the knight sacrifice. After the sacrifice was repaid the position was level, and then White's pawn push to e5 threw about a pawn away. [I] A king on b1 has one pawn in front of it: remove that pawn and the c-file, b-file and long diagonal open at once."
+  },
+  {
+   "type": "board",
+   "fen": "3qr1k1/1p1bppb1/p2p1np1/6B1/3NPPpP/PBr5/P1P1Q3/1K1R3R w - - 0 19",
+   "caption": "TURNING POINT of game 2: the position after 18...Rxc3, White to move. The engine reads about 0.0 for h5 and f5. The game move, the pawn push to e5, drops White to about one pawn down [V, depth 16]. The sacrifice had been repaid; White needed to keep the initiative and did not.",
+   "line": [
+    {
+     "move": "h4h5",
+     "say": "Even after the sacrifice White has a move: the pawn attacks g6 and takes the initiative."
+    },
+    {
+     "move": "f6h5",
+     "say": "Black takes."
+    },
+    {
+     "move": "f4f5",
+     "say": "The f-pawn opens the f-file against f7 and the knight."
+    }
+   ],
+   "highlight": [
+    "h5",
+    "f5",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h4h5",
+       "f4f5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers h5 or f5."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "e4e5",
+      "cp": 60
+     },
+     "statement": "The game move e5 is worse than the best move by at least 60 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-21"
+  },
+  {
+   "type": "card",
+   "text": "**Game 3: the quiet game.** Not every Dragon is a pawn race. After the Classical set-up both kings castle short; no one pushes a pawn at the king, and the fight is over space and squares. [H] A quiet game rewards the player who keeps improving pieces; a single inaccurate piece move can then decide it, as a single missed tempo decides a race. Predict the plan of each side at each phase."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pp1p/3p1np1/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6",
+   "caption": "GAME 3: Smirin - Grandelius (European Individual Championship, Jerusalem, 27 Feb 2015; ratings 2650 and 2609; White won). The Classical set-up, 6.Be2. Purposes are the usual textbook ideas [R]; engine claims are [V] at depth 16.",
+   "line": [
+    {
+     "move": "f1e2",
+     "say": "A quiet developing move: no pawn is pushed and the bishop prepares castling."
+    },
+    {
+     "move": "f8g7",
+     "say": "The fianchetto bishop eyes the long diagonal toward b2 and c3."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles short, so there will be no race: the kings stay on the same wing."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles too."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook prepares to support e4 once the bishop retreats."
+    },
+    {
+     "move": "b8c6",
+     "say": "The knight adds pressure on d4."
+    },
+    {
+     "move": "d4b3",
+     "say": "The knight steps back before ...Nxd4 can trade it, and heads toward the queenside."
+    },
+    {
+     "move": "a7a6",
+     "say": "Black prepares ...b5 to gain space on the queenside."
+    },
+    {
+     "move": "e2f1",
+     "say": "The bishop retreats so the rook backs e4, and the a-pawn can advance without giving up the bishop."
+    }
+   ],
+   "highlight": [
+    "e2",
+    "f1",
+    "g7",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "f1e2",
+       "f8g7",
+       "e1g1"
+      ]
+     },
+     "statement": "White's king is on the kingside after castling."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "f1e2",
+       "f8g7",
+       "e1g1",
+       "e8g8"
+      ]
+     },
+     "statement": "Black's king is on the kingside after castling."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "f1",
+      "piece": "B",
+      "after_moves": [
+       "f1e2",
+       "f8g7",
+       "e1g1",
+       "e8g8",
+       "f1e1",
+       "b8c6",
+       "d4b3",
+       "a7a6",
+       "e2f1"
+      ]
+     },
+     "statement": "After Bf1 the bishop stands on f1."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-10"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/4ppbp/p1np1np1/1p6/4P3/1NN5/PPP2PPP/R1BQRBK1 w - - 0 11",
+   "caption": "Moves 11 to 15. The long manoeuvring phase: nothing is forced and every move is a small positional choice.",
+   "line": [
+    {
+     "move": "a2a4",
+     "say": "White challenges the b5 pawn and the squares behind it."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black pushes: the pawn attacks the knight on c3 and gains space."
+    },
+    {
+     "move": "c3d5",
+     "say": "The knight leaps to the centre: from d5 it hits b4 and e7."
+    },
+    {
+     "move": "f6d7",
+     "say": "Black retreats and prepares ...Nc5 or ...e6."
+    },
+    {
+     "move": "a4a5",
+     "say": "The pawn takes b6 away from Black's knight and cramps the queenside."
+    },
+    {
+     "move": "a8b8",
+     "say": "The rook defends b4 and prepares ...e6."
+    },
+    {
+     "move": "a1a2",
+     "say": "The rook swings to the second rank to defend the pawn and switch to the kingside."
+    },
+    {
+     "move": "e7e6",
+     "say": "Black challenges the knight on d5."
+    },
+    {
+     "move": "d5e3",
+     "say": "The knight retreats toward g4 and f5, where it eyes the black king."
+    },
+    {
+     "move": "d7f6",
+     "say": "Black returns to f6 to trade pieces."
+    }
+   ],
+   "highlight": [
+    "d5",
+    "e3",
+    "b4",
+    "a5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d5",
+      "includes": [
+       "b4",
+       "e7"
+      ],
+      "after_moves": [
+       "a2a4",
+       "b5b4",
+       "c3d5"
+      ]
+     },
+     "statement": "From d5 the knight attacks b4 and e7."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a2a4",
+       "b5b4",
+       "c3d5",
+       "f6d7",
+       "a4a5"
+      ]
+     },
+     "statement": "The pawn on a5 attacks b6."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "N",
+      "after_moves": [
+       "a2a4",
+       "b5b4",
+       "c3d5",
+       "f6d7",
+       "a4a5",
+       "a8b8",
+       "a1a2",
+       "e7e6",
+       "d5e3"
+      ]
+     },
+     "statement": "After Ne3 the knight stands on e3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-11"
+  },
+  {
+   "type": "board",
+   "fen": "1rbq1rk1/5pbp/p1nppnp1/P7/1p2P3/1N2N3/RPP2PPP/2BQRBK1 w - - 2 16",
+   "caption": "Moves 16 to 21. Pieces are traded and the structure stays closed; count what each side's last piece can still do.",
+   "line": [
+    {
+     "move": "e3g4",
+     "say": "The knight offers a trade of Black's defender."
+    },
+    {
+     "move": "f6g4",
+     "say": "Black accepts."
+    },
+    {
+     "move": "d1g4",
+     "say": "The queen takes and now eyes the black king and the e6 pawn."
+    },
+    {
+     "move": "c6d4",
+     "say": "Black centralises the knight, attacking the c2 and e2 squares."
+    },
+    {
+     "move": "b3d4",
+     "say": "White trades off the knight."
+    },
+    {
+     "move": "g7d4",
+     "say": "The bishop recaptures on the long diagonal."
+    },
+    {
+     "move": "g4d1",
+     "say": "The queen retreats and attacks the bishop on d4 along the d-file."
+    },
+    {
+     "move": "e6e5",
+     "say": "Black defends the bishop with a pawn and takes space."
+    },
+    {
+     "move": "c1e3",
+     "say": "White's dark bishop finally develops and challenges the bishop on d4."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black develops the last piece, with an attack on the rook on a2."
+    },
+    {
+     "move": "b2b3",
+     "say": "White blocks the diagonal to the rook on a2 with a pawn. The next move decides the game."
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e3",
+    "e6",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "B",
+      "after_moves": [
+       "e3g4",
+       "f6g4",
+       "d1g4",
+       "c6d4",
+       "b3d4",
+       "g7d4",
+       "g4d1",
+       "e6e5",
+       "c1e3"
+      ]
+     },
+     "statement": "After Be3 White's bishop stands on e3."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "a2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e3g4",
+       "f6g4",
+       "d1g4",
+       "c6d4",
+       "b3d4",
+       "g7d4",
+       "g4d1",
+       "e6e5",
+       "c1e3",
+       "c8e6"
+      ]
+     },
+     "statement": "After Be6 the black bishop attacks the rook on a2."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-12"
+  },
+  {
+   "type": "board",
+   "fen": "1r1q1rk1/5p1p/p2pb1p1/P3p3/1p1bP3/1P2B3/R1P2PPP/3QRBK1 b - - 0 21",
+   "caption": "The two errors of game 3: 21...Bc3 (the engine prefers the trade on e3) and then, after 22.Bxa6, 22...Bxe1. A bishop on a6 does not attack the rook on e1; the bishop capture was a choice, not a necessity.",
+   "line": [
+    {
+     "move": "d4c3",
+     "say": "Black attacks the rook on e1 with the bishop; the engine prefers ...Bxe3."
+    },
+    {
+     "move": "f1a6",
+     "say": "White ignores the attack on the rook and takes a6; if the bishop takes the rook, White has given the exchange for a pawn and a far-advanced a-pawn."
+    },
+    {
+     "move": "c3e1",
+     "say": "Black takes the rook. A second small error: the engine prefers ...Ra8 (see the next item)."
+    },
+    {
+     "move": "d1e1",
+     "say": "White recaptures: Black has the exchange for a pawn, but the engine now rates White about +1.6."
+    }
+   ],
+   "highlight": [
+    "c3",
+    "a6",
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e1",
+      "piece": "Q",
+      "after_moves": [
+       "d4c3",
+       "f1a6",
+       "c3e1",
+       "d1e1"
+      ]
+     },
+     "statement": "After the sequence White's queen stands on e1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "a6",
+      "piece": "B",
+      "after_moves": [
+       "d4c3",
+       "f1a6"
+      ]
+     },
+     "statement": "White has won the a6 pawn: a white bishop stands on a6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-25",
+   "claims": []
+  },
+  {
+   "type": "board",
+   "fen": "1r1q1rk1/5p1p/p2pb1p1/P3p3/1p1bP3/1P2B3/R1P2PPP/3QRBK1 b - - 0 21",
+   "caption": "BEFORE THE ERRORS in game 3, the position after 21.b3. The engine bar reads about +0.3: balanced, with White slightly ahead. Two small errors by Black follow (21...Bc3, then 22...Bxe1), each worth roughly half a pawn or more.",
+   "highlight": [
+    "d4",
+    "e3",
+    "a6",
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -15,
+      "max": 65
+     },
+     "statement": "Turning point of game 3 (after b3): the engine (depth 16) rates the position between -0.15 and +0.65 for White."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What decided game 3.** The position was balanced after twenty quiet moves. [V] Two small errors followed: a bishop move that avoided the trade on e3, and then taking the rook on e1 instead of ...Ra8. Each cost roughly half a pawn or more. [H] In a quiet game small errors add up because nothing forces matters; one slip can be survived, two are hard to. A loose pawn on a6 was the first sign."
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-13"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-14"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-15"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which phase of which game would you play differently, as White or as Black, and what would you change? Answer in a sentence.",
+   "fields": [
+    {
+     "id": "phase",
+     "label": "The phase and the change:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A guess about the swings.** [H] In these three games the swing came from an inaccurate move just before a forcing sequence: a wrong capture, a pawn push, a bishop move. Whether that is general is untested, and tempo counting may or may not matter more than learning patterns. Caution: I chose three games with clear stories from the 2500+ games in our data, so they show examples, not how often each happens. Find a game that contradicts the guess."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Look back at game 1: the combination on g7 took several moves. Does 'one inaccurate move' or 'a tempo race' describe it better? Say why.",
+   "fields": [
+    {
+     "id": "view",
+     "label": "I think this because:",
+     "options": [
+      "agree",
+      "disagree",
+      "unsure"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Diagnose before you defend.** Znosko-Borovsky (*The Middle Game in Chess*) advises: find your chief weakness and the opponent's chief threat, then choose a long plan, not a single parry; when you stand worse, defend and win back freedom. Emanuel Lasker (*Common Sense in Chess*, Lecture 9) advises vacating weak points and supporting them when compromised. In the Dragon, ask: whose pawns are nearer the enemy king, which file is open, and which trade removes an attacker?"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/pp1bppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/2KR3R b - - 6 10",
+   "caption": "BLACK GOES WRONG, 1: a small slip, worth roughly 0.2 to 0.5 of a pawn (the number moves a little between runs). After long castling the engine wants the rook on the c-file; here Black plays a pawn move first.",
+   "line": [
+    {
+     "move": "a7a6",
+     "say": "Black delays the rook: the pawn prepares ...b5 but the c-file stays unused."
+    },
+    {
+     "move": "c4b3",
+     "say": "White retreats the bishop with a gain of time: the h-pawn can now run."
+    }
+   ],
+   "highlight": [
+    "c8",
+    "a6",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a8c8"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers ...Rc8 at this point."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "a7a6",
+      "cp": 15
+     },
+     "statement": "The delaying move ...a6 is worse than ...Rc8 by at least 15 centipawns."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "b3",
+      "piece": "B",
+      "after_moves": [
+       "a7a6",
+       "c4b3"
+      ]
+     },
+     "statement": "After Bb3 the bishop stands on b3."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1bppbp/p1np1np1/8/3NP3/1BN1BP2/PPPQ2PP/2KR3R b - - 1 11",
+   "caption": "DAMAGE LIMITATION: with the bishop already on b3, the engine puts the knight challenge, ...b5, ...h5 and ...Rc8 within about 0.2 of each other. Whatever Black picks, the position stays about a pawn worse for Black. [I] The repairs here trade an attacker or slow the race.",
+   "line": [
+    {
+     "move": "c6a5",
+     "say": "The repair: challenge the bishop. A trade removes one of White's attackers."
+    },
+    {
+     "move": "h2h4",
+     "say": "White continues the plan."
+    },
+    {
+     "move": "a5b3",
+     "say": "The knight takes the bishop with check."
+    },
+    {
+     "move": "a2b3",
+     "say": "White recaptures; the a-file is half open next to his own king."
+    }
+   ],
+   "highlight": [
+    "a5",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c6a5",
+       "b7b5",
+       "h7h5",
+       "a8c8"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) puts Na5, b5, h5 and Rc8 within 40 centipawns of its first choice."
+    },
+    {
+     "id": "C2",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_moves": [
+       "c6a5",
+       "h2h4",
+       "a5b3",
+       "a2b3"
+      ]
+     },
+     "statement": "After the trade Black holds the bishop pair."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "b3",
+      "piece": "P",
+      "after_moves": [
+       "c6a5",
+       "h2h4",
+       "a5b3",
+       "a2b3"
+      ]
+     },
+     "statement": "After the recapture a white pawn stands on b3."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": 60
+     },
+     "statement": "After the best repair the engine (depth 16) still rates the position at least +0.6 for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-16"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/3NP3/2N1BP2/PPPQ2PP/2KR1B1R b - - 4 9",
+   "caption": "BLACK GOES WRONG, 2 (contrast): ...d5 mistimed. First the version that works: White has castled long but the bishop is still on f1. Masters played this break in 199 of 210 games in our data [V].",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "The break works here: the bishop is still on f1 and no piece attacks d5 twice."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes."
+    },
+    {
+     "move": "f6d5",
+     "say": "Black recaptures with the knight; the central pawn trade is done."
+    },
+    {
+     "move": "d4c6",
+     "say": "White removes the knight that defended the centre."
+    },
+    {
+     "move": "b7c6",
+     "say": "Black recaptures and the c6 pawn watches d5."
+    },
+    {
+     "move": "e3d4",
+     "say": "White offers to trade the strongest black piece, the bishop on g7."
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d4",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d6d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers ...d5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2ppbp/2np1np1/8/2BNP3/2N1BP2/PPPQ2PP/2KR3R b - - 4 9",
+   "caption": "The same position with ONE change: White's bishop stands on c4 instead of f1 (an edited position, not a game position). The engine now rates the break much worse; this is one natural continuation, not the engine's only line.",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "The same break, but now the bishop on c4 attacks d5 as well."
+    },
+    {
+     "move": "c3d5",
+     "say": "White takes with the knight: d5 is attacked more often than it is defended."
+    },
+    {
+     "move": "f6d5",
+     "say": "Black recaptures."
+    },
+    {
+     "move": "c4d5",
+     "say": "The bishop takes: White has won a pawn."
+    },
+    {
+     "move": "d8b6",
+     "say": "The queen attacks d4 and b2, but White keeps the extra pawn."
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c4",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "d6d5",
+      "cp": 70
+     },
+     "statement": "The break ...d5 is worse than the best move by at least 70 centipawns."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After ...d5 three white pieces attack the pawn on d5."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Is the central break ...d5 on?",
+   "prompt": "Predict first. Position 1: White has castled long and the bishop is on f1. Position 2: the same position, but White's bishop stands on c4. Position 3: as position 1 with White's h-pawn on h3. For which positions does the break work?",
+   "working": "IOD-LODDRAGON8-17",
+   "failing": "IOD-LODDRAGON8-18",
+   "irrelevant": "IOD-LODDRAGON8-19"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppb1/p2p1np1/1p2n2p/3NP1PP/1BN1BP2/PPPQ4/1K4RR b - - 0 15",
+   "caption": "BLACK GOES WRONG, 3: the king exposed. In game 1 Black had the move ...b4. Here Black takes on g4 and opens the g-file for the rook already standing on g1.",
+   "line": [
+    {
+     "move": "h5g4",
+     "say": "Black takes the pawn: the g-file opens in front of the white rook."
+    },
+    {
+     "move": "h4h5",
+     "say": "White's h-pawn advances with tempo: it attacks g6."
+    },
+    {
+     "move": "c8c3",
+     "say": "Black tries the exchange sacrifice."
+    },
+    {
+     "move": "d2c3",
+     "say": "White takes the rook and the king race stops being a race."
+    }
+   ],
+   "highlight": [
+    "g4",
+    "g1",
+    "h5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "h5g4",
+      "cp": 60
+     },
+     "statement": "Taking on g4 is worse than the best move by at least 60 centipawns."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "h5g4"
+      ]
+     },
+     "statement": "After hxg4 the pawn on g4 is attacked by the rook and the f3 pawn."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppb1/p2p1np1/1p2n2p/3NP1PP/1BN1BP2/PPPQ4/1K4RR b - - 0 15",
+   "caption": "THE REPAIR for the third slip: instead of taking on g4, push the b-pawn as in game 1. The pawn hits the knight with tempo, and the g-file stays shut for White's rook.",
+   "line": [
+    {
+     "move": "b5b4",
+     "say": "The pawn attacks the knight on c3."
+    },
+    {
+     "move": "c3e2",
+     "say": "The knight steps away."
+    },
+    {
+     "move": "a6a5",
+     "say": "Black keeps the race going."
+    },
+    {
+     "move": "g4h5",
+     "say": "White opens the g-file, but Black is now one tempo closer to the king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b5",
+     "to": "b4"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "c3",
+    "g4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b5b4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers ...b4."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "h5g4",
+      "cp": 60
+     },
+     "statement": "Taking on g4 is worse than ...b4 by at least 60 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the three Black slips have in common.** The first lost time (the rook came late), the second broke with ...d5 when White's bishop already stood on c4, the third opened the g-file for White's rook. [I] The break works while the bishop is on f1 and fails once it has come to c4. [H] A repair on the c-file may be more reliable than one on the long diagonal; four positions are not enough to know. Test it on your own games."
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/1p1bppbp/p2p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/1K1R3R w - - 0 13",
+   "caption": "WHITE GOES WRONG, 1: the attack too slow, a small slip of roughly 0.4 of a pawn. The usual plan is the h-pawn. Here White brings a rook to the centre instead.",
+   "line": [
+    {
+     "move": "h1e1",
+     "say": "White brings the second rook to the e-file: it feels active but the kingside pawns do not move."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black uses the free tempo: the pawn starts the race toward White's king."
+    }
+   ],
+   "highlight": [
+    "e1",
+    "b5",
+    "h4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h2h4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers h4; h3, a3, g4, Bh6 and Rhe1 are 30 to 45 centipawns behind."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "h1e1",
+      "cp": 25
+     },
+     "statement": "The rook move is worse than the best move by at least 25 centipawns."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "b5",
+      "piece": "p",
+      "after_moves": [
+       "h1e1",
+       "b7b5"
+      ]
+     },
+     "statement": "After ...b5 the pawn stands on b5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/3bppbp/p2p1np1/1p2n3/3NP3/1BN1BP2/PPPQ2PP/1K1RR3 w - - 0 14",
+   "caption": "THE REPAIR: after the tempo was lost, the engine rates the position about level. White's way back is to slow Black's race and trade, not to hurry. Here the king is on b1, so the Bh6 trade is safe; compare the next board.",
+   "line": [
+    {
+     "move": "a2a3",
+     "say": "The repair: a pawn move that stops ...b4 and keeps the b-file closed."
+    },
+    {
+     "move": "c8b8",
+     "say": "Black prepares ...b4 anyway."
+    },
+    {
+     "move": "e3h6",
+     "say": "Now the bishop trade, supported by the queen and without the c3 knight hanging."
+    },
+    {
+     "move": "g7h6",
+     "say": "Black accepts the trade."
+    },
+    {
+     "move": "d2h6",
+     "say": "The queen takes and the position is balanced."
+    }
+   ],
+   "highlight": [
+    "a3",
+    "b4",
+    "h6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 40
+     },
+     "statement": "The position after 13...b5 is balanced: the engine (depth 16) rates the position between -0.40 and +0.40 for White."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a2a3",
+       "e3h6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers a3 or Bh6; both are within 40 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-22"
+  },
+  {
+   "type": "board",
+   "fen": "2rq1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BN1BP2/PPPQ2PP/2KR3R w - - 9 12",
+   "caption": "WHITE GOES WRONG, 2: the Bh6 trade without preparation. [H] The trade is safest when the king is already on b1 and the c3 knight is supported. Here the king is still on c1: the engine prefers Kb1 first (about +0.8 for White) and rates Bh6 about 0.9 lower.",
+   "line": [
+    {
+     "move": "e3h6",
+     "say": "White hurries the trade of the dark bishops before the king is safe."
+    },
+    {
+     "move": "g7h6",
+     "say": "Black accepts."
+    },
+    {
+     "move": "d2h6",
+     "say": "The queen takes on h6; the c3 knight is now guarded only by the b2 pawn."
+    },
+    {
+     "move": "c8c3",
+     "say": "The exchange sacrifice: the rook takes the knight."
+    },
+    {
+     "move": "b2c3",
+     "say": "White takes the rook."
+    },
+    {
+     "move": "a7a5",
+     "say": "Black has given up the exchange; White's king has lost the cover of the b-pawn."
+    }
+   ],
+   "highlight": [
+    "h6",
+    "c3",
+    "c1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "K"
+     },
+     "statement": "White's king is still on c1."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1b1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers Kb1."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "e3h6",
+      "cp": 40
+     },
+     "statement": "Bh6 is worse than Kb1 by at least 40 centipawns."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "P",
+      "after_moves": [
+       "e3h6",
+       "g7h6",
+       "d2h6",
+       "c8c3",
+       "b2c3"
+      ]
+     },
+     "statement": "After the exchange sacrifice and recapture a white pawn stands on c3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-20"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-26",
+   "claims": []
+  },
+  {
+   "type": "board",
+   "fen": "2rqr1k1/1p1bppb1/p2p1np1/6B1/2nNPPpP/1BN5/PPPQ4/1K1R3R w - - 1 17",
+   "caption": "WHITE GOES WRONG, 3: the queen on e2 allows the knight sacrifice on a3. In game 2 White played Qe2. The engine prefers the queen on d3 by about half a pawn or more.",
+   "line": [
+    {
+     "move": "d2d3",
+     "say": "The repair: the queen steps to d3, keeping the d-file and avoiding the knight sacrifice on a3."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black prepares the c-file attack."
+    },
+    {
+     "move": "g5f6",
+     "say": "White removes the main defender of the black king."
+    },
+    {
+     "move": "g7f6",
+     "say": "Black recaptures."
+    }
+   ],
+   "highlight": [
+    "d3",
+    "a3",
+    "b1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) prefers Qd3."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "d2e2",
+      "cp": 30
+     },
+     "statement": "Qe2 (the game move) is worse than Qd3 by at least 30 centipawns."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d2d3"
+      ]
+     },
+     "statement": "After Qd3 the queen and the bishop on b3 both attack the knight on c4."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-27",
+   "claims": []
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODDRAGON8-23",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "**Cross-check with our data** (players 2500+). After Black's eighth move, three ninth moves matter. The bishop to c4: 139 games (White 60 wins, 62 draws, Black 17). Long castling: 217 games (69, 102, 46); only 210 have a recorded Black reply. The g-pawn push: 41 games (21, 15, 5). [V] The bishop games average 2934, so many are engine games: read White's 65% as engine-assisted play. Counts show what was played, not what is stronger."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Name one thing these counts do not tell you, and one thing you would want to check before using them to choose a move.",
+   "fields": [
+    {
+     "id": "limit",
+     "label": "What the counts hide:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Recap.**\n- Game 1 turned on two moves, game 2 on a slip and a pawn push, game 3 on two bishop moves. [V]\n- [H] In these games one inaccurate move came before a forcing sequence; whether that is general is untested.\n- [I] Black's repairs here were trades or quiet moves, and they leave Black worse.\n- [I] White's repair was to slow Black's race.\n- [H] In the Classical, pieces matter more than a race.\n- Check the machine's numbers against the sample size."
+  },
+  {
+   "type": "board",
+   "fen": "6k1/1p3p2/p5p1/6P1/3b1P2/P5p1/P1Q2q2/1K1R4 w - - 0 33",
+   "caption": "Back to the start: this was the final position of game 2 (Durarbayli - Mchedlishvili, Konya 2012). You guessed how it was decided at the beginning.",
+   "highlight": [
+    "f2",
+    "g3",
+    "b1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "f2",
+      "piece": "q"
+     },
+     "statement": "Black's queen stands on f2."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Was your first guess right? In a sentence: what actually decided game 2, and what would have changed it?",
+   "fields": [
+    {
+     "id": "check",
+     "label": "My guess was:",
+     "options": [
+      "right",
+      "partly right",
+      "wrong"
+     ]
+    },
+    {
+     "id": "why",
+     "label": "What decided it, in my words:"
+    }
+   ],
+   "claims": []
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach it back to a friend who knows only the opening moves. Use these four fields; then check them against the list below.\nSelf-check: Did I say when the plan works? When it fails? Give one example a beginner could set up on a board? Name one mistake and its repair?",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea of a model game:"
+    },
+    {
+     "id": "when",
+     "label": "When a Dragon game turns on one move:"
+    },
+    {
+     "id": "example",
+     "label": "One example I would show:"
+    },
+    {
+     "id": "warn",
+     "label": "One warning and its repair:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "library/data/games (TWIC weekly zips and Lichess broadcast PGN, 2012 to 2026): games filtered by script for 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 g6, both players 2500+, engines excluded by hand; three games chosen, their moves and results checked by python-chess [V]. Game 1: Iordachescu - Mchedlishvili, Turkish league, Konya, 14 July 2012, 1-0. Game 2: Durarbayli - Mchedlishvili, Konya, 18 July 2012, 0-1. Game 3: Smirin - Grandelius, European Individual Championship, Jerusalem, 27 Feb 2015, 1-0. Moves and results are facts; every comment is our own wording",
+  "app/public/masters/stats.json: 329,379 top-level games (both players 2500+), first 24 plies; counts after 8...Nc6 (9.Bc4 139 games 60/62/17; 9.O-O-O 217 games 69/102/46; 9.g4 41 games 21/15/5) and after 9.O-O-O, 9.Bc4 Bd7 10.O-O-O (83 games), Rc8 (58 games 17/35/6) [V]; the data include engine games from broadcasts [V: seen in the source PGN]",
+  "docs/citable-views.md 5.1 (Emanuel Lasker, Common Sense in Chess, Lecture 9), 5.4 and 6.4 (Znosko-Borovsky, The Middle Game in Chess): diagnose before defending; when worse, defend and restore freedom [V-sheet]; 11.1 (Capablanca left variations to the reader) [V-sheet]",
+  "content/items/lesson-od-l-od-dragon-8.json: positions replayed with python-chess from the stated moves; engine claims Stockfish 19 lite, depth 16 (evidence under recorded limits, not proof); one-feature edit marked in the item (position 19)",
+  "Purposes of moves on game boards are the usual textbook ideas [R] and are stated as aims, not verified outcomes; conjecture is labelled [H] or [I] in the text",
+  "docs/lesson-depth-standard.md section 6 (opening series, lesson 7/8: model games and repairs); docs/competition-chess-steps.md"
+ ]
+}

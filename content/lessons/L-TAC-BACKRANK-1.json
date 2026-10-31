@@ -3,17 +3,176 @@
   "title": "Back-rank mate, and luft as the cure",
   "skill": "TAC.BACKRANK",
   "depth": "D1",
-  "minutes": 10,
+  "minutes": 40,
   "outcomes": [
-    "Finds a back-rank mate",
-    "Tells a mate from a check when the king has luft or a guard covers the square",
-    "Sees the back-rank threat against his own king",
-    "Gives his own king luft with a pawn move"
+    "Finds a back-rank mate with a rook or a queen, for either side, in positions where nothing names the idea",
+    "Names which of the three conditions (flight square, capture, block) fails in a check that is not mate",
+    "Counts the defenders of the back rank and says whether an exchange removes the last one",
+    "Decides whether his own king needs luft now, and picks between h3, g3 and a guard on the rank, saying what each loosens",
+    "Explains the idea to a beginner in four parts: the idea, when it works, an example, one warning"
   ],
   "steps": [
     {
+      "type": "board",
+      "fen": "4r1k1/pp3pp1/1bp4p/7Q/1Pn2P2/P7/6PP/BN5K b - - 0 25",
+      "caption": "Black to move. Look at the white king on h1: two pawns in front of it, and the white queen far away on h5. Black's rook can give check on the first rank. White's last move captured the black queen on b1. Guess before you read on: mate, or only a check?",
+      "highlight": [
+        "h1",
+        "e8",
+        "e1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e8e1"
+          },
+          "statement": "The rook can go to e1."
+        },
+        {
+          "id": "C2",
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "Black is not in check and can move."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Black's rook goes to the first rank with check. Pick a guess and give one reason. The lesson comes back to this position, so write what you actually think.",
+      "fields": [
+        {
+          "id": "guess",
+          "label": "My guess:",
+          "options": [
+            "checkmate",
+            "only a check",
+            "I cannot tell"
+          ]
+        },
+        {
+          "id": "why",
+          "label": "Because:"
+        }
+      ]
+    },
+    {
       "type": "card",
-      "text": "A **back-rank mate** is a check along the first or last rank against a king that is shut in by its own pawns. It works when three things hold: the king has **no escape square**, nothing can **capture** the checking piece, and nothing can **block** the line.\nTake one away and it is only a check."
+      "text": "**What you will be able to do.** Look at any position and decide, with nobody naming the idea, whether a back-rank mate exists, for either side. Refute a mate that is not there. Make your own king safe in the cheapest way. And say plainly when there is no back-rank mate at all. The test near the end mixes positions with and without mates, and nothing in it is labelled."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/8/8/8/5PPP/6K1 w - - 0 1",
+      "caption": "White to move. Black's rook is on the other side of the board, but the d-file is open. Count the squares the white king could step to.",
+      "highlight": [
+        "f1",
+        "h1",
+        "f2",
+        "g2",
+        "h2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "g1",
+            "to": [
+              "f1",
+              "h1"
+            ]
+          },
+          "statement": "The king can go to f1 and h1 only."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Shield and cage.** The three pawns shield the king from checks coming from the front, yet they also fill three of its squares. An edge king has at most six squares (its own and five neighbours), and here the pawns take three. Emanuel Lasker's reminder for any attack is to count the squares you must control and to make sure the checking piece cannot be taken."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/8/8/8/5PPP/6K1 b - - 0 1",
+      "caption": "The same position, Black to move. Step through and count which squares one rook covers. [H] Counting the squares before hunting for checks may find mates faster; untested.",
+      "line": [
+        {
+          "move": "d8d1",
+          "say": "One rook check covers e1, f1 and g1. The king cannot step to h1 either: that square lies on the same line."
+        }
+      ],
+      "highlight": [
+        "d1",
+        "f1",
+        "g1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d8d1",
+            "n": 1
+          },
+          "statement": "Rd1 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f1",
+            "color": "black",
+            "count": 1,
+            "after_move": "d8d1"
+          },
+          "statement": "The rook on d1 covers f1."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1,
+            "after_move": "d8d1"
+          },
+          "statement": "The rook on d1 gives check on g1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-1"
+    },
+    {
+      "type": "board",
+      "fen": "7r/6k1/8/8/8/8/3PPP2/4K3 w - - 0 1",
+      "caption": "An uncastled king is shut in the same way. White to move: which squares are free for the king?",
+      "highlight": [
+        "d1",
+        "f1",
+        "d2",
+        "e2",
+        "f2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e1",
+            "to": [
+              "d1",
+              "f1"
+            ]
+          },
+          "statement": "The king can go to d1 and f1 only."
+        }
+      ]
     },
     {
       "type": "board",
@@ -22,7 +181,7 @@
       "line": [
         {
           "move": "e8e1",
-          "say": "The rook checks along the back rank. The pawns cover the king's escape squares."
+          "say": "The rook checks along the first rank. The pawns hold the king in, and nothing white covers e1."
         }
       ],
       "arrows": [
@@ -67,19 +226,1051 @@
     },
     {
       "type": "card",
-      "text": "The cure is **luft** (German for air): an escape square for the king. A pawn move in front of the king, such as h3 or h6, is usually enough. A piece that guards the back rank works too.\nLook at your own back rank as well as your opponent's."
+      "text": "**Three conditions.** A check along the first rank is mate only if all three hold. **One:** the king has no flight square. **Two:** nothing can capture the checking piece. **Three:** nothing can step between the checker and the king. Look at them in that order. Remove any one and it is only a check."
     },
     {
-      "type": "item",
-      "item": "IA1-056"
+      "type": "board",
+      "fen": "4r1k1/pp3pp1/1bp4p/7Q/1Pn2P2/P7/6PP/BN5K b - - 0 25",
+      "caption": "Back to the opening position. Compare with your guess at the start: what did you miss or get right? Then check the three conditions one by one.",
+      "line": [
+        {
+          "move": "e8e1",
+          "say": "The rook checks. g2 and h2 fill the king's squares, nothing covers e1, and nothing can step in."
+        }
+      ],
+      "highlight": [
+        "e1",
+        "g1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1
+          },
+          "statement": "Re1 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece covers e1."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Only a rook?** No. Any piece that gives check along the rank can mate there: a queen as well as a rook, or two pieces working together. The three conditions never change. What changes is how you meet the second one: when a defender can take the checking piece, you may need a second piece behind it. The next three boards show each case."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/pp3ppp/n3b3/8/8/3Q4/PP3PPP/6K1 w - - 0 1",
+      "caption": "White to move. A queen can do the rook's job. Look for the check on the eighth rank.",
+      "line": [
+        {
+          "move": "d3d8",
+          "say": "The queen checks along the eighth rank. Nothing can take it or step in, and the pawns hold the king."
+        }
+      ],
+      "highlight": [
+        "d8",
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d3d8",
+            "n": 1
+          },
+          "statement": "Qd8 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No black piece covers d8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3rr1k1/5ppp/8/8/8/8/4RPPP/4R1K1 w - - 0 1",
+      "caption": "White to move. Black has two rooks guarding the eighth rank; White has two rooks aimed at it.",
+      "line": [
+        {
+          "move": "e2e8",
+          "say": "The first rook takes the guard on e8 with check."
+        },
+        {
+          "move": "d8e8",
+          "say": "The other black rook has to recapture; nothing else can."
+        },
+        {
+          "move": "e1e8",
+          "say": "The second rook takes again, and now nothing is left to take it."
+        }
+      ],
+      "highlight": [
+        "e8",
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e2e8",
+            "n": 2
+          },
+          "statement": "White mates in two moves, starting with the capture on e8."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The rook on e2 attacks e8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5ppp/5n2/8/8/8/4RPPP/4Q1K1 w - - 0 1",
+      "caption": "White to move. A knight guards e8, so a lone rook check would simply be taken. The queen stands behind the rook.",
+      "line": [
+        {
+          "move": "e2e8",
+          "say": "The rook goes to e8 with check, backed by the queen behind it."
+        },
+        {
+          "move": "f6e8",
+          "say": "The knight must take it; there is no other reply."
+        },
+        {
+          "move": "e1e8",
+          "say": "The queen takes the knight with check, and the guard is gone."
+        }
+      ],
+      "highlight": [
+        "e8",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e2e8",
+            "n": 2
+          },
+          "statement": "White mates in two moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The knight on f6 covers e8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1b3ppp/p7/q7/8/2N5/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "Position A. White to move. Predict before you step: mate, or only a check?",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "The rook checks along the eighth rank. Look at each of the three questions."
+        }
+      ],
+      "highlight": [
+        "e8",
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e1e8",
+            "n": 1
+          },
+          "statement": "Re8 is checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No black piece covers e8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1b3pp1/p6p/q7/8/2N5/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "Position B: one black pawn has moved from h7 to h6. Same question: mate, or only a check?",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "The rook checks. The pawn move gave the king a square."
+        },
+        {
+          "move": "g8h7",
+          "say": "The king steps to h7 and the check is over."
+        }
+      ],
+      "highlight": [
+        "h7",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e1e8"
+          },
+          "statement": "Re8 is not checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "No white piece covers h7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/3b1ppp/p7/q7/8/2N5/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "Position C: the black bishop has moved from b7 to d7. Mate, or only a check?",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "The rook checks, but the bishop covers e8."
+        },
+        {
+          "move": "d7e8",
+          "say": "The bishop takes the rook, so the check does not mate."
+        }
+      ],
+      "highlight": [
+        "d7",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e1e8"
+          },
+          "statement": "Re8 is not checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "A black piece covers e8."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "e1e8",
+            "max": -4
+          },
+          "statement": "The rook is lost along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5ppp/p2b4/q7/8/2N5/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "Position D: the black bishop stands on d6 and the h-pawn is back on h7. Mate, or only a check?",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "The rook checks. This time a piece can step in."
+        },
+        {
+          "move": "d6f8",
+          "say": "The bishop interposes on f8, and the check is parried."
+        }
+      ],
+      "highlight": [
+        "d6",
+        "f8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e1e8"
+          },
+          "statement": "Re8 is not checkmate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces cover f8: the bishop and the king."
+        }
+      ]
     },
     {
       "type": "contrast",
-      "title": "One pawn move changes everything",
-      "prompt": "The h-pawn stands on h6 in the second position.",
+      "title": "What turns a mate into a check?",
+      "prompt": "Predict for each position: mate, or only a check? Then say what changed.",
       "working": "IA1-054",
-      "failing": "IA1-057",
-      "irrelevant": "IA1-058"
+      "failing": "IA1-057"
+    },
+    {
+      "type": "card",
+      "text": "**The checklist.** Before you call a check on the first rank mate, ask three questions in order. Where can the king go? Who can take the checker? Who can step in between? If the answers are 'nowhere', 'nobody' and 'nobody', it is mate. If not, say aloud which question failed: flight, capture or block. [H] Naming the failure may help you diagnose your own mistakes faster; this is untested."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In positions B, C and D, which condition failed? Which of the three questions do you usually forget to ask?",
+      "fields": [
+        {
+          "id": "failB",
+          "label": "B failed because:",
+          "options": [
+            "capture",
+            "flight square",
+            "block"
+          ]
+        },
+        {
+          "id": "failC",
+          "label": "C failed because:",
+          "options": [
+            "block",
+            "capture",
+            "flight square"
+          ]
+        },
+        {
+          "id": "failD",
+          "label": "D failed because:",
+          "options": [
+            "capture",
+            "block",
+            "flight square"
+          ]
+        },
+        {
+          "id": "forget",
+          "label": "The question I forget most:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**How the mate gets there.** [I] From the examples below, three things often come before the mate: pieces developed away from the back rank; a rook that was the only piece able to reach the rank goes elsewhere; and a pawn move that opens a file for the enemy rook. Dan Heisman's remedy [S] is to list the opponent's forcing replies (checks, captures, threats) before each move. A check on your first rank is one of them."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/ppp1R1pp/5p2/3r4/1P6/P7/2P2PPP/6K1 w - - 0 23",
+      "caption": "White to move. Black threatens Rd1+. Even the rook's return to e1 would only be taken with mate. White needs air. Predict what happens if the rook grabs the pawn on c7, then step through.",
+      "line": [
+        {
+          "move": "e7c7",
+          "say": "The grab ignores the threat."
+        },
+        {
+          "move": "d5d1",
+          "say": "Black's rook checks along the first rank. The pawns hold the king in and nothing can step in: mate."
+        }
+      ],
+      "highlight": [
+        "c7",
+        "e7",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "e7c7",
+            "cp": 1000
+          },
+          "statement": "The pawn grab loses to a forced mate."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "d5d1",
+            "n": 2,
+            "null_move_first": true
+          },
+          "statement": "If White passes, Black already wins by force: Rd1+, and the rook's return to e1 is taken with mate."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g1f1"
+            ]
+          },
+          "statement": "The engine prefers a king step to the pawn grab."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/1p2k1p1/2p4p/Pp1rpp2/1P1P3R/2P5/5PPP/6K1 w - - 0 28",
+      "caption": "White to move. The pawn on d4 blocks the d-file for now. What might a natural pawn capture do?",
+      "line": [
+        {
+          "move": "d4e5",
+          "say": "The pawn takes on e5 and leaves the d-file."
+        },
+        {
+          "move": "d5d1",
+          "say": "The file is open, Black's rook reaches the first rank, and the white king has nowhere to go: mate."
+        }
+      ],
+      "highlight": [
+        "d4",
+        "d5",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "d4e5",
+            "cp": 1000
+          },
+          "statement": "The capture loses to a forced mate."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "While the pawn stands on d4, Black's rook does not attack d1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-2"
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp3ppp/8/8/8/R7/PP3PPP/6K1 w - - 0 1",
+      "caption": "White to move. Black threatens a rook check on d1 that would be mate. First try: the h-pawn.",
+      "line": [
+        {
+          "move": "h2h3",
+          "say": "Luft with the h-pawn: the king gets the square h2. The price is that g3 loses one pawn guard."
+        },
+        {
+          "move": "d8d1",
+          "say": "Black checks anyway, but now the check is only a check."
+        },
+        {
+          "move": "g1h2",
+          "say": "The king steps to h2. The threat is gone. A king step to f1 also holds here, but it needs a free, safe square and is not always available."
+        }
+      ],
+      "highlight": [
+        "h2",
+        "h3",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2g3",
+              "g2g4",
+              "h2h3",
+              "f2f3",
+              "h2h4",
+              "g1f1",
+              "f2f4"
+            ],
+            "within_cp": 60
+          },
+          "statement": "The h-pawn move holds, like the g-pawn move and a king step."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 2
+          },
+          "statement": "Before the move, two white pawns guard g3."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "g3",
+            "color": "white",
+            "count": 1,
+            "after_move": "h2h3"
+          },
+          "statement": "After h3, only the f-pawn guards g3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp3ppp/8/8/8/R7/PP3PPP/6K1 w - - 0 1",
+      "caption": "The same position. Second try: the g-pawn. Ask what it leaves behind.",
+      "line": [
+        {
+          "move": "g2g3",
+          "say": "Luft with the g-pawn: the king gets g2, and the pawn leaves the long diagonal. The price is f3 and h3."
+        },
+        {
+          "move": "d8d1",
+          "say": "Black checks, but the king has a square."
+        },
+        {
+          "move": "g1g2",
+          "say": "The king steps to g2."
+        }
+      ],
+      "highlight": [
+        "g2",
+        "g3",
+        "f3",
+        "h3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "f3",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "Before the move, a white pawn guards f3."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "f3",
+            "color": "white",
+            "count": 0,
+            "after_move": "g2g3"
+          },
+          "statement": "After g3, no white pawn guards f3."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "h3",
+            "color": "white",
+            "count": 0,
+            "after_move": "g2g3"
+          },
+          "statement": "After g3, no white pawn guards h3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/pp3ppp/8/8/8/R7/1PP2PPP/6K1 w - - 0 1",
+      "caption": "A different setup: the pawn stands on c2 instead of a2, so the rook can return to a1. Third try: guard the first rank instead of making luft. [I] I guessed the guard would be best; Stockfish 19 at depth 16 rates it about 0.1 pawn below the best move here. One position proves nothing.",
+      "line": [
+        {
+          "move": "a3a1",
+          "say": "The rook returns to guard the rank. Now a check on d1 would simply lose a rook."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black makes a waiting move. [I] The rook is now tied to the first rank."
+        }
+      ],
+      "highlight": [
+        "a1",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g1f1",
+              "h2h4",
+              "f2f4",
+              "g2g4",
+              "g2g3",
+              "f2f3",
+              "h2h3",
+              "a3a1"
+            ],
+            "within_cp": 70
+          },
+          "statement": "The rook retreat holds, like the luft moves."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "a3a1",
+            "cp": 10
+          },
+          "statement": "The engine rates the retreat at least a tenth of a pawn below the best move here."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d1",
+            "color": "white",
+            "count": 1,
+            "after_move": "a3a1"
+          },
+          "statement": "After the retreat, the rook covers d1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-3"
+    },
+    {
+      "type": "board",
+      "fen": "8/4k2p/3n4/b4p2/3N4/8/P4PPP/6K1 w - - 2 38",
+      "caption": "White to move. Black has no rook and no queen, so nothing can use White's back rank. Would a quiet luft help, or does it only cost a move?",
+      "line": [
+        {
+          "move": "d4c6",
+          "say": "The knight checks the king and also attacks the bishop on a5."
+        },
+        {
+          "move": "e7e6",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "c6a5",
+          "say": "The knight takes the bishop. White has won a piece."
+        }
+      ],
+      "highlight": [
+        "c6",
+        "a5",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "d4c6",
+            "min": 3
+          },
+          "statement": "The fork wins a piece for White."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "h2h3",
+            "cp": 300
+          },
+          "statement": "Playing h3 first throws the win away."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "a5",
+            "color": "white",
+            "count": 1,
+            "after_move": "d4c6"
+          },
+          "statement": "The knight on c6 would attack the bishop on a5."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When to give luft.** Edward Lasker notes that every pawn move leaves something behind, and advises against a luft made as a precaution before a mate threat shows it is needed. [I] His advice is stated more strongly than modern practice follows: many strong players make h3 or a3 early for other reasons. The practical test is one question: can an enemy rook or queen reach my back rank soon? [H] Beginners may still gain from an early, cheap luft."
+    },
+    {
+      "type": "contrast",
+      "title": "Does White need luft now?",
+      "prompt": "Predict for each position: does White need to spend a move on luft now? Then name the one thing that differs.",
+      "working": "ITAC-LTACBACKRANK1-4",
+      "failing": "ITAC-LTACBACKRANK1-5"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Do you agree with the rule of thumb that luft waits until a threat shows? Think of your own games: did you lose more by giving luft too early, or by giving it too late? [H] I suspect beginners lose far more by waiting; I have not tested this.",
+      "fields": [
+        {
+          "id": "agree",
+          "label": "I:",
+          "options": [
+            "agree",
+            "disagree",
+            "depends"
+          ]
+        },
+        {
+          "id": "reason",
+          "label": "Because:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/2QP1ppp/1pn5/3p4/PP6/8/5PPP/2r3NK b - - 0 32",
+      "caption": "Decoy: the king is pulled to g1. Black to move. White's only protection against a second black rook is the king itself. Predict how Black can use that.",
+      "line": [
+        {
+          "move": "c1g1",
+          "say": "The rook takes the knight with check and forces the king to take it."
+        },
+        {
+          "move": "h1g1",
+          "say": "The king recaptures. It now stands on the first rank."
+        },
+        {
+          "move": "e8e1",
+          "say": "The second rook checks along the rank. The king is shut in by its own pawns: mate."
+        }
+      ],
+      "highlight": [
+        "c1",
+        "g1",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "c1g1",
+            "n": 2
+          },
+          "statement": "Black mates in two moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook on c1 attacks g1."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/p1n2ppp/1p6/2p5/4Q3/q7/5PPP/4R1K1 w - - 2 24",
+      "caption": "Deflection: the knight is pulled off c7. White to move. Two black pieces guard e8: the rook and the knight on c7. What happens if the knight is made to move?",
+      "line": [
+        {
+          "move": "e4a8",
+          "say": "The queen takes the rook with check and offers herself."
+        },
+        {
+          "move": "c7a8",
+          "say": "The knight takes the queen. It had to, and it has left c7."
+        },
+        {
+          "move": "e1e8",
+          "say": "The knight no longer guards e8, so the rook checks and nothing can answer."
+        }
+      ],
+      "highlight": [
+        "c7",
+        "e8",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e4a8",
+            "n": 2
+          },
+          "statement": "White mates in two moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces cover e8."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/r4ppp/4p3/8/8/3R3P/3q2P1/3R3K w - - 0 31",
+      "caption": "Exchange: rooks trade until none is left. White to move. Black's queen stands between White's two rooks, and Black's rook guards the eighth rank. Predict how many captures White needs.",
+      "line": [
+        {
+          "move": "d3d8",
+          "say": "The first rook takes the guard on d8 with check."
+        },
+        {
+          "move": "d2d8",
+          "say": "The queen must recapture. That clears the d-file for the second rook."
+        },
+        {
+          "move": "d1d8",
+          "say": "The second rook takes the queen with check, and nothing can answer."
+        }
+      ],
+      "highlight": [
+        "d8",
+        "d3",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "d3d8",
+            "n": 2
+          },
+          "statement": "White mates in two moves."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Three ways to remove the last guard.** You have just seen a decoy (a sacrifice drags a piece onto a square), a deflection (a forcing move pulls a guard away) and an exchange (a trade removes it). Each has its own lesson: L-TAC-DECOY-1, L-TAC-DEFLECT-1, L-TAC-REMOVE-DEFENDER-1 and L-TAC-OVERLOAD-1. Here, learn one habit: count the defenders of the key square first."
+    },
+    {
+      "type": "contrast",
+      "title": "Does the exchange work?",
+      "prompt": "Count the defenders of d8 before you decide. In the second position a black bishop has been added.",
+      "working": "ITAC-LTACBACKRANK1-6",
+      "failing": "ITAC-LTACBACKRANK1-7"
+    },
+    {
+      "type": "card",
+      "text": "**A mate threat wins material too.** A piece tied to guarding the first rank has less freedom, so it is often a worse defender elsewhere. [I] Edward Lasker lists a mate threat that ties a piece down among the ways a defender can be an illusion. Znosko-Borovsky's point about threats applies as well: a threat can pay off even if you never carry it out. The next boards show a poisoned piece and a forced loss."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/pp3ppp/3q4/8/8/3B4/PP3PPP/4R1K1 b - - 0 1",
+      "caption": "Black to move. White's bishop on d3 is attacked by the black queen and nothing defends it. Is it free?",
+      "line": [
+        {
+          "move": "d6d3",
+          "say": "The queen takes the free bishop, leaving the job of guarding the eighth rank."
+        },
+        {
+          "move": "e1e8",
+          "say": "The rook checks and the king has nowhere to go: mate."
+        }
+      ],
+      "highlight": [
+        "d3",
+        "d6",
+        "e1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [
+              "d3"
+            ]
+          },
+          "statement": "The bishop on d3 is attacked and undefended."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "d6d3",
+            "cp": 1000
+          },
+          "statement": "Taking the bishop loses to a forced mate."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/pp3ppp/3q4/8/8/3B4/PP3PPP/4R1K1 w - - 0 1",
+      "caption": "The same position with White to move. Black's queen is the only piece that can answer a check on e8.",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "Check along the eighth rank. Only the queen can step in, on f8."
+        },
+        {
+          "move": "d6f8",
+          "say": "The queen interposes. It has no other choice."
+        },
+        {
+          "move": "e8f8",
+          "say": "The rook takes the queen with check."
+        },
+        {
+          "move": "g8f8",
+          "say": "The king takes the rook. White gave a rook for a queen."
+        }
+      ],
+      "highlight": [
+        "e8",
+        "f8",
+        "d6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "e1e8",
+            "min": 3
+          },
+          "statement": "The rook check wins material for White."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Nothing can take the rook on e8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-8",
+      "silent": true
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/5ppp/8/8/8/8/5PPP/4R1K1 w - - 0 1",
+      "caption": "White to move. Both kings are shut in by their pawns and the rooks face each other. Who benefits from having the move?",
+      "line": [
+        {
+          "move": "e1e8",
+          "say": "White takes first, with check. Nothing can retake and the king has no square: mate."
+        }
+      ],
+      "highlight": [
+        "e1",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e1e8",
+            "n": 1
+          },
+          "statement": "White mates in one."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/5ppp/8/8/8/8/5PPP/4R1K1 b - - 0 1",
+      "caption": "The same position with Black to move. Predict the result.",
+      "line": [
+        {
+          "move": "e8e1",
+          "say": "Black takes first, with check. The same pattern gives mate to the other side."
+        }
+      ],
+      "highlight": [
+        "e1",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1
+          },
+          "statement": "Black mates in one."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two questions, every move.** Can I check on his first rank, and is it mate? Could he do it to me? [I] Looking at both kings every move is cheap and may catch these mates on both sides. This mirrors Heisman's looking-for-trouble routine [S]: find his threat, then the prevention. Asking 'what rook could check there?' before a quiet move is its practical form. More mixed practice: L-TAC-BACKRANK-2."
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-9"
     },
     {
       "type": "item",
@@ -88,12 +1279,32 @@
     },
     {
       "type": "item",
-      "item": "IA1-060",
+      "item": "ITAC-LTACBACKRANK1-10",
       "silent": true
     },
     {
       "type": "item",
-      "item": "IA1-061",
+      "item": "IG-MATE1-132",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-tEHF0",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-12",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "ITAC-LTACBACKRANK1-13",
       "silent": true
     },
     {
@@ -105,9 +1316,153 @@
       "n": 6
     },
     {
+      "type": "board",
+      "fen": "4r2k/1Q4bp/p5p1/1p6/8/5B2/5NPP/4r1RK w - - 1 46",
+      "caption": "From a Lichess puzzle record (eSn5l, CC0), tagged as a master game in that database. White to move. Black's rook on e1 attacks the white rook on g1. In the game White took the pawn on a6 with the queen. What could go wrong with that?",
+      "highlight": [
+        "a6",
+        "e1",
+        "g1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "Black's rook on e1 attacks White's rook on g1."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "b7a6",
+            "cp": 1000
+          },
+          "statement": "The queen capture on a6 loses to a forced mate."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f2e4"
+            ]
+          },
+          "statement": "A knight move is best."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "min": 300,
+            "max": 1200
+          },
+          "statement": "White stands clearly better (engine, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r2k/6bp/Q5p1/1p6/8/5B2/5NPP/4r1RK b - - 0 46",
+      "caption": "In the game the queen took on a6. Black to move. Predict Black's forcing move before you step: the white king has only its own pawns for cover.",
+      "line": [
+        {
+          "move": "e1g1",
+          "say": "A rook sacrifice: the capture on g1 forces the king to recapture."
+        },
+        {
+          "move": "h1g1",
+          "say": "The king takes the rook. Its shelter is now the first rank, with no air."
+        }
+      ],
+      "highlight": [
+        "e1",
+        "g1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e1g1",
+            "n": 2
+          },
+          "statement": "Black mates in two moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook on e1 attacks g1."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r2k/6bp/Q5p1/1p6/8/5B2/5NPP/6K1 b - - 0 47",
+      "caption": "Black to move again. The second rook is still on e8. Predict the finish.",
+      "line": [
+        {
+          "move": "e8e1",
+          "say": "The second rook checks along the rank. The pawns hold the king in: mate. One sacrifice dragged the king where the other rook could reach it."
+        }
+      ],
+      "highlight": [
+        "e1",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e8e1",
+            "n": 1
+          },
+          "statement": "Black mates in one."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Recap.** A back-rank mate needs three things together: no flight square, nothing to capture the checker, nothing to block. Any piece that can check along the rank will do. The cure is cheap: a luft, a guard, or noticing that no heavy piece can arrive. Count defenders before an exchange. Look at both kings on every move. Positions with no mate are common, so ask the three questions every time."
+    },
+    {
+      "type": "card",
+      "text": "**Self-check.** Before you write, test yourself. Did I say when it works (all three conditions)? Did I say when it fails (flight, capture, block)? Did I give an example a beginner could set up with a few pieces? Did I name one mistake, such as grabbing a pawn with the only guard? Nothing here is graded; the list is only for you."
+    },
+    {
       "type": "reflect",
       "kind": "unsure",
-      "prompt": "When you check a back rank, which of the three conditions do you check last: escape squares, capture, or block?"
+      "prompt": "Teach it back. Explain back-rank mate and luft to a beginner who knows how the pieces move. Use your own words.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea:"
+        },
+        {
+          "id": "when",
+          "label": "When it works:"
+        },
+        {
+          "id": "ex",
+          "label": "An example a beginner could set up:"
+        },
+        {
+          "id": "warn",
+          "label": "One warning:"
+        }
+      ]
     }
   ],
   "review": {
@@ -115,8 +1470,17 @@
     "reviewer": null
   },
   "sources": [
-    "sources/sheets/nimzowitsch_my-system.md (back-rank mate through exchanges, seventh and eighth ranks)",
-    "docs/inference-01-puzzle-theme-difficulty.md (backRankMate median about 990)",
-    "docs/curriculum-map-v1.md S3"
+    "sources/sheets/nimzowitsch_my-system.md (idea 21: a short series of exchanges can win a back-rank mate) [V-sheet]",
+    "docs/citable-views.md 4.4 (Emanuel Lasker, Common Sense in Chess: count the king's squares, keep the checker safe) [V-sheet]",
+    "docs/citable-views.md 4.12 and sources/sheets/edlasker_chess-strategy.md K17 and K6 (d): every pawn move leaves something behind; a luft is right once a mate threat shows it is needed [V-sheet]",
+    "docs/citable-views.md 5.8 and sheet K3: a defender can be an illusion, for instance when a mate threat ties it down (Edward Lasker) [V-sheet]",
+    "docs/citable-views.md 5.9 (Znosko-Borovsky: real and fictitious threats) [V-sheet]",
+    "docs/citable-views.md 10.4 and 10.6 (Heisman: list the opponent's forcing replies; Looking for Trouble) [S, not re-read]",
+    "docs/citable-views.md 12.13 (naming failures as a self-diagnosis aid) [H]",
+    "Lichess puzzle database (CC0), positions from real games: 3PuVM (hook), TRIMp (decoy), 33pRu (deflection), 2Vsf7 (exchange), 2f6Ew and 6ANXe (drift into the mate), eSn5l (real example, master game); each position is the position after the opponent's first recorded move, replayed with python-chess [V]",
+    "Shipped items re-used: IA1-054 to IA1-059, IG-MATE1-132, IL-tEHF0. Positions typed by hand and checked by the engine: see content/items/lesson-tac-l-tac-backrank-1.json [V]",
+    "Position olP4N (early luft costs a move) is from the Lichess puzzle database (CC0) [V]",
+    "competition docs docs/competition-chesscom.md and docs/competition-chess-steps.md (structure: short theory, worksheet, mixed review) [S]",
+    "No statistics from our own data are used in this lesson. Hypotheses labelled [H] in the text are the author's own and untested. The engine claim for every board is under the recorded settings (Stockfish 19 lite, depth 16): evidence, not proof."
   ]
 }

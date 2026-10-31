@@ -1,0 +1,2357 @@
+{
+ "id": "L-HI-ENGINES-HUMANS-3",
+ "course": "history-and-meta",
+ "series": "engines",
+ "title": "Engines and humans 3: using an engine to learn",
+ "skill": "GAME.HISTORY",
+ "depth": "D1",
+ "uses": [
+  "SAF.LOOSE",
+  "SAF.THREAT",
+  "GAME.OWN"
+ ],
+ "minutes": 55,
+ "outcomes": [
+  "Writes a one-sentence verdict (move, threat, plan) for a position before asking an engine, then compares ideas before numbers",
+  "Reads an engine score with its sign, its depth and a mate score, and says in plain words who is better and by roughly how much",
+  "Reads an engine line by saying what each move threatens and what it stops, and says why the first move is advice and the rest evidence",
+  "Shows with two boards why the engine's best move is not always the best teaching move",
+  "Names one pattern behind three blunders (the capturing piece was a guard) and asks what a piece was doing before it captures or trades",
+  "Uses the app's Analysis page (lines, depth, whole-game analysis, next mistake, learn from your mistakes, show threats) inside a small review routine"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQ1RK1 w - - 2 7",
+   "caption": "A quiet Italian position, White to move. Several moves score almost the same for the engine: h3, b4 and Nbd2 are each within about a tenth of a pawn of its first choice, which was Re1 in our run [V]. Before you read on, choose your move and say what it is for. Not 'it develops' but what it makes possible. The next two boards show two plans, not verdicts.",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f1e1",
+       "h2h3",
+       "b1d2",
+       "b2b4"
+      ],
+      "within_cp": 30
+     },
+     "statement": "At depth 16 the engine's first choice is Re1, h3 or Nbd2 (which one depends on the settings), and h3, b4, Nbd2 and Re1 all score within 0.3 pawn of the best. In our runs the gap was under 0.1 pawn."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 70,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position as level: between about -0.3 and +0.7 pawns."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write your move and what it makes possible later. Then guess: how many tenths of a pawn separate the engine's best and worst of h3, b4 and Nbd2?",
+   "fields": [
+    {
+     "id": "move",
+     "label": "my move:"
+    },
+    {
+     "id": "idea",
+     "label": "what it makes possible:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQ1RK1 w - - 2 7",
+   "caption": "The first eight plies of an engine line that starts with h3 (one depth-16 run; other settings order the moves differently, so read it as an example of the plan). Every position along it stays within 0.3 pawn of level in our check [V]. Read the purpose of each move, not its name.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "The pawn takes g4 away from Black's bishop."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black takes g5 away from White's pieces."
+    },
+    {
+     "move": "b2b4",
+     "say": "The pawn attacks the bishop on c5 and starts a queenside advance."
+    },
+    {
+     "move": "c5b6",
+     "say": "The bishop steps off the attacked square and still eyes f2."
+    },
+    {
+     "move": "a2a4",
+     "say": "The a-pawn heads for a5, where it would attack the bishop again."
+    },
+    {
+     "move": "a7a5",
+     "say": "Black stops that: the pawn on a5 attacks the pawn on b4."
+    },
+    {
+     "move": "b4b5",
+     "say": "The pawn attacks the knight on c6."
+    },
+    {
+     "move": "c6e7",
+     "say": "The knight retreats, and White's pawns now stand on a4 and b5."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3"
+      ]
+     },
+     "statement": "After h3, one white pawn attacks g4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "h7h6"
+      ]
+     },
+     "statement": "After ...h6, one black pawn attacks g5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "h7h6",
+       "b2b4"
+      ]
+     },
+     "statement": "After b4, one white piece attacks the bishop on c5."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "h7h6",
+       "b2b4",
+       "c5b6"
+      ]
+     },
+     "statement": "After ...Bb6, one black piece attacks f2."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "h7h6",
+       "b2b4",
+       "c5b6",
+       "a2a4",
+       "a7a5"
+      ]
+     },
+     "statement": "After ...a5, one black pawn attacks b4."
+    },
+    {
+     "id": "C6",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "h7h6",
+       "b2b4",
+       "c5b6",
+       "a2a4",
+       "a7a5",
+       "b4b5"
+      ]
+     },
+     "statement": "After b5, one white pawn attacks the knight on c6."
+    },
+    {
+     "id": "C7",
+     "type": "piece_on",
+     "params": {
+      "square": "b5",
+      "piece": "P",
+      "after_moves": [
+       "h2h3",
+       "h7h6",
+       "b2b4",
+       "c5b6",
+       "a2a4",
+       "a7a5",
+       "b4b5",
+       "c6e7"
+      ]
+     },
+     "statement": "White has a pawn on b5 at the end of the line."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/2B1P3/2PP1N2/PP3PPP/RNBQ1RK1 w - - 2 7",
+   "caption": "The plain developing move: the first eight plies of an engine line from the same run, every position within 0.3 pawn of level [V]. Same question for each move: what does it make possible?",
+   "line": [
+    {
+     "move": "b1d2",
+     "say": "The knight develops and, with the d-pawn, guards e4."
+    },
+    {
+     "move": "a7a6",
+     "say": "Black takes b5 away from White's pieces and keeps the bishop's retreat open."
+    },
+    {
+     "move": "a2a4",
+     "say": "White takes b5 back: the pawn on a4 attacks it."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black takes g5 away from White's pieces."
+    },
+    {
+     "move": "h2h3",
+     "say": "The pawn takes g4 from Black's bishop."
+    },
+    {
+     "move": "c5a7",
+     "say": "The bishop steps out of reach of a later b4 and still looks at f2 from a7."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook takes the e-file behind the pawn on e4."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black challenges White's bishop on c4."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "b1d2"
+      ]
+     },
+     "statement": "After Nbd2, two white pieces defend the pawn on e4: the knight and the d-pawn."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "a7a6"
+      ]
+     },
+     "statement": "After ...a6, one black pawn attacks b5."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "a7a6",
+       "a2a4"
+      ]
+     },
+     "statement": "After a4, one white pawn attacks b5."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "a7a6",
+       "a2a4",
+       "h7h6",
+       "h2h3"
+      ]
+     },
+     "statement": "After h3, one white pawn attacks g4."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "f2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "a7a6",
+       "a2a4",
+       "h7h6",
+       "h2h3",
+       "c5a7"
+      ]
+     },
+     "statement": "After ...Ba7, one black piece attacks f2."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "b1d2",
+       "a7a6",
+       "a2a4",
+       "h7h6",
+       "h2h3",
+       "c5a7",
+       "f1e1"
+      ]
+     },
+     "statement": "After Re1, three white pieces defend e4."
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "a7a6",
+       "a2a4",
+       "h7h6",
+       "h2h3",
+       "c5a7",
+       "f1e1",
+       "c8e6"
+      ]
+     },
+     "statement": "After ...Be6, one black piece attacks the bishop on c4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Two moves, two ideas.** At depth 16 the engine put Re1 first, with h3, b4 and Nbd2 each within a tenth of a pawn [V, one run]. A gap that small is invisible in play. The difference you can feel is the idea: one plan restrains Black and gains queenside space, the other finishes development first. [I] Both are ordinary here: the number cannot choose, your reason can."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which plan did you prefer, and can you give a reason that does not use a number? If your reason was a move name, rewrite it as an idea.",
+   "fields": [
+    {
+     "id": "reason",
+     "label": "my reason, as an idea:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question and the method.** Can you review a game engine-last, find the pattern behind a blunder, and read a score and a line the way a teacher would? Engine-last means: one, look and name a threat, a weak spot and a plan; two, write one sentence of why; three, only then ask the engine; four, compare ideas before numbers. That order is our own design decision, not a tested result."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "caption": "Lichess game ufcqmfxx, played 31 Dec 2012 (UTC) by the game header, listed in the January 2013 database file. Ratings 1463 (White) and 1504 (Black) from the headers; moves are facts. The opening is an Italian Game with Black's bishop to e7, sometimes called the Hungarian Defence [R]. Eleven ordinary moves each. We stop four times. Each stop: look, write your sentence, then reveal.",
+   "line": [
+    {
+     "move": "e2e4",
+     "say": "White takes the centre and opens lines for the queen and a bishop."
+    },
+    {
+     "move": "e7e5",
+     "say": "Black matches it."
+    },
+    {
+     "move": "g1f3",
+     "say": "The knight attacks the pawn on e5."
+    },
+    {
+     "move": "b8c6",
+     "say": "The knight defends the pawn on e5."
+    },
+    {
+     "move": "f1c4",
+     "say": "The bishop eyes f7, a square only the king defends."
+    },
+    {
+     "move": "f8e7",
+     "say": "Black develops quietly and prepares to castle."
+    },
+    {
+     "move": "d2d4",
+     "say": "A centre pawn challenges the pawn on e5."
+    },
+    {
+     "move": "e5d4",
+     "say": "Black takes."
+    },
+    {
+     "move": "f3d4",
+     "say": "The knight recaptures and attacks the knight on c6."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black supports the e5 square and opens the bishop on c8."
+    },
+    {
+     "move": "b1c3",
+     "say": "The knight develops and defends the pawn on e4."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black attacks e4 and develops the last knight."
+    },
+    {
+     "move": "c1g5",
+     "say": "The bishop attacks the knight on f6."
+    },
+    {
+     "move": "c6d4",
+     "say": "Black trades a pair of knights."
+    },
+    {
+     "move": "d1d4",
+     "say": "The queen recaptures and also attacks f6."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black asks the bishop what it wants."
+    },
+    {
+     "move": "g5h4",
+     "say": "The bishop keeps the pressure on f6."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles; the knight on f6 stays well protected."
+    },
+    {
+     "move": "e1c1",
+     "say": "White castles long: kings on opposite wings."
+    },
+    {
+     "move": "c8d7",
+     "say": "Black develops the last minor piece."
+    },
+    {
+     "move": "h1e1",
+     "say": "The second rook joins the e-file behind the pawn on e4."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black's rook takes the other end of the e-file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3"
+      ]
+     },
+     "statement": "After Nf3, one white piece attacks the pawn on e5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6"
+      ]
+     },
+     "statement": "After ...Nc6, one black piece defends the pawn on e5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4"
+      ]
+     },
+     "statement": "After Bc4, one white piece attacks f7."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4"
+      ]
+     },
+     "statement": "After Bc4, one black piece defends f7: the king."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4"
+      ]
+     },
+     "statement": "After d4, one white pawn attacks e5."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "c6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4"
+      ]
+     },
+     "statement": "After Nxd4, one white piece attacks the knight on c6."
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4",
+       "d7d6",
+       "b1c3",
+       "g8f6"
+      ]
+     },
+     "statement": "After ...Nf6, one black piece attacks the pawn on e4."
+    },
+    {
+     "id": "C8",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4",
+       "d7d6",
+       "b1c3",
+       "g8f6",
+       "c1g5"
+      ]
+     },
+     "statement": "After Bg5, one white piece attacks the knight on f6."
+    },
+    {
+     "id": "C9",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4",
+       "d7d6",
+       "b1c3",
+       "g8f6",
+       "c1g5",
+       "c6d4",
+       "d1d4"
+      ]
+     },
+     "statement": "After Qxd4, two white pieces attack the knight on f6."
+    },
+    {
+     "id": "C10",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "queenside",
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4",
+       "d7d6",
+       "b1c3",
+       "g8f6",
+       "c1g5",
+       "c6d4",
+       "d1d4",
+       "h7h6",
+       "g5h4",
+       "e8g8",
+       "e1c1"
+      ]
+     },
+     "statement": "After O-O-O, White's king is on the queenside."
+    },
+    {
+     "id": "C11",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "e2e4",
+       "e7e5",
+       "g1f3",
+       "b8c6",
+       "f1c4",
+       "f8e7",
+       "d2d4",
+       "e5d4",
+       "f3d4",
+       "d7d6",
+       "b1c3",
+       "g8f6",
+       "c1g5",
+       "c6d4",
+       "d1d4",
+       "h7h6",
+       "g5h4",
+       "e8g8",
+       "e1c1",
+       "c8d7",
+       "h1e1"
+      ]
+     },
+     "statement": "After Rhe1, three white pieces defend the pawn on e4: the knight, the queen and the rook."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppbbpp1/3p1n1p/8/2BQP2B/2N5/PPP2PPP/2KRR3 w - - 6 12",
+   "caption": "Decision point 1, move 12. White to move. Black's king is castled short, White's long. Write your move, the threat you fear and the plan you like. Then step through what was played.",
+   "line": [
+    {
+     "move": "c3d5",
+     "say": "White offers a knight trade, and the knight attacks e7 and c7."
+    },
+    {
+     "move": "f6d5",
+     "say": "Black trades."
+    },
+    {
+     "move": "d4d5",
+     "say": "White recaptures; the bishop on h4 is now attacked."
+    },
+    {
+     "move": "e7h4",
+     "say": "Black takes the bishop: nothing protects it."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the pawn move to e5."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "c3d5",
+      "cp": 500
+     },
+     "statement": "At depth 16 the knight move to d5 is rated at least 5 pawns lower than the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d5",
+      "squares": [
+       "b4",
+       "b6",
+       "c3",
+       "c7",
+       "e3",
+       "e7",
+       "f4",
+       "f6"
+      ],
+      "after_moves": [
+       "c3d5"
+      ]
+     },
+     "statement": "After the knight reaches d5 it attacks exactly these squares: b4, b6, c3, c7, e3, e7, f4, f6."
+    },
+    {
+     "id": "C4",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "h4"
+      ],
+      "after_moves": [
+       "c3d5",
+       "f6d5",
+       "d4d5"
+      ]
+     },
+     "statement": "After Nd5 Nxd5 Qxd5, White's only loose piece is the bishop on h4."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Decision point 1: write your sentence before you step through the reveal above, then compare your idea with the engine's choice, and with a quieter move, on the boards later in this lesson.",
+   "fields": [
+    {
+     "id": "move",
+     "label": "my move:"
+    },
+    {
+     "id": "threat",
+     "label": "what I fear:"
+    },
+    {
+     "id": "plan",
+     "label": "my plan:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppbbpp1/3p1n1p/8/2BQP2B/2N5/PPP2PPP/2KRR3 w - - 6 12",
+   "caption": "What the traded piece was doing. Look at the diagonal from e7 to h4.",
+   "line": [
+    {
+     "move": "c3d5",
+     "say": "White offers a knight trade."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight on f6 was blocking this diagonal. When it goes, the bishop on e7 attacks h4 and nothing guards h4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "h4"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "h4"
+      ],
+      "after_moves": [
+       "c3d5",
+       "f6d5"
+      ]
+     },
+     "statement": "After the knight trade on d5, the bishop on e7 attacks the bishop on h4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What was the traded piece doing?** The knight on f6 stood between two bishops. Trading it opened the line and left a bishop with no defender. [I] A miss like this is rarely about long calculation. It comes from asking what a trade wins and not what the traded piece was *doing*. The engine marks the move bad. Only your own sentence shows which question you skipped."
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppb1pp1/3p3p/3Q4/2B1P2b/8/PPP2PPP/2KRR3 w - - 0 14",
+   "caption": "Decision point 2, move 14. White is a piece down and the engine's score is about -5 (White's side). What do you try when the position is lost? Choose a move that sets problems, then step through what was played.",
+   "line": [
+    {
+     "move": "d5f7",
+     "say": "The queen takes a pawn with check."
+    },
+    {
+     "move": "g8h8",
+     "say": "The king goes to the corner."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn advances and attacks the pawn on d6."
+    },
+    {
+     "move": "e8f8",
+     "say": "Black's rook attacks the queen."
+    },
+    {
+     "move": "f7g6",
+     "say": "The queen steps away and eyes h7."
+    },
+    {
+     "move": "h4f2",
+     "say": "Black takes a pawn and attacks the rook on e1."
+    },
+    {
+     "move": "c4d3",
+     "say": "The bishop lines up behind the queen on the diagonal to h7."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -700,
+      "max": -350,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position as clearly better for Black: between about -7 and -3.5 pawns."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d5f7"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the queen capture on f7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d5f7"
+      ]
+     },
+     "statement": "After Qxf7+ one white piece gives check on g8."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d5f7",
+       "g8h8",
+       "e4e5"
+      ]
+     },
+     "statement": "After e5, one white pawn attacks d6."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d5f7",
+       "g8h8",
+       "e4e5",
+       "e8f8"
+      ]
+     },
+     "statement": "After ...Rf8, one black piece attacks the queen on f7."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d5f7",
+       "g8h8",
+       "e4e5",
+       "e8f8",
+       "f7g6"
+      ]
+     },
+     "statement": "After Qg6, one white piece attacks h7."
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d5f7",
+       "g8h8",
+       "e4e5",
+       "e8f8",
+       "f7g6",
+       "h4f2"
+      ]
+     },
+     "statement": "After ...Bxf2, one black piece attacks the rook on e1."
+    },
+    {
+     "id": "C8",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "g6"
+      ],
+      "after_moves": [
+       "d5f7",
+       "g8h8",
+       "e4e5",
+       "e8f8",
+       "f7g6",
+       "h4f2",
+       "c4d3"
+      ]
+     },
+     "statement": "The bishop on d3 defends the queen on g6."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "[H] When you are lost, the best practical move is often the one that asks the opponent the most questions. Do you agree? What does it cost if the opponent answers correctly?",
+   "fields": [
+    {
+     "id": "view",
+     "label": "my view:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2q1r1k/pppb2p1/3p2Qp/4P3/8/3B4/PPP2bPP/2KRR3 b - - 1 17",
+   "caption": "Decision point 3, move 17. Black is a piece up and it is Black's move. Before the engine speaks: what does White threaten? You do not need a machine to see this one. Write the threat and two ways to stop it.",
+   "arrows": [
+    {
+     "from": "g6",
+     "to": "h7"
+    },
+    {
+     "from": "d3",
+     "to": "h7"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "g6h7",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If Black could pass, White would mate at once with the queen move to h7."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write the threat in one sentence and two moves that stop it.",
+   "fields": [
+    {
+     "id": "threat",
+     "label": "White threatens:"
+    },
+    {
+     "id": "stops",
+     "label": "two ways to stop it:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2q1r1k/pppb2p1/3p2Qp/4P3/8/3B4/PPP2bPP/2KRR3 b - - 1 17",
+   "caption": "Black's move in the game, and what followed.",
+   "line": [
+    {
+     "move": "h8g8",
+     "say": "Black steps off h8. The game move."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn attacks d7 and f7, and White's threat on h7 stays."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "h8g8",
+      "cp": 800
+     },
+     "statement": "At depth 16 the king move to g8 is rated at least 8 pawns lower than the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d8g5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the queen check on g5."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h8g8",
+       "e5e6"
+      ]
+     },
+     "statement": "After e6, one white pawn attacks the bishop on d7."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-7"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/pppb2p1/3pP1Qp/8/8/3B4/PPP2bPP/2KRR3 b - - 0 18",
+   "caption": "Decision point 4 was the item above. This is what Black played at move 18, and the end of the game. (At move 17 the engine's first choice was the queen check you were asked to find.)",
+   "line": [
+    {
+     "move": "f2e1",
+     "say": "Black takes a rook and ignores the threat."
+    },
+    {
+     "move": "g6h7",
+     "say": "The queen mates: the bishop on d3 defends it and the king has no square."
+    }
+   ],
+   "orientation": "black",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "f2e1",
+      "cp": 3000
+     },
+     "statement": "At depth 16 the bishop capture on e1 is rated at least 30 pawns lower than the engine's best move (it allows a mate)."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f2e1",
+       "g6h7"
+      ]
+     },
+     "statement": "After Bxe1 and Qh7, the bishop on d3 defends the queen on h7."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The same blind spot twice.** Black missed the mating idea on h7 at move 17 and again at move 18 [V from this game]. [H] Reviewing engine-last would expose it sooner: your own written sentence shows what you did not look for, while an engine-first review shows only the answer. [S] Our notes lean on VanLehn's review of tutoring, where feedback on the learner's own attempt at each step does the work. Untested for chess here."
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/p1p1bpp1/1p2pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 8",
+   "caption": "Level. A Queen's Gambit structure; no piece is hanging for either side [V]. The engine says about +0.2 (White's side). Say it aloud: who is better, and by how much, in words?",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 60,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position between about -0.3 and +0.6 pawns: level."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "White has no loose piece."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Black has no loose piece."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k2r/rp2np2/p1pp1nq1/4p1pp/NPP1P3/P2P2QP/4BPP1/1R3RK1 w k - 2 19",
+   "caption": "A clear edge, nothing forced. The engine rates this about +2 for White. [I] One reason a reader might give: the knight on a4 and White's extra space on the queenside. Say your own reason. Same question: who, and how much in words?",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 150,
+      "max": 300,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position between about +1.5 and +3.0 pawns for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppbbpp1/3p3p/3Q4/2B1P2B/8/PPP2PPP/2KRR3 b - - 0 13",
+   "caption": "Black to move. The engine shows about -4.8, still from White's side. The minus sign means Black is better. Why? The engine's number is only the result; the reason is on the board.",
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "h4"
+    }
+   ],
+   "orientation": "black",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -600,
+      "max": -380,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position between about -6.0 and -3.8 pawns: clearly better for Black."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "h4"
+      ]
+     },
+     "statement": "White's only loose piece is the bishop on h4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Reading a score.** The number is pawns from White's side: plus one (100 centipawns) means White is about a pawn ahead, minus one means Black is. 'M3' means mate in three. 'Depth 16' means the main lines reached about sixteen half-moves; some go deeper, some shallower [R]. [I] Rough words: under half a pawn level, up to one and a half a small edge, up to three a clear edge, beyond that decisive."
+  },
+  {
+   "type": "card",
+   "text": "**What a pawn is worth to a person.** The score assumes both sides play perfectly from here. *Win chance* turns it into odds: in the app's formula plus one pawn is about 59 per cent for White and plus three about 75 [V, arithmetic checked]. [I] For club players the practical chances are probably closer to level, since nobody plays perfectly. The marks ?!, ? and ?? later measure lost win chance."
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-10"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bp1p/p1np1np1/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR2K w - - 0 10",
+   "caption": "Ruy Lopez, White to move. The engine says about +0.3: read the number first (who, how much, in words), then read the line, asking of every move: what does it threaten, and what does it stop? The line comes from one depth-16 run that showed three lines; a run showing one line preferred a different recapture on b3.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "A waiting move that takes g4 from Black's bishop before the centre advance."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black challenges the bishop on b3."
+    },
+    {
+     "move": "d2d4",
+     "say": "The centre pawn attacks e5 at last."
+    },
+    {
+     "move": "e6b3",
+     "say": "Black trades bishops."
+    },
+    {
+     "move": "d1b3",
+     "say": "The queen recaptures and looks along the diagonal at f7."
+    },
+    {
+     "move": "d8d7",
+     "say": "Black's queen steps to d7 and helps guard e6."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h2h3",
+       "a2a4",
+       "d2d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the pawn move to h3, a4 or d4, all within 0.4 pawns of the best."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 10,
+      "max": 90,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position between about +0.1 and +0.9 pawns."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3"
+      ]
+     },
+     "statement": "After h3, one white pawn attacks g4."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "b3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "c8e6"
+      ]
+     },
+     "statement": "After ...Be6, one black piece attacks the bishop on b3."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "c8e6",
+       "d2d4"
+      ]
+     },
+     "statement": "After d4, one white pawn attacks e5."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "c8e6",
+       "d2d4",
+       "e6b3",
+       "d1b3"
+      ]
+     },
+     "statement": "After Qxb3, one white piece attacks f7."
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "h2h3",
+       "c8e6",
+       "d2d4",
+       "e6b3",
+       "d1b3",
+       "d8d7"
+      ]
+     },
+     "statement": "After ...Qd7, two black pieces defend e6."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The first move is advice; the rest is evidence.** The first move is the engine's advice. Each later move answers the reply that would otherwise be good. [I] Past about five plies the line is increasingly the engine's guess, and the order of moves changes between runs, as the earlier boards showed. For each move ask two things: what does it threaten, and what does it stop?"
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-11"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/ppp2pb1/5p2/8/2PP2QP/2N5/PP6/2KR4 w - - 0 18",
+   "caption": "From puzzle 9ESVF (Lichess puzzle database, a real game), after a trade of pieces on f6. White to move. One quiet move wins by force: find it before you step.",
+   "line": [
+    {
+     "move": "d1g1",
+     "say": "A quiet rook move: the queen on g4 now has a protected capture on g7."
+    },
+    {
+     "move": "g8h8",
+     "say": "Black's king steps to h8; the engine finds no defence that avoids mate."
+    },
+    {
+     "move": "g4g7",
+     "say": "The queen takes the bishop, protected by the rook, and the king has no square."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "d1g1",
+      "n": 2
+     },
+     "statement": "White mates in two moves, starting with the rook move to g1."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d1g1"
+      ]
+     },
+     "statement": "After Rg1 the queen attacks g7 and the rook stands behind it on the same file."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r5k1/p1ppq1bR/1p2p1Q1/5rP1/6p1/2P5/PP3PP1/1K1R4 w - - 3 24",
+   "caption": "A mate score (puzzle 76PJV, a real game). At depth 2 the engine shows about -1.3 here (Black better). At depth 6 the same search finds a forced mate in three for White [V, one-off run]. The quiet first move is a rook coming to the h-file; the finish is a sacrifice.",
+   "line": [
+    {
+     "move": "d1h1",
+     "say": "A quiet rook move: two rooks now point at h8."
+    },
+    {
+     "move": "g8f8",
+     "say": "The king steps to f8, but the engine finds no defence that avoids mate."
+    },
+    {
+     "move": "h7h8",
+     "say": "The rook sacrifices itself on the corner square."
+    },
+    {
+     "move": "g7h8",
+     "say": "The bishop must take the rook."
+    },
+    {
+     "move": "h1h8",
+     "say": "The second rook takes the bishop and mates."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -300,
+      "max": -50,
+      "depth": 2
+     },
+     "statement": "At depth 2 the engine rates the position between about -3.0 and -0.5 pawns, in Black's favour."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "d1h1",
+      "n": 3
+     },
+     "statement": "White mates in three moves, starting with the rook move to h1."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Depth is a statement about effort.** The same position gave about -1.3 at depth 2 and a forced mate at depth 6 [V]. A score without its depth is half a sentence. When you review, note the depth the app reached before you trust a surprising score; if it is low, wait or raise it. [I] Below roughly intermediate level, naming the pattern probably helps more than reading evaluations. Untested here."
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppbbpp1/3p1n1p/8/2BQP2B/2N5/PPP2PPP/2KRR3 w - - 6 12",
+   "caption": "Move 12 again. The best move is not always the best lesson. The engine's first choice, e5, begins a nine-ply line with a check in the middle [V, one depth-16 run]. [I] A human would struggle to see all of it. Step through it: where would you have stopped calculating?",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "The pawn attacks the knight on f6, which the bishop on h4 already attacks."
+    },
+    {
+     "move": "d6e5",
+     "say": "Black takes, and the new pawn attacks the white queen."
+    },
+    {
+     "move": "e1e5",
+     "say": "The rook takes the pawn, and now attacks the bishop on e7."
+    },
+    {
+     "move": "d7e6",
+     "say": "Black blocks the e-file, and the bishop attacks the bishop on c4."
+    },
+    {
+     "move": "c4e6",
+     "say": "White takes the bishop. The black queen now looks at the white queen."
+    },
+    {
+     "move": "d8d4",
+     "say": "Black takes the queen."
+    },
+    {
+     "move": "e6f7",
+     "say": "White checks first with the bishop."
+    },
+    {
+     "move": "g8f7",
+     "say": "The king takes."
+    },
+    {
+     "move": "d1d4",
+     "say": "The rook takes the queen. Count what each side has now."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "e4e5"
+      ]
+     },
+     "statement": "After e5, two white pieces attack the knight on f6."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e4e5",
+       "d6e5"
+      ]
+     },
+     "statement": "After ...dxe5, one black pawn attacks the white queen on d4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e4e5",
+       "d6e5",
+       "e1e5"
+      ]
+     },
+     "statement": "After Rxe5, one white piece attacks the bishop on e7."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e4e5",
+       "d6e5",
+       "e1e5",
+       "d7e6"
+      ]
+     },
+     "statement": "After ...Be6, one black piece attacks the bishop on c4."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e4e5",
+       "d6e5",
+       "e1e5",
+       "d7e6",
+       "c4e6"
+      ]
+     },
+     "statement": "After Bxe6, one black piece attacks the white queen on d4."
+    },
+    {
+     "id": "C6",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's first choice is the pawn move to e5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/pppbbpp1/3p1n1p/8/2BQP2B/2N4P/PPP2PP1/2KRR3 b - - 0 12",
+   "caption": "The quiet alternative: h3 first, taking g4 from Black's pieces. Black is to move and the engine still prefers White by about 1.1 to 1.4 pawns, a small-to-moderate edge on this lesson's scale. After h3 the e5 break is still available. The line is an example (a multi-line engine run gave it; other runs differ), and the score stays near +1.1 to +1.5 along it [V, one run].",
+   "line": [
+    {
+     "move": "c7c6",
+     "say": "Black prepares ...b5 against the bishop on c4."
+    },
+    {
+     "move": "e4e5",
+     "say": "White plays the same break a move later, now with g4 covered."
+    },
+    {
+     "move": "d6e5",
+     "say": "Black takes."
+    },
+    {
+     "move": "e1e5",
+     "say": "The rook takes the pawn and attacks the bishop on e7."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black attacks the bishop on c4 with a pawn."
+    },
+    {
+     "move": "c4b3",
+     "say": "The bishop retreats and stays on the same diagonal."
+    },
+    {
+     "move": "c6c5",
+     "say": "A pawn attacks the white queen."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 100,
+      "max": 320,
+      "depth": 16
+     },
+     "statement": "After h3, at depth 16 the engine rates the position between about +1.0 and +3.2 pawns for White."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "After h3, one white pawn attacks g4."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "After h3, White has no loose piece."
+    },
+    {
+     "id": "C4",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": []
+     },
+     "statement": "After h3, Black has no loose piece."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c7c6"
+      ]
+     },
+     "statement": "After ...c6, one black pawn attacks b5."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c7c6",
+       "e4e5",
+       "d6e5",
+       "e1e5"
+      ]
+     },
+     "statement": "After Rxe5, one white piece attacks the bishop on e7."
+    },
+    {
+     "id": "C7",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c7c6",
+       "e4e5",
+       "d6e5",
+       "e1e5",
+       "b7b5"
+      ]
+     },
+     "statement": "After ...b5, one black pawn attacks the bishop on c4."
+    },
+    {
+     "id": "C8",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c7c6",
+       "e4e5",
+       "d6e5",
+       "e1e5",
+       "b7b5",
+       "c4b3",
+       "c6c5"
+      ]
+     },
+     "statement": "After ...c5, one black pawn attacks the white queen on d4."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which would you teach a club player: the move that needs nine half-moves of exact calculation, or the one whose idea fits a sentence? [I] Where would you draw the line between them?",
+   "fields": [
+    {
+     "id": "choice",
+     "label": "I would teach:"
+    },
+    {
+     "id": "why",
+     "label": "because:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**One pattern, from real games.** The Lichess puzzle file we hold has 6,157,341 puzzles; 224,023 carry the tag *hangingPiece*. In 125,348 of those the first move, the mistake that creates the puzzle, is a capture. In 26,506 (about 12 per cent of all hangingPiece puzzles) the reply takes a different piece the capturing piece had been guarding [V, our count]. Puzzles are chosen because a tactic exists: a catalogue of mistakes, not a frequency in play."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1p3ppp/1np5/4N3/p1BPP3/P7/3Q1PPP/R3K2R w KQkq - 1 16",
+   "caption": "Puzzle 0QTfA, from a real game. White to move takes a pawn and attacks two pieces at once. Which white piece is left without a guard? Decide, then step.",
+   "line": [
+    {
+     "move": "e5f7",
+     "say": "The knight takes a pawn and attacks the queen and the rook."
+    },
+    {
+     "move": "b6c4",
+     "say": "Black's knight takes the bishop for free."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "e5f7",
+      "cp": 200
+     },
+     "statement": "At depth 16 the knight capture on f7 is rated at least 2 pawns lower than the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Before the capture, one white piece defends the bishop on c4: the knight on e5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f7",
+      "includes": [
+       "d8",
+       "h8"
+      ],
+      "after_moves": [
+       "e5f7"
+      ]
+     },
+     "statement": "The knight on f7 attacks the queen on d8 and the rook on h8."
+    },
+    {
+     "id": "C4",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c4"
+      ],
+      "after_moves": [
+       "e5f7"
+      ]
+     },
+     "statement": "After Nxf7, White's only loose piece is the bishop on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/2p1bppp/ppNq4/3Q1b2/3P4/4P3/PP3PPP/R1B1K2R b KQ - 0 13",
+   "caption": "Puzzle 1GRVJ, from a real game. Black to move can take the white queen with the queen. What does Black's queen stop guarding when it leaves d6?",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "Black's queen takes White's queen."
+    },
+    {
+     "move": "c6e7",
+     "say": "The knight takes the bishop with check and attacks the black queen."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "d6d5",
+      "cp": 200
+     },
+     "statement": "At depth 16 the queen capture on d5 is rated at least 2 pawns lower than the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Before the capture, one black piece defends the bishop on e7: the queen on d6."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "e7"
+      ],
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After Qxd5, Black's only loose piece is the bishop on e7."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "d5",
+       "g8"
+      ],
+      "after_moves": [
+       "d6d5",
+       "c6e7"
+      ]
+     },
+     "statement": "The knight on e7 attacks the queen on d5 and the king on g8."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "1r4k1/n2bqpbp/pr1p2p1/2pP4/2P1PpP1/P1NB1N1P/3Q1P2/1R2R1K1 w - - 0 23",
+   "caption": "Puzzle 1Zv6x, from a real game. White's queen takes a pawn. What was the queen doing on d2 before it left?",
+   "line": [
+    {
+     "move": "d2f4",
+     "say": "The queen takes a pawn."
+    },
+    {
+     "move": "g7c3",
+     "say": "The bishop takes the knight, which only the queen had protected."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "d2f4",
+      "cp": 200
+     },
+     "statement": "At depth 16 the queen capture on f4 is rated at least 2 pawns lower than the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Before the capture, one white piece defends the knight on c3: the queen on d2."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c3"
+      ],
+      "after_moves": [
+       "d2f4"
+      ]
+     },
+     "statement": "After Qxf4, White's only loose piece is the knight on c3."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**One question for all three.** Before a capture, a trade or a 'free pawn', ask: *what was this piece doing before it moved?* If the answer is 'guarding something', keep guarding, or make sure the guarded piece is safe another way. [I] The habit works because attention follows the prize; the question moves attention to what you give up."
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-2"
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-3"
+  },
+  {
+   "type": "card",
+   "text": "**The Analysis page, step by step** [V, read in the app source on 30 Oct 2026]. Load a game as text, or set up a position. Choose how many lines and what depth. *Analyse whole game* scores every position at depth 12 and marks moves: ?! loses 10 to 20 points of win chance, ? 20 to 30, ?? 30 or more. *Next mistake* and *Learn from your mistakes* visit the ? and ?? moves only."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Guided exercise, no screenshots needed. Open Analysis with a game you lost. Before you press anything, write your own list: the three moments you felt unsure. Then run the whole-game analysis and count how many of your three the tool also marked.",
+   "fields": [
+    {
+     "id": "mine",
+     "label": "my three moments:"
+    },
+    {
+     "id": "match",
+     "label": "how many matched:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Two more buttons.** *Learn from your mistakes* returns to the position before an error and asks you for a better move; press *Show the answer* only after you have written your own sentence. *Show threats* draws one red arrow: the first move the engine would play if it were the opponent's turn. The next board shows what it would draw for Black at move 17."
+  },
+  {
+   "type": "board",
+   "fen": "r2q1r1k/pppb2p1/3p2Qp/4P3/8/3B4/PPP2bPP/2KRR3 b - - 1 17",
+   "caption": "What Show threats would draw here: one arrow, the white queen's move to h7. The bishop on d3 that backs it is not drawn: you must see that yourself. Use the button after you have written your own threat, not before.",
+   "arrows": [
+    {
+     "from": "g6",
+     "to": "h7"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "g6h7",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If Black could pass, White would mate at once with the queen move to h7."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "g6"
+      ]
+     },
+     "statement": "The bishop on d3 defends the queen on g6 and so backs a queen move to h7."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What others say.** As summarised on pages we could read, Jeremy Silman puts a tactical check first and treats engine output as the what, not the why [S]. Jacob Aagaard argues that serious errors often start at the very beginning of a calculation, when a candidate move is never considered [S, a reviewer's account]. Mark Dvoretsky's school stressed analysing your own games [R, from memory]. None of this tests engine-last review; they are directions to try."
+  },
+  {
+   "type": "contrast",
+   "title": "Does the threat still exist?",
+   "prompt": "Predict first. In the second position White's bishop stands on c4 instead of d3. Is a mate on h7 still threatened? In the third, White's a-pawn is on a3. Does that change what Black should do?",
+   "working": "IHI-LHIENGINESHUMANS3-7",
+   "failing": "IHI-LHIENGINESHUMANS3-8",
+   "irrelevant": "IHI-LHIENGINESHUMANS3-9"
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-4"
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-1"
+  },
+  {
+   "type": "item",
+   "item": "IHI-LHIENGINESHUMANS3-6"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1r1k/pppb2p1/3p2Qp/4P3/8/3B4/PPP2bPP/2KRR3 b - - 1 17",
+   "caption": "Common mistake: playing the engine's line without knowing why. This is the engine's first line for Black. Before you trust it, say what each move stops or threatens.",
+   "line": [
+    {
+     "move": "d8g5",
+     "say": "A check that offers a queen trade: the piece that threatens mate must trade or leave."
+    },
+    {
+     "move": "g6g5",
+     "say": "White takes."
+    },
+    {
+     "move": "h6g5",
+     "say": "Black recaptures, and the threat on h7 has gone with the queens."
+    },
+    {
+     "move": "e1e2",
+     "say": "The rook attacks the bishop on f2."
+    },
+    {
+     "move": "d7g4",
+     "say": "The bishop attacks the rook on e2."
+    },
+    {
+     "move": "d1d2",
+     "say": "The other rook comes to d2 and guards the rook on e2."
+    },
+    {
+     "move": "g4e2",
+     "say": "Black takes the rook on e2."
+    },
+    {
+     "move": "d2e2",
+     "say": "White recaptures."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d8g5"
+      ]
+     },
+     "statement": "After Qg5+, one white piece attacks the black queen on g5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "f2",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d8g5",
+       "g6g5",
+       "h6g5",
+       "e1e2"
+      ]
+     },
+     "statement": "After Re2, one white piece attacks the bishop on f2."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d8g5",
+       "g6g5",
+       "h6g5",
+       "e1e2",
+       "d7g4"
+      ]
+     },
+     "statement": "After ...Bg4, one black piece attacks the rook on e2."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e2",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8g5",
+       "g6g5",
+       "h6g5",
+       "e1e2",
+       "d7g4",
+       "d1d2"
+      ]
+     },
+     "statement": "After Rdd2, one white piece defends the rook on e2."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Two patterns so far: the capturing piece was a guard, and the check you did not look at. Which one does this engine line belong to? Name the pattern in one word and write the one question that would have caught it.",
+   "fields": [
+    {
+     "id": "pattern",
+     "label": "pattern, in one word:"
+    },
+    {
+     "id": "question",
+     "label": "the question that would have caught it:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three habits that waste an engine.** One, shown above: playing its line without knowing why. Two: trusting a small plus in a quiet position; a score near plus one half is within what both sides can reach with sensible play [I]. Three: analysing only your losses. [H] Wins hide errors too. [H] Reading the engine's answer before trying may feel like learning without being so; this is our conjecture."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which of the three habits is yours? Write one sentence about the last time you did it.",
+   "fields": [
+    {
+     "id": "habit",
+     "label": "my habit, and the last time:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Where engines mislead.** Three cases. Depth: the same position gave -1.3 at depth 2 and a forced mate at depth 6 [V, earlier board]. Perfect play: the score assumes both sides play exactly, so a plus that needs ten precise moves may be worth little to you [I]. Fortresses: when the side ahead cannot make progress against best defence, a large number can hide a draw [R, endgame books; we did not check a position here]."
+  },
+  {
+   "type": "card",
+   "text": "**Compare ideas with several lines.** The Lines setting in Analysis shows more than one engine choice. Set it to 3 on the Ruy Lopez position from earlier and hide the scores in your mind. For each of the three first moves, write what it is for in one sentence. Then compare the ideas. [H] Choosing between ideas for your own reasons trains judgement more than reading which number is largest."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Open the Ruy Lopez position in Analysis with Lines set to 3. Write the idea of each first move before you look at its score, then say which idea you prefer and why.",
+   "fields": [
+    {
+     "id": "i1",
+     "label": "first move, idea:"
+    },
+    {
+     "id": "i2",
+     "label": "second move, idea:"
+    },
+    {
+     "id": "i3",
+     "label": "third move, idea:"
+    },
+    {
+     "id": "pref",
+     "label": "I prefer, because:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A weekly routine [H].** After a game that mattered: replay it without the engine and mark the moments you felt unsure (ten minutes). Run whole-game analysis and open only the three biggest swings, writing your sentence before each answer (ten minutes). Name the pattern in one word and add it to a list (two minutes). Once a week, pick one pattern to watch for. Cut any step you will not do."
+  },
+  {
+   "type": "board",
+   "fen": "3Q1r1k/2P3p1/b6p/P1p5/1p6/4r1Pq/7P/4R1K1 w - - 0 35",
+   "caption": "Teach it back with this position (puzzle 0LeZV, a real game; White to move after Black's rook took a knight on e3). Set it up for a beginner: what do you ask them to write first, which pattern is it, and which single question would have caught it?",
+   "orientation": "white",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "e3",
+       "f8"
+      ]
+     },
+     "statement": "Black has two loose pieces: the rook on e3 and the rook on f8."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "f8",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece attacks the rook on f8: the queen on d8."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach it back. A club teammate says: 'I just look at what the engine says after my game.' Explain engine-last review to them in your own words.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "the idea:"
+    },
+    {
+     "id": "when",
+     "label": "when it helps, and when it does not:"
+    },
+    {
+     "id": "example",
+     "label": "an example they could set up on a board:"
+    },
+    {
+     "id": "warning",
+     "label": "one warning:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Teach-back checklist.** Did you (1) ask your listener for a sentence before showing the engine, (2) name the pattern, (3) give one example they could set up on a board, (4) give one warning? A missing item is the one to practise."
+  },
+  {
+   "type": "card",
+   "text": "**Recap.** Write before you ask; compare ideas, then numbers. The first move is advice, the rest is evidence. Before a capture ask what the piece was guarding. [H] Keep one habit: a sentence of why before the engine. **Check yourself:** minus means Black is better; depth is how far the search looked; for a line, say what each move threatens and stops; drop the habit you named."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Your engine habits. Write one habit you will start, one you will stop, and the first game you will use them on.",
+   "fields": [
+    {
+     "id": "start",
+     "label": "I will start:"
+    },
+    {
+     "id": "stop",
+     "label": "I will stop:"
+    },
+    {
+     "id": "first",
+     "label": "first game:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Game ufcqmfxx from the Lichess standard rated database file for January 2013 (public, CC0; the game header gives the UTC date 2012.12.31), library/data/lichess_db_standard_rated_2013-01.pgn.zst: moves replayed with python-chess; ratings 1463 and 1504 from the game headers; engine claims Stockfish 19 lite single thread, depth stated in each claim (evidence under recorded limits, not proof) [V]",
+  "Lichess puzzle database in library/data (6,157,341 puzzles, CC0): puzzles 0QTfA, 1GRVJ, 1Zv6x, 1Gx3p, 0Fh76, 09vi3 and 0LeZV (guard-left pattern), 9ESVF (board of step 25) and 76PJV (step 26) are positions from real games; counts 224,023 / 125,348 / 26,506 are reproduced by tools/analysis/count_guard_left.py (python-chess; in the file the first move is the mistake that creates the puzzle; the 26,506 are about 12 per cent of the hangingPiece puzzles); puzzles are selected for a tactic, so the counts are a catalogue, not a frequency [V]",
+  "app/src/pages/Analysis.tsx and app/src/engine.ts: Analysis page controls (Lines, Depth, Show threats, Analyse whole game at depth 12, Next mistake, Learn from your mistakes, ?! ? ?? thresholds) and the score sign convention, read in the source on 30 Oct 2026 [V]",
+  "docs/council-synthesis.md: engine-last is our own design decision (untested), VanLehn step-level tutoring [S, secondary]",
+  "docs/citable-views.md: 10.13 Silman (https://en.wikipedia.org/wiki/Jeremy_Silman and https://www.chess.com/article/view/how-to-evaluate-a-position; engine shows what, not why) [S, summaries]; 10.7 Aagaard (https://www.chess.com/blog/sputnick/calculation-in-the-engine-age-a-review-of-jacob-aagaards-excelling-at-chess-calculation; errors start at candidate moves) [S, reviewer's account]; 11.8 and 11.9 Dvoretsky (https://en.wikipedia.org/wiki/Mark_Dvoretsky; analysis of your own games) [S/R]. All paraphrased; no quotations",
+  "Conjectures labelled in the text: [H] engine-last beats engine-first; [I] pattern naming helps below intermediate level; [H] a small review routine will be kept; [H] practical chances when lost",
+  "Positions: step 19 is the authored sequence 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 O-O 6.Nf3 h6 7.Bh4 b6 (item PBa3-c4); the position of step 20 comes from our earlier example set and its original game is not recorded. Win chance figures use the logistic formula in app/src/pages/Analysis.tsx (recalled from Lichess, [R]); +1 pawn gives 59.1 per cent and +3 gives 75.1 per cent [V, arithmetic]. Engine lines vary with depth and the number of lines requested; every line on the boards was reproduced at depth 16 in at least one run [V]"
+ ]
+}

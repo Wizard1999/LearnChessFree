@@ -1,0 +1,1684 @@
+{
+  "id": "L-HI-ENGINES-HUMANS-2",
+  "course": "history-and-meta",
+  "series": "engines",
+  "title": "Engines and humans 2: what engines see and what they miss",
+  "skill": "GAME.HISTORY",
+  "depth": "D1",
+  "uses": [
+    "END.FORTRESS",
+    "DEF.FORTRESS"
+  ],
+  "minutes": 35,
+  "outcomes": [
+    "States which of win, draw or hard to hold a fortress position is, using the bishop's colour and the pawn's file, and checks it with a tablebase",
+    "Explains why a shallow search can rate a drawn fortress above zero, and asks for a second depth before trusting a number",
+    "Reads an engine score on a scale and says what it does and does not show about a pawn sacrifice",
+    "Counts the only-moves a defender needs and says why an equal score can still be hard to hold",
+    "Writes three questions to ask before believing an engine number"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "2k5/rp3Q2/8/8/8/2K5/8/8 w - - 0 1",
+      "caption": "Your hook position. White has a queen against a rook and a pawn: 9 against 6 by counting values. At depth 4 the engine says about +1.5. Win, draw or loss for White? Decide before reading on.",
+      "highlight": [
+        "f7",
+        "a7",
+        "b7",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "depth": 4,
+            "min": 130,
+            "max": 180
+          },
+          "statement": "At depth 4 the engine shows about +1.5 for White."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Your verdict (win, draw or loss) and how sure you are, before any evidence.",
+      "fields": [
+        {
+          "id": "verdict",
+          "label": "My verdict and confidence:"
+        },
+        {
+          "id": "why",
+          "label": "My reason in one sentence:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question.** An engine's number feels like a fact. This lesson asks when it misleads a person: a *fortress* that a short search does not see, a *horizon* that hides the truth, a defence with many *only-moves*, and sacrifices whose worth no count shows. By the end you can say win, draw or hard to hold, and explain why the number alone could not tell you."
+    },
+    {
+      "type": "card",
+      "text": "**An honest wrinkle [V].** The next board is a different case. There the engine does not show a big number, and its score rises with depth: +0.01, +0.15, +0.35 and +1.09 at depths 4, 8, 16 and 30, while the tablebase says draw. So a draw can hide behind a small or rising score as well as a big one."
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/8/8/8/P7/K1B5 w - - 0 1",
+      "caption": "A second discovery board. White has a bishop and a pawn more than Black: 3 + 1 = 4 ahead by counting values, and Black's king sits in the corner. Win, draw or loss for White? Decide before reading on.",
+      "highlight": [
+        "a1",
+        "c1",
+        "a2",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 5,
+            "max": 65
+          },
+          "statement": "At depth 16 the engine shows about +0.35."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "depth": 4,
+            "min": -20,
+            "max": 20
+          },
+          "statement": "At depth 4 the engine shows about 0.0."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "depth": 30,
+            "min": 90,
+            "max": 130
+          },
+          "statement": "At depth 30 the engine shows about +1.1, higher than at depth 4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/1K6/8/P7/8/8/2B5 w - - 0 1",
+      "caption": "This is the trap the defender hopes for, not a proof. With White's king already close, the check forces Black to choose between two squares; only one saves the game.",
+      "line": [
+        {
+          "move": "a4a5",
+          "say": "White pushes the pawn: a rook pawn heads for the corner, with the king close behind."
+        },
+        {
+          "move": "a8b8",
+          "say": "Black steps out of the corner but stays on the two squares it needs."
+        },
+        {
+          "move": "c1f4",
+          "say": "The bishop checks and takes b8 away. Black has two replies: Ka8 draws, Kc8 loses [V, tablebase]."
+        },
+        {
+          "move": "b8a8",
+          "say": "Black returns to the corner. No square the bishop uses includes a8, and from c8 the king would be cut off from it [I]."
+        },
+        {
+          "move": "a5a6",
+          "say": "White pushes again, but now Black has no legal move and is not in check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a4",
+          "to": "a5"
+        },
+        {
+          "from": "c1",
+          "to": "f4"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "b8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "a4a5"
+          },
+          "statement": "Tablebase: after the pawn push the result is still a draw."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 57,
+            "max": 117,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine rates the position near +0.9, not as a win."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1k6/8/1K6/P7/5B2/8/8/8 b - - 0 1",
+      "caption": "The position after the check. Black is in check and has two legal replies. One draws, one loses: the tablebase separates them.",
+      "highlight": [
+        "b8",
+        "a8",
+        "c8",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw",
+            "move": "b8a8"
+          },
+          "statement": "Tablebase: Ka8 draws."
+        },
+        {
+          "id": "C2",
+          "type": "tablebase",
+          "params": {
+            "result": "loss",
+            "move": "b8c8"
+          },
+          "statement": "Tablebase: Kc8 loses."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/PK6/8/8/8/7B/8 b - - 0 3",
+      "caption": "The stalemate trap with the bishop at the far end of the diagonal: any bishop on this diagonal takes b8 away, and Black has no move.",
+      "highlight": [
+        "a8",
+        "b6",
+        "h2",
+        "a6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          },
+          "statement": "Black to move: stalemate."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two words.** A *rook pawn* stands on the edge file (a or h). A *wrong-coloured bishop* travels on squares whose colour differs from the pawn's promotion corner. Here the corner a8 is light and this bishop is dark, so it can never cover the corner."
+    },
+    {
+      "type": "card",
+      "text": "**The condition [S].** With a rook pawn and a wrong-coloured bishop, the defender draws if the king reaches the corner. Textbook geometry [S]. The same pieces with Black's king far away, on h8, are a tablebase win [V]. So the file of the pawn, the bishop's colour and where the defending king stands all matter."
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/8/8/8/P7/K1B5 w - - 0 1",
+      "caption": "Same material, one difference: Black's king stands on h8, too far to reach the a8 corner in time. Tablebase: White wins.",
+      "highlight": [
+        "h8",
+        "a8",
+        "a2",
+        "c1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "Tablebase: a win."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 700
+          },
+          "statement": "At depth 16 the engine shows over +7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/1K6/8/P7/8/8/5B2 w - - 0 1",
+      "caption": "One feature changed: the bishop now stands on a light square, the colour of the corner. Same pawn, same kings.",
+      "line": [
+        {
+          "move": "f1h3",
+          "say": "This bishop travels on light squares, the colour of the corner, so it can help cover it."
+        },
+        {
+          "move": "a8b8",
+          "say": "Black steps along the back rank."
+        },
+        {
+          "move": "a4a5",
+          "say": "The pawn advances while the bishop keeps c8 covered."
+        },
+        {
+          "move": "b8a8",
+          "say": "Black goes back to the corner."
+        },
+        {
+          "move": "a5a6",
+          "say": "The pawn comes closer; the king has fewer squares each time."
+        },
+        {
+          "move": "a8b8",
+          "say": "Black has no other safe move."
+        },
+        {
+          "move": "a6a7",
+          "say": "The pawn checks the king and pushes it into the corner."
+        },
+        {
+          "move": "b8a8",
+          "say": "Forced."
+        },
+        {
+          "move": "h3g2",
+          "say": "The bishop checks along the long diagonal; the king has no escape: mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f1",
+          "to": "h3"
+        }
+      ],
+      "highlight": [
+        "f1",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "Tablebase: the position is a win."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "f1h3",
+            "n": 5
+          },
+          "statement": "Bh3 forces mate in five (engine, depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 900,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows a forced mate (a score above +9)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "k7/8/8/8/8/8/1P6/K1B5 w - - 0 1",
+      "caption": "Another one-feature change: the bishop is still on the wrong colour, but the pawn is on the b-file instead of the edge. The line shows how the win starts.",
+      "line": [
+        {
+          "move": "b2b4",
+          "say": "The pawn sets off up the b-file."
+        },
+        {
+          "move": "a8a7",
+          "say": "The black king leaves the corner."
+        },
+        {
+          "move": "c1e3",
+          "say": "The bishop checks along the diagonal and drives the king back."
+        },
+        {
+          "move": "a7a6",
+          "say": "The king steps up next to the pawn's future squares."
+        },
+        {
+          "move": "a1a2",
+          "say": "White's king walks up to help."
+        },
+        {
+          "move": "a6b7",
+          "say": "Black keeps close."
+        }
+      ],
+      "highlight": [
+        "b2",
+        "c1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "Tablebase: the position is a win."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 700,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine rates it above +7."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why a b-pawn wins [I].** It promotes on b8, a dark square, and this bishop is dark-squared, so the bishop can guard the queening square while the king cannot hold the corner. The tablebase agrees [V]. A rook pawn has only one neighbouring file, which is what lets the defender hide."
+    },
+    {
+      "type": "contrast",
+      "title": "Which of these holds a draw?",
+      "prompt": "Predict each result first. Compare the bishop's colour, the corner, and the file of the pawn.",
+      "working": "IHI-LHIENGINESHUMANS2-1",
+      "failing": "IHI-LHIENGINESHUMANS2-2",
+      "irrelevant": "IHI-LHIENGINESHUMANS2-3"
+    },
+    {
+      "type": "card",
+      "text": "**A testable checklist [I].** A *fortress* is a position the stronger side cannot break however long it tries. Ask three questions. (1) Can a check also attack a second piece? If so, no fortress (the queen boards with the king on f8 and on e8). (2) Is every defending unit guarded by another or out of reach? (3) Does the defender have a safe spare move, or can zugzwang bite (the two pawn boards later)?"
+    },
+    {
+      "type": "board",
+      "fen": "2k5/rp3Q2/8/8/8/2K5/8/8 w - - 0 1",
+      "caption": "A second fortress family: a queen against a rook and a pawn. By counting values the queen side is 3 ahead (9 against 6). The rook guards the pawn along the seventh rank and the king guards the pawn from c8.",
+      "line": [
+        {
+          "move": "f7e8",
+          "say": "The queen checks along the back rank."
+        },
+        {
+          "move": "c8c7",
+          "say": "The king steps up beside its pawn and the rook."
+        },
+        {
+          "move": "e8e5",
+          "say": "A second check from the centre looks for a way in."
+        },
+        {
+          "move": "c7c8",
+          "say": "Back where it started: the queen has made no progress."
+        },
+        {
+          "move": "e5e8",
+          "say": "The same check again: White repeats and Black repeats."
+        }
+      ],
+      "highlight": [
+        "a7",
+        "b7",
+        "c8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 20
+          },
+          "statement": "At depth 20 the engine rates it level."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The working test [I].** The queen can win only if a check also attacks an unguarded piece. Here the pawn shields the rook along the seventh rank and the king stays near, so every check is just a check. A defender holds when no queen check forks king and rook."
+    },
+    {
+      "type": "board",
+      "fen": "5k1r/5p2/8/8/8/5Q2/K7/8 w - - 0 1",
+      "caption": "Another queen against rook-and-pawn fortress. Black's king guards the rook; the pawn on f7 stays behind it. Watch White's checks run out of ideas.",
+      "line": [
+        {
+          "move": "f3a8",
+          "say": "White checks. The rook on h8 is attacked too, but the king can defend it."
+        },
+        {
+          "move": "f8g7",
+          "say": "The king steps next to the rook, so Qxh8 would lose the queen."
+        },
+        {
+          "move": "a8g2",
+          "say": "A check along the g-file, hoping to force the king away."
+        },
+        {
+          "move": "g7f8",
+          "say": "Back again: the king returns and the rook is guarded once more."
+        }
+      ],
+      "highlight": [
+        "f8",
+        "h8",
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 60,
+            "max": 140,
+            "depth": 4
+          },
+          "statement": "At depth 4 the engine shows about +1 for White."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 it shows 0.00."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k2r/5p2/8/8/8/5Q2/K7/8 w - - 0 1",
+      "caption": "One detail moved: Black's king stands on e8, not f8. Now the check on a8 also hits the rook, and the king cannot guard it.",
+      "line": [
+        {
+          "move": "f3a8",
+          "say": "White checks the king and attacks the rook along the same rank."
+        },
+        {
+          "move": "e8e7",
+          "say": "The king steps off the rank and cannot cover h8 from there."
+        },
+        {
+          "move": "a8h8",
+          "say": "The queen takes the rook; Black has no compensation."
+        }
+      ],
+      "highlight": [
+        "e8",
+        "h8",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "win"
+          },
+          "statement": "Tablebase: the position is a win for White."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 300,
+            "max": 100000,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows over +3."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Other families [H].** Locked pawn chains can also form fortresses. This course has no tablebase-checked board for them yet, so treat that as an idea to test, not a result."
+    },
+    {
+      "type": "card",
+      "text": "**What 'depth' counts [R].** In engine settings, depth N means the search looks N half-moves (plies) ahead along its main lines, and good engines look further on promising lines. From here on, 'depth N' always means that setting."
+    },
+    {
+      "type": "board",
+      "fen": "2k5/rp3Q2/8/8/8/2K5/8/8 w - - 0 1",
+      "caption": "Same position, three searches. Depth 4 shows about +1.5, depth 8 about +1.3, depth 20 and depth 30 both about 0.0. All four numbers are real output from the same engine [V].",
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 130,
+            "max": 180,
+            "depth": 4
+          },
+          "statement": "At depth 4 the engine shows about +1.5 for White."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 103,
+            "max": 153,
+            "depth": 8
+          },
+          "statement": "At depth 8 about +1.3."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 20
+          },
+          "statement": "At depth 20 about 0.0."
+        },
+        {
+          "id": "C4",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: draw."
+        },
+        {
+          "id": "C5",
+          "type": "eval_range",
+          "params": {
+            "depth": 30,
+            "min": -25,
+            "max": 25
+          },
+          "statement": "At depth 30 about 0.0."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "7r/4K1k1/4Q1p1/8/8/8/8/8 b - - 0 1",
+      "caption": "Black to move, a queen against a rook and one pawn. The numbers at depth 4 and depth 16 differ a lot. The tablebase decides. [I] The king and rook guard each other, so no check wins the rook.",
+      "line": [
+        {
+          "move": "h8f8",
+          "say": "The rook offers itself: the queen cannot take it because the king guards it."
+        },
+        {
+          "move": "e6e5",
+          "say": "White checks, searching for a way in."
+        },
+        {
+          "move": "g7g8",
+          "say": "Black steps to the back rank, where the rook and king protect each other."
+        },
+        {
+          "move": "e5d5",
+          "say": "Another check; the fortress keeps absorbing them."
+        }
+      ],
+      "highlight": [
+        "g7",
+        "f8",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw for Black."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 190,
+            "depth": 4
+          },
+          "statement": "At depth 4 White seems about +1.4 ahead."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows 0.00."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "5r2/Q5pk/2K3p1/8/8/8/8/8 w - - 0 1",
+      "caption": "Not every fortress fools the engine. Here even a very shallow search stays under half a pawn, and the tablebase agrees. [I] The king and two pawns form a shelter, and the rook leaves it only while the king guards the pawn on g7. A big number is a warning sign, not the only sign.",
+      "highlight": [
+        "f8",
+        "g7",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -45,
+            "max": 45,
+            "depth": 4
+          },
+          "statement": "Even at depth 4 the engine shows under half a pawn."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": -45,
+            "max": 45,
+            "depth": 16
+          },
+          "statement": "At depth 16 the same."
+        }
+      ],
+      "line": [
+        {
+          "move": "a7e7",
+          "say": "The queen attacks the g7 pawn, which the king guards."
+        },
+        {
+          "move": "f8f5",
+          "say": "The rook steps out to f5: the engine's choice at depth 16 [V]."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Why might a shallow search rate this position above zero, while the tablebase says draw?",
+      "fields": [
+        {
+          "id": "why",
+          "label": "My explanation:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the engine does [I].** An engine adds up material and piece activity at the end of its search. To see a draw it must see that every winning try fails, which can take many moves. A tablebase simply stores the answer for positions with few pieces."
+    },
+    {
+      "type": "card",
+      "text": "**What we found [V].** In the queen-versus-rook fortresses, depth 4 to 8 gave +1 to +1.5 and depth 16 to 20 gave 0.00. In the bishop and rook-pawn position the score rose with depth, from +0.01 at depth 4 to +1.09 at depth 30, while the tablebase says draw. [I] A second depth helps in some families, not all; the tablebase is the check when it applies."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-7"
+    },
+    {
+      "type": "card",
+      "text": "**Horizon effect.** The name comes from computer chess: a search that stops at a fixed depth cannot see what lies beyond it [R]. [I] Our fortress numbers are a related problem, the search stopping before the draw is visible, not the classic horizon effect, which is about delaying an unavoidable loss. Treat every number as 'this engine, this depth'."
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/1p3ppp/p2ppn2/6B1/3NPP2/2N5/PqPQ2PP/R3KB1R w KQkq - 0 9",
+      "caption": "The numbers wobble even in ordinary play. This position arises after Black takes a pawn in a famous Sicilian line. Searched at depth 2, 6, 10 and 16 the score changes by a few tenths each time, in no steady direction.",
+      "highlight": [
+        "b2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 34,
+            "max": 84,
+            "depth": 2
+          },
+          "statement": "Depth 2."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 63,
+            "max": 113,
+            "depth": 6
+          },
+          "statement": "Depth 6."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 60,
+            "depth": 10
+          },
+          "statement": "Depth 10."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "min": 25,
+            "max": 75,
+            "depth": 16
+          },
+          "statement": "Depth 16."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "A friend says 'the engine says +0.5, so I am better'. Which two things would you ask before agreeing?",
+      "fields": [
+        {
+          "id": "q1",
+          "label": "Question 1:"
+        },
+        {
+          "id": "q2",
+          "label": "Question 2:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Reading a score honestly [H].** A rough guide many players use, not tested here: 0.0 to +0.5 level, about +1 a small edge, +3 and above often winning. Whether +3 wins depends on the position type: fortress positions can read +3 at shallow depth and be drawn. Always note the engine and the depth."
+    },
+    {
+      "type": "card",
+      "text": "**From score to chance [I].** 'Win probability' curves turn a score into a chance. One public formula, recalled and not re-checked [R], gives 50 + 50 x (2 / (1 + e^(-0.00368 x score in hundredths)) - 1) per cent. Worked here: +1.00 gives about 59%, +3.00 about 75%. The curve is a model fitted to games, not a fact about your position."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-8"
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-9"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "caption": "Ruy Lopez, Black to move. Four replies lie within about 0.21 of a pawn of each other at depth 16 [V]. Which one does the engine name?",
+      "highlight": [
+        "g8",
+        "a7",
+        "c6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g8f6",
+              "a7a6",
+              "c6d4",
+              "g8e7"
+            ],
+            "within_cp": 25
+          },
+          "statement": "At depth 16 the engine's best move is one of these four, and all four are within 40 hundredths of a pawn of it."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Close numbers [I].** Four replies lie within 0.21 of a pawn of each other at depth 16 [V]. When several moves are this close, the number cannot choose between them; your plans and your understanding must."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Four moves are within a fifth of a pawn. Which would you play, and what plan decides it for you?",
+      "fields": [
+        {
+          "id": "plan",
+          "label": "My move and plan:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Long-term compensation.** A sacrifice may or may not leave the engine near zero. The next boards test three cases at depth 16 and depth 24: a pawn sacrifice where the engine still shows nearly the full pawn, a second whose number shrinks with depth, and an exchange sacrifice that reads level. The numbers, not our expectations, decide what we say."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "The Benko Gambit. Step through the first moves: Black gives a pawn for lasting pressure.",
+      "line": [
+        {
+          "move": "d2d4",
+          "say": "White claims the centre."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops and looks at e4."
+        },
+        {
+          "move": "c2c4",
+          "say": "A second central pawn."
+        },
+        {
+          "move": "c7c5",
+          "say": "Black attacks the d4 pawn."
+        },
+        {
+          "move": "d4d5",
+          "say": "White gains space and cramps the black pawns."
+        },
+        {
+          "move": "b7b5",
+          "say": "The gambit: Black offers a pawn to open the queenside files."
+        },
+        {
+          "move": "c4b5",
+          "say": "White accepts."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black attacks b5 and offers a second pawn."
+        },
+        {
+          "move": "b5a6",
+          "say": "White takes again."
+        },
+        {
+          "move": "c8a6",
+          "say": "Black takes back with a developed bishop."
+        },
+        {
+          "move": "b1c3",
+          "say": "White develops."
+        },
+        {
+          "move": "d7d6",
+          "say": "Black solidifies and keeps the open files."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkb1r/4pppp/b2p1n2/2pP4/8/2N5/PP2PPPP/R1BQKBNR w KQkq - 0 7",
+      "caption": "The engine puts White about +0.9 ahead at depth 16 and again at depth 24, nearly the full pawn. It sees little compensation here [V]. Humans often claim more [H]. Black's half-open a- and b-files are what the sacrifice aims at.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White takes more of the centre."
+        },
+        {
+          "move": "a6f1",
+          "say": "Black trades off White's good bishop."
+        },
+        {
+          "move": "e1f1",
+          "say": "White recaptures; now castling is gone for good."
+        },
+        {
+          "move": "g7g6",
+          "say": "Black prepares a bishop on the long diagonal."
+        },
+        {
+          "move": "g2g3",
+          "say": "White secures the kingside and prepares to tuck the king away."
+        },
+        {
+          "move": "f8g7",
+          "say": "The bishop looks down the long diagonal at the queenside."
+        },
+        {
+          "move": "f1g2",
+          "say": "White's king finds a safe home by hand."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles; the rooks will aim at the open a- and b-files."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "a2"
+        },
+        {
+          "from": "b8",
+          "to": "b2"
+        }
+      ],
+      "highlight": [
+        "a2",
+        "b2",
+        "a8",
+        "b8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 70,
+            "max": 105
+          },
+          "statement": "At depth 16 White is ahead by nearly a pawn."
+        },
+        {
+          "id": "C1b",
+          "type": "eval_range",
+          "params": {
+            "depth": 24,
+            "min": 70,
+            "max": 105
+          },
+          "statement": "At depth 24 the same."
+        },
+        {
+          "id": "C2",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 3
+          },
+          "statement": "White has three queenside pawns."
+        },
+        {
+          "id": "C3",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "queenside",
+            "count": 2
+          },
+          "statement": "Black has two."
+        },
+        {
+          "id": "C4",
+          "type": "open_files",
+          "params": {
+            "half_open_black": [
+              "a",
+              "b"
+            ]
+          },
+          "statement": "The a- and b-files are half-open for Black."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] Imagine playing this as Black against a friend of equal rating. Is the compensation easier to use or to meet? Write your guess before reading the next card.",
+      "fields": [
+        {
+          "id": "guess",
+          "label": "My guess and reason:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2ppbppp/p1n2n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 b - - 0 8",
+      "caption": "The Marshall Attack in the Ruy Lopez: a second pawn sacrifice, this time for an attack on the king.",
+      "line": [
+        {
+          "move": "d7d5",
+          "say": "Black strikes at the centre at once, at the price of a pawn."
+        },
+        {
+          "move": "e4d5",
+          "say": "White takes."
+        },
+        {
+          "move": "f6d5",
+          "say": "Black recaptures and keeps the pieces active."
+        },
+        {
+          "move": "f3e5",
+          "say": "White takes the e5 pawn: White is a pawn up."
+        },
+        {
+          "move": "c6e5",
+          "say": "Black trades."
+        },
+        {
+          "move": "e1e5",
+          "say": "The rook recaptures."
+        },
+        {
+          "move": "c7c6",
+          "say": "The pawn protects the knight on d5, which White's bishop was attacking."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/4bppp/p1p5/1p1nR3/8/1BP5/PP1P1PPP/RNBQ2K1 w - - 0 12",
+      "caption": "White is a pawn up. Depth 16 shows +0.57 and depth 24 shows +0.24 [V], so the number shrinks as the search deepens. [H] Black's compensation is future play: the bishop to d6 and the queen to h4 against the king, not something already on the board.",
+      "highlight": [
+        "g1",
+        "d5",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 40,
+            "max": 75
+          },
+          "statement": "At depth 16 White is ahead by about half a pawn."
+        },
+        {
+          "id": "C1b",
+          "type": "eval_range",
+          "params": {
+            "depth": 24,
+            "min": 10,
+            "max": 40
+          },
+          "statement": "At depth 24 about a quarter of a pawn."
+        },
+        {
+          "id": "C2",
+          "type": "wing_pawns",
+          "params": {
+            "color": "white",
+            "wing": "queenside",
+            "count": 4
+          },
+          "statement": "White has four queenside pawns."
+        },
+        {
+          "id": "C3",
+          "type": "wing_pawns",
+          "params": {
+            "color": "black",
+            "wing": "queenside",
+            "count": 3
+          },
+          "statement": "Black has three."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3q1rk1/pp1bppbp/3p1np1/4n3/3NP3/1BP1BP2/P1PQ2PP/1K1R3R b - - 0 13",
+      "caption": "An exchange sacrifice in the Dragon: Black has given a rook for a knight, yet the engine scores it level at depth 16 and depth 24 [V]. [I] The compensation is a pawn structure around White's king that has been broken, and a strong knight on e5.",
+      "highlight": [
+        "e5",
+        "c3",
+        "b1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -60,
+            "max": 40
+          },
+          "statement": "At depth 16 about level."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "depth": 24,
+            "min": -40,
+            "max": 40
+          },
+          "statement": "At depth 24 about level."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Disagreeing with the engine [H].** Where compensation comes from pressure and activity, a human's feel may beat a short search or fall short of a deep one. We do not know how often. Hypothesis: write your own view down before looking, because the disagreement is the lesson. Candidates first, engine second."
+    },
+    {
+      "type": "card",
+      "text": "**Two outside views, rephrased.** Silman is summarised as saying engine analysis shows what to play but not why [S, secondary summary]. Aagaard is reported to say serious errors often begin when a key candidate move is overlooked [S, a reviewer's account]. Neither source was read in full here."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Choose a position from your own games where you disagreed with an engine. Write your view first, then the engine's, then one reason you now believe for the gap.",
+      "fields": [
+        {
+          "id": "mine",
+          "label": "My view:"
+        },
+        {
+          "id": "engine",
+          "label": "The engine's view and depth:"
+        },
+        {
+          "id": "gap",
+          "label": "A reason for the gap:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The reverse case.** The engine says 0.00, yet the position is hard for a person. A defender may hold only if they find the single saving move several times in a row. The evaluation, 0.00, hides how narrow the path is. We now count those moves."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/3K1p2/7r/8/8/8/2Q5/8 b - - 0 1",
+      "caption": "Black to move in a drawn position (engine: level). White keeps checking. Step through and notice how often Black has exactly one safe move.",
+      "line": [
+        {
+          "move": "h6b6",
+          "say": "Black has five safe moves here. This rook move keeps the rook out of the queen's reach."
+        },
+        {
+          "move": "c2c8",
+          "say": "White starts a series of checks."
+        },
+        {
+          "move": "g8g7",
+          "say": "The only move that keeps the draw (see the next items)."
+        },
+        {
+          "move": "c8c3",
+          "say": "Another check, from a different square."
+        },
+        {
+          "move": "g7g8",
+          "say": "Again the only move."
+        },
+        {
+          "move": "c3g3",
+          "say": "A third check."
+        },
+        {
+          "move": "b6g6",
+          "say": "Again the only saving move: the rook returns to shield the king."
+        },
+        {
+          "move": "g3b8",
+          "say": "The queen changes diagonal."
+        },
+        {
+          "move": "g8g7",
+          "say": "Black steps aside once more."
+        },
+        {
+          "move": "d7e7",
+          "say": "White brings its king to attack the f7 pawn."
+        },
+        {
+          "move": "g6e6",
+          "say": "The only move out of sixteen: the rook offers itself."
+        },
+        {
+          "move": "e7d7",
+          "say": "White goes back; the fortress holds."
+        }
+      ],
+      "highlight": [
+        "g8",
+        "h6",
+        "c2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw for Black."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows about 0.00."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-10"
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-11"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] Guess: out of ten club players with this position and a clock, how many find every one of these moves? Write a number and a reason.",
+      "fields": [
+        {
+          "id": "n",
+          "label": "My number and reason:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-12"
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-13"
+    },
+    {
+      "type": "card",
+      "text": "**What this suggests [H].** In practice, a position with many only-moves is more likely to be lost at club level than its 0.00 suggests, while a position that is theoretically lost but needs the opponent to find many only-moves may score better than the engine's number. We have no data of our own to test this; treat it as a hypothesis to check with your own games."
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-14"
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-15"
+    },
+    {
+      "type": "card",
+      "text": "**Who has the waiting moves? [I]** In the next two boards the pieces are identical and only whose turn it is changes. Even a depth-4 search sees the swing here: +4.6 for White with Black to move, +0.08 with White to move [V]. One tempo flips the result. A fortress that survives only while you can shuffle fails the moment you must break it."
+    },
+    {
+      "type": "board",
+      "fen": "8/3k4/8/3K4/3P4/8/8/8 b - - 0 1",
+      "caption": "Black to move. It is the same kings and pawn as the next board; only whose turn it is changes. Here Black must move, and every move loses ground.",
+      "line": [
+        {
+          "move": "d7e8",
+          "say": "Black has to move. The king gives way, and the opposition is gone."
+        },
+        {
+          "move": "d5d6",
+          "say": "White steps forward, and the king gets in front of the pawn."
+        },
+        {
+          "move": "e8f7",
+          "say": "Black keeps the king nearby."
+        },
+        {
+          "move": "d6d7",
+          "say": "White pushes the king to the edge for good."
+        }
+      ],
+      "highlight": [
+        "d7",
+        "d5",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          },
+          "statement": "Tablebase: the side to move, Black, loses."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 400,
+            "max": 100000,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows over +4 for White."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "depth": 4,
+            "min": 400,
+            "max": 560
+          },
+          "statement": "At depth 4 the engine already shows over +4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/3k4/8/3K4/3P4/8/8/8 w - - 0 1",
+      "caption": "Now White must move instead. White has no useful waiting move, and the engine agrees it is level. The same position changed from lost to drawn by one tempo.",
+      "line": [
+        {
+          "move": "d5e5",
+          "say": "White steps aside, since the pawn alone cannot advance safely."
+        },
+        {
+          "move": "d7e7",
+          "say": "Black keeps the opposition by moving next to it."
+        },
+        {
+          "move": "e5d5",
+          "say": "White returns."
+        },
+        {
+          "move": "e7d7",
+          "say": "Black returns; nobody can make progress."
+        }
+      ],
+      "highlight": [
+        "d7",
+        "d5",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw for White."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows about 0.00."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "depth": 4,
+            "min": -45,
+            "max": 45
+          },
+          "statement": "At depth 4 about level."
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Break the shelter",
+      "prompt": "Predict: draw or win? One difference between the two boards: how far Black's pawn has advanced (g7 versus g6).",
+      "working": "IHI-LHIENGINESHUMANS2-5",
+      "failing": "IHI-LHIENGINESHUMANS2-6"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/3K4/5p1r/8/8/8/2Q5/8 b - - 0 1",
+      "caption": "Back to the queen against a rook and one pawn, but the pawn has moved one step, from f7 to f6. Predict the verdict before reading the claims.",
+      "highlight": [
+        "f6",
+        "d7",
+        "h6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "loss"
+          },
+          "statement": "Tablebase: the side to move, Black, loses."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 250,
+            "max": 100000,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine shows over +2.5 for White."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why the pawn step matters [I].** In the f7 board the only saving rook moves went to g6 and e6, squares the pawn on f7 guards. On f6 the pawn no longer guards them, so the rook has no safe shelter and the queen's checks fork it. The tablebase confirms the loss [V]."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "In one sentence: why did moving Black's pawn a single step flip the result?",
+      "fields": [
+        {
+          "id": "why",
+          "label": "My reason:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Common mistakes.** Three to watch. Trusting a plus score in a locked position. Giving up material in a fortress because it feels passive: the shelter needs those pieces where they are. Resigning a drawn game because the number looks big. [H] The last is the costliest, because nobody can punish it; you only lose the chance to learn the position."
+    },
+    {
+      "type": "card",
+      "text": "**A real model case [H].** We have not yet read and checked a famous game where a misread evaluation or a mistaken resignation decided the result, so none is claimed here. Until that is done, the constructed example below is a teaching device, not history."
+    },
+    {
+      "type": "board",
+      "fen": "8/5q2/8/2k5/8/R1P5/2P5/1K6 w - - 0 1",
+      "caption": "A constructed example, not a real game. White has a rook and two pawns against a queen: 7 against 9 by counting values, and many players would give up. The tablebase says draw.",
+      "line": [
+        {
+          "move": "b1b2",
+          "say": "The king guards both pawns, so the queen cannot win either for free."
+        },
+        {
+          "move": "f7f2",
+          "say": "The queen attacks the c2 pawn, which the king defends."
+        }
+      ],
+      "highlight": [
+        "a3",
+        "c3",
+        "c2",
+        "b1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "tablebase",
+          "params": {
+            "result": "draw"
+          },
+          "statement": "Tablebase: the position is a draw."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -25,
+            "max": 25,
+            "depth": 16
+          },
+          "statement": "At depth 16 the engine rates it level."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-4",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-18",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-16",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-20",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-19",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-17",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IHI-LHIENGINESHUMANS2-21",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Three questions before you believe a number.** (1) Which engine and which depth, and does a second depth agree? (2) Is the position locked, or built on a few precise moves, so counting is the wrong tool? (3) What would a person need to do next, and could they? A number answers none of these. [H] Writing the three answers down is a habit worth building."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back to a beginner who says 'the engine says +5, so it is won'. Fill all four.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea in my words:"
+        },
+        {
+          "id": "when",
+          "label": "When it applies:"
+        },
+        {
+          "id": "example",
+          "label": "One example I could set up on a board:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Self-check.** Did I say when a big score can mislead (a fortress, a short search)? Did I say when it does not (a score over +3 that a tablebase also agrees with)? Did I give an example a beginner could set up on a board? Did I name one mistake? Nothing here is graded; compare your answer with the lesson, not with a mark."
+    },
+    {
+      "type": "card",
+      "text": "**Recap.** A big score can hide a fortress, and a small or rising score can hide one too. Bishop colour, the file of the pawn and where the defending king stands decide the corner. A second depth is one check, not a guarantee. Compensation is not in the count. A 0.00 can hide five only-moves. Write your view down before the engine's."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "One habit I will change when I use an engine this week.",
+      "fields": [
+        {
+          "id": "habit",
+          "label": "My habit:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "Syzygy tablebase results through the Lichess tablebase service, used by tools/validate.py (7 pieces or fewer) [V]",
+    "Engine claims: Stockfish 19 lite single thread as in tools/engine.py, depth stated in each claim; depth-limited numbers are evidence under recorded settings, not proofs [V]",
+    "Positions: fortress family from tools/endgames/gen_queen.py (PE-FORT-3, 6, 8, 9, 10, 11, 12, 14) and one-feature edits by python-chess (flip_horizontal, mirror); bishop and pawn positions built by hand and then tablebase-checked; opening lines replayed with python-chess [V]",
+    "Wikipedia, 'Fortress (chess)' and 'Horizon effect': names and definitions only [S]",
+    "Jeremy Silman: engine analysis shows what to play but not why (paraphrase), docs/citable-views.md 10.13 [S]",
+    "Jacob Aagaard, Excelling at Chess Calculation: serious errors often come from overlooked candidate moves (paraphrase), docs/citable-views.md 10.7, via a reviewer's account [S]",
+    "Opening names (Benko Gambit, Marshall Attack, Ruy Lopez) as in app/public/openings; the lines are replayed moves, facts only [V]",
+    "Conjecture marked [H] or [I] in the text is ours; not tested [H]",
+    "Not found: a position where Stockfish 19 stayed wrong at depth 16 or 20 in the fortress families tried. The shallow-depth gap is real, the depth-16 gap was not found [V]",
+    "This revision: engine depths and tablebase results re-measured here with tools/engine.py and tools/validate.py (Stockfish 19 lite single thread; Lichess tablebase) [V]. Silman and Aagaard are cited from secondary summaries only, not read in full [S]. The win-probability formula is recalled, not re-checked [R]."
+  ]
+}
