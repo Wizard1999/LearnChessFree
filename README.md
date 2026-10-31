@@ -31,3 +31,5 @@ Download `desktop/ChessSchool.exe` and double-click it. Nothing to install. It i
 `docs/maintenance.md` is the routine: **`tools/check.py`** runs everything that must stay true (content validation, skill graph, tests including a smoke test of every page and cross-checks that every lesson is on the map, in the lists and in a course), **`tools/status.py`** says what is stale and how to fix it, **`tools/refresh_data.py`** is the monthly game-data update. Design rules for every page: `docs/design-simplicity-pass.md`. Map design: `docs/map-radial-design.md`. Licences and the free-forever pledge: `LICENSES.md`, `FREE-FOREVER.md`.
 
 Created by Andrew Valentine. See NOTICE.
+
+- `docs/next-session-plan.md`: what to do first when development resumes (written at the 31 Oct 2026 pause).
