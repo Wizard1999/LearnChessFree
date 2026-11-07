@@ -297,6 +297,14 @@ The phone is designed on its own, not squeezed from the desktop. Default scope: 
 - [ ] Install and offline: the app installs from the browser (manifest, icons, theme colour from the palette) and the first lessons work offline
 - [ ] Test matrix: 360x640, 375x812, 390x844, 412x915, a tablet, and a real phone and real tablet (Andrew's step); acceptance: the first lesson, a practice set, a game and the map are all usable one-handed without covering the board or the map
 
+## Phase 2l: From the harsh review of 7 November 2026 (decision D50)
+- [ ] Split the Forks lesson (65 steps, seven reflections) into short chapters, each with one clear insight and at most two reflections; the same rule for every long lesson: a step must enable something the learner could not do before
+- [ ] A visible pin and fork correctness pass: review the generalisations in every tactics lesson against counterexamples (absolute pin: the piece may still move along the pin line or capture the pinner; relative pin) with a person
+- [ ] Fewer organising systems on screen: one navigation story for a beginner (Today, Curriculum, Practice, Progress, More); subjects, stages, tiers, depths, courses and mastery names are explained once and hidden behind the lesson list until asked for; progress separates learning history, independent performance and application in plain words
+- [ ] Say "reliable" only with its scope: reliable at what kind of positions, under what conditions; wording and counts, never an exact-looking probability
+- [ ] A short learner pilot (8 to 12 people, true beginners and club players) before any more breadth; observe time to the first meaningful move, abandonment by chapter, and whether they can say what finished versus demonstrated means
+- [ ] A convenience answer for the browser-local progress trade-off: a calm backup nudge, an easy export and import, and a clear explanation moved out of the first screen
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
