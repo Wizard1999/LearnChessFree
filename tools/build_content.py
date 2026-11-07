@@ -36,9 +36,9 @@ def lesson_minutes(steps):
         if k == "card": t += words(s["text"]) / 200
         elif k == "board": t += 0.4 + words(s.get("caption") or "") / 200
         elif k == "item": t += 0.8
-        elif k == "contrast": t += 2
+        elif k == "contrast": t += 1.5
         elif k == "reflect": t += 1
-        elif k == "practice": t += (s.get("n") if s.get("n") is not None else 3) * 0.7
+        elif k == "practice": t += min(s.get("n") if s.get("n") is not None else 3, 3) * 0.7
     return max(3, math.floor(t + 0.5))
 
 
