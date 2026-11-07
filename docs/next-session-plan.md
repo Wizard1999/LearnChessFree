@@ -14,6 +14,10 @@ After the current app queue lands, apply the new palette in one pass: tokens fir
 
 The Up next button is already gone; roll the highlight-plus-label design out to the lesson list, courses, Progress boxes and Practice. Then the palette pass (3e) with the type, spacing and geometric-illustration direction. Linked hover (D44) applies to every highlighted item.
 
+## A luminous school (D47, roadmap 3g)
+
+Part of the palette and design pass (3e, 3f): the design brief and test, two rhythms, the reveal-as-explanation pattern in the depth standard, `docs/visual-language.md` with a test, selective glow, texture and type rules. Painted-world illustration is out; geometric shapes in the palette are in.
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.

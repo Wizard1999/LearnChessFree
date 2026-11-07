@@ -209,6 +209,19 @@ Palette: electric cobalt #4055F5, persimmon #F06445, golden yellow #F4C542, deep
 - [ ] Design direction for the palette pass (3e): clean typography, generous spacing, bold geometric illustrations, a restrained layout, and the colours carry the personality. Typography: one serif for headings and one clean sans for text, a modest scale (about 1.25), comfortable line length (60 to 70 characters) and leading (1.5 to 1.65); Spacing: an 8-point rhythm with generous padding around cards and between sections, fewer boxes and borders, more white space; Illustrations: a small set of bold geometric shapes (circles, quarter-circles, squares, diagonal bars) in the palette, drawn as inline SVG, used for the Start screen, empty states, stage headers, course covers and the finale and completion screens, never decoration that competes with the board or the lesson; Layout: restrained, one main column, one primary action per view
 - [ ] Screenshot review of the redesigned Start, Today, a lesson, the map and Play, in both looks, before shipping
 
+## Phase 3g: A luminous school of chess (Andrew, 7 November 2026, adopting the useful parts of an outside design opinion; decision D47)
+Design brief and test for every design decision: **"A luminous school of chess, where every discovery makes the board clearer."** Does it invite exploration, direct attention, or deepen understanding?
+- [ ] Two rhythms: exploring (home, map, courses, stage pages) is spacious and illustrated; working (a lesson, an exercise) is calm with the board dominant; illustration grows quieter as concentration matters more; the same colours, type and symbols connect both
+- [ ] The reveal is the explanation: lessons show the mechanism on the board first (for a fork, the two attack lines appear after the learner's move), then say it in words; add this pattern to `docs/lesson-depth-standard.md` and use it in the rebuilt lessons
+- [ ] One stable visual language (`docs/visual-language.md`, one page): selection (cobalt ring), legal moves (dots), threats and the move to look at (persimmon arrows), hints (gold glow), completion and demonstrated skill (jade tick), up next (persimmon edge and label); the same everywhere, with a test that the app uses only these treatments
+- [ ] Selective luminosity: a restrained glow only on the current lesson, the selected piece and the Up next item; nothing else glows
+- [ ] Pacing in lessons: one question, then an action, then the consequence, then the explanation; a prediction only after a worked example (already a rule)
+- [ ] Colour roles confirmed: ivory = reading surfaces; ink = text and structure; cobalt = primary action and current selection; persimmon = look here (Up next and board threats, always with a label or arrow); gold = discoveries and milestones; jade = demonstrated skill and the map's world
+- [ ] Texture: a faint procedural paper or stone feel on the page background and map only, never on board squares or small text, near zero file size, switched off by the high-contrast look
+- [ ] Typography: a restrained literary serif for chapter, course and stage titles (poetic title plus a plain subtitle saying what you will learn) and a highly readable sans for lessons and controls; lesson titles stay literal; ornament is rare
+- [ ] Writing carries the same care: short concrete prompts, explanations next to what they explain, terms revealed when the learner has something to attach them to
+- [ ] Skipped on purpose: painted-scenery or lore illustration (cost, and the site stays free, light and offline); geometric illustration in the palette instead
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
