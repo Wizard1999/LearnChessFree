@@ -17,6 +17,7 @@ The best possible place to learn chess and to learn how to learn: text-and-board
 
 ## How to work
 - **Keep the roadmap current.** `ROADMAP.md` is the visible plan (also shown in the app on the Roadmap page). When a task finishes, tick it (`[x]`, or `[~]` while in progress) and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`, which recomputes the percentages and the coverage metrics from the real files. Add new tasks when new work appears. Andrew wants to see what is built and what is next at all times.
+- **Agent waves:** use `tools/workflows/lesson-wave.js` and follow `docs/workflow-guide.md` (batched authors, every lesson reviewed with its own verdict, explicit models and effort, short briefs, one full check at the end). Never economise on review or on the Foundation audit.
 - Explain design reasoning so Andrew can agree or disagree. Prefer a decision with a stated default over a question.
 - He dislikes permission interruptions: batch work, avoid unnecessary browsing, and do not ask in chat for access he has already granted. Reddit is blocked in the browser tool; bot-checked sites (US Chess) are not to be bypassed.
 - Work in milestones with gates (`03-product-design.md` §7). Do not build features beyond the current milestone. Update the docs and the memory file when a decision changes.
