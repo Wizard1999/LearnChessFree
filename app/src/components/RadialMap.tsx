@@ -5,6 +5,7 @@ import { layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
 import { skillState, sheetOffset, listMaxHeight } from '../lib/mapSheet'
 import { BANDS, REGIONS, bandOf } from '../lib/mapRegions'
+import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
 import type { Lesson, Skill } from '../types'
 
@@ -36,17 +37,18 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   const R = layout.radius + 300 // room outside the circle for the section and region names
   const navigate = useNavigate()
   const [hov, setHov] = useState<string | null>(null)
+  const linkedHoverId = useLinkedHover() // a skill pointed at in another window (Progress boxes, Up next ...) is highlighted here too
   const [tip, setTip] = useState<{ id: string; corner: 'br' | 'bl' } | null>(null)
   const hideTimer = useRef<number | undefined>(undefined)
   const showTip = (id: string, el: Element) => {
-    window.clearTimeout(hideTimer.current); setHov(id)
+    window.clearTimeout(hideTimer.current); setHov(id); setLinkedHover(id)
     const box = svg.current?.parentElement?.getBoundingClientRect(), r = el.getBoundingClientRect()
     if (!box) return
     // the card lives in a corner of the map (bottom right by default, bottom left when the skill is down there), never at the pointer, so it never hides the links
     const nearBR = r.left - box.left > box.width - 340 && r.top - box.top > box.height - 250
     setTip({ id, corner: nearBR ? 'bl' : 'br' })
   }
-  const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null) }, 220) }
+  const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null); setLinkedHover(null) }, 220) }
   const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
   const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
   // the camera is remembered for the session, so coming back from a lesson lands where the learner was
@@ -328,7 +330,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           )
         })}
         {/* top layer: the hovered and the chosen skill are redrawn last, fully visible, with a readable label, whatever is dimmed or crowded around them */}
-        {[...new Set([picked, hov].filter((x): x is string => !!x))].map(id => {
+        {[...new Set([picked, hov, linkedHoverId].filter((x): x is string => !!x))].map(id => {
           const n = byId.get(id); if (!n) return null
           return (
             <g key={`top-${id}`} transform={`translate(${n.x},${n.y})`} className={`maptop${id === picked ? ' sel' : ''}`} pointerEvents="none">
@@ -352,7 +354,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
       <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of the whole map"
         onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
         <circle r={layout.radius} className="miniback" />
-        {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === rec ? 26 : 12} className={n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} />)}
+        {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === linkedHoverId ? 40 : n.id === rec ? 26 : 12} className={n.id === linkedHoverId ? 'minilink' : n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} />)}
         <rect x={-view.x - R / view.k} y={-view.y - R / view.k} width={(2 * R) / view.k} height={(2 * R) / view.k} className="miniview" />
       </svg>
       {tip && (() => {

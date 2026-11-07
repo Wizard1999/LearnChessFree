@@ -1,4 +1,5 @@
 import { RadialMap } from '../components/RadialMap'
+import { linkedHoverHandlers, setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
@@ -18,11 +19,12 @@ const FILL = [0, 25, 50, 75, 100]
 
 function Block({ n, selected, seen, onPick, onHover }: { n: NodeProgress; selected: boolean; seen: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
   const credited = n.levelWithAssumed > n.level // the fill includes credit that is only assumed
+  const linked = useLinkedHover() === n.id // the same skill is under the pointer in another window
   const label = `${n.title}: ${LEVEL_NAMES[n.level]}${credited ? `, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()} from placement or warm-up, not yet shown` : ''}${n.due ? ', refresher due' : ''}${n.lessonDone ? ', lesson finished' : n.hasLesson ? ', lesson not yet finished' : ''}`
   return (
-    <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
+    <button type="button" className={`blk lv${n.level}${selected ? ' sel' : ''}${linked ? ' linked' : ''}${n.due ? ' due' : ''}${credited ? ' assumed' : ''}`} style={{ ['--fill' as string]: `${FILL[n.levelWithAssumed]}%` }}
       data-lesson={n.lessonDone ? '1' : undefined} data-seen={seen && !n.lessonDone ? '1' : undefined} aria-label={label} aria-pressed={selected} onClick={() => onPick(n.id)}
-      onMouseEnter={e => onHover(n, e.currentTarget)} onMouseLeave={() => onHover(null)} onFocus={e => onHover(n, e.currentTarget)} onBlur={() => onHover(null)} />
+      onMouseEnter={e => { onHover(n, e.currentTarget); setLinkedHover(n.id) }} onMouseLeave={() => { onHover(null); setLinkedHover(null) }} onFocus={e => { onHover(n, e.currentTarget); setLinkedHover(n.id) }} onBlur={() => { onHover(null); setLinkedHover(null) }} />
   )
 }
 
@@ -68,6 +70,7 @@ export function Course() {
   const narrowScreen = () => typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches === true
   const toggleWin = (k: keyof Wins) => saveWins(narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !wins[k] } : { ...wins, [k]: !wins[k] })
   const dockOpen = wins.progress || wins.challenge || wins.next
+  const linkedId = useLinkedHover() // the skill the pointer is on in any open window
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -339,7 +342,7 @@ export function Course() {
                 <ul className="plain upnext">{upNext.map(n => {
                   const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : undefined
                   return (
-                    <li key={n.id}>
+                    <li key={n.id} className={linkedId === n.id ? 'linked' : undefined} {...linkedHoverHandlers(n.id)}>
                       <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{n.levelWithAssumed > n.level ? `${LEVEL_NAMES[n.level]}, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()}` : LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
                       {d && <p className="small muted">{n.workingDepth}: {d.outcome}</p>}
                       <div className="row">
