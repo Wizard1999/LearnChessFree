@@ -22,6 +22,10 @@ Part of the palette and design pass (3e, 3f): the design brief and test, two rhy
 
 Reshape the path into tracks with a published Foundation and a capstone (before wider rollout of new lessons, because it decides which lessons the beginner rebuild and package 4 should be). First deliverables: `docs/foundation.md`, `tools/foundation_matrix.py`, the track field in `tools/build_path.py`, the rules-completeness pass (draws), the winning-a-won-game lesson and the opponent-awareness habit lessons, the opening starter package. The map's stage rings should become track-aware.
 
+## Mobile map redesign (roadmap 2j)
+
+A hotfix is in (single scrolling control rows, hidden hint and legend). When the app queue finishes, run the real redesign as one agent task: full-bleed map, thin top bar, floating round map buttons, one filters sheet, a draggable skill sheet.
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.

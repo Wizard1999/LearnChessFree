@@ -234,6 +234,11 @@ Promise to work toward: **a complete foundation in practical chess, from the rul
 - [ ] An independent chess educator reviews the Foundation checklist itself so it does not quietly omit essentials (needs a person)
 - [ ] The depth standard's emphasis moves from step counts to coverage, examples, feedback and independent performance (step counts stay diagnostic); a 15-step lesson can be complete
 
+## Phase 2j: Mobile map redesign (Andrew, 7 November 2026: the controls covered almost the whole screen on a phone)
+- [x] Hotfix: on phones the view buttons, the section and stage filters and the map toolbar are single scrolling rows, the hint text and legend are hidden, and the map takes the rest of the screen (about 56 percent of the height, no page scroll)
+- [ ] Real redesign: the map is full-bleed; one thin top bar (the three views as a segmented control and a menu button); a floating column of round map buttons at the edge (zoom in, zoom out, fit all, where I am, back, search); ONE bottom filters sheet holding sections, stages, Progress, Mastery challenge, the skill list and the legend; the selected-skill panel is a bottom sheet that can be dragged down to see the map; nothing else covers the map; pinch zoom and two-finger pan are the main gestures
+- [ ] Acceptance: at 375x812 the map is at least 70 percent of the height with the sheet closed; every control reachable with one thumb; every node selectable; keyboard and screen-reader paths still work; tested with the browser's mobile preset and on a real phone
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
