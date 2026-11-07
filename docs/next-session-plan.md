@@ -6,6 +6,10 @@ Written 31 Oct 2026 so nothing Andrew said is lost. Everything below is also in 
 
 Four bounded packages, each ending in something usable: (1) trust and friction: items 1 and 2 below plus the mastery, confidence, step-id and save-failure fixes; (2) the beginner journey: item 3 below, a gentle default opponent, one post-game review moment, a few real beginners; (3) one complete opening application on the Dragon series: item 5 plus a post-game thematic review; (4) controlled expansion: a small batch of core lessons and one more opening series, reviewed for quality, loading cost and saved-progress migration. The 17 other opening series and the culture rewrites wait until package 3 shows the shared components work. Items 4 and 6 (map stages, real games) slot into packages 2 and 3.
 
+## Colour palette (D45, roadmap 3e)
+
+After the current app queue lands, apply the new palette in one pass: tokens first (the app already uses CSS variables), then roles, the map and board colours, `tools/check_contrast.py` in `tools/check.py`, the tick-and-cross rule, and a screenshot review of the main pages in both looks. Do not mix this with the map-stage work.
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.

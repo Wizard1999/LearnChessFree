@@ -192,6 +192,16 @@ Review proposals accepted:
 - [ ] Accessibility: real keyboard, screen-reader, narrow-screen and enlarged-text journeys using WCAG 2.2; audio must never play over changed text (version check)
 - [ ] Human review scoped to a release slice: the beginner path, the exemplars, high-traffic practice items
 
+## Phase 3e: The new colour palette (Andrew, 7 November 2026; decision D45; after the current app queue, one coherent pass)
+Palette: electric cobalt #4055F5, persimmon #F06445, golden yellow #F4C542, deep jade #168577, midnight ink #172238, warm ivory #F7F5EE. About 70 percent ivory/ink, 20 percent cobalt, 10 percent the other three accents.
+- [ ] Tokens: define the six colours once with tints and shades (including a lighter cobalt for the dark look) and point the existing CSS variables (`--accent`, `--info`, `--success`, `--canvas`, `--surface`, ...) at them; light look = ivory and ink, dark look = ink and ivory
+- [ ] Roles: cobalt = the single primary action (buttons, links, focus ring, selected, "builds on"); persimmon = energy and direction only (your next step, current stage, wordmark accent, refresher due, check); jade = demonstrated skill (Rely on it, mastered, correct answers, Maia, finale results); golden yellow = curiosity (optional invitations, new, last move and hint highlights, partly filled progress); ink = text and the dark look
+- [ ] Map: region colours (Foundations jade, Seeing and calculating cobalt, Understanding positions gold, Fighting and converting persimmon, Playing and improving ink-grey) on the region arcs, labels and slice tints; node fill by level: seen gold, level one light cobalt, level two cobalt, mastered jade; recommended next step persimmon
+- [ ] Board: a "Scholarmate" board theme (ivory and a muted jade), last move gold, legal-move dots cobalt; keep the existing board choices and the high-contrast option
+- [ ] Contrast checker `tools/check_contrast.py`: computes WCAG ratios for every text/background token pair, run by `tools/check.py`, fails below 4.5:1 for text and 3:1 for graphics and large text (my hand estimates: persimmon and gold fail as text on ivory, so they are fills, borders and highlights with ink text; cobalt on ink is too dim, so the dark look gets a lighter cobalt)
+- [ ] Colour is never the only cue: correct and incorrect always carry a tick or cross and a different shape (jade and persimmon are close in brightness for red-green colour blindness)
+- [ ] Screenshot review of Today, a lesson, practice, progress, the map and Play in both looks at desktop and phone size; update the crest, favicon, manifest theme colour and the product page copy
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
