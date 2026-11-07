@@ -10,12 +10,30 @@ import type { Lesson, Skill } from '../types'
 
 interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null }
 
+/** Text that follows an arc of a circle round the map, centred on `mid` (radians), reading upright: on the top half it runs clockwise outside the baseline,
+ * on the bottom half the path is reversed so the letters are not upside down. The size shrinks to fit the arc a label may use. */
+function ArcLabel({ id, mid, radius, text, size, className }: { id: string; mid: number; radius: number; text: string; size: number; className: string }) {
+  const top = Math.sin(mid) <= 0
+  const r = top ? radius - size * 0.33 : radius + size * 0.33
+  const half = Math.min(Math.PI * 0.95, (text.length * size * 0.6) / r / 2 + 0.03)
+  const a1 = mid - half, a2 = mid + half
+  const p = (a: number) => `${Math.cos(a) * r},${Math.sin(a) * r}`
+  const d = top ? `M${p(a1)} A${r},${r} 0 0 1 ${p(a2)}` : `M${p(a2)} A${r},${r} 0 0 0 ${p(a1)}`
+  return (
+    <g pointerEvents="none">
+      <path id={id} d={d} fill="none" stroke="none" />
+      <text className={className} fontSize={size}><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{text}</textPath></text>
+    </g>
+  )
+}
+const fitSize = (arc: number, chars: number, factor: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, (arc * 0.92) / (chars * factor)))
+
 /** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
 export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null }: Props) {
   const layout = useMemo(() => layoutMap(skills), [skills])
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
-  const R = layout.radius + 40
+  const R = layout.radius + 300 // room outside the circle for the section and region names
   const navigate = useNavigate()
   const [hov, setHov] = useState<string | null>(null)
   const [tip, setTip] = useState<{ id: string; corner: 'br' | 'bl' } | null>(null)
@@ -221,14 +239,19 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           setView(zoomAt(viewRef.current, 1.8, R, svg.current.getBoundingClientRect(), e.clientX, e.clientY))
         }}>
         {layout.wedges.map(w => {
-          const mid = (w.from + w.to) / 2
           const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
           return (
             <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`}>
               <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
-              <text x={Math.cos(mid) * (layout.radius - 20)} y={Math.sin(mid) * (layout.radius - 20)} textAnchor="middle" className="wedgelabel" opacity={view.k >= 1.2 ? 1 : 0}>{w.strand} {strandNames[w.strand] ?? ''}</text>
             </g>
           )
+        })}
+        {/* section names: big, bold, curved round the outside of each slice, outside the region arc */}
+        {layout.wedges.map(w => {
+          const text = `${w.strand} ${strandNames[w.strand] ?? ''}`.trim()
+          const rS = layout.radius + 70
+          const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
+          return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
         })}
         {/* milestone bands: faint rings labelled with the ability they stand for (orientation only, not a rating) */}
         {bandEdges.slice(0, -1).map((r, b) => (
@@ -246,7 +269,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           return (
             <g key={rg.id} className="mapregion" pointerEvents="none">
               <path d={`M${pt(from + 0.01, r0)} A${r0},${r0} 0 ${to - from > Math.PI ? 1 : 0} 1 ${pt(to - 0.01, r0)}`} className="regionarc" fill="none" />
-              <text x={Math.cos(mid) * (r0 + 52)} y={Math.sin(mid) * (r0 + 52)} textAnchor="middle" className="regionlabel">{rg.name}</text>
+              <ArcLabel id={`arc-${rg.id}`} mid={mid} radius={layout.radius + 215} text={rg.name} size={fitSize((to - from) * (layout.radius + 215), rg.name.length, 0.62, 50, 84)} className="arclabel region" />
             </g>
           )
         })}
