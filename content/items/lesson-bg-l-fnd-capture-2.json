@@ -1,0 +1,576 @@
+{
+ "positions": [
+  {
+   "id": "PBG-LFNDCAPTURE2-1",
+   "fen": "6k1/5p2/6pp/2R3b1/8/8/8/6K1 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-TAPDEF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "white rook c5, black bishop g5 with pawns g6 h6 f7, kings; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-2",
+   "fen": "4k3/8/3p4/8/8/8/8/4K3 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-PAWNSQ",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black pawn d6 and kings; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-3",
+   "fen": "4r1k1/2b2ppp/3pp3/4n3/8/8/5PPP/4R1K1 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-COUNT1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black knight e5 defended by one pawn; bishop and rook blocked by own pawns; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-4",
+   "fen": "6k1/4bppp/2n5/8/8/8/5PPP/2R3K1 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-WRONGBISHOP",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black knight c6 with a dark-squared bishop on e7 nearby; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-5",
+   "fen": "8/8/2k5/2p5/8/8/8/2R1K3 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-KINGDEF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "white rook c1, black pawn c5 guarded by its king on c6; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-6",
+   "fen": "6k1/2B2pp1/4p3/n2p4/8/8/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-TWOCAPS",
+   "provenance": {
+    "kind": "authored",
+    "ref": "white bishop c7 attacks loose knight a5; rook d1 attacks pawn d5 guarded by e6; legality checked with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCAPTURE2-7",
+   "fen": "3r2k1/3p1ppp/8/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-BG-FNDCAPTURE2-BLOCKED",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black knight d5, rook d8 blocked by own pawn d7; legality checked with python-chess",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBG-LFNDCAPTURE2-1",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LFNDCAPTURE2-1",
+   "prompt": "Try it first. The white rook on c5 attacks the black bishop on g5. Tap every black piece that could capture on g5 if the rook takes it. Not sure yet? Press a hint; the next steps show it.",
+   "answer": {
+    "squares": [
+     "h6"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1
+     },
+     "id": "C1"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "h6",
+      "squares": [
+       "g5"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "g6",
+      "squares": [
+       "f5",
+       "h5"
+      ]
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares"
+   ],
+   "hints": [
+    "Black pawns capture diagonally forward, which for Black means down the board.",
+    "Look at the pawns on g6 and h6. Which one has g5 on a forward diagonal?",
+    "Only the pawn on h6 attacks g5. The pawn on g6 stands right in front of the bishop but attacks f5 and h5."
+   ],
+   "explain": "The pawn on h6 attacks g5 on its forward diagonal, so it can take back. The pawn on g6 attacks f5 and h5, so standing in front of the bishop does not make it a defender.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-2",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LFNDCAPTURE2-2",
+   "prompt": "Tap every square the black pawn on d6 defends, meaning the squares where it could capture an enemy piece.",
+   "answer": {
+    "squares": [
+     "c5",
+     "e5"
+    ]
+   },
+   "claims": [
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "d6",
+      "squares": [
+       "c5",
+       "e5"
+      ]
+     },
+     "id": "C1"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares"
+   ],
+   "hints": [
+    "A pawn captures differently from the way it walks.",
+    "Black pawns move down the board, so their captures point down the board too.",
+    "One square diagonally forward, to each side: c5 and e5."
+   ],
+   "explain": "A pawn captures one square diagonally forward. For Black that is down the board, so the pawn on d6 defends c5 and e5. It does not defend d5, the square straight ahead.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-3",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCAPTURE2-3",
+   "prompt": "White to move. The rook on e1 attacks the knight on e5. How many black pieces really defend the knight? Count before you answer.",
+   "answer": {
+    "outcome": "1",
+    "options": [
+     "0",
+     "1",
+     "2"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "e1e5",
+      "max": -2
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "For each black piece, ask: can it capture on e5 right now, with a clear line?",
+    "The bishop on c7 and the rook on e8 each have one of their own pawns in the way.",
+    "Only the pawn on d6 can capture on e5."
+   ],
+   "explain": "The pawn on d6 attacks e5. The bishop on c7 is blocked by that same pawn and the rook on e8 is blocked by the pawn on e6, so they do not count. One defender, so the rook would lose a rook for a knight.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "e1e5": "The pawn on d6 takes the rook. That is 5 points lost for 3 won."
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-4",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCAPTURE2-4",
+   "prompt": "White to move. Should the rook on c1 take the knight on c6? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c6",
+      "color": "black",
+      "count": 0
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c6",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "c1c6",
+      "min": 3
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Count first: which black pieces could capture on c6?",
+    "The bishop on e7 stands near the knight. Which colour of square can it reach?",
+    "The bishop moves only on dark squares and c6 is a light square, so it cannot take back."
+   ],
+   "explain": "Nothing can capture on c6. The bishop on e7 stays on dark squares and c6 is light, so being close does not help it. The rook wins the knight for nothing.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-5",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCAPTURE2-5",
+   "prompt": "White to move. Should the rook on c1 take the pawn on c5? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "black",
+      "count": 1
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "c1c5",
+      "max": -4
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Which black pieces could capture on c5?",
+    "A king can capture too, on any of the eight squares around it.",
+    "The black king on c6 touches c5, and nothing of White's covers c5 to stop it."
+   ],
+   "explain": "The black king stands next to c5 and takes back. White gives a rook (5 points) for a pawn (1 point).",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "c1c5": "The king takes the rook. 5 points lost for 1 won."
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-6",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBG-LFNDCAPTURE2-6",
+   "prompt": "White to move. Two captures are possible. Which one wins material?",
+   "answer": {
+    "moves": [
+     "c7a5"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "c7a5"
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "a5",
+      "color": "black",
+      "count": 0
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "c7a5",
+      "min": 3
+     },
+     "id": "C3"
+    },
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c7a5"
+      ]
+     },
+     "id": "C4"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "d1d5",
+      "cp": 150
+     },
+     "id": "C5"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move"
+   ],
+   "hints": [
+    "Write down both captures, then count the defenders of each target.",
+    "One target has a pawn guarding it.",
+    "The knight on a5 has no defender, so the bishop takes it for free."
+   ],
+   "explain": "The bishop takes the knight on a5 and nothing can retake it. The rook would take the pawn on d5, but the pawn on e6 retakes, so White would give 5 points for 1.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d1d5": "The pawn on e6 retakes the rook. 5 points lost for 1 won."
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-7",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCAPTURE2-7",
+   "prompt": "White to move. Should the rook on d1 take the knight on d5? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d5",
+      "min": 3
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Count first: which black pieces could capture on d5?",
+    "The black rook is on the same file. What stands between it and d5?",
+    "Its own pawn on d7 blocks the line, so the rook cannot capture on d5."
+   ],
+   "explain": "The black rook on d8 is on the d-file, but its own pawn on d7 stands in the way. Nothing can capture on d5, so the rook wins the knight.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCAPTURE2-8",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCAPTURE2-1",
+   "prompt": "A friend says: the pawn on g6 defends the bishop on g5, because it stands right in front of it. What is wrong with that?",
+   "answer": {
+    "outcome": "A pawn captures diagonally forward, so g6 does not reach g5",
+    "options": [
+     "Nothing, the pawn is right next to it",
+     "A pawn captures diagonally forward, so g6 does not reach g5",
+     "The pawn is pinned"
+    ]
+   },
+   "claims": [
+    {
+     "type": "piece_attacks",
+     "params": {
+      "square": "g6",
+      "squares": [
+       "f5",
+       "h5"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1
+     },
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Ask which squares the pawn on g6 can capture on.",
+    "Black pawns capture diagonally down the board.",
+    "From g6 a black pawn reaches f5 and h5, not g5."
+   ],
+   "explain": "The pawn on g6 attacks f5 and h5. Standing in front of the bishop does not make it a defender; the pawn on h6 is the only one that defends g5.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  }
+ ]
+}

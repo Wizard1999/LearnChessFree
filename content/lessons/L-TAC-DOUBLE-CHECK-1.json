@@ -1,41 +1,507 @@
 {
   "id": "L-TAC-DOUBLE-CHECK-1",
-  "title": "Double check",
+  "title": "Double check: how to see it, set it up and stop it",
   "skill": "TAC.DOUBLE-CHECK",
   "depth": "D1",
-  "minutes": 9,
+  "minutes": 30,
   "outcomes": [
-    "Explains why only the king can answer a double check",
-    "Finds the move that gives a double check when told to look for one",
-    "Says that a move is no double check when a piece blocks the uncovered line"
+    "Explains why only the king can answer a double check, and when the king may capture a checking piece",
+    "Finds the move that gives a double check by looking for a piece that stands in front of a line to the king",
+    "Says that a move is no double check when a piece blocks the uncovered line or the front piece gives no check",
+    "Sets up a double check with a first forcing move and spots one aimed at their own king",
+    "Explains double check to a beginner with the idea, its conditions, an example and a warning"
   ],
   "steps": [
     {
-      "type": "card",
-      "text": "A **double check** is two checks at once: a piece moves away, uncovers a check from the piece behind it, and gives check itself. You met the uncovering idea in *Discovered attacks and discovered check*.\nOnly the king can answer a double check: one move cannot block or capture two checking pieces."
+      "type": "item",
+      "item": "IL-HpDLG",
+      "silent": true,
+      "chapter": "See it"
     },
     {
-      "type": "item",
-      "item": "ISsp7-4"
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Write the move you chose, and what you think could stop it. Nothing is explained yet.",
+      "fields": [
+        {
+          "id": "move",
+          "label": "My move:"
+        },
+        {
+          "id": "stop",
+          "label": "What could stop it:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Double check** means one move gives check twice, so the king has to move. After this lesson you can do four things: **see** one coming, **judge** whether it works (and when the king simply takes the checking piece), **set one up** or stop one against you, and **tell** a real double check from a look-alike. First, boards from easy to hard: watch what the first move does."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/p7/3p4/1PpPp3/P1B1Q3/K1b4q/2R3N1 b - - 0 41",
+      "caption": "The hook position again, Black to move. The queen on h2 looks along the second rank at the king on a2, but Black's own bishop on c2 stands in the way.",
+      "line": [
+        {
+          "move": "c2b3",
+          "say": "The bishop steps off the rank and attacks the king itself, while the queen's line opens: two checks at once."
+        },
+        {
+          "move": "a2a1",
+          "say": "White cannot capture or block two checkers, so the king must move."
+        },
+        {
+          "move": "h2a2",
+          "say": "The queen takes the open rank. The bishop protects her: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c2",
+          "to": "b3"
+        },
+        {
+          "from": "h2",
+          "to": "a2"
+        }
+      ],
+      "highlight": [
+        "a2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "c2b3"
+          },
+          "statement": "The bishop move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "a2",
+            "color": "black",
+            "count": 2,
+            "after_move": "c2b3"
+          },
+          "statement": "After the bishop moves, two black pieces attack the king on a2."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "c2b3",
+            "n": 2
+          },
+          "statement": "Black forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c2b3"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/6Rp/2k5/P4P2/1P4P1/2r1n1KP/7B/8 b - - 0 44",
+      "caption": "Black to move. The rook on c3 looks along the third rank at the king on g3, but Black's own knight on e3 is in the way.",
+      "line": [
+        {
+          "move": "e3f5",
+          "say": "The knight takes a pawn and leaves the rank. It attacks the king from f5, and the rook's line is open."
+        },
+        {
+          "move": "g3f4",
+          "say": "The king moves. One of its three squares."
+        },
+        {
+          "move": "f5g7",
+          "say": "The knight takes the white rook on g7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e3",
+          "to": "f5"
+        },
+        {
+          "from": "c3",
+          "to": "g3"
+        }
+      ],
+      "highlight": [
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e3f5"
+          },
+          "statement": "The knight capture is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "black",
+            "count": 2,
+            "after_move": "e3f5"
+          },
+          "statement": "After the knight captures, two black pieces attack the king on g3."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e3f5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "e3f5",
+            "min": 5
+          },
+          "statement": "Along the engine line Black wins at least a rook for a pawn."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2k4r/ppq2ppp/2nr4/2p5/2PpP3/3B1Q2/PP1B1PPK/R4R2 b - - 0 17",
+      "caption": "Black to move. The queen on c7 aims down a diagonal at the king on h2, but Black's rook on d6 stands on that diagonal.",
+      "line": [
+        {
+          "move": "d6h6",
+          "say": "The rook leaves the diagonal and checks down the h-file. The queen's diagonal is open: two checks."
+        },
+        {
+          "move": "h2g1",
+          "say": "The king has one legal move."
+        },
+        {
+          "move": "c7h2",
+          "say": "The queen lands on h2, protected by the rook: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d6",
+          "to": "h6"
+        },
+        {
+          "from": "c7",
+          "to": "h2"
+        }
+      ],
+      "highlight": [
+        "h2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d6h6"
+          },
+          "statement": "The rook move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h2",
+            "color": "black",
+            "count": 2,
+            "after_move": "d6h6"
+          },
+          "statement": "After the rook moves, two black pieces attack the king on h2."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "d6h6",
+            "n": 2
+          },
+          "statement": "Black forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d6h6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r4r2/5Bk1/pp5p/2p3P1/P3R1Q1/3qn3/1P4P1/5RK1 w - - 0 24",
+      "caption": "White to move. The queen on g4 looks up the g-file at the king on g7, but White's own pawn on g5 stands in the way.",
+      "line": [
+        {
+          "move": "g5h6",
+          "say": "The pawn captures toward the king: it gives check from h6 and opens the g-file for the queen."
+        },
+        {
+          "move": "g7h6",
+          "say": "The king may take the pawn, because nothing protects it. Both other king moves also lose."
+        },
+        {
+          "move": "g4g6",
+          "say": "The queen steps to g6, protected by the bishop on f7: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "h6"
+        },
+        {
+          "from": "g4",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g5h6"
+          },
+          "statement": "The pawn capture is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g7",
+            "color": "white",
+            "count": 2,
+            "after_move": "g5h6"
+          },
+          "statement": "After the pawn captures, two white pieces attack the king on g7."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "g5h6",
+            "n": 2
+          },
+          "statement": "White forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5h6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3rr1k1/pp3pp1/2p3q1/8/3PpP1p/2N1P1nP/PP3R2/3QRNK1 b - - 0 26",
+      "caption": "Black to move. The queen on g6 looks down the g-file at the king on g1, but Black's knight on g3 stands in front of it.",
+      "line": [
+        {
+          "move": "g3e2",
+          "say": "The knight steps off the file and checks from e2: two checks."
+        },
+        {
+          "move": "g1h1",
+          "say": "The king steps into the corner."
+        },
+        {
+          "move": "g6g1",
+          "say": "The queen arrives on g1, protected by the knight: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g3",
+          "to": "e2"
+        },
+        {
+          "from": "g6",
+          "to": "g1"
+        }
+      ],
+      "highlight": [
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g3e2"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 2,
+            "after_move": "g3e2"
+          },
+          "statement": "After the knight moves, two black pieces attack the king on g1."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "g3e2",
+            "n": 2
+          },
+          "statement": "Black forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g3e2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two pieces on one line.** Every board had the same parts. A *back piece* (a queen, rook or bishop) aims at the king along a line, and a *front piece* stands in the way. When the front piece moves, the back piece gives check. If the front piece also gives check from its new square, that is a **double check**. So the search is: find a piece standing between your long-range piece and the enemy king."
+    },
+    {
+      "type": "board",
+      "fen": "r1b2r1k/2p2p2/pp3R1p/4Q1qp/8/7P/6PK/8 w - - 1 40",
+      "caption": "White to move. The queen on e5 aims at the king on h8, but White's rook on f6 stands on that diagonal. A harder one: the front piece is a rook that captures.",
+      "line": [
+        {
+          "move": "f6h6",
+          "say": "The rook takes a pawn and checks down the h-file. The diagonal opens: two checks."
+        },
+        {
+          "move": "h8g8",
+          "say": "The only legal reply."
+        },
+        {
+          "move": "e5g5",
+          "say": "The queen takes the black queen with mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "h6"
+        },
+        {
+          "from": "e5",
+          "to": "h8"
+        }
+      ],
+      "highlight": [
+        "h8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6h6"
+          },
+          "statement": "The rook capture is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h8",
+            "color": "white",
+            "count": 2,
+            "after_move": "f6h6"
+          },
+          "statement": "After the rook captures, two white pieces attack the king on h8."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "f6h6",
+            "n": 2
+          },
+          "statement": "White forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6h6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
     },
     {
       "type": "board",
       "fen": "8/6Rp/2k5/P4n2/1P4P1/2r3KP/7B/8 w - - 0 45",
-      "caption": "White to move. Black has just played ...Nxf5+: the knight and the rook both give check.",
+      "caption": "White to move, in double check: the knight on f5 and the rook on c3 both attack the king. Which White pieces can help?",
+      "chapter": "Why it works, and when it fails",
       "line": [
         {
           "move": "g3f4",
-          "say": "Only the king can move: a double check cannot be blocked or captured away."
+          "say": "Only the king can move. Capturing or blocking one checker would leave the other check standing."
         },
         {
           "move": "f5g7",
-          "say": "The knight takes the rook on g7."
+          "say": "Black's knight takes the rook on g7."
         }
       ],
       "arrows": [
         {
           "from": "f5",
-          "to": "g7"
+          "to": "g3"
+        },
+        {
+          "from": "c3",
+          "to": "g3"
         }
       ],
       "highlight": [
@@ -52,6 +518,16 @@
         },
         {
           "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g3",
+            "color": "black",
+            "count": 2
+          },
+          "statement": "Two black pieces attack the king."
+        },
+        {
+          "id": "C3",
           "type": "legal_moves_set",
           "params": {
             "moves": [
@@ -66,7 +542,150 @@
     },
     {
       "type": "card",
-      "text": "A double check is strongest when the king's escape squares are covered or lead to somewhere worse. It is not mate by itself: list the squares first.\nIt exists only if the uncovered line is open. A rule of thumb: ask what stands between the line and the king. If a piece blocks it, the move is only a single check, and blocking or capturing become possible answers again."
+      "text": "**Why only the king can answer.** A single check can be met three ways: take the checking piece, block the line, or move the king. A capture or a block deals with one checker, and the other check is still there. So the king must move. That includes the king *capturing* a checker, if the checker stands next to the king and nothing protects it."
+    },
+    {
+      "type": "board",
+      "fen": "8/p3k3/8/4B3/8/8/8/4R1K1 w - - 0 1",
+      "caption": "A bare board. White to move. The bishop on e5 blocks the rook's file.",
+      "line": [
+        {
+          "move": "e5d6",
+          "say": "The bishop leaves the file and checks from d6: two checks, and the bishop is next to the king."
+        },
+        {
+          "move": "e7d6",
+          "say": "Nothing protects the bishop, so the king simply takes it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d6"
+        },
+        {
+          "from": "e1",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "d6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "The bishop move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 2,
+            "after_move": "e5d6"
+          },
+          "statement": "After the bishop moves, two white pieces attack the king."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 0,
+            "after_move": "e5d6"
+          },
+          "statement": "No white piece protects the bishop on d6."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/p3k3/8/2P1B3/8/8/8/4R1K1 w - - 0 1",
+      "caption": "The same board with one change: a white pawn stands on c5.",
+      "line": [
+        {
+          "move": "e5d6",
+          "say": "The bishop gives the same double check."
+        },
+        {
+          "move": "e7d8",
+          "say": "The pawn on c5 protects the bishop, so the king cannot take it. It has to run."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d6"
+        },
+        {
+          "from": "c5",
+          "to": "d6"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "c5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "The bishop move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 2,
+            "after_move": "e5d6"
+          },
+          "statement": "After the bishop moves, two white pieces attack the king."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5d6"
+          },
+          "statement": "The pawn on c5 protects the bishop on d6."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "A piece gives double check and stands next to the king. When can the king take it?",
+      "fields": [
+        {
+          "id": "when",
+          "label": "The king can take it:",
+          "options": [
+            "whenever it is a minor piece",
+            "only if no white piece attacks that square, the other checker included",
+            "never: only moves away are legal",
+            "only if the other checker is a knight"
+          ],
+          "answer": "only if no white piece attacks that square, the other checker included"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What a double check needs, and what makes it win.** It needs an open line once the front piece leaves, and a front piece that checks from its new square. Miss either and you have one check, which can be blocked or captured. It wins when the king cannot take the checker and every flight square is covered. Even then the forced king move buys a free move, because the king had to answer. That free move can bring mate, a fork or an undefended piece."
     },
     {
       "type": "contrast",
@@ -77,8 +696,839 @@
       "irrelevant": "ISsp7-2"
     },
     {
+      "type": "board",
+      "fen": "r1b1k2r/pp3ppp/4pn2/q2p4/1n1P4/PP2P3/4BPPP/RN1QK1NR b KQkq - 1 10",
+      "caption": "Black to move. A double check does not have to mate. The queen on a5 looks along a diagonal at the king on e1, with Black's knight on b4 in the way.",
+      "line": [
+        {
+          "move": "b4c2",
+          "say": "The knight steps off the diagonal and checks from c2: two checks."
+        },
+        {
+          "move": "e1f1",
+          "say": "The king has exactly one legal move."
+        },
+        {
+          "move": "c2a1",
+          "say": "The knight takes the rook on a1. The king's one move was not enough to save it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b4",
+          "to": "c2"
+        },
+        {
+          "from": "a5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b4c2"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 2,
+            "after_move": "b4c2"
+          },
+          "statement": "After the knight moves, two black pieces attack the king on e1."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b4c2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "b4c2",
+            "min": 3
+          },
+          "statement": "Along the engine line Black wins at least a piece."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/p2q2p1/3p1p1p/2pN1P1P/2Q1P1P1/8/Pn3K2/3R3R w - - 0 27",
+      "caption": "White to move. Here the king's single flight square is the problem. The queen on c4 aims at g8, with White's knight on d5 on the diagonal.",
+      "line": [
+        {
+          "move": "d5f6",
+          "say": "The knight takes a pawn and checks from f6; the queen checks along the diagonal."
+        },
+        {
+          "move": "g8h8",
+          "say": "Again exactly one legal king move."
+        },
+        {
+          "move": "f6d7",
+          "say": "The knight takes the black queen on d7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "f6"
+        },
+        {
+          "from": "c4",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d5f6"
+          },
+          "statement": "The knight capture is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 2,
+            "after_move": "d5f6"
+          },
+          "statement": "After the knight captures, two white pieces attack the king on g8."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d5f6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "eval_range",
+          "params": {
+            "min": 300,
+            "max": 3000,
+            "depth": 16
+          },
+          "statement": "In this position White is more than three pawns ahead (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2rr4/3b2bk/1q4Np/p1pp1Q2/8/1P2P3/P4PPP/2RR2K1 w - - 9 27",
+      "caption": "White to move. The queen on f5 aims through g6 at the king on h7, and White's knight on g6 is on that diagonal. The king has two flight squares here.",
+      "line": [
+        {
+          "move": "g6f8",
+          "say": "The knight leaves the diagonal and checks from f8: two checks."
+        },
+        {
+          "move": "h7g8",
+          "say": "The king has two moves. Going to h8 would allow a queen mate on h7, so Black tries g8."
+        },
+        {
+          "move": "f8d7",
+          "say": "The knight takes the bishop and attacks the queen on b6."
+        },
+        {
+          "move": "d8d7",
+          "say": "The rook retakes: the bishop was protected."
+        },
+        {
+          "move": "f5d7",
+          "say": "The queen takes the rook. White has a rook and a bishop for a knight, about five and a half pawns up [V, engine depth 16]."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "f8"
+        },
+        {
+          "from": "f5",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g6f8"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 2,
+            "after_move": "g6f8"
+          },
+          "statement": "After the knight moves, two white pieces attack the king on h7."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "b6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "g6f8",
+              "h7g8",
+              "f8d7"
+            ]
+          },
+          "statement": "After the three moves the knight on d7 attacks the queen on b6."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "g6f8",
+            "min": 3
+          },
+          "statement": "Along the engine line White wins material."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r6/5pkp/2p2Np1/p1Pp4/5q2/P1Q4P/4rPB1/3R2K1 w - - 10 32",
+      "caption": "White to move. The queen on c3 aims along the long diagonal at g7, and White's knight on f6 blocks it. The king has three flight squares.",
+      "line": [
+        {
+          "move": "f6h5",
+          "say": "The knight leaves the diagonal and checks from h5: two checks."
+        },
+        {
+          "move": "g7h6",
+          "say": "One of three king moves."
+        },
+        {
+          "move": "h5f4",
+          "say": "The knight takes the black queen on f4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "h5"
+        },
+        {
+          "from": "c3",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f6h5"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g7",
+            "color": "white",
+            "count": 2,
+            "after_move": "f6h5"
+          },
+          "statement": "After the knight moves, two white pieces attack the king on g7."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f6h5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6h5",
+            "min": 5
+          },
+          "statement": "Along the engine line White wins at least a rook."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6r1/2Qp4/kp2p1r1/1N6/P2P4/6np/1PP2R1N/5RK1 b - - 6 42",
+      "caption": "Black to move. The rook on g6 looks down the g-file at the king on g1, with Black's knight on g3 in front. After the forced king move, a sacrifice finishes the job.",
+      "line": [
+        {
+          "move": "g3e2",
+          "say": "The knight checks from e2 and opens the g-file: two checks."
+        },
+        {
+          "move": "g1h1",
+          "say": "The king's only move."
+        },
+        {
+          "move": "g6g1",
+          "say": "The rook gives itself up to pull a white rook onto g1."
+        },
+        {
+          "move": "f1g1",
+          "say": "White has to take it: the king cannot."
+        },
+        {
+          "move": "g8g1",
+          "say": "The second black rook recaptures with mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g3",
+          "to": "e2"
+        },
+        {
+          "from": "g6",
+          "to": "g1"
+        }
+      ],
+      "highlight": [
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g3e2"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 2,
+            "after_move": "g3e2"
+          },
+          "statement": "After the knight moves, two black pieces attack the king on g1."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "g3e2",
+            "n": 3
+          },
+          "statement": "Black forces mate within three moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g3e2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Which piece moves in front? [V] our data.** In 39 Lichess puzzles (CC0, chosen for the double-check theme, so not a fair sample of games) whose key move is a true double check, the front piece was a knight 25 times, a pawn 8, a rook 4, a bishop 2, and never a queen or king in this sample. A knight always checks from two squares away, so the king can never take it (geometry). [H] That may explain why knights lead the count."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "[H] is a guess. What could explain the count besides the king's reach? Pick the one you would test first.",
+      "fields": [
+        {
+          "id": "guess",
+          "label": "I would test:",
+          "options": [
+            "the king cannot take a knight",
+            "knights block lines more often",
+            "the puzzle sample is biased towards knights",
+            "I would need more data first"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Setting one up, and stopping one.** [I] Two ways to set one up, from the boards in this lesson: put a long-range piece behind a piece that has a checking square, or use a first check to drive the king onto the line. Dan Heisman advises listing the opponent's checks, captures and threats before each move [S, paraphrased]. [I] The question this theme adds: does an enemy long-range piece stand behind a piece that could check my king?",
+      "chapter": "Set one up, stop one"
+    },
+    {
+      "type": "board",
+      "fen": "3R4/4p1bk/p3Q1pp/1pq1B3/6n1/1PP2P2/6PP/7K b - - 7 35",
+      "caption": "Black to move. No double check exists yet. The queen on c5 aims along a diagonal at g1, and no black long-range piece aims at h1 yet. A first check can change that.",
+      "line": [
+        {
+          "move": "g4f2",
+          "say": "A single check, from a knight that also blocks the queen's diagonal. The king has one move."
+        },
+        {
+          "move": "h1g1",
+          "say": "The king has only one move, g1: onto the queen's diagonal."
+        },
+        {
+          "move": "f2h3",
+          "say": "Now the knight checks again as it unblocks the diagonal: a double check."
+        },
+        {
+          "move": "g1f1",
+          "say": "The king has other moves (h1 or f1); every one loses to mate. After f1, the queen mates on f2."
+        },
+        {
+          "move": "c5f2",
+          "say": "The queen mates on f2, protected by the knight on h3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "f2"
+        },
+        {
+          "from": "c5",
+          "to": "g1"
+        }
+      ],
+      "highlight": [
+        "g1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g4f2"
+          },
+          "statement": "The knight move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "g4f2",
+              "h1g1",
+              "f2h3"
+            ]
+          },
+          "statement": "After the first three moves, two black pieces attack the king on g1."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "g4f2",
+            "n": 3
+          },
+          "statement": "Black forces mate within three moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g4f2"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The first check is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6r/1pp1kpp1/5n1p/p3N3/8/2P5/PP3PPP/2KR3R w - - 0 16",
+      "caption": "White to move. The knight on e5 stands between the rook's file and the king on e7: no double check exists yet. A quiet rook move can set one up.",
+      "line": [
+        {
+          "move": "h1e1",
+          "say": "A quiet move: the rook goes behind the knight. If Black ignores it, White has a double check."
+        },
+        {
+          "move": "a5a4",
+          "say": "Black plays a move that does not meet the threat."
+        },
+        {
+          "move": "e5g6",
+          "say": "The knight checks and uncovers the rook: two checks, no square for the king, mate. [V] The engine's best defence is the king stepping off the file, and White is still about four pawns up."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h1",
+          "to": "e1"
+        },
+        {
+          "from": "e5",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "h1e1"
+          },
+          "statement": "The rook move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h1e1"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The quiet rook move is the engine's first choice (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 0,
+            "after_move": "h1e1"
+          },
+          "statement": "After the quiet move no white piece attacks the king yet: the knight blocks the rook."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "h1e1",
+              "a5a4",
+              "e5g6"
+            ]
+          },
+          "statement": "If Black ignores it, two white pieces attack the king after the knight jump."
+        }
+      ]
+    },
+    {
       "type": "item",
-      "item": "IL-HpDLG",
+      "item": "ICR-LTACDOUBLECHECK1-5"
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACDOUBLECHECK1-6"
+    },
+    {
+      "type": "board",
+      "fen": "8/6Rp/2k5/P4P2/1P4P1/2r1n1KP/7B/8 w - - 0 44",
+      "caption": "White to move. The same placement as the earlier rook-and-knight board, but now White is to move: what would Black threaten if White passed? The king on g3 and the rook on c3 share a rank, and Black's knight is between them.",
+      "line": [
+        {
+          "move": "g3h4",
+          "say": "The king leaves the third rank. A jump by the knight cannot uncover the rook any more."
+        },
+        {
+          "move": "e3g2",
+          "say": "The knight still gives a check."
+        },
+        {
+          "move": "h4g5",
+          "say": "But it is a single check, and the king walks away."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g3",
+          "to": "h4"
+        },
+        {
+          "from": "c3",
+          "to": "g3"
+        }
+      ],
+      "highlight": [
+        "g3",
+        "e3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g3h4"
+          },
+          "statement": "The king move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e3f5",
+            "min": 5,
+            "null_move_first": true
+          },
+          "statement": "If White passed, Black's knight capture would win material."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g3h4",
+              "g3f2",
+              "g3f4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Several king moves are within 40 hundredths of the best (depth 16)."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "h4",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g3h4",
+              "e3g2"
+            ]
+          },
+          "statement": "After the knight check, only one black piece attacks the king."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "8/6Rp/2k5/P4P2/1P4P1/2r1n1KP/7B/8 w - - 0 44",
+      "caption": "The same position. What if White ignores the line and moves the king along the rank?",
+      "line": [
+        {
+          "move": "g3f3",
+          "say": "The king stays on the third rank."
+        },
+        {
+          "move": "e3f5",
+          "say": "The knight takes the pawn. It does not attack f3, so this is a single discovered check."
+        },
+        {
+          "move": "f3e4",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "f5g7",
+          "say": "The knight takes the rook again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g3",
+          "to": "f3"
+        },
+        {
+          "from": "c3",
+          "to": "f3"
+        }
+      ],
+      "highlight": [
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "g3f3"
+          },
+          "statement": "The king move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "g3f3",
+            "cp": 400
+          },
+          "statement": "The king move is at least four pawns worse than the best move (depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "f3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g3f3",
+              "e3f5"
+            ]
+          },
+          "statement": "After the knight capture, only the rook attacks the king on f3."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Many defences work.** [V] At depth 16 the engine rates stepping the king off the rank, advancing a pawn and capturing with the rook within about a pawn of each other. What fails is leaving the king on the line. [I] So ask before each move: does an enemy long-range piece stand behind a piece that could check me? The king, the back piece or the front piece can move, or the line can be blocked."
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACDOUBLECHECK1-1"
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACDOUBLECHECK1-7"
+    },
+    {
+      "type": "card",
+      "text": "**Two look-alikes and one failed double check.** (1) The line is blocked, so the move gives one check. (2) The front piece lands where it does not attack the king: a *discovered* check, which can be blocked. And a real double check can still fail: the king takes the checker, or has a safe square (the third condition). Ask: which check is missing, or which king answer exists?",
+      "chapter": "Look-alikes and a mixed test"
+    },
+    {
+      "type": "board",
+      "fen": "8/p3k3/1r6/4B3/8/8/8/4R1K1 w - - 0 1",
+      "caption": "A bare board, White to move. The bishop again blocks the rook's file, and Black has a rook on b6.",
+      "line": [
+        {
+          "move": "e5g3",
+          "say": "The bishop uncovers the rook, but from g3 it does not attack the king: a single check."
+        },
+        {
+          "move": "b6e6",
+          "say": "A single check allows a block. Black puts the rook on the file."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "g3"
+        },
+        {
+          "from": "e1",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "e7",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5g3"
+          },
+          "statement": "The bishop move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5g3"
+          },
+          "statement": "After the bishop moves, only one white piece attacks the king."
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Is the checker safe from the king?",
+      "prompt": "All three positions hold the same bishop move with two checks. In the second, the white pawn on c5 is missing. In the third, Black's a-pawn has moved. Predict which are checkmate.",
+      "working": "ICR-LTACDOUBLECHECK1-2",
+      "failing": "ICR-LTACDOUBLECHECK1-3",
+      "irrelevant": "ICR-LTACDOUBLECHECK1-4"
+    },
+    {
+      "type": "item",
+      "item": "IL-2NjSC",
+      "silent": true,
+      "chapter": "Mixed test"
+    },
+    {
+      "type": "item",
+      "item": "IL-FblQV",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-tldfC",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-O9oVm",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IL-pttkD",
       "silent": true
     },
     {
@@ -87,17 +1537,253 @@
       "silent": true
     },
     {
-      "type": "practice",
-      "tags": [
-        "theme.doubleCheck",
-        "cue.3"
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Six positions, unlabelled. Which kind did you miss: a double check you did not see, or a look-alike you believed? Six positions are too few to prove anything, so treat this as a note.",
+      "fields": [
+        {
+          "id": "missed",
+          "label": "I mostly missed:",
+          "options": [
+            "a double check I did not see",
+            "a look-alike I believed",
+            "a real double check that fails, which I thought won",
+            "neither, or I am not sure"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A real position.** A famous double check was played by Réti against Tartakower, Vienna 1910 [R]; our famous-game lesson shows the whole game. This position is from an online game (Lichess puzzle database, CC0). Do not hunt for moves yet. List every check White has, then ask which of them has a piece behind it.",
+      "chapter": "A real example"
+    },
+    {
+      "type": "board",
+      "fen": "2r3k1/p5p1/1p2R1qp/8/8/1Q3r1P/PP3PP1/6K1 w - - 0 27",
+      "caption": "White to move. The queen on b3 aims along a diagonal at the king on g8, and White's rook on e6 stands on it.",
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "g8"
+        }
       ],
-      "n": 6
+      "highlight": [
+        "e6",
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "Right now no white piece attacks the king on g8: the rook blocks the queen."
+        }
+      ]
     },
     {
       "type": "reflect",
       "kind": "expect",
-      "prompt": "In the last double check you found, which squares could the king go to, and which of them were covered? Would the move still work if one of those squares were free?"
+      "prompt": "Before the answer: name the checks White has, then the one you would test first.",
+      "fields": [
+        {
+          "id": "checks",
+          "label": "The checks I see:"
+        },
+        {
+          "id": "first",
+          "label": "I would test first:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2r3k1/p5p1/1p2R1qp/8/8/1Q3r1P/PP3PP1/6K1 w - - 0 27",
+      "caption": "The same position, with the answer.",
+      "line": [
+        {
+          "move": "e6e8",
+          "say": "The rook checks along the eighth rank and uncovers the queen's check: two checks."
+        },
+        {
+          "move": "g8h7",
+          "say": "The king has one legal move."
+        },
+        {
+          "move": "b3g8",
+          "say": "The queen lands on g8, protected by the rook: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "e8"
+        },
+        {
+          "from": "b3",
+          "to": "g8"
+        }
+      ],
+      "highlight": [
+        "g8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e6e8"
+          },
+          "statement": "The rook move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 2,
+            "after_move": "e6e8"
+          },
+          "statement": "After the rook moves, two white pieces attack the king."
+        },
+        {
+          "id": "C3",
+          "type": "mate_in",
+          "params": {
+            "move": "e6e8",
+            "n": 2
+          },
+          "statement": "White forces mate within two moves."
+        },
+        {
+          "id": "C4",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e6e8"
+            ],
+            "within_cp": 40
+          },
+          "statement": "This move is the engine's first choice (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2r3k1/p5p1/1p2R1qp/8/8/1Q3r1P/PP3PP1/6K1 w - - 0 27",
+      "caption": "The tempting alternative. Taking the black queen also gives check.",
+      "line": [
+        {
+          "move": "e6g6",
+          "say": "The rook takes the queen and uncovers the queen's check. But the rook on g6 gives no check itself: a single check."
+        },
+        {
+          "move": "f3b3",
+          "say": "Black takes the checking queen with the rook. A double check would have allowed no such answer."
+        },
+        {
+          "move": "a2b3",
+          "say": "White recaptures. Queens are off and the attack is gone."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "g6"
+        },
+        {
+          "from": "f3",
+          "to": "b3"
+        }
+      ],
+      "highlight": [
+        "g6",
+        "b3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e6g6"
+          },
+          "statement": "The rook capture is legal."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g8",
+            "color": "white",
+            "count": 1,
+            "after_move": "e6g6"
+          },
+          "statement": "After the capture, only one white piece attacks the king on g8."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e6g6",
+            "cp": 600
+          },
+          "statement": "The capture is at least six pawns worse than the best move (depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What others say.** Nimzowitsch (*My System*, chapter on discovered check) describes double check as leaving the king nothing but flight, and calls it purely tactical [V-sheet: paraphrased from our own notes, not the book page]. Jacob Aagaard argues that many calculation errors start with a candidate move that was never considered [S, a reviewer's account, paraphrased]. [I] So the habit: put the double check on your candidate list before you calculate."
+    },
+    {
+      "type": "card",
+      "text": "**What to remember.**\n1. Double check: two checkers, so only the king can move.\n2. A back piece, a front piece, an open line.\n3. The front piece must check from where it lands.\n4. The king may take a checker next to it, if nothing covers that square.\n5. Count the flight squares: mate, or a free move.\n6. Look-alikes: blocked line, or no front check.\n7. Defence: ask what long-range piece stands behind a piece that could check you. Move the king or either piece.",
+      "chapter": "Say it back"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach a beginner. Write four things: what a double check is, when it works, an example they could set up on a board (pieces and squares), and one warning. Self-check, nothing is graded: did you say why only the king can answer, name one condition that can fail, and give a look-alike?",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea in one sentence:"
+        },
+        {
+          "id": "when",
+          "label": "When it works:"
+        },
+        {
+          "id": "example",
+          "label": "An example to set up:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "A model answer [I], in the author's words. Idea: one move makes two pieces check at once, so only the king can answer. When it works: the line is open, the front piece checks where it lands, and the king cannot take the checker or reach a safe square. Example: White rook e1, bishop e5, pawn c5, Black king e7; the bishop to d6 is mate. Warning: without the pawn on c5 the king takes the bishop. Compare with yours.",
+      "fields": [
+        {
+          "id": "compare",
+          "label": "My answer was:",
+          "options": [
+            "close to this",
+            "missing a condition that can fail",
+            "missing the example or the warning",
+            "quite different, I will reread"
+          ]
+        }
+      ]
     }
   ],
   "review": {
@@ -105,9 +1791,13 @@
     "reviewer": null
   },
   "sources": [
-    "sources/sheets/nimzowitsch_my-system.md (idea 29: discovered check, the see-saw, double check)",
-    "docs/curriculum-map-v1.md S3",
-    "Lichess puzzle database (CC0): MlBfV, KuUQg, O6qUt, 0w830 as seed positions",
-    "content/items/lesson-split-sp7.json"
+    "docs/lesson-depth-standard.md (class B; show-then-say, conjecture and views); docs/competition-chess-steps.md (a named search routine per tactic, labelled then unlabelled mixes, a closing reminder page) [S]",
+    "sources/sheets/nimzowitsch_my-system.md (idea 29: discovered check, the see-saw, double check) [V-sheet], paraphrased",
+    "Dan Heisman on listing the opponent's checks, captures and threats (docs/citable-views.md 10.4 to 10.6) [S], paraphrased",
+    "Jacob Aagaard, Excelling at Chess Calculation, on overlooked candidates (docs/citable-views.md 10.7) [S, a reviewer's account], paraphrased",
+    "Reti v Tartakower, Vienna 1910: named only, see lesson L-FG-RETI-TARTAKOWER-1",
+    "Lichess puzzle database (CC0): HpDLG, KuUQg, 6I3O1, oQzhg, STb53, dfrDo, 2KDVD, Q6YSr, 18Tqx, YxXpP, 6Nlhc, olNsY, WfqCG, 2NjSC, tldfC, pttkD, FblQV, O9oVm; counts of key-move pieces from app/public/content/items.json (39 items tagged theme.doubleCheck, key move a true double check) [V]",
+    "Engine statements: Stockfish 19 lite single-thread, depth 16, via tools/validate_lessons.py and tools/validate.py",
+    "content/items/lesson-split-sp7.json; content/items/lesson-cr-l-tac-double-check-1.json"
   ]
 }

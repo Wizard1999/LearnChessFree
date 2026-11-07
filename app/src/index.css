@@ -255,7 +255,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px
 .board-wrap { position: relative; }
 .controltoggle { position: absolute; top: 0.3rem; right: 0.3rem; z-index: 6; min-height: 32px; padding: 0.15rem 0.7rem; font-size: 0.85rem; }
 .controlmap { position: absolute; inset: 0; z-index: 5; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); }
-.controlmap .ctl { position: relative; min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: #111; cursor: pointer; }
+.controlmap .ctl { position: relative; min-height: 0; padding: 0; border: 0; border-radius: 0; background: var(--ctl-bg, transparent); color: #111; cursor: pointer; }
 .controlmap .ctl.sel { outline: 3px solid var(--focus); outline-offset: -3px; }
 .controlmap .ctlnum { position: absolute; left: 2px; bottom: 1px; font: 700 0.7rem/1 var(--font-moves); color: #111; background: rgba(255, 255, 255, 0.7); border-radius: 2px; padding: 0 2px; }
 .controldetail { position: absolute; left: 0; right: 0; bottom: 0; z-index: 7; padding: 0.4rem 0.6rem; font-size: 0.85rem; background: var(--surface); color: var(--text); border-top: 2px solid var(--control-boundary); }
@@ -1006,3 +1006,105 @@ label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) { min-heig
 /* chessground's own stylesheet shifts the file letters 24px right of the board, which pushed the page wider than a phone and put every letter under the wrong file */
 .board-wrap .cg-wrap coords.files { left: 0; width: 100%; }
 @media (max-width: 1000px) { .opngrid { grid-template-columns: minmax(0, 1fr); } .opngrid > * { min-width: 0; } }
+
+/* Skill names on the map: plates in screen pixels, readable at every zoom, above the stage rings, never overlapping (lib/mapLabels.ts); text behind a plate is hidden by it */
+.maplabels { position: absolute; z-index: 3; pointer-events: none; overflow: hidden; }
+.maplabel { position: absolute; display: flex; align-items: center; justify-content: center; padding: 0 0.45rem; border-radius: 0.5rem; font-size: 14px; font-weight: 700; line-height: 1; white-space: nowrap; color: var(--text); background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--text) 14%, transparent), 0 2px 6px rgba(0, 0, 0, 0.25); }
+.maplabel.forced { font-size: 14px; background: var(--surface); box-shadow: 0 0 0 2px var(--accent), 0 3px 10px rgba(0, 0, 0, 0.35); }
+.maplabel.sel { box-shadow: 0 0 0 2px var(--focus), 0 3px 10px rgba(0, 0, 0, 0.35); }
+/* the stage ring words recede once names are showing, so the names stay the clearest thing on the map */
+.mapsvg.zoom-mid .stagename, .mapsvg.zoom-near .stagename { opacity: 0.4; }
+
+/* ===== Roles across the app (roadmap 3e/3g): Up next, result marks, hints. Tokens only: no raw colours here. ===== */
+/* Up next: a persimmon edge and, on hover, focus or linked hover, the words "Up next" (UpNextMark). The same in every view. */
+.upnext-mark { position: relative; border-left: 5px solid var(--accent-line, var(--accent)); padding-left: 0.75rem; border-radius: 4px; transition: background-color 0.15s; }
+.upnext-mark:hover, .upnext-mark.linked, .upnext-mark:focus-within { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.upnext-label { position: absolute; top: 0; right: 0.5rem; transform: translateY(-55%); z-index: 3; padding: 0.05rem 0.55rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.12s; }
+.upnext-mark:hover > .upnext-label, .upnext-mark:focus-within > .upnext-label, .upnext-mark.linked > .upnext-label { opacity: 1; }
+.upnext-mark.card { padding-left: 1.25rem; }
+@media (prefers-reduced-motion: reduce) { .upnext-mark, .upnext-label { transition: none; } }
+:root[data-motion='reduce'] .upnext-mark, :root[data-motion='reduce'] .upnext-label { transition: none; }
+/* Result marks: shape + tick or cross + word. Jade is demonstrated skill; unsuccessful stays neutral (ink), never alarm red. */
+.resultmark { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700; }
+.resultmark .resulticon { flex: none; }
+.resultmark .shape { stroke-width: 1.5; }
+.resultmark .glyph { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.resultmark-correct, .resultmark-sound-alternative { color: var(--success); }
+.resultmark-correct .shape, .resultmark-sound-alternative .shape { fill: var(--success); stroke: var(--success); }
+.resultmark-correct .glyph, .resultmark-sound-alternative .glyph { stroke: var(--on-success, var(--canvas)); }
+.resultmark-sound-alternative .shape { fill: var(--surface); }
+.resultmark-sound-alternative .glyph { stroke: var(--success); }
+.resultmark-unsuccessful { color: var(--text); }
+.resultmark-unsuccessful .shape { fill: var(--chip); stroke: var(--text); }
+.resultmark-unsuccessful .glyph { stroke: var(--text); }
+.result .resultmark { display: flex; font-size: 1.05rem; margin-bottom: 0.25rem; }
+.resultlegend { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.5rem 0; padding: 0; list-style: none; }
+.lessonrow.upnext-mark, .upnext-mark.upnext-mark { border-left-color: var(--accent-line, var(--accent)); }
+
+/* the map explanation moved into a "?" chip so the stage buttons sit right under the view buttons (more map on screen) */
+.mappage .sectionbar .chip.maphelp { min-width: 2rem; padding: 0.15rem 0.55rem; font-weight: 700; flex: 0 0 auto; }
+.mappage .viewtabs { margin-bottom: 0.2rem; }
+main.mappage.curriculum .viewtabs { margin-top: 0 !important; margin-bottom: 0.25rem !important; }
+main.mappage.curriculum .sectionbar { margin-top: 0 !important; margin-bottom: 0.3rem !important; }
+.maplabel.hot { box-shadow: 0 0 0 2px var(--accent), 0 2px 6px rgba(0, 0, 0, 0.25); } /* the hover highlight never changes the plate's size or place */
+/* calm map (8 Nov 2026): the stage ring text is a whisper except at the medial line; names fade in on hover and never move */
+.arclabel.stagename.whisper { opacity: 0.55; font-weight: 600; stroke-width: 0; }
+.maplabel { transition: opacity 0.18s ease; }
+.maplabel.ghost { opacity: 0; }
+.maplabel.ghost.on { opacity: 1; }
+.mapsvg.zoom-mid .stagename, .mapsvg.zoom-near .stagename { opacity: 1; }
+.mapsvg.zoom-mid .stagename.whisper, .mapsvg.zoom-near .stagename.whisper { opacity: 0.55; }
+
+/* constellation (8 Nov 2026): lines you have built glow softly, the lines out to your next skills glow fiercely, untouched lines are a faint trace; highlighted nodes always glow */
+.edges.built { filter: drop-shadow(0 0 3px var(--text)); }
+.edges.frontier { filter: drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 2px var(--accent)); }
+.mapedge.built { stroke: var(--text); }
+.mapedge.frontier { stroke: var(--accent); stroke-linecap: round; }
+.mapnode .nodeglow.soft { opacity: 0.16; animation: none; }
+.mapnode.sel .nodecircle, .mapnode.next .nodecircle { filter: drop-shadow(0 0 7px var(--accent)); }
+.mapedge.partial { stroke: var(--text); }
+/* glow and highlight in a light, almost white colour (8 Nov 2026); on a light page it falls back to the accent so it stays visible */
+:root { --glow: #fffbee; }
+:root[data-theme='light'] { --glow: var(--accent); }
+.edges.frontier { filter: drop-shadow(0 0 6px var(--glow)) drop-shadow(0 0 2px var(--glow)); }
+.mapedge.frontier, .mapedge.frontier.full { stroke: var(--glow); }
+.mapnode .nodeglow:not(.soft), :root[data-style='scholarmate'] .mapnode .nodeglow:not(.soft) { fill: var(--glow) !important; }
+.mapnode.sel .nodecircle, .mapnode.next .nodecircle { filter: drop-shadow(0 0 7px var(--glow)); }
+.maplabel.forced, .maplabel.hot { box-shadow: 0 0 0 2px var(--glow), 0 2px 8px rgba(0, 0, 0, 0.3); }
+/* stage highlight: a hazy, soft light inside the stage's own ring, not a saturated fill (8 Nov 2026) */
+.mapsvg .stageband.here, :root[data-style='scholarmate'] .mapsvg .stageband.here { fill: var(--glow) !important; fill-opacity: 0.06 !important; stroke: var(--glow) !important; stroke-width: 7 !important; stroke-opacity: 0.2 !important; filter: blur(2.5px); }
+.mapsvg .stageband.hi, :root[data-style='scholarmate'] .mapsvg .stageband.hi { fill: var(--glow) !important; fill-opacity: 0.1 !important; stroke: var(--glow) !important; stroke-width: 10 !important; stroke-opacity: 0.3 !important; filter: blur(3px); }
+.arclabel.stagename.here, .arclabel.stagename.hi, :root[data-style='scholarmate'] .arclabel.stagename.here, :root[data-style='scholarmate'] .arclabel.stagename.hi { fill: var(--glow) !important; }
+/* things glow their own colour (8 Nov 2026): a blue line glows blue, an orange one orange, a started skill in its level colour; a general highlight is the near-white glow */
+.mapedge.pre { filter: drop-shadow(0 0 5px #3aa0ff); }
+.mapedge.next { filter: drop-shadow(0 0 5px var(--accent)); }
+:root[data-style='scholarmate'] .mapedge.pre { filter: drop-shadow(0 0 5px var(--primary)); }
+:root[data-style='scholarmate'] .mapedge.next { filter: drop-shadow(0 0 5px var(--accent-line)); }
+.mapnode .nodeglow.soft { opacity: 0.28; }
+.mapnode .nodeglow.soft.lv1, .mapnode .nodeglow.soft.lv2, .mapnode .nodeglow.soft.lv3 { fill: var(--info) !important; }
+.mapnode .nodeglow.soft.lv4 { fill: var(--success) !important; }
+:root[data-style='scholarmate'] .mapnode .nodeglow.soft.lv1 { fill: var(--lv1) !important; }
+:root[data-style='scholarmate'] .mapnode .nodeglow.soft.lv2 { fill: var(--lv2) !important; }
+:root[data-style='scholarmate'] .mapnode .nodeglow.soft.lv3 { fill: var(--lv3) !important; }
+:root[data-style='scholarmate'] .mapnode .nodeglow.soft.lv4 { fill: var(--lv4) !important; }
+
+/* built lines tinted by the lower level of the two skills they join, each glowing its own colour */
+.edges.built { filter: none; }
+.mapedge.built.b1 { stroke: var(--info); } .edges.built.b1 { filter: drop-shadow(0 0 3px var(--info)); }
+.mapedge.built.b2 { stroke: var(--info); } .edges.built.b2 { filter: drop-shadow(0 0 3px var(--info)); }
+.mapedge.built.b3 { stroke: var(--info); } .edges.built.b3 { filter: drop-shadow(0 0 3px var(--info)); }
+.mapedge.built.b4 { stroke: var(--success); } .edges.built.b4 { filter: drop-shadow(0 0 3px var(--success)); }
+:root[data-style='scholarmate'] .mapedge.built.b1 { stroke: var(--lv1); } :root[data-style='scholarmate'] .edges.built.b1 { filter: drop-shadow(0 0 3px var(--lv1)); }
+:root[data-style='scholarmate'] .mapedge.built.b2 { stroke: var(--lv2); } :root[data-style='scholarmate'] .edges.built.b2 { filter: drop-shadow(0 0 3px var(--lv2)); }
+:root[data-style='scholarmate'] .mapedge.built.b3 { stroke: var(--lv3); } :root[data-style='scholarmate'] .edges.built.b3 { filter: drop-shadow(0 0 3px var(--lv3)); }
+:root[data-style='scholarmate'] .mapedge.built.b4 { stroke: var(--lv4); } :root[data-style='scholarmate'] .edges.built.b4 { filter: drop-shadow(0 0 3px var(--lv4)); }
+
+/* more map on screen (8 Nov 2026): the stage buttons are compact so all eight fit one row on a wide screen, and the hint line lives in the "?" button */
+main.mappage.curriculum .sectionbar { gap: 0.25rem; }
+main.mappage.curriculum .sectionbar .chip { font-size: 0.78rem; padding: 0.1rem 0.5rem; min-height: 28px; }
+main.mappage.curriculum .sectionbar .chip.maphelp { min-width: 1.8rem; }
+main.mappage.curriculum .mapbar { padding-top: 0.2rem; padding-bottom: 0.2rem; gap: 0.4rem; }
+
+/* one line (8 Nov 2026): the view, section and stage menus sit at the start of the map toolbar */
+.mapbar .sectionbar.inbar { display: flex; flex-wrap: nowrap; align-items: center; gap: 0.35rem; margin: 0 !important; padding: 0 !important; flex: 0 0 auto; }
+.mapbar .mapsearch { width: 9rem; min-width: 7rem; }

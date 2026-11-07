@@ -12,12 +12,12 @@ describe('ring label plan', () => {
   it('uses the full title where it fits and the short form where it does not', () => {
     const full = 'Stage 2 · Legal play', short = 'Stage 2'
     expect(ringLabelPlan(2000, 60, [full, short]).text).toBe(full)
-    const small = ringLabelPlan(185, 60, [full, short])
+    const small = ringLabelPlan(185, 60, [full, short], 1.5)
     expect(small.text).toBe(short)
     expect(small.size).toBeLessThanOrEqual(60)
   })
   it('never makes a label wider than the arc it may use', () => {
-    const p = ringLabelPlan(185, 200, ['Stage 1'])
+    const p = ringLabelPlan(185, 200, ['Stage 1'], 1.5)
     expect(p.size * 0.6 * 'Stage 1'.length).toBeLessThanOrEqual(1.5 * 185 + 1e-6)
   })
 })

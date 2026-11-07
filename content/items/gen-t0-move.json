@@ -2159,6 +2159,16 @@
     "ref": "tools/generators/gen_move.py seed=20261024: pawn movement, flip of base 12",
     "licence": "project"
    }
+  },
+  {
+   "id": "PG-MOVE-102-V2",
+   "fen": "8/3P3Q/8/1K2p3/4p2P/8/6p1/1k6 w - - 2 2",
+   "family": "FAM-GEN-MOVE-QUEEN-10",
+   "provenance": {
+    "kind": "generated",
+    "ref": "tools/generators/gen_move.py seed=20261024: queen movement, flip of base 10; variant for lesson L-FND-QUEENKING-1: quiet moves c6b5 c1b1 added so the position is not shared (checked with python-chess)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -14709,6 +14719,70 @@
    "explain": "The pawn on d5 can move to 3 squares: c6, d6, e6. It can capture the knight on c6 and the pawn on e6.",
    "id": "IG-MOVE-216",
    "position": "PG-MOVE-216",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "skill": "FND.PIECE.QUEEN.D2",
+   "cue": 3,
+   "task": "select_squares",
+   "prompt": "White to move. Tap every square the piece on h7 can move to.",
+   "answer": {
+    "from": "h7",
+    "squares": [
+     "e4",
+     "e7",
+     "f5",
+     "f7",
+     "g6",
+     "g7",
+     "g8",
+     "h5",
+     "h6",
+     "h8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "h7",
+      "to": [
+       "e4",
+       "e7",
+       "f5",
+       "f7",
+       "g6",
+       "g7",
+       "g8",
+       "h5",
+       "h6",
+       "h8"
+      ]
+     },
+     "statement": "The white queen on h7 can legally move to exactly these squares."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.QUEEN",
+    "tier.0",
+    "cue.3",
+    "kind.generated",
+    "family.FAM-IG-MOVE-102-V2",
+    "lang.en",
+    "task.select_squares"
+   ],
+   "hints": [
+    "First decide what kind of piece stands on h7. Then recall how that piece moves.",
+    "On each line it slides until something is in the way: it cannot jump and cannot land on its own pieces.",
+    "An enemy piece in the way can be captured, and the queen stops there. Check the eight directions one at a time."
+   ],
+   "explain": "The queen on h7 can move to 10 squares: e4, e7, f5, f7, g6, g7, g8, h5, h6, h8. It can capture the pawn on e4. It cannot land on its own pieces on d7 and h4.",
+   "id": "IG-MOVE-102-V2",
+   "position": "PG-MOVE-102-V2",
    "orientation": "white",
    "review": {
     "status": "machine-only"

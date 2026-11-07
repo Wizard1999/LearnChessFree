@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { ArtScene } from '../components/art'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, type GameRec } from '../db'
 import { ChessBoard } from '../components/ChessBoard'
@@ -61,7 +62,7 @@ export function Games() {
           </section>
           <section className="card">
             <h2>Saved games</h2>
-            {!games || games.length === 0 ? <p className="muted">None yet. Games you play against the practice opponent are saved here automatically.</p> : (
+            {!games || games.length === 0 ? <p className="muted"><ArtScene kind="games" />None yet. Games you play against the practice opponent are saved here automatically.</p> : (
               <table className="table"><thead><tr><th>Date</th><th>White</th><th>Black</th><th>Result</th><th>From</th><th /></tr></thead>
                 <tbody>{games.map(g => <tr key={g.id}><td>{g.date ?? new Date(g.ts).toLocaleDateString()}</td><td>{g.white}</td><td>{g.black}</td><td>{g.result}</td><td>{g.source}</td>
                   <td><button type="button" onClick={() => setSelectedId(g.id!)}>Review</button></td></tr>)}</tbody></table>

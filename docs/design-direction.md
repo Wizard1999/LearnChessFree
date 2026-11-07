@@ -49,3 +49,7 @@ Adopt it as the visual and interaction foundation. It is unusually well aimed: i
 8. **Validation rounds** with real people (gate G11).
 
 Everything in 1 to 6 can proceed now; 7 and 8 need Andrew.
+
+## Update, 7 November 2026: the opt-in "Scholarmate" look
+
+The owner prefers the existing look, so it stays the default ('Friendly', with 'Collegiate' beside it). A new six-colour look named **Scholarmate** is an opt-in choice in Settings > Appearance > Look, with its own light and dark mode (Settings > Light / Dark / System). Palette: cobalt #4055F5 (primary action, selection, links), persimmon #F06445 (look here, Up next, check), gold #F4C542 (discovery, last move, hints), jade #168577 (demonstrated skill, correct answers), ink #172238 and ivory #F7F5EE (the canvas the colours sit on). Tokens live in `app/src/styles/palette.css`; `tools/check_contrast.py` gates every text pair at 4.5:1 and every graphic pair at 3:1 in both modes. The review and what remains: `docs/design-audit/palette.md`. The fonts listed above are the earlier plan; the look uses the bundled faces recorded in `LICENSES.md`.

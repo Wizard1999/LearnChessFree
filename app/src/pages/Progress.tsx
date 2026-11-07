@@ -1,3 +1,5 @@
+import { hueOfStage } from '../lib/hue'
+import { ArtEmblem, ArtScene } from '../components/art'
 import { useMemo } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
@@ -8,6 +10,8 @@ import { independenceSentence } from '../lib/labels'
 import { independence, masteryMap, MIN_BAND_SAMPLES, useAttempts, useLessonProgress } from '../lib/progress'
 import { stageProgress } from '../lib/stageProgress'
 import { Achievements } from './Achievements'
+import { ResultMark } from '../components/ResultMark'
+import type { ResultKind } from '../lib/resultText'
 
 const DAY = 86400000
 const pct = (x: number | null) => (x === null ? '—' : `${Math.round(x * 100)}%`)
@@ -35,6 +39,8 @@ export function Progress() {
   const stages = useMemo(() => stageProgress(content.lessons, lessonProg ?? [], masteries), [content.lessons, lessonProg, masteries])
 
   const diag = useMemo(() => { const m = new Map<string, number>(); for (const r of reflections ?? []) if (r.kind === 'diagnosis') m.set(r.data.cause, (m.get(r.data.cause) ?? 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1]) }, [reflections])
+  // First answers by outcome: the same three marks as in the exercises (correct, sound alternative, unsuccessful).
+  const outcomes = useMemo(() => { const t: Record<ResultKind, number> = { correct: 0, 'sound-alternative': 0, unsuccessful: 0 }; for (const a of firsts) t[a.result ?? (a.correct ? 'correct' : 'unsuccessful')]++; return t }, [firsts])
   const ind = independence(attempts ?? [])
   const rows = useMemo(() => [...masteries.entries()].sort((a, b) => b[1].n - a[1].n), [masteries])
 
@@ -48,18 +54,19 @@ export function Progress() {
           <h2>Your path</h2>
           <p className="small muted">Eight stages, in order. "Lessons finished" counts lessons you completed or marked done. "Shown in exercises" counts skills where your answers, without hints, reached Level one or better. A finished lesson is not proof that you can use the idea.</p>
           <ol className="pathlist">{stages.map(s => (
-            <li key={s.id} className={s.current ? 'pathstage current' : 'pathstage'} aria-current={s.current ? 'step' : undefined}>
-              <h3>Stage {s.index}: {s.title}{s.current && <span className="badge">You are here</span>}</h3>
+            <li key={s.id} data-hue={hueOfStage(s.index)} className={s.current ? 'pathstage current' : 'pathstage'} aria-current={s.current ? 'step' : undefined}>
+              <h3><ArtEmblem seed={s.id} />Stage {s.index}: {s.title}{s.current && <span className="badge here">You are here</span>}</h3>
               <p className="small">{s.milestone}</p>
               <p className="small muted">Lessons finished: <strong>{s.finished} of {s.lessons}</strong>{s.skipped > 0 && ` (${s.skipped} marked done without doing)`} · Shown in exercises: <strong>{s.shown} of {s.skills}</strong> skills</p>
             </li>))}
           </ol>
         </section>
       )}
-      {firsts.length === 0 ?<section className="card"><p>No exercises answered yet. <Link to="/">Start with today's plan</Link>.</p></section> : (
+      {firsts.length === 0 ?<section className="card"><ArtScene kind="attempts" /><p>No exercises answered yet. <Link to="/">Start with today's plan</Link>.</p></section> : (
         <>
           <section className="card">
             <h2>Hints and independence</h2>
+            <p className="resultlegend" aria-label="First answers by outcome">{(['correct', 'sound-alternative', 'unsuccessful'] as ResultKind[]).map(k => <ResultMark key={k} kind={k} count={outcomes[k]} />)}</p>
             <p>{independenceSentence(ind.counted, ind.hintRate, ind.unpromptedAccuracy)} <strong>Success looks like hint use falling while accuracy holds.</strong> Needing more help on harder material is normal.</p>
             <p className="small muted">Unlabeled means the exercise does not tell you which idea to use.</p>
             <details><summary>Week by week</summary><div className="tablewrap"><table className="table small"><thead><tr><th>Week of</th><th>Exercises</th><th>Unlabeled</th><th>With hints</th><th>Right without hints</th></tr></thead>

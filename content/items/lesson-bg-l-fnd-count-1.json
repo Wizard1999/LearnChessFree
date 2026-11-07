@@ -1,0 +1,376 @@
+{
+ "positions": [
+  {
+   "id": "PBG-LFNDCOUNT1-1",
+   "fen": "6k1/p4pp1/3p3p/4n3/5P2/5N2/P5PP/6K1 w - - 0 1",
+   "family": "FAM-COUNT-PAWNFIRST",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black knight e5 attacked by a pawn and a knight, defended by a pawn; legality and lines replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCOUNT1-2",
+   "fen": "2b3k1/p4pp1/3p3p/4n3/8/8/P3RPPP/4R1K1 w - - 0 1",
+   "family": "FAM-BG-FNDCOUNT1-DOUBLEDPAWN",
+   "provenance": {
+    "kind": "authored",
+    "ref": "doubled rooks on the e-file against a knight defended by a pawn, black bishop c8 added so material is not lopsided; legality and lines replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCOUNT1-3",
+   "fen": "4r1k1/5ppp/8/8/1b6/4N3/P2P2PP/4K3 b - - 0 1",
+   "family": "FAM-BG-FNDCOUNT1-PINNED",
+   "provenance": {
+    "kind": "authored",
+    "ref": "white knight e3 apparently defended by the pawn d2, which is pinned by bishop b4; mirror of a position with colours swapped; legality and lines replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCOUNT1-4",
+   "fen": "3r2k1/5ppp/5n2/3p4/8/1B6/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-BG-FNDCOUNT1-EQUAL",
+   "provenance": {
+    "kind": "authored",
+    "ref": "black pawn d5 attacked by bishop and rook, defended by rook and knight; legality and lines replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDCOUNT1-5",
+   "fen": "6k1/5pp1/1n2p2p/3p4/8/4B3/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-BG-FNDCOUNT1-LOOSEKNIGHT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "loose knight b6 attacked by Be3; pawn d5 defended by e6 and attacked by the rook; legality and lines replayed with python-chess",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBG-LFNDCOUNT1-1",
+   "skill": "SAF.COUNT.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LFNDCOUNT1-1",
+   "prompt": "Try it first. Tap every white piece or pawn that attacks the black knight on e5. Not sure yet? Press a hint; the next steps show it.",
+   "answer": {
+    "squares": [
+     "f4",
+     "f3"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2
+     },
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "f4e5"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "f3e5"
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.SAF.COUNT",
+    "tier.1",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares",
+    "task.select_squares"
+   ],
+   "hints": [
+    "A white piece attacks a square when it could capture there next move.",
+    "Check each white piece: could it capture on e5 next move?",
+    "The pawn on f4 and the knight on f3 both attack e5. No other white piece does."
+   ],
+   "explain": "The pawn on f4 attacks e5 on its forward diagonal and the knight on f3 reaches e5 with its jump. That is two attackers; no other white piece can capture on e5.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCOUNT1-2",
+   "skill": "SAF.COUNT.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCOUNT1-2",
+   "prompt": "White has two rooks lined up on the e-file and starts by taking the knight on e5. Black takes back whenever it can. Add up the points White wins and loses in the swaps on e5. Does White gain points overall? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "e2e5",
+      "max": -1
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.SAF.COUNT",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Count the swaps one at a time, in points: pawn 1, knight 3, rook 5.",
+    "The rook takes the knight (+3). What takes the rook, and how much is that?",
+    "White gains 3, loses 5, gains 1: that is one point down."
+   ],
+   "explain": "The front rook takes the knight (+3), the pawn on d6 takes that rook (-5), the second rook takes the pawn (+1). White loses one point in these swaps. A rook behind another does count, but a pawn defender is too cheap to beat with rooks.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCOUNT1-3",
+   "skill": "SAF.COUNT.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDCOUNT1-3",
+   "prompt": "Black to move. The white knight on e3 is next to a pawn on d2. Black takes the knight with the rook. What can White do next?",
+   "answer": {
+    "outcome": "cannot win it back",
+    "options": [
+     "take the rook with the pawn",
+     "win it back some other way",
+     "cannot win it back"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "white",
+      "count": 1
+     },
+     "id": "C1"
+    },
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "d2e3"
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "e8e3",
+      "min": 3
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.SAF.COUNT",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Before you trust a defender, ask whether it may legally move.",
+    "Look at the diagonal from the bishop on b4 through the pawn on d2.",
+    "The pawn on d2 is pinned to its king, so it cannot capture on e3."
+   ],
+   "explain": "The rook takes the knight with check. The pawn on d2 stands between the bishop and the white king, so capturing would leave the king in check, which is illegal. Black wins a knight for nothing.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCOUNT1-4",
+   "skill": "SAF.COUNT.D1",
+   "cue": 2,
+   "task": "classify_position",
+   "position": "PBG-LFNDCOUNT1-4",
+   "prompt": "White thinks about starting with the bishop on d5. Black will recapture whenever it can. After all the captures, what has happened to White's points?",
+   "answer": {
+    "class": "White loses material",
+    "options": [
+     "White gains material",
+     "White loses material",
+     "Even trade"
+    ]
+   },
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 2
+     },
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 2
+     },
+     "id": "C2"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "b3d5",
+      "max": -2
+     },
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.SAF.COUNT",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.classify_position",
+    "task.classify_position"
+   ],
+   "hints": [
+    "Count the attackers of d5, then the defenders. Compare the numbers.",
+    "The bishop takes a pawn (+1). What takes the bishop?",
+    "Equal numbers: the first piece to capture is the one that gets taken, and it is worth more than the pawn."
+   ],
+   "explain": "Two attackers meet two defenders, so White's first capture is answered. The bishop wins a pawn (+1) and is taken by the knight (-3). The rook could take on, but then Black's rook takes it. White has no good way to continue.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDCOUNT1-5",
+   "skill": "SAF.COUNT.D1",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PBG-LFNDCOUNT1-5",
+   "prompt": "White to move. Find the capture that wins material without losing any back.",
+   "answer": {
+    "moves": [
+     "e3b6"
+    ]
+   },
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e3b6"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "e3b6",
+      "min": 3
+     },
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "b6",
+      "color": "black",
+      "count": 0
+     },
+     "id": "C3"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "d1d5",
+      "cp": 200
+     },
+     "id": "C4"
+    }
+   ],
+   "tags": [
+    "node.SAF.COUNT",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "task.find_move"
+   ],
+   "hints": [
+    "Two black units are attacked. Count the defenders of each.",
+    "The pawn on d5 has a defender. Does the knight on b6?",
+    "The bishop takes the knight on b6: nothing can take back."
+   ],
+   "explain": "The knight on b6 is attacked by the bishop and nothing defends it, so the bishop wins it for free. The pawn on d5 is defended by the pawn on e6, so a rook capture there would lose the rook for a pawn.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d1d5": "The rook takes the pawn on d5, but the pawn on e6 takes the rook: five points given for one."
+   }
+  }
+ ]
+}

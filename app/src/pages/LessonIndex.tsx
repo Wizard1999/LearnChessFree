@@ -1,3 +1,5 @@
+import { hueOfStage, hueOfStrand } from '../lib/hue'
+import { ArtEmblem } from '../components/art'
 import { Fragment, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
@@ -10,6 +12,12 @@ import { STRAND_NAMES } from '../lib/missions'
 import { PATH_STAGES, stageLabel } from '../lib/pathStages'
 import { FirstGameInvite } from '../components/FirstGameInvite'
 import { inviteSlot } from '../lib/firstGame'
+import { UpNextMark } from '../components/UpNextMark'
+
+/** A list row; the up next row carries the shared persimmon mark (UpNextMark). */
+function UpNextOrLi({ up, skillId, className, children }: { up: boolean; skillId: string; className: string; children: React.ReactNode }) {
+  return up ? <UpNextMark as="li" skillId={skillId} className={className}>{children}</UpNextMark> : <li className={className}>{children}</li>
+}
 
 type Filter = 'all' | 'todo' | 'done'
 type View = 'path' | 'section'
@@ -41,6 +49,18 @@ export function LessonIndex() {
     }
     return [...m.entries()].sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
   }, [content, byId, q, filter, view])
+  // Up next: in the recommended path the first unfinished lesson in path order; by subject, the first unfinished lesson of each subject. Filters and search never move it.
+  const upNextIds = useMemo(() => {
+    const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
+    const first = new Map<string, string>()
+    for (const l of sorted) {
+      if (byId.get(l.id)?.done) continue
+      const key = view === 'path' ? l.stage ?? '?' : content.skillById.get(l.skill)?.strand ?? '?'
+      if (!first.has(key)) first.set(key, l.id)
+    }
+    if (view === 'path') { const ks = [...first.keys()].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))); return new Set(ks.length ? [first.get(ks[0])!] : []) }
+    return new Set(first.values())
+  }, [content, byId, view])
   const groupOf = (l: LessonMeta) => (view === 'path' ? l.stage : content.skillById.get(l.skill)?.strand)
   const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
   const totalMin = content.lessons.reduce((t, l) => t + mins(l), 0)
@@ -65,9 +85,10 @@ export function LessonIndex() {
       {groups.map(([strand, ls], gi) => (
         <Fragment key={strand}>
         {view === 'path' && gi === inviteSlot(groups.map(g => g[0])) && <FirstGameInvite />}
-        <div className="card">
+        <div className="card" data-hue={view === 'path' ? hueOfStage(Math.max(1, PATH_STAGES.findIndex(x => x.id === strand) + 1)) : hueOfStrand(strand)}>
           {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); return (
-            <div className="sectionhead"><h2>{view === 'path' ? `${stageLabel(strand)} · ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand)}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
+            <div className="sectionhead"><h2><ArtEmblem seed={strand} />{view === 'path' ? `${stageLabel(strand)} · ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand)}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
+          {view === 'path' && PATH_STAGES.find(x => x.id === strand)?.milestone && <p className="stagesub">{PATH_STAGES.find(x => x.id === strand)?.milestone}</p>}
           {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
             <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
           <ul className="plain lessonindex">
@@ -76,7 +97,7 @@ export function LessonIndex() {
               const earlier = finishedEarlierVersion(p, l)
               const status = p?.done ? (p.skipped ? 'Skipped' : earlier ? 'Finished (earlier version)' : 'Finished') : p && p.step > 0 ? `In progress (step ${p.step + 1} of ${l.stepCount})` : 'Not started'
               return (
-                <li key={l.id} className={`row lessonrow ${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
+                <UpNextOrLi key={l.id} up={upNextIds.has(l.id)} skillId={l.skill} className={`row lessonrow ${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
                   <span className="statusmark" aria-hidden="true">{p?.done ? (p.skipped ? '»' : '✓') : p && p.step > 0 ? '◐' : '○'}</span>
                   <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{earlier ? 'Review the new version' : p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
                   <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {aboutMinutes(lessonMinutes(l))} · {status}</span></span>
@@ -84,7 +105,7 @@ export function LessonIndex() {
                     {!p?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void mark(l, false)}>Mark finished</button> <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void mark(l, true)}>Skip</button></>}
                     {(p?.done || (p && p.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void reset(l.id)}>Reset</button>}
                   </span>
-                </li>
+                </UpNextOrLi>
               )
             })}
           </ul>

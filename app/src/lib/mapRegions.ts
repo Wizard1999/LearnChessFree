@@ -18,3 +18,14 @@ export const BANDS: { name: string; milestone: string; tiers: number[] }[] = [
   { name: 'Advanced study', milestone: 'handle complex decisions and specialise', tiers: [6, 7, 8, 9] },
 ]
 export const bandOf = (tier: number) => Math.max(0, BANDS.findIndex(b => b.tiers.includes(tier)))
+
+/** The region a strand belongs to, as "1".."5" (the order of REGIONS), or undefined. The Scholarmate look colours the map by region (data-region). */
+export function regionOfStrand(strand: string | undefined): string | undefined {
+  const i = REGIONS.findIndex(r => r.strands.includes(strand ?? ''))
+  return i < 0 ? undefined : String(i + 1)
+}
+/** Which of the two tints a slice takes inside its region: the strands of a region alternate "a", "b", so neighbours inside one region differ. */
+export function tintOfStrand(strand: string | undefined): 'a' | 'b' {
+  const r = REGIONS.find(x => x.strands.includes(strand ?? ''))
+  return r && r.strands.indexOf(strand ?? '') % 2 === 1 ? 'b' : 'a'
+}

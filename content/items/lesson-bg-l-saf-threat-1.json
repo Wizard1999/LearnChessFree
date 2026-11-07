@@ -1,0 +1,544 @@
+{
+ "positions": [
+  {
+   "id": "PBG-LSAFTHREAT1-1",
+   "fen": "6k1/pp3ppp/8/4p3/3N4/8/PP3PPP/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black pawn on e5 attacks a white knight on d4 that nothing defends",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-2",
+   "fen": "6k1/pp3ppp/8/8/1b6/8/PP3PPP/4R1K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black bishop on b4 eyes a loose white rook on e1",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-3",
+   "fen": "3r2k1/pp3ppp/1b6/8/8/3N4/PP3PPP/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black bishop has left the d-file, uncovering the rook against a loose knight on d3",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-4",
+   "fen": "6k1/pp3ppp/8/8/3n4/6Q1/PP3PPP/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black knight on d4 threatens to jump to e2 with check, attacking king and queen",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-5",
+   "fen": "3r2k1/pp3ppp/8/8/3N4/4P3/P4PPP/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black rook attacks a white knight that a pawn defends",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-6",
+   "fen": "4q1k1/pp3ppp/8/8/8/8/PP3PPP/1N4K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-6",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black queen on e8 threatens checkmate on e1, nothing covers it and the king has no square",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-7",
+   "fen": "4r1k1/pp3ppp/8/8/8/7P/PP1R1PP1/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-7",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black rook on e8 could check on e1, but the h3 pawn gave the white king an escape square",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LSAFTHREAT1-8",
+   "fen": "6k1/pp3ppp/8/8/3n4/8/PPB2PPP/6K1 w - - 0 1",
+   "family": "FAM-BG-LSAFTHREAT1-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: black knight on d4 attacks a loose white bishop on c2",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IBG-LSAFTHREAT1-1",
+   "skill": "SAF.THREAT.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LSAFTHREAT1-1",
+   "prompt": "Black's pawn has just moved to e5. A pawn captures one step diagonally forward. Tap every square this pawn attacks.",
+   "answer": {
+    "squares": [
+     "d4",
+     "f4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e5",
+      "squares": [
+       "d4",
+       "f4"
+      ]
+     },
+     "statement": "The pawn on e5 attacks d4 and f4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No white piece defends the knight on d4."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-1",
+    "lang.en",
+    "task.select_squares"
+   ],
+   "hints": [
+    "A black pawn captures towards the bottom of the board, one file to the left or right.",
+    "Which two squares are diagonally in front of the pawn, from Black's side?",
+    "The squares are d4 and f4. One of them holds a white piece."
+   ],
+   "explain": "A black pawn moves down the board, so it captures diagonally downwards: onto d4 or f4. The knight stands on d4 and nothing defends it, so the pawn is about to win it. That is what a threat looks like.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-2",
+   "skill": "SAF.THREAT.D1",
+   "cue": 1,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-2",
+   "prompt": "Black has just moved. What does Black threaten? Move a Black piece to show it.",
+   "answer": {
+    "threat_move": "b4e1"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "e1"
+      ]
+     },
+     "statement": "The rook on e1 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "b4e1",
+      "min": 5,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the bishop wins the rook."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-2",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "Look at the bishop that has just arrived. Which diagonal does it control?",
+    "Follow that diagonal towards White's side. What stands on it?",
+    "The bishop reaches e1 through c3 and d2."
+   ],
+   "explain": "The bishop on b4 looks along a diagonal at the rook on e1. No white piece defends the rook, so the bishop can simply take it. The threat is real because the rook is loose.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-3",
+   "skill": "SAF.THREAT.D1",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-3",
+   "prompt": "Black's bishop has just stepped off the d-file. What does Black threaten now? Move a Black piece to show it.",
+   "answer": {
+    "threat_move": "d8d3"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "d3"
+      ]
+     },
+     "statement": "The knight on d3 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "d8d3",
+      "min": 3,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the rook wins the knight."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-3",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "The moved piece attacks very little. Look at the piece it was standing in front of.",
+    "Which black piece now has an open file?",
+    "The rook on d8 looks down the d-file at the knight."
+   ],
+   "explain": "The bishop's move itself attacks only a defended pawn, but it uncovers the rook behind it. The rook now looks down the open d-file at a knight that nothing defends, so the rook threatens to take it.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-4",
+   "skill": "SAF.THREAT.D1",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-4",
+   "prompt": "Nothing of White's is attacked yet. Black has just moved a knight. What does Black threaten? Move a Black piece to show it.",
+   "answer": {
+    "threat_move": "d4e2"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d4e2",
+      "min": 6,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the knight wins the queen for a knight."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e2",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No white piece covers e2."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No white piece is attacked right now."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-4",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "Nothing is attacked yet. Ask where the knight could go next.",
+    "A knight on e2 would attack g1 and g3. What stands on those squares?",
+    "From e2 the knight gives check and also attacks the queen."
+   ],
+   "explain": "From e2 the knight would give check to the king on g1 and attack the queen on g3 at the same moment. White must answer the check first, so the queen is lost for a knight. The danger is one move away, and nothing covers e2.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-5",
+   "skill": "SAF.THREAT.D1",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-5",
+   "prompt": "Black has just moved a rook to the d-file. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "outcome": "none"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The rook attacks the knight on d4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The pawn on e3 defends the knight."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No white piece is loose."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "a2a3",
+      "min": 0
+     },
+     "statement": "If White makes an unrelated move, Black does not win material."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.2",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-5",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "Which of your pieces does the rook attack?",
+    "Does anything defend that piece? Imagine the rook takes it.",
+    "If the rook took the knight, a pawn would take the rook."
+   ],
+   "explain": "The rook attacks the knight, but the pawn on e3 defends it. If the rook took the knight, the pawn would take the rook, and Black would give 5 points for 3. So the rook's move threatens nothing.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-6",
+   "skill": "SAF.THREAT.D2",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-6",
+   "prompt": "Black has just moved. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "threat_move": "e8e1"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e8e1",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the queen gives checkmate on e1."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No white piece covers e1."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-6",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "Look at the white king. Where could it go if it were in check?",
+    "The king's own pawns shut it in on the first row. Which square would give check there?",
+    "The queen can slide down the open e-file."
+   ],
+   "explain": "The queen looks down the open e-file to e1. A queen on e1 would give check along the first row, the king's pawns shut it in, and no white piece covers e1 or can block on f1. That is checkmate, so the threat is real.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-7",
+   "skill": "SAF.THREAT.D2",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-7",
+   "prompt": "Black has just moved a rook to the open e-file. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "outcome": "none"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_is_not_mate",
+     "params": {
+      "move": "e8e1",
+      "null_move_first": true
+     },
+     "statement": "If White passes, Re1 is check but not checkmate."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No white piece is loose."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "a2a3",
+      "min": 0
+     },
+     "statement": "If White makes an unrelated move, Black does not win material."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-7",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "A check is not always a mate. After a check on the first row, where could the king go?",
+    "Look at the pawns in front of the king. Is the king fully shut in?",
+    "The pawn on h3 left a square on h2."
+   ],
+   "explain": "The rook can give check on e1, but the king steps to h2 because the pawn on h3 opened that square. A check the king can walk away from is not a mate, and no white piece can be won, so there is no real threat.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LSAFTHREAT1-8",
+   "skill": "SAF.THREAT.D2",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PBG-LSAFTHREAT1-8",
+   "prompt": "Black has just moved. Anything to worry about? Show the threat by moving a Black piece, or say there is none.",
+   "answer": {
+    "threat_move": "d4c2"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c2"
+      ]
+     },
+     "statement": "The bishop on c2 is attacked and nothing defends it."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "d4c2",
+      "min": 3,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the knight wins the bishop."
+    }
+   ],
+   "tags": [
+    "node.SAF.THREAT",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-BG-LSAFTHREAT1-8",
+    "lang.en",
+    "task.threat_detection"
+   ],
+   "hints": [
+    "List what the knight on d4 attacks, by its L-shaped jumps.",
+    "Which of those squares holds a white piece?",
+    "The knight attacks the bishop on c2."
+   ],
+   "explain": "A knight on d4 attacks c2, and the bishop standing there has no defender. Winning a piece for nothing is a real gain, so the threat is real.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,328 @@
+{
+ "positions": [
+  {
+   "id": "PCR-LTACSKEWER1-1",
+   "fen": "r3k3/pp6/8/8/8/8/8/4K2R w - - 0 1",
+   "family": "FAM-CR-SKEWER-ROOK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Colour-flipped one-feature edit of a rook skewer, built with python-chess and engine-checked (depth 16)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PCR-LTACSKEWER1-2",
+   "fen": "r3k3/pp6/3b4/8/8/8/8/4K2R w - - 0 1",
+   "family": "FAM-CR-SKEWER-ROOK-BLOCK",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Colour-flipped one-feature edit of a rook skewer, built with python-chess and engine-checked (depth 16)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PCR-LTACSKEWER1-3",
+   "fen": "4k3/pp6/8/8/8/8/8/4K2R w - - 0 1",
+   "family": "FAM-CR-SKEWER-ROOK-NONE",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Colour-flipped one-feature edit of a rook skewer, built with python-chess and engine-checked (depth 16)",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PCR-LTACSKEWER1-4",
+   "fen": "5n2/1p6/pBpk2p1/5p1p/1PP2P1P/P4K2/8/8 b - - 2 38",
+   "family": "FAM-CR-SKEWER-BN-THREAT",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Colour-flipped copy of a Lichess endgame position (CC0, lichess puzzle 9bFTT), python-chess mirror",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PCR-LTACSKEWER1-5",
+   "fen": "r3k3/rp6/8/8/8/8/8/4K2R w - - 0 1",
+   "family": "FAM-CR-SKEWER-ROOK-DEF",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Colour-flipped one-feature edit of a rook skewer, built with python-chess and engine-checked (depth 16)",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "ICR-LTACSKEWER1-1",
+   "skill": "TAC.SKEWER.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PCR-LTACSKEWER1-1",
+   "prompt": "White to move. Find the skewer.",
+   "answer": {
+    "moves": [
+     "h1h8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h1h8"
+      ]
+     },
+     "statement": "Rh8+ is the engine's first choice (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "h1h8",
+      "min": 5
+     },
+     "statement": "Rh8+ followed by Rxa8 wins the rook."
+    }
+   ],
+   "tags": [
+    "theme.skewer",
+    "node.TAC.SKEWER",
+    "cue.1",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "family.FAM-CR-SKEWER-ROOK",
+    "cue.1"
+   ],
+   "hints": [
+    "Look for a check along the back rank.",
+    "The black king stands between your rook and another rook.",
+    "The rook goes to h8; the king must leave the eighth rank."
+   ],
+   "explain": "Rh8+ checks the king on e8. The rook on a8 stands on the same rank behind it. The king steps off the rank and the rook takes the rook.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "ICR-LTACSKEWER1-2",
+   "skill": "TAC.SKEWER.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PCR-LTACSKEWER1-2",
+   "prompt": "White to move. A black bishop stands on d6. Does Rh8+ still win the rook on a8? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "h1h8",
+      "max": 0
+     },
+     "statement": "Rh8+ wins nothing along the engine line."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "f8",
+      "color": "black",
+      "count": 2,
+      "after_move": "h1h8"
+     },
+     "statement": "After the check, the bishop and the king both cover f8, so Black can block there."
+    }
+   ],
+   "tags": [
+    "theme.skewer",
+    "node.TAC.SKEWER",
+    "cue.2",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "family.FAM-CR-SKEWER-ROOK-BLOCK",
+    "cue.2"
+   ],
+   "hints": [
+    "After the check, can Black do something other than move the king?",
+    "Which black piece can reach the squares between the rook and the king?",
+    "The bishop can step to f8 and block the check."
+   ],
+   "explain": "The bishop on d6 can step to f8 and cut the line between the rook and the king. The check is parried and the rook on a8 is not attacked.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "options": [
+    "yes",
+    "no"
+   ]
+  },
+  {
+   "id": "ICR-LTACSKEWER1-3",
+   "skill": "TAC.SKEWER.D2",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PCR-LTACSKEWER1-3",
+   "prompt": "White to move. The black rook is not on a8. Does Rh8+ win anything? Predict, then check.",
+   "answer": {
+    "outcome": "no"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "h1h8",
+      "max": 0
+     },
+     "statement": "Rh8+ wins no material along the engine line."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [],
+      "after_move": "h1h8"
+     },
+     "statement": "After the check no black piece is attacked and undefended."
+    }
+   ],
+   "tags": [
+    "theme.skewer",
+    "node.TAC.SKEWER",
+    "cue.2",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "family.FAM-CR-SKEWER-ROOK-NONE",
+    "cue.2"
+   ],
+   "hints": [
+    "Check first, then look behind the king.",
+    "What stands on the eighth rank beyond the king?",
+    "Nothing does: the check lines up nothing."
+   ],
+   "explain": "Rh8+ is still a check, but no piece stands behind the king on the eighth rank. When the king steps aside there is nothing to take.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "options": [
+    "yes",
+    "no"
+   ]
+  },
+  {
+   "id": "ICR-LTACSKEWER1-4",
+   "skill": "TAC.SKEWER.D2",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PCR-LTACSKEWER1-4",
+   "prompt": "Black to move. What is White threatening? (Name the move.)",
+   "answer": {
+    "threat_move": "b6c5"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "b6c5",
+      "min": 3,
+      "null_move_first": true
+     },
+     "statement": "If Black passed, Bc5+ would win the knight on f8 along the engine line."
+    }
+   ],
+   "tags": [
+    "theme.skewer",
+    "node.TAC.SKEWER",
+    "cue.3",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "family.FAM-CR-SKEWER-BN-THREAT",
+    "cue.3",
+    "mode.threat"
+   ],
+   "hints": [
+    "Look at the line between the black king and the knight.",
+    "Which white piece can reach that diagonal with check?",
+    "The bishop on b6 has a check."
+   ],
+   "explain": "The white bishop can check on c5. The king on d6 is on a diagonal with the knight on f8 behind it, so after the king steps aside the bishop takes the knight.",
+   "orientation": "black",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "ICR-LTACSKEWER1-5",
+   "skill": "TAC.SKEWER.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PCR-LTACSKEWER1-5",
+   "prompt": "White to move. Is there a tactic that wins material?",
+   "answer": {
+    "class": "No"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "h1h8",
+      "max": 0
+     },
+     "statement": "Rh8+ followed by Rxa8 Rxa8 only trades rooks along the engine line."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "a8",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The rook on a7 defends the rook on a8."
+    }
+   ],
+   "tags": [
+    "theme.skewer",
+    "node.TAC.SKEWER",
+    "cue.3",
+    "kind.authored",
+    "tier.2",
+    "lang.en",
+    "family.FAM-CR-SKEWER-ROOK-DEF",
+    "cue.3"
+   ],
+   "hints": [
+    "Is there a check that lines up another piece?",
+    "If the piece behind the king is taken, can it be recaptured?",
+    "The rook on a7 guards a8."
+   ],
+   "explain": "Rh8+ still lines up the rook on a8 behind the king, but the rook on a7 defends it. Rook takes rook, rook takes rook: an even trade, not a win.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   },
+   "options": [
+    "Yes",
+    "No"
+   ]
+  }
+ ]
+}

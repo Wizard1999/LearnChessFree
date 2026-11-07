@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
 import type { Key } from 'chessground/types'
 import { ChessBoard, type BoardShape } from './ChessBoard'
@@ -307,6 +308,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
 
       {phase === 'done' && (
         <div className={correct ? 'result ok' : 'result no'} role="status">
+          <ResultMark kind={resultKind(!!correct, !!altNote)} />
           <p><strong>{resultHeadline(resultKind(!!correct, !!altNote), wrongs)}</strong>
             {altNote && <> <strong>{altNote.san}</strong> also works. The exercise was looking for <strong>{answerSan}</strong>.</>}
             {!altNote && answerSan && <> The move is <strong>{answerSan}</strong>.</>}

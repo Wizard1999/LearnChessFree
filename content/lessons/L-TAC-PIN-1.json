@@ -3,30 +3,53 @@
   "title": "Pins: cannot move, or should not move",
   "skill": "TAC.PIN",
   "depth": "D1",
-  "minutes": 10,
+  "minutes": 30,
   "outcomes": [
-    "Tells an absolute pin (no legal move) from a relative pin (legal but costly)",
-    "Wins a pinned piece by attacking it again",
-    "Checks that something valuable really stands behind the pinned piece",
-    "Tells a pin from a fork"
+    "Sees a pin on a file, rank or diagonal and names the pinner, the pinned piece and the screened piece",
+    "Tells an absolute pin (no move off the line) from a relative pin (legal but costly) and prices a relative pin by what stands behind",
+    "Wins a pinned piece by attacking it again, and checks that the pinned defender is not a real defender",
+    "Names the five ways out of a pin (block, capture the pinner, step aside, hit the pinner, counter-attack) and checks them before relying on a pin",
+    "Tells a pin from a look-alike (a blocked line, a defended equal piece), from a skewer and from a fork",
+    "Explains pins to a beginner with the idea, when it works, an example and a warning"
   ],
   "steps": [
     {
+      "type": "item",
+      "item": "IA1-039",
+      "silent": true,
+      "chapter": "See the line"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Write your move. Then say in a few words what it attacks, and why that piece cannot simply walk away. Nothing is explained yet.",
+      "fields": [
+        {
+          "id": "move",
+          "label": "My move:"
+        },
+        {
+          "id": "why",
+          "label": "Why the attacked piece cannot just leave:"
+        }
+      ]
+    },
+    {
       "type": "card",
-      "text": "A **pin** attacks a piece that cannot, or should not, move, because a more valuable piece stands behind it on the same line.\nIn an **absolute** pin the piece behind is the king, so moving the pinned piece is illegal. An absolutely pinned piece is easy prey: it cannot run away from a second attacker."
+      "text": "**This lesson, as four tests you can take yourself.**\n1. **See** a pin on any file, rank or diagonal.\n2. **Price** it: what does it cost, and can it be undone?\n3. **Set one up**, or stop one against you.\n4. **Teach** it to a beginner.\nA **pin** attacks a piece that cannot, or should not, move, because something worth more stands behind it on the same line."
     },
     {
       "type": "board",
       "fen": "r3k3/ppp2ppp/4bn2/8/5P2/2NB4/PPP3PP/4R1K1 w - - 0 1",
-      "caption": "White to move. The black bishop on e6 stands between the rook and the king.",
+      "caption": "White to move. The black bishop on e6 stands between the white rook and the black king.",
       "line": [
         {
           "move": "f4f5",
-          "say": "The pawn attacks the bishop. It is pinned and cannot leave the e-file."
+          "say": "The pawn attacks the bishop. The bishop is pinned, so it cannot step off the e-file."
         },
         {
           "move": "e8f8",
-          "say": "Black moves the king, but the bishop is still attacked."
+          "say": "Black moves the king, but it is White's turn again and the bishop is still attacked."
         },
         {
           "move": "f5e6",
@@ -55,10 +78,508 @@
             "move": "f4f5",
             "min": 3
           },
-          "statement": "f5 wins the bishop along the engine line."
+          "statement": "The pawn push f5 wins the bishop along the engine line."
         },
         {
           "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The rook on e1 attacks the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "e6",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "f4f5"
+          },
+          "statement": "After the pawn push, the bishop on e6 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACPIN1-14"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/ppp1pppp/2np4/1B6/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "caption": "Black to move. The bishop on b5 looks along a diagonal at the king on e8; the knight on c6 stands in front of it.",
+      "line": [
+        {
+          "move": "a7a6",
+          "say": "Black asks the bishop with a pawn, because the pinned knight cannot do it."
+        },
+        {
+          "move": "b5c6",
+          "say": "White takes the knight with check. The knight in front of the king could not move away."
+        },
+        {
+          "move": "b7c6",
+          "say": "The pawn recaptures and Black's pawns are doubled. The pin did not win material here. It cost Black the choice."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c6",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c6 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c6",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The bishop on b5 attacks the knight."
+        },
+        {
+          "id": "C3",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "c6",
+              "c7"
+            ],
+            "after_moves": [
+              "a7a6",
+              "b5c6",
+              "b7c6"
+            ]
+          },
+          "statement": "After the recapture Black has doubled pawns on c6 and c7."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Three roles on one line.** The **pinner** is a bishop, rook or queen, because only those act along lines. The **pinned** piece stands next on the line. Behind it stands the **screened** piece: the king, or something worth more. Every square between them must be empty. Nimzowitsch's book uses the same three roles. A knight, a pawn or a king cannot pin."
+    },
+    {
+      "type": "board",
+      "fen": "4rk2/5ppp/8/8/4R3/8/5PPP/4K3 w - - 0 1",
+      "caption": "White to move. The white rook on e4 is pinned to its king, yet it is not stuck.",
+      "line": [
+        {
+          "move": "e4e8",
+          "say": "A pinned rook may move along the pin line, so it can even capture the pinner."
+        },
+        {
+          "move": "f8e8",
+          "say": "The king recaptures. The pin only forbids leaving the line, nothing more."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "e2",
+              "e3",
+              "e5",
+              "e6",
+              "e7",
+              "e8"
+            ]
+          },
+          "statement": "The rook may move only along the e-file."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook on e8 attacks the rook on e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACPIN1-15"
+    },
+    {
+      "type": "board",
+      "fen": "r1b1kb1r/pp1n1ppp/2p1pn2/q2p2B1/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQkq - 2 7",
+      "caption": "White to move. The queen on a5 pins the knight on c3 from far away; b4 and d2 are empty.",
+      "line": [
+        {
+          "move": "f3d2",
+          "say": "The new piece on d2 stands between the knight and the king. The pin to the king is gone; at most a small relative pin to the d2 piece remains."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "c3",
+        "d2",
+        "b4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c3 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The queen attacks the knight."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 6,
+            "after_move": "f3d2"
+          },
+          "statement": "After the piece arrives on d2, the knight has six legal moves."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/b7/8/8/3P4/4K3 w - - 0 1",
+      "caption": "White to move. A pinned pawn: the bishop on a5 pins the pawn on d2 to the king.",
+      "line": [
+        {
+          "move": "e1d1",
+          "say": "The king steps off the diagonal, which ends the pin and frees the pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "d2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "d2",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The pawn on d2 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d2",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The bishop attacks the pawn."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "caption": "Black to move. It looks like a pin, but a pawn on d7 stands between the bishop and the king.",
+      "line": [
+        {
+          "move": "a7a6",
+          "say": "Black can ask the bishop at once. The knight is attacked, not pinned."
+        },
+        {
+          "move": "b5a4",
+          "say": "The bishop retreats and keeps its diagonal. Nothing was won or lost."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "c6"
+        }
+      ],
+      "highlight": [
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c6",
+            "mode": "legal",
+            "count": 5
+          },
+          "statement": "The knight on c6 has five legal moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "c6",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The bishop attacks the knight."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Cannot, or should not.** If the screened piece is the king, the pinned piece can move only along the line: an **absolute** pin. If it is anything else, moving is legal but costs what stands behind: a **relative** pin. Nimzowitsch spoke of whole and half pins: a piece that can slide along the line is only half pinned. The price is one comparison: what is behind, against what moves.",
+      "chapter": "What a pin costs"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/ppp2ppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR b KQkq - 3 4",
+      "caption": "Black to move. The knight on f6 may legally move, but the line from g5 through f6 ends at the queen.",
+      "line": [
+        {
+          "move": "f6g8",
+          "say": "Suppose the knight retreats. The move is legal."
+        },
+        {
+          "move": "g5d8",
+          "say": "The bishop takes the queen, which the knight was shielding."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king takes back. Black has given a queen for a bishop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "f6",
+            "to": [
+              "d7",
+              "e4",
+              "g4",
+              "g8",
+              "h5"
+            ]
+          },
+          "statement": "The knight on f6 has five legal moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d8",
+            "color": "white",
+            "count": 1,
+            "after_move": "f6g8"
+          },
+          "statement": "After the knight leaves, the bishop attacks the queen."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "f6g8",
+            "max": -5
+          },
+          "statement": "Moving the knight loses a queen for a bishop along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA1-037"
+    },
+    {
+      "type": "card",
+      "text": "**A pinned piece still bites.** It cannot leave the line, but it keeps attacking the squares it attacks, so the enemy king may not step onto them. A pinned knight is stuck completely, because a knight never moves along a line. Look at the board, then answer before you step on."
+    },
+    {
+      "type": "board",
+      "fen": "4r3/3k4/8/4B3/5P2/8/8/4K3 b - - 0 1",
+      "caption": "Black to move. The bishop on e5 is pinned to its king by the rook on e8, but it still guards d6 and c7.",
+      "line": [],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        },
+        {
+          "from": "e5",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "d6",
+        "c7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "c6",
+              "c8",
+              "d8",
+              "e6",
+              "e7"
+            ]
+          },
+          "statement": "The king on d7 cannot step to d6 or c7, because the pinned bishop still controls them."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook on e8 attacks the bishop."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before you step on: can the black king capture or step onto d6? Say why in a few words.",
+      "fields": [
+        {
+          "id": "kd6",
+          "label": "Can the king go to d6?",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "answer": "no"
+        },
+        {
+          "id": "kd6why",
+          "label": "Why:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4rk2/ppp2ppp/4bn2/8/5P2/2NB4/PPP3PP/4R1K1 w - - 0 1",
+      "caption": "White to move. The same pin, but the rook behind the bishop is defended and is worth as much as White's rook.",
+      "line": [
+        {
+          "move": "f4f5",
+          "say": "The pawn attacks the pinned bishop."
+        },
+        {
+          "move": "e6d7",
+          "say": "The bishop leaves anyway. The rook behind it is defended, so taking it wins nothing."
+        },
+        {
+          "move": "e1e8",
+          "say": "White takes the rook with check."
+        },
+        {
+          "move": "f6e8",
+          "say": "The knight takes back. The rooks are swapped and nobody is ahead: a pin on a defended equal piece costs nothing."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "f4f5",
+            "max": 0
+          },
+          "statement": "The pawn push wins nothing along the engine line."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 60
+          },
+          "statement": "The engine rates the position as level."
+        },
+        {
+          "id": "C3",
           "type": "attackers",
           "params": {
             "square": "e6",
@@ -70,46 +591,965 @@
       ]
     },
     {
-      "type": "item",
-      "item": "IA1-033"
-    },
-    {
-      "type": "item",
-      "item": "IA1-034"
+      "type": "board",
+      "fen": "r3k3/ppp2ppp/4b3/3n4/5P2/2NB4/PPP3PP/4R1K1 w - - 0 1",
+      "caption": "White to move. The black knight on d5 is defended by the bishop on e6, which is pinned.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "The knight takes. The bishop \"defends\" it but cannot recapture without exposing the king."
+        },
+        {
+          "move": "a8d8",
+          "say": "Black attacks the knight a second time, with the rook."
+        },
+        {
+          "move": "d5c3",
+          "say": "The knight steps back. White keeps the extra piece."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e6"
+        },
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3d5",
+            "min": 3
+          },
+          "statement": "Capturing on d5 wins a piece along the engine line."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "e6",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The bishop on e6 has no legal move."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The bishop is the only black piece that guards d5."
+        }
+      ]
     },
     {
       "type": "card",
-      "text": "Two kinds of pin.\n**Absolute:** the king is behind. The pinned piece has no legal move.\n**Relative:** something valuable, but not the king, is behind. The piece may legally move, but then it loses what stood behind it.\n'Cannot move' and 'should not move' differ. A **fork** is one piece attacking two targets; a pin needs a line with something behind."
+      "text": "**Why a pin bites.** A pinned piece cannot leave, so it can be attacked again and again. If it leaves, it pays. Nimzowitsch (*My System*, pin chapter) held that a pinned piece defends only on paper, and that a pawn is the best attacker, because it cannot be chased away. E. Lasker listed pins among the ways a defender is an illusion. [I] Cheaper attackers are usually better, but check the position."
     },
     {
       "type": "item",
-      "item": "IA1-037"
-    },
-    {
-      "type": "item",
-      "item": "IA1-038"
+      "item": "ICR-LTACPIN1-3"
     },
     {
       "type": "contrast",
       "title": "Is the piece really pinned?",
-      "prompt": "In the second position the king stands on d8.",
+      "prompt": "Same kind of position, three small differences. For each, predict whether the attack on the bishop wins it.",
       "working": "IA1-034",
       "failing": "IA1-035",
       "irrelevant": "IA1-036"
     },
     {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the position where the attack failed, the bishop could simply move away. Which feature was different from the working position?",
+      "fields": [
+        {
+          "id": "changed",
+          "label": "What changed:",
+          "options": [
+            "the bishop is defended twice",
+            "the king no longer stands behind the bishop",
+            "the white rook is not on the e-file",
+            "the pawn on f4 is missing"
+          ],
+          "answer": "the king no longer stands behind the bishop"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4",
+      "caption": "White to move. [I] One way a pin can end: White asks the bishop with a pawn, and the bishop trades itself for the knight, so White gets the bishop pair and doubled c-pawns. The engine prefers other moves at move 4 [V], so this is one way, not the only one.",
+      "line": [
+        {
+          "move": "e2e3",
+          "say": "Opens the f1 bishop. The knight on c3 stays pinned, so White builds around it."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles. The bishop may stay on b4 as long as it likes."
+        },
+        {
+          "move": "f1d3",
+          "say": "Develops and keeps the c3 knight pinned, so Black must keep guarding d4."
+        },
+        {
+          "move": "d7d5",
+          "say": "Black stakes a claim in the centre and pressures c4."
+        },
+        {
+          "move": "a2a3",
+          "say": "The pawn forces the bishop to decide now, because a retreat gives up the pin for nothing."
+        },
+        {
+          "move": "b4c3",
+          "say": "Black gives up the bishop for the knight."
+        },
+        {
+          "move": "b2c3",
+          "say": "White has the bishop pair; the cost is the doubled c-pawns."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b4",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "c3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c3 has no legal move at the start."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "squares": [
+              "c3",
+              "c4"
+            ],
+            "after_moves": [
+              "e2e3",
+              "e8g8",
+              "f1d3",
+              "d7d5",
+              "a2a3",
+              "b4c3",
+              "b2c3"
+            ]
+          },
+          "statement": "At the end White has doubled pawns on c3 and c4."
+        }
+      ]
+    },
+    {
       "type": "card",
-      "text": "Some pins win nothing at once. A pinned piece stays tied to its square and is a poor defender, which can shape play for many moves. Whether that matters is judged case by case, and later strategy lessons return to it."
+      "text": "**Five ways out of a pin.** The pinned side can **block** the line, **capture** the pinner, **step aside** (move the screened piece, or swap it for a cheaper one), **hit the pinner**, usually with a pawn, or **counter-attack** harder. [I] This sorting is mine. Nimzowitsch listed related policies: ask the pinner a question, ignore the pin, bring up reserves, or keep your options open. Check each answer before you lean on a pin.",
+      "chapter": "Ways out of a pin"
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkbnr/ppp1pppp/2np4/1B6/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+      "caption": "Black to move. Way one: block the line. A bishop steps between the pinner and the king.",
+      "line": [
+        {
+          "move": "c8d7",
+          "say": "The bishop steps between the pinner and the king. The knight is free."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops the other knight. The c6 knight is free to move whenever it wants."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c6",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c6 has no legal move at the start."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "c6",
+            "mode": "legal",
+            "count": 5,
+            "after_move": "c8d7"
+          },
+          "statement": "After the block the knight on c6 has five legal moves."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/1b6/2N5/8/1R2K3 w - - 0 1",
+      "caption": "White to move. Way two: capture the pinner. The bishop on b4 pins the knight on c3, and the rook on b1 can take it.",
+      "line": [
+        {
+          "move": "b1b4",
+          "say": "The rook takes the pinner. The knight is free and White is a piece up."
+        },
+        {
+          "move": "e8f7",
+          "say": "Black has no way to take back."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b1",
+          "to": "b4"
+        }
+      ],
+      "highlight": [
+        "b4",
+        "c3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c3 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b4",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "The rook attacks the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "b1b4",
+            "min": 3
+          },
+          "statement": "Capturing the pinner wins the bishop along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/b7/8/8/3N4/4K3 w - - 0 1",
+      "caption": "White to move. Way three: step aside. The king leaves the diagonal, so the knight on d2 is no longer pinned.",
+      "line": [
+        {
+          "move": "e1d1",
+          "say": "The king steps off the diagonal. The pin is over and the knight may move, which it should, since the bishop still attacks it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "d2",
+        "e1",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "d2",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on d2 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d2",
+            "mode": "legal",
+            "count": 6,
+            "after_move": "e1d1"
+          },
+          "statement": "After the king steps aside the knight has six legal moves."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/ppp2ppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR b KQkq - 3 4",
+      "caption": "Black to move. Way three, second form: swap the piece behind. A bishop on e7 stands behind the knight and in front of the queen, so the pin now threatens only a defended bishop.",
+      "line": [
+        {
+          "move": "f8e7",
+          "say": "The bishop steps behind the knight, in front of the queen."
+        },
+        {
+          "move": "e2e3",
+          "say": "White can no longer win anything by capturing on f6, since the bishop recaptures."
+        },
+        {
+          "move": "f6e4",
+          "say": "The knight leaves. The white bishop now attacks only the bishop, which the queen and the king defend."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "e7",
+        "d8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "f8e7",
+              "e2e3",
+              "f6e4"
+            ]
+          },
+          "statement": "After the knight has left, the white bishop attacks the bishop on e7."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "f8e7",
+              "e2e3",
+              "f6e4"
+            ]
+          },
+          "statement": "Two black pieces defend the bishop on e7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqk1nr/ppp2ppp/4p3/3p4/1b1PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 2 4",
+      "caption": "White to move. Way four: hit the pinner. A pawn attack makes the bishop choose.",
+      "line": [
+        {
+          "move": "a2a3",
+          "say": "The pawn attacks the pinning bishop."
+        },
+        {
+          "move": "b4c3",
+          "say": "The bishop trades itself for the pinned knight, with check."
+        },
+        {
+          "move": "b2c3",
+          "say": "White recaptures and has both bishops, with doubled pawns on the c-file."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a3",
+          "to": "b4"
+        }
+      ],
+      "highlight": [
+        "b4",
+        "c3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The knight on c3 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "b4",
+            "color": "white",
+            "count": 1,
+            "after_move": "a2a3"
+          },
+          "statement": "After the pawn push, the pawn attacks the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "white"
+            ],
+            "after_moves": [
+              "a2a3",
+              "b4c3",
+              "b2c3"
+            ]
+          },
+          "statement": "After the trade only White owns both bishops."
+        },
+        {
+          "id": "C4",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "squares": [
+              "c2",
+              "c3"
+            ],
+            "after_moves": [
+              "a2a3",
+              "b4c3",
+              "b2c3"
+            ]
+          },
+          "statement": "After the recapture White has doubled pawns on c2 and c3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bqkb1r/pppn1ppp/5n2/3p2B1/3P4/2N5/PP2PPPP/R2QKBNR w KQkq - 0 6",
+      "caption": "[R] Way five: counter-attack. Optional extra. White to move. The old trap on this move has a name, the Elephant Trap. The pinned knight captures because the in-between check wins the queen back.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "The knight takes the pawn on d5, hoping the pinned knight on f6 cannot recapture."
+        },
+        {
+          "move": "f6d5",
+          "say": "The pinned knight captures anyway. The queen is now exposed to the bishop."
+        },
+        {
+          "move": "g5d8",
+          "say": "White takes the queen."
+        },
+        {
+          "move": "f8b4",
+          "say": "Black checks first. The in-between move comes before any recapture."
+        },
+        {
+          "move": "d1d2",
+          "say": "White blocks the check with the queen."
+        },
+        {
+          "move": "b4d2",
+          "say": "The bishop takes the queen."
+        },
+        {
+          "move": "e1d2",
+          "say": "The king recaptures."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king takes the bishop. Black has won a piece for a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "move_loses",
+          "params": {
+            "move": "c3d5",
+            "cp": 300
+          },
+          "statement": "The capture on d5 is worse than the best move by at least 300 centipawns."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "c3d5",
+            "max": -2
+          },
+          "statement": "Along the engine line the capture on d5 costs White a piece for a pawn."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/ppp2p1p/3p2p1/4p3/2B1P1b1/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5",
+      "caption": "[R] Optional extra: the pinned piece can bite back, because the bait is poisoned. White to move; the knight on f3 is pinned to the queen on d1.",
+      "line": [
+        {
+          "move": "f3e5",
+          "say": "The pinned knight moves anyway. Now the queen and the knight both attack the bishop on g4."
+        },
+        {
+          "move": "d6e5",
+          "say": "Black takes the knight."
+        },
+        {
+          "move": "d1g4",
+          "say": "The queen takes the bishop, and White ends a pawn ahead."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "d1"
+        },
+        {
+          "from": "f3",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "g4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ]
+          },
+          "statement": "The knight capture is the engines first choice."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "g4",
+            "color": "white",
+            "count": 2,
+            "after_move": "f3e5"
+          },
+          "statement": "After the knight moves, the queen and the knight both attack the bishop."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "f3e5",
+            "min": 1
+          },
+          "statement": "White ends at least a pawn ahead along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/ppp2p1p/3p2p1/4N3/2B1P3/2N5/PPPP1PPP/R1BbK2R w KQkq - 0 6",
+      "caption": "[R] If Black takes the queen instead, White has a finish. White to move.",
+      "line": [
+        {
+          "move": "c4f7",
+          "say": "The bishop gives check; the knight on e5 guards f7, so the king cannot take."
+        },
+        {
+          "move": "e8e7",
+          "say": "The king has only one square."
+        },
+        {
+          "move": "c3d5",
+          "say": "The knight gives checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        },
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "f7",
+        "e7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "c4f7",
+            "n": 2
+          },
+          "statement": "White mates in two moves."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Setting one up.** You need a long-range piece, a target and a screen on one line, then a threat. [I] In the examples here a quiet pin was undone in one move and the wins came with a threat or a check (not counted). [V] Our bank holds 55 pin-themed Lichess puzzles with a find-the-move task. The first move is by a knight in 20, a bishop in 16, a rook in 9, a queen in 9, a pawn in 1, and gives check in 26.",
+      "chapter": "Set one up, stop one"
     },
     {
       "type": "item",
-      "item": "IA1-039",
-      "silent": true
+      "item": "IL-jgS0z"
     },
     {
-      "type": "item",
-      "item": "IA1-040",
-      "silent": true
+      "type": "board",
+      "fen": "5r2/1p1q1pk1/p5b1/2R4p/P7/1r5P/5QPB/2R3K1 w - - 1 37",
+      "caption": "White to move. A check can clear the line before the pin is set.",
+      "line": [
+        {
+          "move": "h2e5",
+          "say": "The bishop gives check along the diagonal to the king on g7."
+        },
+        {
+          "move": "f7f6",
+          "say": "The pawn blocks the check, and it leaves the seventh rank, which clears the line from c7 to the king."
+        },
+        {
+          "move": "c5c7",
+          "say": "The rook pins the queen to the king along the seventh rank."
+        },
+        {
+          "move": "d7c7",
+          "say": "The queen may take, because she can slide along the line."
+        },
+        {
+          "move": "c1c7",
+          "say": "The second rook recaptures with check. White has a queen for a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "g7"
+        }
+      ],
+      "highlight": [
+        "d7",
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 300,
+            "max": 2000
+          },
+          "statement": "The engine rates White as clearly better."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 3,
+            "after_moves": [
+              "h2e5",
+              "f7f6",
+              "c5c7"
+            ]
+          },
+          "statement": "After the rook arrives, the queen has three legal moves, all along the rank."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "h2e5",
+              "f7f6",
+              "c5c7"
+            ]
+          },
+          "statement": "After the rook arrives, it attacks the queen."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r3k3/ppp2ppp/4bn2/8/5P2/2NB4/PPP3PP/R5K1 w - - 0 1",
+      "caption": "White to move. A quiet pin: the rook can join the e-file, but the pin may last only one move.",
+      "line": [
+        {
+          "move": "a1e1",
+          "say": "The rook pins the bishop and prepares the pawn push."
+        },
+        {
+          "move": "e8f8",
+          "say": "The king steps off the e-file, so the pin is over."
+        },
+        {
+          "move": "f4f5",
+          "say": "The pawn attacks the bishop."
+        },
+        {
+          "move": "e6d7",
+          "say": "The bishop simply retreats. White has won nothing."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "f8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "e6",
+            "mode": "legal",
+            "count": 0,
+            "after_move": "a1e1"
+          },
+          "statement": "After the rook move, the bishop on e6 has no legal move."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 80
+          },
+          "statement": "The engine rates the position as roughly level."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r3k3/8/8/3N4/8/8/5PPP/6K1 w - - 0 1",
+      "caption": "White to move. Not a pin: a fork. One piece attacks two targets, with nothing in front of either.",
+      "line": [
+        {
+          "move": "d5c7",
+          "say": "The knight attacks the king and the rook at once."
+        },
+        {
+          "move": "e8d7",
+          "say": "The king must answer the check."
+        },
+        {
+          "move": "c7a8",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "e8"
+        },
+        {
+          "from": "c7",
+          "to": "a8"
+        }
+      ],
+      "highlight": [
+        "c7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "d5c7"
+          },
+          "statement": "After the jump, the knight attacks the king."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "a8",
+            "color": "white",
+            "count": 1,
+            "after_move": "d5c7"
+          },
+          "statement": "After the jump, the knight attacks the rook."
+        },
+        {
+          "id": "C3",
+          "type": "material_after_move",
+          "params": {
+            "move": "d5c7",
+            "min": 2
+          },
+          "statement": "The jump wins material along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "7r/8/8/7k/8/8/K7/R7 w - - 0 1",
+      "caption": "White to move. Not a pin: a skewer, the pin the other way round. The valuable piece stands in front and must move, so the piece behind falls.",
+      "line": [
+        {
+          "move": "a1h1",
+          "say": "The rook checks along the h-file. The king stands in front, the rook behind."
+        },
+        {
+          "move": "h5g4",
+          "say": "The king must step off the file."
+        },
+        {
+          "move": "h1h8",
+          "say": "The rook takes what stood behind the king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h1",
+          "to": "h8"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "h8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "white",
+            "count": 1,
+            "after_move": "a1h1"
+          },
+          "statement": "After the rook move it attacks the king."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "a1h1",
+            "min": 5
+          },
+          "statement": "The skewer wins the rook along the engine line."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**[H] A guess to argue with.** Players may overrate a pin they have made, because a pin is a picture, and underrate the one-move escape, because an escape takes calculation. This is my guess, not a finding; we have not tested it. For your next five games, note each pin you make and how many moves it lasted."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Do you agree with the guess, or does it match your own games differently? Say why in a sentence."
+    },
+    {
+      "type": "card",
+      "text": "**Stopping a pin against you.** Before each move, find the enemy long-range pieces and ask what stands on their lines to your king and queen. Dan Heisman (*Looking for Trouble*, as summarised on chess.com and ForwardChess [S]) advises looking for the opponent's strongest forcing replies before you move. A pin is often the quiet reply. If one is coming, the five ways out are best used before it arrives."
+    },
+    {
+      "type": "contrast",
+      "title": "Same bishop, one pawn different",
+      "prompt": "Predict first. The same attack on the knight, with one small difference between the positions. Does the white bishop on g5 attack the queen once the knight leaves?",
+      "working": "ICR-LTACPIN1-16",
+      "failing": "ICR-LTACPIN1-13"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "What made the difference between the two positions?",
+      "fields": [
+        {
+          "id": "diff",
+          "label": "The difference:",
+          "options": [
+            "the knight is defended in one and not the other",
+            "the pawn on e7 blocks the line to the queen",
+            "the bishop on g5 is attacked in one",
+            "the queen stands on a different square"
+          ],
+          "answer": "the pawn on e7 blocks the line to the queen"
+        }
+      ]
+    },
+    {
+      "type": "practice",
+      "tags": [
+        "set.pin1.mixed"
+      ],
+      "n": 4,
+      "chapter": "Test, game, teach"
     },
     {
       "type": "practice",
@@ -117,12 +1557,385 @@
         "theme.pin",
         "cue.3"
       ],
-      "n": 6
+      "n": 4
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACPIN1-20"
+    },
+    {
+      "type": "item",
+      "item": "ICR-LTACPIN1-21"
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp2qppp/2p2n2/4p3/2B1P3/1QN5/PPP2PPP/R1B1K2R w KQkq - 0 9",
+      "caption": "[R] Morphy v the Duke of Brunswick and Count Isouard, Paris 1858 (the Opera game), from move 9. Watch every pin.",
+      "line": [
+        {
+          "move": "c1g5",
+          "say": "The bishop pins the knight on f6 to the queen on e7."
+        },
+        {
+          "move": "b7b5",
+          "say": "Black hits the bishop on c4 with a pawn."
+        },
+        {
+          "move": "c3b5",
+          "say": "White gives up the knight to open the diagonal toward e8."
+        },
+        {
+          "move": "c6b5",
+          "say": "Black accepts and takes the knight."
+        },
+        {
+          "move": "c4b5",
+          "say": "The bishop retakes with check along the open diagonal."
+        },
+        {
+          "move": "b8d7",
+          "say": "Black blocks with the knight, which is now pinned to the king."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "e7"
+        },
+        {
+          "from": "b5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "f6",
+            "color": "white",
+            "count": 1,
+            "after_move": "c1g5"
+          },
+          "statement": "After the bishop move, it attacks the knight on f6."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1g5"
+            ]
+          },
+          "statement": "The bishop move is the engine's first choice."
+        },
+        {
+          "id": "C3",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 0,
+            "after_moves": [
+              "c1g5",
+              "b7b5",
+              "c3b5",
+              "c6b5",
+              "c4b5",
+              "b8d7"
+            ]
+          },
+          "statement": "After the last move, the knight on d7 has no legal move."
+        }
+      ]
     },
     {
       "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Which part is least clear: telling an absolute pin from a relative one, or checking that something valuable really stands behind the pinned piece?"
+      "kind": "expect",
+      "prompt": "Look at the last position of the board. Which black piece cannot move, and how can White add a second attacker on it? Say it before you step on.",
+      "fields": [
+        {
+          "id": "pinned",
+          "label": "The piece that cannot move:"
+        },
+        {
+          "id": "plan",
+          "label": "How to attack it again:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r3kb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/R3K2R w KQkq - 1 12",
+      "caption": "White to move. The knight on d7 is pinned. White adds a second attacker.",
+      "line": [
+        {
+          "move": "e1c1",
+          "say": "Castling long brings a rook to the d-file."
+        },
+        {
+          "move": "a8d8",
+          "say": "Black adds a defender with the other rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "e8"
+        },
+        {
+          "from": "d1",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 2,
+            "after_move": "e1c1"
+          },
+          "statement": "After castling, two white pieces attack the knight."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "black",
+            "count": 4,
+            "after_moves": [
+              "e1c1",
+              "a8d8"
+            ]
+          },
+          "statement": "After the rook move, four black pieces defend the knight."
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Only the knight on d7 is pinned, yet it is attacked twice and defended four times. Does simple counting say White should take? Then say what could still make the capture work, before you step on.",
+      "fields": [
+        {
+          "id": "count",
+          "label": "Does counting favour taking?",
+          "options": [
+            "yes",
+            "no"
+          ],
+          "answer": "no"
+        },
+        {
+          "id": "why",
+          "label": "What could make the capture work:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3rkb1r/p2nqppp/5n2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR3R w k - 3 13",
+      "caption": "White to move. Black has four defenders of the knight on d7, but the knight itself cannot move.",
+      "line": [
+        {
+          "move": "d1d7",
+          "say": "The rook takes the pinned knight, a trade on the square of the pin."
+        },
+        {
+          "move": "d8d7",
+          "say": "A rook recaptures. It lands on the pin line, so it is pinned in turn."
+        },
+        {
+          "move": "h1d1",
+          "say": "The second rook attacks the recaptured rook, which cannot leave."
+        },
+        {
+          "move": "e7e6",
+          "say": "The queen defends the rook, but a pinned piece can be defended, never moved."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d7"
+        },
+        {
+          "from": "b5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d1d7"
+            ]
+          },
+          "statement": "The rook capture is the engine's first choice."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 0,
+            "after_moves": [
+              "d1d7",
+              "d8d7",
+              "h1d1",
+              "e7e6"
+            ]
+          },
+          "statement": "After the last move, the rook on d7 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2r1ppp/4qn2/1B2p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 2 15",
+      "caption": "White to move. The rook on d7 is pinned to the king by the bishop, so it cannot run.",
+      "line": [
+        {
+          "move": "b5d7",
+          "say": "The bishop takes the pinned rook, with check."
+        },
+        {
+          "move": "f6d7",
+          "say": "The knight recaptures and lands on d7, where the rook on d1 attacks it again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b5d7"
+            ]
+          },
+          "statement": "The bishop capture is the engine's first choice."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "d7",
+            "mode": "legal",
+            "count": 0
+          },
+          "statement": "The rook on d7 has no legal move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4kb1r/p2n1ppp/4q3/4p1B1/4P3/1Q6/PPP2PPP/2KR4 w k - 0 16",
+      "caption": "White to move. The knight on d7 has taken, and the queen swings to the back rank.",
+      "line": [
+        {
+          "move": "b3b8",
+          "say": "The queen gives check on the eighth rank and offers herself. Every defence loses to mate in two."
+        },
+        {
+          "move": "d7b8",
+          "say": "The knight takes the queen, but that unblocks the d-file."
+        },
+        {
+          "move": "d1d8",
+          "say": "The rook gives checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "b8"
+        },
+        {
+          "from": "d1",
+          "to": "d8"
+        }
+      ],
+      "highlight": [
+        "b8",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "b3b8",
+            "n": 2
+          },
+          "statement": "White mates in two moves."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Counting failed, the pin did not.** The recapturing rook landed on the pin line and was pinned in turn, so attackers could pile on it. [V] The engine rates the first position of this sequence at about +7 for White at depth 18. A pinned piece guards less than it seems: the pinned knight itself defends nothing, and any piece that recaptures onto the line is pinned too."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back. Imagine a beginner who has never heard of a pin. Write what you would say.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "What a pin is:"
+        },
+        {
+          "id": "when",
+          "label": "When it wins material and when it does not:"
+        },
+        {
+          "id": "example",
+          "label": "An example a beginner could set up on a board:"
+        },
+        {
+          "id": "warning",
+          "label": "One mistake to avoid:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Check your teaching.** Did you say: what a pin is; the difference between an absolute and a relative pin; what can break it (block, capture the pinner, step aside, hit the pinner, counter-attack); an example a beginner could set up on a real board; one mistake to avoid? If one is missing, add it and read it back."
+    },
+    {
+      "type": "card",
+      "text": "**What to remember.**\n1. A pin needs a long-range piece, a pinned piece and a screened piece on one clear line.\n2. Absolute: the king is behind. Relative: something worth more.\n3. Check what stands behind, and whether it is worth more.\n4. Win a pinned piece by attacking it again, often best with a pawn.\n5. A pinned defender defends only on paper.\n6. The pinned side can block, capture the pinner, step aside, hit the pinner or counter-attack."
+    },
+    {
+      "type": "reflect",
+      "kind": "confidence",
+      "prompt": "How sure are you that you could spot, price and use a pin in your next game? Name the part you would check first."
     }
   ],
   "review": {
@@ -130,8 +1943,14 @@
     "reviewer": null
   },
   "sources": [
-    "sources/sheets/nimzowitsch_my-system.md (idea 26 pin anatomy; idea 28 unpinning)",
-    "docs/inference-01-puzzle-theme-difficulty.md (pins sit above forks in puzzle difficulty)",
-    "docs/curriculum-map-v1.1.md"
+    "docs/lesson-depth-standard.md (class B: sections 3, 4, 7)",
+    "sources/sheets/nimzowitsch_my-system.md, ideas 26, 27, 28 (pin anatomy: pinning, pinned, screened; whole and half pins; the pinned piece protects only on paper; four policies for living with a pin) [V-sheet], paraphrased; docs/citable-views.md",
+    "Edward Lasker, Chess Strategy, on defenders that are illusions (docs/citable-views.md 5.8) [V-sheet], paraphrased",
+    "Dan Heisman, Looking for Trouble, on looking for the opponent's forcing replies (docs/citable-views.md 10.4 to 10.6) [S], paraphrased",
+    "docs/competition-chess-steps.md (labelled then unlabelled mixes, a closing reminder) [S]; docs/competition-chesscom.md",
+    "Game: Morphy v Duke of Brunswick and Count Isouard, Paris 1858 [R] (moves are facts; sources as listed in content/lessons/L-FG-OPERA-1.json)",
+    "Opening positions replayed with python-chess from the start position: Nimzo-Indian, French Winawer, Queen's Gambit Declined (the Elephant Trap), Cambridge Springs, Steinitz-type and Ruy Lopez set-ups, and the Legal trap. Names of traps are [R].",
+    "Statistics: counted from app/public/content/items.json (kind.puzzle items tagged theme.pin with a find-the-move task: 55 Lichess puzzles, CC0 puzzle data; the first move of the stored answer is by a knight in 20, a bishop in 16, a rook in 9, a queen in 9, a pawn in 1, and gives check in 26) [V]; this describes our bank, not how players err or which piece pins",
+    "Engine statements: Stockfish 19 lite single thread via tools/validate_lessons.py and tools/validate.py (evidence under recorded limits, not proof). Position of the Be5 puzzle: Lichess puzzle IL-jgS0z (CC0)"
   ]
 }

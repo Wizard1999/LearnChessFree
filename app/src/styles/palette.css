@@ -1,0 +1,255 @@
+/* Scholarmate palette (decision D45) and the two modes. Imported first (main.tsx), so theme.css and index.css only use names.
+   Brand colours (7 Nov 2026): electric cobalt #4055F5, persimmon #F06445, golden yellow #F4C542, deep jade #168577,
+   midnight ink #172238, warm ivory #F7F5EE.
+
+   Roles:  cobalt = the one primary action and the current selection (buttons, links, focus ring, "builds on");
+           persimmon = look here (Up next, your current stage, board threats, check), always with a label or arrow;
+           jade = demonstrated skill (Rely on it, mastered, correct answers, Maia, finale results);
+           gold = curiosity and discovery (optional invitations, new, last move, hints, milestones): a fill or border with ink text,
+                  never text on ivory;
+           ink = text and the dark base.
+   Contrast (WCAG 2.2): text 4.5:1, graphics 3:1, in BOTH modes; tools/check_contrast.py parses this file and fails the build otherwise.
+   Persimmon and gold fail as text on ivory, so text in those hues uses --accent-ink / --warning, and rings and lines use --accent-line.
+   Cobalt is too dim as text on ink, so the dark mode uses a lighter cobalt (--cobalt-300) for links and for the button fill.
+
+   Scope: this file styles ONLY the opt-in Scholarmate look (<html data-style="scholarmate">, Settings > Appearance > Look). The default
+   look (Friendly) and Collegiate keep their own colours in theme.css, untouched. The raw palette below is shared and harmless.
+   Modes: light is the base for the look; dark follows the system (prefers-color-scheme) unless the learner chose, and an explicit
+   data-theme="light" or "dark" on <html> always wins. The two dark blocks below must stay identical (the checker verifies it).
+   Strand colours: eleven subject strands (S1 to S11) each own a fill (--sN), a text colour for it (--on-sN) and a line colour
+   (--sN-line, 3:1 on the page) that is carried through the whole look. The name of a strand always sits beside its colour. */
+
+/* ---- raw palette: the six colours once, with tints and shades ---- */
+:root {
+  --cobalt-50: #eef0ff; --cobalt-100: #dde2ff; --cobalt-200: #cdd4ff; --cobalt-350: #6e80ff; --cobalt-300: #9aa8ff; --cobalt-400: #b3beff; --cobalt-500: #4055f5; --cobalt-700: #2c3fd0;
+  --persimmon-100: #fde4dc; --persimmon-300: #ff9a80; --persimmon-500: #f06445; --persimmon-600: #f58a70; --persimmon-700: #b33a1e; --persimmon-800: #d4452a;
+  --gold-100: #fbefc6; --gold-500: #f4c542; --gold-700: #7a5800;
+  --jade-100: #d9eee9; --jade-300: #46c2a8; --jade-500: #168577; --jade-700: #0f695e; --jade-900: #123f42;
+  /* dark mode base (7 Nov 2026): a warm dark paper instead of navy, which did not sit well with the accents */
+  --night-900: #1d1b19; --night-800: #272421; --night-700: #34302b; --night-300: #cbc5ba; --night-200: #413c35;
+  --ink-950: #0b1220; --ink-900: #172238; --ink-800: #1f2d48; --ink-700: #2b3b5c; --ink-600: #44516e; --ink-500: #747d93; --ink-300: #b6bdcc; --ink-200: #34445f;
+  --ivory-50: #fdfcf8; --ivory-100: #f7f5ee; --ivory-200: #ece9dd; --ivory-300: #dad5c6;
+  --crimson-700: #a3223b; --crimson-300: #ff93a6;
+}
+
+/* ---- Scholarmate, light mode (the base for the look; also an explicit data-theme="light") ---- */
+:root[data-style='scholarmate'] {
+  color-scheme: light;
+  --canvas: var(--ivory-100);
+  --surface: var(--ivory-50);
+  --chip: var(--ivory-200);
+  --text: var(--ink-900);
+  --text-secondary: var(--ink-600);
+  --divider: var(--ivory-300);            /* decorative only: never the sole boundary of a control */
+  --control-boundary: var(--ink-500);     /* a boundary a person must see: 3:1 on canvas, surface and chip */
+
+  --primary: var(--cobalt-500);           /* the one primary action and the current selection */
+  --on-primary: #ffffff;
+  --primary-hover: var(--cobalt-700);
+  --link: var(--cobalt-700);              /* cobalt as text */
+  --focus: var(--cobalt-500);
+
+  --accent: var(--persimmon-500);         /* look here: a fill, always with ink text */
+  --on-accent: var(--ink-900);
+  --accent-hover: var(--persimmon-600);
+  --accent-ink: var(--persimmon-700);     /* persimmon as text */
+  --accent-line: var(--persimmon-800);    /* persimmon as a ring, edge or stroke (3:1 on ivory) */
+
+  --success: var(--jade-700);             /* demonstrated skill: text, ticks, rings and fills */
+  --on-success: #ffffff;
+  --gold: var(--gold-500);                /* curiosity: a fill, always with ink text */
+  --on-gold: var(--ink-900);
+  --warning: var(--gold-700);             /* gold as text */
+  --error: var(--crimson-700);
+
+  --ok-bg: var(--jade-100);
+  --no-bg: var(--persimmon-100);
+
+  /* the page header and big colour fields: a field is a fill with its own text colour, so text on it is checked as a pair */
+  --bar: var(--cobalt-500); --on-bar: #ffffff; --on-bar-soft: #e8ebff; --bar-gold: #ffeaa8;
+  --field-cobalt: #e3e7ff; --field-jade: #d4ece6; --field-gold: #fbefc6; --field-persimmon: #fde4dc;
+  --on-field: var(--ink-900); --on-field-soft: var(--ink-600); --field-link: var(--cobalt-700);
+
+  --board-last: rgba(244, 197, 66, 0.78);
+  --board-selected: rgba(64, 85, 245, 0.34);
+  --board-dest: rgba(44, 63, 208, 0.6);
+  --board-hint: rgba(244, 197, 66, 0.5);
+  --board-pick: rgba(64, 85, 245, 0.42);
+  --board-coord: var(--ink-900);
+  --paper-shade: rgba(23, 34, 56, 0.045);
+  --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+  --s1: #F4C542; --on-s1: var(--ink-900); --s1-line: #937d3e;
+  --s2: #168577; --on-s2: #ffffff; --s2-line: #168577;
+  --s3: #F06445; --on-s3: var(--ink-900); --s3-line: #d25b43;
+  --s4: #4055F5; --on-s4: #ffffff; --s4-line: #4055f5;
+  --s5: #1A7C9C; --on-s5: #ffffff; --s5-line: #1a7c9c;
+  --s6: #7A3FB5; --on-s6: #ffffff; --s6-line: #7a3fb5;
+  --s7: #9AAA2A; --on-s7: var(--ink-900); --s7-line: #78872e;
+  --s8: #B02E75; --on-s8: #ffffff; --s8-line: #b02e75;
+  --s9: #F29B38; --on-s9: var(--ink-900); --s9-line: #ac7438;
+  --s10: #6CCBB1; --on-s10: var(--ink-900); --s10-line: #4c8b83;
+  --s11: #8FB0FF; --on-s11: var(--ink-900); --s11-line: #6680bb;
+  /* ---- map and boards (task 3): the map's regions, the node levels, the board squares and the board's state colours ----
+     Regions: Foundations jade, Seeing and calculating cobalt, Understanding positions gold, Fighting and converting persimmon, Playing and
+     improving neutral. --rN is the fill (tinted in the slices), --rN-line a ring or arc (3:1 on the page), --rN-text the name (4.5:1).
+     Node levels: not started is an outline (--node-outline, 3:1 on every slice tint); seen gold, level one light cobalt, level two cobalt,
+     mastered jade; each fill has a pip colour (--on-lvN) and carries pips as well, so colour is never the only cue.
+     Board: --board-sq-light / --board-sq-dark are the Scholarmate squares and MUST equal the colours inside the data URIs in scholarmate.css
+     (a test checks it); the frame is the only edge the board needs on the page; coordinates take the colour that reads on their square. */
+  --r1: #168577; --r1-line: #168577; --r1-text: var(--jade-700);
+  --r2: #4055F5; --r2-line: #4055F5; --r2-text: var(--cobalt-700);
+  --r3: #F4C542; --r3-line: #937d3e; --r3-text: var(--gold-700);
+  --r4: #F06445; --r4-line: var(--persimmon-800); --r4-text: var(--persimmon-700);
+  --r5: #747d93; --r5-line: #747d93; --r5-text: var(--ink-600);
+  --lv1: var(--gold-500); --on-lv1: var(--ink-900); --lv2: var(--cobalt-400); --on-lv2: var(--ink-900);
+  --lv3: var(--cobalt-500); --on-lv3: #ffffff; --lv4: var(--jade-500); --on-lv4: #ffffff;
+  --node-outline: var(--ink-600);
+  --board-sq-light: #eeeadb; --board-sq-dark: #62a090; --board-frame: var(--ink-900);
+  --coord-on-light: var(--ink-900); --coord-on-dark: var(--ink-900);
+  --board-shape-edge: var(--ink-900);
+  --board-dot: var(--cobalt-350); --board-halo: var(--ink-900);
+  --tint-a: 15%; --tint-b: 24%; --tint-hi: 24%;
+  --board-check: rgba(240, 100, 69, 0.9);
+  --brush-green: var(--jade-300); --brush-red: var(--persimmon-500); --brush-blue: var(--cobalt-350); --brush-yellow: var(--gold-500);
+  --ctl-white: 64, 85, 245; --ctl-black: 240, 100, 69;
+}
+
+/* ---- Scholarmate, dark mode: follows the system unless the learner chose; an explicit choice always wins ---- */
+@media (prefers-color-scheme: dark) {
+  :root[data-style='scholarmate']:not([data-theme='light']) {
+    color-scheme: dark;
+    --canvas: var(--night-900);
+    --surface: var(--night-800);
+    --chip: var(--night-700);
+    --text: var(--ivory-100);
+    --text-secondary: var(--night-300);
+    --divider: var(--night-200);
+    --control-boundary: #9a9488;
+
+    --primary: var(--cobalt-300);
+    --on-primary: var(--ink-900);
+    --primary-hover: var(--cobalt-400);
+    --link: var(--cobalt-400);
+    --focus: var(--cobalt-400);
+
+    --accent: var(--persimmon-500);
+    --on-accent: var(--ink-900);
+    --accent-hover: var(--persimmon-600);
+    --accent-ink: var(--persimmon-300);
+    --accent-line: var(--persimmon-500);
+
+    --success: var(--jade-300);
+    --on-success: var(--ink-900);
+    --gold: var(--gold-500);
+    --on-gold: var(--ink-900);
+    --warning: var(--gold-500);
+    --error: var(--crimson-300);
+
+    --ok-bg: var(--jade-900);
+    --no-bg: #4a2b33;
+
+    --bar: var(--cobalt-700); --on-bar: #ffffff; --on-bar-soft: #dfe3ff; --bar-gold: var(--gold-500);
+    --field-cobalt: #22305f; --field-jade: #174442; --field-gold: #4a4021; --field-persimmon: #4a2b33;
+    --on-field: var(--ivory-100); --on-field-soft: var(--night-300); --field-link: var(--cobalt-400);
+
+    --board-coord: var(--ink-900);
+    --paper-shade: rgba(247, 245, 238, 0.04);
+    --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+    --s1: #F4C542; --on-s1: var(--ink-900); --s1-line: #F4C542;
+    --s2: #3FB9A3; --on-s2: var(--ink-900); --s2-line: #3FB9A3;
+    --s3: #F06445; --on-s3: var(--ink-900); --s3-line: #F06445;
+    --s4: #8C9CFF; --on-s4: var(--ink-900); --s4-line: #8C9CFF;
+    --s5: #52B6D6; --on-s5: var(--ink-900); --s5-line: #52B6D6;
+    --s6: #B58CE8; --on-s6: var(--ink-900); --s6-line: #B58CE8;
+    --s7: #9AAA2A; --on-s7: var(--ink-900); --s7-line: #9AAA2A;
+    --s8: #E8789F; --on-s8: var(--ink-900); --s8-line: #E8789F;
+    --s9: #F29B38; --on-s9: var(--ink-900); --s9-line: #F29B38;
+    --s10: #6CCBB1; --on-s10: var(--ink-900); --s10-line: #6CCBB1;
+    --s11: #8FB0FF; --on-s11: var(--ink-900); --s11-line: #8FB0FF;
+    --r1: #3FB9A3; --r1-line: #3FB9A3; --r1-text: var(--jade-300);
+    --r2: #8C9CFF; --r2-line: #8C9CFF; --r2-text: var(--cobalt-400);
+    --r3: #F4C542; --r3-line: #F4C542; --r3-text: var(--gold-500);
+    --r4: #F06445; --r4-line: #F06445; --r4-text: var(--persimmon-300);
+    --r5: #9a9488; --r5-line: #9a9488; --r5-text: var(--night-300);
+    --lv1: var(--gold-500); --on-lv1: var(--ink-900); --lv2: var(--cobalt-200); --on-lv2: var(--ink-900);
+    --lv3: var(--cobalt-350); --on-lv3: var(--ink-900); --lv4: var(--jade-300); --on-lv4: var(--ink-900);
+    --node-outline: var(--night-300);
+    --board-sq-light: #d6d6c6; --board-sq-dark: #32716a; --board-frame: var(--night-300);
+    --coord-on-light: var(--ink-900); --coord-on-dark: var(--ivory-100);
+    --board-shape-edge: var(--ink-950);
+    --board-dot: var(--cobalt-300); --board-halo: var(--ink-950);
+    --tint-a: 6%; --tint-b: 10%; --tint-hi: 12%;
+    --board-last: rgba(244, 197, 66, 0.62); --board-selected: rgba(154, 168, 255, 0.5);
+    --board-check: rgba(240, 100, 69, 0.9);
+    --brush-green: var(--jade-300); --brush-red: var(--persimmon-500); --brush-blue: var(--cobalt-300); --brush-yellow: var(--gold-500);
+    --ctl-white: 154, 168, 255; --ctl-black: 240, 100, 69;
+  }
+}
+:root[data-style='scholarmate'][data-theme='dark'] {
+  color-scheme: dark;
+  --canvas: var(--night-900);
+  --surface: var(--night-800);
+  --chip: var(--night-700);
+  --text: var(--ivory-100);
+  --text-secondary: var(--night-300);
+  --divider: var(--night-200);
+  --control-boundary: #9a9488;
+
+  --primary: var(--cobalt-300);
+  --on-primary: var(--ink-900);
+  --primary-hover: var(--cobalt-400);
+  --link: var(--cobalt-400);
+  --focus: var(--cobalt-400);
+
+  --accent: var(--persimmon-500);
+  --on-accent: var(--ink-900);
+  --accent-hover: var(--persimmon-600);
+  --accent-ink: var(--persimmon-300);
+  --accent-line: var(--persimmon-500);
+
+  --success: var(--jade-300);
+  --on-success: var(--ink-900);
+  --gold: var(--gold-500);
+  --on-gold: var(--ink-900);
+  --warning: var(--gold-500);
+  --error: var(--crimson-300);
+
+  --ok-bg: var(--jade-900);
+  --no-bg: #4a2b33;
+
+  --bar: var(--cobalt-700); --on-bar: #ffffff; --on-bar-soft: #dfe3ff; --bar-gold: var(--gold-500);
+  --field-cobalt: #22305f; --field-jade: #174442; --field-gold: #4a4021; --field-persimmon: #4a2b33;
+  --on-field: var(--ivory-100); --on-field-soft: var(--night-300); --field-link: var(--cobalt-400);
+
+  --board-coord: var(--ink-900);
+  --paper-shade: rgba(247, 245, 238, 0.04);
+  --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+  --s1: #F4C542; --on-s1: var(--ink-900); --s1-line: #F4C542;
+  --s2: #3FB9A3; --on-s2: var(--ink-900); --s2-line: #3FB9A3;
+  --s3: #F06445; --on-s3: var(--ink-900); --s3-line: #F06445;
+  --s4: #8C9CFF; --on-s4: var(--ink-900); --s4-line: #8C9CFF;
+  --s5: #52B6D6; --on-s5: var(--ink-900); --s5-line: #52B6D6;
+  --s6: #B58CE8; --on-s6: var(--ink-900); --s6-line: #B58CE8;
+  --s7: #9AAA2A; --on-s7: var(--ink-900); --s7-line: #9AAA2A;
+  --s8: #E8789F; --on-s8: var(--ink-900); --s8-line: #E8789F;
+  --s9: #F29B38; --on-s9: var(--ink-900); --s9-line: #F29B38;
+  --s10: #6CCBB1; --on-s10: var(--ink-900); --s10-line: #6CCBB1;
+  --s11: #8FB0FF; --on-s11: var(--ink-900); --s11-line: #8FB0FF;
+  --r1: #3FB9A3; --r1-line: #3FB9A3; --r1-text: var(--jade-300);
+  --r2: #8C9CFF; --r2-line: #8C9CFF; --r2-text: var(--cobalt-400);
+  --r3: #F4C542; --r3-line: #F4C542; --r3-text: var(--gold-500);
+  --r4: #F06445; --r4-line: #F06445; --r4-text: var(--persimmon-300);
+  --r5: #9a9488; --r5-line: #9a9488; --r5-text: var(--night-300);
+  --lv1: var(--gold-500); --on-lv1: var(--ink-900); --lv2: var(--cobalt-200); --on-lv2: var(--ink-900);
+  --lv3: var(--cobalt-350); --on-lv3: var(--ink-900); --lv4: var(--jade-300); --on-lv4: var(--ink-900);
+  --node-outline: var(--night-300);
+  --board-sq-light: #d6d6c6; --board-sq-dark: #32716a; --board-frame: var(--night-300);
+  --coord-on-light: var(--ink-900); --coord-on-dark: var(--ivory-100);
+  --board-shape-edge: var(--ink-950);
+  --board-dot: var(--cobalt-300); --board-halo: var(--ink-950);
+  --tint-a: 6%; --tint-b: 10%; --tint-hi: 12%;
+  --board-last: rgba(244, 197, 66, 0.62); --board-selected: rgba(154, 168, 255, 0.5);
+  --board-check: rgba(240, 100, 69, 0.9);
+  --brush-green: var(--jade-300); --brush-red: var(--persimmon-500); --brush-blue: var(--cobalt-300); --brush-yellow: var(--gold-500);
+  --ctl-white: 154, 168, 255; --ctl-black: 240, 100, 69;
+}

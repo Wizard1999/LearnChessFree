@@ -1,25 +1,27 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactElement, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db, type LessonProgress } from '../db'
 import { ghostPosition, layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
 import { skillState, sheetOffset, listMaxHeight } from '../lib/mapSheet'
-import { REGIONS } from '../lib/mapRegions'
+import { REGIONS, regionOfStrand, tintOfStrand } from '../lib/mapRegions'
 import { PATH_STAGES } from '../lib/pathStages'
 import { currentStageIndex, skillHomeStages, skillReturns, stageSentence } from '../lib/skillStages'
 import { onMapJump } from '../lib/mapJump'
 import { ringLabelPlan, ringTextPaths, zoomZone } from '../lib/mapZoom'
+import { planLabels, type LabelNode } from '../lib/mapLabels'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
+import { hueOfStrand } from '../lib/hue'
 import type { LessonMeta, Skill } from '../types'
 
-interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: LessonMeta[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null; /** A stage (index 0..7) to light on every slice; the rest dim. */ highlightStage?: number | null }
+interface Props { /** Controls placed at the start of the toolbar (the view, section and stage menus), so everything sits on one line. */ toolbarLead?: ReactNode; skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: LessonMeta[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null; /** The next few skills (prerequisites met): their names stay visible. */ upNext?: string[]; /** A stage (index 0..7) to light on every slice; the rest dim. */ highlightStage?: number | null }
 
 /** Text that follows an arc of a circle round the map, centred on `mid` (radians), reading upright: on the top half it runs clockwise outside the baseline,
  * on the bottom half the path is reversed so the letters are not upside down. The size shrinks to fit the arc a label may use. */
-function ArcLabel({ id, mid, radius, text, size, className }: { id: string; mid: number; radius: number; text: string; size: number; className: string }) {
+function ArcLabel({ id, mid, radius, text, size, className, region }: { id: string; mid: number; radius: number; text: string; size: number; className: string; region?: string }) {
   const top = Math.sin(mid) <= 0
   const r = top ? radius - size * 0.33 : radius + size * 0.33
   const half = Math.min(Math.PI * 0.95, (text.length * size * 0.6) / r / 2 + 0.03)
@@ -27,7 +29,7 @@ function ArcLabel({ id, mid, radius, text, size, className }: { id: string; mid:
   const p = (a: number) => `${Math.cos(a) * r},${Math.sin(a) * r}`
   const d = top ? `M${p(a1)} A${r},${r} 0 0 1 ${p(a2)}` : `M${p(a2)} A${r},${r} 0 0 0 ${p(a1)}`
   return (
-    <g pointerEvents="none">
+    <g pointerEvents="none" data-region={region}>
       <path id={id} d={d} fill="none" stroke="none" />
       <text className={className} fontSize={size}><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{text}</textPath></text>
     </g>
@@ -35,31 +37,51 @@ function ArcLabel({ id, mid, radius, text, size, className }: { id: string; mid:
 }
 /** The empty channel between two stage rings is 2 x (EDGE_PAD - node radius); the divider text must fit inside it. */
 const RING_TEXT_MAX = 56
+const RING_TEXT_TINY = 9
 const fitSize =(arc: number, chars: number, factor: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, (arc * 0.92) / (chars * factor)))
 
-/** A stage boundary that IS its label: the words run all the way round the circle just inside the band's outer edge, repeated with a little space between the repeats.
- * Two half circles carry the text so it reads upright everywhere: the top half runs left to right over the top, the bottom half left to right along the bottom. */
-function TextRing({ id, outer, size, text, className }: { id: string; outer: number; size: number; text: string; className: string }) {
+/** A stage boundary that IS its label, kept calm (8 Nov 2026): round most of the circle the words are a whisper (tiny, so the ring reads as a thin line until you
+ * zoom right in); where the ring crosses the vertical centreline (top and bottom of the circle) they are large, upright and readable. Two half circles carry the whisper so it reads upright everywhere. */
+function TextRing({ id, outer, tiny, big, text, bigText, className }: { id: string; outer: number; tiny: number; big: number; text: string; bigText: string; className: string }) {
   const unit = `${text}   \u2022   `
-  const half = Math.PI * outer
-  const fit = Math.min(size, (half * 0.97) / (unit.length * 0.6)) // a ring too small for one repeat shrinks its text rather than overflow
-  const n = Math.max(1, Math.floor(half / (unit.length * fit * 0.6)))
-  const content = unit.repeat(n)
-  // the text is centred on the boundary circle itself (there is no line there: the words are the divider): on the top half the letters rise from the baseline
-  // (outward), on the bottom half they hang from it (inward), so both halves read upright and each is centred on the same radius
-  const { top, bottom, rTop: rt, rBottom: rb } = ringTextPaths(outer, fit)
+  const fit = Math.min(tiny, (Math.PI * outer * 0.97) / (unit.length * 0.6))
+  const { rTop: rt, rBottom: rb } = ringTextPaths(outer, fit)
+  // the large words sit at the top and bottom of the circle (the vertical centreline); the small text runs on from either side of them, so the ring is one
+  // continuous line of text with a larger middle and nothing overlaps: each half circle is cut into two pieces that stop a gap short of the large words
+  const span = Math.min(Math.PI * 0.8, (bigText.length * big * 0.6) / outer), gap = span / 2 + (big * 0.9) / outer
+  const rT = outer - big * 0.34, rB = outer + big * 0.34
+  const pt = (a: number, r: number) => `${(r * Math.cos(a)).toFixed(2)},${(r * Math.sin(a)).toFixed(2)}`
+  const P = Math.PI
+  const topPath = `M${pt(-P / 2 - span / 2, rT)} A${rT},${rT} 0 0 1 ${pt(-P / 2 + span / 2, rT)}`
+  const bottomPath = `M${pt(P / 2 + span / 2, rB)} A${rB},${rB} 0 0 0 ${pt(P / 2 - span / 2, rB)}`
+  // [from angle, to angle, radius, clockwise]: top half runs left to right over the top (clockwise), bottom half left to right along the bottom (counter-clockwise)
+  const pieces: [number, number, number, boolean][] = [
+    [P, 1.5 * P - gap, rt, true], [1.5 * P + gap, 2 * P, rt, true],
+    [P, P / 2 + gap, rb, false], [P / 2 - gap, 0, rb, false],
+  ]
   return (
     <g pointerEvents="none">
-      <path id={`${id}-t`} d={top} fill="none" stroke="none" />
-      <path id={`${id}-b`} d={bottom} fill="none" stroke="none" />
-      <text className={className} fontSize={fit}><textPath href={`#${id}-t`} textLength={Math.PI * rt * 0.99} lengthAdjust="spacing">{content}</textPath></text>
-      <text className={className} fontSize={fit}><textPath href={`#${id}-b`} textLength={Math.PI * rb * 0.99} lengthAdjust="spacing">{content}</textPath></text>
+      <path id={`${id}-r`} d={topPath} fill="none" stroke="none" />
+      <path id={`${id}-l`} d={bottomPath} fill="none" stroke="none" />
+      {pieces.map(([a1, a2, r, cw], i) => {
+        if (cw ? a2 <= a1 : a1 <= a2) return null
+        const len = r * Math.abs(a2 - a1), n = Math.floor(len / (unit.length * fit * 0.6))
+        if (n < 1) return null
+        return (
+          <g key={i}>
+            <path id={`${id}-w${i}`} d={`M${pt(a1, r)} A${r},${r} 0 0 ${cw ? 1 : 0} ${pt(a2, r)}`} fill="none" stroke="none" />
+            <text className={`${className} whisper`} fontSize={fit}><textPath href={`#${id}-w${i}`} textLength={len * 0.99} lengthAdjust="spacing">{unit.repeat(n)}</textPath></text>
+          </g>
+        )
+      })}
+      <text className={className} fontSize={big} textAnchor="middle"><textPath href={`#${id}-r`} startOffset="50%">{bigText}</textPath></text>
+      <text className={className} fontSize={big} textAnchor="middle"><textPath href={`#${id}-l`} startOffset="50%">{bigText}</textPath></text>
     </g>
   )
 }
 /** The curriculum as a map: the first skill at the centre, one ring per stage of the recommended path, a wedge per subject (strand). Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null, highlightStage = null }: Props) {
+export function RadialMap({ toolbarLead, skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null, upNext = [], highlightStage = null }: Props) {
   const homeStages = useMemo(() => skillHomeStages(skills, lessons), [skills, lessons])
   const layout = useMemo(() => layoutMap(skills, homeStages), [skills, homeStages])
   const hereStage = useMemo(() => currentStageIndex(lessons, new Set(lessonProgress.filter(p => p.done).map(p => p.lessonId))), [lessons, lessonProgress])
@@ -122,6 +144,17 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     return m
   }, [layout, progress])
   /** Each prerequisite is worth an equal share of the way into a skill (3 prerequisites: a third each). A prerequisite counts fully at Level one and partly before that. */
+  /** Completion as the average level reached, as a percentage (the same sum the Progress window uses), for the whole map, each section, region and stage. */
+  const pct = useMemo(() => {
+    const mean = (ids: string[]) => (ids.length ? Math.round((100 * ids.reduce((sum, id) => sum + Math.min(4, progress.get(id)?.level ?? 0), 0)) / (4 * ids.length)) : 0)
+    const by = (f: (n: (typeof layout.nodes)[number]) => boolean) => mean(layout.nodes.filter(f).map(n => n.id))
+    return {
+      all: by(() => true),
+      strand: (s: string) => by(n => n.strand === s),
+      region: (strands: string[]) => by(n => strands.includes(n.strand)),
+      stage: (i: number) => by(n => n.stage === i),
+    }
+  }, [layout, progress])
   const pathLight = useMemo(() => {
     const parents = new Map<string, string[]>()
     for (const e of layout.edges) parents.set(e.to, [...(parents.get(e.to) ?? []), e.from])
@@ -215,12 +248,51 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     el.querySelector('[aria-current]')?.scrollIntoView({ block: 'nearest' })
   }, [listOpen, picked, hits.length])
   const zone = zoomZone(view.k)
+  // skill names are planned in screen pixels: the size of the svg area on screen
+  const [box, setBox] = useState({ w: 0, h: 0, left: 0, top: 0 })
+  useEffect(() => {
+    const el = svg.current; if (!el) return
+    const measure = () => { const r = el.getBoundingClientRect(), pr = el.parentElement?.getBoundingClientRect(); setBox({ w: r.width, h: r.height, left: r.left - (pr?.left ?? 0), top: r.top - (pr?.top ?? 0) }) }
+    measure()
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
+    ro?.observe(el); window.addEventListener('resize', measure)
+    return () => { ro?.disconnect(); window.removeEventListener('resize', measure) }
+  }, [])
+  const labelPlan = useMemo(() => {
+    const dimNode = (n: { id: string; strand: string; stage?: number }) => (picked && !linked.has(n.id)) || (!picked && ((highlightStrand && n.strand !== highlightStrand) || (highlightStage !== null && n.stage !== highlightStage)))
+    // the names always shown besides the chosen skill: the next few skills (their prerequisites are met) and the few most recently worked on, so the map stays calm
+    const upNextSet = new Set(upNext)
+    const working = new Set([...progress.values()].filter(p => p.level > 0 && p.level < 4 && !p.noExercises).sort((a, b) => (b.lastTs ?? 0) - (a.lastTs ?? 0)).slice(0, 4).map(p => p.id))
+    const nodes: LabelNode[] = layout.nodes.map(n => {
+      const p = progress.get(n.id)
+      let priority = 0
+      if (n.id === picked) priority = 1000
+      else if (n.id === rec) priority = 800
+      else if (dimNode(n as never)) priority = 0
+      else if (upNextSet.has(n.id)) priority = 150
+      else if (working.has(n.id)) priority = 120
+      return { id: n.id, x: n.x, y: n.y, title: p?.title ?? n.id, priority, ring: n.ring }
+    })
+    // far away only the important names; closer in, every name that fits without touching another
+    return planLabels(nodes, view, R, box.w, box.h, { fontPx: 14, minPriority: 100 })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout, view, R, box, picked, rec, upNext, progress, highlightStrand, highlightStage, linked])
+  // the hovered name never changes the plan (nothing moves or resizes): it is lit if it already has a plate, otherwise one plate is added on its own
+  const hotId = hov ?? linkedHoverId ?? null
+  const [lastHot, setLastHot] = useState<string | null>(null)
+  useEffect(() => { if (hotId) setLastHot(hotId) }, [hotId])
+  const hotExtra = useMemo(() => {
+    if (!lastHot || labelPlan.some(l => l.id === lastHot)) return null
+    const n = layout.nodes.find(x => x.id === lastHot); if (!n) return null
+    return planLabels([{ id: n.id, x: n.x, y: n.y, title: progress.get(n.id)?.title ?? n.id, priority: 100, ring: n.ring }], view, R, box.w, box.h, { fontPx: 14, minPriority: 0 })[0] ?? null
+  }, [lastHot, labelPlan, layout, progress, view, R, box])
   const labelUnits = Math.max(26, Math.min(130, (15 * 2 * R) / view.k / 800)) // about 15 screen pixels, in map units
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
       <div className="mapbarwrap">
       <div className="row filters mapbar">
+        {toolbarLead}
         <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
         <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in">＋</button>
         <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
@@ -228,8 +300,13 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <button type="button" onClick={locate}>Where I am</button>
         <button type="button" onClick={back} disabled={past.length === 0}>‹ Back</button>
         <button type="button" aria-expanded={listOpen} onClick={() => { setListOpen(o => !o); setQ('') }}>Skill list</button>
-        <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
-        <span className="small muted">Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll to zoom.</span>
+        {picked && <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>}
+        <span className="levellegend small" aria-label="Skill colours">{LEVEL_NAMES.map((nm, i) => <span key={nm} className="lvkey"><i className={`lvdot lv${i}`} />{nm}</span>)}</span>
+        <span className="small"><strong>Overall {pct.all}%</strong></span>
+      </div>
+      {/* skill names: plates in screen pixels above the map and its stage rings, planned so no two overlap and each is easy to read */}
+      <div className="maplabels" aria-hidden="true" style={{ left: box.left, top: box.top, width: box.w, height: box.h }}>
+        {(hotExtra ? [...labelPlan, hotExtra] : labelPlan).map(l => <span key={l.id} className={`maplabel${l.forced ? ' forced' : ''}${l.id === picked ? ' sel' : ''}${l.id === hotId ? ' hot' : ''}${hotExtra && l.id === hotExtra.id ? ` ghost${hotId === l.id ? ' on' : ''}` : ''}`} style={{ left: l.box.x, top: l.box.y, minWidth: l.box.w, height: l.box.h }}>{l.text}</span>)}
       </div>
       {(hits.length > 0 || listOpen) && (
         <div className="maplist" role="listbox" aria-label="Skills" ref={listRef}>
@@ -286,17 +363,17 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         {layout.wedges.map(w => {
           const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
           return (
-            <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`}>
+            <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`} data-hue={hueOfStrand(w.strand)} data-region={regionOfStrand(w.strand)} data-tint={tintOfStrand(w.strand)}>
               <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
             </g>
           )
         })}
         {/* section names: big, bold, curved round the outside of each slice, outside the region arc */}
         {layout.wedges.map(w => {
-          const text = `${w.strand} ${strandNames[w.strand] ?? ''}`.trim()
+          const text = `${w.strand} ${strandNames[w.strand] ?? ''}`.trim() + ` (${pct.strand(w.strand)}%)`
           const rS = layout.radius + 70
           const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
-          return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
+          return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} region={regionOfStrand(w.strand)} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
         })}
         {/* stage rings: one band per stage of the recommended path; the learner's current stage is emphasised, a chosen stage is lit */}
         {layout.stages.map(st => {
@@ -307,43 +384,56 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         {layout.stages.map(st => {
           const t = PATH_STAGES[st.index]; if (!t) return null
           const here = hereStage === st.index, nm = `Stage ${st.index + 1}`
-          const plan = ringLabelPlan(st.mid, labelUnits, here ? [`You are here · ${nm} · ${t.title}`, `You are here · ${nm}`, nm] : [`${nm} · ${t.title}`, nm])
-          return <TextRing key={`sn-${st.index}`} id={`arc-stage-${st.index}`} outer={st.outer} text={plan.text} size={Math.min(plan.size, RING_TEXT_MAX)} className={`arclabel stagename${here ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} />
+          const sp = `(${pct.stage(st.index)}%)`, full = `${nm}: ${t.title} ${sp}`
+          const plan = ringLabelPlan(st.mid, labelUnits, here ? [`You are here · ${full}`, full, `${nm} ${sp}`] : [full, `${nm} ${sp}`], 2.5, here ? 1 : 0)
+          return <TextRing key={`sn-${st.index}`} id={`arc-stage-${st.index}`} outer={st.outer} text={`${nm} · ${t.title}`} bigText={plan.text} tiny={Math.min(RING_TEXT_TINY, plan.size)} big={Math.min(plan.size, RING_TEXT_MAX)} className={`arclabel stagename${here ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} />
         })}
         {/* broad regions round the outside; readable when the section names are too small */}
         {REGIONS.map(rg => {
           const ws = layout.wedges.filter(w => rg.strands.includes(w.strand)); if (!ws.length) return null
           const from = ws[0].from, to = ws[ws.length - 1].to, mid = (from + to) / 2, r0 = layout.radius + 14
+          const rgText = rg.strands.length > 1 ? `${rg.name} (${pct.region(rg.strands)}%)` : rg.name // one section: its own percentage already says it
           const pt = (a: number, r: number) => `${Math.cos(a) * r},${Math.sin(a) * r}`
           return (
-            <g key={rg.id} className="mapregion" pointerEvents="none">
+            <g key={rg.id} className="mapregion" pointerEvents="none" data-region={String(REGIONS.indexOf(rg) + 1)}>
               <path d={`M${pt(from + 0.01, r0)} A${r0},${r0} 0 ${to - from > Math.PI ? 1 : 0} 1 ${pt(to - 0.01, r0)}`} className="regionarc" fill="none" />
-              <ArcLabel id={`arc-${rg.id}`} mid={mid} radius={layout.radius + 215} text={rg.name} size={fitSize((to - from) * (layout.radius + 215), rg.name.length, 0.62, 50, 84)} className="arclabel region" />
+              <ArcLabel id={`arc-${rg.id}`} mid={mid} radius={layout.radius + 215} text={rgText} size={fitSize((to - from) * (layout.radius + 215), rgText.length, 0.62, 50, 84)} className="arclabel region" region={String(REGIONS.indexOf(rg) + 1)} />
             </g>
           )
         })}
         <defs>
           <marker id="arrow-pre" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrowpre" /></marker>
           <marker id="arrow-next" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrownext" /></marker>
+          {/* the Scholarmate look draws what a skill leads to with a dashed line and an open head, so the two kinds of link differ in shape as well as colour */}
+          <marker id="arrow-next-open" viewBox="-1 -1 12 12" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrownextopen" /></marker>
         </defs>
-        {layout.edges.map(e => {
-          const a = byId.get(e.from), b = byId.get(e.to); if (!a || !b) return null
-          const focus = picked ?? hov
-          // the chosen skill (or the one under the pointer): blue lines come IN from what it builds on, orange lines go OUT to what it leads to
-          const pre = focus !== null && e.to === focus
-          const next = focus !== null && e.from === focus
-          // the path to a skill brightens as its prerequisites are done and is brightest when all of them are; it fades as the skill itself is mastered
-          // (the light moves on to what comes next). Paths from skills you have not touched stay dark.
-          const c = pathLight.share(e.from), tl = level(e.to)
-          const light = tl >= 4 ? 0 : c * (0.25 + 0.75 * (pathLight.total.get(e.to) ?? 0)) * (tl >= 2 ? 0.5 : 1)
-          const lit = light > 0.02
-          if (pre || next) {
-            // stop the line at the edge of the target node so the arrowhead is visible
-            const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = 24
-            return <line key={`${e.from}>${e.to}`} x1={a.x + (dx / len) * r} y1={a.y + (dy / len) * r} x2={b.x - (dx / len) * r} y2={b.y - (dy / len) * r} className={pre ? 'mapedge pre' : 'mapedge next'} markerEnd={pre ? 'url(#arrow-pre)' : 'url(#arrow-next)'} />
+        {/* a constellation you build as you learn: lines between skills you have worked on are bright, the lines that lead on to the skills you can branch out to
+            are the brightest of all (full strength once every prerequisite is done), and lines between skills you have never touched are very faint but never gone */}
+        {(() => {
+          const els: { tier: string; el: ReactElement }[] = []
+          for (const e of layout.edges) {
+            const a = byId.get(e.from), b = byId.get(e.to); if (!a || !b) continue
+            const focus = picked ?? hov
+            const pre = focus !== null && e.to === focus
+            const next = focus !== null && e.from === focus
+            if (pre || next) {
+              // stop the line at the edge of the target node so the arrowhead is visible
+              const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = 24
+              els.push({ tier: 'frontier', el: <line key={`${e.from}>${e.to}`} x1={a.x + (dx / len) * r} y1={a.y + (dy / len) * r} x2={b.x - (dx / len) * r} y2={b.y - (dy / len) * r} className={pre ? 'mapedge pre' : 'mapedge next'} markerEnd={pre ? 'url(#arrow-pre)' : 'url(#arrow-next)'} /> })
+              continue
+            }
+            const lf = level(e.from), lt = level(e.to), strength = pathLight.total.get(e.to) ?? 0
+            let tier = 'base', cls = 'mapedge', style: CSSProperties = { opacity: 0.07, strokeWidth: 1 }
+            if (lf >= 1 && lt >= 1) { const lo = Math.min(lf, lt, 4); tier = `built b${lo}`; cls = `mapedge built b${lo}`; style = { opacity: 0.55 + 0.3 * Math.min(1, (lf + lt) / 6), strokeWidth: 2.2 } }
+            else if (lf >= 1 && lt < 1) {
+              // only a skill with every prerequisite done is a branch you can take now: those lines are the fierce ones; a half-opened path is a quiet line
+              if (strength >= 0.999) { tier = 'frontier'; cls = 'mapedge frontier full'; style = { opacity: 1, strokeWidth: 4.4 } }
+              else { cls = 'mapedge partial'; style = { opacity: 0.12 + 0.3 * strength, strokeWidth: 1.2 + 0.8 * strength } }
+            }
+            els.push({ tier, el: <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={cls} style={style} /> })
           }
-          return <line key={`${e.from}>${e.to}`} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={lit ? 'mapedge lit' : 'mapedge'} style={lit ? { opacity: 0.12 + 0.88 * light, strokeWidth: 1.5 + 3 * light } : undefined} />
-        })}
+          return ['base', 'built b1', 'built b2', 'built b3', 'built b4', 'frontier'].map(t => <g key={t} className={`edges ${t}`}>{els.filter(x => x.tier === t).map(x => x.el)}</g>)
+        })()}
         {layout.nodes.map(n => {
           const p = progress.get(n.id)
           const lvl = level(n.id)
@@ -354,7 +444,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           // unstarted skills fade with how few of their prerequisites are done, but stay readable
           const op = lvl > 0 || next ? 1 : 0.62 + 0.38 * ready
           return (
-            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${relation.pre.has(n.id) ? ' prereq' : ''}${relation.lead.has(n.id) ? ' leadsto' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
+            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} data-hue={hueOfStrand(n.strand)} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${relation.pre.has(n.id) ? ' prereq' : ''}${relation.lead.has(n.id) ? ' leadsto' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
               tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, ${stageSentence(n.stage)}, ${LEVEL_NAMES[lvl]}${next ? ', ready to start' : ''}`}
               onClick={() => onPick(n.id)} data-id={n.id} onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) }
@@ -366,14 +456,16 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
                   if (t) { e.preventDefault(); (svg.current?.querySelector(`[data-id="${t}"]`) as SVGElement | null)?.focus() }
                 }
               }}>
-              {next && <circle r={32} className="nodeglow" />}
+              {next && <circle r={36} className="nodeglow" />}
+              {!next && lvl > 0 && <circle r={31} className={`nodeglow soft lv${lvl}`} />}
               <clipPath id={cid}><rect x={-22} y={22 - 44 * (lvl / 4)} width={44} height={44} /></clipPath>
               <circle r={22} fill="var(--canvas)" className="nodebase" />
-              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
+              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} className="oldfill" />}
+              {lvl > 0 && <circle r={22} className={`nodefill lv${lvl}`} />}
               <circle r={22} fill="none" className="nodecircle" />
-              {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
-              {picked !== n.id && hov !== n.id && !(dim && zone !== 'near') && (zone !== 'far' || relation.pre.has(n.id) || relation.lead.has(n.id)) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
-              {zone === 'near' && picked !== n.id && hov !== n.id && <text className="nodestatus" y={62} textAnchor="middle">{LEVEL_NAMES[lvl]}{p?.lessonDone ? ' · lesson done' : ''}</text>}
+              {p?.hasLesson && p.lessonDone && <text className={`nodemark lv${lvl}`} textAnchor="middle" dy="5">✓</text>}
+              {lvl > 0 && <g className={`nodepips lv${lvl}`} aria-hidden="true">{lvl === 4 ? <path className="nodestar" d="M0.0,-18.5 L1.8,-13.5 L7.1,-13.3 L2.9,-10.0 L4.4,-4.9 L0.0,-7.9 L-4.4,-4.9 L-2.9,-10.0 L-7.1,-13.3 L-1.8,-13.5 Z" /> : Array.from({ length: lvl }, (_, i) => <circle key={i} className="nodepip" r={2.7} cx={(i - (lvl - 1) / 2) * 7.5} cy={-12} />)}</g>}
+              {zone === 'near' && lvl > 0 && picked !== n.id && hov !== n.id && <text className="nodestatus" y={62} textAnchor="middle">{LEVEL_NAMES[lvl]}{p?.lessonDone ? ' · lesson done' : ''}</text>}
             </g>
           )
         })}
@@ -398,7 +490,6 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           return (
             <g key={`top-${id}`} transform={`translate(${n.x},${n.y})`} className={`maptop${id === picked ? ' sel' : ''}`} pointerEvents="none">
               <circle r={27} className="topring" fill="none" />
-              <text className="toplabel" y={52} textAnchor="middle">{progress.get(id)?.title ?? id}</text>
             </g>
           )
         })}
@@ -406,9 +497,10 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           const n = byId.get(rec)!
           return (
             <g transform={`translate(${n.x},${n.y})`} className="maprec" pointerEvents="none">
+              <circle r={42} className="recring recbg" fill="none" />
               <circle r={42} className="recring" fill="none" />
               <rect x={-86} y={-78} width={172} height={34} rx={17} className="recpill" />
-              <text y={-55} textAnchor="middle" className="rectext">Your next step</text>
+              <text y={-55} textAnchor="middle" className="rectext"><tspan className="recold">Your next step</tspan><tspan className="recnew">Up next</tspan></text>
             </g>
           )
         })()}
@@ -417,7 +509,9 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
       <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of the whole map"
         onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
         <circle r={layout.radius} className="miniback" />
-        {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === linkedHoverId ? 40 : n.id === rec ? 26 : 12} className={n.id === linkedHoverId ? 'minilink' : n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} />)}
+        {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === linkedHoverId ? 40 : n.id === rec ? 26 : 12} className={`${n.id === linkedHoverId ? 'minilink' : n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} lv${level(n.id)}`} />)}
+        {/* the regions as a coloured rim (shown in the Scholarmate look only) */}
+        {REGIONS.map(rg => { const ws = layout.wedges.filter(w => rg.strands.includes(w.strand)); if (!ws.length) return null; const a = ws[0].from + 0.01, b = ws[ws.length - 1].to - 0.01, r0 = layout.radius + 30; return <path key={rg.id} className="miniregion" data-region={String(REGIONS.indexOf(rg) + 1)} fill="none" d={`M${Math.cos(a) * r0},${Math.sin(a) * r0} A${r0},${r0} 0 ${b - a > Math.PI ? 1 : 0} 1 ${Math.cos(b) * r0},${Math.sin(b) * r0}`} /> })}
         <rect x={-view.x - R / view.k} y={-view.y - R / view.k} width={(2 * R) / view.k} height={(2 * R) / view.k} className="miniview" />
       </svg>
       {tip && (() => {

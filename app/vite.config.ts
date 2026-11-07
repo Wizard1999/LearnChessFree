@@ -1,9 +1,26 @@
 import react from '@vitejs/plugin-react'
-import { defaultClientConditions, defineConfig } from 'vite'
+import { rmSync } from 'node:fs'
+import { join } from 'node:path'
+import { defaultClientConditions, defineConfig, type Plugin } from 'vite'
+
+/**
+ * public/content keeps unhashed copies of the content files because the tools and tests read them (items.json, lessons.json, ...); the app
+ * reads only the hash-named copies that manifest.json names (docs/performance.md). Leave the unhashed copies out of the build: they would
+ * only add about 18 MB of files nobody downloads.
+ */
+const dropUnhashedContent = (): Plugin => {
+  let outDir = 'dist'
+  return {
+    name: 'drop-unhashed-content',
+    apply: 'build',
+    configResolved(c) { outDir = join(c.root, c.build.outDir) },
+    closeBundle() { for (const n of ['items', 'skills', 'verified', 'courses', 'lessons']) rmSync(join(outDir, 'content', `${n}.json`), { force: true }) },
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), dropUnhashedContent()],
   // Maia: use onnxruntime-web's build that loads its wasm from the app's own public/maia/ort (copied by scripts/copy-maia.mjs) instead of
   // bundling a second 15 MB copy into dist/assets.
   resolve: { conditions: ['onnxruntime-web-use-extern-wasm', ...defaultClientConditions] },

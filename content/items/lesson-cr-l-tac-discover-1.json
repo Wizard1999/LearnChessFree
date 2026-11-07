@@ -1,0 +1,488 @@
+{
+  "positions": [
+    {
+      "id": "PCR-LTACDISCOVER1-1",
+      "fen": "4k2r/pp3ppp/2n5/4N3/8/8/PPP2PPP/4R1K1 w - - 0 1",
+      "family": "FAM-CR-DISC-KN",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Constructed for this lesson (one-feature edits of a single setup: knight on e5 in front of a rook, black king on e8); engine-checked, depth 16",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-2",
+      "fen": "4k2r/pp3ppp/2n5/4N3/8/8/PPP2PPP/3R2K1 w - - 0 1",
+      "family": "FAM-CR-DISC-KN-NOLINE",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Constructed for this lesson (one-feature edits of a single setup: knight on e5 in front of a rook, black king on e8); engine-checked, depth 16; the rook moved from e1 to d1",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-3",
+      "fen": "4k2r/p4ppp/2n5/4N3/8/8/PPP2PPP/3R2K1 w - - 0 1",
+      "family": "FAM-CR-DISC-KN-NOREC",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Constructed for this lesson (one-feature edits of a single setup: knight on e5 in front of a rook, black king on e8); engine-checked, depth 16; rook on d1 and the black b-pawn removed",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-4",
+      "fen": "4r1k1/1pq2pp1/2p4p/p2pb3/P7/1P5P/2P2PP1/R1B1QN1K b - - 1 23",
+      "family": "FAM-CR-DISC-BH2-NOCHECK",
+      "provenance": {
+        "kind": "authored",
+        "ref": "One-feature edit of Lichess puzzle UxZAC (CC0): the white king moved from g1 to h1; engine-checked, depth 16",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-5",
+      "fen": "r4rk1/pp1bnppp/4p3/3p4/8/1PqB1Q2/P2N1PPP/3RR1K1 b - - 0 15",
+      "family": "FAM-CR-DISC-THREAT",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position of Lichess puzzle 4V0vX (CC0) after the black move there, with Black to move instead (so the question is what White threatens); engine-checked, depth 16",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-6",
+      "fen": "r1b2rk1/p3Npbp/2n3p1/1pq1P3/2B5/1P3N1P/P1Q2PP1/R3R1K1 b - - 0 18",
+      "family": "FAM-CR-DISC-RECAPT",
+      "provenance": {
+        "kind": "lichess_puzzle",
+        "ref": "Lichess puzzle 6b92S (CC0), position before the move that allowed the tactic; Black to move",
+        "licence": "CC0"
+      }
+    },
+    {
+      "id": "PCR-LTACDISCOVER1-7",
+      "fen": "r1bq4/p3bkp1/7p/1Bpn4/5B2/3P4/PPP3PP/R4RK1 w - - 0 16",
+      "family": "FAM-CR-DISC-NEGI",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Negi,P - Richter,Mic, Bundesliga 2013-14 round 14, 2014.04.05 (TWIC data, library/data/games/twic/twic1013g.zip): position after 15...Kxf7, replayed from the game record with python-chess [V]",
+        "licence": "project (moves are facts; wording is ours)"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ICR-LTACDISCOVER1-1",
+      "skill": "TAC.DISCOVER.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PCR-LTACDISCOVER1-1",
+      "prompt": "White to move. The rook on e1 stands behind the knight on e5, facing the black king. Find a knight move that wins material.",
+      "answer": {
+        "moves": [
+          "e5c6",
+          "e5g6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e5c6",
+              "e5g6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is one of these two knight moves."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 0
+          },
+          "statement": "While the knight stands on e5, nothing of White's attacks the king: the knight blocks the rook."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5c6"
+          },
+          "statement": "After the knight leaves e5 for c6, only the rook attacks e8: it gives check."
+        },
+        {
+          "id": "C4",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5g6"
+          },
+          "statement": "After the knight leaves e5 for g6, only the rook attacks e8: it gives check."
+        },
+        {
+          "id": "C5",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5g6",
+            "min": 4
+          },
+          "statement": "Ng6+ wins material along the engine's line."
+        },
+        {
+          "id": "C6",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5c6",
+            "min": 3
+          },
+          "statement": "Nxc6+ wins material along the engine's line."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.2"
+      ],
+      "hints": [
+        "Look along the e-file. What stands behind the knight?",
+        "Some knight moves leave the black king in check from the rook. Black cannot answer that by capturing the knight.",
+        "Two knight moves work: one captures a knight, one attacks the rook on h8."
+      ],
+      "explain": "The knight blocks the rook. When it leaves with a capture or a threat, the rook's check comes at the same time, and Black has no time to take back.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-CR-DISC-KN"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-2",
+      "skill": "TAC.DISCOVER.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDISCOVER1-2",
+      "prompt": "White to move. The rook stands on d1, not on e1. Does Nxc6 win a knight for nothing? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e8",
+            "color": "white",
+            "count": 0,
+            "after_move": "e5c6"
+          },
+          "statement": "After Nxc6 nothing attacks the black king: there is no check."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5c6",
+            "max": 1
+          },
+          "statement": "Along the engine's line Nxc6 wins at most a pawn, not a piece."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.2"
+      ],
+      "hints": [
+        "Is the black king attacked after the knight captures?",
+        "If there is no check, can Black take the knight back?",
+        "The b7 pawn takes the knight on c6."
+      ],
+      "explain": "With the rook on d1 nothing is uncovered. Black simply recaptures with the b-pawn, so the trade is even apart from a pawn.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-CR-DISC-KN"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-3",
+      "skill": "TAC.DISCOVER.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDISCOVER1-3",
+      "prompt": "White to move. The rook stands on d1 and Black's b-pawn is gone. Does Nxc6 win a knight? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "loose_pieces",
+          "params": {
+            "color": "black",
+            "squares": [
+              "c6"
+            ]
+          },
+          "statement": "The knight on c6 is attacked and nothing defends it."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e5c6",
+            "min": 3
+          },
+          "statement": "Nxc6 wins a knight along the engine's line."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.2"
+      ],
+      "hints": [
+        "Which black pieces does the white knight attack?",
+        "Does anything defend the knight on c6?",
+        "The knight on c6 has no defender."
+      ],
+      "explain": "No discovery is needed here: the black knight is simply loose, so the plain capture wins it. The idea of this lesson does not apply.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-CR-DISC-KN"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-4",
+      "skill": "TAC.DISCOVER.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDISCOVER1-4",
+      "prompt": "Black to move. The white king stands on h1 instead of g1, and the rook still stands behind the bishop. Does ...Bh2 still win the queen? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "h1",
+            "color": "black",
+            "count": 0,
+            "after_move": "e5h2"
+          },
+          "statement": "After ...Bh2 nothing of Black's attacks the king on h1: it is not check."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "e5h2",
+            "cp": 300
+          },
+          "statement": "At depth 16 the engine rates ...Bh2 at least 300 centipawns below the best move."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.2"
+      ],
+      "hints": [
+        "Does the bishop on h2 attack the king on h1?",
+        "Without a check, can White simply use the move to take the rook on e8 first?",
+        "The white queen takes the rook on e8 with check."
+      ],
+      "explain": "The bishop no longer gives check, so White is not forced. The queen takes the rook on e8 first, because the two pieces attacked each other.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "contrast_group": "CG-CR-DISC-BH2",
+      "orientation": "black"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-5",
+      "skill": "TAC.DISCOVER.D2",
+      "cue": 3,
+      "task": "threat_detection",
+      "position": "PCR-LTACDISCOVER1-5",
+      "prompt": "Black to move. What is White threatening? (Name the move.)",
+      "answer": {
+        "threat_move": "d3h7"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "material_after_move",
+          "params": {
+            "move": "d3h7",
+            "min": 5,
+            "null_move_first": true
+          },
+          "statement": "If Black passed, Bxh7+ would win material for White."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.3"
+      ],
+      "hints": [
+        "Look at the white queen. Is anything of White's standing in front of it?",
+        "Look at the white queen and the white bishop. What could the bishop do next?",
+        "The bishop can capture on h7 with check."
+      ],
+      "explain": "Bxh7+ is check from the bishop and, at the same time, lets the queen on f3 take the queen on c3. Black must deal with it now.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "black"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-6",
+      "skill": "TAC.DISCOVER.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PCR-LTACDISCOVER1-6",
+      "prompt": "Black to move. The white knight on e7 gives check. Take it with the right piece.",
+      "answer": {
+        "moves": [
+          "c5e7"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c5e7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is Qxe7."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c6e7",
+            "cp": 600
+          },
+          "statement": "Nxe7 is rated at least 600 centipawns lower."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.3"
+      ],
+      "hints": [
+        "Two black pieces can take the knight. Look at the lines that run through each of them.",
+        "Compare what each capture leaves on the board, and which black piece shares a line with a white piece.",
+        "Take with the queen."
+      ],
+      "explain": "Taking with the knight leaves the black queen on c5, in line with the white queen, with only the bishop on c4 between them. Taking with the queen removes the target.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "c6e7": "This also captures the knight, but the queen stays on c5: Bxf7+ then uncovers the white queen's attack on it."
+      },
+      "orientation": "black"
+    },
+    {
+      "id": "ICR-LTACDISCOVER1-7",
+      "skill": "TAC.DISCOVER.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PCR-LTACDISCOVER1-7",
+      "prompt": "White to move. White has just given up the queen on f7 and Black has taken it. Find the move that rescues the position.",
+      "answer": {
+        "moves": [
+          "f4c7"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f4c7"
+            ],
+            "within_cp": 40
+          },
+          "statement": "At depth 16 the engine's best move is Bc7+."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "f4e5",
+            "cp": 300
+          },
+          "statement": "The other natural bishop check is rated at least 300 centipawns lower."
+        }
+      ],
+      "tags": [
+        "theme.discoveredAttack",
+        "node.TAC.DISCOVER",
+        "lang.en",
+        "kind.authored",
+        "cue.3"
+      ],
+      "hints": [
+        "Count what each side has given up. White needs something big back.",
+        "Which White piece stands behind the bishop on f4, aimed at the black king?",
+        "Move the bishop with a threat of its own."
+      ],
+      "explain": "The rook on f1 stands behind the bishop on f4, with the black king on f7 in front. A bishop check from c7 also attacks the queen on d8, so the queen falls.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    }
+  ]
+}

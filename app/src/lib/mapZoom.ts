@@ -6,10 +6,10 @@ export const zoomZone = (k: number): ZoomZone => (k < 1.5 ? 'far' : k < 3.5 ? 'm
  * Choose the words and the size of a ring label that runs along a circle of the given radius. The label may span at most `maxAngle` radians.
  * The first candidate that fits at about the wanted size wins; otherwise the last (shortest) is shrunk to fit. Sizes are in map units.
  */
-export function ringLabelPlan(radius: number, desired: number, candidates: string[], maxAngle = 1.5): { text: string; size: number } {
+export function ringLabelPlan(radius: number, desired: number, candidates: string[], maxAngle = 2.5, fallbackIndex = candidates.length - 1): { text: string; size: number } {
   const fit = (t: string) => (maxAngle * radius) / (Math.max(1, t.length) * 0.6)
   for (const c of candidates) if (fit(c) >= desired * 0.9) return { text: c, size: Math.min(desired, fit(c)) }
-  const last = candidates[candidates.length - 1] ?? ''
+  const last = candidates[fallbackIndex] ?? candidates[candidates.length - 1] ?? ''
   return { text: last, size: Math.min(desired, fit(last)) }
 }
 

@@ -1,3 +1,4 @@
+import { GeoArt } from '../components/GeoArt'
 import { Crest } from '../components/Crest'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -113,6 +114,7 @@ export function Today() {
         <p className="lede">No sign-up and nothing to set up. Your progress is saved in this browser as you go. A private or incognito window deletes it when you close it, so use a normal window (or export a file from Settings).</p>
         {storageDead && <p className="warn-text" role="alert">This browser is not storing anything (blocked site data does this), so your progress will be lost when you close the tab.</p>}
         <section className="card hero">
+          <GeoArt />
           <div className="herocrest" aria-hidden="true"><Crest /></div>
           <p className="eyebrow">First lesson · about {firstLesson.minutes} min</p>
           <h2>{firstLesson.title}</h2>
@@ -142,7 +144,8 @@ export function Today() {
           {!planReady ? (
             <section className="card hero"><p className="muted">Preparing today's plan…</p></section>
           ) : upNext ? (
-            <section className="card hero">
+            <section className="card hero upnext-card">
+              <GeoArt />
               <p className="eyebrow">Up next · about {upNext.minutes} min</p>
               <h2>{upNext.title}</h2>
               <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
@@ -150,6 +153,7 @@ export function Today() {
             </section>
           ) : blocks.length > 0 ? (
             <section className="card hero">
+              <GeoArt />
               <h2>Today's plan is done</h2>
               <p>You can stop here, or keep going with <Link to="/practice">more practice</Link>.</p>
             </section>

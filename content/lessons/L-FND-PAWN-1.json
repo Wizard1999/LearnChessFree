@@ -3,48 +3,259 @@
   "title": "The pawn: moves and captures are different",
   "skill": "FND.PIECE.PAWN",
   "depth": "D1",
-  "minutes": 9,
+  "minutes": 20,
   "outcomes": [
     "Taps every square a pawn can move to, including the two-square start and diagonal captures",
     "Knows a pawn cannot capture straight ahead and is blocked by any piece in front of it",
-    "Knows what happens when a pawn reaches the last rank"
+    "Knows what happens when a pawn reaches the last rank",
+    "Names the three questions to ask before moving a pawn",
+    "Knows that a pawn watches its forward diagonals, even when they are empty",
+    "Explains why pawn moves are permanent and why a pawn is the least valuable piece",
+    "Knows that a pawn can be promoted to a piece other than a queen, and that the choice can matter"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "**Pawns** move straight forward, one square at a time, and never backward. From their starting square they may move two squares if both are empty. But pawns **capture** differently: one square diagonally forward. A pawn cannot capture straight ahead, and any piece directly in front of it blocks it."
+      "text": "Philidor, as quoted in Young's *Chess Generalship*: \"The Pawns are the soul of Chess\" [S: quoted there, not checked in Philidor's own book]. [I] Every game you play is shaped by pawns. Because a pawn can never go back, each pawn move changes the board for good, so this lesson asks why pawns behave as they do, not only how.",
+      "chapter": "Meet the pawn"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-1"
+    },
+    {
+      "type": "card",
+      "text": "The **pawn** is the least valuable piece, yet the pawns decide the shape of the whole game. Each side starts with eight, in a row on the second rank (White) or the seventh rank (Black). A pawn walks **straight forward**, one square at a time, and never backward. Forward means up the board for White and down for Black. The next boards show how it moves."
     },
     {
       "type": "board",
-      "fen": "4k3/8/8/8/8/3n4/4P3/6K1 w - - 0 1",
-      "caption": "Forward to e3 or e4, or a capture on d3. The pawn goes diagonally only to capture.",
+      "fen": "7k/8/8/8/8/8/4P3/6K1 w - - 0 1",
+      "caption": "On its first move a pawn may step one square or jump two. After that it moves one square at a time.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "From its starting square the pawn may jump two squares in one move."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black makes a waiting move with the king."
+        },
+        {
+          "move": "e4e5",
+          "say": "It has now moved, so it can only step one square."
+        }
+      ],
       "arrows": [
         {
           "from": "e2",
           "to": "e4"
-        },
-        {
-          "from": "e2",
-          "to": "d3"
         }
       ],
       "highlight": [
-        "d3",
         "e3",
         "e4"
       ],
       "claims": [
         {
-          "id": "C1",
           "type": "legal_destinations",
           "params": {
             "from": "e2",
             "to": [
-              "d3",
               "e3",
               "e4"
             ]
-          }
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "7k/8/8/8/4P3/8/8/6K1 w - - 0 1",
+      "caption": "A pawn never moves backward. From e4 the only move is forward to e5.",
+      "line": [
+        {
+          "move": "e4e5",
+          "say": "One step forward is all this pawn has."
+        },
+        {
+          "move": "h8g8",
+          "say": "Black makes a waiting move."
+        },
+        {
+          "move": "e5e6",
+          "say": "Every pawn step is permanent: the pawn cannot take it back."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "e3"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "e5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "illegal_move",
+          "params": {
+            "move": "e4e3"
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Every other piece can return to a square it left. A pawn cannot, so a pawn move is a decision you keep for the rest of the game. [I] That is why pawn moves deserve more thought than piece moves. [I] The two-square first jump is probably there for speed: a pawn can claim space in one move instead of two. The cost, which the en passant rule later answers, is that it can skip past a square an enemy pawn guards."
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-2"
+    },
+    {
+      "type": "card",
+      "text": "The two-square jump has two conditions. The pawn must still be on its starting square, and **both** squares in front of it must be empty. A pawn cannot hop over a piece. The next two boards show a piece on the far square, and then a piece directly in front."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/4n3/8/4P3/6K1 w - - 0 1",
+      "caption": "A black knight stands on e4. The jump is blocked, but the single step to e3 still works.",
+      "line": [
+        {
+          "move": "e2e3",
+          "say": "The one-square step is allowed because e3 is empty."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e3"
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e3"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e2",
+            "to": [
+              "e3"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "illegal_move",
+          "params": {
+            "move": "e2e4"
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/4n3/4P3/6K1 w - - 0 1",
+      "caption": "Now the knight stands on e3, right in front. The pawn cannot move at all.",
+      "highlight": [
+        "e3"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e2",
+            "to": []
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Same pawn, one change",
+      "prompt": "The pawn moves up one square to e3. Predict first: can it still jump two squares?",
+      "working": "IA0-41",
+      "failing": "IA0-42"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-3"
+    },
+    {
+      "type": "card",
+      "text": "A pawn **captures** (takes an enemy piece by landing on its square) differently from the way it walks. It captures one square **diagonally forward**, to the left or to the right. It never captures straight ahead. So it has a walk, and a capture that works only when an enemy piece stands on a forward diagonal.",
+      "chapter": "Capturing"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3n1b2/4P3/8/8/R5K1 w - - 0 1",
+      "caption": "The pawn can walk to e5, or capture the knight on d5, or capture the bishop on f5. Taking the bishop wins a piece too. Which capture is better depends on what the pawn would leave undefended [I].",
+      "line": [
+        {
+          "move": "e4d5",
+          "say": "The pawn captures the knight, moving one square diagonally forward."
+        },
+        {
+          "move": "e8d7",
+          "say": "Black moves the king; the knight is gone for good."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "d5"
+        },
+        {
+          "from": "e4",
+          "to": "f5"
+        },
+        {
+          "from": "e4",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "f5",
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "d5",
+              "e5",
+              "f5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "e4d5",
+            "min": 2
+          },
+          "id": "C2"
         }
       ]
     },
@@ -53,23 +264,29 @@
       "item": "IA0-38"
     },
     {
-      "type": "item",
-      "item": "IA0-39"
-    },
-    {
-      "type": "item",
-      "item": "IA0-40"
-    },
-    {
-      "type": "card",
-      "text": "Two details cause most pawn mistakes. The two-square jump is only for a pawn's first move, and only if both squares are empty. And a pawn captures diagonally, never straight ahead. Before moving a pawn ask: has it moved yet? And is the square ahead empty?"
-    },
-    {
-      "type": "contrast",
-      "title": "Same pawn, one change",
-      "prompt": "The pawn moves up one square to e3. Predict first: can it still jump two squares?",
-      "working": "IA0-41",
-      "failing": "IA0-42"
+      "type": "board",
+      "fen": "7k/8/8/4n3/4P3/8/8/6K1 w - - 0 1",
+      "caption": "A knight stands straight in front of the pawn. The pawn cannot capture it and cannot go around.",
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": []
+          },
+          "id": "C1"
+        },
+        {
+          "type": "illegal_move",
+          "params": {
+            "move": "e4e5"
+          },
+          "id": "C2"
+        }
+      ]
     },
     {
       "type": "contrast",
@@ -80,16 +297,421 @@
     },
     {
       "type": "item",
-      "item": "IA0-45"
+      "item": "IA0-39"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3n4/4P3/8/8/6K1 w - - 0 1",
+      "caption": "After a capture the pawn stands on a new file, and from there it walks straight forward again.",
+      "line": [
+        {
+          "move": "e4d5",
+          "say": "The pawn captures and changes from the e file to the d file."
+        },
+        {
+          "move": "e8f8",
+          "say": "Black moves the king."
+        },
+        {
+          "move": "d5d6",
+          "say": "From its new file the pawn walks straight forward again."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "d5"
+        }
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e4",
+            "to": [
+              "d5",
+              "e5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "n"
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "A pawn is worth one point, the least of any piece (knight and bishop three, rook five, queen nine: the standard counting). So a pawn that takes any piece wins material, and every other piece fears an enemy pawn aiming at it. [I] That is why you rarely leave a valuable piece where an enemy pawn can attack it, and why a defended pawn is often a trap for a bishop.",
+      "chapter": "Pawns and value"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/4q3/3P4/8/8/R3K3 w - - 0 1",
+      "caption": "The lowest-value piece attacks the highest-value piece. The queen must run, or be taken.",
+      "line": [
+        {
+          "move": "d4e5",
+          "say": "The pawn captures the queen: the most valuable piece lost to the least valuable."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d4",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d4e5"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d4e5",
+            "min": 8
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/3b4/4P3/2N5/8/4K3 b - - 0 1",
+      "caption": "A pawn guarded by a knight is not free. The bishop takes it and is taken back.",
+      "line": [
+        {
+          "move": "d5e4",
+          "say": "The bishop wins a pawn."
+        },
+        {
+          "move": "c3e4",
+          "say": "The knight recaptures: three points for one."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d5",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "e4"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d5e4"
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "A pawn also **watches** its two forward diagonal squares, even when they are empty. If an enemy piece stepped onto one, the pawn could capture it. This matters most for kings: a king may never step onto a square where it could be captured. The next board shows it."
+    },
+    {
+      "type": "board",
+      "fen": "8/8/4k3/8/4P3/8/8/K7 b - - 0 1",
+      "caption": "The pawn on e4 watches d5 and f5. The black king cannot step there, but it can use every other nearby square.",
+      "arrows": [
+        {
+          "from": "e4",
+          "to": "d5"
+        },
+        {
+          "from": "e4",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "f5"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e6",
+            "to": [
+              "d6",
+              "d7",
+              "e5",
+              "e7",
+              "f6",
+              "f7"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "pawn_attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-4"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-5"
+    },
+    {
+      "type": "card",
+      "text": "Pawns can get stuck. Two pawns that face each other cannot pass, because neither can capture straight ahead. Each blocks the other until something else changes, so you must move a different piece. Players say the file is **blocked** or **closed**.",
+      "chapter": "Pawns in the way"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/4p3/4P3/8/8/4K3 w - - 0 1",
+      "caption": "White's pawn on e4 and Black's pawn on e5 face each other. Neither can move, so the kings must.",
+      "line": [
+        {
+          "move": "e1d2",
+          "say": "White cannot push the pawn, so another piece has to move."
+        },
+        {
+          "move": "e8d7",
+          "say": "Black is in exactly the same situation."
+        }
+      ],
+      "highlight": [
+        "e4",
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "mobility",
+          "params": {
+            "square": "e4",
+            "mode": "legal",
+            "count": 0
+          },
+          "id": "C1"
+        },
+        {
+          "type": "mobility",
+          "params": {
+            "square": "e5",
+            "mode": "legal",
+            "count": 0
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3",
+      "caption": "Locked pawns in a real opening: after three moves of the French Defence (advance variation) the pawns on the e file block each other for most of the game. The opening courses explore such structures.",
+      "line": [],
+      "highlight": [
+        "e5",
+        "e6"
+      ],
+      "claims": [
+        {
+          "type": "mobility",
+          "params": {
+            "square": "e5",
+            "mode": "legal",
+            "count": 0
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-6"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/3p4/8/8/8/8/8/6K1 b - - 0 1",
+      "caption": "Black's pawns move down the board. Everything you learned works the same way, turned around.",
+      "line": [
+        {
+          "move": "d7d5",
+          "say": "From the seventh rank Black may jump two squares."
+        },
+        {
+          "move": "g1f1",
+          "say": "White makes a waiting move."
+        },
+        {
+          "move": "d5d4",
+          "say": "After that Black walks one square at a time, downward."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d6",
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "d5",
+              "d6"
+            ]
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/3p4/2N5/8/8/8/8/6K1 b - - 0 1",
+      "caption": "Same pawn, now Black: it starts on the seventh rank and captures diagonally downward. The knight on c6 is capturable; d6 and d5 are free.",
+      "line": [
+        {
+          "move": "d7c6",
+          "say": "Black captures toward the left of the board, one square diagonally forward."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "c6"
+        }
+      ],
+      "highlight": [
+        "c6",
+        "d6",
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "c6",
+              "d5",
+              "d6"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d7c6",
+            "min": 3
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-40"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-7"
+    },
+    {
+      "type": "card",
+      "text": "Before you move or capture with a pawn, ask three questions. **Has it moved yet?** Only a pawn on its starting square may jump. **Is the square ahead empty?** If not, it cannot walk. **Is an enemy piece on a forward diagonal?** Then it can capture. Those three cover how a pawn walks and captures. Two more checks come first: does the move leave my king attacked, and does the pawn reach the last rank?"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-12"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-11"
     },
     {
       "type": "item",
       "item": "IA0-46"
     },
     {
+      "type": "card",
+      "text": "One pawn capture is not like the others. If an enemy pawn jumps two squares and lands beside your pawn, you may capture it as if it had stepped one square. This is **en passant** (\"in passing\"), and you must do it at once or lose the right. The next lesson on en passant covers it fully.",
+      "chapter": "A special capture"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/3p4/8/4P3/8/8/8/4K3 b - - 0 1",
+      "caption": "The jump passes the square the white pawn watches. White may capture as if the pawn had stopped there.",
+      "line": [
+        {
+          "move": "d7d5",
+          "say": "Black jumps two squares and lands beside the white pawn."
+        },
+        {
+          "move": "e5d6",
+          "say": "En passant: the white pawn captures diagonally onto the square that was jumped over."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d6"
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d7d5"
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "When a pawn reaches the far rank (the eighth for White, the first for Black) it is **promoted**. It must turn into a queen, rook, bishop or knight of its own colour, and you choose which. Almost always a queen, because it is the strongest piece [fact]. A knight is occasionally right, when it gives check or forks something, or when a queen would stalemate the opponent; you will meet those cases later.",
+      "chapter": "The far end"
+    },
+    {
       "type": "board",
       "fen": "6k1/4P3/8/8/8/8/8/6K1 w - - 0 1",
-      "caption": "When a pawn reaches the last rank, it turns into a new piece. Here it becomes a queen.",
+      "caption": "The pawn reaches the last rank and you choose its new piece; four are legal.",
       "line": [
         {
           "move": "e7e8q",
@@ -97,7 +719,7 @@
         },
         {
           "move": "g8h7",
-          "say": "Black's king moves."
+          "say": "Check! The queen attacks the king along the 8th rank, so the king must step away."
         }
       ],
       "arrows": [
@@ -111,24 +733,155 @@
       ],
       "claims": [
         {
-          "id": "C1",
           "type": "legal_move",
           "params": {
             "move": "e7e8q"
-          }
+          },
+          "id": "C1"
         },
         {
-          "id": "C2",
           "type": "legal_move",
           "params": {
             "move": "e7e8n"
-          }
+          },
+          "id": "C2"
+        },
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "e7",
+            "to": [
+              "e8"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4N1k1/8/8/8/8/8/8/6K1 b - - 0 1",
+      "caption": "The same promotion to a knight. A lone knight cannot force mate, so this is a draw: the choice of piece matters.",
+      "line": [],
+      "highlight": [
+        "e8"
+      ],
+      "claims": [
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -50,
+            "max": 50
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r3/3P4/7k/8/8/8/8/1K6 w - - 0 1",
+      "caption": "A pawn can promote while capturing. Here it takes the rook on its diagonal and becomes a queen in the same move.",
+      "line": [
+        {
+          "move": "d7e8q",
+          "say": "The pawn captures the rook and is promoted on the same move."
+        },
+        {
+          "move": "h6g7",
+          "say": "Black's king moves. White has a new queen and has won a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "e8"
+      ],
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "d8",
+              "e8"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d7e8q",
+            "min": 5
+          },
+          "id": "C2"
         }
       ]
     },
     {
       "type": "item",
-      "item": "IA0-47"
+      "item": "IBG-LFNDPAWN1-10"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-8"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPAWN1-9"
+    },
+    {
+      "type": "card",
+      "text": "Pawns with a purpose. In this standard opening line each pawn move has a job. [I] The first claims central space, the second pawn challenges the enemy pawn that holds it, and the recapture on the centre square keeps pieces pointing at the middle. Watch the board: the prose gives the ideas, the moves are shown for you.",
+      "chapter": "Pawns in a real game"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "A line of the Scotch Game, shown move by move.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "The king pawn jumps two: space in the centre and room for the bishop and queen."
+        },
+        {
+          "move": "e7e5",
+          "say": "Black answers in kind, claiming the same space."
+        },
+        {
+          "move": "g1f3",
+          "say": "A knight attacks the e5 pawn; not a pawn move, but it gives the next pawn move a purpose."
+        },
+        {
+          "move": "b8c6",
+          "say": "Black defends the attacked pawn."
+        },
+        {
+          "move": "d2d4",
+          "say": "The second central pawn challenges the e5 pawn; it is willing to be traded."
+        },
+        {
+          "move": "e5d4",
+          "say": "Black takes it."
+        },
+        {
+          "move": "f3d4",
+          "say": "The knight recaptures, and White has the centre."
+        }
+      ],
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "e2e4"
+          },
+          "id": "C1"
+        }
+      ]
     },
     {
       "type": "practice",
@@ -136,12 +889,27 @@
         "node.FND.PIECE.PAWN",
         "kind.generated"
       ],
-      "n": 6
+      "n": 6,
+      "chapter": "Check yourself"
     },
     {
       "type": "reflect",
       "kind": "unsure",
-      "prompt": "Which pawn rule felt least clear: the two-square start, the diagonal capture, or the last rank? Write it down so the app can bring it back."
+      "prompt": "Teach it back. Explain to a friend who has never played why a pawn on e4 cannot take a knight on e5 but can take one on d5. Write two sentences, then compare with the model answer below."
+    },
+    {
+      "type": "card",
+      "text": "**Model answer.** A pawn walks straight and captures diagonally, so a piece directly in front blocks it instead of being a target; a piece on a forward diagonal can be taken. In short: walks straight, captures sideways-forward, never backward, and on the far rank it must become another piece."
+    },
+    {
+      "type": "card",
+      "text": "**Where next.** The en passant lesson shows the special pawn capture. After that come the first tactics, where a pawn capture or a pawn fork often wins a piece. Count how many of your last ten blunders involved a pawn move; the answer will be in My games.",
+      "chapter": "Where next"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Which of the three questions do you forget first: has it moved, is the square ahead empty, or is an enemy piece on a diagonal? Write down one position where you would forget it."
     }
   ],
   "review": {
@@ -150,6 +918,8 @@
   },
   "sources": [
     "docs/first-hours.md session 1",
-    "docs/council-synthesis.md CD-1, CD-4"
+    "docs/council-synthesis.md CD-1, CD-4",
+    "docs/citable-views.md 3.2 (Philidor, as quoted in Young, Chess Generalship)",
+    "positions: python-chess constructions, see content/items/lesson-bg-l-fnd-pawn-1.json"
   ]
 }

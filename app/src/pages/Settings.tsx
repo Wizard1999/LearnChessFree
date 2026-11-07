@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { exportAll, resetAll } from '../db'
 import { describeMerge, describeScope, planMerge, validateExport, type ExportFile, type Scope } from '../lib/backup'
 import { downloadBackup, downloadBlob, mergeWithSafetyCopy, replaceWithSafetyCopy } from '../lib/backupIO'
-import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
+import { loadAppearance, saveAppearance, withLookBoard, type Appearance } from '../lib/appearance'
 import { useStorageStatus } from '../lib/persist'
 import { effectiveTrivial, loadNever, loadTrivial, showAgain } from '../lib/trivial'
 import { useAttempts } from '../lib/progress'
@@ -35,7 +35,7 @@ export function SettingsContent() {
   useEffect(refreshTrivial, [])
   const trivial = [...effectiveTrivial(attempts ?? [], manual, never)].sort()
   const [look, setLook] = useState<Appearance>(loadAppearance())
-  const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = { ...look, [k]: v }; setLook(n); saveAppearance(n) }
+  const choose = <K extends keyof Appearance>(k: K, v: Appearance[K]) => { const n = withLookBoard(look, { ...look, [k]: v }); setLook(n); saveAppearance(n) }
   useEffect(() => { void loadLoop().then(setLoop) }, [])
   const speech = useSpeech()
 
@@ -78,11 +78,11 @@ export function SettingsContent() {
     <>
       <section className="card">
         <h2>Appearance</h2>
-        <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches.</p>
+        <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches. Scholarmate is the new look, with big colour fields for each subject; Friendly and Collegiate are the looks you know, and Friendly stays the default.</p>
         {([
-          ['style', 'Look', [['friendly', 'Friendly'], ['collegiate', 'Collegiate']]],
-          ['theme', 'Theme', [['system', 'Same as my device'], ['light', 'Light'], ['dark', 'Dark']]],
-          ['board', 'Board colors', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast']]],
+          ['style', 'Look', [['friendly', 'Friendly'], ['collegiate', 'Collegiate'], ['scholarmate', 'Scholarmate (new)']]],
+          ['theme', 'Light or dark', [['system', 'System (same as my device)'], ['light', 'Light'], ['dark', 'Dark']]],
+          ['board', 'Board colors', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast'], ...(look.style === 'scholarmate' ? [['scholarmate', 'Scholarmate (ivory and jade)']] : [])]],
           ['text', 'Text size', [['standard', 'Standard'], ['large', 'Large'], ['larger', 'Larger']]],
           ['motion', 'Motion', [['system', 'Same as my device'], ['reduce', 'Reduce motion']]],
         ] as [keyof Appearance, string, [string, string][]][]).map(([key, label, opts]) => (

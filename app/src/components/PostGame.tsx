@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { ArtScene } from './art'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
 import { getEngine } from '../engine'
@@ -40,6 +41,7 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
 
   return (
     <section className="card postgame" aria-label="After the game">
+      <ArtScene kind="postgame" />
       <h2>The game is over</h2>
       <p>{reason} It is saved in <Link to="/games">My games</Link>.</p>
       {strength && <p><strong>Something you did well.</strong> {strength.text}</p>}

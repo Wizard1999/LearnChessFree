@@ -31,3 +31,11 @@ Added 30 October 2026 (decision D39: AI is allowed if it stays free and equally 
 - **Runtime**: onnxruntime-web 1.31.1 (Microsoft, **MIT**; text of https://github.com/microsoft/onnxruntime/blob/main/LICENSE read 30 October 2026 [V], shipped as `app/public/maia/ONNXRUNTIME-LICENSE.txt`). Its WebAssembly file and small loader are copied by `app/scripts/copy-maia.mjs` into `app/public/maia/ort/` and served from the app's own files (no CDN).
 - **Move vocabulary** (`app/src/lib/maiaMoves.ts`): the 1858 move names the network outputs, taken from LeelaChessZero/lczero-training `tf/policy_index.py`. It is a list of moves, a fact about the network, not creative text [H]; that repository showed no licence file on 30 October 2026, so its licence was not checked [not checked].
 - Not a rating: "Maia about 1500" describes the human games the network imitates, not a measured strength of the program.
+
+## Fonts (self-hosted, SIL Open Font License)
+Added 7 November 2026 with the palette pass (D45, D46). No font is loaded from a CDN: the files are bundled by the build from the npm packages below and served from the app's own files.
+- **Source Serif 4** (variable; Adobe, SIL OFL 1.1): page, course and stage titles. npm `@fontsource-variable/source-serif-4`, whose package states `OFL-1.1` [V: `license` field of the installed package.json, 7 November 2026].
+- **Plus Jakarta Sans** (variable; Tokotype, SIL OFL 1.1): lessons, controls and navigation in the opt-in Scholarmate look only (D47). npm `@fontsource-variable/plus-jakarta-sans`, `OFL-1.1` [V: `license` field of the installed package.json, 7 November 2026]. Only the latin subset is referenced (styles/scholarmate.css), so the other subsets are not shipped.
+- **Source Sans 3** (variable; Adobe, SIL OFL 1.1): lessons and controls. npm `@fontsource-variable/source-sans-3`, `OFL-1.1` [V: same check].
+- **IBM Plex Mono** (IBM, SIL OFL 1.1): move notation. npm `@fontsource/ibm-plex-mono`, `OFL-1.1` [V: same check].
+- The OFL allows use, embedding and redistribution with the software provided the fonts are not sold on their own and the licence travels with them; each package ships its `LICENSE` file in `node_modules` and the build output carries the font files only. System fonts (Georgia, system-ui) are the fallback and are not shipped [I: the reserved font names clause was not checked with a lawyer].

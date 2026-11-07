@@ -209,6 +209,16 @@
     "ref": "tools/generators/gen_special.py seed=20261031: en passant no",
     "licence": "project"
    }
+  },
+  {
+   "id": "PG-EP-21-V2",
+   "fen": "8/P7/8/8/2pP4/K7/5k2/8 b - - 2 2",
+   "family": "FAM-GEN-EP-07",
+   "provenance": {
+    "kind": "generated",
+    "ref": "tools/generators/gen_special.py seed=20261031: en passant no; variant for lesson L-FND-SPECIAL-1: quiet moves g3f2 b4a3 added so the position is not shared (checked with python-chess)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -1164,6 +1174,51 @@
    ],
    "id": "IG-EP-21",
    "position": "PG-EP-21",
+   "orientation": "black",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "skill": "FND.ENPASSANT.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "prompt": "Black to move. White's pawn on d4 has been standing beside black's pawn for several moves; White's last move was elsewhere. Can black capture it en passant? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "c4d3"
+     },
+     "statement": "The en passant capture is not available."
+    }
+   ],
+   "hints": [
+    "En passant is only possible right after an enemy pawn has just moved two squares forward past your pawn.",
+    "Ask yourself: did the pawn beside yours arrive there with a two-square move on the previous turn?",
+    "If it has been standing there, or got there in any other way, the chance is gone."
+   ],
+   "explain": "No. En passant is only possible on the move right after the enemy pawn made its two-square move. That chance has passed.",
+   "tags": [
+    "node.FND.ENPASSANT",
+    "tier.0",
+    "cue.3",
+    "kind.generated",
+    "family.FAM-IG-EP-21-V2",
+    "lang.en",
+    "ep.no",
+    "task.predict_outcome"
+   ],
+   "id": "IG-EP-21-V2",
+   "position": "PG-EP-21-V2",
    "orientation": "black",
    "review": {
     "status": "machine-only"

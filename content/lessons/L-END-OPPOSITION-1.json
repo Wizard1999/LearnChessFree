@@ -3,95 +3,77 @@
  "title": "Opposition: one tempo between a win and a draw",
  "skill": "END.OPPOSITION",
  "depth": "D1",
- "minutes": 12,
+ "minutes": 30,
  "outcomes": [
-  "Takes the opposition in a king-and-pawn ending when it is the move that wins",
-  "Predicts win or draw for king and pawn against king, and sees that one tempo or one king square can flip it",
-  "Names three cases where 'the side not to move wins' fails: king level with the pawn, a king already on a key square, a rook pawn"
+  "Takes the opposition in a king-and-pawn ending when it is the move that wins, and explains in words why the side not to move holds it",
+  "Predicts win or draw for king and pawn against king, and sees that one tempo, a spare pawn step or one king square can flip it",
+  "Names the cases where 'the side not to move wins' fails: a king level with the pawn, an edge pawn, a distant defender, and the pawn on its sixth rank",
+  "Links the opposition to key squares and says what the opposition is for",
+  "Teaches the idea to a beginner with an example, a condition and a warning"
  ],
  "steps": [
   {
-   "type": "card",
-   "text": "**King and pawn against a king** is often decided by one tempo (one move of time).When the kings face each other with exactly one square between them, the side that has to move must give way. That is the **opposition**. Watch one pawn win in one position and only draw in a look-alike."
+   "type": "item",
+   "item": "IA3-202",
+   "chapter": "See it"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before reading on, write why you chose that answer. Did you look first at the pawn, at the two kings, or at whose turn it was?"
   },
   {
    "type": "board",
    "fen": "8/4k3/8/4K3/4P3/8/8/8 b - - 0 1",
-   "caption": "Black to move. Every Black move loses; one line is shown.",
+   "caption": "Black to move. Black's king has five squares and every one loses. One defence is shown: Black gives ground, White's king follows, and the pawn walks home.",
    "line": [
     {
      "move": "e7d7",
-     "say": "Black has to leave the facing square. Here the king goes to d7."
+     "say": "Black must leave the facing line, so the king steps to the side."
     },
     {
      "move": "e5f6",
-     "say": "White's king moves forward to f6."
+     "say": "White's king jumps ahead to the sixth rank and shields the pawn's whole path."
     },
     {
      "move": "d7d8",
-     "say": "Black's king steps back."
+     "say": "Black falls back and keeps out of the way."
     },
     {
      "move": "f6f7",
-     "say": "White's king steps to f7."
+     "say": "White's king keeps pace, always a rank ahead of Black's."
     },
     {
      "move": "d8c7",
-     "say": "Black's king goes to c7."
+     "say": "Black swings round towards the pawn's side."
     },
     {
      "move": "e4e5",
-     "say": "Now the pawn can advance."
-    }
-   ],
-   "claims": [
-    {
-     "id": "C1",
-     "type": "tablebase",
-     "params": {
-      "result": "loss"
-     },
-     "statement": "With Black to move, Black loses."
+     "say": "Now the pawn may go: its king covers it and Black's king is too far away."
     },
     {
-     "id": "C2",
-     "type": "tablebase",
-     "params": {
-      "result": "loss",
-      "move": "e7d7"
-     }
+     "move": "c7b6",
+     "say": "Black runs for the pawn's rear."
     },
     {
-     "id": "C3",
-     "type": "tablebase",
-     "params": {
-      "result": "loss",
-      "move": "e7d8"
-     }
+     "move": "e5e6",
+     "say": "The pawn steps on, guarded by its king."
     },
     {
-     "id": "C4",
-     "type": "tablebase",
-     "params": {
-      "result": "loss",
-      "move": "e7e8"
-     }
+     "move": "b6b5",
+     "say": "Black runs on, always one move too slow."
     },
     {
-     "id": "C5",
-     "type": "tablebase",
-     "params": {
-      "result": "loss",
-      "move": "e7f7"
-     }
+     "move": "e6e7",
+     "say": "One step from the last rank."
     },
     {
-     "id": "C6",
-     "type": "tablebase",
-     "params": {
-      "result": "loss",
-      "move": "e7f8"
-     }
+     "move": "b5c4",
+     "say": "Black is still far away."
+    },
+    {
+     "move": "e7e8q",
+     "say": "The pawn becomes a queen, and White is winning."
     }
    ],
    "arrows": [
@@ -107,6 +89,273 @@
    "highlight": [
     "e5",
     "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "legal_destinations",
+     "params": {
+      "from": "e7",
+      "to": [
+       "d7",
+       "d8",
+       "e8",
+       "f7",
+       "f8"
+      ]
+     },
+     "id": "C2",
+     "statement": "The king on e7 has exactly these squares: d7, d8, e8, f7, f8."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7d7"
+     },
+     "id": "C3",
+     "statement": "Kd7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7d8"
+     },
+     "id": "C4",
+     "statement": "Kd8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7e8"
+     },
+     "id": "C5",
+     "statement": "Ke8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7f7"
+     },
+     "id": "C6",
+     "statement": "Kf7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7f8"
+     },
+     "id": "C7",
+     "statement": "Kf8 loses."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The opposition.** Two kings stand on one file (or rank) with exactly one square between them. Kings may never touch, so the side to move must step aside and give ground. Having the opposition means the *other* side is to move. It is a position plus a turn: the same placement can be a win or a draw, depending on whose turn it is."
+  },
+  {
+   "type": "board",
+   "fen": "8/4k3/8/4K3/4P3/8/8/8 w - - 0 1",
+   "caption": "White to move. The same pieces on the same squares, but now White must give way, and the position is only a draw.",
+   "line": [
+    {
+     "move": "e5d5",
+     "say": "White steps aside, hoping to get past on another file."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black steps to the new facing square: White must move again."
+    },
+    {
+     "move": "e4e5",
+     "say": "White pushes the pawn, but the king has gained nothing."
+    },
+    {
+     "move": "d7e7",
+     "say": "Black's king returns to the pawn's file."
+    },
+    {
+     "move": "d5c6",
+     "say": "White tries to go round the far side."
+    },
+    {
+     "move": "e7e6",
+     "say": "Black's king blocks the pawn's path, and White cannot make progress."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5d5"
+     },
+     "id": "C2",
+     "statement": "Kd5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f5"
+     },
+     "id": "C3",
+     "statement": "Kf5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5d4"
+     },
+     "id": "C4",
+     "statement": "Kd4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f4"
+     },
+     "id": "C5",
+     "statement": "Kf4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/3k4/8/3K4/3P4/8 b - - 0 1",
+   "caption": "The pawn may stand behind its king. Black to move still loses: White's king keeps stepping forward as Black gives way.",
+   "line": [
+    {
+     "move": "d5c5",
+     "say": "Black gives way sideways."
+    },
+    {
+     "move": "d3e4",
+     "say": "Black's king guards the square straight ahead of White's, so White goes forward on the other side."
+    },
+    {
+     "move": "c5d6",
+     "say": "Black follows up the board."
+    },
+    {
+     "move": "e4d4",
+     "say": "The kings face again, one square between them, with Black to move."
+    },
+    {
+     "move": "d6c6",
+     "say": "Black must give way again."
+    },
+    {
+     "move": "d4e5",
+     "say": "White's king steps forward once more."
+    },
+    {
+     "move": "c6d7",
+     "say": "Black falls back."
+    },
+    {
+     "move": "e5d5",
+     "say": "White's king keeps pace; the pawn waits safely behind it."
+    },
+    {
+     "move": "d7c7",
+     "say": "Black yields again."
+    },
+    {
+     "move": "d5e6",
+     "say": "White's king has reached the sixth rank, and Black cannot hold it back."
+    }
+   ],
+   "highlight": [
+    "d3",
+    "d5"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c5"
+     },
+     "id": "C2",
+     "statement": "Kc5 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5e5"
+     },
+     "id": "C3",
+     "statement": "Ke5 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5c6"
+     },
+     "id": "C4",
+     "statement": "Kc6 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5d6"
+     },
+     "id": "C5",
+     "statement": "Kd6 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d5e6"
+     },
+     "id": "C6",
+     "statement": "Ke6 loses."
+    }
    ]
   },
   {
@@ -114,40 +363,1809 @@
    "item": "IA3-201"
   },
   {
+   "type": "board",
+   "fen": "8/4k3/8/3K4/4P3/8/8/8 w - - 0 1",
+   "caption": "The position of the task. Only one move wins: the king steps to the facing square. The tempting pawn push only draws.",
+   "line": [
+    {
+     "move": "d5e5",
+     "say": "The king steps to the facing square, one square from Black's king, with Black to move."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black must give way."
+    },
+    {
+     "move": "e5f6",
+     "say": "White steps forward to the sixth rank."
+    },
+    {
+     "move": "d7d8",
+     "say": "Black retreats."
+    },
+    {
+     "move": "f6f7",
+     "say": "White keeps pace."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black swings round."
+    },
+    {
+     "move": "e4e5",
+     "say": "Only now does the pawn go forward."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d5e5"
+     },
+     "id": "C2",
+     "statement": "Ke5 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4e5"
+     },
+     "id": "C3",
+     "statement": "The pawn push only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5c4"
+     },
+     "id": "C4",
+     "statement": "Kc4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5d4"
+     },
+     "id": "C5",
+     "statement": "Kd4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5c5"
+     },
+     "id": "C6",
+     "statement": "Kc5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d5c6"
+     },
+     "id": "C7",
+     "statement": "Kc6 only draws."
+    }
+   ]
+  },
+  {
    "type": "card",
-   "text": "**Rule of thumb:** the side that is *not* to move holds the opposition, and holding it usually wins. It is a heuristic with exceptions. You will meet three: a king that is only **level with** the pawn, a king already **two ranks in front** of the pawn, and a **rook pawn** (a pawn on the a-file or h-file). Predict each one first."
+   "text": "**Why it works.** Kings can never touch, so each one takes squares from the other. The king to move must give way, and the other king then steps forward or takes the opposition back. That costs the mover only when the other side has a pawn to protect and a king ahead of it. [I] Calling the move a burden is a rule of thumb: with the pawn far ahead of the defender, or spare pawn steps in hand, having the move can be fine.",
+   "chapter": "Why it works and when it fails"
   },
   {
-   "type": "contrast",
-   "title": "Same pawn, the move changes",
-   "prompt": "Black to move wins for White. Change one thing: White to move. Does the result survive? Predict, then check.",
-   "working": "IA3-202",
-   "failing": "IA3-203",
-   "irrelevant": "IA3-204"
-  },
-  {
-   "type": "contrast",
-   "title": "Same pawn, wrong king square",
-   "prompt": "Back to Black to move. Put White's king on d5 instead of e5. Is it still a win? Predict, then check.",
-   "working": "IA3-202",
-   "failing": "IA3-205",
-   "irrelevant": "IA3-206"
-  },
-  {
-   "type": "item",
-   "item": "IA3-207"
+   "type": "board",
+   "fen": "4k3/8/4K3/8/4P3/8/8/8 b - - 0 1",
+   "caption": "Black to move. White's king stands two ranks ahead of the pawn. From here the pawn walks home.",
+   "line": [
+    {
+     "move": "e8d8",
+     "say": "Black has two squares, and neither stops the pawn."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn steps ahead under its king's protection."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black returns."
+    },
+    {
+     "move": "e6d6",
+     "say": "White's king steps aside to give the pawn the square ahead, and still guards it."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black waits."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn goes forward again."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black returns."
+    },
+    {
+     "move": "e6e7",
+     "say": "One step from the last rank."
+    },
+    {
+     "move": "e8f7",
+     "say": "Black attacks the pawn."
+    },
+    {
+     "move": "d6d7",
+     "say": "White's king guards the queening square, and the pawn will become a queen."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "legal_destinations",
+     "params": {
+      "from": "e8",
+      "to": [
+       "d8",
+       "f8"
+      ]
+     },
+     "id": "C2",
+     "statement": "The king on e8 has exactly these squares: d8, f8."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e8d8"
+     },
+     "id": "C3",
+     "statement": "Kd8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e8f8"
+     },
+     "id": "C4",
+     "statement": "Kf8 loses."
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e8d8",
+       "e4e5",
+       "d8e8",
+       "e6d6",
+       "e8d8",
+       "e5e6",
+       "d8e8",
+       "e6e7",
+       "e8f7",
+       "d6d7"
+      ]
+     },
+     "id": "C5",
+     "statement": "After the last step White's king guards the queening square e8."
+    }
+   ]
   },
   {
    "type": "item",
    "item": "IA3-208"
   },
   {
-   "type": "item",
-   "item": "IA3-209"
+   "type": "card",
+   "text": "**Key squares.** With the pawn on its fourth rank, the three squares two ranks in front of it are **key squares** (for the e-pawn: d6, e6 and f6). A king on one wins when the defender cannot capture the pawn at once. [I] This is a rule of thumb read from tablebase-checked boards; the board after the three examples shows an exception. The opposition is a method: it forces the other king aside so yours can reach a key square."
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/3K4/8/4P3/8/8/8 b - - 0 1",
+   "caption": "Another key square: the white king on d6. Black to move loses.",
+   "line": [
+    {
+     "move": "d8c8",
+     "say": "Black has two squares and neither helps."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn moves forward, covered by its king."
+    },
+    {
+     "move": "c8d8",
+     "say": "Black waits."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn advances again."
+    }
+   ],
+   "highlight": [
+    "d6",
+    "e6",
+    "f6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "legal_destinations",
+     "params": {
+      "from": "d8",
+      "to": [
+       "c8",
+       "e8"
+      ]
+     },
+     "id": "C2",
+     "statement": "The king on d8 has exactly these squares: c8, e8."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8c8"
+     },
+     "id": "C3",
+     "statement": "Kc8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8e8"
+     },
+     "id": "C4",
+     "statement": "Ke8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "5k2/8/5K2/8/4P3/8/8/8 b - - 0 1",
+   "caption": "The third key square: the white king on f6. Black to move loses here too.",
+   "line": [
+    {
+     "move": "f8g8",
+     "say": "Black picks a side."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn moves forward under the king's cover."
+    },
+    {
+     "move": "g8f8",
+     "say": "Black returns."
+    },
+    {
+     "move": "f6e6",
+     "say": "White's king steps aside to give the pawn room."
+    }
+   ],
+   "highlight": [
+    "d6",
+    "e6",
+    "f6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "legal_destinations",
+     "params": {
+      "from": "f8",
+      "to": [
+       "e8",
+       "g8"
+      ]
+     },
+     "id": "C2",
+     "statement": "The king on f8 has exactly these squares: e8, g8."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f8e8"
+     },
+     "id": "C3",
+     "statement": "Ke8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "f8g8"
+     },
+     "id": "C4",
+     "statement": "Kg8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/3K4/8/3kP3/8/8/8 b - - 0 1",
+   "caption": "The exception. White's king stands on a key square, but Black's king already attacks the pawn. Black to move takes it and draws. With White to move instead, the pawn push wins.",
+   "line": [
+    {
+     "move": "d4e4",
+     "say": "Black captures the pawn, and only the two kings remain: a draw."
+    }
+   ],
+   "highlight": [
+    "d6",
+    "d4",
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d4e4"
+     },
+     "id": "C2",
+     "statement": "Capturing the pawn draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d4d3"
+     },
+     "id": "C3",
+     "statement": "Kd3 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/3k4/8/4K3/4P3/8/8/8 w - - 0 1",
+   "caption": "Black has just given way. White to move: step forward or to the side, never back, and the win stays.",
+   "line": [
+    {
+     "move": "e5f6",
+     "say": "White steps forward onto a key square."
+    },
+    {
+     "move": "d7d8",
+     "say": "Black backs off."
+    },
+    {
+     "move": "f6f7",
+     "say": "White pushes on."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black cannot stay near."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn moves only when the king has made room."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "f6"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5f6"
+     },
+     "id": "C2",
+     "statement": "Kf6 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5d5"
+     },
+     "id": "C3",
+     "statement": "Kd5 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5f5"
+     },
+     "id": "C4",
+     "statement": "Kf5 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5d4"
+     },
+     "id": "C5",
+     "statement": "Kd4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f4"
+     },
+     "id": "C6",
+     "statement": "Kf4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the defender can do.** There are two defences in the middle of the board. First, if the attacking king is only level with the pawn, take the opposition yourself. Second, stay in front of the pawn and keep a square between the kings. Both need exact timing, so each gets a board. The corner is a third, separate resource and comes with the edge pawn later."
+  },
+  {
+   "type": "board",
+   "fen": "8/4k3/8/3K4/4P3/8/8/8 b - - 0 1",
+   "caption": "Black to move. White's king is level with the pawn, not ahead of it. Black takes the opposition and draws.",
+   "line": [
+    {
+     "move": "e7d7",
+     "say": "Black takes the opposition: the kings face on the d-file, with White to move."
+    },
+    {
+     "move": "d5e5",
+     "say": "White tries the other file."
+    },
+    {
+     "move": "d7e7",
+     "say": "Black steps across and faces the king again."
+    },
+    {
+     "move": "e5d5",
+     "say": "White tries the first file again."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black copies it, and the position repeats with no progress."
+    }
+   ],
+   "highlight": [
+    "d5",
+    "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e7d7"
+     },
+     "id": "C2",
+     "statement": "Kd7 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7d8"
+     },
+     "id": "C3",
+     "statement": "Kd8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e7e8"
+     },
+     "id": "C4",
+     "statement": "Ke8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/4k3/8/3KP3/8/8/8 b - - 0 1",
+   "caption": "Black to move. Black already stands in front of the pawn, but only one move keeps the draw.",
+   "line": [
+    {
+     "move": "e6d6",
+     "say": "The only drawing move: the kings face on the d-file with White to move."
+    },
+    {
+     "move": "e4e5",
+     "say": "White pushes the pawn with check."
+    },
+    {
+     "move": "d6e6",
+     "say": "Black attacks the pawn."
+    },
+    {
+     "move": "d4e4",
+     "say": "White's king guards it."
+    },
+    {
+     "move": "e6e7",
+     "say": "Black waits."
+    },
+    {
+     "move": "e4d5",
+     "say": "White heads for a key square, but Black's king keeps in front."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black faces the king again and keeps the draw."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn gives check."
+    },
+    {
+     "move": "d7e7",
+     "say": "Black attacks the pawn, which the king guards: no progress."
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e6d6"
+     },
+     "id": "C2",
+     "statement": "Kd6 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e6f6"
+     },
+     "id": "C3",
+     "statement": "Kf6 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e6d7"
+     },
+     "id": "C4",
+     "statement": "Kd7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e6e7"
+     },
+     "id": "C5",
+     "statement": "Ke7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e6f7"
+     },
+     "id": "C6",
+     "statement": "Kf7 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/4k3/4P3/4K3/8/8/8 b - - 0 1",
+   "caption": "The king stands behind its pawn on the fifth rank. This is a draw whoever moves. [I] The defender stays in front of the pawn and the attacking king cannot get past it to a key square, so it can only chase the defender back and forth.",
+   "line": [
+    {
+     "move": "e6e7",
+     "say": "Black keeps in front of the pawn."
+    },
+    {
+     "move": "e4d5",
+     "say": "White's king goes round."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black stays level with the pawn's path."
+    },
+    {
+     "move": "e5e6",
+     "say": "The pawn steps ahead with check."
+    },
+    {
+     "move": "d7e7",
+     "say": "Black attacks the pawn."
+    },
+    {
+     "move": "d5e5",
+     "say": "White's king guards it."
+    },
+    {
+     "move": "e7e8",
+     "say": "Black steps back to the edge."
+    },
+    {
+     "move": "e5f6",
+     "say": "White's king is now beside the pawn on the sixth rank; Black to move draws (see the next board)."
+    }
+   ],
+   "highlight": [
+    "e4",
+    "e5",
+    "e6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e6d7"
+     },
+     "id": "C2",
+     "statement": "Kd7 draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e6e7"
+     },
+     "id": "C3",
+     "statement": "Ke7 draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e6f7"
+     },
+     "id": "C4",
+     "statement": "Kf7 draws."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three ways to explain the same thing.** Capablanca taught the opposition as a rule about the move. Edward Lasker named the moment the pawn reaches its sixth rank as critical and showed that a spare pawn move can take the opposition back. Nimzowitsch thought the usual account vague and preferred forcing the enemy king to yield. [S] All three are paraphrased from our reading sheets. [I] They look like one idea seen from three sides: the king not on the move owns the better squares."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] A hypothesis to test: the opposition is just a short way of saying 'who runs out of useful moves first'. Does that fit what you have seen? Name one position from this lesson where it fits and one where it does not seem to help.",
+   "fields": [
+    {
+     "id": "fits",
+     "label": "Where it fits:"
+    },
+    {
+     "id": "strains",
+     "label": "Where it does not seem to help:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Setting it up.** You take the opposition by stepping onto the facing square, so before moving ask three things. Am I one step from that square? Whose move is it afterwards? Does my pawn have a spare step that changes the answer? A pawn on its second or third rank has such steps.",
+   "chapter": "Set it up or prevent it"
+  },
+  {
+   "type": "board",
+   "fen": "8/8/5k2/8/4K3/5P2/8/8 w - - 0 1",
+   "caption": "White to move. The only winning move is the step to the facing square. The pawn push only draws.",
+   "line": [
+    {
+     "move": "e4f4",
+     "say": "The king steps to the facing square: one square between the kings, Black to move."
+    },
+    {
+     "move": "f6e6",
+     "say": "Black must give way."
+    },
+    {
+     "move": "f4g5",
+     "say": "White's king moves forward past the pawn's file."
+    },
+    {
+     "move": "e6f7",
+     "say": "Black steps in front."
+    },
+    {
+     "move": "g5f5",
+     "say": "White's king goes beside the black king."
+    },
+    {
+     "move": "f7g7",
+     "say": "Black steps aside."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "f4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "f6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e4f4"
+     },
+     "id": "C2",
+     "statement": "Kf4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f3f4"
+     },
+     "id": "C3",
+     "statement": "The pawn push only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4d3"
+     },
+     "id": "C4",
+     "statement": "Kd3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4e3"
+     },
+     "id": "C5",
+     "statement": "Ke3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4d4"
+     },
+     "id": "C6",
+     "statement": "Kd4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e4d5"
+     },
+     "id": "C7",
+     "statement": "Kd5 only draws."
+    }
+   ]
   },
   {
    "type": "item",
-   "item": "IA3-210"
+   "item": "ICR-LENDOPPOSITION1-1"
+  },
+  {
+   "type": "board",
+   "fen": "8/8/4k3/8/8/3K4/4P3/8 w - - 0 1",
+   "caption": "White to move. Two king moves win. One faces the black king; the other, toward the d-file, also wins because White can take the opposition one move later (distant opposition, explained below). Both pawn pushes and the sideways king steps only draw.",
+   "line": [
+    {
+     "move": "d3e4",
+     "say": "The king steps to the facing square: one square between the kings, Black to move."
+    },
+    {
+     "move": "e6d6",
+     "say": "Black gives way."
+    },
+    {
+     "move": "e4f5",
+     "say": "White's king goes forward on the other side."
+    },
+    {
+     "move": "d6d5",
+     "say": "Black steps down beside the pawn's file."
+    },
+    {
+     "move": "e2e3",
+     "say": "Now the pawn takes a spare step; the king guards it."
+    },
+    {
+     "move": "d5d6",
+     "say": "Black retreats."
+    },
+    {
+     "move": "f5f6",
+     "say": "White's king keeps its lead."
+    },
+    {
+     "move": "d6d7",
+     "say": "Black has run out of room."
+    }
+   ],
+   "highlight": [
+    "d3",
+    "e6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d3e4"
+     },
+     "id": "C2",
+     "statement": "Ke4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "d3d4"
+     },
+     "id": "C3",
+     "statement": "Kd4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2e3"
+     },
+     "id": "C4",
+     "statement": "The pawn step only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e2e4"
+     },
+     "id": "C5",
+     "statement": "The two-square pawn step only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/5k2/8/5K2/5P2/8/8 w - - 0 1",
+   "caption": "The kings already face, but it is White's move. Reaching the facing square at the wrong moment is not enough: this is a draw.",
+   "line": [
+    {
+     "move": "f4e4",
+     "say": "White steps aside to get round."
+    },
+    {
+     "move": "f6e6",
+     "say": "Black copies at once, and the kings face again with White to move."
+    },
+    {
+     "move": "e4d4",
+     "say": "White tries the other side."
+    },
+    {
+     "move": "e6d6",
+     "say": "Black copies again."
+    }
+   ],
+   "highlight": [
+    "f4",
+    "f6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4e3"
+     },
+     "id": "C2",
+     "statement": "Ke3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4g3"
+     },
+     "id": "C3",
+     "statement": "Kg3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4e4"
+     },
+     "id": "C4",
+     "statement": "Ke4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f4g4"
+     },
+     "id": "C5",
+     "statement": "Kg4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/4k3/8/4K3/8/4P3/8/8 w - - 0 1",
+   "caption": "White to move. A pawn on its third rank has a spare step. Spending it hands the move to Black while the kings still face.",
+   "line": [
+    {
+     "move": "e3e4",
+     "say": "The spare step: the kings face and Black must move."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black gives way."
+    },
+    {
+     "move": "e5f6",
+     "say": "White's king steps forward to the sixth rank."
+    },
+    {
+     "move": "d7d8",
+     "say": "Black falls back."
+    },
+    {
+     "move": "f6f7",
+     "say": "White keeps pace."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black swings round."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn moves on."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e3",
+    "e5",
+    "e7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3e4"
+     },
+     "id": "C2",
+     "statement": "The pawn step wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5d5"
+     },
+     "id": "C3",
+     "statement": "Kd5 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e5f5"
+     },
+     "id": "C4",
+     "statement": "Kf5 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5d4"
+     },
+     "id": "C5",
+     "statement": "Kd4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5f4"
+     },
+     "id": "C6",
+     "statement": "Kf4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e5e4"
+     },
+     "id": "C7",
+     "statement": "Ke4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDOPPOSITION1-2"
+  },
+  {
+   "type": "card",
+   "text": "**Distant opposition.** Kings can also face each other from farther away: on one file or rank with an odd number of empty squares between them, such as three. [I] The same parity rule applies, checked board by board: the side not to move holds it, and a later step can turn it into the close opposition. A diagonal works in the same way. On the next board, White reaches the same file as Black's king with three empty squares between."
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/8/8/8/2K1P3/8/8 w - - 0 1",
+   "caption": "White to move. The king steps to the d-file with three empty squares between the kings and Black to move: the distant opposition. Kc4 also wins here; the pawn push and every other king move only draw.",
+   "line": [
+    {
+     "move": "c3d4",
+     "say": "The distant opposition: same file, three squares between, Black to move."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black gives way."
+    },
+    {
+     "move": "d4d5",
+     "say": "White's king steps forward."
+    },
+    {
+     "move": "c7d8",
+     "say": "Black returns to the file."
+    },
+    {
+     "move": "d5e6",
+     "say": "White's king slips past to the sixth rank."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black has run out of useful squares."
+    }
+   ],
+   "highlight": [
+    "d4",
+    "d8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3d4"
+     },
+     "id": "C2",
+     "statement": "Kd4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "c3c4"
+     },
+     "id": "C3",
+     "statement": "Kc4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e3e4"
+     },
+     "id": "C4",
+     "statement": "The pawn push only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3d3"
+     },
+     "id": "C5",
+     "statement": "Kd3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "c3b3"
+     },
+     "id": "C6",
+     "statement": "Kb3 only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/8/8/8/2K1P3/8/8 b - - 0 1",
+   "caption": "The same placement with Black to move: a draw. [I] After Kd7, White can no longer reach a file with an odd number of squares between the kings and Black to move.",
+   "line": [
+    {
+     "move": "d8d7",
+     "say": "Black steps to the file where White cannot take the distant opposition."
+    },
+    {
+     "move": "c3d4",
+     "say": "White comes forward."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black now holds the close opposition."
+    },
+    {
+     "move": "e3e4",
+     "say": "The pawn moves on."
+    },
+    {
+     "move": "d6e6",
+     "say": "Black stays in front of the pawn: a draw."
+    }
+   ],
+   "highlight": [
+    "d7",
+    "c3"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d8d7"
+     },
+     "id": "C2",
+     "statement": "Kd7 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d8c7"
+     },
+     "id": "C3",
+     "statement": "Kc7 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "d8e7"
+     },
+     "id": "C4",
+     "statement": "Ke7 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8c8"
+     },
+     "id": "C5",
+     "statement": "Kc8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8e8"
+     },
+     "id": "C6",
+     "statement": "Ke8 loses."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Same pieces, other player to move",
+   "prompt": "Original first: Black to move, and White wins. Now White is to move instead. Predict the result, then check. The third position moves everything one file to the left, with Black to move.",
+   "working": "IA3-202",
+   "failing": "IA3-203",
+   "irrelevant": "IA3-204",
+   "chapter": "Near misses"
+  },
+  {
+   "type": "contrast",
+   "title": "Same pawn, wrong king square",
+   "prompt": "Original again. In the second position White's king stands on d5, level with the pawn. In the third the pawn is on e3 and the kings are as in the original.",
+   "working": "IA3-202",
+   "failing": "IA3-205",
+   "irrelevant": "IA3-206"
+  },
+  {
+   "type": "card",
+   "text": "**A third kind of failure: the edge of the board.** A pawn on the a-file or h-file leaves the attacker only one side to go round. If the defending king reaches the corner, the attacker must avoid **stalemate**: a position where the side to move has no legal move and is not in check, which is a draw. [I] If the defender is too far away, the pawn still queens. The tablebase boards below are the proof."
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/6K1/6P1/8/8/8/8 b - - 0 1",
+   "caption": "First the normal case. The pawn is on the g-file, one file in from the edge, and Black to move loses.",
+   "line": [
+    {
+     "move": "h8g8",
+     "say": "Black has one legal move."
+    },
+    {
+     "move": "g6h6",
+     "say": "White's king steps aside to the sixth rank beside the pawn's path."
+    },
+    {
+     "move": "g8f7",
+     "say": "Black comes out of the corner."
+    },
+    {
+     "move": "g5g6",
+     "say": "The pawn steps ahead with check, guarded by the king."
+    },
+    {
+     "move": "f7f6",
+     "say": "Black attacks the pawn, but the king guards it."
+    }
+   ],
+   "highlight": [
+    "g5",
+    "g6",
+    "h8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "h8g8"
+     },
+     "id": "C2",
+     "statement": "Kg8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/6K1/7P/8/8/8/8 b - - 0 1",
+   "caption": "Black to move. This is the h-pawn. The same king placing with the g-pawn wins, but here Black draws.",
+   "line": [
+    {
+     "move": "h8g8",
+     "say": "Black has one legal move."
+    },
+    {
+     "move": "h5h6",
+     "say": "White pushes, but Black's king stays near the corner."
+    },
+    {
+     "move": "g8h8",
+     "say": "Black steps back into the corner."
+    },
+    {
+     "move": "g6h5",
+     "say": "White makes a waiting move, but no progress follows."
+    },
+    {
+     "move": "h8g8",
+     "say": "Black shuffles between the corner squares."
+    },
+    {
+     "move": "h5g5",
+     "say": "White tries again."
+    },
+    {
+     "move": "g8h8",
+     "say": "Black shuffles again, and the draw stands."
+    }
+   ],
+   "highlight": [
+    "h5",
+    "h8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "h8g8"
+     },
+     "id": "C2",
+     "statement": "Kg8 holds the draw."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/P7/K7/8/8/8/8/8 b - - 0 1",
+   "caption": "The edge-file trap in its purest form. Black has no legal move and is not in check: stalemate, so the game is drawn.",
+   "highlight": [
+    "a8",
+    "a7",
+    "a6"
+   ],
+   "claims": [
+    {
+     "type": "game_state",
+     "params": {
+      "state": "stalemate"
+     },
+     "id": "C1",
+     "statement": "Black is stalemated: no legal move, not in check."
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Edge file or not?",
+   "prompt": "Original first: a b-pawn, White's king in front, Black to move, and White wins. In the second position the pawn is on the a-file. In the third everything has moved one file to the right.",
+   "working": "ICR-LENDOPPOSITION1-3",
+   "failing": "ICR-LENDOPPOSITION1-4",
+   "irrelevant": "ICR-LENDOPPOSITION1-5"
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/8/k7/8/4P3/4K3 b - - 0 1",
+   "caption": "A fourth case: the defender is too far away. Black's king never reaches the pawn's path, and White wins with either side to move, so the opposition never comes up.",
+   "line": [
+    {
+     "move": "a4b4",
+     "say": "Black heads towards the pawn."
+    },
+    {
+     "move": "e1d2",
+     "say": "White's king steps up beside its pawn."
+    },
+    {
+     "move": "b4c4",
+     "say": "Black comes closer."
+    },
+    {
+     "move": "d2e3",
+     "say": "White's king guards the pawn from the front."
+    },
+    {
+     "move": "c4b4",
+     "say": "Black circles."
+    },
+    {
+     "move": "e3f4",
+     "say": "White's king moves ahead, and Black's king is still too far from the pawn."
+    }
+   ],
+   "highlight": [
+    "a4",
+    "e2"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a4b3"
+     },
+     "id": "C2",
+     "statement": "Kb3 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a4b4"
+     },
+     "id": "C3",
+     "statement": "Kb4 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a4b5"
+     },
+     "id": "C4",
+     "statement": "Kb5 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a4a3"
+     },
+     "id": "C5",
+     "statement": "Ka3 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a4a5"
+     },
+     "id": "C6",
+     "statement": "Ka5 loses."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A reversal on the sixth rank.** Edward Lasker's notes mark the moment the pawn reaches its sixth rank as critical [S]. With the black king on e8 and the white king beside the pawn, White to move wins and Black to move draws. [I] That reverses the usual rule, but not for every layout: with the black king on d8, White wins whoever moves. Predict on the next board."
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/4PK2/8/8/8/8/8 w - - 0 1",
+   "caption": "White to move. The king stands beside the pawn on the sixth rank. The pawn push wins; every king step only draws.",
+   "line": [
+    {
+     "move": "e6e7",
+     "say": "The pawn steps ahead, guarded by its king, and Black's king has no good square."
+    },
+    {
+     "move": "e8d7",
+     "say": "Black attacks the pawn."
+    },
+    {
+     "move": "f6f7",
+     "say": "White's king takes the squares in front and guards the pawn."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black's king still cannot touch the pawn."
+    },
+    {
+     "move": "e7e8q",
+     "say": "The pawn becomes a queen."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f6",
+    "e8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e6e7"
+     },
+     "id": "C2",
+     "statement": "The pawn push wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6e5"
+     },
+     "id": "C3",
+     "statement": "Ke5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6f5"
+     },
+     "id": "C4",
+     "statement": "Kf5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6g5"
+     },
+     "id": "C5",
+     "statement": "Kg5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6g6"
+     },
+     "id": "C6",
+     "statement": "Kg6 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6g7"
+     },
+     "id": "C7",
+     "statement": "Kg7 only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/4PK2/8/8/8/8/8 b - - 0 1",
+   "caption": "The same placement with Black to move: a draw. Black must keep the king beside the pawn's file.",
+   "line": [
+    {
+     "move": "e8f8",
+     "say": "The only drawing move: the king stays beside the pawn's file."
+    },
+    {
+     "move": "e6e7",
+     "say": "The pawn gives check."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black must step in front of the pawn."
+    },
+    {
+     "move": "f6e6",
+     "say": "White's king steps to e6 and Black is stalemated, so it is a draw."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f6",
+    "f8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e8f8"
+     },
+     "id": "C2",
+     "statement": "Kf8 holds the draw."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "e8d8"
+     },
+     "id": "C3",
+     "statement": "Kd8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/4P3/4K3/8/8/8/8/8 b - - 0 1",
+   "caption": "The last position of that line: Black has no legal move and is not in check. Stalemate, and the game is drawn.",
+   "highlight": [
+    "e8",
+    "e7",
+    "e6"
+   ],
+   "claims": [
+    {
+     "type": "game_state",
+     "params": {
+      "state": "stalemate"
+     },
+     "id": "C1",
+     "statement": "Black is stalemated: no legal move, not in check."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Mixed test.** From here nothing is labelled, and some positions are not about the opposition at all. For each one ask: whose move is it, where is each king compared with the pawn and its key squares, and is the pawn on the edge of the board? Sometimes the answer is that the move does not matter.",
+   "chapter": "Mixed test and real endings"
+  },
+  {
+   "type": "item",
+   "item": "IA3-207",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDOPPOSITION1-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDOPPOSITION1-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDOPPOSITION1-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDOPPOSITION1-9",
+   "silent": true
   },
   {
    "type": "item",
@@ -169,6 +2187,496 @@
    "type": "reflect",
    "kind": "expect",
    "prompt": "Before each prediction: did you ask who was to move, or where each king stood? Which of the two did you check first, and which did you forget?"
+  },
+  {
+   "type": "card",
+   "text": "**Four real endings.** They come from game records in the Lichess broadcast archive (moves are public facts; the comments are ours). In the first, a 2561-rated player had only king and pawn left against a 2563-rated opponent. Before you see the moves, notice that White is to move and that no king faces the other."
+  },
+  {
+   "type": "board",
+   "fen": "8/5k2/8/8/8/4K3/5P2/8 w - - 0 75",
+   "caption": "Kantor v Yoo, Saint Louis, 8 Nov 2022. White to move. Five king moves win; both pawn pushes and two king retreats only draw. The game continued as shown.",
+   "line": [
+    {
+     "move": "e3f4",
+     "say": "White brought the king forward onto Black's file. Several king moves win here, so no exact opposition is needed."
+    },
+    {
+     "move": "f7g6",
+     "say": "Black stepped aside."
+    },
+    {
+     "move": "f4e5",
+     "say": "White's king kept advancing past the pawn's file."
+    },
+    {
+     "move": "g6g7",
+     "say": "Black fell back."
+    },
+    {
+     "move": "e5e6",
+     "say": "White's king reached the sixth rank. The game record gives White the win a few moves later."
+    }
+   ],
+   "highlight": [
+    "e3",
+    "f7"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3f4"
+     },
+     "id": "C2",
+     "statement": "Kf4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3f3"
+     },
+     "id": "C3",
+     "statement": "Kf3 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3e4"
+     },
+     "id": "C4",
+     "statement": "Ke4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3d3"
+     },
+     "id": "C5",
+     "statement": "Kd3 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "e3d4"
+     },
+     "id": "C6",
+     "statement": "Kd4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f2f3"
+     },
+     "id": "C7",
+     "statement": "The pawn step f3 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f2f4"
+     },
+     "id": "C8",
+     "statement": "The pawn step f4 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e3d2"
+     },
+     "id": "C9",
+     "statement": "Kd2 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e3e2"
+     },
+     "id": "C10",
+     "statement": "Ke2 only draws."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Write a guess: why would both pawn pushes only draw here, while five king moves win? Think about what the black king can do once the pawn has moved."
+  },
+  {
+   "type": "card",
+   "text": "**A guess, labelled.** [H] After a pawn push the black king, still free to roam, may reach the squares in front of the pawn before the white king has made room. Capablanca's practical advice for these endings was to walk the king forward and push the pawn mainly to keep it safe. The tablebase confirms the result on the board; it does not prove our explanation."
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/4PK2/8/8/8/8/8 b - - 0 59",
+   "caption": "Keymer v Smeets, Schachbundesliga (header date 8 Dec 2019). Black to move, and every Black move loses. In the game Black played Ke8 and White pushed the pawn.",
+   "line": [
+    {
+     "move": "d8e8",
+     "say": "Black takes the square in front of the pawn."
+    },
+    {
+     "move": "e6e7",
+     "say": "The pawn steps ahead, guarded by the king. The record ends here with a win for White."
+    }
+   ],
+   "highlight": [
+    "d8",
+    "e6",
+    "f6"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8e8"
+     },
+     "id": "C2",
+     "statement": "Ke8 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8c7"
+     },
+     "id": "C3",
+     "statement": "Kc7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "d8c8"
+     },
+     "id": "C4",
+     "statement": "Kc8 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3k4/8/4PK2/8/8/8/8/8 w - - 0 1",
+   "caption": "The same placement with White to move. Now the pawn push only draws and the king step wins. Here the move decides only which piece advances.",
+   "line": [
+    {
+     "move": "f6f7",
+     "say": "The king steps beside the pawn's path and takes away the black king's best squares."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black runs towards the pawn's rear."
+    },
+    {
+     "move": "e6e7",
+     "say": "Now the pawn goes, guarded by its king."
+    },
+    {
+     "move": "c7d7",
+     "say": "Black attacks the pawn."
+    },
+    {
+     "move": "e7e8q",
+     "say": "The pawn becomes a queen, guarded by the king."
+    }
+   ],
+   "highlight": [
+    "e6",
+    "f6",
+    "d8"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With White to move the tablebase result for White is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f6f7"
+     },
+     "id": "C2",
+     "statement": "Kf7 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "e6e7"
+     },
+     "id": "C3",
+     "statement": "The pawn push only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6e5"
+     },
+     "id": "C4",
+     "statement": "Ke5 only draws."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f6g5"
+     },
+     "id": "C5",
+     "statement": "Kg5 only draws."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/k7/8/4K3/8/5P2/8 b - - 0 55",
+   "caption": "Stefansson v Bjornsson, Reykjavik Open, 3 Apr 2023 (ratings 2510 and 2310 in the record). Black's king is far from the pawn, and Black to move loses. The game ended a few moves later.",
+   "line": [
+    {
+     "move": "a6b7",
+     "say": "Black looks for a way back."
+    },
+    {
+     "move": "e4f5",
+     "say": "White's king goes forward, not the pawn."
+    },
+    {
+     "move": "b7c7",
+     "say": "Black keeps walking."
+    },
+    {
+     "move": "f5e6",
+     "say": "White's king reaches the sixth rank."
+    },
+    {
+     "move": "c7d8",
+     "say": "Black runs out of squares."
+    },
+    {
+     "move": "e6f7",
+     "say": "White's king takes the squares in front of the pawn's path. The record gives White the win."
+    }
+   ],
+   "highlight": [
+    "a6",
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a loss."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6b6"
+     },
+     "id": "C2",
+     "statement": "Kb6 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6b7"
+     },
+     "id": "C3",
+     "statement": "Kb7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6a7"
+     },
+     "id": "C4",
+     "statement": "Ka7 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6a5"
+     },
+     "id": "C5",
+     "statement": "Ka5 loses."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "loss",
+      "move": "a6b5"
+     },
+     "id": "C6",
+     "statement": "Kb5 loses."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/5p2/8/6k1/4K3/8/8/8 b - - 0 56",
+   "caption": "Mkrtchian v Harika, FIDE Online Olympiad play-off, 28 Aug 2020 (ratings 2388 and 2515 in the record). Colours reversed: Black has the pawn. Black to move wins, and the game continued as shown.",
+   "line": [
+    {
+     "move": "g5g4",
+     "say": "Black's king steps to the side of White's king, keeping ahead of the pawn."
+    },
+    {
+     "move": "e4e5",
+     "say": "White's king advances."
+    },
+    {
+     "move": "f7f5",
+     "say": "Now the pawn goes, guarded by the king from behind."
+    },
+    {
+     "move": "e5d4",
+     "say": "White tries to run towards the pawn's path."
+    },
+    {
+     "move": "f5f4",
+     "say": "The pawn advances again."
+    },
+    {
+     "move": "d4d3",
+     "say": "White's king keeps coming."
+    },
+    {
+     "move": "g4f3",
+     "say": "Black's king steps in front of the pawn's path to guard it."
+    },
+    {
+     "move": "d3d2",
+     "say": "White keeps going, but is too far behind."
+    }
+   ],
+   "highlight": [
+    "g5",
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "id": "C1",
+     "statement": "With Black to move the tablebase result for Black is a win."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "g5g4"
+     },
+     "id": "C2",
+     "statement": "Kg4 wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "f7f6"
+     },
+     "id": "C3",
+     "statement": "The pawn step f6 also wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win",
+      "move": "g5g6"
+     },
+     "id": "C4",
+     "statement": "Kg6 also wins."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "f7f5"
+     },
+     "id": "C5",
+     "statement": "The pawn step f5 only draws here."
+    },
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "draw",
+      "move": "g5h4"
+     },
+     "id": "C6",
+     "statement": "Kh4 only draws."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.** The opposition is a position plus a turn: the kings face with one square between and the other side must move. It wins when the attacking king is ahead of the pawn and the defender is near. It fails for a king level with the pawn, an edge pawn or a faraway defender, and on the sixth rank it can reverse. Always ask whose move it is.",
+   "chapter": "Say it back"
+  },
+  {
+   "type": "card",
+   "text": "**Self-check before you write.** Did you say when the opposition works? Did you say when it fails and name at least one failing look-alike? Did you give an example a beginner could set up on a board? Did you name one mistake, such as pushing the pawn too early? The app does not grade this; you are the judge."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it to an imagined beginner who has just learned how the pieces move. Write the idea, when it works, one example, and one warning, in your own words.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea in two sentences:"
+    },
+    {
+     "id": "when",
+     "label": "When it works, and when it fails:"
+    },
+    {
+     "id": "example",
+     "label": "One example a beginner could set up on a board:"
+    },
+    {
+     "id": "warning",
+     "label": "One mistake to avoid:"
+    }
+   ]
   }
  ],
  "review": {
@@ -177,9 +2685,13 @@
  },
  "sources": [
   "sources/sheets/capablanca_chess-fundamentals.md (CI-06, CI-07, CI-13: ideas only; wording of the opposition not used)",
-  "sources/sheets/edlasker_chess-strategy.md (K23: key squares as the cleaner rule)",
+  "sources/sheets/edlasker_chess-strategy.md (K23: the sixth rank as the critical moment (the book does not state key squares); K25: spare moves in pawn endings; paraphrased, not quoted)",
   "sources/sheets/emlasker_common-sense.md (4.19: opposition as a consequence of who must move)",
+  "sources/sheets/nimzowitsch_my-system.md (idea 18: frontal approach and yielding, named as a different explanation; paraphrased) via docs/citable-views.md items 9.5-9.9",
   "docs/curriculum-map-v1.1.md section 4 (tablebase checks)",
-  "All positions: own constructions, every result from the Lichess tablebase service"
+  "docs/competition-chess-steps.md (Steps method: explanation kept short, exercises many)",
+  "Real examples: game records from the Lichess broadcast database (library/data/games/lichess-broadcast, files 2021-10 and 2022-11; Lichess states its database exports are CC0): Kantor v Yoo, Saint Louis, 8 Nov 2022 (ratings 2561 and 2563 in the record); Keymer v Smeets, Schachbundesliga, header date 8 Dec 2019 (ratings 2506 and 2604 in the record). Moves are facts; the commentary is ours. Also: Stefansson v Bjornsson, Reykjavik Open, 3 Apr 2023 (file 2023-04; ratings 2510 and 2310 in the record); Mkrtchian v Harika, FIDE Online Olympiad play-off, 28 Aug 2020 (file 2020-08; ratings 2388 and 2515 in the record).",
+  "Item file content/items/lesson-cr-l-end-opposition-1.json: positions built by one-feature edits of verified positions; every result from the Lichess tablebase service",
+  "Conjecture labelled [H] and [I] in the text is ours and unverified beyond the tablebase claims on the boards"
  ]
 }

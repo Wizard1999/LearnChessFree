@@ -4,7 +4,7 @@
     ./tools/.venv/Scripts/python.exe -I tools/check.py --quick    # skips the engine-heavy lesson validation (about a minute)
     ./tools/.venv/Scripts/python.exe -I tools/check.py --status   # also prints what is stale (see tools/status.py)
 
-Stages, in order: content (validate_lessons, check_all, check_graph --strict, build_content, check_overlap), app (tsc, vitest including the
+Stages, in order: content (validate_lessons, check_all, check_graph --strict, build_content, check_contrast for both colour modes, check_overlap), app (tsc, vitest including the
 route smoke test and the data cross-checks, vite build). Prints one line per stage and exits non-zero if any fails.
 """
 import datetime, json, re, subprocess, sys, time
@@ -23,6 +23,7 @@ STAGES += [
     ("skill graph", PY + ["tools/check_graph.py", "--strict"], ROOT, "0 errors"),
     ("build content", PY + ["tools/build_content.py"], ROOT, None),
     ("recommended path", PY + ["tools/build_path.py", "--check"], ROOT, None),
+    ("contrast (both modes)", PY + ["tools/check_contrast.py"], ROOT, "CONTRAST OK"),
     ("overlap (at most 1 known)", PY + ["tools/check_overlap.py"], ROOT, "1 overlaps"),
     ("typescript", [NPX, "tsc", "-b", "--force"], ROOT / "app", None),
     ("tests + route smoke + cross-checks", [NPX, "vitest", "run"], ROOT / "app", "failed" and None),

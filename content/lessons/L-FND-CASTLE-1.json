@@ -3,7 +3,7 @@
   "title": "Castling, and when you cannot",
   "skill": "FND.CASTLE",
   "depth": "D1",
-  "minutes": 8,
+  "minutes": 20,
   "outcomes": [
     "Castles kingside and queenside",
     "Knows the four conditions and which attacked squares matter",
@@ -11,21 +11,23 @@
   ],
   "steps": [
     {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-1",
+      "chapter": "Try it first"
+    },
+    {
       "type": "card",
-      "text": "**Castling** is the one move where two pieces move at once. The king goes two squares toward a rook, and that rook jumps over to the king's other side. It tucks the king away and brings a rook into the game. You can castle toward the h-file (kingside) or toward the a-file (queenside)."
+      "text": "You just **castled**. The king slid two squares toward a rook, and that rook jumped to the king's other side. It is the only move where two of your pieces move at once. The **kingside** is the half of the board from the e-file to the h-file, the **queenside** the half from the a-file to the d-file.",
+      "chapter": "Meet the idea"
     },
     {
       "type": "board",
-      "fen": "r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 1",
-      "caption": "White castles kingside: the king goes to g1 and the rook to f1. Black castles queenside.",
+      "fen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "Castling toward the h-file. The king goes two squares and the rook hops to its other side.",
       "line": [
         {
           "move": "e1g1",
-          "say": "The king goes to g1 and the rook jumps to f1."
-        },
-        {
-          "move": "e8c8",
-          "say": "Black castles the other way: king to c8, rook to d8."
+          "say": "The king goes two squares toward the rook, and the rook jumps over it to the square beside the king."
         }
       ],
       "arrows": [
@@ -48,44 +50,1126 @@
           "type": "legal_move",
           "params": {
             "move": "e1g1"
-          }
+          },
+          "statement": "Kingside castling is legal."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f1",
+            "piece": "R",
+            "after_move": "e1g1"
+          },
+          "statement": "The rook lands on f1."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "g1",
+            "piece": "K",
+            "after_move": "e1g1"
+          },
+          "statement": "The king lands on g1."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "Castling toward the a-file. The king still goes only two squares, but the rook travels three.",
+      "line": [
+        {
+          "move": "e1c1",
+          "say": "The king goes two squares toward the a-file, and the rook jumps over it to d1."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "c1"
+        },
+        {
+          "from": "a1",
+          "to": "d1"
+        }
+      ],
+      "highlight": [
+        "c1",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is legal."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "d1",
+            "piece": "R",
+            "after_move": "e1c1"
+          },
+          "statement": "The rook lands on d1."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "c1",
+            "piece": "K",
+            "after_move": "e1c1"
+          },
+          "statement": "The king lands on c1."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Writing it down.** On a scoresheet or in the app's move list, castling toward the h-file is written O-O and castling toward the a-file is written O-O-O (capital letter O, not zero). The longer one is the longer rook trip. Each is a single move, so the other side replies as usual.",
+      "chapter": "Meet the idea"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-2"
+    },
+    {
+      "type": "card",
+      "text": "Castling does two jobs in one move. It takes the king off the middle files, where attacks often come, and it brings a rook towards the action. [I] That is why castling is so often played in the opening. It is a rule of thumb, not a law. Look at the two boards that follow."
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/5ppp/8/8/8/8/PPP2PPP/R3K2R w KQ - 0 1",
+      "caption": "White has not castled. The black rook owns the open e-file and the white king is already in check.",
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "e8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          },
+          "statement": "White is in check."
+        }
+      ],
+      "line": [
+        {
+          "move": "e1f1",
+          "say": "The king must step aside, and the right to castle is gone for good. The h1 rook is now stuck in its corner."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4r1k1/5ppp/8/8/8/8/PPP2PPP/R4RK1 w - - 0 1",
+      "caption": "Same rook, but White castled earlier. The king is off the e-file, so there is no check, and the rook on f1 now stands on a file that can open later.",
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "g1",
+        "f1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "White is not in check."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-3"
+    },
+    {
+      "type": "card",
+      "text": "There are four conditions. Ask them in this order. Have the king and that rook never moved? Are all the squares between them empty? Is the king out of check right now? Is every square the king crosses or lands on safe from attack? The boards that follow show each one, and what happens when it fails.",
+      "chapter": "The four conditions"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "Condition one. White's king takes a short walk and returns. Watch what the walk costs.",
+      "line": [
+        {
+          "move": "e1e2",
+          "say": "The king steps one square forward."
+        },
+        {
+          "move": "e8e7",
+          "say": "Black's king steps too, just to pass a move."
+        },
+        {
+          "move": "e2e1",
+          "say": "White's king walks back to its home square."
+        },
+        {
+          "move": "e7e8",
+          "say": "Black's king goes home as well."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling toward the h-file is legal at the start."
         },
         {
           "id": "C2",
           "type": "legal_move",
           "params": {
             "move": "e1c1"
-          }
+          },
+          "statement": "Castling toward the a-file is legal at the start."
         }
       ]
     },
     {
-      "type": "item",
-      "item": "IA0-78"
-    },
-    {
-      "type": "card",
-      "text": "You may castle only if: the king and that rook have never moved; every square between them is empty; the king is not in check; and the king does not pass over or land on an attacked square. The rook's own path does not have to be safe."
-    },
-    {
-      "type": "contrast",
-      "title": "Same castle, a rook arrives",
-      "prompt": "A black rook lands on f3. Predict first: can White still castle kingside?",
-      "working": "IA0-79",
-      "failing": "IA0-80",
-      "irrelevant": "IA0-81"
-    },
-    {
-      "type": "item",
-      "item": "IA0-82"
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K2R w - - 4 3",
+      "caption": "Everything looks like the start: kings and rooks are on their home squares and nothing is in between. Yet castling is gone for good. The game remembers that the king moved.",
+      "highlight": [
+        "e1",
+        "a1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "White can no longer castle toward the h-file."
+        },
+        {
+          "id": "C2",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "White can no longer castle toward the a-file."
+        }
+      ]
     },
     {
       "type": "item",
       "item": "IA0-83"
     },
     {
+      "type": "board",
+      "fen": "4k3/p7/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "The same idea for a rook. White's h1 rook steps over and comes straight back.",
+      "line": [
+        {
+          "move": "h1g1",
+          "say": "The rook on h1 steps one square along its row."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black makes a quiet pawn move."
+        },
+        {
+          "move": "g1h1",
+          "say": "The rook returns to its corner."
+        },
+        {
+          "move": "a6a5",
+          "say": "Black pushes the pawn once more."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling toward the h-file is legal at the start."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Castling toward the a-file is legal at the start."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/p7/8/8/8/R3K2R w Q - 0 3",
+      "caption": "Only the rook that moved lost the right. The king and the other rook never moved, so castling toward the a-file still works.",
+      "highlight": [
+        "h1",
+        "a1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling toward the h-file is gone."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Castling toward the a-file is still legal."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/4b3/8/8/8/R3K2R b KQ - 0 1",
+      "caption": "The rook never moved, but a capture also ends the right. Black's bishop takes the rook on a1.",
+      "line": [
+        {
+          "move": "e5a1",
+          "say": "The bishop captures the rook on a1. A rook that is gone cannot take part in castling."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "a1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5a1"
+          },
+          "statement": "The bishop can take the rook."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/b3K2R w K - 0 2",
+      "caption": "Castling toward the a-file is gone. Castling toward the h-file survives.",
+      "highlight": [
+        "a1",
+        "h1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is gone."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is still legal."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K2R w K - 0 3",
+      "caption": "A rook stands on a1 again, yet the right stays lost: the game remembers, not the picture. A king can also castle only once per game.",
+      "highlight": [
+        "a1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is still not allowed."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is allowed."
+        }
+      ]
+    },
+    {
       "type": "item",
-      "item": "IA0-84"
+      "item": "IBG-LFNDCASTLE1-4"
+    },
+    {
+      "type": "card",
+      "text": "Condition two: every square between the king and the rook must be empty, whoever's piece is in the way. On the king's side that is two squares. On the queen's side it is three. Pieces have to move out first, which is one reason castling toward the a-file usually takes longer.",
+      "chapter": "The four conditions"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/p7/8/8/8/8/8/RN2K2R w KQ - 0 1",
+      "caption": "White wants to castle toward the a-file, but the knight on b1 blocks the way.",
+      "line": [
+        {
+          "move": "b1c3",
+          "say": "The knight steps out of the way, so b1 is empty."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black makes a quiet move. Now b1, c1 and d1 are all empty."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Castling toward the a-file is blocked at first."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling toward the h-file is already legal."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/8/8/R3K1nR w KQ - 0 1",
+      "caption": "An enemy piece blocks too. A black knight sits on g1, so castling toward the h-file is impossible. Castling toward the a-file is fine.",
+      "highlight": [
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "The knight on g1 blocks kingside castling."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is legal."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-5"
+    },
+    {
+      "type": "card",
+      "text": "Condition three: you cannot castle while your king is in check. To answer a check you must move the king, block the line, or capture the checking piece. Castling is not on that list. Watch a rook give check, then look at the position it creates."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/r7/8/8/PPP2PPP/R3K2R b KQ - 0 1",
+      "caption": "Black to move. At the moment nothing attacks White's king, so castling would be legal if it were White's turn.",
+      "line": [
+        {
+          "move": "a5e5",
+          "say": "The rook swings to the open e-file and gives check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e1",
+        "e5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Right now nothing attacks e1."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 1,
+            "after_move": "a5e5"
+          },
+          "statement": "After the rook move, e1 is attacked."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/4r3/8/8/PPP2PPP/R3K2R w KQ - 1 2",
+      "caption": "White to move, in check. The rook and the king both stand where they would for castling, but it is not allowed.",
+      "line": [
+        {
+          "move": "e1d2",
+          "say": "The king steps off the e-file. That is a legal way to answer the check."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          },
+          "statement": "White is in check."
+        },
+        {
+          "id": "C2",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling toward the h-file is not allowed in check."
+        },
+        {
+          "id": "C3",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Castling toward the a-file is not allowed in check."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IA0-82"
+    },
+    {
+      "type": "board",
+      "fen": "4k3/p3b3/8/8/8/8/PPP2PPP/R3K2R b KQ - 0 1",
+      "caption": "A check from earlier does not matter. Black checks, White blocks, and then the king is free to castle.",
+      "line": [
+        {
+          "move": "e7b4",
+          "say": "The bishop gives check along the diagonal."
+        },
+        {
+          "move": "c2c3",
+          "say": "White blocks the diagonal with a pawn, so the king is no longer in check."
+        },
+        {
+          "move": "a7a6",
+          "say": "Black makes a quiet move."
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles. Having been in check earlier changes nothing; only check right now matters."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e7",
+          "to": "b4"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "Nothing attacks e1 at the start."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e1",
+            "color": "black",
+            "count": 1,
+            "after_move": "e7b4"
+          },
+          "statement": "The bishop's check lands on e1."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Condition four: the king may not cross or land on a square that an enemy piece attacks. Only the king's two squares count. The rook may be attacked, and it may cross an attacked square. On the queenside the extra square beside the rook belongs to the rook's journey, not the king's."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/8/5r2/8/R3K2R w KQ - 0 1",
+      "caption": "The black rook on f3 attacks f1, a square the king would cross. Castling toward the h-file is off, but castling toward the a-file is fine.",
+      "arrows": [
+        {
+          "from": "f3",
+          "to": "f1"
+        }
+      ],
+      "highlight": [
+        "f1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "f1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook attacks f1."
+        },
+        {
+          "id": "C2",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is not allowed."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is allowed."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/2b5/8/8/PPP3PP/R3K2R w KQ - 0 1",
+      "caption": "Now the landing square. The bishop on c5 attacks g1 through the empty f2 square, so the king may not land there.",
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "g1"
+        }
+      ],
+      "highlight": [
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The bishop attacks g1."
+        },
+        {
+          "id": "C2",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is not allowed."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is allowed."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r2k3/8/8/8/8/8/P1P2PPP/R3K2R w KQ - 0 1",
+      "caption": "The rook's square does not matter. The black rook attacks b1, which only the rook crosses, so castling toward the a-file is still legal.",
+      "arrows": [
+        {
+          "from": "b8",
+          "to": "b1"
+        }
+      ],
+      "highlight": [
+        "b1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "b1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The rook attacks b1."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is legal."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is legal."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r3k3/8/8/8/8/8/8/R3K2R w KQ - 0 1",
+      "caption": "Even an attacked rook does not stop castling. The black rook attacks White's rook on a1, but the king's squares are safe.",
+      "arrows": [
+        {
+          "from": "a8",
+          "to": "a1"
+        }
+      ],
+      "highlight": [
+        "a1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "a1",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The black rook attacks a1."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "Queenside castling is legal."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Kingside castling is legal."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two common slips.** First, moving the rook before the king: the game reads that as a rook move and the right is spent. Always start with the king. Second, checking only the king's start and end squares: the square in between counts too, as the rook on f3 showed.",
+      "chapter": "Mistakes"
+    },
+    {
+      "type": "contrast",
+      "title": "Same castle, a rook arrives",
+      "prompt": "Predict first: can White castle kingside in each position?",
+      "working": "IA0-79",
+      "failing": "IA0-80",
+      "irrelevant": "IA0-81"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-6"
+    },
+    {
+      "type": "card",
+      "text": "Which side? Castling toward the h-file needs two squares empty and leaves the rook beside the king. Castling toward the a-file needs three and takes longer to prepare. [I] So the kingside is usually quicker. [I] Choose the side away from where the opponent is attacking, unless a concrete line says otherwise. Watch both happen in real move orders.",
+      "chapter": "Kingside, queenside, and whether to"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "A common opening. Watch which pieces must leave before each side can castle.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "A centre pawn moves, opening the way for the bishop on f1."
+        },
+        {
+          "move": "e7e5",
+          "say": "Black does the same, freeing the bishop on f8."
+        },
+        {
+          "move": "g1f3",
+          "say": "The knight leaves g1. That is one of the two squares the king needs."
+        },
+        {
+          "move": "b8c6",
+          "say": "Black brings out a knight."
+        },
+        {
+          "move": "f1c4",
+          "say": "The bishop leaves f1. Both squares between king and rook are empty now."
+        },
+        {
+          "move": "f8c5",
+          "say": "Black's bishop leaves f8, clearing one square for Black's castling."
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles toward the h-file: the king reaches g1, the rook f1."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black's knight leaves g8, the last piece in the way of Black's castling."
+        },
+        {
+          "move": "d2d3",
+          "say": "A quiet pawn move."
+        },
+        {
+          "move": "e8g8",
+          "say": "Black castles toward the h-file too."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "At the start castling is blocked by the pieces at home."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "e2e4"
+          },
+          "statement": "The pawn can move to open the bishop."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "A queenside example. Three pieces must leave, so it takes more moves.",
+      "line": [
+        {
+          "move": "d2d4",
+          "say": "The pawn opens the way for the bishop on c1 and the queen."
+        },
+        {
+          "move": "d7d5",
+          "say": "Black meets it in the centre."
+        },
+        {
+          "move": "b1c3",
+          "say": "The knight leaves b1: the first of three squares is clear."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight."
+        },
+        {
+          "move": "c1f4",
+          "say": "The bishop leaves c1: the second square is clear."
+        },
+        {
+          "move": "e7e6",
+          "say": "Black opens the bishop on f8."
+        },
+        {
+          "move": "d1d2",
+          "say": "The queen leaves d1: all three squares are empty."
+        },
+        {
+          "move": "f8e7",
+          "say": "Black prepares to castle."
+        },
+        {
+          "move": "e1c1",
+          "say": "White castles toward the a-file: the king reaches c1, the rook d1."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "e1c1"
+          },
+          "statement": "At the start castling toward the a-file is blocked."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "d2d4"
+          },
+          "statement": "The pawn can move."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "5rk1/5ppp/8/8/8/8/5PPP/5RK1 w - - 0 1",
+      "caption": "Both kings on the same side. Each shield is three pawns, so a pawn push by either player weakens its own king first. Lasker's point (paraphrased): ask what a pawn move stops guarding.",
+      "highlight": [
+        "f2",
+        "g2",
+        "h2",
+        "f7",
+        "g7",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f2",
+              "g2",
+              "h2"
+            ]
+          },
+          "statement": "White's shield is three pawns."
+        },
+        {
+          "id": "C2",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "black",
+            "squares": [
+              "f7",
+              "g7",
+              "h7"
+            ]
+          },
+          "statement": "Black's shield is three pawns."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "2kr4/ppp2ppp/8/8/8/8/PPP2PPP/5RK1 w - - 0 1",
+      "caption": "Kings on opposite sides. Each side can push the pawns on the wing where the enemy king is, because it costs its own king nothing. [I] This is why such games turn into a race.",
+      "line": [
+        {
+          "move": "b2b4",
+          "say": "White starts a pawn storm on the side where Black's king lives."
+        },
+        {
+          "move": "g7g5",
+          "say": "Black answers by storming White's king."
+        }
+      ],
+      "highlight": [
+        "c8",
+        "g1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "white",
+            "squares": [
+              "f2",
+              "g2",
+              "h2"
+            ]
+          },
+          "statement": "White's own king shield is untouched by the b-pawn push."
+        },
+        {
+          "id": "C2",
+          "type": "king_pawn_shield",
+          "params": {
+            "color": "black",
+            "squares": [
+              "b7",
+              "c7"
+            ]
+          },
+          "statement": "Black's king has pawns on b7 and c7 in front of it."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-7"
+    },
+    {
+      "type": "card",
+      "text": "When should you castle? Capablanca advised keeping the option open and finishing development first, (*Chess Fundamentals*, Sec. 7). Edward Lasker warned that every pawn move near a castled king leaves squares unguarded (*Chess Strategy*). [H] I suspect that beginners who castle once their knights and bishops are out lose fewer games to centre attacks than those who wait; this is untested."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/1b3ppp/8/3q4/8/6P1/5P1P/5RK1 b - - 0 1",
+      "caption": "White has just pushed the g-pawn one square. Square g2 lost its pawn, and the queen and bishop line up on the long diagonal. Black to move.",
+      "line": [
+        {
+          "move": "d5g2",
+          "say": "The queen lands on g2, backed by the bishop. The king has no square and cannot capture."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b7",
+          "to": "g2"
+        }
+      ],
+      "highlight": [
+        "g2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "g2",
+            "color": "black",
+            "count": 1
+          },
+          "statement": "The queen attacks g2, with the bishop behind it."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "d5g2",
+            "n": 1
+          },
+          "statement": "Qg2 is checkmate."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "4k3/8/8/8/q7/2N5/PPP2PPP/R3K2R w KQ - 0 1",
+      "caption": "Castling is a choice, not a duty. White can castle here, but the black queen is hanging.",
+      "line": [
+        {
+          "move": "c3a4",
+          "say": "The knight captures the queen. Nothing recaptures it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "a4"
+        }
+      ],
+      "highlight": [
+        "a4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e1g1"
+          },
+          "statement": "Castling is legal here."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c3a4"
+            ],
+            "within_cp": 40
+          },
+          "statement": "Taking the queen is best."
+        },
+        {
+          "id": "C3",
+          "type": "move_loses",
+          "params": {
+            "move": "e1g1",
+            "cp": 300
+          },
+          "statement": "Castling is far worse than taking the queen."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-8"
+    },
+    {
+      "type": "item",
+      "item": "IA0-84",
+      "silent": true,
+      "chapter": "Check yourself"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-9",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCASTLE1-10",
+      "silent": true
     },
     {
       "type": "practice",
@@ -96,9 +1180,23 @@
       "n": 6
     },
     {
+      "type": "card",
+      "text": "**Explain it to a friend.** Write the four checks in your own words, plus what makes the right vanish for good. Then compare: king and rook never moved, nothing between them, no check now, no attacked square on the king's route. A captured rook also ends it."
+    },
+    {
       "type": "reflect",
-      "kind": "confidence",
-      "prompt": "Which castling condition would you check last in a real game: moved pieces, empty squares, check, or attacked squares?"
+      "kind": "expect",
+      "prompt": "Explain castling in your own words, then name the check you are most likely to forget.",
+      "fields": [
+        {
+          "id": "explain",
+          "label": "My explanation:"
+        },
+        {
+          "id": "forget",
+          "label": "The check I am most likely to forget:"
+        }
+      ]
     }
   ],
   "review": {
@@ -107,6 +1205,9 @@
   },
   "sources": [
     "docs/first-hours.md session 3",
-    "docs/council-synthesis.md CD-1, CD-4"
+    "docs/council-synthesis.md CD-1, CD-4",
+    "docs/citable-views.md 1.11 (Capablanca, Chess Fundamentals Sec. 7, Ex. 18, paraphrased) and 4.12 (Edward Lasker, Chess Strategy, game 12 note and K17, paraphrased)",
+    "Positions built by replaying legal moves with python-chess; see content/items/lesson-bg-l-fnd-castle-1.json provenance",
+    "[I] and [H] marks in the text are inferences and guesses, not measured"
   ]
 }

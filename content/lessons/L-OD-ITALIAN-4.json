@@ -1,0 +1,2861 @@
+{
+ "id": "L-OD-ITALIAN-4",
+ "course": "opening-deep-dives",
+ "series": "italian",
+ "title": "The d4 break and the typical middlegame structures",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "OPN.PRINCIPLES",
+  "POS.BREAKS",
+  "POS.STRUCTURE.CHAIN",
+  "POS.STRUCTURE.IQP",
+  "POS.OUTPOST",
+  "POS.BISHOPS",
+  "SAF.COUNT",
+  "SAF.LOOSE"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Asks the three questions before a central break (can a pawn retake, is any piece or pawn loose, does a capture on e4 win anything) as a checklist, and says which one a given position fails",
+  "Tells a ready d4 from a premature one in positions that differ by one feature (the pawn on c3, a pawn attacking the bishop, a move on the other wing)",
+  "Names the block moves against the check on b4, says what each leaves, and knows why the pinned knight on c3 is playable but double-edged",
+  "Describes the isolated-pawn structure (what it gives White and what it costs), and counts the attackers and defenders of the pawn on d4",
+  "Describes the big-centre and closed-centre structures with one plan for each side, and avoids the typical mistakes (the e-pawn push once ...d5 attacks the bishop on c4, castling with the bishop attacked by a pawn, the knight recapture on d4)",
+  "Quotes our counts for move 5, 6 and 7 with their sample sizes and says what the counts do and do not show"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "chapter": "Hook: the pawn on c3 can take back",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+   "caption": "Move 6 of the Giuoco Piano, White to move. White pushed the d-pawn and Black took it. The pawn on c3 can take back, which would put two pawns side by side in the centre. Before any explanation, ask: if the pawn takes back, what will Black's bishop on c5 do with the new pawn, and what does White get in return?",
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d4"
+    },
+    {
+     "from": "c5",
+     "to": "b4"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "d4",
+    "c5",
+    "b4",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c3d4"
+     },
+     "statement": "The recapture with the c-pawn is legal."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5",
+       "c3d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the push e5 or the recapture on d4, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 30,
+      "depth": 16
+     },
+     "statement": "At depth 16 the position is level: the engine's score is between -30 and +30 centipawns for White."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Your guess before any explanation, even if you are unsure: if White takes back with the c-pawn, what does the black bishop do next, and who gains from that? One sentence each.",
+   "fields": [
+    {
+     "id": "black",
+     "label": "What Black does next:"
+    },
+    {
+     "id": "gain",
+     "label": "Who gains from it:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** The pawn break d4 decides what kind of game an Italian becomes. Today you answer three questions: when does the break work, what structures follow it, and what is each side trying to do in each of them? By the end you can look at a pawn on c3 and a bishop on c4 and say which of three kinds of position is coming, and what you want from it."
+  },
+  {
+   "type": "board",
+   "chapter": "What the recapture buys",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+   "caption": "Step through the recapture and Black's check. Count what each side has at the end: two white pawns abreast in the centre, against one tempo and a trade of bishops.",
+   "line": [
+    {
+     "move": "c3d4",
+     "say": "The c-pawn takes back. White now has two pawns side by side on d4 and e4, and the bishop on c4 still aims at f7."
+    },
+    {
+     "move": "c5b4",
+     "say": "Black's bishop gives check along the diagonal to e1. The check forces White to respond, but the exchange that follows also develops a white knight. [I] It is not clear that Black gains a tempo."
+    },
+    {
+     "move": "c1d2",
+     "say": "The bishop steps in front of the check."
+    },
+    {
+     "move": "b4d2",
+     "say": "Black trades off the bishop that blocked, with a second check."
+    },
+    {
+     "move": "b1d2",
+     "say": "The knight retakes and develops. It also guards the pawn on e4, which the knight on f6 attacks."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d4"
+    },
+    {
+     "from": "b4",
+     "to": "e1"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e4",
+    "d2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c3d4"
+     },
+     "statement": "The recapture on d4 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "connected",
+      "color": "white",
+      "includes": [
+       "d4",
+       "e4"
+      ],
+      "after_move": "c3d4"
+     },
+     "statement": "After the recapture the pawns on d4 and e4 are connected (side by side)."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c3d4",
+       "c5b4",
+       "c1d2",
+       "b4d2",
+       "b1d2"
+      ]
+     },
+     "statement": "At the end the pawn on e4 has one white defender (the knight on d2)."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c3d4",
+       "c5b4",
+       "c1d2",
+       "b4d2",
+       "b1d2"
+      ]
+     },
+     "statement": "At the end the pawn on e4 has one black attacker (the knight on f6)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP3PPP/RNBQK2R w KQkq - 1 7",
+   "caption": "White is in check from the bishop on b4, and the knight on f6 attacks the pawn on e4. Seven moves answer the check. Good: the bishop or the b1 knight blocks on d2. Playable at a small cost: the knight block on c3 (it is pinned) and the king step to f1 (castling is lost). Bad: the king step to e2 and the f3 knight to d2. The queen block loses the queen at once. Which block would you choose, and what does it do about e4?",
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "e1"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "e1",
+    "d2",
+    "c3",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "White is in check."
+    },
+    {
+     "id": "C2",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "b1c3",
+       "b1d2",
+       "c1d2",
+       "d1d2",
+       "e1e2",
+       "e1f1",
+       "f3d2"
+      ]
+     },
+     "statement": "White has exactly seven legal moves: Bd2, Nbd2, Nfd2, Nc3, Qd2, Ke2 and Kf1."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1d2",
+       "b1d2",
+       "b1c3",
+       "e1f1"
+      ],
+      "within_cp": 60
+     },
+     "statement": "At depth 16 the engine's best move is the bishop to d2, the knight from b1 to d2, the knight to c3 or the king to f1, and all four are within 60 centipawns of it."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "f3d2",
+      "cp": 80
+     },
+     "statement": "At depth 16 the knight from f3 to d2 is at least 80 centipawns worse than the best move."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "e1e2",
+      "cp": 80
+     },
+     "statement": "At depth 16 the king step to e2 is at least 80 centipawns worse than the best move."
+    },
+    {
+     "id": "C6",
+     "type": "move_loses",
+     "params": {
+      "move": "d1d2",
+      "cp": 500
+     },
+     "statement": "At depth 16 the queen block on d2 is at least five pawns worse than the best move."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-1"
+  },
+  {
+   "type": "card",
+   "text": "**Three questions before the break.** First: when the pawn on d4 is taken, can a pawn take back? Second: is any of my pieces attacked by a pawn or left without a defender? Third: does the check, or the knight's attack on e4, win something? [I] This is a checklist, not a law: calm answers make the break probably playable. The next three positions change one feature each. Predict first.",
+   "chapter": "Three questions before the break"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 1 5",
+   "caption": "Position 1: the break d4 in the position you know. Answer the three questions. Can a pawn retake? Is anything loose? What does the knight on f6 do to e4? Only one white unit is loose here, the pawn on e4, and that turns out to be affordable.",
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d4"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "c3",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The pawn on c3 attacks d4."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "e4"
+      ]
+     },
+     "statement": "Only the pawn on e4 is attacked and undefended."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d3",
+       "d2d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is d3 or the break d4, and d4 is within 40 centipawns of it."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Predict. In position 2 White has played a3 instead of c3, so the c-pawn is still on c2. Is the break d4 still playable? Say which of the three questions changes.",
+   "fields": [
+    {
+     "id": "pred",
+     "label": "My prediction:"
+    },
+    {
+     "id": "why",
+     "label": "The question that changes:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/P4N2/1PPP1PPP/RNBQK2R w KQkq - 1 5",
+   "caption": "Position 2: White has played a3 instead of c3, and the c-pawn is still on c2, so no pawn can retake on d4. The question it tests: can a pawn retake? After d4 and ...exd4 only a piece can, and Black's knight on c6 and bishop on c5 both look at that square.",
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d4"
+    },
+    {
+     "from": "c5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "a3",
+    "d4",
+    "c6",
+    "c5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No white pawn attacks d4."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "d2d4",
+      "cp": 100
+     },
+     "statement": "At depth 16 the break d4 is at least 100 centipawns worse than the best move."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d3",
+       "b1c3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is d3 or the knight to c3, and both are within 40 centipawns of it."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n2n2/2bpp3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 0 5",
+   "caption": "Position 3: the pawn is back on c3 but Black's d-pawn has already reached d5 (our edit of position 1). It attacks the bishop on c4 and the pawn on e4. Name every loose white unit, then ask what the break d4 does about them.",
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "c4"
+    },
+    {
+     "from": "d5",
+     "to": "e4"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "e4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c4",
+       "e4"
+      ]
+     },
+     "statement": "Exactly the bishop on c4 and the pawn on e4 are attacked and undefended."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "d2d4",
+      "cp": 250
+     },
+     "statement": "At depth 16 the break d4 is at least 250 centipawns worse than the best move: the pawn takes the bishop."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the capture exd5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n2n2/2bpp3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 0 5",
+   "caption": "The repair: first remove the problem, then break. Step through it. White meets the attack on the bishop with a capture, develops, and only then plays d4, so every unit is safe when the pawn retakes.",
+   "line": [
+    {
+     "move": "e4d5",
+     "say": "White takes the attacker, so the bishop and the pawn are no longer loose."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight retakes."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles. Nothing is loose now."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles too."
+    },
+    {
+     "move": "d2d4",
+     "say": "Now the break comes: all three questions are calm."
+    },
+    {
+     "move": "e5d4",
+     "say": "Black takes the pawn."
+    },
+    {
+     "move": "c3d4",
+     "say": "The pawn on c3 retakes, exactly as the first question needs."
+    },
+    {
+     "move": "c5e7",
+     "say": "The bishop leaves the attacked square."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "d5"
+    },
+    {
+     "from": "c3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d4",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the capture exd5."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e4d5",
+       "f6d5",
+       "e1g1",
+       "e8g8",
+       "d2d4",
+       "e5d4"
+      ]
+     },
+     "statement": "After d4 and ...exd4 the pawn on c3 attacks d4 (a pawn can retake)."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [],
+      "after_moves": [
+       "e4d5",
+       "f6d5"
+      ]
+     },
+     "statement": "After the capture and the retake nothing white is attacked and undefended."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "What changed in position 2, and what changed in position 3? For each, say which of the three questions it broke.",
+   "fields": [
+    {
+     "id": "p2",
+     "label": "Position 2 broke question:"
+    },
+    {
+     "id": "p3",
+     "label": "Position 3 broke question:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The idea: a break is a question of timing.** The same pawn move is good in one position and loses a piece in the next. [I] A loose pawn on e4 matters only if Black's capture there wins something, or wins it with a gain of time. Two repairs appear: a knight on d2 guards the pawn, or White lets it go and wins the material back by a tactic."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP3PPP/RNBQK2R w KQkq - 1 7",
+   "caption": "The second block, the knight from b1. The pawn on e4 is lost for a moment but the pawn on d4 moves with tempo. Step through it and see how the two sides stand after both castle.",
+   "line": [
+    {
+     "move": "b1d2",
+     "say": "The other safe block: the knight from b1 covers e4 and blocks the diagonal."
+    },
+    {
+     "move": "b4d2",
+     "say": "Black trades the bishop for the knight, which removes the defender of e4."
+    },
+    {
+     "move": "c1d2",
+     "say": "The bishop retakes and develops."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black takes the pawn, and the knight now attacks the bishop on d2."
+    },
+    {
+     "move": "d4d5",
+     "say": "The pawn advances and attacks the knight on c6: White gains time."
+    },
+    {
+     "move": "c6e7",
+     "say": "The knight retreats."
+    },
+    {
+     "move": "d2b4",
+     "say": "The bishop steps to b4 and eyes the knight on e7 through d6."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black blocks the diagonal with the pawn, which Black's c-pawn guards."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles. The pawn on d5 cramps Black."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles too. White has given up the e4 pawn for time and space; the engine calls the end position level."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b1",
+     "to": "d2"
+    },
+    {
+     "from": "d4",
+     "to": "d5"
+    },
+    {
+     "from": "d5",
+     "to": "c6"
+    }
+   ],
+   "highlight": [
+    "d2",
+    "e4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1d2",
+       "b1d2"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the bishop to d2 or the knight from b1 to d2, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b1d2",
+       "b4d2",
+       "c1d2",
+       "f6e4",
+       "d4d5"
+      ]
+     },
+     "statement": "After the pawn advance to d5 a white pawn attacks the knight's square c6."
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "b1d2"
+     },
+     "statement": "The knight block from b1 is legal."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 30,
+      "depth": 16,
+      "after_moves": [
+       "b1d2",
+       "b4d2",
+       "c1d2",
+       "f6e4",
+       "d4d5",
+       "c6e7",
+       "d2b4",
+       "d7d6",
+       "e1g1",
+       "e8g8"
+      ]
+     },
+     "statement": "At the end of the line the engine's score is between -30 and +30 centipawns for White (level)."
+    }
+   ],
+   "chapter": "The check on b4: three ways to block"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "White gave a pawn for time and space. Is the pawn worth it? Write what you would look at on the board, and what you would measure in games, before you decide.",
+   "fields": [
+    {
+     "id": "worth",
+     "label": "Worth it? What I would measure:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP3PPP/RNBQK2R w KQkq - 1 7",
+   "caption": "The third block, the knight to c3, where it is pinned. Old books give White a pawn-sacrifice attack here, which some call the Moeller idea [R]. Our master table has no games with this move (fewer than 3). Step through the first eight plies and count what Black has to save.",
+   "line": [
+    {
+     "move": "b1c3",
+     "say": "The third block: the knight steps in front of the bishop, but it is now pinned against the king."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black takes the pawn on e4. The pinned knight cannot take part in a recapture."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles and gives the pawn for time. The rook now looks at the e-file."
+    },
+    {
+     "move": "b4c3",
+     "say": "Black takes the pinned knight with the bishop."
+    },
+    {
+     "move": "d4d5",
+     "say": "The pawn push attacks the knight on c6, while the b-pawn attacks the bishop on c3: Black has two things to save."
+    },
+    {
+     "move": "c3f6",
+     "say": "The bishop escapes the pawn and stays on the long diagonal."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook attacks the knight on e4, which is pinned to the king on the open e-file."
+    },
+    {
+     "move": "c6e7",
+     "say": "Black blocks the file with the knight that the pawn attacked, so it escapes too, and it also unpins the knight on e4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "e1"
+    },
+    {
+     "from": "e1",
+     "to": "e4"
+    },
+    {
+     "from": "d4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "e4",
+    "e1",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "b1c3",
+      "cp": 25
+     },
+     "statement": "At depth 16 the knight block on c3 is at least a quarter of a pawn worse than the best block."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1d2",
+       "b1d2"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the bishop to d2 or the knight from b1 to d2, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "b1c3"
+     },
+     "statement": "The knight block on c3 is legal."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppppnppp/5b2/3P4/2B1n3/5N2/PP3PPP/R1BQR1K1 w kq - 3 11",
+   "caption": "The rest of the try, Black to move at the end. Black has won a pawn and White has the better-placed pieces. Count the material, then look at the knight on g5: it eyes f7 and h7. The engine sees Black slightly better, so the attack is a gamble, not a refutation.",
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "h7"
+    },
+    {
+     "from": "g5",
+     "to": "f7"
+    },
+    {
+     "from": "e1",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "g5",
+    "e4",
+    "e7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -80,
+      "max": -10,
+      "depth": 16,
+      "after_moves": [
+       "e1e4",
+       "d7d6",
+       "c1g5",
+       "f6g5",
+       "f3g5"
+      ]
+     },
+     "statement": "At depth 16 the engine gives Black a small edge: the score is between -80 and -10 centipawns for White."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g5",
+      "squares": [
+       "e4",
+       "e6",
+       "f3",
+       "f7",
+       "h3",
+       "h7"
+      ],
+      "after_moves": [
+       "e1e4",
+       "d7d6",
+       "c1g5",
+       "f6g5",
+       "f3g5"
+      ]
+     },
+     "statement": "The knight on g5 attacks e4, e6, f3, f7, h3, h7."
+    }
+   ],
+   "line": [
+    {
+     "move": "e1e4",
+     "say": "Black spent the move saving the knight from the pawn, so the knight on e4 falls. Black is now a pawn up."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black frees the bishop on c8 and defends e5."
+    },
+    {
+     "move": "c1g5",
+     "say": "The bishop develops and attacks the bishop on f6."
+    },
+    {
+     "move": "f6g5",
+     "say": "Black trades."
+    },
+    {
+     "move": "f3g5",
+     "say": "The knight retakes and eyes f7 and h7. White has activity for the pawn."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What people play at move seven.** Master table (2500+): 212 games at the check. The b1 knight to d2 in 111 (White scored 57.7 percent), the bishop block in 101 (49.0 percent, 85 draws). Online, rated 1500 to 1700, 918 games: the knight to c3 in 547 (White 56.1 percent), the bishop in 348 (51.6 percent). The knight to c3 is not in the master table (fewer than 3 games). [H] It scores online because Black must find the capture on e4."
+  },
+  {
+   "type": "board",
+   "chapter": "A side line: Black takes the pawn",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/1bBPP3/5N2/PP3PPP/RNBQK2R w KQkq - 1 7",
+   "caption": "Instead of trading bishops after the bishop block, Black can take the pawn on e4. Our master table has 20 games with this line: White scored 42.5 percent (2 wins, 13 draws, 5 losses). That is a small sample, so read it as a hint, not a verdict. The next board shows the tactic White has here.",
+   "line": [
+    {
+     "move": "c1d2",
+     "say": "The bishop blocks the check; the queen, the king and the knight guard it."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black takes the pawn. Now both bishops stand on the long diagonal from a5 to e1."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "e1"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d2",
+    "e4",
+    "b4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c1d2"
+     },
+     "statement": "The bishop block on d2 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 30,
+      "depth": 16,
+      "after_moves": [
+       "c1d2",
+       "f6e4"
+      ]
+     },
+     "statement": "After the capture on e4 the engine's score is between -30 and +30 centipawns for White (level)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n5/8/1bBPn3/5N2/PP1B1PPP/RN1QK2R w KQkq - 0 8",
+   "caption": "The position from the last board, White to move. Both bishops stand on the long diagonal and White has a tactic. Step through it and keep a running count of what each side has given up.",
+   "line": [
+    {
+     "move": "d2b4",
+     "say": "The bishop takes the bishop that gave the check, before anything else."
+    },
+    {
+     "move": "c6b4",
+     "say": "The knight retakes, so the bishops are traded and the knight stands on b4."
+    },
+    {
+     "move": "c4f7",
+     "say": "The bishop takes f7 with check. The king is dragged out and cannot castle later."
+    },
+    {
+     "move": "e8f7",
+     "say": "The king has to take."
+    },
+    {
+     "move": "d1b3",
+     "say": "The queen gives check and attacks the knight on b4 at the same time."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black blocks the check with the pawn."
+    },
+    {
+     "move": "b3b4",
+     "say": "The queen takes the knight. From the start of this board White has won a bishop, a pawn and a knight for two bishops, so the material it gave up is regained (level), and the king on f7 cannot castle."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "b4"
+    },
+    {
+     "from": "c4",
+     "to": "f7"
+    },
+    {
+     "from": "b3",
+     "to": "f7"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "d2",
+    "f7",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2b4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the capture Bxb4 is the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 30,
+      "depth": 16
+     },
+     "statement": "At depth 16 the position is level: the engine's score is between -30 and +30 centipawns for White."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "d2b4",
+      "min": -1,
+      "max": 1
+     },
+     "statement": "Along the engine's best line the net material change of Bxb4 is within one pawn of zero."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "chapter": "Structure B: Black strikes with d5",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/2BPP3/5N2/PP1N1PPP/R2QK2R b KQkq - 0 8",
+   "caption": "Structure B. Black to move strikes at once. Master data: after the knight recaptured on d2, all 80 master games in our table continued with this strike (White scored 50.6 percent, 71 draws). Step through it and watch what is left of White's centre.",
+   "line": [
+    {
+     "move": "d7d5",
+     "say": "The pawn attacks the bishop and the pawn on e4 together. This is the strike Black has been preparing."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes: the bishop is no longer attacked and the pawn that Black attacked is gone."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight retakes and centralises. White's pawn on d4 now has no pawn beside it: it is isolated."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d7",
+     "to": "d5"
+    },
+    {
+     "from": "d5",
+     "to": "c4"
+    },
+    {
+     "from": "d5",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c4",
+    "e4",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d7d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the strike d5 is the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "e8g8",
+      "cp": 40
+     },
+     "statement": "At depth 16 castling is at least 40 centipawns worse than the strike."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "isolated",
+      "color": "white",
+      "squares": [
+       "d4"
+      ],
+      "after_moves": [
+       "d7d5",
+       "e4d5",
+       "f6d5"
+      ]
+     },
+     "statement": "After the exchange White's only isolated pawn is on d4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2QK2R w KQkq - 0 10",
+   "caption": "White's most popular move here is Qb3. Master data: 64 games with it, of which 62 were drawn (1 win each); the move O-O appears in 17 games (White scored 52.9 percent). Step through the repetition and ask yourself why masters keep entering it.",
+   "line": [
+    {
+     "move": "d1b3",
+     "say": "The queen backs up the bishop: both aim along the diagonal at the knight on d5 and, behind it, at f7."
+    },
+    {
+     "move": "c6a5",
+     "say": "The knight attacks both the queen and the bishop on c4."
+    },
+    {
+     "move": "b3a4",
+     "say": "The queen steps away with check, so Black cannot take the bishop at once."
+    },
+    {
+     "move": "a5c6",
+     "say": "The knight returns to block the check, and the earlier position is back."
+    },
+    {
+     "move": "a4b3",
+     "say": "The queen goes back and the position repeats: Black can steer into a draw by repetition."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "d5"
+    },
+    {
+     "from": "a5",
+     "to": "b3"
+    },
+    {
+     "from": "a5",
+     "to": "c4"
+    }
+   ],
+   "highlight": [
+    "b3",
+    "a5",
+    "a4",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1g1",
+       "d1b3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is castling or Qb3, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -15,
+      "max": 20,
+      "depth": 16
+     },
+     "statement": "At depth 16 the position is level: the engine's score is between -15 and +20 centipawns for White."
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "d1b3"
+     },
+     "statement": "The queen move Qb3 is legal."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Strong players avoid the most forcing lines not out of fear but because quiet plans keep the winning chances without allowing a known draw. Does the 62 draws in 64 games support that, contradict it, or say nothing? Write what you would want to measure.",
+   "fields": [
+    {
+     "id": "view",
+     "label": "My view and what I would measure:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2QK2R w KQkq - 0 10",
+   "caption": "The alternative: castle first and let the bishop go to b5. Step through it. At the knight retreat, count the attackers and the defenders of the pawn on d4.",
+   "line": [
+    {
+     "move": "e1g1",
+     "say": "White avoids the repetition and finishes development. The bishop on c4 is guarded by the knight on d2."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles too."
+    },
+    {
+     "move": "c4b5",
+     "say": "The bishop leaves c4 [I] (where ...Nb6 could chase it) and eyes the knight on c6, one of the two pieces that press on d4."
+    },
+    {
+     "move": "d5e7",
+     "say": "The knight retreats. The d-file is now open for the black queen, which looks at d4."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook takes the open e-file and attacks the knight on e7."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black develops the bishop and covers d5 and the e-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d4"
+    },
+    {
+     "from": "d8",
+     "to": "d4"
+    },
+    {
+     "from": "f3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "b5",
+    "c6",
+    "e7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e1g1",
+       "d1b3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is castling or Qb3, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "e1g1",
+       "e8g8",
+       "c4b5",
+       "d5e7"
+      ]
+     },
+     "statement": "After the knight retreat two black pieces (the knight on c6 and the queen) attack d4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e1g1",
+       "e8g8",
+       "c4b5",
+       "d5e7"
+      ]
+     },
+     "statement": "At that moment one white piece (the knight on f3) defends d4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2QK2R w KQkq - 0 10",
+   "caption": "The isolated pawn needs piece support. At the moment of the knight retreat, d4 is attacked twice and defended once. Step through the repair and count the defenders at the end.",
+   "line": [
+    {
+     "move": "e1g1",
+     "say": "White castles."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "c4b5",
+     "say": "The bishop eyes the knight on c6."
+    },
+    {
+     "move": "d5e7",
+     "say": "The knight retreats and the queen's file opens: d4 now has two attackers and one defender."
+    },
+    {
+     "move": "d2b3",
+     "say": "The repair: the knight steps to b3, attacks d4 itself and unblocks the queen. Now d4 has three defenders. [I] Taking on c6 would also cut the attackers, but it gives the bishop for a knight; Nb3 keeps all the pieces."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "d4"
+    },
+    {
+     "from": "d1",
+     "to": "d4"
+    },
+    {
+     "from": "f3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "e1g1",
+       "e8g8",
+       "c4b5",
+       "d5e7"
+      ]
+     },
+     "statement": "After the knight retreat two black pieces attack d4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e1g1",
+       "e8g8",
+       "c4b5",
+       "d5e7"
+      ]
+     },
+     "statement": "After the knight retreat only one white piece defends d4."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "e1g1",
+       "e8g8",
+       "c4b5",
+       "d5e7",
+       "d2b3"
+      ]
+     },
+     "statement": "After Nb3 three white pieces (two knights and the queen) defend d4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the isolated pawn means.** The pawn on d4 has no pawn beside it, so only pieces can guard it, and a black knight can sit on d5 where no pawn will ever chase it. In return White gets open lines for the rooks and the bishop. Capablanca (Chess Fundamentals, his ninth game) treated such a pawn as a target to attack from the start, trading minor pieces towards an ending [V-sheet]. [I] Engines are kinder to its owner: activity can pay for the weakness."
+  },
+  {
+   "type": "board",
+   "chapter": "Plans in structure B",
+   "fen": "r1bqk2r/ppp2ppp/2n5/3n4/2BP4/5N2/PP1N1PPP/R2QK2R w KQkq - 0 10",
+   "caption": "How structure B arises, one plausible route (move orders vary [H]). Step through it and see why each move is played: the queen comes to b3 to pressure the knight, Black reinforces d5 with the c-pawn, and White's rook comes to the e-file.",
+   "line": [
+    {
+     "move": "d1b3",
+     "say": "The queen backs up the bishop against the knight on d5."
+    },
+    {
+     "move": "c6e7",
+     "say": "Black avoids the repetition. [I] The knight on c6 had little to do, and on e7 it keeps d5 defended."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook takes the open e-file and attacks the knight on e7."
+    },
+    {
+     "move": "c7c6",
+     "say": "Black fixes the blockade: the pawn on c6 backs the knight on d5, which no white pawn can ever attack."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "d5"
+    },
+    {
+     "from": "e1",
+     "to": "e7"
+    },
+    {
+     "from": "c6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c6",
+    "e1",
+    "e7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d1b3"
+     },
+     "statement": "The queen move Qb3 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "isolated",
+      "color": "white",
+      "squares": [
+       "d4"
+      ],
+      "after_moves": [
+       "d1b3",
+       "c6e7",
+       "e1g1",
+       "e8g8",
+       "f1e1",
+       "c7c6"
+      ]
+     },
+     "statement": "At the end White's only isolated pawn is on d4."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 5,
+      "max": 50,
+      "depth": 16,
+      "after_moves": [
+       "d1b3",
+       "c6e7",
+       "e1g1",
+       "e8g8",
+       "f1e1",
+       "c7c6"
+      ]
+     },
+     "statement": "At depth 16 White has a small edge: between 5 and 50 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2nppp/2p5/3n4/2BP4/1Q3N2/PP1N1PPP/R3R1K1 w - - 0 13",
+   "caption": "The map of structure B. White's pawn on d4 is isolated and Black's knight on d5, backed by the pawn on c6, is a blockader that no white pawn can ever attack. Plans: White wants active pieces (the knight to e4, rooks to the d- and c-files) and the kingside. Black wants to trade pieces and keep the blockade.",
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "e4"
+    },
+    {
+     "from": "c6",
+     "to": "d5"
+    },
+    {
+     "from": "e1",
+     "to": "e7"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "d5",
+    "c6",
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "isolated",
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "statement": "White's only isolated pawn is on d4."
+    },
+    {
+     "id": "C2",
+     "type": "outposts",
+     "params": {
+      "color": "black",
+      "occupied": "own",
+      "squares": [
+       "d5"
+      ]
+     },
+     "statement": "Black's only outpost is d5, occupied by its own knight and backed by the pawn on c6."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No white pawn can attack d5 (no pawn stands on the c- or e-file)."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": 5,
+      "max": 50,
+      "depth": 16
+     },
+     "statement": "At depth 16 White has a small edge: between 5 and 50 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp2nppp/2p5/3n4/2BP4/1Q3N2/PP1N1PPP/R3R1K1 w - - 0 13",
+   "caption": "White's plan in structure B: put the pieces on active squares before the pawn is in danger. Step through the engine's line (depth 18, a small edge for White). [I] The reasons given for each move are my reading of it.",
+   "line": [
+    {
+     "move": "d2e4",
+     "say": "The knight leaves the blocked square d2 for a post where it eyes c5, d6, f6 and g5. It also unblocks the queen's file."
+    },
+    {
+     "move": "a7a5",
+     "say": "[I] Black gains room on the queenside and stops White's b-pawn from advancing."
+    },
+    {
+     "move": "a1c1",
+     "say": "[I] The rook comes to the c-file, where the pawn on c6 is a target."
+    },
+    {
+     "move": "a5a4",
+     "say": "The pawn attacks the queen and gains more space on the queenside."
+    },
+    {
+     "move": "b3a3",
+     "say": "The queen steps to a3 and attacks the knight on e7 along the diagonal."
+    },
+    {
+     "move": "e7f5",
+     "say": "The knight leaves the attack and now eyes the pawn on d4."
+    },
+    {
+     "move": "c1d1",
+     "say": "The rook guards the pawn on d4 again."
+    },
+    {
+     "move": "f8e8",
+     "say": "Black's rook takes the open e-file and faces the knight on e4."
+    },
+    {
+     "move": "h2h3",
+     "say": "A waiting move that gives the king room and takes g4 from the bishop."
+    },
+    {
+     "move": "c8e6",
+     "say": "Black develops the last piece and covers d5 and the e-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "c5"
+    },
+    {
+     "from": "e4",
+     "to": "d6"
+    },
+    {
+     "from": "e4",
+     "to": "f6"
+    },
+    {
+     "from": "e4",
+     "to": "g5"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "d4",
+    "a3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2e4",
+       "h2h3",
+       "a2a4",
+       "b3a3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the knight to e4, h3, a4 or Qa3, and all are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e4",
+      "squares": [
+       "c3",
+       "c5",
+       "d2",
+       "d6",
+       "f2",
+       "f6",
+       "g3",
+       "g5"
+      ],
+      "after_move": "d2e4"
+     },
+     "statement": "After the knight reaches e4 it attacks c3, c5, d2, d6, f2, f6, g3 and g5."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 5,
+      "max": 50,
+      "depth": 16
+     },
+     "statement": "At depth 16 White has a small edge: between 5 and 50 centipawns."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-21"
+  },
+  {
+   "type": "card",
+   "text": "**Structure A: the centre stands.** If Black does not strike back, White keeps both centre pawns. Pawns side by side attack four squares in Black's half, and Capablanca called such a pair the strongest centre, with a warning that pushing one to the fifth rank is a big decision [V-sheet]. [I] White's danger is impatience: the pawns are strongest when the pieces are developed first. Black is cramped but not lost; the next boards show what each side does.",
+   "chapter": "Structure A: the centre stands"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/8/2BPP3/5N2/PP1N1PPP/R2QK2R b KQkq - 0 8",
+   "caption": "Black to move had the strike ...d5 available (it scores best at depth 16). Here Black plays slowly. Step through the slow reply and count the squares the two white pawns attack in Black's half.",
+   "line": [
+    {
+     "move": "e8g8",
+     "say": "Black castles and leaves the centre alone. This is the slow reply."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles too. Both centre pawns are still on d4 and e4 and nothing attacks them."
+    },
+    {
+     "move": "d7d6",
+     "say": "Black guards e5 and frees the bishop on c8, but gives White time."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "c5"
+    },
+    {
+     "from": "d4",
+     "to": "e5"
+    },
+    {
+     "from": "e4",
+     "to": "d5"
+    },
+    {
+     "from": "e4",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e4",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "e8g8",
+      "cp": 40
+     },
+     "statement": "At depth 16 castling is at least 40 centipawns worse than the strike d5."
+    },
+    {
+     "id": "C2",
+     "type": "space",
+     "params": {
+      "color": "white",
+      "mode": "pawn_attacks",
+      "count": 4,
+      "squares": [
+       "c5",
+       "d5",
+       "e5",
+       "f5"
+      ],
+      "after_moves": [
+       "e8g8",
+       "e1g1",
+       "d7d6"
+      ]
+     },
+     "statement": "At the end White's pawns attack four squares in Black's half (c5, d5, e5 and f5); Black's pawns attack none in White's."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "connected",
+      "color": "white",
+      "includes": [
+       "d4",
+       "e4"
+      ],
+      "after_moves": [
+       "e8g8",
+       "e1g1",
+       "d7d6"
+      ]
+     },
+     "statement": "At the end the pawns on d4 and e4 are connected."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/2np1n2/8/2BPP3/5N2/PP1N1PPP/R2Q1RK1 w - - 0 10",
+   "caption": "Structure A in action. White pushes the centre pawn with tempo, Black undermines it, and the pieces come out. Step through and note which of White's centre pawns survives, and which squares White's pawn on h3 controls.",
+   "line": [
+    {
+     "move": "d4d5",
+     "say": "The pawn gains space and attacks the knight on c6: a centre pawn advances with a gain of time."
+    },
+    {
+     "move": "c6e7",
+     "say": "The knight retreats towards the kingside."
+    },
+    {
+     "move": "f1e1",
+     "say": "The rook backs up the pawn on e4. [I] That lets the pawn stand without the bishop's help."
+    },
+    {
+     "move": "c7c6",
+     "say": "Black attacks the advanced pawn from the side."
+    },
+    {
+     "move": "d5c6",
+     "say": "[I] White takes first, before Black takes on d5 and opens the position on Black's terms."
+    },
+    {
+     "move": "e7c6",
+     "say": "The knight retakes and is active again."
+    },
+    {
+     "move": "h2h3",
+     "say": "A quiet move that takes the square g4 from the bishop and the knight."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "d5"
+    },
+    {
+     "from": "c7",
+     "to": "c6"
+    },
+    {
+     "from": "h3",
+     "to": "g4"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c6",
+    "e4",
+    "h3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the push d5 is the engine's best move."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 20,
+      "max": 90,
+      "depth": 16
+     },
+     "statement": "At depth 16 White has an edge of between 20 and 90 centipawns."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d4d5",
+       "c6e7",
+       "f1e1"
+      ]
+     },
+     "statement": "After Re1 two white pieces (the knight on d2 and the rook) defend the pawn on e4."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d4d5",
+       "c6e7",
+       "f1e1",
+       "c7c6",
+       "d5c6",
+       "e7c6",
+       "h2h3"
+      ]
+     },
+     "statement": "After h3 a white pawn attacks g4."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-5"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/2np1n2/8/2BPP3/5N2/PP1N1PPP/R2Q1RK1 w - - 0 10",
+   "caption": "A typical mistake in structure A: the queen sortie Qb3. Step through the engine's answer. At the end the centre is open and the cramp is gone. The engine rates the queen move at least 50 centipawns below the push d5 at the same move.",
+   "line": [
+    {
+     "move": "d1b3",
+     "say": "A natural-looking queen move that increases the pressure on f7, but it walks into a knight attack."
+    },
+    {
+     "move": "c6a5",
+     "say": "The knight attacks the queen and the bishop at once."
+    },
+    {
+     "move": "b3c3",
+     "say": "The queen steps away and keeps guard of the bishop, but the bishop must now be traded."
+    },
+    {
+     "move": "a5c4",
+     "say": "Black trades the bishop for the knight. [I] That knight was Black's passive piece."
+    },
+    {
+     "move": "c3c4",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "d6d5",
+     "say": "Black strikes in the centre with the pawn: the cramp is gone."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a5",
+     "to": "b3"
+    },
+    {
+     "from": "a5",
+     "to": "c4"
+    },
+    {
+     "from": "d6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "b3",
+    "a5",
+    "c4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "d1b3",
+      "cp": 50
+     },
+     "statement": "At depth 16 the queen move Qb3 is at least 50 centipawns worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is d5."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Plans and warnings in structure A.** White: advance with tempo only when the pieces are ready, keep a rook behind the e-pawn, and use the space to attack the king or the weak squares. Black: undermine the advanced pawn with the c-pawn, trade pieces to relieve the cramp, and strike with the d-pawn when it is safe. [H] Many club losses here come from an unprepared push of the e-pawn, a hypothesis our data could test. The next board shows that push."
+  },
+  {
+   "type": "board",
+   "chapter": "Mistakes and repairs",
+   "fen": "r1bqk2r/ppp2ppp/2n2n2/3p4/2BPP3/5N2/PP1N1PPP/R2QK2R w KQkq - 0 9",
+   "caption": "The e-pawn push once ...d5 already attacks the bishop on c4: the typical mistake. Step through it. At the end count the material: it is level. [I] The engine's dislike is positional: White gave up its light bishop and its centre, and Black's queen is active.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "Tempting: the pawn attacks the knight on f6 and seems to win a tempo."
+    },
+    {
+     "move": "d5c4",
+     "say": "But Black first takes the bishop with the pawn."
+    },
+    {
+     "move": "e5f6",
+     "say": "White takes the knight. Material is level for the moment."
+    },
+    {
+     "move": "d8f6",
+     "say": "Black retakes with the queen, which now looks at d4 from f6."
+    },
+    {
+     "move": "d2c4",
+     "say": "White takes the pawn on c4. Material is level, yet the engine rates the push at least 60 centipawns worse than the best move."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "e5"
+    },
+    {
+     "from": "d5",
+     "to": "c4"
+    },
+    {
+     "from": "f6",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "c4",
+    "f6",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "e4e5",
+      "cp": 60
+     },
+     "statement": "At depth 16 the push e5 is at least 60 centipawns worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is exd5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The pawn on d5 attacks the bishop on c4 (one black attacker)."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-3"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n2n2/3p4/2BPP3/5N2/PP1N1PPP/R2QK2R w KQkq - 0 9",
+   "caption": "The second mistake: the bishop on c4 is attacked by a pawn and White castles. Step through it and say how many points of material White has lost at the end (a bishop counts about three, a pawn one).",
+   "line": [
+    {
+     "move": "e1g1",
+     "say": "Castling looks natural, but it ignores the pawn that attacks the bishop."
+    },
+    {
+     "move": "d5c4",
+     "say": "The pawn takes the bishop."
+    },
+    {
+     "move": "d2c4",
+     "say": "The knight takes the pawn back: White has given a bishop for a pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "c4"
+    },
+    {
+     "from": "e1",
+     "to": "g1"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "e1g1",
+      "cp": 250
+     },
+     "statement": "At depth 16 castling is at least 250 centipawns worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The bishop on c4 is attacked once by a black pawn and defended once by the knight on d2."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The knight on d2 defends the bishop on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+   "caption": "The third mistake: recapturing on d4 with the knight. Step through it. At the end, count the white defenders of the pawn on e4 that Black has just taken.",
+   "line": [
+    {
+     "move": "f3d4",
+     "say": "The knight retakes instead of the pawn. The c-pawn stays home and nothing on the c-file recaptures later."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black takes the pawn on e4, which nothing defends."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "d4"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "f3d4",
+      "cp": 100
+     },
+     "statement": "At depth 16 the recapture with the knight is at least 100 centipawns worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 0,
+      "after_move": "f3d4"
+     },
+     "statement": "After the knight recapture no white piece defends the pawn on e4."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5",
+       "c3d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the push e5 or the recapture with the c-pawn."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Structure C: the push.** White can answer the capture by pushing the e-pawn, attacking the knight. Black counters with a pawn strike of its own and the centre closes: White's pawns on d4 and e5 face Black's pawn on d5, like the pawn structure of the French Defence. Closed centres reward manoeuvres, and two things matter: strong squares for knights, and the bishop pair. [I] Plans, not calculation, decide these games.",
+   "chapter": "Structure C: the closed centre"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b5/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 0 6",
+   "caption": "Our master table at move 6: the e-pawn push in 534 games (White scored 57.3 percent), the recapture in 219 (53.2 percent) and the b-pawn in 47 (60.6 percent). Step through the push and notice that the masters choose it more than twice as often as the recapture.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "The pawn attacks the knight, which must move or be defended."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black strikes back: the pawn attacks the bishop on c4 and opens the bishop on c8."
+    },
+    {
+     "move": "c4b5",
+     "say": "The bishop steps away with a pin: the knight on c6 now stands between the bishop and the king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "e5"
+    },
+    {
+     "from": "d7",
+     "to": "d5"
+    },
+    {
+     "from": "b5",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d5",
+    "b5",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e4e5",
+       "c3d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is the push e5 or the recapture on d4, and both are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_move": "e4e5"
+     },
+     "statement": "After the push a white pawn attacks the knight on f6."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e4e5",
+       "d7d5"
+      ]
+     },
+     "statement": "After the pawn strike a black pawn attacks the bishop on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/ppp2ppp/2n2n2/1BbpP3/3p4/2P2N2/PP3PPP/RNBQK2R b KQkq - 1 7",
+   "caption": "The closed structure arises. Step through it. The knight on c6 is pinned at the start, so it cannot move; at the end ask which side is cramped.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "The knight escapes the pawn and lands on a square no white pawn attacks now, backed by the pawn on d5."
+    },
+    {
+     "move": "c3d4",
+     "say": "White takes back the pawn. The pawns on d4 and e5 now form a chain with d4 as its base."
+    },
+    {
+     "move": "c5b6",
+     "say": "Black's bishop avoids the pawn and keeps the diagonal aimed at d4, the base of the chain."
+    },
+    {
+     "move": "b1c3",
+     "say": "The knight challenges the strong knight on e4."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b5",
+     "to": "e8"
+    },
+    {
+     "from": "b6",
+     "to": "d4"
+    },
+    {
+     "from": "c3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "c6",
+    "e4",
+    "d4",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "c6",
+      "to": []
+     },
+     "statement": "The pinned knight on c6 has no legal move."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f6e4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the knight move Ne4 is the engine's best move."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 0,
+      "after_move": "f6e4"
+     },
+     "statement": "After the knight lands, no white pawn attacks e4 (the f-pawn could challenge it later)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "chapter": "Plans in structure C",
+   "fen": "r1bq1rk1/ppp2ppp/1bn5/1B1pP3/3Pn3/2N2N2/PP3PPP/R1BQK2R w KQ - 3 10",
+   "caption": "The map of structure C. White's pawn chain: d4 is the base, e5 the head, and the head cramps Black. Black's knight on e4 is strong but not permanent, because the f-pawn can challenge it. Plans: White trades or challenges the knight; Black attacks the head of the chain and keeps the bishop pair.",
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "e4"
+    },
+    {
+     "from": "f7",
+     "to": "e5"
+    },
+    {
+     "from": "f2",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e5",
+    "e4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "chain_base",
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "statement": "The pawn on d4 is the base of the chain (it defends a pawn and nothing defends it)."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "white",
+      "squares": [
+       "e5"
+      ]
+     },
+     "statement": "The pawn on e5 is protected by a pawn."
+    },
+    {
+     "id": "C3",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white",
+       "black"
+      ]
+     },
+     "statement": "Both sides own both bishops."
+    },
+    {
+     "id": "C4",
+     "type": "outposts",
+     "params": {
+      "color": "black",
+      "occupied": "any",
+      "squares": []
+     },
+     "statement": "Black's knight on e4 is not on an outpost by our definition: a white f-pawn could still challenge it."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1P3/2Bp4/2P2N2/PP3PPP/RNBQK2R b KQkq - 0 6",
+   "caption": "A typical mistake for Black in structure C: the knight to e4 before ...d5. Step through it. At the end count the black pieces that the bishop on d5 attacks and the defenders of the knight on e4.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "Black's mistake: the knight jumps to e4 instead of striking with the d-pawn."
+    },
+    {
+     "move": "c4d5",
+     "say": "The bishop attacks the knight on e4 and the knight on c6 at once, and no black piece defends the knight on e4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "e4"
+    },
+    {
+     "from": "d5",
+     "to": "c6"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "e4",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "f6e4",
+      "cp": 60
+     },
+     "statement": "From the position after the push e5, at depth 16 the black move Ne4 is at least 60 centipawns worse than the best move d5."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d7d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move for Black is the strike d5."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "e4"
+      ],
+      "after_moves": [
+       "f6e4",
+       "c4d5"
+      ]
+     },
+     "statement": "After Bd5 the knight on e4 is attacked and undefended."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Plans in the push structure.** White can trade Black's active knight on e4 or challenge it with the f-pawn. Black wants to attack the head of the chain with a pawn lever and to keep the bishop pair. [I] The pawn on e5 cramps Black as long as it stays guarded; the cramped side should seek exchanges. [H] That is why the lever with the f-pawn is Black's thematic break here. The next board tests that idea."
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/ppp2ppp/1bn5/1B1pP3/3Pn3/2N2N2/PP3PPP/R1BQK2R w KQ - 3 10",
+   "caption": "Black's lever ...f6 in action. Step through the engine's line (level at depth 16). At move 12 Black has doubled c-pawns but the bishop pair; at the end White's knight on f3 is attacked by a pawn.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "A quiet move that takes g4 from the bishop on c8, so ...Bg4 will not pin the knight on f3."
+    },
+    {
+     "move": "f7f6",
+     "say": "Black attacks the head of the chain with a pawn lever."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles; the pawn on e5 is guarded by the pawn on d4 and the knight on f3."
+    },
+    {
+     "move": "f6e5",
+     "say": "Black takes the pawn, opening the f-file."
+    },
+    {
+     "move": "b5c6",
+     "say": "White removes the knight that presses on d4 and breaks up Black's queenside pawns."
+    },
+    {
+     "move": "b7c6",
+     "say": "Black retakes with the b-pawn. The c-pawns are doubled and Black still has both bishops."
+    },
+    {
+     "move": "c3e4",
+     "say": "White takes the strong knight on e4."
+    },
+    {
+     "move": "d5e4",
+     "say": "The pawn retakes and now attacks the knight on f3."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f7",
+     "to": "f6"
+    },
+    {
+     "from": "b5",
+     "to": "c6"
+    },
+    {
+     "from": "c3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "f6",
+    "c6",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "h2h3",
+       "c1e3",
+       "e1g1"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is h3, Be3 or castling, and all are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_move": "h2h3"
+     },
+     "statement": "After h3 a white pawn attacks g4."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h2h3",
+       "f7f6"
+      ]
+     },
+     "statement": "After ...f6 a black pawn attacks the head of the chain on e5."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "black",
+      "includes": [
+       "c6",
+       "c7"
+      ],
+      "after_moves": [
+       "h2h3",
+       "f7f6",
+       "e1g1",
+       "f6e5",
+       "b5c6",
+       "b7c6"
+      ]
+     },
+     "statement": "After Bxc6 bxc6 the black pawns on c7 and c6 are doubled."
+    },
+    {
+     "id": "C5",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_moves": [
+       "h2h3",
+       "f7f6",
+       "e1g1",
+       "f6e5",
+       "b5c6",
+       "b7c6"
+      ]
+     },
+     "statement": "After Bxc6 bxc6 only Black owns both bishops."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-6"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-20"
+  },
+  {
+   "type": "board",
+   "chapter": "Our statistics",
+   "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2P2N2/PP1P1PPP/RNBQK2R w KQkq - 1 5",
+   "caption": "Our data at the position you started the break from. Master table (329,379 games, both players 2500 or more, first 24 plies; 3,069 games listed here): d3 in 2,264 (White scored 55.4 percent), the break d4 in 777 (56.6 percent), b4 in 28. Online, rated 1500 to 1700 (2,660 games): the break d4 in 1,453 (55.8 percent), d3 in 768 (50.9 percent). The engine rates all three within 40 centipawns.",
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "d4"
+    },
+    {
+     "from": "d2",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "d3",
+    "d4",
+    "b4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d3",
+       "b2b4",
+       "d2d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is d3, b4 or the break d4, and all three are within 40 centipawns of it."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The pawn on c3 attacks d4 (a pawn can retake)."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Masters prefer the quiet d3 (3 times in 4), club players prefer the break d4 (more than half the time), yet the engine thinks all three are fine. Write a hypothesis for the difference and one thing in our data that would make you change your mind.",
+   "fields": [
+    {
+     "id": "h",
+     "label": "My hypothesis:"
+    },
+    {
+     "id": "change",
+     "label": "What would change my mind:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What this lesson leaves out.** In our master table White plays the quiet d3 in about three games out of four at this point, and the break d4 in about one in four. This lesson covers only the break and the structures it creates. [I] The d3 structure is a slower family of plans that keeps the centre flexible. It is taught in the lesson on the slow plans (L-OD-ITALIAN-3); compare the two once you have both."
+  },
+  {
+   "type": "contrast",
+   "title": "Does the break d4 work?",
+   "prompt": "Predict first. In the second position White has played a3 instead of c3, so the c-pawn stays on c2. In the third, Black has played a6 on the other wing instead of d6. Which of these changes matters to the break?",
+   "working": "IOD-LODITALIAN4-15",
+   "failing": "IOD-LODITALIAN4-16",
+   "irrelevant": "IOD-LODITALIAN4-17",
+   "chapter": "Contrasts and mixed tests"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-26",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODITALIAN4-27",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "od.italian",
+    "plan.d4",
+    "cue.3"
+   ],
+   "n": 3
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Which of the three structures (A: the big centre, B: the isolated pawn, C: the closed centre) would you want to play, as White and as Black? Give one reason you can defend, one risk you accept and one structure you would avoid for now.",
+   "fields": [
+    {
+     "id": "white",
+     "label": "As White I would choose, because:"
+    },
+    {
+     "id": "black",
+     "label": "As Black I would choose, because:"
+    },
+    {
+     "id": "risk",
+     "label": "The risk I accept:"
+    }
+   ],
+   "chapter": "Reflect and teach it back"
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.**\n- Before the break: can a pawn retake, is anything loose, does a capture on e4 win something? A checklist. [I]\n- The same break loses a piece a move earlier or later. [V]\n- A: centre pawns give space; beware impatience. [I]\n- B: the isolated pawn gives lines, costs guards. [I]\n- C: challenge the knight or hit the chain's head. [I]\n- Pushing e5 once ...d5 hits the bishop costs about 90 centipawns; before ...d5 it is the main line. [V]"
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach it back. Imagine you teach a friend who knows how the pieces move. Write five sentences: (1) the three questions before the break d4, (2) one position where it fails and why, (3) what an isolated pawn gives and costs, (4) one warning about the e-pawn, (5) one plan for each side in the closed centre.",
+   "fields": [
+    {
+     "id": "tb1",
+     "label": "1. The three questions:"
+    },
+    {
+     "id": "tb2",
+     "label": "2. A position where it fails:"
+    },
+    {
+     "id": "tb3",
+     "label": "3. The isolated pawn gives and costs:"
+    },
+    {
+     "id": "tb4",
+     "label": "4. A warning about the e-pawn:"
+    },
+    {
+     "id": "tb5",
+     "label": "5. A plan for each side in the closed centre:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Did you name all three questions (a pawn to retake, nothing loose, e4 not winning anything for Black)? Did you give a position a friend could set up on a board? Did you say that the isolated pawn gives lines and costs guards? Did you warn about pushing the e-pawn once ...d5 attacks the bishop? Then go back to your first guess at the start of the lesson and change one word."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Did your teach-back pass the self-check? Which of the five sentences was the weakest, and what would you look at on a board to improve it?",
+   "fields": [
+    {
+     "id": "weak",
+     "label": "The weakest sentence and the fix:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "app/public/masters/stats.json: 329,379 top-level games (both players 2500+, first 24 plies), rows for the positions after 4.c3 Nf6; 5.d4 exd4; 6.cxd4 Bb4+; 6.cxd4 Bb4+ 7.Bd2 Bxd2+ 8.Nbxd2; 8...d5 9.exd5 Nxd5; 6.e5 d5; moves with fewer than 3 games are dropped, move orders merged; White's score = (wins + draws/2) / games [V]",
+  "app/public/openings (core.json + chunks): online Lichess games, band 1500-1700 (index 4 of 8), edge counts for 4.c3 Nf6 (2,660 games reach it; d4 1,453 with 786 White wins and 49 draws; d3 768 with 377 and 28) and for 6.cxd4 Bb4+ (918 reach it; Nc3 547 with 295 wins and 24 draws; Bd2 348 with 173 and 13) [V]",
+  "content/items/lesson-od-l-od-italian-4.json: every position replayed from SAN with python-chess except one one-feature edit (a black pawn on d5, provenance in the file); engine claims Stockfish 19 lite single thread, depth 16 (evidence under recorded limits, not proof)",
+  "docs/citable-views.md 3.12 (isolated queen's pawn, Capablanca Chess Fundamentals, game 9) [V-sheet]; 2.2 (the centre pawns and their advance, Capablanca) [V-sheet]; paraphrased, no quotations; the books were not re-read for this lesson",
+  "[H] The hypotheses in the cards and reflections (club losses from the unprepared e-pawn push; why the knight to c3 scores online; why masters avoid forcing draws; the f-pawn lever as Black's thematic break) are mine and are labelled in the text; [I] the cards on timing, engine kindness to an isolated pawn and the engine's dislike of the e-pawn push are inferences, labelled",
+  "docs/lesson-depth-standard.md section 6, row 4 (series lesson 4: the main line and the structures it creates)"
+ ]
+}

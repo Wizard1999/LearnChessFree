@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
 import type { Key } from 'chessground/types'
 import { ChessBoard } from './ChessBoard'
@@ -176,6 +177,7 @@ export function PlayOut({ item, source, onDone, nextLabel = 'Next' }: { item: It
       <PlayGame startFen={item.fen} humanColor={color} botId="b5" maxMoves={item.answer.max_moves ?? 40} onEnd={ended} />
       {res && (
         <div className={res.ok ? 'result ok' : 'result no'} role="status">
+          <ResultMark kind={res.ok ? 'correct' : 'unsuccessful'} />
           <p><strong>{res.ok ? 'Goal reached.' : 'Goal not reached.'}</strong> {res.reason}</p>
           {item.explain && <p>{item.explain}</p>}
           {onDone && <button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button>}

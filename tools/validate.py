@@ -156,7 +156,7 @@ def white_pov(kind, value, stm_white):
 
 STRUCT_TYPES = {"pawn_set", "pawn_islands", "open_files", "holes", "outposts", "bishop_pair", "pawn_colours", "mobility",
                 "king_pawn_shield", "space", "rooks_connected", "piece_on", "king_wing", "moves_where", "piece_attacks", "pawn_attackers", "wing_pawns"}
-AFTER_MOVE_TYPES = STRUCT_TYPES | {"attackers", "loose_pieces"}
+AFTER_MOVE_TYPES = STRUCT_TYPES | {"attackers", "loose_pieces", "mate_in", "eval_range"}
 NULL_FIRST_TYPES = {"material_after_move", "quiet_position", "move_is_not_mate"}
 
 

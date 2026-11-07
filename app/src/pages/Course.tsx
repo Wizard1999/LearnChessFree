@@ -1,5 +1,6 @@
 import { RadialMap } from '../components/RadialMap'
-import { linkedHoverHandlers, setLinkedHover, useLinkedHover } from '../lib/linkedHover'
+import { UpNextMark } from '../components/UpNextMark'
+import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
@@ -104,7 +105,6 @@ export function Course() {
   const narrowScreen = () => typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches === true
   const toggleWin = (k: keyof Wins) => saveWins(narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !wins[k] } : { ...wins, [k]: !wins[k] })
   const dockOpen = wins.progress || wins.challenge || wins.next
-  const linkedId = useLinkedHover() // the skill the pointer is on in any open window
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -401,7 +401,7 @@ export function Course() {
                 <ul className="plain upnext">{upNext.map(n => {
                   const d = n.workingDepth ? content.skillById.get(n.id)?.depths[n.workingDepth] : undefined
                   return (
-                    <li key={n.id} className={linkedId === n.id ? 'linked' : undefined} {...linkedHoverHandlers(n.id)}>
+                    <UpNextMark as="li" key={n.id} skillId={n.id}>
                       <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{n.levelWithAssumed > n.level ? `${LEVEL_NAMES[n.level]}, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()}` : LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
                       {d && <p className="small muted">{n.workingDepth}: {d.outcome}</p>}
                       <div className="row">
@@ -409,7 +409,7 @@ export function Course() {
                         {n.workingDepth && <Link className="button primary" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`} aria-label={`Practice: ${n.title}`}>Practice</Link>}
                         <button type="button" className="link" aria-label={`Remove ${n.title} from suggestions`} onClick={() => void dismiss(n.id)}>Remove</button>
                       </div>
-                    </li>
+                    </UpNextMark>
                   )
                 })}</ul>
               )}
@@ -443,22 +443,26 @@ export function Course() {
     <>
     <main className={`page wide mappage curriculum${dockOpen ? ' winleft' : ''}${node && sk && !busy ? ' winright' : ''}`}>
       <h1 className="sr-only">Curriculum</h1>
-      {tabs}
-      <details className="inlinenote maplede"><summary>How the map fills in</summary><p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p></details>
+      <div className="missiongrid mapgrid">
 
-      <div className="row filters sectionbar" role="group" aria-label="Sections and stages">
+        <div className="mapcenter"><RadialMap toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
+      <ChipGroup label="View" menu current="Map">
+        <button type="button" className="chip" onClick={() => setTab('lessons')}>All lessons</button>
+        <button type="button" className="chip" onClick={() => setTab('courses')}>Courses</button>
+        <button type="button" className="chip on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
+        <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress window</button>
+        <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge window</button>
+      </ChipGroup>
       <ChipGroup label="Sections" menu current={isAll ? 'Whole curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </ChipGroup>
-      <ChipGroup label="Stages" current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
+      <ChipGroup label="Stages" menu current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
         <button type="button" className={stageSel === null ? 'chip on' : 'chip'} aria-pressed={stageSel === null} onClick={() => setStage(null)}>All stages</button>
         {PATH_STAGES.map((st, i) => <button key={st.id} type="button" className={`chip stagechip${stageSel === i ? ' on' : ''}${hereStage === i ? ' here' : ''}`} aria-pressed={stageSel === i} aria-label={`${stageSentence(i)}${hereStage === i ? ', you are here' : ''}`} title={`${st.milestone}${hereStage === i ? ' (You are here.)' : ''}`} onClick={() => setStage(i)}>{stageSentence(i)}</button>)}
       </ChipGroup>
-      </div>
-      <div className="missiongrid mapgrid">
-
-        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} /></div>
+      <button type="button" className="chip maphelp" aria-label="How the map fills in" title="Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll to zoom. Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.">?</button>
+      </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
       </div>
 

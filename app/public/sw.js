@@ -1,9 +1,10 @@
 // Offline support: after the first visit the whole school (lessons, exercises, openings data, engine) works without a network.
 // Strategy: network-first for the page, the content manifest and the openings index (so updates arrive); the other content files are
-// requested as ?v=<manifest hash>, so each URL never changes and is cache-first (the lessons and exercise bank are about 10 MB, so a
-// return visit starts from the cache at once, and a new build has new URLs, so builds never mix); cache-first for everything else
+// have the hash of their bytes in their names (items.<hash>.json, lessons/<id>.<revision>.json; manifest.json names them), so each URL never
+// changes and is cache-first (the exercise bank is about 15 MB, so a return visit starts from the cache at once, and a new build has new
+// names, so builds never mix); cache-first for everything else
 // same-origin (hashed JS/CSS, the engine, openings chunks). Bump CACHE when a cache-first file changes without changing its name.
-const CACHE = 'chess-school-v5'
+const CACHE = 'chess-school-v6'
 // Recorded read-aloud (public/audio, about 70 MB in all): never precached; each small file is cached on first play, and at most AUDIO_MAX
 // files are kept (oldest dropped first). Media elements ask with Range headers, so a cached file is answered as 206 when asked for a range.
 const AUDIO_MAX = 400
@@ -42,7 +43,9 @@ self.addEventListener('fetch', e => {
   const url = new URL(req.url)
   if (req.method !== 'GET' || url.origin !== self.location.origin) return
   const networkFirst = req.mode === 'navigate' || /\/audio\/index\.json$/.test(url.pathname) || /\/content\/manifest\.json$/.test(url.pathname) || /\/openings(-dev)?\/(core|manifest)\.json$/.test(url.pathname)
-  const versioned = /\/content\/[^/]+\.json$/.test(url.pathname) && url.searchParams.has('v')
+  const HASHED = /\/content\/(?:lessons\/)?[^/]+\.[0-9a-f]{8,16}\.json$/
+  const versioned = HASHED.test(url.pathname)
+  const stem = (p) => p.replace(/\.[0-9a-f]{8,16}\.json$/, '')
   e.respondWith((async () => {
     const cache = await caches.open(CACHE)
     if (/\/audio\/[0-9a-f]+\.ogg$/.test(url.pathname)) return audioResponse(req, url, cache)
@@ -53,7 +56,7 @@ self.addEventListener('fetch', e => {
         const r = await fetch(req)
         if (r.ok) {
           await cache.put(req, r.clone())
-          for (const k of await cache.keys()) { const u = new URL(k.url); if (u.pathname === url.pathname && u.search !== url.search) await cache.delete(k) } // drop older builds of this file
+          for (const k of await cache.keys()) { const u = new URL(k.url); if (u.pathname !== url.pathname && HASHED.test(u.pathname) && stem(u.pathname) === stem(url.pathname)) await cache.delete(k) } // drop older builds of this file
         }
         return r
       } catch { return Response.error() }

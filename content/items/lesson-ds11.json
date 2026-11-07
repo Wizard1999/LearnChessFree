@@ -349,6 +349,16 @@
     "ref": "PBds11-33 with the white king moved g6-f6",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBds11-10-V2",
+   "fen": "6k1/5pp1/2p4p/3n4/8/7P/5PP1/3R2K1 w - - 0 2",
+   "family": "FAM-DS11-CAP-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored batch ds11: FAM-DS11-CAP-2; variant for lesson L-FND-CAPTURE-2: quiet moves h2h3 h7h6 added so the position is not shared (checked with python-chess)",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -2357,6 +2367,71 @@
    ],
    "explain": "The queen checks and the white king on f6 defends it, so the black king cannot capture; every escape square is covered. Checkmate.",
    "orientation": "black",
+   "review": {
+    "status": "machine-only"
+   }
+  },
+  {
+   "id": "IBds11-10-V2",
+   "skill": "FND.CAPTURE.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PBds11-10-V2",
+   "prompt": "White to move. Should the rook on d1 take the knight on d5? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The pawn on c6 defends d5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece attacks d5."
+    },
+    {
+     "id": "C3",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d5",
+      "max": -2
+     },
+     "statement": "Rxd5 loses at least 2 points."
+    }
+   ],
+   "tags": [
+    "node.FND.CAPTURE",
+    "tier.0",
+    "cue.3",
+    "kind.authored",
+    "family.FAM-IBds11-10-V2",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Count first: which black pieces could capture on that square, and which white pieces attack it?",
+    "A nearby piece only defends a square if it can capture there with its own kind of move.",
+    "Compare what you take with what you could lose: a cheaper capturing piece changes the answer."
+   ],
+   "explain": "The pawn on c6 defends d5. After Rxd5 cxd5 White has given a rook (5) for a knight (3): at least 2 points down along the best defence.",
+   "orientation": "white",
    "review": {
     "status": "machine-only"
    }

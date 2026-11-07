@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { ArtScene } from './art'
 import { Link } from 'react-router-dom'
 import { ChessBoard } from './ChessBoard'
 import { ItemPlayer, type ItemResult } from './ItemPlayer'
@@ -207,6 +208,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
     const sk = content.skillById.get(lesson.skill)
     return (
       <section className="card">
+        <ArtScene kind="done" />
         <h2>Lesson complete</h2>
         <p>You finished <strong>{lesson.title}</strong>.</p>
         {lesson.outcomes && <><p className="small muted">What you should now be able to do:</p><ul>{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></>}

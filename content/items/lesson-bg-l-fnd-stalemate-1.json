@@ -1,0 +1,511 @@
+{
+  "positions": [
+    {
+      "id": "PBG-LFNDSTALEMATE1-1",
+      "fen": "k7/8/1K6/8/8/8/8/2Q5 b - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-1",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-2",
+      "fen": "8/8/8/3Q4/8/8/2K5/k7 w - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-2",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-3",
+      "fen": "7k/5K2/6B1/p7/P7/8/8/8 b - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-3",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-4",
+      "fen": "2b4k/5K2/6P1/8/8/8/8/8 b - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-4",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-5",
+      "fen": "k7/8/2K5/8/8/8/8/6Q1 w - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-5",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-6",
+      "fen": "8/8/8/8/8/1K6/3Q4/k7 b - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-6",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSTALEMATE1-7",
+      "fen": "8/8/8/8/8/3k1q2/8/4K3 w - - 0 1",
+      "family": "FAM-BG-LFNDSTALEMATE1-7",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by hand and replayed move by move in python-chess (checked with python-chess)",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IBG-LFNDSTALEMATE1-1",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "PBG-LFNDSTALEMATE1-1",
+      "prompt": "Black to move. Tap every square the black king can legally move to.",
+      "answer": {
+        "from": "a8",
+        "squares": [
+          "b8"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "a8",
+            "to": [
+              "b8"
+            ]
+          },
+          "statement": "The black king on a8 can go only to b8.",
+          "id": "C1"
+        },
+        {
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "Black is not in check and has a legal move.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.select_squares"
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "The white king covers a7 and b7. What about the square beside the king on the back row?",
+        "One square is left."
+      ],
+      "explain": "The white king covers a7 and b7, and the queen is far away on c1, so b8 is free. Black has exactly one legal move, so the game goes on.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-2",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PBG-LFNDSTALEMATE1-2",
+      "prompt": "White to move. Find checkmate.",
+      "answer": {
+        "moves": [
+          "d5a8",
+          "d5a5"
+        ]
+      },
+      "claims": [
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "d5a8",
+            "n": 1
+          },
+          "statement": "Qa8 is checkmate.",
+          "id": "C1"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "d5a5",
+            "n": 1
+          },
+          "statement": "Qa5 is checkmate.",
+          "id": "C2"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "d5b3",
+            "cp": 1000
+          },
+          "statement": "Qb3 throws away the win.",
+          "id": "C3"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "d5c4",
+            "cp": 1000
+          },
+          "statement": "Qc4 throws away the win.",
+          "id": "C4"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.find_move"
+      ],
+      "hints": [
+        "Where is the black king, and which squares next to it does the white king cover?",
+        "You need check as well as no escape square. Quiet moves that only take squares away can leave Black with no move and no check.",
+        "Two queen moves reach the edge column and give check."
+      ],
+      "explain": "The queen gives check from a8 or a5, and the white king covers b1 and b2, so Black has no escape: checkmate. A queen move that only takes the squares away, with no check, leaves Black with no legal move and no check: a draw.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d5b3": "Qb3 takes every square from the king but does not attack it. Black cannot move and is not in check: stalemate, a draw.",
+        "d5c4": "Qc4 also covers a2 and b3 without giving check. Black has no legal move: stalemate."
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-3",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 1,
+      "task": "classify_position",
+      "position": "PBG-LFNDSTALEMATE1-3",
+      "prompt": "Black to move. What is the result of this position?",
+      "answer": {
+        "class": "Stalemate",
+        "options": [
+          "Checkmate",
+          "Stalemate",
+          "The game goes on"
+        ]
+      },
+      "claims": [
+        {
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          },
+          "statement": null,
+          "id": "C1"
+        },
+        {
+          "type": "legal_moves_set",
+          "params": {
+            "moves": []
+          },
+          "statement": "The side to move has no legal move.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.classify_position"
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "Count the squares around the king on h8. Then look at the black pawn: can it move?",
+        "The pawn on a5 is blocked by the white pawn on a4."
+      ],
+      "explain": "The king on h8 has no safe square (the white king and bishop cover them) and is not attacked. The pawn on a5 is blocked by the pawn on a4. Black has no legal move and is not in check: stalemate.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-4",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 2,
+      "task": "classify_position",
+      "position": "PBG-LFNDSTALEMATE1-4",
+      "prompt": "Black to move. What is the result of this position?",
+      "answer": {
+        "class": "The game goes on",
+        "options": [
+          "Checkmate",
+          "Stalemate",
+          "The game goes on"
+        ]
+      },
+      "claims": [
+        {
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": null,
+          "id": "C1"
+        },
+        {
+          "type": "legal_moves_set",
+          "params": {
+            "moves": [
+              "c8d7",
+              "c8b7",
+              "c8e6",
+              "c8a6",
+              "c8f5",
+              "c8g4",
+              "c8h3"
+            ]
+          },
+          "statement": "These are all of Black's legal moves.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.classify_position"
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "The king has no safe square. Does any other black piece have a move?",
+        "Check each black piece in turn, not just the king."
+      ],
+      "explain": "The king on h8 has no safe square and is not attacked, but the bishop on c8 can move. A side is stalemated only when no piece of it can move, so the game goes on.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-5",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PBG-LFNDSTALEMATE1-5",
+      "prompt": "White to move. Find a move after which White forces checkmate on the next move, whatever Black plays. Black must always have a legal move.",
+      "answer": {
+        "moves": [
+          "c6b6",
+          "g1g7",
+          "g1b1"
+        ]
+      },
+      "claims": [
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "c6b6",
+            "n": 2
+          },
+          "statement": "Kb6 forces mate in two.",
+          "id": "C1"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "g1g7",
+            "n": 2
+          },
+          "statement": "Qg7 forces mate in two.",
+          "id": "C2"
+        },
+        {
+          "type": "mate_in",
+          "params": {
+            "move": "g1b1",
+            "n": 2
+          },
+          "statement": "Qb1 forces mate in two.",
+          "id": "C3"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "c6c7",
+            "cp": 1000
+          },
+          "statement": "Kc7 throws away the win.",
+          "id": "C4"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "g1b6",
+            "cp": 1000
+          },
+          "statement": "Qb6 throws away the win.",
+          "id": "C5"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.find_move"
+      ],
+      "hints": [
+        "Which moves would leave the black king with no square and no check?",
+        "The black king needs to keep a square for one more move. Take most squares, not all.",
+        "Try bringing the king nearer, or put the queen far away on a line that covers part of the cage."
+      ],
+      "explain": "Each of these three moves leaves the black king one square, so Black has a legal move, and White then mates. The two moves that take the last square without giving check are stalemate.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "c6c7": "Kc7 takes b7 and b8, but the queen and king together then cover a7 as well. Black has no legal move and is not in check: stalemate.",
+        "g1b6": "Qb6 covers a7, b7 and b8 at once. Black cannot move and is not in check: stalemate."
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-6",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "PBG-LFNDSTALEMATE1-6",
+      "prompt": "Black to move. Tap every square the black king can legally move to.",
+      "answer": {
+        "from": "a1",
+        "squares": [
+          "b1"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "a1",
+            "to": [
+              "b1"
+            ]
+          },
+          "statement": "The black king on a1 can go only to b1.",
+          "id": "C1"
+        },
+        {
+          "type": "game_state",
+          "params": {
+            "state": "ongoing"
+          },
+          "statement": "Black is not in check and has a legal move.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.select_squares"
+      ],
+      "hints": [
+        "Is the king attacked right now?",
+        "The white king covers a2 and b2, and the queen covers the second row.",
+        "One square on the bottom row is not covered by anything."
+      ],
+      "explain": "The white king covers a2 and b2. The queen also covers the second row, but nothing covers b1, and the king is not attacked. Black has one legal move.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IBG-LFNDSTALEMATE1-7",
+      "skill": "FND.STALEMATE.D1",
+      "cue": 3,
+      "task": "classify_position",
+      "position": "PBG-LFNDSTALEMATE1-7",
+      "prompt": "White to move. What is the result of this position?",
+      "answer": {
+        "class": "Stalemate",
+        "options": [
+          "Checkmate",
+          "Stalemate",
+          "The game goes on"
+        ]
+      },
+      "claims": [
+        {
+          "type": "game_state",
+          "params": {
+            "state": "stalemate"
+          },
+          "statement": null,
+          "id": "C1"
+        },
+        {
+          "type": "legal_moves_set",
+          "params": {
+            "moves": []
+          },
+          "statement": "The side to move has no legal move.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.FND.STALEMATE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.1",
+        "task.classify_position"
+      ],
+      "hints": [
+        "Is the white king attacked right now?",
+        "Count the squares next to the white king on e1. Who covers each one?",
+        "The black king covers d2 and e2. What covers d1, f1 and f2?"
+      ],
+      "explain": "White is not in check, and each square beside the king on e1 is covered: d2 and e2 by the black king, d1, f1 and f2 by the queen. White has no other piece, so White has no legal move: stalemate. It works for either colour.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    }
+  ]
+}

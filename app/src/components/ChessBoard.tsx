@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
-import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
+import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { announce, isPromotionMove, moveCursor, piecesFromFen, positionStatus, PROMOTION_PIECES, screenPos, squareLabel, squaresInOrder } from '../lib/boardKeys'
 import type { CursorKey } from '../lib/boardKeys'
 import { ALL_SQUARES } from '../lib/control'
@@ -8,7 +8,7 @@ import { Chessground } from 'chessground'
 import type { Api } from 'chessground/api'
 import type { Config } from 'chessground/config'
 import type { Key } from 'chessground/types'
-import type { DrawShape } from 'chessground/draw'
+import type { DrawBrushes, DrawShape } from 'chessground/draw'
 import 'chessground/assets/chessground.base.css'
 import 'chessground/assets/chessground.brown.css'
 import { prefersReducedMotion } from '../lib/appearance'
@@ -47,6 +47,15 @@ export interface Props {
   onControlUse?: () => void
 }
 
+/** Arrow colours of the Scholarmate look, read from its tokens (jade, persimmon, cobalt, gold) so they follow light and dark; undefined in the other looks, which keep Chessground's own. */
+function lookBrushes(): Partial<DrawBrushes> | undefined {
+  if (typeof document === 'undefined' || document.documentElement.getAttribute('data-style') !== 'scholarmate') return undefined
+  const cs = getComputedStyle(document.documentElement), get = (n: string) => cs.getPropertyValue(n).trim()
+  const c = { green: get('--brush-green'), red: get('--brush-red'), blue: get('--brush-blue'), yellow: get('--brush-yellow') }
+  if (!c.green || !c.red || !c.blue || !c.yellow) return undefined
+  return { green: { key: 'g', color: c.green, opacity: 1, lineWidth: 10 }, red: { key: 'r', color: c.red, opacity: 1, lineWidth: 10 }, blue: { key: 'b', color: c.blue, opacity: 1, lineWidth: 10 }, yellow: { key: 'y', color: c.yellow, opacity: 1, lineWidth: 10 } }
+}
+
 /** Thin React wrapper around Chessground (GPL-3.0-or-later): rendering, drag/touch input, arrows, highlights. */
 export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false, onControlUse }: Props) {
   const el = useRef<HTMLDivElement>(null)
@@ -62,6 +71,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     if (placement !== lastPlacement.current) { lastPlacement.current = placement; cb.current.edit.onChange(placement) }
   }
   const config = (): Config => {
+    const brushes = lookBrushes()
     const hl = new Map<Key, string>()
     for (const s of highlight) hl.set(s as Key, 'hl')
     if (picker) for (const s of picker.selected) hl.set(s as Key, 'sel')
@@ -85,7 +95,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
         ? { free: false, color: movable.color, dests: movable.dests, showDests: true, events: { after: (o, d) => cb.current.movable?.onMove(o, d) } }
         : { free: false, color: undefined, dests: new Map() },
       events: { select: k => { cb.current.picker?.onToggle(k); cb.current.edit?.onSquare?.(k) }, change: () => { if (cb.current.edit) report() } },
-      drawable: { enabled: false, visible: true },
+      drawable: { enabled: false, visible: true, ...(brushes ? { brushes: brushes as DrawBrushes } : {}) },
     }
   }
   const autoShapes = (): DrawShape[] => shapes.map(s => ({ orig: s.from as Key, dest: s.to as Key | undefined, brush: s.brush ?? 'green', modifiers: s.width ? { lineWidth: s.width } : undefined }))
@@ -271,7 +281,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
             const strength = Math.min(1, Math.abs(c.score) / 6)
             const bg = c.score === 0 ? 'transparent' : c.score > 0 ? `rgba(31, 90, 190, ${0.12 + 0.5 * strength})` : `rgba(214, 100, 20, ${0.12 + 0.5 * strength})`
             return (
-              <button key={sq} type="button" className={picked === sq ? 'ctl sel' : 'ctl'} style={{ background: bg }} aria-label={describeControl(c)} onClick={() => setPicked(p => (p === sq ? null : sq))}>
+              <button key={sq} type="button" className={`ctl${c.score > 0 ? ' cw' : c.score < 0 ? ' cb' : ''}${picked === sq ? ' sel' : ''}`} style={{ '--ctl-bg': bg, '--ctl-k': strength.toFixed(2) } as CSSProperties} aria-label={describeControl(c)} onClick={() => setPicked(p => (p === sq ? null : sq))}>
                 <span className="ctlnum">{c.white.length || c.black.length ? `${c.white.length}${c.white.some(a => a.xray) ? '+' : ''}-${c.black.length}${c.black.some(a => a.xray) ? '+' : ''}${c.loose.length ? '!' : ''}` : ''}</span>
               </button>
             )
@@ -294,7 +304,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
               )}
             </div>
           )}
-          {map && !picked && !hoverSq && <span className="controldetail muted" role="note">Blue: White holds the square more strongly. Orange: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Point at a square to read it (touch screens: use the inspect button).</span>}
+          {map && !picked && !hoverSq && <span className="controldetail muted" role="note"><span className="lk-old">Blue</span><span className="lk-new">Cobalt with stripes</span>: White holds the square more strongly. <span className="lk-old">Orange</span><span className="lk-new">Persimmon with dots</span>: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Point at a square to read it (touch screens: use the inspect button).</span>}
         </div>
       )}
     </div>

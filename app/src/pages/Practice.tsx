@@ -8,6 +8,8 @@ import { interleave, pickFresh } from '../lib/select'
 import { skillLabel, tidyLabel } from '../lib/labels'
 import { ItemSequence } from '../components/LessonPlayer'
 import type { Item } from '../types'
+import { ResultMark } from '../components/ResultMark'
+import { UpNextMark } from '../components/UpNextMark'
 
 export function Practice() {
   const content = useContent()
@@ -72,7 +74,7 @@ export function Practice() {
     <main className="page">
       <h1>Practice</h1>
       {!started && (
-        <section className="card">
+        <UpNextMark as="section" className="card">
           <p className="lede">Positions with no label telling you which idea to use. New ones come first.</p>
           <div className="row"><button type="button" className="primary big" onClick={go}>Start {n} mixed positions</button></div>
           <details className="practiceopts">
@@ -91,7 +93,7 @@ export function Practice() {
             </div>
             <label className="check"><input type="checkbox" checked={silentOn} onChange={e => { setSilent(e.target.checked); if (!e.target.checked && params.get('silent')) set('silent', '') }} /> <span><strong>Silent practice</strong>: no hints. This is how you check that you can do it on your own. (Answers and explanations still appear after each exercise.)</span></label>
           </details>
-        </section>
+        </UpNextMark>
       )}
       {started && finished === null && (
         <>
@@ -102,6 +104,7 @@ export function Practice() {
       {started && finished !== null && (
         <section className="card">
           <h2>Set finished</h2>
+          <p className="resultlegend"><ResultMark kind="correct" count={finished} /><ResultMark kind="unsuccessful" count={Math.max(0, items.length - finished)} /></p>
           <p>{finished} of {items.length} right on the first try without hints. That is one data point, not a verdict; what counts is how this looks over many sets.</p>
           <div className="row"><button type="button" className="primary" onClick={go}>Another set</button>
             <button type="button" onClick={() => { const p = new URLSearchParams(params); p.delete('go'); setParams(p); setFinished(null) }}>Change focus</button></div>

@@ -1,3 +1,4 @@
+import { hueOfStrand } from '../lib/hue'
 import { aboutMinutes, lessonMinutes } from '../lib/lessonTime'
 import { paceText } from '../lib/measuredTime'
 import { usePaceMedians } from '../lib/useStepTimes'
@@ -22,7 +23,7 @@ export function LessonPage() {
   if (!lesson) return <main className="page"><h1>Lesson not found</h1><p><Link to="/course">Back to the curriculum</Link></p></main>
   const sk = skillById.get(lesson.skill)
   return (
-    <main className="page">
+    <main className="page" data-hue={hueOfStrand(sk?.strand)}>
       <p className="small muted"><Link to="/course">Curriculum</Link> › {sk?.title ?? lesson.skill} › {lesson.depth}</p>
       <h1>{lesson.title}</h1>
       <p className="muted small">Planned: {aboutMinutes(lessonMinutes(lesson))}</p>

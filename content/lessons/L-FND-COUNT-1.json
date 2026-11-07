@@ -3,163 +3,907 @@
   "title": "Is this piece safe? Loose pieces and counting",
   "skill": "SAF.COUNT",
   "depth": "D1",
-  "minutes": 12,
+  "minutes": 20,
   "outcomes": [
     "Spots loose pieces (attacked and not defended) on either side",
-    "Counts attackers and defenders of a square",
-    "Decides whether to start captures on a square by adding up the swaps, cheapest piece first"
+    "Counts attackers and defenders of a square, including a piece hidden behind another",
+    "Decides whether to start captures on a square by adding up the swaps, cheapest piece first, and where to stop"
   ],
   "steps": [
     {
       "type": "card",
-      "text": "A piece is **attacked** when an enemy piece could capture it. It is **defended** when a friendly piece could take back on that square. Attacked and **not defended** is **loose** here: it can be taken for free. Related words: **undefended** means no friendly piece guards it, even if nobody attacks it yet; **hanging** (*en prise*) means attacked without enough defence; **tactically vulnerable** means defended but still losable to a trick. Spot loose pieces, yours and theirs: the first safety habit."
+      "text": "Picture a game where you leave a piece on a square and a pawn you never noticed takes it for free. Most lost pieces go this way: one attacker or defender was left uncounted. This lesson gives you a short habit that catches it.",
+      "chapter": "Meet the idea"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCOUNT1-1"
     },
     {
       "type": "board",
-      "fen": "6k1/5pp1/1pn1p2p/3b4/8/1Q3N2/PP3PPP/3R2K1 w - - 0 1",
-      "caption": "The queen attacks the pawn on b6 and the bishop on d5. Only one of them is loose.",
+      "fen": "6k1/p4pp1/3p3p/4n3/5P2/5N2/P5PP/6K1 w - - 0 1",
+      "caption": "Two white units attack the knight; one black pawn defends it. Two attackers against one defender.",
       "arrows": [
         {
-          "from": "b3",
-          "to": "b6"
+          "from": "f4",
+          "to": "e5"
         },
         {
-          "from": "b3",
+          "from": "f3",
+          "to": "e5"
+        },
+        {
+          "from": "d6",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Every capture fight happens on one square. Count the **attackers**: the pieces that could capture there. Then count the **defenders**: the other side's pieces that could take back. Do both counts before you move anything. In the position above it is 2 against 1. The numbers alone do not give the answer, but without them you are guessing."
+    },
+    {
+      "type": "card",
+      "text": "A **loose** piece is attacked and has no defender, so it can be taken for free. Count it as 1 against 0."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5ppp/8/3n4/8/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "One attacker, no defenders. This is the loose piece from earlier, seen as a count: 1 against 0.",
+      "line": [
+        {
+          "move": "d1d5",
+          "say": "The rook takes the knight. Nothing can take back, so White wins 3 points."
+        },
+        {
+          "move": "g7g6",
+          "say": "Black cannot win the knight back. White is a knight ahead."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
           "to": "d5"
         }
       ],
       "highlight": [
-        "b6",
         "d5"
       ],
       "claims": [
         {
-          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 0
+          },
+          "id": "C2"
+        },
+        {
           "type": "loose_pieces",
           "params": {
             "color": "black",
             "squares": [
-              "b6"
+              "d5"
             ]
-          }
+          },
+          "id": "C3"
         },
         {
-          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "d1d5",
+            "min": 3
+          },
+          "id": "C4"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/4p2p/8/8/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "Count for your own piece too. Before the rook steps to d5, ask who attacks that square: the pawn on e6 does, and nothing of White's defends it.",
+      "line": [
+        {
+          "move": "d1d5",
+          "say": "The rook lands where a pawn attacks it and nothing defends it."
+        },
+        {
+          "move": "e6d5",
+          "say": "The pawn takes it for free. One look at the count would have stopped this."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "d5"
+        },
+        {
+          "from": "d1",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
           "type": "attackers",
           "params": {
             "square": "d5",
             "color": "black",
             "count": 1
-          }
+          },
+          "id": "C1"
+        },
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d1d5"
+          },
+          "id": "C2"
         }
       ]
     },
     {
-      "type": "item",
-      "item": "IA0-56"
-    },
-    {
-      "type": "item",
-      "item": "IA0-57"
-    },
-    {
-      "type": "card",
-      "text": "When several pieces fight over one square, count. List the attackers and the defenders. Start captures with your cheapest attacker. Add up what each side takes and gives, and stop when the next swap would lose more than it wins. More attackers than defenders is not always enough."
-    },
-    {
       "type": "board",
-      "fen": "6k1/p4pp1/1p5p/2n5/3P4/B7/P5PP/6K1 w - - 0 1",
-      "caption": "Two attackers, one defender, and the pawn goes first. Count the swaps.",
+      "fen": "6k1/5ppp/4p3/3p4/8/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "Again 1 attacker, but now 1 defender, and the attacker is worth more than the target.",
       "line": [
         {
-          "move": "d4c5",
-          "say": "The pawn takes the knight: +3."
+          "move": "d1d5",
+          "say": "The rook takes a pawn: +1."
         },
         {
-          "move": "b6c5",
-          "say": "The pawn takes the pawn: -1."
-        },
-        {
-          "move": "a3c5",
-          "say": "The bishop takes the pawn: +1."
+          "move": "e6d5",
+          "say": "The defending pawn takes the rook: -5. White gave 5 points for 1."
         }
       ],
       "arrows": [
         {
-          "from": "d4",
-          "to": "c5"
+          "from": "d1",
+          "to": "d5"
         },
         {
-          "from": "a3",
-          "to": "c5"
+          "from": "e6",
+          "to": "d5"
         }
       ],
       "highlight": [
-        "c5"
+        "d5"
       ],
       "claims": [
         {
-          "id": "C1",
           "type": "attackers",
           "params": {
-            "square": "c5",
+            "square": "d5",
             "color": "white",
-            "count": 2
-          }
+            "count": 1
+          },
+          "id": "C1"
         },
         {
-          "id": "C2",
           "type": "attackers",
           "params": {
-            "square": "c5",
+            "square": "d5",
             "color": "black",
             "count": 1
-          }
+          },
+          "id": "C2"
         },
         {
-          "id": "C3",
           "type": "material_after_move",
           "params": {
-            "move": "d4c5",
-            "min": 3
-          }
+            "move": "d1d5",
+            "max": -3
+          },
+          "id": "C3"
         }
       ]
-    },
-    {
-      "type": "item",
-      "item": "IA0-59"
     },
     {
       "type": "item",
       "item": "IA0-60"
     },
     {
+      "type": "card",
+      "text": "A fight on one square is a string of swaps: capture, take back, capture again. Each side may stop when the next capture would cost more than it wins. Add the points as you go, using the counting values: pawn 1, knight 3, bishop 3, rook 5, queen 9. Those values are a rule of thumb [I], not the true worth of a piece.",
+      "chapter": "Count the swaps"
+    },
+    {
+      "type": "board",
+      "fen": "6k1/p4pp1/3p3p/4n3/5P2/5N2/P5PP/6K1 w - - 0 1",
+      "caption": "Back to the opening position. The pawn goes first: the cheapest attacker.",
+      "line": [
+        {
+          "move": "f4e5",
+          "say": "The pawn takes the knight: +3, and the cheapest White piece did it."
+        },
+        {
+          "move": "d6e5",
+          "say": "Black's pawn takes back: -1. White's running total is +2."
+        },
+        {
+          "move": "f3e5",
+          "say": "The knight takes the last pawn: +1. Total +3, and Black has no defender left."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f4",
+          "to": "e5"
+        },
+        {
+          "from": "f3",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "e5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "f4e5",
+            "min": 3
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
       "type": "contrast",
-      "title": "Same count, different pieces",
+      "title": "Same count, different target and first capturer",
       "prompt": "Again two attackers and one defender. This time the target is a pawn and the first attacker is a knight. Predict first: does the count still win?",
       "working": "IA0-61",
       "failing": "IA0-62"
     },
     {
-      "type": "item",
-      "item": "IA0-63"
+      "type": "card",
+      "text": "The first piece to capture is the one the defender takes. If it is worth more than what it captured, you start behind and need the last capture to win it back. So send your cheapest attacker first. [I] That is a rule of thumb; a pin or a hidden piece can change who is able to recapture."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/4p2p/3p4/2P5/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "The pawn on d5 is attacked by a pawn and a rook, and defended once. Start with the pawn.",
+      "line": [
+        {
+          "move": "c4d5",
+          "say": "The pawn takes a pawn: +1."
+        },
+        {
+          "move": "e6d5",
+          "say": "Black takes back: -1. Running total 0."
+        },
+        {
+          "move": "d1d5",
+          "say": "The rook takes the last pawn: +1. Nothing can take the rook, so White wins a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "d5"
+        },
+        {
+          "from": "d1",
+          "to": "d5"
+        },
+        {
+          "from": "e6",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "c4d5",
+            "min": 1
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/4p2p/3p4/2P5/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "The same position, but the rook goes first. Same pieces, same squares, a different result.",
+      "line": [
+        {
+          "move": "d1d5",
+          "say": "The rook takes the pawn: +1, but now a rook stands where a pawn can take it."
+        },
+        {
+          "move": "e6d5",
+          "say": "Black's pawn takes the rook: -5. Running total -4."
+        },
+        {
+          "move": "c4d5",
+          "say": "White's pawn takes back: +1. Total -3. Two pawns won, a rook lost."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d5"
+        },
+        {
+          "from": "c4",
+          "to": "d5"
+        },
+        {
+          "from": "e6",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d1d5",
+            "max": -3
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "Edward Lasker, in *Chess Strategy*, advised totalling what each side can capture with before starting, not playing the line out in your head. The boards here play it out so you can see each step; totals are the method to aim for. Znosko-Borovsky, in *The Middle Game in Chess*, counted attackers needed against defenders available around a king; the same habit of counting both sides first carries over to one square."
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/3n4/8/8/3R1PPP/3R2K1 w - - 0 1",
+      "caption": "Two rooks doubled on the d-file. Only the front rook attacks the knight directly; the rear one waits behind it.",
+      "line": [
+        {
+          "move": "d2d5",
+          "say": "The front rook takes the knight: +3."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black's rook takes back: -5. Total -2 for now."
+        },
+        {
+          "move": "d1d5",
+          "say": "The rear rook, which was hidden behind the first, takes again: +5. Total +3."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d2",
+          "to": "d5"
+        },
+        {
+          "from": "d1",
+          "to": "d2"
+        },
+        {
+          "from": "d8",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d2d5",
+            "min": 3
+          },
+          "id": "C3"
+        }
+      ],
+      "chapter": "Hidden helpers and false defenders"
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/3n4/8/8/3R1PPP/6K1 w - - 0 1",
+      "caption": "Take away the rear rook and nothing is left to take back. A lone rook against a defended knight loses.",
+      "line": [
+        {
+          "move": "d2d5",
+          "say": "The rook takes the knight: +3."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black's rook takes back: -5. White is 2 points down and has no helper."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d2",
+          "to": "d5"
+        },
+        {
+          "from": "d8",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d2d5",
+            "max": -1
+          },
+          "id": "C3"
+        },
+        {
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "r",
+            "after_moves": [
+              "d2d5",
+              "d8d5"
+            ]
+          },
+          "id": "C4"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "d2d5",
+              "d8d5"
+            ]
+          },
+          "id": "C5"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "A piece behind another on the same file, rank or diagonal can join in once the front one has gone, but only if it moves along that line: two rooks on a file, a queen behind a bishop on a diagonal. A rook behind a bishop on a diagonal does not. Count such pieces, and the same goes for the defending side."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/5pp1/4p2p/3n4/8/1B6/R4PPP/6K1 w - - 0 1",
+      "caption": "Not a battery. The rook on a2 stands behind the bishop on the same diagonal, but a rook cannot move along a diagonal, so it never joins the fight on d5.",
+      "line": [
+        {
+          "move": "b3d5",
+          "say": "The bishop takes the knight: +3."
+        },
+        {
+          "move": "e6d5",
+          "say": "The pawn takes the bishop: -3. The rook behind could not take part."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b3",
+          "to": "d5"
+        },
+        {
+          "from": "a2",
+          "to": "b3"
+        },
+        {
+          "from": "e6",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "a2"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        }
+      ]
     },
     {
       "type": "item",
-      "item": "IA0-65"
+      "item": "IBG-LFNDCOUNT1-2"
+    },
+    {
+      "type": "card",
+      "text": "A defender only counts if it can really capture. A piece that is **pinned**, meaning it may not move because that would leave its own king in check, cannot take back. Edward Lasker warned in *Chess Strategy* that a defender can be an illusion for reasons like this. So after counting, ask about every defender: could it legally capture right now? A pin to the king makes a recapture illegal; a pin to a bigger piece only makes it costly."
+    },
+    {
+      "type": "board",
+      "fen": "4k3/p2p2pp/4n3/1B6/8/8/5PPP/4R1K1 w - - 0 1",
+      "caption": "The pawn on d7 looks like a defender of the knight. But the bishop on b5 pins it against the king.",
+      "line": [
+        {
+          "move": "e1e6",
+          "say": "The rook takes the knight with check. The d7 pawn cannot take back: moving would leave its king in check."
+        },
+        {
+          "move": "e8f8",
+          "say": "The king steps aside (Kf8 or Kd8). White has won a whole knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "e6"
+        },
+        {
+          "from": "b5",
+          "to": "e8"
+        },
+        {
+          "from": "d7",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "d7",
+        "e6"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "illegal_move",
+          "params": {
+            "move": "d7e6"
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "e1e6",
+            "min": 3
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "The king can capture too, but never onto a square a defender guards. So a king is usually the last attacker or the last defender, and it counts only when nothing is left to take it back. Count it last."
+    },
+    {
+      "type": "board",
+      "fen": "6k1/8/8/8/8/1n6/3r4/4K3 w - - 0 1",
+      "caption": "The king touches the rook on d2, but the knight on b3 defends it. The king cannot take.",
+      "arrows": [
+        {
+          "from": "e1",
+          "to": "d2"
+        },
+        {
+          "from": "b3",
+          "to": "d2"
+        }
+      ],
+      "highlight": [
+        "d2"
+      ],
+      "claims": [
+        {
+          "type": "illegal_move",
+          "params": {
+            "move": "e1d2"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d2",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "You do not have to finish the swaps. After each capture, look at what is left and ask whether the next capture would give up more than it gains. If so, stop there. Counting well means knowing how many captures to make, not only how many are possible. Next: two attackers against two defenders, and White still comes out ahead.",
+      "chapter": "Stop in time"
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/4p3/3n4/2P5/8/5PPP/3R2K1 w - - 0 1",
+      "caption": "Two attackers (pawn and rook), two defenders (pawn and rook). The target is a knight, and the pawn is the cheapest piece here.",
+      "line": [
+        {
+          "move": "c4d5",
+          "say": "The pawn takes the knight: +3."
+        },
+        {
+          "move": "e6d5",
+          "say": "Black's pawn takes back: -1. White is 2 points up, and this is the place to stop."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "d5"
+        },
+        {
+          "from": "d1",
+          "to": "d5"
+        },
+        {
+          "from": "e6",
+          "to": "d5"
+        },
+        {
+          "from": "d8",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 2
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "c4d5",
+            "min": 2
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r2k1/5ppp/8/3p4/8/8/5PPP/3R2K1 w - - 0 2",
+      "caption": "Why stop? The pawn on d5 is attacked once and defended once, and White's attacker is a rook.",
+      "line": [
+        {
+          "move": "d1d5",
+          "say": "The rook takes the pawn: +1."
+        },
+        {
+          "move": "d8d5",
+          "say": "Black's rook takes back: -5. White would be 4 points down on this swap."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "d5"
+        },
+        {
+          "from": "d8",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5"
+      ],
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d1d5",
+            "max": -3
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCOUNT1-3"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCOUNT1-4"
+    },
+    {
+      "type": "item",
+      "item": "IA0-65",
+      "chapter": "Check yourself"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDCOUNT1-5"
+    },
+    {
+      "type": "card",
+      "text": "Counting answers one question: what happens if captures start on this square? It says nothing about a threat elsewhere, such as an attack on your king. Check those separately. [H] My guess: most beginner counting errors come from forgetting one far-away attacker or defender, not from bad arithmetic. Test this on your own games and see if you agree."
     },
     {
       "type": "item",
       "item": "IA0-58"
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.SAF.LOOSE",
-        "kind.generated"
-      ],
-      "n": 6
     },
     {
       "type": "practice",
@@ -170,9 +914,56 @@
       "n": 6
     },
     {
+      "type": "card",
+      "text": "**The method in four steps.** 1. Count the attackers and the defenders of the square, including pieces behind. 2. Check that each one could legally capture. 3. Add up the points, cheapest piece first. 4. Stop when the next capture makes the total worse. [I] The point values and cheapest-first are rules of thumb; they break with a pin, a king capture, or a rear piece that is not on the right line."
+    },
+    {
+      "type": "card",
+      "text": "Next in this strand: removing a defender, where you chase off or capture the piece guarding a target so the count flips, and overloaded defenders, where one piece guards two things. Both start from the count you just learned. [H] My guess: once counting is automatic, spotting these two is the next jump in your tactics."
+    },
+    {
       "type": "reflect",
-      "kind": "confidence",
-      "prompt": "Pick one counting question. Which swap did you add up last, and did you check that each defender could really capture? Rate how sure you were of that answer. (low / medium / high)"
+      "kind": "teachback",
+      "prompt": "In two sentences, tell a beginner how to decide whether to start captures on a square. Write it in your own words first. Then tick what you included.",
+      "fields": [
+        {
+          "id": "explanation",
+          "label": "My explanation:"
+        },
+        {
+          "id": "both",
+          "label": "Count attackers and defenders, including pieces behind",
+          "options": [
+            "I said it",
+            "I missed it"
+          ]
+        },
+        {
+          "id": "legal",
+          "label": "Check each piece could really capture",
+          "options": [
+            "I said it",
+            "I missed it"
+          ]
+        },
+        {
+          "id": "order",
+          "label": "Add points cheapest first and stop when it gets worse",
+          "options": [
+            "I said it",
+            "I missed it"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Compare.** A model answer: to judge a fight over one square, I count the attackers and the defenders, including any hidden behind another piece. I check that each defender could really capture. Then I add up the swaps in points, cheapest piece first, and I stop when the next capture would lose more than it wins."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Optional. Think of a capture you almost made in a recent game. Which piece was in danger, and what was the first thing you counted? Write one line."
     }
   ],
   "review": {
@@ -182,6 +973,8 @@
   "sources": [
     "docs/first-hours.md session 2",
     "docs/council-synthesis.md CD-1, CD-4",
-    "sources/sheets/edlasker_chess-strategy.md (K2 counting, K3 spoilers)"
+    "sources/sheets/edlasker_chess-strategy.md (K2 counting, K3 spoilers; paraphrased)",
+    "sources/sheets/znosko-borovsky_middle-game.md (C32, paraphrased); docs/citable-views.md 4.16, 5.8",
+    "Positions: authored, replayed with python-chess, engine-checked by tools/validate_lessons.py"
   ]
 }

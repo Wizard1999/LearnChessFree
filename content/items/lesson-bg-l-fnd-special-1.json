@@ -1,0 +1,564 @@
+{
+  "positions": [
+    {
+      "id": "PBG-LFNDSPECIAL1-1",
+      "fen": "4k3/3p4/8/4P3/8/8/8/4K3 b - - 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: black pawn on its start square beside a white pawn on e5; legal-move task before any rule is named",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-2",
+      "fen": "4k3/8/8/8/Pp6/8/8/4K3 b - a3 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: rook-file jump, black pawn on b4 beside it, en passant square a3",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-3",
+      "fen": "4k3/8/8/3PpP2/8/8/8/4K3 w - e6 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: two white pawns beside a pawn that has just jumped; either may capture",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-4",
+      "fen": "4k3/8/8/5p2/6P1/8/8/4K3 b - - 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: white pawn jumps onto a square a black pawn already attacks; ordinary capture",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-5",
+      "fen": "8/8/8/8/R4Ppk/8/8/K7 b - f3 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: both pawns leave the fourth rank, exposing the black king on h4 to a rook on a4",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-6",
+      "fen": "3r2k1/8/8/8/3Pp3/8/2R1K3/8 b - d3 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: mirror of the lesson board; white jumps beside a black pawn, the capture checks the king and attacks the rook",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-7",
+      "fen": "4k3/8/8/8/Pp6/8/8/4K3 b - a3 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: same position as item 2 asked as a square-tapping task",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-8",
+      "fen": "4k3/8/8/8/Pp6/8/8/4K3 w - - 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: black pawn stepped once beside a white pawn on a4; no en passant",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-9",
+      "fen": "4k3/8/8/6pP/8/8/8/4K3 w - g6 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: black g-pawn has just jumped beside a white pawn on h5; en passant on g6",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IBG-LFNDSPECIAL1-1",
+      "skill": "FND.ENPASSANT.D1",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "PBG-LFNDSPECIAL1-1",
+      "prompt": "Black to move. Tap every square the pawn on d7 can move to.",
+      "answer": {
+        "from": "d7",
+        "squares": [
+          "d6",
+          "d5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "d7",
+            "to": [
+              "d6",
+              "d5"
+            ]
+          },
+          "statement": "The pawn on d7 can step to d6 or jump to d5."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.0",
+        "cue.1",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.select_squares"
+      ],
+      "hints": [
+        "A pawn that has not moved yet has an extra option.",
+        "Count one step and the two-square jump, and check both squares are empty.",
+        "The pawn can reach d6 and d5."
+      ],
+      "explain": "The black pawn has not moved yet, so it may step one square to d6 or jump two squares to d5. Both squares are empty. Notice that d5 is right beside White's pawn on e5, while d6 is a square that pawn attacks.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-2",
+      "skill": "FND.ENPASSANT.D1",
+      "cue": 1,
+      "task": "find_move",
+      "position": "PBG-LFNDSPECIAL1-2",
+      "prompt": "White has just jumped the pawn from a2 to a4, landing beside your pawn on b4. Capture it en passant.",
+      "answer": {
+        "moves": [
+          "b4a3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "b4a3"
+          },
+          "statement": "Black can capture en passant on a3."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "b4b3"
+          },
+          "statement": "Black can also simply push the pawn."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.0",
+        "cue.1",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.find_move"
+      ],
+      "hints": [
+        "The white pawn jumped two squares and now stands right beside your pawn.",
+        "You capture it as if it had stepped only one square. Which square did it pass over?",
+        "Your pawn goes diagonally to a3, and the white pawn on a4 disappears."
+      ],
+      "explain": "The white pawn passed over a3 on its jump. Black's pawn on b4 captures it by moving to a3, and the pawn on a4 is removed. The two kings take no part.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      },
+      "feedback_by_move": {
+        "b4b3": "That is an ordinary pawn step. The en passant capture goes diagonally to a3."
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-3",
+      "skill": "FND.ENPASSANT.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PBG-LFNDSPECIAL1-3",
+      "prompt": "Black has just jumped the pawn from e7 to e5, between your two pawns. Capture it en passant. Either pawn may do it.",
+      "answer": {
+        "moves": [
+          "d5e6",
+          "f5e6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "d5e6"
+          },
+          "statement": "The pawn on d5 can capture en passant."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "f5e6"
+          },
+          "statement": "The pawn on f5 can capture en passant."
+        },
+        {
+          "id": "C3",
+          "type": "legal_move",
+          "params": {
+            "move": "d5d6"
+          },
+          "statement": "Ordinary pawn steps are still available."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.0",
+        "cue.2",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.find_move"
+      ],
+      "hints": [
+        "Two of your pawns stand beside the jumper.",
+        "Either one may capture, and both land on the same square.",
+        "The landing square is e6, the square the black pawn passed over."
+      ],
+      "explain": "Both white pawns stand beside the pawn that jumped. Each may capture it by moving to e6, the square it passed over. Only one capture happens: whichever pawn takes, the pawn on e5 is removed.",
+      "orientation": "white",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-4",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PBG-LFNDSPECIAL1-4",
+      "prompt": "White has just played the pawn from g2 to g4. Black to move: capture that pawn.",
+      "answer": {
+        "moves": [
+          "f5g4"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "f5g4"
+          },
+          "statement": "The pawn on f5 captures on g4."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "f5f4"
+          },
+          "statement": "The pawn on f5 can also simply step ahead."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.1",
+        "cue.3",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.find_move"
+      ],
+      "hints": [
+        "Where does your pawn on f5 attack?",
+        "Your pawn captures one square diagonally forward.",
+        "The white pawn stands on g4, diagonally ahead of your pawn."
+      ],
+      "explain": "White's pawn landed on g4, a square the black pawn on f5 already attacks, because a pawn captures diagonally forward. So Black takes it in the ordinary way. No special rule is needed, because the pawn is not beside Black's pawn.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      },
+      "feedback_by_move": {
+        "f5f4": "That is only a step ahead. The white pawn on g4 stands diagonally in front of your pawn."
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-5",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "PBG-LFNDSPECIAL1-5",
+      "prompt": "Black to move. White has just jumped a pawn from f2 to f4, beside Black's pawn on g4. Can Black capture en passant? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "illegal_move",
+          "params": {
+            "move": "g4f3"
+          },
+          "statement": "The en passant capture is not legal."
+        },
+        {
+          "id": "C2",
+          "type": "legal_move",
+          "params": {
+            "move": "g4g3"
+          },
+          "statement": "Black's pawn can still step ahead."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.1",
+        "cue.3",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.predict_outcome"
+      ],
+      "hints": [
+        "Remember the rule for every move: your own king may not be left in check.",
+        "Picture the fourth rank after the capture: which pieces would still stand between the rook and the king?",
+        "The capture takes the pawn on g4 off the rank, and the captured pawn on f4 leaves it too."
+      ],
+      "explain": "After the capture both pawns would be gone from the fourth rank, so the white rook on a4 would attack the black king on h4. A move may never leave your own king in check, so the capture is not allowed, although every other condition is met.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-6",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PBG-LFNDSPECIAL1-6",
+      "prompt": "White has just jumped the pawn from d2 to d4. Black to move: find the capture that gives check and attacks a rook at the same time.",
+      "answer": {
+        "moves": [
+          "e4d3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e4d3"
+          },
+          "statement": "Black can capture en passant on d3."
+        },
+        {
+          "id": "C2",
+          "type": "material_after_move",
+          "params": {
+            "move": "e4d3",
+            "min": 5
+          },
+          "statement": "The capture wins at least a rook's worth of material along the engine line."
+        },
+        {
+          "id": "C3",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e4d3"
+            ]
+          },
+          "statement": "The engine rates the capture as the best move."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.1",
+        "cue.2",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.find_move"
+      ],
+      "hints": [
+        "Look at what a pawn on d3 would attack.",
+        "A pawn attacks the two squares diagonally ahead of it. Which white pieces stand there?",
+        "The pawn from e4 captures en passant on d3, giving check to the king on e2 and attacking the rook on c2."
+      ],
+      "explain": "Black's pawn on e4 captures en passant on d3. The pawn on d3 attacks the king on e2 and the rook on c2 at once. White must answer the check, so Black then takes the rook.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-7",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 3,
+      "task": "select_squares",
+      "position": "PBG-LFNDSPECIAL1-7",
+      "prompt": "Black to move. White has just played a2-a4. Tap every square the pawn on b4 can move to.",
+      "answer": {
+        "from": "b4",
+        "squares": [
+          "a3",
+          "b3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "b4",
+            "to": [
+              "a3",
+              "b3"
+            ]
+          },
+          "statement": "The pawn on b4 can move to exactly these squares."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.0",
+        "cue.3",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.select_squares"
+      ],
+      "hints": [
+        "List the usual pawn moves first: straight ahead, then diagonal captures of pieces that are there.",
+        "Then ask whether the last move gives the pawn one more capture.",
+        "The extra capture lands on the square the white pawn passed over."
+      ],
+      "explain": "The pawn on b4 can step ahead to b3. It can also capture en passant on a3, the square the white pawn passed over on its jump. It has no other moves.",
+      "orientation": "black",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-8",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 3,
+      "task": "select_squares",
+      "position": "PBG-LFNDSPECIAL1-8",
+      "prompt": "White to move. Black's last move was the pawn from b5 to b4. Tap every square the pawn on a4 can move to.",
+      "answer": {
+        "from": "a4",
+        "squares": [
+          "a5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "a4",
+            "to": [
+              "a5"
+            ]
+          },
+          "statement": "White's pawn on a4 can only step ahead."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.1",
+        "cue.3",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.select_squares"
+      ],
+      "hints": [
+        "Did the black pawn jump two squares, or step one?",
+        "Only a two-square jump gives the right to capture in passing.",
+        "The pawn took one step, so the pawn on a4 can only step ahead."
+      ],
+      "explain": "Black's pawn moved only one square, from b5 to b4. En passant exists only against a pawn that has just jumped two squares, so White's pawn on a4 can do nothing but step ahead.",
+      "orientation": "white",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-9",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 3,
+      "task": "select_squares",
+      "position": "PBG-LFNDSPECIAL1-9",
+      "prompt": "White to move. Black's last move was the pawn from g7 to g5. Tap every square the pawn on h5 can move to.",
+      "answer": {
+        "from": "h5",
+        "squares": [
+          "g6",
+          "h6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "h5",
+            "to": [
+              "g6",
+              "h6"
+            ]
+          },
+          "statement": "The pawn on h5 can step to h6 or capture en passant on g6."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.1",
+        "cue.3",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.select_squares"
+      ],
+      "hints": [
+        "Black's pawn did jump two squares. Where did it land?",
+        "It landed right beside your pawn on the next file.",
+        "You can step to h6 or capture on g6, the square the black pawn passed over."
+      ],
+      "explain": "The black pawn jumped from g7 to g5 and landed right beside White's pawn on h5. White may capture it en passant on g6, or simply step to h6.",
+      "orientation": "white",
+      "review": {
+        "status": "machine-only"
+      }
+    }
+  ]
+}

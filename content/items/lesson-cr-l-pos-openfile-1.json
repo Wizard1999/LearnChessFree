@@ -1,0 +1,540 @@
+{
+  "positions": [
+    {
+      "id": "P-LPOSOPENFILE1-1",
+      "fen": "r4rk1/pp3ppp/8/3p4/3P4/8/PP3PPP/R4RK1 w - - 0 1",
+      "family": "FAM-LPOSOPENFILE1-1",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by placing pieces on an empty board (family of shipped IA2-1: rook, minor piece and five pawns each; legality and material balance checked with python-chess); the pawn structure of the lesson's first board with the c-pawns off",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-2",
+      "fen": "5rk1/pp3ppp/2n5/8/8/4B3/PP3PPP/3R2K1 w - - 0 1",
+      "family": "FAM-LPOSOPENFILE1-2",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by placing pieces on an empty board (family of shipped IA2-1: rook, minor piece and five pawns each; legality and material balance checked with python-chess); Black knight on c6",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-3",
+      "fen": "5rk1/1p3ppp/n7/p7/8/4B3/PP3PPP/3R2K1 w - - 0 1",
+      "family": "FAM-LPOSOPENFILE1-3",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by placing pieces on an empty board (family of shipped IA2-1: rook, minor piece and five pawns each; legality and material balance checked with python-chess); Black knight on a6 and pawn on a5, a harmless square so the landing on d7 works (a near-miss for the lesson's covered-square boards)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-4",
+      "fen": "5rk1/pp3ppp/4b3/8/8/4B3/PP3PPP/3R2K1 w - - 0 1",
+      "family": "FAM-LPOSOPENFILE1-4",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by placing pieces on an empty board (family of shipped IA2-1; legality and material balance checked with python-chess); the d-file holds no pawns, so the rook can reach d7 (although the bishop on e6 watches that square)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-5",
+      "fen": "5rk1/pp3pp1/5b1p/8/8/5N1P/PP3PP1/3R2K1 b - - 0 1",
+      "family": "FAM-LPOSOPENFILE1-5",
+      "provenance": {
+        "kind": "authored",
+        "ref": "constructed by placing pieces on an empty board (family of shipped IA2-1: rook, minor piece and five pawns each; legality and material balance checked with python-chess); Black to move, White threatens to take the d-file",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-6",
+      "fen": "1r3r1k/1p2R1pp/p4p2/3p4/P2Pn1P1/5N1P/1P3P2/2R3K1 w - - 0 30",
+      "family": "FAM-LPOSOPENFILE1-6",
+      "provenance": {
+        "kind": "authored",
+        "ref": "a master-level position said to come from a 2021 broadcast game (Ding Liren v Leko was the first attribution), but the review pass could not re-find the game, so the source is NOT verified; treated as an illustration; legality checked with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LPOSOPENFILE1-7",
+      "fen": "5rk1/p4pbp/1p1p2p1/n7/3Pb2P/P3BN2/3K1PP1/2R4R w - - 0 23",
+      "family": "FAM-LPOSOPENFILE1-7",
+      "provenance": {
+        "kind": "lichess_game",
+        "ref": "Carlsen v Vachier-Lagrave, Tata Steel Masters 2021, round 13 (31 Jan 2021), moves from the Lichess broadcast database export (CC0), game xxXcvwgx/vaENvYpp, read locally 7 Nov 2026; result 1-0 per the file header: position before 23.Rc7",
+        "licence": "CC0"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ICR-LPOSOPENFILE1-1",
+      "skill": "POS.OPENFILE.D1",
+      "cue": 1,
+      "task": "predict_outcome",
+      "position": "P-LPOSOPENFILE1-1",
+      "prompt": "Which files are completely open here: no pawn of either colour on them?",
+      "answer": {
+        "outcome": "the c-file and the e-file",
+        "options": [
+          "the c-file and the e-file",
+          "the e-file only",
+          "the c-file, the d-file and the e-file",
+          "the a-file and the h-file"
+        ]
+      },
+      "claims": [
+        {
+          "type": "open_files",
+          "params": {
+            "open": [
+              "c",
+              "e"
+            ],
+            "half_open_white": [],
+            "half_open_black": []
+          },
+          "statement": "Exactly the c-file and the e-file have no pawns; the d-file still holds a white and a black pawn.",
+          "id": "C1"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "Go file by file. A file is open only if neither side has a pawn on it.",
+        "Look at the middle of the board: which two files have no pawns at all?",
+        "Files c and e are empty of pawns. The d-file has a pawn of each colour."
+      ],
+      "explain": "The c-file and the e-file hold no pawns at all. The d-file has a white pawn and a black pawn facing each other, so it is closed.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-2",
+      "skill": "POS.OPENFILE.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LPOSOPENFILE1-2",
+      "prompt": "White to move. Find the most useful move.",
+      "answer": {
+        "moves": [
+          "d1d7"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "d1d7"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "black",
+            "count": 0
+          },
+          "id": "C2"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "b7",
+            "color": "white",
+            "count": 1,
+            "after_move": "d1d7"
+          },
+          "id": "C3"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d1d7"
+            ]
+          },
+          "id": "C4"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "f2f4",
+            "cp": 100
+          },
+          "id": "C5"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "Is there an open file? Which rank would you like your rook on?",
+        "Look at the squares a rook on the d-file could reach. Does a black piece watch d7?",
+        "Take the rook all the way up the open file."
+      ],
+      "explain": "No black piece attacks d7, so the rook lands there safely and attacks the pawns on b7 and f7. Waiting with f4 gives Black time to bring the knight and the rook into the defence.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "f2f4": "This lets Black repair first: the open file is still there, but the entry is no longer free."
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-3",
+      "skill": "POS.OPENFILE.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-LPOSOPENFILE1-3",
+      "prompt": "Black's knight stands on a6 (and the a-pawn on a5) instead of the knight on c6. Does the rook landing on d7 win a pawn? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "black",
+            "count": 0
+          },
+          "statement": "No black piece attacks d7.",
+          "id": "C1"
+        },
+        {
+          "type": "material_after_move",
+          "params": {
+            "move": "d1d7",
+            "min": 1
+          },
+          "statement": "Landing on d7 wins at least a pawn along the engine line.",
+          "id": "C2"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": 100,
+            "max": 400
+          },
+          "statement": "The engine prefers White clearly (depth 16).",
+          "id": "C3"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "Count the black pieces that attack d7.",
+        "The knight on a6 jumps to b4, c5, c7 or b8. Does it reach d7?",
+        "Nothing covers d7, so the rook lands safely and attacks the pawns on b7 and f7."
+      ],
+      "explain": "The knight on a6 is far from the action and does not attack d7, so the rook lands safely and attacks b7 and f7. A piece next to the entry square matters; a piece that merely stands somewhere on the board does not.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-4",
+      "skill": "POS.OPENFILE.D2",
+      "cue": 3,
+      "task": "predict_outcome",
+      "position": "P-LPOSOPENFILE1-4",
+      "prompt": "White to move. Can the rook on d1 reach d7 or d8 this move? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_destinations",
+          "params": {
+            "from": "d1",
+            "to": [
+              "a1",
+              "b1",
+              "c1",
+              "d2",
+              "d3",
+              "d4",
+              "d5",
+              "d6",
+              "d7",
+              "d8",
+              "e1",
+              "f1"
+            ]
+          },
+          "statement": "The rook on d1 can reach d2 to d8, as well as a1, b1, c1, e1 and f1.",
+          "id": "C1"
+        },
+        {
+          "type": "open_files",
+          "params": {
+            "open": [
+              "c",
+              "d",
+              "e"
+            ]
+          },
+          "statement": "The c-file, the d-file and the e-file hold no pawns.",
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "Look at the d-file. Is anything standing on it?",
+        "No pawn and no piece stands between the rook and d8.",
+        "The file is open, so the rook can go all the way. Whether it should land there is a different question."
+      ],
+      "explain": "Nothing blocks the d-file, so the rook can reach d7 or d8. Reaching a square is not the same as landing safely: the bishop on e6 watches d7, so the rook would be taken there.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-5",
+      "skill": "POS.OPENFILE.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LPOSOPENFILE1-5",
+      "prompt": "Black to move. Find the best move.",
+      "answer": {
+        "moves": [
+          "f8d8"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "f8d8"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f8d8"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 60
+          },
+          "statement": "The position is roughly balanced.",
+          "id": "C3"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "White's rook stands alone on an open file. How could Black stop it from landing?",
+        "A rook of your own on the same file asks White to trade or step aside.",
+        "Put the rook opposite White's rook on the d-file."
+      ],
+      "explain": "A black rook on the d-file means White cannot land on d7 without allowing a trade. The engine rates this move first (depth 16).",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-6",
+      "skill": "POS.OPENFILE.D3",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LPOSOPENFILE1-6",
+      "prompt": "White to move. Find the most useful move.",
+      "answer": {
+        "moves": [
+          "c1c7"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "c1c7"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "black",
+            "count": 0
+          },
+          "id": "C2"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1c7"
+            ]
+          },
+          "id": "C3"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "c1c2",
+            "cp": 70
+          },
+          "id": "C4"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "How many of your rooks stand on the seventh rank? How many could?",
+        "Is the c-file open? Can a black piece take a rook on c7?",
+        "Bring the second rook to the same rank."
+      ],
+      "explain": "Nothing black attacks c7, and the second rook joins the first on the seventh rank; the engine rates it far above the quiet rook move (depth 16).",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "c1c2": "A quiet rook move gives Black time to bring a rook to the seventh rank or to hunt the knight."
+      }
+    },
+    {
+      "id": "ICR-LPOSOPENFILE1-7",
+      "skill": "POS.OPENFILE.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LPOSOPENFILE1-7",
+      "prompt": "White to move. Find the most useful move.",
+      "answer": {
+        "moves": [
+          "c1c7"
+        ]
+      },
+      "claims": [
+        {
+          "type": "legal_move",
+          "params": {
+            "move": "c1c7"
+          },
+          "id": "C1"
+        },
+        {
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "black",
+            "count": 0
+          },
+          "id": "C2"
+        },
+        {
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1c7"
+            ]
+          },
+          "id": "C3"
+        },
+        {
+          "type": "move_loses",
+          "params": {
+            "move": "d2e2",
+            "cp": 60
+          },
+          "id": "C4"
+        }
+      ],
+      "tags": [
+        "node.POS.OPENFILE",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "tier.3",
+        "theme.openFile"
+      ],
+      "hints": [
+        "Which file is open, and who is watching it?",
+        "Is the seventh rank covered by a black piece?",
+        "Put the rook on the seventh rank."
+      ],
+      "explain": "No black piece attacks c7, and from there the rook hits the pawns on a7 and f7. The engine rates it clearly above the quiet moves (depth 16).",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d2e2": "The king step is not bad, but it lets Black bring the knight or a rook back to cover the seventh rank."
+      }
+    }
+  ]
+}

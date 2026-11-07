@@ -1,0 +1,457 @@
+{
+  "positions": [
+    {
+      "id": "PCR-LTACDOUBLECHECK1-1",
+      "fen": "r6r/1pp1kpp1/5b1p/p3N3/8/2P2b2/PP3PPP/2KRR3 b - - 0 16",
+      "family": "FAM-CR-DC1-T",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position of ISsp7-2 (Lichess puzzle 9MTe7 edit) with Black to move: White threatens a double-check mate",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-2",
+      "fen": "3q1r2/pp1pkpp1/7p/2P1B1P1/8/8/5PPP/4R1K1 w - - 0 1",
+      "family": "FAM-CR-DC1-K",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Authored with python-chess: a bishop in front of the e1 rook, a pawn on c5 protecting d6",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-3",
+      "fen": "3q1r2/pp1pkpp1/7p/4B1P1/8/8/5PPP/4R1K1 w - - 0 1",
+      "family": "FAM-CR-DC1-K",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position -2 with the white pawn c5 removed: the checker on d6 is unprotected",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-4",
+      "fen": "3q1r2/1p1pkpp1/p6p/2P1B1P1/8/8/5PPP/4R1K1 w - - 0 1",
+      "family": "FAM-CR-DC1-K",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position -2 with Black's a-pawn moved from a7 to a6: an irrelevant change",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-5",
+      "fen": "r6r/1pp1kpp1/5n1p/p3N3/8/2P5/PP3PPP/2KR3R w - - 0 16",
+      "family": "FAM-CR-DC1-S",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Authored: ICR-1 structure with a black knight on f6 (no self-block by a bishop); the rook on h1 can lift to e1. Checked with python-chess: Ng6 is the only checking mate after the lift.",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-6",
+      "fen": "2kr3r/pp3ppp/2p5/8/P3n3/5N1P/1PP1KPP1/R6R b - - 0 16",
+      "family": "FAM-CR-DC1-S",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position -5 mirrored (colours and ranks swapped), Black to move",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PCR-LTACDOUBLECHECK1-7",
+      "fen": "2krr3/pp3ppp/2p5/8/P3n3/5N1P/1PP1KPP1/R6R w - - 1 16",
+      "family": "FAM-CR-DC1-S",
+      "provenance": {
+        "kind": "authored",
+        "ref": "Position -5 after the rook lift, mirrored: White to move, Black threatens a double-check mate",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "ICR-LTACDOUBLECHECK1-1",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 3,
+      "task": "threat_detection",
+      "position": "PCR-LTACDOUBLECHECK1-1",
+      "prompt": "Black to move. Suppose Black passed. Which White move would be checkmate? Show it. (You have seen a position like this from White's side.)",
+      "answer": {
+        "threat_move": "e5g6"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e5g6",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If Black passed, Ng6 would be checkmate."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.3",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Pretend Black passes. Which white piece stands in front of a line to the king on e7?",
+        "The rook on e1 aims at the king, and the knight on e5 blocks it. Which knight jump also attacks e7?",
+        "A knight move to the g-file."
+      ],
+      "explain": "If Black passed, the knight would jump to g6, check the king itself and uncover the rook on e1: two checks. Only the king can move, and no square is free.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "black"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-2",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDOUBLECHECK1-2",
+      "prompt": "White to move. The bishop on e5 can go to d6 with two checks. Is Bd6+ checkmate? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "Bd6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e5d6",
+            "n": 1
+          },
+          "statement": "Bd6 is checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5d6"
+          },
+          "statement": "The pawn on c5 protects the bishop on d6."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Which two white pieces would attack the king on e7?",
+        "Can the king take the bishop on d6? Look at the pawn on c5.",
+        "Count the king's other squares."
+      ],
+      "explain": "Bd6 attacks the king and uncovers the rook, so only the king can move. It cannot take the bishop, which the pawn on c5 protects, and it has no other free square.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-3",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDOUBLECHECK1-3",
+      "prompt": "White to move. White has no pawn on c5. Is Bd6+ checkmate? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "Bd6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "move_is_not_mate",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "Bd6+ is check but not checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 0,
+            "after_move": "e5d6"
+          },
+          "statement": "No white piece protects the bishop on d6."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Is the bishop on d6 next to the king?",
+        "Does any white piece protect d6 now?",
+        "A king may take an unprotected piece next to it, even when two pieces give check."
+      ],
+      "explain": "The bishop on d6 stands next to the king and nothing protects it, so the king takes it. The double check still forces a king move, but this one is available.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-4",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "PCR-LTACDOUBLECHECK1-4",
+      "prompt": "White to move. Black's pawn stands on a6, not a7, and White has a pawn on c5. Is Bd6+ checkmate? Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "Bd6 is legal."
+        },
+        {
+          "id": "C2",
+          "type": "mate_in",
+          "params": {
+            "move": "e5d6",
+            "n": 1
+          },
+          "statement": "Bd6 is checkmate."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_move": "e5d6"
+          },
+          "statement": "The pawn on c5 protects the bishop on d6."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Does the a-pawn touch any square near the black king?",
+        "Which squares matter: those next to the king on e7.",
+        "Compare with the first position: what is the same?"
+      ],
+      "explain": "The a-pawn is far from the king and plays no part: the result is the same as with the pawn on a7.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-5",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PCR-LTACDOUBLECHECK1-5",
+      "prompt": "White to move. No double check exists yet. Find the quiet move that makes a knight jump into a double check next.",
+      "answer": {
+        "moves": [
+          "h1e1"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "h1e1"
+          },
+          "statement": "The rook move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h1e1"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The rook lift is the engine's first choice (depth 16)."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.2",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Which line to the king on e7 is blocked by your own knight?",
+        "Which piece could stand behind the knight, on that line?",
+        "A rook that is not yet on the e-file."
+      ],
+      "explain": "The rook behind the knight on e1 means any knight jump that checks the king also uncovers the rook. Ng6 would then be a double check and mate. The move is quiet: it gives no check itself.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-6",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PCR-LTACDOUBLECHECK1-6",
+      "prompt": "Black to move. The same idea from the other side. Find the quiet move that prepares a double check.",
+      "answer": {
+        "moves": [
+          "h8e8"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_move",
+          "params": {
+            "move": "h8e8"
+          },
+          "statement": "The rook move is legal."
+        },
+        {
+          "id": "C2",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h8e8"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The rook lift is the engine's first choice (depth 16)."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.3",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Which of your pieces blocks a line to the white king?",
+        "Put a long-range piece behind it.",
+        "A rook from the h-file."
+      ],
+      "explain": "The rook on e8 stands behind the knight on e4, which blocks the file to the white king on e2. A knight jump to g3 then checks the king and uncovers the rook.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "black"
+    },
+    {
+      "id": "ICR-LTACDOUBLECHECK1-7",
+      "skill": "TAC.DOUBLE-CHECK.D1",
+      "cue": 3,
+      "task": "threat_detection",
+      "position": "PCR-LTACDOUBLECHECK1-7",
+      "prompt": "White to move. Suppose White passed. Which Black move would be checkmate? Show it.",
+      "answer": {
+        "threat_move": "e4g3"
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mate_in",
+          "params": {
+            "move": "e4g3",
+            "n": 1,
+            "null_move_first": true
+          },
+          "statement": "If White passed, Ng3 would be checkmate."
+        }
+      ],
+      "tags": [
+        "theme.doubleCheck",
+        "node.TAC.DOUBLE-CHECK",
+        "cue.3",
+        "kind.authored",
+        "tier.3",
+        "lang.en"
+      ],
+      "hints": [
+        "Pretend White passes. Which black piece stands in front of a line to the king on e2?",
+        "The rook on e8 aims at the king; a black knight blocks it.",
+        "Which knight jump also attacks e2?"
+      ],
+      "explain": "A Black knight jump to g3 would check the king and uncover the rook on e8: two checks, and the king has no free square. White must stop it now, for example by moving the king off the e-file.",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "orientation": "white"
+    }
+  ]
+}
