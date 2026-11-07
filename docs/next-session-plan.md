@@ -10,6 +10,10 @@ Four bounded packages, each ending in something usable: (1) trust and friction: 
 
 After the current app queue lands, apply the new palette in one pass: tokens first (the app already uses CSS variables), then roles, the map and board colours, `tools/check_contrast.py` in `tools/check.py`, the tick-and-cross rule, and a screenshot review of the main pages in both looks. Do not mix this with the map-stage work.
 
+## Up next as colour and the design direction (D46, roadmap 3f)
+
+The Up next button is already gone; roll the highlight-plus-label design out to the lesson list, courses, Progress boxes and Practice. Then the palette pass (3e) with the type, spacing and geometric-illustration direction. Linked hover (D44) applies to every highlighted item.
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.

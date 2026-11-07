@@ -202,6 +202,13 @@ Palette: electric cobalt #4055F5, persimmon #F06445, golden yellow #F4C542, deep
 - [ ] Colour is never the only cue: correct and incorrect always carry a tick or cross and a different shape (jade and persimmon are close in brightness for red-green colour blindness)
 - [ ] Screenshot review of Today, a lesson, practice, progress, the map and Play in both looks at desktop and phone size; update the crest, favicon, manifest theme colour and the product page copy
 
+## Phase 3f: "Up next" is a colour, and the overall design direction (Andrew, 7 November 2026; decision D46)
+- [x] The Up next button and window are removed from the Curriculum toolbar (Progress and Mastery challenge remain as toggles); the map's recommended skill keeps its persimmon ring and now says "Up next" on its hover card
+- [ ] The same design in every view, with no dedicated button: All lessons marks the next unfinished lesson (persimmon edge and an "Up next" label on hover and in the row), Courses marks the course and lesson to continue, the Progress boxes mark the next skills, Practice marks the recommended set; always the same persimmon highlight and the same word, always easy to see and intuitive
+- [ ] Linked hover (D44) also applies: pointing at the highlighted item in one window highlights it in the others
+- [ ] Design direction for the palette pass (3e): clean typography, generous spacing, bold geometric illustrations, a restrained layout, and the colours carry the personality. Typography: one serif for headings and one clean sans for text, a modest scale (about 1.25), comfortable line length (60 to 70 characters) and leading (1.5 to 1.65); Spacing: an 8-point rhythm with generous padding around cards and between sections, fewer boxes and borders, more white space; Illustrations: a small set of bold geometric shapes (circles, quarter-circles, squares, diagonal bars) in the palette, drawn as inline SVG, used for the Start screen, empty states, stage headers, course covers and the finale and completion screens, never decoration that competes with the board or the lesson; Layout: restrained, one main column, one primary action per view
+- [ ] Screenshot review of the redesigned Start, Today, a lesson, the map and Play, in both looks, before shipping
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
