@@ -30,6 +30,18 @@ A hotfix is in (single scrolling control rows, hidden hint and legend). When the
 
 Not a hotfix. After the current app queue: first `docs/mobile-design.md` (wireframes of the bottom tab bar, the map, a lesson, an exercise, Practice and Play, Today and Progress at 375x812, with the touch and safe-area rules), then build it page by page, then test on a real phone. Keep the byline in the phone header (rule 9).
 
+## Where things stood on 7 Nov 2026 (for the next session or after compacting)
+
+**Git:** `main` is 4 local commits ahead of `origin/main` and NOT pushed (app queue 4, plans D44 to D50, the lesson-wave template, a daily-practice fix). The working tree also holds uncommitted work: the generated content outputs (`app/public/content/*`, hash-named files, `readiness.json`), the new map name plates (`app/src/lib/mapLabels.ts`, `RadialMap.tsx`), the quieter map lines, and the look workflow's edits to `index.css`, `appearance.ts`, `Settings.tsx`, `theme.css`, `app/src/styles/palette.css`, `index.html`. Push only after the full `tools/check.py` passes. The live site (Vercel builds from GitHub) therefore still shows the 30 Oct to 1 Nov build.
+
+**Workflows (resume with `Workflow({scriptPath, resumeFromRunId})`; finished agents replay from cache):**
+- Content week 1 (beginner rebuild, Italian series, core batch, Dragon finale, review slice): STOPPED to save the 5-hour limit. Script `C:/Users/Ender/AppData/Local/Temp/claude/O---Chessteaching/4071769d-cf5b-453e-9168-98863c2f445a/scratchpad/content-week-1.js`, run id `wf_2528c461-535`. Done: path rebuild (S0 + S1 about 155 planned minutes), Dragon finale, review-slice tooling, many authors. Not done: many reviews and fixes (beginner lessons), the Italian series authors, core-batch reviews. Lessons may be half-rewritten: run `tools/check_all.py` and `tools/validate_lessons.py` after resuming.
+- Look and colour v3 (new opt-in 'Scholarmate' look, light and dark, colourful, old looks stay default): running when this note was written; script `C:/Users/Ender/.claude/projects/O---Chessteaching/4071769d-cf5b-453e-9168-98863c2f445a/workflows/scripts/look-and-colour-v3.js`, run id `wf_020d4e28-a36`.
+
+**Owner preferences this week:** old look stays the default and the new look is opt-in and far more colourful (D50); Plus Jakarta Sans plus a serif for titles; both light and dark; Up next is a colour not a button; linked hover across windows (D44); text rings for the stage names; map names as non-overlapping plates (done, unpushed); mobile redesign is its own pass (roadmap 2k, D49); a finishable Foundation with a capstone (D48); Maia finale games (D41); real games prescribed by the curriculum (D42). Use `tools/workflows/lesson-wave.js` for lesson waves (every lesson reviewed, stronger-model audit for the Foundation).
+
+**First actions next time:** check usage (5-hour limit resets about 15:00 UTC on 7 Nov); resume the content workflow; wait for the look workflow; run `./tools/.venv/Scripts/python.exe -I tools/check.py`; fix overlaps and failures; rebuild the content (`tools/build_content.py`); regenerate the lesson audio only once, after the rewrites (`tools/make_audio.py`); commit and push; confirm the Vercel deploy is green (the site is about 200 MB); then continue with roadmap 2k (mobile design), 2i (Foundation), 2l (forks split and the review follow-ups).
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.
