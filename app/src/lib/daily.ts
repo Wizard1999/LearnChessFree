@@ -58,7 +58,10 @@ export function buildDaily(c: ContentBundle, attempts: Attempt[], placement: Pla
   const lists = open.map(k => pickFresh(poolFor(k).filter(i => i.cue >= 3), attempts, 2, `${day}:mix:${k}`)).filter(l => l.length)
   let mixed = interleave(lists).slice(0, 8)
   if (mixed.length < 4) {
-    const gen = pickFresh(c.items.filter(i => i.cue >= 3), attempts, 6 - mixed.length, `${day}:mixfill`, { exclude: new Set(mixed.map(i => i.id)) })
+    // filler only from skills the learner has started or the earliest tiers: an early learner never gets advanced material just because the set has room (review 7 Nov 2026)
+    const started = new Set([...masteries.entries()].filter(([, m]) => m.state !== 'unseen').map(([k]) => k.slice(0, k.lastIndexOf('.'))))
+    const readyFor = (skill: string) => { const node = skill.slice(0, skill.lastIndexOf('.')); return started.has(node) || (c.skillById.get(node)?.tier ?? 9) <= 1 }
+    const gen = pickFresh(c.items.filter(i => i.cue >= 3 && readyFor(i.skill)), attempts, 6 - mixed.length, `${day}:mixfill`, { exclude: new Set(mixed.map(i => i.id)) })
     mixed = [...mixed, ...gen]
   }
   const quiet = pickFresh(c.items.filter(i => (i.tags ?? []).includes('kind.quiet')), attempts, 1, `${day}:quiet`, { exclude: new Set(mixed.map(i => i.id)) })
