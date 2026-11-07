@@ -1,6 +1,8 @@
 import { isOnline, rankedVoices } from '../lib/voices'
 import { useEffect, useState } from 'react'
-import { exportAll, importAll, resetAll } from '../db'
+import { exportAll, resetAll } from '../db'
+import { describeMerge, describeScope, planMerge, validateExport, type ExportFile, type Scope } from '../lib/backup'
+import { downloadBackup, downloadBlob, mergeWithSafetyCopy, replaceWithSafetyCopy } from '../lib/backupIO'
 import { loadAppearance, saveAppearance, type Appearance } from '../lib/appearance'
 import { useStorageStatus } from '../lib/persist'
 import { effectiveTrivial, loadNever, loadTrivial, showAgain } from '../lib/trivial'
@@ -38,23 +40,34 @@ export function SettingsContent() {
   const speech = useSpeech()
 
   async function doExport() {
-    const data = await exportAll()
-    const blob = new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' })
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
-    a.download = `chess-school-export-${new Date().toISOString().slice(0, 10)}.json`
-    a.click()
-    URL.revokeObjectURL(a.href)
-    setMsg(`Exported ${data.attempts.length} attempts, ${data.reflections.length} notes, ${data.games.length} games.`)
-  }
-  async function doImport(file: File | undefined) {
-    if (!file) return
     try {
-      const obj = JSON.parse(await file.text())
-      if (!window.confirm('Importing replaces everything stored on this device. Continue?')) return
-      await importAll(obj)
-      setMsg('Import complete.')
-    } catch (e) { setMsg(`Import failed: ${(e as Error).message}`) }
+      const data = await downloadBackup()
+      setMsg(`Exported ${data.attempts.length} answers, ${data.lessonProgress.length} lesson records, ${data.reflections.length} notes, ${data.games.length} games.`)
+    } catch (e) { setMsg(`The export failed: ${(e as Error).message}`) }
+  }
+  // Importing is two steps: read and check the file and say what is in it; then the learner chooses merge or replace.
+  const [incoming, setIncoming] = useState<{ file: ExportFile; scope: Scope; name: string } | null>(null)
+  const [mergePlan, setMergePlan] = useState<string | null>(null)
+  const [previous, setPrevious] = useState<Blob | null>(null)
+  async function readImport(file: File | undefined) {
+    if (!file) return
+    setIncoming(null); setPrevious(null); setMergePlan(null)
+    try {
+      const v = validateExport(JSON.parse(await file.text()))
+      if (!v.ok) { setMsg(`Import not started: ${v.error}`); return }
+      setIncoming({ file: v.file, scope: v.scope, name: file.name })
+      const current = await exportAll()
+      setMergePlan(describeMerge(planMerge(current as unknown as ExportFile, v.file)))
+      setMsg(null)
+    } catch (e) { setMsg(`Import not started: this file could not be read as JSON (${(e as Error).message}).`) }
+  }
+  async function runImport(mode: 'merge' | 'replace') {
+    if (!incoming) return
+    try {
+      if (mode === 'merge') { const r = await mergeWithSafetyCopy(incoming.file); setPrevious(r.previous); setMsg('Merged. Nothing that was here was removed.') }
+      else { setPrevious(await replaceWithSafetyCopy(incoming.file)); setMsg('Replaced. This device now holds the contents of the file.') }
+      setIncoming(null); setMergePlan(null)
+    } catch (e) { setMsg(`The import failed and nothing was changed: ${(e as Error).message}`) }
   }
   async function doReset() {
     if (!window.confirm('Delete all progress, notes and saved games on this device? Export first if you want a copy.')) return
@@ -96,6 +109,7 @@ export function SettingsContent() {
               <input type="range" min={RATE_MIN} max={RATE_MAX} step={0.1} value={speech.prefs.rate} onChange={e => savePrefs({ rate: Number(e.target.value) })} /></label>
             <button type="button" onClick={() => speakText('Knight takes e5, check. Castle kingside with O-O.')}>Hear a sample</button>
           </div>
+          {speech.source && speech.playing !== 'idle' && <p className="small muted" role="status">Voice now: {speech.source === 'recorded' ? 'the recorded voice' : "your browser's built-in voice, not the recorded one"}.</p>}
         </section>
       )}
       <section className="card">
@@ -107,9 +121,23 @@ export function SettingsContent() {
         <p>To use another device, or keep a copy, export a file here and import it there. It is plain JSON you can read without this app. Signing in to sync across devices is planned, not built yet (it needs a server; the roadmap tracks it).</p>
         <div className="row">
           <button type="button" className="primary" onClick={() => void doExport()}>Export everything</button>
-          <label className="button">Import a file <input type="file" accept="application/json" hidden onChange={e => void doImport(e.target.files?.[0])} /></label>
+          <label className="button">Choose a file to import <input type="file" accept="application/json" hidden onChange={e => { void readImport(e.target.files?.[0]); e.target.value = '' }} /></label>
           <button type="button" onClick={() => void doReset()}>Delete everything</button>
         </div>
+        {incoming && (
+          <div className="importpreview" role="group" aria-label="Import preview">
+            <h3>This file ({incoming.name}) holds</h3>
+            <p>{describeScope(incoming.scope)}</p>
+            <p className="small muted"><strong>Merge</strong> keeps everything on this device and adds what the file has and this device lacks; a finished lesson stays finished. <strong>Replace</strong> makes this device hold exactly the file, which removes anything newer that is only here. Either way, a copy of what is on this device now is offered for download afterwards.</p>
+            {mergePlan && <p className="small">{mergePlan}</p>}
+            <div className="row">
+              <button type="button" className="primary" onClick={() => void runImport('merge')}>Merge into this device</button>
+              <button type="button" onClick={() => void runImport('replace')}>Replace what is on this device</button>
+              <button type="button" onClick={() => setIncoming(null)}>Cancel</button>
+            </div>
+          </div>
+        )}
+        {previous && <p className="small"><button type="button" className="link" onClick={() => downloadBlob(previous, `chess-school-before-import-${new Date().toISOString().slice(0, 10)}.json`)}>Download a copy of what was on this device before the import</button> (it is held in this tab only, so download it now if you might want it).</p>}
         {msg && <p role="status">{msg}</p>}
       </section>
       <section className="card">

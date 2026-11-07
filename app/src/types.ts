@@ -68,36 +68,64 @@ export interface Skill {
 
 /** A field of a reflect step. type 'number' shows a number box; with `answer` the step checks it (within `tolerance`) after saving. */
 export interface ReflectField { id: string; label: string; options?: string[]; type?: 'number' | 'text'; answer?: number; tolerance?: number }
-export type LessonStep =
+/** Every step may carry a stable id (made at build time) and a chapter name shown in long lessons. */
+export type StepMeta = { sid?: string; chapter?: string }
+export type LessonStep = StepMeta & (
   | { type: 'card'; title?: string; text: string }
   | { type: 'board'; fen: string; caption?: string; line?: { move: string; say?: string }[]; arrows?: { from: string; to: string }[]; highlight?: string[]; claims?: Claim[] }
   | { type: 'item'; item: string; silent?: boolean; ask_confidence?: boolean }
   | { type: 'practice'; tags: string[]; n: number; silent?: boolean; ask_confidence?: boolean }
   | { type: 'contrast'; title?: string; prompt?: string; working: string; failing: string; irrelevant?: string; silent?: boolean; ask_confidence?: boolean }
   | { type: 'reflect'; kind: string; prompt: string; fields?: ReflectField[] }
+  /** An optional game from the position the lesson taught: against Maia or Stockfish, as White, Black or both (D41). */
+  | { type: 'finale'; fen: string; color?: 'white' | 'black' | 'both'; prompt?: string; moves?: string[] }
+)
 
-export interface Lesson {
+/** A step's stable id and chapter name: all the catalog keeps of a lesson's steps (their bodies are in the lesson's own file). */
+export interface StepRef { sid: string; chapter?: string }
+
+/** What the lists, the map and the daily plan need to know about a lesson (lessons-catalog.<hash>.json, written by tools/build_content.py). No step bodies. */
+export interface LessonMeta {
   id: string
+  /** What this lesson is for its skill: its first teaching (intro), a later depth (continuation), a course lesson using the skill (application) or a check (assessment). Derived by tools/build_content.py unless the source sets it. */
+  role?: 'intro' | 'continuation' | 'application' | 'assessment'
+  /** Hash of the lesson's steps: changes when the lesson is rewritten (saved places and completions record it). Also names the body file. */
+  revision?: string
   title: string
   skill: string
   depth: string
+  /** Minutes the lesson takes, computed at build time with the formula of lib/lessonTime.ts (stepsMinutes). */
   minutes?: number
   /** Place in the recommended learning path (1 = first) and its stage id (S0..S7); set by tools/build_path.py. */
   order?: number
   stage?: string
-  outcomes?: string[]
-  steps: LessonStep[]
   review: { status: string; reviewer?: string | null }
   /** Optional course this lesson belongs to (content/courses); such a lesson uses core skills and does not replace their lessons. */
   course?: string
+  /** Opening series (several lessons on one opening). */
+  series?: string
   uses?: string[]
   /** Other skill nodes this lesson also teaches (a lesson has one main skill; coverage of the rest is recorded here). */
   also?: string[]
+  stepCount: number
+  stepRefs: StepRef[]
+  /** Path of the body file next to the catalog: lessons/<id>.<revision>.json. */
+  file?: string
+}
+
+/** A whole lesson: the catalog entry plus its body (steps and the author-side extras). Loaded on demand (useLesson in lib/content.tsx). */
+export interface Lesson extends LessonMeta {
+  outcomes?: string[]
+  steps: LessonStep[]
   sources?: string[]
 }
 
+/** The body file of a lesson, as written by tools/build_content.py. */
+export type LessonBody = Pick<Lesson, 'id' | 'revision' | 'steps' | 'outcomes' | 'sources'>
+
 export interface VerifiedInfo { claims: number; checked_at: string | null; engine: string | null; depth: number | null }
-export interface Manifest { version: number; /** Skill-depth keys whose exercises are all cued (cue 1-2). */ cued_only?: string[]; /** Skill-depth keys that have at least one shipped exercise. */ depths_with_items?: string[]; built: string; hash: string; skills: number; items: number; lessons: number; skipped: number; by_review: Record<string, number> }
+export interface ContentFiles { skills: string; items: string; itemsFirst: string; verified: string; courses: string; catalog: string }
+export interface Manifest { version: number; /** File names of the hashed content files (content/<name>), written by tools/build_content.py. */ files?: ContentFiles; /** Skill-depth keys whose exercises are all cued (cue 1-2). */ cued_only?: string[]; /** Skill-depth keys that have at least one shipped exercise. */ depths_with_items?: string[]; built: string; hash: string; skills: number; items: number; lessons: number; skipped: number; by_review: Record<string, number> }
 
 /** An optional path layered on the core curriculum (docs/course-families.md). Lessons are ordinary lessons listed by id. */
 export interface Course { id: string; title: string; family: string; summary: string; audience?: string; uses?: string[]; lessons: string[] }
@@ -107,11 +135,12 @@ export interface ContentBundle {
   manifest: Manifest
   skills: Skill[]
   items: Item[]
-  lessons: Lesson[]
+  /** The catalog: metadata of every lesson, no step bodies (read those with useLesson). */
+  lessons: LessonMeta[]
   verified: Record<string, VerifiedInfo>
   skillById: Map<string, Skill>
   itemById: Map<string, Item>
-  lessonById: Map<string, Lesson>
+  lessonById: Map<string, LessonMeta>
   /** Skill-depth keys whose exercises are all cued: evidence there counts in full (lib/mastery.ts). From the manifest, so it is right before the whole bank has loaded. */
   cuedOnly: ReadonlySet<string>
   /** Skill-depth keys with at least one exercise. A prerequisite depth without any is met by finishing the skill's lesson (progress.ts prereqMet). */

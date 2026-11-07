@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Attempt } from '../db'
 import type { Skill } from '../types'
-import { evidenceAttempts, frontierFor, masteryMap, prereqMet, statusOf, type Placement } from './progress'
+import { evidenceAttempts, frontierFor, independence, masteryMap, prereqMet, statusOf, type Placement } from './progress'
 
 const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: o.itemId ?? 'i', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
 
@@ -76,4 +76,41 @@ describe('prerequisites on depths that have no exercises', () => {
   })
   it('do not block when nothing at all can be done about them', () => expect(call(false, false, false)).toBe(true))
   it('still need real evidence when the depth has exercises', () => expect(call(true, true, true)).toBe(false))
+})
+
+describe('independence(): confidence is accuracy by band, with sample sizes', () => {
+  const conf = (n: number, confidence: 'low' | 'medium' | 'high', correct: boolean, off = 0) =>
+    Array.from({ length: n }, (_, i) => att({ itemId: `${confidence}${correct}${off}${i}`, confidence, correct, ts: off + i + 1 }))
+  it('reports no accuracy for a band with fewer than 8 answers', () => {
+    const r = independence([...conf(7, 'high', true)])
+    const high = r.confidenceBands.find(b => b.band === 'high')!
+    expect(high).toMatchObject({ n: 7, correct: 7, enough: false, accuracy: null })
+  })
+  it('reports accuracy once a band has 8 answers, separately per band', () => {
+    const r = independence([...conf(6, 'high', true), ...conf(2, 'high', false, 100), ...conf(8, 'low', false, 200)])
+    expect(r.confidenceBands.find(b => b.band === 'high')).toMatchObject({ n: 8, correct: 6, accuracy: 0.75, enough: true })
+    expect(r.confidenceBands.find(b => b.band === 'low')).toMatchObject({ accuracy: 0 })
+    expect(r.confidenceBands.find(b => b.band === 'medium')).toMatchObject({ n: 0, accuracy: null })
+    expect(r).not.toHaveProperty('calibrationError')
+  })
+  it('lists recent high-confidence mistakes, newest first, and not low-confidence ones', () => {
+    const r = independence([...conf(1, 'high', false, 10), ...conf(1, 'low', false, 20), ...conf(1, 'high', false, 30)])
+    expect(r.highMisses.map(m => m.ts)).toEqual([31, 11])
+  })
+  it('lesson answers are not unprompted and are left out', () => {
+    expect(independence([att({ source: 'lesson', confidence: 'high', correct: false })]).highMisses).toHaveLength(0)
+  })
+})
+
+describe('guided evidence does not decide a placement-assumed status', () => {
+  const skills = new Map<string, Skill>([['N', { id: 'N', title: 'N', strand: 'S3', tier: 2, depths: {} } as Skill]])
+  const placed: Placement = { done: true, frontierTier: 4, ts: 1, byTier: {} }
+  it('stays assumed after guided successes and independent evidence is still thin', () => {
+    const a = [att({ cue: 1, source: 'lesson' }), att({ itemId: 'x', cue: 2 })]
+    expect(statusOf('N.D2', skills, masteryMap(a), placed)).toBe('assumed')
+  })
+  it('is replaced by what was seen once independent answers go badly', () => {
+    const a = Array.from({ length: 4 }, (_, i) => att({ itemId: `m${i}`, correct: false, ts: i + 1 }))
+    expect(statusOf('N.D2', skills, masteryMap(a), placed)).toBe('practising')
+  })
 })

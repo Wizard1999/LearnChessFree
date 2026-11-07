@@ -96,3 +96,22 @@ describe('AudioQueue', () => {
     const { q, made } = setup(['a']); q.start(); q.setRate(0.8); expect(made[0].playbackRate).toBe(0.8)
   })
 })
+
+describe('stale audio safety', () => {
+  const sha = (t: string) => createHash('sha1').update(t).digest('hex').slice(0, 12)
+  it('a recording is only chosen when its hash is the hash of the exact text now shown', async () => {
+    const before = 'The rook moves in straight lines.'
+    const ix = parseAudioIndex({ voice: 'v', files: { [sha(before)]: {} } })!
+    expect(await planAudio([before], ix)).not.toBeNull()
+    // the lesson was rewritten (even by one character or a space): the old recording must not play
+    expect(await planAudio(['The rook moves in straight lines!'], ix)).toBeNull()
+    expect(await planAudio(['The rook moves in straight lines. '], ix)).toBeNull()
+    expect(await planAudio(['The rook moves along straight lines.'], ix)).toBeNull()
+  })
+  it('one rewritten chunk sends the whole text to the browser voice, never a mix of old and new', async () => {
+    const a = 'First sentence.', b = 'Second sentence.'
+    const ix = parseAudioIndex({ voice: 'v', files: { [sha(a)]: {}, [sha(b)]: {} } })!
+    expect(await planAudio([a, b], ix)).toHaveLength(2)
+    expect(await planAudio([a, 'Second sentence, changed.'], ix)).toBeNull()
+  })
+})

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { parsePgn, writePgn, START_FEN, type Tree } from './pgnTree'
+import { mainLineNode, parsePgn, writePgn, START_FEN, type Tree } from './pgnTree'
 
 const sans = (t: Tree, id = 0, out: string[] = []): string[] => { for (const k of t.nodes[id].kids) { out.push(t.nodes[k].san); } return out }
 
@@ -50,5 +50,14 @@ describe('clock comments', () => {
     if (typeof r === 'string') throw new Error(r)
     const clocks = r.nodes.filter(n => n.id > 0).map(n => n.clk)
     expect(clocks).toEqual([180, 179.5, 170])
+  })
+})
+
+describe('mainLineNode', () => {
+  it('walks the main line to the requested move and stops at the end', () => {
+    const t = parsePgn('1. e4 e5 2. Nf3') as Tree
+    expect(t.nodes[mainLineNode(t, 0)].ply).toBe(0)
+    expect(t.nodes[mainLineNode(t, 2)].san).toBe('e5')
+    expect(t.nodes[mainLineNode(t, 99)].san).toBe('Nf3')
   })
 })

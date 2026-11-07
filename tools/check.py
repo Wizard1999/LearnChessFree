@@ -7,7 +7,7 @@
 Stages, in order: content (validate_lessons, check_all, check_graph --strict, build_content, check_overlap), app (tsc, vitest including the
 route smoke test and the data cross-checks, vite build). Prints one line per stage and exits non-zero if any fails.
 """
-import subprocess, sys, time
+import datetime, json, re, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,6 +18,8 @@ STAGES = []
 if not quick: STAGES.append(("lessons validate", PY + ["tools/validate_lessons.py"], ROOT, "ALL LESSONS PASSED"))
 STAGES += [
     ("check_all", PY + ["tools/check_all.py"], ROOT, "0 errors"),
+    ("review tools", PY + ["tools/test_review.py"], ROOT, "ALL REVIEW TESTS PASSED"),
+    ("readiness builder", PY + ["tools/test_readiness.py"], ROOT, "ALL READINESS TESTS PASSED"),
     ("skill graph", PY + ["tools/check_graph.py", "--strict"], ROOT, "0 errors"),
     ("build content", PY + ["tools/build_content.py"], ROOT, None),
     ("recommended path", PY + ["tools/build_path.py", "--check"], ROOT, None),
@@ -33,6 +35,11 @@ for name, cmd, cwd, must in STAGES:
     out = (r.stdout or "") + (r.stderr or "")
     ok = r.returncode == 0 and (must is None or must in out)
     if name.startswith("overlap"): ok = "overlaps in" in out and ("1 overlaps" in out or "0 overlaps" in out)
+    if name.startswith("tests"):  # recorded for the readiness view (tools/readiness.py, area 'Reliability'); the file is ignored by git
+        mp, mf = re.search(r"Tests\s+(?:(\d+) failed \| )?(\d+) passed", out), re.search(r"Tests\s+(\d+) failed", out)
+        if mp:
+            rec = {"passed": int(mp.group(2)), "failed": int(mp.group(1) or (mf.group(1) if mf else 0)), "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes")}
+            (ROOT / "tools" / "_tmp_scratch").mkdir(exist_ok=True); (ROOT / "tools" / "_tmp_scratch" / "test-results.json").write_text(json.dumps(rec), encoding="utf-8")
     print(f"{'PASS' if ok else 'FAIL'}  {name}  ({time.time() - t0:.0f}s)", flush=True)
     if not ok:
         failed.append(name); print("\n".join(out.strip().splitlines()[-12:]), flush=True)

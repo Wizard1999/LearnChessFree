@@ -4,13 +4,13 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { layoutMap } from './lib/mapLayout'
 import { lessonSort } from './lib/progress'
-import type { Course, Lesson, Skill } from './types'
+import { readCatalog, readCourses, readSkills } from './lib/shippedContent'
 
 const PUB = join(__dirname, '..', 'public')
 const json = <T>(p: string): T => JSON.parse(readFileSync(join(PUB, p), 'utf8')) as T
-const skills = json<Skill[]>('content/skills.json')
-const lessons = json<Lesson[]>('content/lessons.json')
-const courses = json<Course[]>('content/courses.json')
+const skills = readSkills()
+const lessons = readCatalog()
+const courses = readCourses()
 const manifest = json<{ lessons: number; skills: number; items: number }>('content/manifest.json')
 const skillById = new Map(skills.map(s => [s.id, s]))
 

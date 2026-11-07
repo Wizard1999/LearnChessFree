@@ -29,13 +29,15 @@ export function loadSpeechPrefs(): SpeechPrefs {
 }
 
 type Playing = 'idle' | 'speaking' | 'paused'
-interface State { prefs: SpeechPrefs; voices: SpeechSynthesisVoice[]; playing: Playing; audioReady: boolean }
+/** Which voice is (or was last) speaking: the shipped recording or the browser's built-in voice. Shown in the UI so the learner knows. */
+export type VoiceSource = 'recorded' | 'browser' | null
+interface State { prefs: SpeechPrefs; voices: SpeechSynthesisVoice[]; playing: Playing; audioReady: boolean; source: VoiceSource }
 let audioIndex: AudioIndex | null = null
 let queue: AudioQueue | null = null
 
 const synth = (): SpeechSynthesis | null => (typeof window !== 'undefined' && 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined' ? window.speechSynthesis : null)
 
-let state: State = { prefs: loadSpeechPrefs(), voices: [], playing: 'idle', audioReady: false }
+let state: State = { prefs: loadSpeechPrefs(), voices: [], playing: 'idle', audioReady: false, source: null }
 const listeners = new Set<() => void>()
 function set(patch: Partial<State>) { state = { ...state, ...patch }; listeners.forEach(l => l()) }
 function subscribe(l: () => void) { listeners.add(l); return () => { listeners.delete(l) } }
@@ -76,7 +78,7 @@ export function stopSpeech() {
   if (queue) { const q = queue; queue = null; q.stop() }
   const s = synth()
   if (s && (s.speaking || s.pending || s.paused)) s.cancel()
-  if (state.playing !== 'idle') set({ playing: 'idle' })
+  if (state.playing !== 'idle' || state.source) set({ playing: 'idle', source: null })
 }
 
 export function pauseSpeech() { if (state.playing !== 'speaking') return; if (queue) queue.pause(); else synth()?.pause(); set({ playing: 'paused' }) }
@@ -103,6 +105,7 @@ export function speakText(raw: string) {
         onError: playedAny => { if (mine !== token) return; queue = null; if (playedAny) set({ playing: 'idle' }); else speakWithBrowser(chunks, mine) },
       })
       queue = q
+      set({ source: 'recorded' })
       q.start()
     })()
     return
@@ -112,7 +115,7 @@ export function speakText(raw: string) {
 
 function speakWithBrowser(chunks: string[], mine: number) {
   const s = synth()
-  if (!s || state.voices.length === 0) { if (mine === token) set({ playing: 'idle' }); return }
+  if (!s || state.voices.length === 0) { if (mine === token) set({ playing: 'idle', source: null }); return }
   if (s.speaking || s.pending || s.paused) s.cancel()
   // the chosen voice, else the most natural English one the browser has (lib/voices.ts)
   const voice = state.voices.find(v => v.voiceURI === state.prefs.voice) ?? bestVoice(state.voices)
@@ -125,7 +128,7 @@ function speakWithBrowser(chunks: string[], mine: number) {
     u.onerror = finish
     s.speak(u)
   })
-  set({ playing: 'speaking' })
+  set({ playing: 'speaking', source: 'browser' })
 }
 
 export function useSpeech() {

@@ -13,8 +13,8 @@ import chess
 import validate as V
 from engine import Engine, ROOT
 
-STEP_TYPES = {"card", "board", "item", "practice", "contrast", "reflect"}
-TASK_STEPS = {"item", "practice", "contrast", "reflect", "board_task"}
+STEP_TYPES = {"card", "board", "item", "practice", "contrast", "reflect", "finale"}
+TASK_STEPS = {"item", "practice", "contrast", "reflect", "board_task", "finale"}
 
 
 def load_items():
@@ -51,6 +51,12 @@ def validate_lesson(path, eng, items):
             if not any(x in TASK_STEPS or x == "board" and steps[i + 1 + j].get("claims") for j, x in enumerate(nxt)):
                 if not any(x in ("item", "practice", "contrast", "reflect") for x in nxt):
                     errs.append(f"{where}: no task (item/practice/contrast/reflect) within the next two steps")
+        if t == "finale":   # an optional game against Maia or Stockfish from the position the lesson taught (D41): {fen, color: white|black|both, moves?, prompt?}
+            try: fb = chess.Board(s["fen"])
+            except Exception as ex: errs.append(f"{where}: bad fen ({ex})"); continue
+            if not fb.is_valid(): errs.append(f"{where}: invalid position {fb.status().name}")
+            if s.get("color", "both") not in ("white", "black", "both"): errs.append(f"{where}: color must be white, black or both")
+            if fb.is_game_over(): errs.append(f"{where}: the finale position is already over")
         if t == "board":
             try: b = chess.Board(s["fen"])
             except Exception as ex: errs.append(f"{where}: bad fen ({ex})"); continue

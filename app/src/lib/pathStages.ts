@@ -9,3 +9,14 @@ export const PATH_STAGES: { id: string; title: string; milestone: string }[] = [
   { id: 'S6', title: 'Advanced craft', milestone: 'You calculate longer lines, choose between plans, and convert advantages.' },
   { id: 'S7', title: 'Specialization', milestone: 'You direct training at your own demonstrated needs.' },
 ]
+
+/** Learners see stages as "Stage 1" to "Stage 8"; the ids S0..S7 are internal. */
+export function stageNumber(id: string): number {
+  const i = PATH_STAGES.findIndex(s => s.id === id)
+  return i < 0 ? 0 : i + 1
+}
+/** "Stage 3 of 8" style label for display everywhere. */
+export function stageLabel(id: string): string {
+  const n = stageNumber(id)
+  return n ? `Stage ${n}` : id
+}

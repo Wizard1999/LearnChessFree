@@ -3,6 +3,7 @@ import { Chess } from 'chess.js'
 import type { Key } from 'chessground/types'
 import { ChessBoard } from './ChessBoard'
 import { BOTS, getEngine } from '../engine'
+import { safeWrite } from '../lib/saveStatus'
 import { db, type AttemptSource } from '../db'
 import { destsFor, uciFor } from '../lib/play'
 import { fallbackBotId, getMaia, MAIA_LEVELS, MAIA_RUNTIME_BYTES, mb, type OpponentChoice } from '../lib/maia'
@@ -165,9 +166,7 @@ export function PlayOut({ item, source, onDone, nextLabel = 'Next' }: { item: It
     const ok = goal === 'win' ? e.outcome === 'win' : e.outcome === 'draw' || e.outcome === 'limit' || e.outcome === 'win'
     setRes({ ok, reason: e.reason })
     result.current = { correct: ok && hints === 0, hints, wrongs: ok ? 0 : 1, timeMs: Date.now() - start.current }
-    try {
-      await db.attempts.add({ itemId: item.id, skillKey: item.skill, cue: item.cue, family: item.family, correct: ok, firstAttempt: true, hints, timeMs: Date.now() - start.current, source, ts: Date.now(), unprompted: hints === 0 })
-    } catch { /* ignore */ }
+    await safeWrite(() => db.attempts.add({ itemId: item.id, skillKey: item.skill, cue: item.cue, family: item.family, correct: ok, firstAttempt: true, hints, timeMs: Date.now() - start.current, source, ts: Date.now(), unprompted: hints === 0, result: ok ? 'correct' : 'unsuccessful' }))
   }
   const goalText = goal === 'win' ? `Win this position (checkmate within ${item.answer.max_moves ?? 40} moves).` : `Hold the draw for ${item.answer.max_moves ?? 40} moves, or reach a drawn position.`
   return (

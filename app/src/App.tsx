@@ -22,6 +22,7 @@ import { BRAND } from './brand'
 import { ErrorBoundary } from './components/ErrorBoundary'
 import { Crest } from './components/Crest'
 import { BuildStamp } from './components/BuildStamp'
+import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
 
 // Five places for a learner; the rest are tools, one click away under More.
@@ -47,6 +48,7 @@ export default function App() {
         <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>
       </header>
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <SaveNotice />
       <ErrorBoundary resetKey={loc.pathname}>
       <Routes>
         <Route path="/" element={<Today />} />

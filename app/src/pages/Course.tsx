@@ -1,6 +1,6 @@
 import { RadialMap } from '../components/RadialMap'
 import { linkedHoverHandlers, setLinkedHover, useLinkedHover } from '../lib/linkedHover'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
@@ -10,10 +10,15 @@ import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
 import { STRAND_NAMES, challengeSeed, challengeVerdict, LEVEL_HELP, LEVEL_NAMES, nodeProgress, planChallenge, skillsUpNext, type ChallengePlan, type Level, type Mission, type NodeProgress } from '../lib/missions'
+import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
+import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { masteryMap, nextLessons, type Placement, type StrandWarmup } from '../lib/progress'
 import { interleave } from '../lib/select'
+import { PATH_STAGES } from '../lib/pathStages'
+import { currentStageIndex, skillHomeStages, skillReturns, stageSentence } from '../lib/skillStages'
+import { requestMapJump } from '../lib/mapJump'
 import { useMissionData } from '../lib/useMissions'
-import { splitSkillKey, type Skill } from '../types'
+import { splitSkillKey, type LessonMeta, type Skill } from '../types'
 
 const FILL = [0, 25, 50, 75, 100]
 
@@ -56,15 +61,44 @@ function Legend() {
   )
 }
 
+/** True on a phone-width screen (the chip rows become compact menus there). */
+function useNarrow(): boolean {
+  const q = '(max-width: 700px)'
+  const [n, setN] = useState(() => typeof window !== 'undefined' && window.matchMedia?.(q).matches === true)
+  useEffect(() => {
+    const m = window.matchMedia?.(q); if (!m) return
+    const h = () => setN(m.matches); m.addEventListener('change', h); h()
+    return () => m.removeEventListener('change', h)
+  }, [])
+  return n
+}
+
+/** Choice chips. A row (`menu` off) wraps inside the bar and never scrolls sideways; a menu is one button that opens the chips above the map and closes when a choice is made.
+ * On a phone every group is a menu. */
+function ChipGroup({ label, current, menu = false, children }: { label: string; current: string; menu?: boolean; children: ReactNode }) {
+  const narrow = useNarrow()
+  const [open, setOpen] = useState(false)
+  if (!narrow && !menu) return <><span className="small muted sectionlabel">{label}:</span>{children}</>
+  return (
+    <div className="chipmenu">
+      <button type="button" className="chipmenubtn" aria-expanded={open} onClick={() => setOpen(o => !o)}><span aria-hidden="true">{open ? '▴' : '▾'}</span> {label}: <strong>{current}</strong></button>
+      {open && <div className="chipmenubody" role="group" aria-label={label} onClick={e => { if ((e.target as HTMLElement).closest('button')) setOpen(false) }} onKeyDown={e => { if (e.key === 'Escape') { e.stopPropagation(); setOpen(false) } }}>{children}</div>}
+    </div>
+  )
+}
+
 export function Course() {
   const { content, attempts, progress, placement, ctx, missions, overall } = useMissionData()
   const [params, setParams] = useSearchParams()
   const view = params.get('mission') ?? 'all'
   const setView = (v: string) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (v === 'all') p.delete('mission'); else p.set('mission', v); setParams(p, { replace: true }); setPicked(null); setWarmOpen(false); setWarmDone(null) }
   const [picked, setPicked] = useState<string | null>(null)
+  // a stage of the recommended path lit on the map (?stage=S3); the choice is in the address so it can be shared and survives a reload
+  const stageSel = (() => { const i = PATH_STAGES.findIndex(x => x.id === params.get('stage')); return i < 0 ? null : i })()
+  const setStage = (i: number | null) => { const p = new URLSearchParams(params); p.set('view', 'map'); if (i === null || i === stageSel) p.delete('stage'); else p.set('stage', PATH_STAGES[i].id); setParams(p, { replace: true }); setPicked(null) }
   // three windows the learner switches on and off from the toolbar; the map fits around whichever are open (they are remembered)
   type Wins = { progress: boolean; challenge: boolean; next: boolean }
-  const [wins, setWins] = useState<Wins>(() => { try { const w = JSON.parse(localStorage.getItem('map:wins') ?? 'null'); if (w && typeof w === 'object') { const o = { progress: !!w.progress, challenge: !!w.challenge, next: !!w.next }; if (window.matchMedia?.('(max-width: 1300px)').matches) { const first = (['progress', 'challenge', 'next'] as const).find(k => o[k]); return { progress: first === 'progress', challenge: first === 'challenge', next: first === 'next' } } return o } } catch { /* optional */ } return { progress: false, challenge: false, next: false } })
+  const [wins, setWins] = useState<Wins>(() => { try { const w = JSON.parse(localStorage.getItem('map:wins') ?? 'null'); if (w && typeof w === 'object') { const o = { progress: !!w.progress, challenge: !!w.challenge, next: false }; if (window.matchMedia?.('(max-width: 1300px)').matches) { const first = (['progress', 'challenge', 'next'] as const).find(k => o[k]); return { progress: first === 'progress', challenge: first === 'challenge', next: first === 'next' } } return o } } catch { /* optional */ } return { progress: false, challenge: false, next: false } })
   const saveWins = (w: Wins) => { setWins(w); try { localStorage.setItem('map:wins', JSON.stringify(w)) } catch { /* optional */ } }
   // on a narrow screen the windows are a bottom sheet, so only one is open at a time
   const narrowScreen = () => typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches === true
@@ -101,6 +135,8 @@ export function Course() {
   const current: Mission = mission ?? overall
   const [why, setWhy] = useState<string | null>(null)
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
+  const homeStages = useMemo(() => skillHomeStages(content.skills, content.lessons), [content.skills, content.lessons])
+  const hereStage = useMemo(() => currentStageIndex(content.lessons, new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
   const currentIds = useMemo(() => new Set(current.nodes.map(n => n.id)), [current])
@@ -117,14 +153,17 @@ export function Course() {
   const showLessons = tab !== 'map' && !showCourses // the list of lessons is the default view; the map is the second
   const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'lessons') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
   const tabs = (
-    <div className="row filters" role="group" aria-label="Curriculum views">
-      <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
-      <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
-      <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
+    <div className="row filters viewtabs" role="group" aria-label="Curriculum views">
+      <div className="tabsleft">
+        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
+        <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
+        <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
+      </div>
       <span className="tabsep" aria-hidden="true" />
-      <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
-      <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
-      <button type="button" className={wins.next ? 'chip on' : 'chip'} aria-pressed={wins.next} onClick={() => toggleWin('next')}>Up next</button>
+      <div className="tabsright">
+        <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
+        <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
+      </div>
     </div>
   )
 
@@ -156,21 +195,22 @@ export function Course() {
     } // an inconclusive warm-up is shown but not saved: it must not replace what a placement assumed
     setWarmDone(r); setWarmOpen(false)
   }
-  const markLesson = (id: string, steps: number, skipped: boolean) => db.lessonProgress.put({ lessonId: id, step: steps, done: true, ts: Date.now(), skipped })
-  const resetLesson = (id: string) => db.lessonProgress.delete(id)
+  const markLesson = (l: LessonMeta, skipped: boolean) => saveFinished(db.lessonProgress, l, skipped)
+  const resetLesson = (id: string) => resetProgress(db.lessonProgress, id)
   const lessonIdsOf = (nodes: NodeProgress[]) => content.lessons.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
   async function markAll(nodes: NodeProgress[], skipped: boolean, label: string) {
     const ls = lessonIdsOf(nodes)
     if (!window.confirm(`${label} ${ls.length} lessons? You can undo this right after, or reset any lesson later.`)) return
     const changed: string[] = []
-    for (const l of ls) if (!progress?.find(p => p.lessonId === l.id)?.done) { await markLesson(l.id, l.steps.length, skipped); changed.push(l.id) }
+    for (const l of ls) if (!progress?.find(p => p.lessonId === l.id)?.done) { await markLesson(l, skipped); changed.push(l.id) }
     setBulk(changed)
   }
   async function undoBulk() { for (const id of bulk ?? []) await resetLesson(id); setBulk(null) }
   const dismiss = async (id: string) => { const n = [...dismissed, id]; setDismissed(n); await kvSet('upnext:dismissed', n) }
 
   const lessonSeen = (id: string) => content.lessons.some(l => (l.skill === id || l.also?.includes(id)) && progress?.some(p => p.lessonId === l.id)) // a lesson opened, even if not finished
-  const lessonsFor = (id: string) => content.lessons.filter(l => l.skill === id || l.also?.includes(id))
+  /** Every lesson that teaches this skill (its introduction first, then continuations); course applications and checks are listed separately. */
+  const lessonsFor = (id: string) => { const s = lessonsForSkill(content.lessons, id); return s.teaching.length ? s.teaching : s.alsoTeaching }
   const sk = node ? content.skillById.get(node.id) : undefined
   const warm = mission ? placement.byStrand?.[mission.strand] : undefined
   const busy = !!run || (warmOpen && !!mission)
@@ -196,10 +236,12 @@ export function Course() {
   const detailPanel = (
     node && sk && !busy && (() => {
       const ls = lessonsFor(node.id)
+      const more = lessonsForSkill(content.lessons, node.id)
       const lp = (id: string) => progress?.find(p => p.lessonId === id)
-      const open = ls.find(l => !lp(l.id)?.done)           // the first lesson of this skill not yet finished
+      const open = primaryLesson(content.lessons, node.id, id => !!lp(id)?.done) // the first unfinished of the introduction, then continuations: never a course lesson or a check
       const started = !!open && (lp(open.id)?.step ?? 0) > 0
       const cn = links(node.id)
+      const returns = skillReturns(sk, content.lessons)
       const showDepth = node.workingDepth ?? 'D1'
       const outcome = sk.depths[showDepth]?.outcome ?? sk.depths.D1?.outcome
       // student-facing names for the evidence levels; each is ticked only when the evidence supports it (the same rule as the map nodes)
@@ -208,10 +250,15 @@ export function Course() {
         ['Find it yourself', 'in positions where nobody names it', node.level >= 3],
         ['Rely on it', 'at the deepest depth, not due for a refresher', node.level >= 4],
       ]
+      const lessonRow = (l: LessonMeta) => { const pr = lp(l.id); return (
+        <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
+          {!pr?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void markLesson(l, false)}>Mark finished</button> · <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void markLesson(l, true)}>Skip</button></>}
+          {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) }
       return (
             <section className={`card skilldetail detaildrawer`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
               <h2>{node.title}</h2>
+              <p className="small stageline"><strong>{stageSentence(homeStages.get(node.id) ?? 0)}</strong>{homeStages.get(node.id) === hereStage ? ' · you are here' : ''}</p>
               <h3 className="sdh">What it lets you do</h3>
               <p>{outcome}</p>
               <h3 className="sdh">What you have shown</h3>
@@ -225,18 +272,30 @@ export function Course() {
                 {open && node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6`}>Practice {node.workingDepth}</Link>}
                 {node.workingDepth && <Link className="button" to={`/practice?skill=${node.id}.${node.workingDepth}&go=1&n=6&silent=1`}>Test it silently</Link>}
               </div>
+              {returns.length > 0 && <>
+                <h3 className="sdh">Where this skill returns</h3>
+                <p className="small muted">It starts at {stageSentence(homeStages.get(node.id) ?? 0)} and comes back later. Each button shows that stage on the map.</p>
+                <ul className="plain returns">{returns.map(g => (
+                  <li key={g.stageId}><button type="button" className="link" aria-label={`Show ${stageSentence(g.stageIndex)} on the map`} onClick={() => requestMapJump({ skill: node.id, stage: g.stageIndex })}>{stageSentence(g.stageIndex)}</button>
+                    <span className="small muted"> adds {g.items.map(i => i.adds).filter((a, k, all) => all.indexOf(a) === k).join(', ')}</span></li>))}</ul>
+              </>}
               <h3 className="sdh">What it connects to</h3>
               <p className="small linkrow"><span className="muted">Builds on:</span> {cn.from.length ? cn.from.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">nothing: you can start here</span>}</p>
               <p className="small linkrow"><span className="muted">Leads to:</span> {cn.to.length ? cn.to.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">no skill after this one yet</span>}</p>
               {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
               {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
               <details><summary>Lessons for this skill ({ls.length})</summary>
-                {ls.map(l => { const pr = lp(l.id); return (
-                  <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
-                    {!pr?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void markLesson(l.id, l.steps.length, false)}>Mark finished</button> · <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void markLesson(l.id, l.steps.length, true)}>Skip</button></>}
-                    {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) })}
+                {ls.map(l => lessonRow(l))}
                 {ls.length === 0 && <p className="small muted">No lesson for this skill yet.</p>}
               </details>
+              {more.appears.length > 0 && <details><summary>Where else this appears ({more.appears.length})</summary>
+                <p className="small muted">Course lessons that use this skill. They assume you have met it; they do not teach it first.</p>
+                {more.appears.map(l => lessonRow(l))}
+              </details>}
+              {more.checks.length > 0 && <details><summary>Check yourself ({more.checks.length})</summary>
+                <p className="small muted">Stage checks test what you already learned; they are not where a skill starts.</p>
+                {more.checks.map(l => lessonRow(l))}
+              </details>}
               <details><summary>Every depth in detail</summary>
                 {node.cuedTop && <p className="small muted">The deepest exercises for this skill name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
                 <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
@@ -346,7 +405,7 @@ export function Course() {
                       <div className="upnext-head"><button type="button" className="link" onClick={() => setPicked(n.id)}><strong>{n.title}</strong></button> <Swatch level={n.level} /> <span className="muted small">{n.levelWithAssumed > n.level ? `${LEVEL_NAMES[n.level]}, assumed up to ${LEVEL_NAMES[n.levelWithAssumed].toLowerCase()}` : LEVEL_NAMES[n.level]}{n.due ? ' · refresher due' : ''}{isAll ? ` · ${n.strand}` : ''}</span></div>
                       {d && <p className="small muted">{n.workingDepth}: {d.outcome}</p>}
                       <div className="row">
-                        {lessonsFor(n.id).filter(() => !n.lessonDone).slice(0, 1).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`} aria-label={`Lesson: ${n.title}`}>Lesson</Link>)}
+                        {(n.lessonDone ? [] : [primaryLesson(content.lessons, n.id, id => !!progress?.find(p => p.lessonId === id)?.done)].filter((l): l is LessonMeta => !!l)).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`} aria-label={`Lesson: ${n.title}`}>Lesson</Link>)}
                         {n.workingDepth && <Link className="button primary" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`} aria-label={`Practice: ${n.title}`}>Practice</Link>}
                         <button type="button" className="link" aria-label={`Remove ${n.title} from suggestions`} onClick={() => void dismiss(n.id)}>Remove</button>
                       </div>
@@ -368,7 +427,6 @@ export function Course() {
         <aside className="dock left" aria-label="Progress, challenge and up next">
           {wins.progress && <div className="dockwin"><div className="dockwinhead"><strong>Progress</strong><button type="button" className="dockclose" aria-label="Close progress" onClick={() => toggleWin('progress')}>✕</button></div><div className="dockbody">{leftPanel}</div></div>}
           {wins.challenge && <div className="dockwin"><div className="dockwinhead"><strong>Mastery challenge</strong><button type="button" className="dockclose" aria-label="Close mastery challenge" onClick={() => toggleWin('challenge')}>✕</button></div><div className="dockbody">{rightPanel('challenge')}</div></div>}
-          {wins.next && <div className="dockwin"><div className="dockwinhead"><strong>Up next</strong><button type="button" className="dockclose" aria-label="Close up next" onClick={() => toggleWin('next')}>✕</button></div><div className="dockbody">{rightPanel('next')}</div></div>}
         </aside>
       )}
       {skillOpen && (
@@ -388,13 +446,19 @@ export function Course() {
       {tabs}
       <details className="inlinenote maplede"><summary>How the map fills in</summary><p className="lede">Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.</p></details>
 
-      <div className="row filters sectionbar" role="group" aria-label="Sections"><span className="small muted sectionlabel">Sections:</span>
+      <div className="row filters sectionbar" role="group" aria-label="Sections and stages">
+      <ChipGroup label="Sections" menu current={isAll ? 'Whole curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
+      </ChipGroup>
+      <ChipGroup label="Stages" current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
+        <button type="button" className={stageSel === null ? 'chip on' : 'chip'} aria-pressed={stageSel === null} onClick={() => setStage(null)}>All stages</button>
+        {PATH_STAGES.map((st, i) => <button key={st.id} type="button" className={`chip stagechip${stageSel === i ? ' on' : ''}${hereStage === i ? ' here' : ''}`} aria-pressed={stageSel === i} aria-label={`${stageSentence(i)}${hereStage === i ? ', you are here' : ''}`} title={`${st.milestone}${hereStage === i ? ' (You are here.)' : ''}`} onClick={() => setStage(i)}>{stageSentence(i)}</button>)}
+      </ChipGroup>
       </div>
       <div className="missiongrid mapgrid">
 
-        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} /></div>
+        <div className="mapcenter"><RadialMap skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} /></div>
 
       </div>
 

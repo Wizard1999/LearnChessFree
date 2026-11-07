@@ -50,7 +50,7 @@ def emit_d1(b, vb, mv, fam, kind):
     col = vb.turn
     a, t = chess.square_name(mv.from_square), chess.square_name(mv.to_square)
     item = {"skill": "FND.BOARD.D1", "cue": 1, "task": "find_move",
-            "prompt": f"{CTITLE[col]} to move. Play {a} to {t}: move the piece on {a} to {t}.",
+            "prompt": f"{CTITLE[col]} to move. Play the {PNAME[vb.piece_at(mv.from_square).piece_type]} from {a} to {t}.",
             "answer": {"moves": [mv.uci()]},
             "claims": [claim("C1", "legal_move", f"{a} to {t} is a legal move.", move=mv.uci())],
             "tags": tags_for(["FND.BOARD"], 0, 1, fam, ["task.find_move", "board.name-to-square"]),

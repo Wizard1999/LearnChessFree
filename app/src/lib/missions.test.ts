@@ -6,7 +6,7 @@ import { buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpN
 
 const skill = (id: string, strand = 'S3', tier = 2, depths: Record<string, string[]> = { D0: [], D1: [], D2: ['X.D1'], D3: ['X.D2'] }): Skill =>
   ({ id, title: id, strand, tier, depths: Object.fromEntries(Object.entries(depths).map(([d, p]) => [d, { outcome: 'does the thing well enough', prereqs: p.map(x => x.replace('X', id)) }])) } as Skill)
-const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, pReliable: 0.5, unlabeledWeight: 5, cuedOnly: false, n: 5, ok: 4, lastTs, state })
+const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, allMean: 0.5, pReliable: 0.5, unlabeledWeight: 5, cuedOnly: false, n: 5, ok: 4, guidedN: 0, lastTs, lastIndependentSuccess: lastTs, recentMiss: false, wasReliableOn: null, reliableNow: state === 'reliable', state })
 const ctxFor = (skills: Skill[], masteries: Record<string, Mastery>, itemDepths: Record<string, string[]>, lessonDone: string[] = []): MissionContext => ({
   masteries: new Map(Object.entries(masteries)), placement: { done: false, frontierTier: 0, ts: 0, byTier: {} },
   skillById: new Map(skills.map(s => [s.id, s])), itemDepths: new Map(Object.entries(itemDepths)), lessonDone: new Set(lessonDone), hasLesson: new Set(lessonDone),

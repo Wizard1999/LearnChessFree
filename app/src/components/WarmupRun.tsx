@@ -24,7 +24,7 @@ export function WarmupRun({ mission, items, attempts, onFinish, onCancel }: { mi
   }
   return (
     <div>
-      <p className="muted small">Warm-up · exercise {idx + 1} of up to {plan.items.length}. No hints. A wrong answer on something you have not practiced at that level is not held against you; once you have practiced it, every answer counts.</p>
+      <p className="muted small">Warm-up · exercise {idx + 1} of up to {plan.items.length}. No hints. A wrong answer on something you have not practiced at that level is not held against you; once you have practiced it, every answer counts. No two questions come from the same family of positions, so a short warm-up is a short honest one, not a padded one.</p>
       <ItemPlayer key={it.id} item={it} source="warmup" silent nextLabel={idx + 1 >= plan.items.length ? 'See result' : 'Next exercise'} onDone={done} />
       <div className="row">
         {results.length >= 3 && <button type="button" onClick={() => onFinish(concludeWarmup(results, Date.now()))}>Stop here and use my answers so far</button>}

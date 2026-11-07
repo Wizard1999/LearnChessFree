@@ -3,11 +3,24 @@ import type { Attempt } from '../db'
 
 const DAY = 86400000
 export const INTERVAL_DAYS = [1, 2, 4, 8, 16, 32]
-const dayKey = (ts: number) => Math.floor(ts / DAY)
+/** The learner's LOCAL calendar day as a day number (so a late-evening answer belongs to that evening's day, wherever the learner is). */
+export const localDay = (ts: number) => { const d = new Date(ts); return Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / DAY) }
+/** Local midnight at the start of a local day number. */
+export const localMidnight = (day: number) => { const u = new Date(day * DAY); return new Date(u.getUTCFullYear(), u.getUTCMonth(), u.getUTCDate()).getTime() }
+const dayKey = localDay
 
 /** Next review time for a skill-depth, from its first attempts at cue >= minCue (default 2: cue 1 only shows the idea was seen; use 1 for a depth that has nothing but cue 1 exercises). */
 export function nextDue(attempts: Attempt[], minCue = 2): number | null {
-  const usable = attempts.filter(a => a.firstAttempt && a.cue >= minCue)
+  // Assisted repetition is not a fresh demonstration: answers inside lessons (the idea has just been named) and later presentations of an
+  // exercise already answered (memory of the position) do not advance or reset the schedule.
+  const seen = new Set<string>()
+  const usable: Attempt[] = []
+  for (const a of [...attempts].sort((x, y) => x.ts - y.ts)) {
+    if (!a.firstAttempt || a.source === 'lesson') continue
+    const repeat = seen.has(a.itemId)
+    seen.add(a.itemId)
+    if (!repeat && a.cue >= minCue) usable.push(a)
+  }
   if (usable.length === 0) return null
   const byDay = new Map<number, { ok: number; n: number }>()
   for (const t of usable) {
@@ -26,9 +39,9 @@ export function nextDue(attempts: Attempt[], minCue = 2): number | null {
   }
   const last = days[days.length - 1]
   const lastOk = last[1].ok / last[1].n >= 0.75
-  if (!lastOk) return (last[0] + 1) * DAY // a failed day: due tomorrow
+  if (!lastOk) return localMidnight(last[0] + 1) // a failed day: due the next local day
   const interval = INTERVAL_DAYS[Math.min(streak - 1, INTERVAL_DAYS.length - 1)]
-  return (last[0] + interval) * DAY
+  return localMidnight(last[0] + interval)
 }
 
 export const isDue = (attempts: Attempt[], now = Date.now(), minCue = 2) => {

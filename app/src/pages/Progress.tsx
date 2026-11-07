@@ -5,7 +5,7 @@ import { db } from '../db'
 import { useContent } from '../lib/content'
 import { describeMastery } from '../lib/mastery'
 import { independenceSentence } from '../lib/labels'
-import { independence, masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
+import { independence, masteryMap, MIN_BAND_SAMPLES, useAttempts, useLessonProgress } from '../lib/progress'
 import { stageProgress } from '../lib/stageProgress'
 import { Achievements } from './Achievements'
 
@@ -34,10 +34,6 @@ export function Progress() {
   const lessonProg = useLessonProgress()
   const stages = useMemo(() => stageProgress(content.lessons, lessonProg ?? [], masteries), [content.lessons, lessonProg, masteries])
 
-  const calib = useMemo(() => {
-    const out = (['low', 'medium', 'high'] as const).map(c => { const xs = firsts.filter(a => a.confidence === c); return { c, n: xs.length, ok: xs.filter(a => a.correct).length } })
-    return out
-  }, [firsts])
   const diag = useMemo(() => { const m = new Map<string, number>(); for (const r of reflections ?? []) if (r.kind === 'diagnosis') m.set(r.data.cause, (m.get(r.data.cause) ?? 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1]) }, [reflections])
   const ind = independence(attempts ?? [])
   const rows = useMemo(() => [...masteries.entries()].sort((a, b) => b[1].n - a[1].n), [masteries])
@@ -71,14 +67,16 @@ export function Progress() {
           </section>
           <section className="card">
             <h2>Does your confidence match your results?</h2>
-            <p className="small muted">Before answering unlabeled exercises you can mark how sure you are. If "high" is right far more often than "low", your sense of what you know is trustworthy; if not, that is useful to learn.</p>
+            <p className="small muted">Before answering unlabeled exercises you can mark how sure you are. If "high" is right far more often than "low", your sense of what you know is trustworthy; if not, that is useful to learn. A percentage is shown only for a band with at least {MIN_BAND_SAMPLES} answers; fewer than that says nothing yet.</p>
             <div className="tablewrap"><table className="table small"><thead><tr><th>You said</th><th>Answers</th><th>Right</th></tr></thead>
-              <tbody>{calib.map(c => <tr key={c.c}><td>{c.c}</td><td>{c.n}</td><td>{c.n ? `${Math.round((c.ok / c.n) * 100)}%` : '—'} <span className="muted">({c.ok}/{c.n})</span></td></tr>)}</tbody></table></div>
-            {ind.calibrationError !== null && <p className="small muted">Average gap between confidence and outcome: {ind.calibrationError.toFixed(2)} (lower is better; this is a rough measure on a few answers).</p>}
+              <tbody>{ind.confidenceBands.map(c => <tr key={c.band}><td>{c.band}</td><td>{c.n}</td><td>{c.accuracy !== null ? `${Math.round(c.accuracy * 100)}%` : 'too few to say'} <span className="muted">({c.correct}/{c.n})</span></td></tr>)}</tbody></table></div>
+            {ind.highMisses.length > 0 && (
+              <><p className="small">Recent answers you were sure of and missed. These are the most useful ones to look at again:</p>
+                <ul className="plain small">{ind.highMisses.map(m => <li key={`${m.itemId}:${m.ts}`}>{new Date(m.ts).toLocaleDateString()} · {content.skillById.get(m.skillKey.slice(0, m.skillKey.lastIndexOf('.')))?.title ?? m.skillKey} <span className="muted">({m.skillKey.slice(m.skillKey.lastIndexOf('.') + 1)})</span></li>)}</ul></>)}
           </section>
           <section className="card">
             <h2>What the evidence says per skill</h2>
-            <div className="tablewrap"><table className="table small"><thead><tr><th>Skill</th><th>Counted</th><th>Status</th></tr></thead>
+            <div className="tablewrap"><table className="table small"><thead><tr><th>Skill</th><th>Independent checks</th><th>Status</th></tr></thead>
               <tbody>{rows.map(([k, m]) => <tr key={k}><td>{content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title ?? k} <span className="muted">({k.slice(k.lastIndexOf('.') + 1)})</span></td><td>{m.n}</td><td>{describeMastery(m)}</td></tr>)}</tbody></table></div>
           </section>
           <section className="card">

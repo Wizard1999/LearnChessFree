@@ -3,16 +3,18 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useContent, useContentFull } from '../lib/content'
 import { MapPreview } from '../components/MapPreview'
+import { BackupNudge } from '../components/BackupNudge'
 import { independence, masteryMap, nextLessons, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
 import { buildDaily, dateKey, NO_EXTRAS, type Block, type Extras } from '../lib/daily'
 import { challengeSeed, planChallenge } from '../lib/missions'
 import { useMissionData } from '../lib/useMissions'
-import { ItemSequence, LessonPlayer, RichText } from '../components/LessonPlayer'
+import { ItemSequence, LessonById, RichText } from '../components/LessonPlayer'
 import { db, kvGet, kvSet } from '../db'
 import { describeMastery } from '../lib/mastery'
 import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/drill'
 import { useStorageStatus } from '../lib/persist'
 import { stageLine, stageProgress } from '../lib/stageProgress'
+import { FirstGameInvite } from '../components/FirstGameInvite'
 
 const NONE: never[] = []
 
@@ -157,8 +159,9 @@ export function Today() {
               <p>Open the <Link to="/course">course</Link> to pick something, or try <Link to="/practice">some practice</Link>.</p>
             </section>
           )}
+          {planReady && <FirstGameInvite />}
           {planReady && stageText && <p className="small muted stageline"><Link to="/course?view=lessons">{stageText}</Link></p>}
-          {planReady && missionData.ctx && <MapPreview skills={content.skills} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
+          {planReady && missionData.ctx && <MapPreview skills={content.skills} lessons={content.lessons} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
           {startBlock && upNext !== startBlock && <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting point <span className="muted">(optional, about {startBlock.minutes} minutes)</span></Link></div>}
           <details className="card aimcard" open={!!intention}>
             <summary>Set your own aim for today <span className="muted small">· optional</span></summary>
@@ -194,7 +197,7 @@ export function Today() {
               <ul className="plain">{learning.map(([k, m]) => <li key={k}><strong>{content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title ?? k}</strong> <span className="muted small">({k.slice(k.lastIndexOf('.') + 1)})</span>: {describeMastery(m)}</li>)}</ul>
             )}
             <p className="muted small">Independence (last {ind.counted} first attempts): {ind.hintRate === null ? 'no unlabeled exercises yet.' : `hints used on ${Math.round(ind.hintRate * 100)}% of unlabeled exercises; ${ind.unpromptedAccuracy === null ? '' : `${Math.round(ind.unpromptedAccuracy * 100)}% correct without hints.`}`}
-              {ind.calibrationError !== null && ` Confidence vs. correctness gap: ${ind.calibrationError.toFixed(2)} (lower is better calibrated).`}</p>
+              {ind.confidenceBands.filter(b => b.enough).map(b => ` When you said "${b.band}" you were right ${Math.round(b.accuracy! * 100)}% of the time (${b.correct}/${b.n}).`)}</p>
           </details>
         </>
       )}
@@ -202,13 +205,14 @@ export function Today() {
         <>
           <p><button type="button" onClick={() => setActive(null)}>← Back</button></p>
           <h2>{activeBlock.title}</h2>
-          {activeBlock.kind === 'lesson' && activeBlock.lessonId && (() => { const l = content.lessonById.get(activeBlock.lessonId); return l ? <LessonPlayer lesson={l} onExit={() => setActive(null)} /> : <p>Lesson not found.</p> })()}
+          {activeBlock.kind === 'lesson' && activeBlock.lessonId && (() => { const l = content.lessonById.get(activeBlock.lessonId); return l ? <LessonById meta={l} onExit={() => setActive(null)} /> : <p>Lesson not found.</p> })()}
           {(activeBlock.kind === 'review' || activeBlock.kind === 'mixed') && (
             <ItemSequence items={(activeBlock.itemIds ?? []).map(id => content.itemById.get(id)!).filter(Boolean)} source={activeBlock.kind === 'review' ? 'review' : 'daily'} onComplete={() => void complete(activeBlock.id)} intro={activeBlock.title} />
           )}
           {activeBlock.kind === 'reflect' && <ReflectToday intention={intention || null} onDone={() => void complete('reflect')} />}
         </>
       )}
+      {!activeBlock && <BackupNudge />}
     </main>
   )
 }

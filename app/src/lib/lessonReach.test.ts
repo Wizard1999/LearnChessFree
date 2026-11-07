@@ -1,19 +1,16 @@
 /// <reference types="node" />
 // Can a learner who does everything right be offered every lesson? A lesson is offered when its prerequisites are met (progress.ts
 // nextLessons); a prerequisite depth that can never become reliable or practising would hide every lesson behind it.
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import type { Attempt, LessonProgress } from '../db'
-import type { ContentBundle, Item, Lesson, Manifest, Skill } from '../types'
+import type { ContentBundle } from '../types'
+import { readCatalog, readItems, readManifest, readSkills } from './shippedContent'
 import { masteryMap, nextLessons, NO_PLACEMENT } from './progress'
 
-const dir = join(__dirname, '..', '..', 'public', 'content')
-const read = <T>(f: string) => JSON.parse(readFileSync(join(dir, f), 'utf8')) as T
-const manifest = read<Manifest>('manifest.json')
-const skills = read<Skill[]>('skills.json')
-const items = read<Item[]>('items.json')
-const lessons = read<Lesson[]>('lessons.json')
+const manifest = readManifest()
+const skills = readSkills()
+const items = readItems()
+const lessons = readCatalog()
 const bundle: ContentBundle = {
   manifest, skills, items, lessons, verified: {}, courses: [],
   skillById: new Map(skills.map(s => [s.id, s])), itemById: new Map(items.map(i => [i.id, i])), lessonById: new Map(lessons.map(l => [l.id, l])),
@@ -33,7 +30,7 @@ function walk(): { offered: Set<string> } {
   for (let round = 0; round < 200; round++) {
     const next = nextLessons(bundle, masteryMap(attempts, ts + 1, bundle.cuedOnly), NO_PLACEMENT, progress, 1000).filter(l => !offered.has(l.id))
     if (next.length === 0) break
-    for (const l of next) { offered.add(l.id); progress.push({ lessonId: l.id, step: l.steps.length, done: true, ts: ++ts }) }
+    for (const l of next) { offered.add(l.id); progress.push({ lessonId: l.id, step: l.stepCount, done: true, ts: ++ts }) }
   }
   return { offered }
 }

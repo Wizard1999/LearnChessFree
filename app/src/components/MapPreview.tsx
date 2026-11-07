@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom'
 import { layoutMap } from '../lib/mapLayout'
 import { currentStrand, previewText } from '../lib/mapPreview'
 import { STRAND_NAMES } from '../lib/missions'
-import type { Skill } from '../types'
+import { skillHomeStages } from '../lib/skillStages'
+import type { LessonMeta, Skill } from '../types'
 
-interface Props { skills: Skill[]; levels: Map<string, number>; nextId: string | null; nextTitle: string | null }
+interface Props { skills: Skill[]; /** The lessons give each skill its stage ring; without them the tier rule is used. */ lessons?: LessonMeta[]; levels: Map<string, number>; nextId: string | null; nextTitle: string | null }
 
 /** A small static picture of the whole curriculum map on the Today page: wedges per strand, finished skills filled, the next skill ringed. Links to the full map. */
-export function MapPreview({ skills, levels, nextId, nextTitle }: Props) {
-  const layout = useMemo(() => layoutMap(skills), [skills])
+export function MapPreview({ skills, lessons, levels, nextId, nextTitle }: Props) {
+  const layout = useMemo(() => layoutMap(skills, lessons ? skillHomeStages(skills, lessons) : undefined), [skills, lessons])
   const nodes = useMemo(() => layout.nodes.map(n => ({ id: n.id, strand: n.strand, level: levels.get(n.id) ?? 0 })), [layout, levels])
   const strand = currentStrand(nodes, nextId)
   const started = nodes.filter(n => n.level > 0).length

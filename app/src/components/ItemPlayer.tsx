@@ -10,11 +10,13 @@ import { addTrivial } from '../lib/trivial'
 import { addFeedback } from '../lib/feedback'
 import { ITEM_KINDS } from './ReviewPanel'
 import { isAlsoSound } from '../lib/altmove'
+import { safeWrite } from '../lib/saveStatus'
 import { db, type AttemptSource } from '../db'
 import { useContent } from '../lib/content'
 import { afterMixedItem, EMPTY_LOOP, loadLoop, offeredLevels, saveLoop, type LoopLevel, type LoopState } from '../lib/loop'
 import { useLessonProgress } from '../lib/progress'
 import { destsFor, flipTurn, hidePieces, isUci, sideToMove, tryMove, uciFor } from '../lib/play'
+import { leadText, resultHeadline, resultKind, RESULT_LABEL, type ResultKind } from '../lib/resultText'
 import type { Item } from '../types'
 
 export interface ItemResult { correct: boolean; hints: number; wrongs: number; timeMs: number }
@@ -30,14 +32,16 @@ interface Props {
   loopShown?: LoopLevel
   /** Lessons can ask for a confidence rating on items below cue 3 (self-calibration lessons). */
   askConfidence?: boolean
+  /** Keep the board this way round (a contrast step shows several positions on one board orientation). */
+  orientation?: 'white' | 'black'
 }
 
 const norm = (s?: string) => (s ?? '').trim().toLowerCase()
 
-export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = 'Next', silent = false, loopShown, askConfidence = false }: Props) {
+export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = 'Next', silent = false, loopShown, askConfidence = false, orientation: orientationProp }: Props) {
   const { verified } = useContent()
   const askFen = item.task === 'threat_detection' ? flipTurn(item.fen) : item.fen
-  const orientation = item.orientation && item.orientation !== 'auto' ? item.orientation : sideToMove(askFen)
+  const orientation = orientationProp ?? (item.orientation && item.orientation !== 'auto' ? item.orientation : sideToMove(askFen))
   const start = useRef(Date.now())
   const recorded = useRef(false)
 
@@ -111,21 +115,24 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   }, [item.claims])
 
   async function record(ok: boolean, first: boolean, alt = false) {
+    const kind: ResultKind = resultKind(ok, alt)
     if (recorded.current) return
     recorded.current = true
     try {
-      await db.attempts.add({
+      // A failed write is reported once (calm notice with an export button) and the item still works.
+      await safeWrite(() => db.attempts.add({
         itemId: item.id, skillKey: item.skill, cue: item.cue, family: item.family, correct: ok, firstAttempt: first,
         hints: hintsShown + (controlUsed ? 1 : 0), aids: controlUsed ? ['controlMap'] : undefined, timeMs: Date.now() - start.current, confidence: conf, source, ts: Date.now(),
         unprompted: item.cue >= 3 && hintsShown === 0 && !controlUsed && !loopOpened && !loopShown, silent,
         scan: loopOpened ? offered : loopShown ? [loopShown] : undefined,
         alt: alt || undefined,
-      })
+        result: kind,
+      }))
       if (!loopShown && offered.length > 0) {
         const next = afterMixedItem(loopState, offered, ok && first && hintsShown === 0 && !controlUsed, loopOpened)
         setLoopState(next); await saveLoop(next)
       }
-    } catch { /* storage unavailable: the lesson still works */ }
+    } catch { /* the loop-state save is a convenience; safeWrite already reported any failed attempt write */ }
   }
 
   const result = useRef<ItemResult>({ correct: false, hints: 0, wrongs: 0, timeMs: 0 })
@@ -224,6 +231,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   if (item.task === 'play_out') return <PlayOut item={item} source={source} onDone={onDone} nextLabel={nextLabel} />
 
   const v = verified[item.id]
+  const lead = leadText(item.explain, item.claims)
   const prompt = promptOverride ?? item.prompt
   const reveal = item.reveal_pv && item.reveal_pv.length > 0 ? item.reveal_pv.slice(0, 8).map(m => ({ move: m })) : null
   const answerSan = (() => {
@@ -299,12 +307,13 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
 
       {phase === 'done' && (
         <div className={correct ? 'result ok' : 'result no'} role="status">
-          <p><strong>{correct ? (wrongs === 0 ? 'Correct.' : 'Right, after a second look.') : 'Not this time.'}</strong>
-            {altNote && <> <strong>{altNote.san}</strong> is also sound: {altNote.why} (engine, depth 14, so evidence rather than proof). The exercise was looking for <strong>{answerSan}</strong>.</>}
+          <p><strong>{resultHeadline(resultKind(!!correct, !!altNote), wrongs)}</strong>
+            {altNote && <> <strong>{altNote.san}</strong> also works. The exercise was looking for <strong>{answerSan}</strong>.</>}
             {!altNote && answerSan && <> The move is <strong>{answerSan}</strong>.</>}
             {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
             {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
-          {item.explain && <p>{item.explain}</p>}
+          <p className={lead.written ? undefined : 'muted'}>{lead.text}</p>
+          {altNote && <p className="small muted">Why {altNote.san} is sound: {altNote.why}</p>}
           <div className="small">
             {reported ? <span role="status">Thank you: your report is saved on this device (send it from Settings → Reviews).</span> : !reporting ? <button type="button" className="link" onClick={() => setReporting(true)}>Report a problem with this exercise</button> : (
               <div className="reportbox">
@@ -313,18 +322,23 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
                 <button type="button" disabled={!reportKind} onClick={() => { void addFeedback({ targetType: 'item', targetId: item.id, checks: {}, kind: reportKind, text: reportText }, 'item-report').then(() => setReported(true)) }}>Save report</button>
               </div>)}
           </div>
-          {item.claims.filter(c => c.statement).length > 0 && (
-            <ul className="checks small">{item.claims.filter(c => c.statement).slice(0, 5).map(c => <li key={c.id}><span aria-hidden="true">✓</span> {c.statement}</li>)}</ul>
-          )}
           {item.cue >= 3 && correct && <p className="small"><button type="button" className="link" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
-          {reveal && (
-            <details><summary>Show the line the engine found</summary>
-              <LinePlayer fen={askFen} line={reveal} orientation={orientation} title={`Engine line${v?.depth ? ` (depth ${v.depth})` : ''}: evidence, not an explanation`} />
-            </details>
-          )}
-          <p className="muted small badges">
-            <span title="Every claim in this exercise was checked by software">{v ? `Checked by ${v.engine ?? 'rules'}${v.depth ? ` at depth ${v.depth}` : ''}` : 'Checked by rules'}</span>
-          </p>
+          <details className="howchecked">
+            <summary>How this was checked</summary>
+            <p className="small muted">Result recorded: {RESULT_LABEL[resultKind(!!correct, !!altNote)]}.</p>
+            {altNote && <p className="small">{altNote.san}: engine, depth 14, so evidence rather than proof.</p>}
+            {item.claims.filter(c => c.statement).length > 0 && (
+              <ul className="checks small">{item.claims.filter(c => c.statement).slice(0, 5).map(c => <li key={c.id}><span aria-hidden="true">✓</span> {c.statement}</li>)}</ul>
+            )}
+            {reveal && (
+              <details><summary>Show the line the engine found</summary>
+                <LinePlayer fen={askFen} line={reveal} orientation={orientation} title={`Engine line${v?.depth ? ` (depth ${v.depth})` : ''}: evidence, not an explanation`} />
+              </details>
+            )}
+            <p className="muted small badges">
+              <span title="Every claim in this exercise was checked by software">{v ? `Checked by ${v.engine ?? 'rules'}${v.depth ? ` at depth ${v.depth}` : ''}` : 'Checked by rules'}</span>
+            </p>
+          </details>
           {onDone && <button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button>}
         </div>
       )}

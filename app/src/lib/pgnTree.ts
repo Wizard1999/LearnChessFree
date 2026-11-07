@@ -97,3 +97,10 @@ export function writePgn(t: Tree): string {
   const root = t.nodes[0].comment ? `{${t.nodes[0].comment}} ` : ''
   return `${out.join('\n')}\n\n${root}${first} ${head.Result}\n`
 }
+
+/** The node reached after `ply` moves along the main line (first child each time); the last node of the line when the game is shorter. */
+export function mainLineNode(t: Tree, ply: number): number {
+  let id = 0
+  for (let n = 0; n < ply; n++) { const kid = t.nodes[id]?.kids[0]; if (kid === undefined) break; id = kid }
+  return id
+}

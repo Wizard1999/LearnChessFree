@@ -8,7 +8,7 @@ import { getEngine, resetEngine, scoreText, type EngineLine } from '../engine'
 import { destsFor, flipTurn } from '../lib/play'
 import { db, type GameRec } from '../db'
 import { loadOpenings, nameOf, children as openingChildren, cnt, type OGraph } from '../lib/openingsData'
-import { addMove, emptyTree, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree, type TNode } from '../lib/pgnTree'
+import { addMove, emptyTree, mainLineNode, moveNumber, NAG_SYMBOL, parsePgn, START_FEN, SYMBOL_NAG, writePgn, type Tree, type TNode } from '../lib/pgnTree'
 import { mastersFor, type MasterInfo, type MasterRow } from '../lib/masters'
 import { pieceCount, probeTablebase, TB_TEXT, type TbResult } from '../lib/tablebase'
 import { LABEL_RULES, moveLabel, type MoveLabel } from '../lib/moveLabel'
@@ -334,7 +334,14 @@ export function Analysis() {
   useEffect(() => {
     const fenParam = params.get('fen'), gameParam = params.get('game')
     if (fenParam) { const r = parseInput(fenParam); if (typeof r !== 'string') loadTree(r) }
-    else if (gameParam) void db.games.get(+gameParam).then(g => { if (g) importText(g.pgn) })
+    else if (gameParam) void db.games.get(+gameParam).then(g => {
+      if (!g) return
+      const r = parseInput(g.pgn)
+      if (typeof r === 'string') { setMsg(r); return }
+      loadTree(r)
+      const ply = Number(params.get('ply')) // ?ply=N opens the game at the position after N moves (the post-game screen links here)
+      if (Number.isInteger(ply) && ply > 0) setCur(mainLineNode(r, ply))
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const [withEvals, setWithEvals] = useState(false)

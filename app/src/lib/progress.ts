@@ -1,8 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db, kvGet, type Attempt, type LessonProgress } from '../db'
 import { masteryOf, type Mastery } from './mastery'
-import type { ContentBundle, Lesson, Skill } from '../types'
+import type { ContentBundle, LessonMeta, Skill } from '../types'
 import { splitSkillKey } from '../types'
+import { roleOf } from './lessonRoles'
 
 export interface StrandWarmup {
   frontierTier: number; ts: number; byTier: Record<number, { n: number; ok: number }>
@@ -79,7 +80,7 @@ export function statusOf(key: string, skills: Map<string, Skill>, masteries: Map
   const tier = sk?.tier
   const assumed = tier !== undefined && tier < frontierFor(sk, placement)
   if (m && m.state !== 'unseen') {
-    if (assumed && (m.state === 'introduced' || m.state === 'practising') && m.mean >= 0.5) return 'assumed'
+    if (assumed && (m.state === 'introduced' || m.state === 'practising') && m.allMean >= 0.5) return 'assumed'
     return m.state
   }
   return assumed ? 'assumed' : 'unseen'
@@ -119,7 +120,7 @@ function prereqRank(key: string, skills: Map<string, Skill>, seen: Set<string> =
 }
 
 /** Curriculum order: tier, then prerequisite depth (what a lesson builds on comes first), then skill id. */
-export function lessonSort(a: Lesson, b: Lesson, skills: Map<string, Skill>) {
+export function lessonSort(a: LessonMeta, b: LessonMeta, skills: Map<string, Skill>) {
   if (a.order !== undefined && b.order !== undefined) return a.order - b.order // the recommended path (content/path.json), already checked against the prerequisites
   const ta = skills.get(a.skill)?.tier ?? 9
   const tb = skills.get(b.skill)?.tier ?? 9
@@ -128,12 +129,14 @@ export function lessonSort(a: Lesson, b: Lesson, skills: Map<string, Skill>) {
 }
 
 /** Lessons whose prerequisites are met, not yet finished, in curriculum order. */
-export function nextLessons(c: ContentBundle, masteries: Map<string, Mastery>, placement: Placement, progress: LessonProgress[], limit = 3): Lesson[] {
+export function nextLessons(c: ContentBundle, masteries: Map<string, Mastery>, placement: Placement, progress: LessonProgress[], limit = 3): LessonMeta[] {
   const done = new Set(progress.filter(p => p.done).map(p => p.lessonId))
   const doneSkills = new Set<string>(), lessonSkills = new Set<string>()
   for (const l of c.lessons) for (const s of [l.skill, ...(l.also ?? [])]) { lessonSkills.add(s); if (done.has(l.id)) doneSkills.add(s) }
   const sorted = [...c.lessons].sort((a, b) => lessonSort(a, b, c.skillById))
-  const out: Lesson[] = []
+  const out: LessonMeta[] = []
+  // a skill is never started on a course application or a stage check: those wait until its own teaching lessons are finished
+  const unfinishedTeaching = (skill: string, introOnly: boolean) => c.lessons.some(x => x.skill === skill && !done.has(x.id) && (introOnly ? roleOf(x) === 'intro' : (roleOf(x) === 'intro' || roleOf(x) === 'continuation')))
   for (const l of sorted) {
     if (done.has(l.id)) continue
     const sk = c.skillById.get(l.skill)
@@ -141,27 +144,43 @@ export function nextLessons(c: ContentBundle, masteries: Map<string, Mastery>, p
     const ok = pre.every(p => prereqMet(p, c.skillById, masteries, placement, k => c.depthsWithItems.has(k), s => doneSkills.has(s), s => lessonSkills.has(s)))
     // a placement or warm-up above this tier means the beginner version is not needed unless the learner asks for it
     const skipped = sk && sk.tier < frontierFor(sk, placement) - 1 && statusOf(`${l.skill}.${l.depth}`, c.skillById, masteries, placement) === 'assumed'
-    if (ok && !skipped) out.push(l)
+    const role = roleOf(l)
+    const early = !skipped && ((role === 'continuation' && unfinishedTeaching(l.skill, true)) || ((role === 'application' || role === 'assessment') && unfinishedTeaching(l.skill, false)))
+    if (ok && !skipped && !early) out.push(l)
     if (out.length >= limit) break
   }
   return out
 }
 
-/** Independence ledger: how often the learner got it right unprompted (cue >= 3, no hints) in the last N attempts. */
+export type ConfidenceBand = 'low' | 'medium' | 'high'
+/** A band's accuracy is only reported once it rests on at least this many answers. */
+export const MIN_BAND_SAMPLES = 8
+export interface BandAccuracy { band: ConfidenceBand; n: number; correct: number; accuracy: number | null; enough: boolean }
+export interface ConfidenceMiss { itemId: string; skillKey: string; ts: number }
+
+/**
+ * Independence ledger: how often the learner got it right unprompted (cue >= 3, no hints) in the last N attempts, and how the
+ * learner's stated confidence relates to the result. Confidence is reported as accuracy by band with sample sizes (no single
+ * "calibration" number: an absolute-error score rewards always saying "high"), and the recent high-confidence misses are listed for review.
+ */
 export function independence(attempts: Attempt[], last = 60) {
   const recent = evidenceAttempts(attempts).sort((x, y) => x.ts - y.ts).filter(a => a.firstAttempt).slice(-last)
   const cued = recent.filter(a => a.cue >= 3 && a.source !== 'lesson') // a lesson names the idea, so its answers are not unprompted
   const unprompted = cued.filter(a => a.hints === 0)
   const withConf = cued.filter(a => a.confidence)
-  let calibration: number | null = null
-  if (withConf.length >= 8) {
-    const target = { low: 0.4, medium: 0.7, high: 0.9 } as const
-    calibration = withConf.reduce((s, a) => s + Math.abs(target[a.confidence!] - (a.correct ? 1 : 0)), 0) / withConf.length
-  }
+  const confidenceBands: BandAccuracy[] = (['low', 'medium', 'high'] as const).map(band => {
+    const xs = withConf.filter(a => a.confidence === band)
+    const correct = xs.filter(a => a.correct).length
+    const enough = xs.length >= MIN_BAND_SAMPLES
+    return { band, n: xs.length, correct, accuracy: enough ? correct / xs.length : null, enough }
+  })
+  const highMisses: ConfidenceMiss[] = withConf.filter(a => a.confidence === 'high' && !a.correct).slice(-5).reverse()
+    .map(a => ({ itemId: a.itemId, skillKey: a.skillKey, ts: a.ts }))
   return {
     counted: recent.length,
     hintRate: cued.length ? 1 - unprompted.length / cued.length : null,
     unpromptedAccuracy: unprompted.length ? unprompted.filter(a => a.correct).length / unprompted.length : null,
-    calibrationError: calibration,
+    confidenceBands,
+    highMisses,
   }
 }

@@ -1,12 +1,9 @@
-import { readFileSync } from 'node:fs'
-import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { lessonSort } from './progress'
-import type { Lesson, Skill } from '../types'
+import { readCatalog, readSkills } from './shippedContent'
 
-const PUB = join(__dirname, '..', '..', 'public', 'content')
-const skills = JSON.parse(readFileSync(join(PUB, 'skills.json'), 'utf8')) as Skill[]
-const lessons = JSON.parse(readFileSync(join(PUB, 'lessons.json'), 'utf8')) as Lesson[]
+const skills = readSkills()
+const lessons = readCatalog()
 
 describe('the order the first lessons are taught in', () => {
   it('teaches the sliding pieces first, then the knight, then the pawn', () => {

@@ -1,15 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db, type LessonProgress } from '../db'
-import { layoutMap } from '../lib/mapLayout'
+import { ghostPosition, layoutMap } from '../lib/mapLayout'
 import { LEVEL_NAMES, type NodeProgress } from '../lib/missions'
 import { skillState, sheetOffset, listMaxHeight } from '../lib/mapSheet'
-import { BANDS, REGIONS, bandOf } from '../lib/mapRegions'
+import { REGIONS } from '../lib/mapRegions'
+import { PATH_STAGES } from '../lib/pathStages'
+import { currentStageIndex, skillHomeStages, skillReturns, stageSentence } from '../lib/skillStages'
+import { onMapJump } from '../lib/mapJump'
+import { ringLabelPlan, ringTextPaths, zoomZone } from '../lib/mapZoom'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
+import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
+import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
-import type { Lesson, Skill } from '../types'
+import type { LessonMeta, Skill } from '../types'
 
-interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: Lesson[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null }
+interface Props { skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: LessonMeta[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null; /** A stage (index 0..7) to light on every slice; the rest dim. */ highlightStage?: number | null }
 
 /** Text that follows an arc of a circle round the map, centred on `mid` (radians), reading upright: on the top half it runs clockwise outside the baseline,
  * on the bottom half the path is reversed so the letters are not upside down. The size shrinks to fit the arc a label may use. */
@@ -27,12 +33,36 @@ function ArcLabel({ id, mid, radius, text, size, className }: { id: string; mid:
     </g>
   )
 }
-const fitSize = (arc: number, chars: number, factor: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, (arc * 0.92) / (chars * factor)))
+/** The empty channel between two stage rings is 2 x (EDGE_PAD - node radius); the divider text must fit inside it. */
+const RING_TEXT_MAX = 56
+const fitSize =(arc: number, chars: number, factor: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, (arc * 0.92) / (chars * factor)))
 
-/** The curriculum as a map: the first skill at the centre, rings outward by prerequisite chain, a wedge per strand. Pan by dragging,
+/** A stage boundary that IS its label: the words run all the way round the circle just inside the band's outer edge, repeated with a little space between the repeats.
+ * Two half circles carry the text so it reads upright everywhere: the top half runs left to right over the top, the bottom half left to right along the bottom. */
+function TextRing({ id, outer, size, text, className }: { id: string; outer: number; size: number; text: string; className: string }) {
+  const unit = `${text}   \u2022   `
+  const half = Math.PI * outer
+  const fit = Math.min(size, (half * 0.97) / (unit.length * 0.6)) // a ring too small for one repeat shrinks its text rather than overflow
+  const n = Math.max(1, Math.floor(half / (unit.length * fit * 0.6)))
+  const content = unit.repeat(n)
+  // the text is centred on the boundary circle itself (there is no line there: the words are the divider): on the top half the letters rise from the baseline
+  // (outward), on the bottom half they hang from it (inward), so both halves read upright and each is centred on the same radius
+  const { top, bottom, rTop: rt, rBottom: rb } = ringTextPaths(outer, fit)
+  return (
+    <g pointerEvents="none">
+      <path id={`${id}-t`} d={top} fill="none" stroke="none" />
+      <path id={`${id}-b`} d={bottom} fill="none" stroke="none" />
+      <text className={className} fontSize={fit}><textPath href={`#${id}-t`} textLength={Math.PI * rt * 0.99} lengthAdjust="spacing">{content}</textPath></text>
+      <text className={className} fontSize={fit}><textPath href={`#${id}-b`} textLength={Math.PI * rb * 0.99} lengthAdjust="spacing">{content}</textPath></text>
+    </g>
+  )
+}
+/** The curriculum as a map: the first skill at the centre, one ring per stage of the recommended path, a wedge per subject (strand). Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null }: Props) {
-  const layout = useMemo(() => layoutMap(skills), [skills])
+export function RadialMap({ skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null, highlightStage = null }: Props) {
+  const homeStages = useMemo(() => skillHomeStages(skills, lessons), [skills, lessons])
+  const layout = useMemo(() => layoutMap(skills, homeStages), [skills, homeStages])
+  const hereStage = useMemo(() => currentStageIndex(lessons, new Set(lessonProgress.filter(p => p.done).map(p => p.lessonId))), [lessons, lessonProgress])
   const byId = useMemo(() => new Map(layout.nodes.map(n => [n.id, n])), [layout])
   const R = layout.radius + 300 // room outside the circle for the section and region names
   const navigate = useNavigate()
@@ -50,7 +80,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
   }
   const hideTip = () => { window.clearTimeout(hideTimer.current); hideTimer.current = window.setTimeout(() => { setTip(null); setHov(null); setLinkedHover(null) }, 220) }
   const doneBy = useMemo(() => new Map(lessonProgress.map(p => [p.lessonId, p])), [lessonProgress])
-  const mark = (ids: string[], steps: Record<string, number>, done: boolean) => Promise.all(ids.map(id => done ? db.lessonProgress.put({ lessonId: id, step: steps[id] ?? 0, done: true, ts: Date.now(), skipped: false }) : db.lessonProgress.delete(id)))
+  const mark = (ids: string[], done: boolean) => Promise.all(ids.map(id => { const l = lessons.find(x => x.id === id); return done && l ? saveFinished(db.lessonProgress, l, false) : resetProgress(db.lessonProgress, id) }))
   // the camera is remembered for the session, so coming back from a lesson lands where the learner was
   const [view, setView] = useState(() => { try { const v = JSON.parse(sessionStorage.getItem('map-view') ?? 'null'); if (v && [v.x, v.y, v.k].every(Number.isFinite)) return v as { x: number; y: number; k: number } } catch { /* storage unavailable */ } return { x: 0, y: 0, k: 3 } })
   const viewRef = useRef(view); viewRef.current = view
@@ -105,6 +135,23 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     if (picked) { s.add(picked); for (const e of layout.edges) { if (e.from === picked) s.add(e.to); if (e.to === picked) s.add(e.from) } }
     return s
   }, [picked, layout])
+  /** The chosen skill's neighbours: what it builds on (blue) and what it leads to (orange). */
+  const relation = useMemo(() => {
+    const pre = new Set<string>(), lead = new Set<string>()
+    if (picked) for (const e of layout.edges) { if (e.to === picked) pre.add(e.from); if (e.from === picked) lead.add(e.to) }
+    return { pre, lead }
+  }, [picked, layout])
+  const pickedSkill = useMemo(() => (picked ? skills.find(x => x.id === picked) ?? null : null), [picked, skills])
+  /** The other stages where the chosen skill has lessons: ghost markers on those rings (nothing is hidden, the move is an illusion). */
+  const ghosts = useMemo(() => {
+    if (!pickedSkill) return []
+    return skillReturns(pickedSkill, lessons).flatMap(g => { const pos = ghostPosition(layout, pickedSkill.id, g.stageIndex); return pos ? [{ ...g, ...pos }] : [] })
+  }, [pickedSkill, lessons, layout])
+  useEffect(() => {
+    if (highlightStage === null) return
+    go({ x: 0, y: 0, k: 1 }) // a stage runs round the whole circle: show it all
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlightStage])
   useEffect(() => {
     if (!highlightStrand) return
     const ns = layout.nodes.filter(n => n.strand === highlightStrand); if (!ns.length) return
@@ -112,33 +159,37 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     go({ x: -cx, y: -cy, k: 1.6 })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [highlightStrand, layout])
+  /** Centre the camera on a map point, in the part of the map that is not covered by a panel (the side drawers, or the bottom sheet on a phone). */
+  const centreOn = (x: number, y: number, minK: number) => {
+    const el = svg.current; if (!el) return
+    // on a phone the page is scrolled so the whole map workspace (toolbar and map) sits above the bottom sheet
+    if (window.matchMedia?.('(max-width: 700px)').matches) el.closest('.radialmap')?.scrollIntoView({ block: 'start' })
+    const box = el.getBoundingClientRect()
+    const cover = (sel: string) => [...document.querySelectorAll(sel)].map(e => e.getBoundingClientRect())
+    let left = box.left, right = box.right
+    for (const r of cover('.sidechrome > .sidedrawer.left, .sidechrome > .detaildrawer')) if (r.right > left && r.left < box.left + box.width / 2) left = Math.max(left, r.right)
+    for (const r of cover('.sidechrome > .sidedrawer.right')) if (r.left < right && r.right > box.left + box.width / 2) right = Math.min(right, r.left)
+    const dx = ((left + right) / 2) - (box.left + box.width / 2)
+    const sheet = document.querySelector('.dock.right')?.getBoundingClientRect()
+    const dy = sheetOffset(box, sheet ?? null)
+    const v = viewRef.current; const k = Math.max(v.k, minK); const upp = (2 * R) / k / Math.min(box.width, box.height); go({ x: -x + dx * upp, y: -y + dy * upp, k })
+  }
   /** When a skill is chosen, bring it into the part of the map that is not covered by a panel, with its neighbours around it. */
   useEffect(() => {
     if (!picked) return
     const n = byId.get(picked); if (!n) return
-    const t = window.setTimeout(() => {
-      const el = svg.current; if (!el) return
-      // on a phone the page is scrolled so the whole map workspace (toolbar and map) sits above the bottom sheet
-      if (window.matchMedia?.('(max-width: 700px)').matches) el.closest('.radialmap')?.scrollIntoView({ block: 'start' })
-      const box = el.getBoundingClientRect()
-      const cover = (sel: string) => [...document.querySelectorAll(sel)].map(e => e.getBoundingClientRect())
-      let left = box.left, right = box.right
-      for (const r of cover('.sidechrome > .sidedrawer.left, .sidechrome > .detaildrawer')) if (r.right > left && r.left < box.left + box.width / 2) left = Math.max(left, r.right)
-      for (const r of cover('.sidechrome > .sidedrawer.right')) if (r.left < right && r.right > box.left + box.width / 2) right = Math.min(right, r.left)
-      const dx = ((left + right) / 2) - (box.left + box.width / 2)
-      const sheet = document.querySelector('.dock.right')?.getBoundingClientRect()
-      const dy = sheetOffset(box, sheet ?? null)
-      const v = viewRef.current; const k = Math.max(v.k, 1.8); const upp = (2 * R) / k / Math.min(box.width, box.height); go({ x: -n.x + dx * upp, y: -n.y + dy * upp, k })
-    }, 80)
+    const t = window.setTimeout(() => centreOn(n.x, n.y, 1.8), 80)
     return () => window.clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [picked])
+  // the panel's "Where this skill returns" buttons move the camera to the ghost marker on that stage's ring
+  useEffect(() => onMapJump(j => { const g = ghostPosition(layout, j.skill, j.stage); if (g) centreOn(g.x, g.y, 2.2) }))
   const zoom = (f: number) => setView(v => ({ ...v, k: Math.max(0.25, Math.min(6, v.k * f)) }))
   const fit = () => go({ x: 0, y: 0, k: 1 })
   const locate = () => {
     // centre on the first skill that is started but not mastered, else the first not started
     const open = layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises })
-    const cand = open.find(n => (progress.get(n.id)?.level ?? 0) > 0) ?? open.sort((a, b) => a.ring - b.ring)[0]
+    const cand = open.find(n => (progress.get(n.id)?.level ?? 0) > 0) ?? open.sort((a, b) => a.ring - b.ring || a.sub - b.sub)[0]
     if (cand) { go({ x: -cand.x, y: -cand.y, k: 2 }); onPick(cand.id) }
   }
   // a native, non-passive wheel listener: React's onWheel cannot stop the page from scrolling
@@ -149,17 +200,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     return () => el.removeEventListener('wheel', h)
   }, [])
   // the skill to do next: the one the path recommends, else the earliest skill that is ready and not yet mastered
-  const rec = recommended ?? layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises && (readiness.get(n.id) ?? 0) >= 1 }).sort((a, b) => a.ring - b.ring)[0]?.id ?? null
-  // distance bands: the outer edge of each band is where most of its skills end (85th percentile of their distance from the centre)
-  const bandEdges = useMemo(() => {
-    const out: number[] = []
-    BANDS.forEach((_, b) => {
-      const rs = layout.nodes.filter(n => bandOf(n.tier) === b).map(n => Math.hypot(n.x, n.y)).sort((a, c) => a - c)
-      const r = rs.length ? rs[Math.min(rs.length - 1, Math.floor(rs.length * 0.85))] + 30 : 0
-      out.push(Math.max(r, (out[b - 1] ?? 0) + 60))
-    })
-    return out
-  }, [layout])
+  const rec = recommended ?? layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises && (readiness.get(n.id) ?? 0) >= 1 }).sort((a, b) => a.ring - b.ring || a.sub - b.sub)[0]?.id ?? null
   const hits = useMemo(() => {
     const t = q.trim().toLowerCase(); if (!t) return []
     return layout.nodes.map(n => ({ n, title: progress.get(n.id)?.title ?? n.id })).filter(x => x.title.toLowerCase().includes(t) || x.n.id.toLowerCase().includes(t)).slice(0, 8)
@@ -173,6 +214,8 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
     el.style.maxHeight = cap === null ? '' : `${cap}px`
     el.querySelector('[aria-current]')?.scrollIntoView({ block: 'nearest' })
   }, [listOpen, picked, hits.length])
+  const zone = zoomZone(view.k)
+  const labelUnits = Math.max(26, Math.min(130, (15 * 2 * R) / view.k / 800)) // about 15 screen pixels, in map units
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className="radialmap">
@@ -186,7 +229,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         <button type="button" onClick={back} disabled={past.length === 0}>‹ Back</button>
         <button type="button" aria-expanded={listOpen} onClick={() => { setListOpen(o => !o); setQ('') }}>Skill list</button>
         <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>
-        <span className="small muted">Centre outwards is the reading order of the subjects; the recommended path (Curriculum, All lessons) mixes them by stage. Drag to move, scroll to zoom.</span>
+        <span className="small muted">Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll to zoom.</span>
       </div>
       {(hits.length > 0 || listOpen) && (
         <div className="maplist" role="listbox" aria-label="Skills" ref={listRef}>
@@ -197,7 +240,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
               <div key={rg.id}><strong className="small">{rg.name}</strong>
                 {rg.strands.map(st => (
                   <div key={st}><span className="small muted">{st} {strandNames[st] ?? ''}</span>
-                    <div className="maplistrow">{layout.nodes.filter(n => n.strand === st).sort((a, b) => a.ring - b.ring || a.id.localeCompare(b.id)).map(n => {
+                    <div className="maplistrow">{layout.nodes.filter(n => n.strand === st).sort((a, b) => a.ring - b.ring || a.sub - b.sub || a.id.localeCompare(b.id)).map(n => {
                       const t = progress.get(n.id)?.title ?? n.id, st2 = skillState(progress.get(n.id))
                       return <button key={n.id} type="button" className={picked === n.id ? 'link on' : 'link'} aria-current={picked === n.id ? 'true' : undefined} aria-label={`${t}, ${st2.word}${picked === n.id ? ', selected' : ''}`} onClick={() => showSkill(n.id)}><span aria-hidden="true" className="listmark">{st2.mark}</span>{t}</button>
                     })}</div>
@@ -206,7 +249,7 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
         </div>
       )}
       </div>
-      <svg ref={svg} className={`mapsvg${highlightStrand ? ' hasHi' : ''}`} viewBox={vb} role="group" aria-label="Curriculum map"
+      <svg ref={svg} className={`mapsvg zoom-${zone}${highlightStrand ? ' hasHi' : ''}${highlightStage !== null ? ' hasStageHi' : ''}`} viewBox={vb} role="group" aria-label="Curriculum map"
         onPointerDown={e => {
           if (ptrs.current.size === 0) { suppressClick.current = false; pinch.current = null; moved.current = false }
           ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); lastType.current = e.pointerType;
@@ -255,14 +298,18 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
           return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
         })}
-        {/* milestone bands: faint rings labelled with the ability they stand for (orientation only, not a rating) */}
-        {bandEdges.slice(0, -1).map((r, b) => (
-          <g key={`band-${b}`} className="mapband" pointerEvents="none">
-            <circle r={r} fill="none" className="bandring" />
-            <text y={-r + 26} textAnchor="middle" className="bandlabel">{BANDS[b].name}: {BANDS[b].milestone}</text>
-          </g>
-        ))}
-        <text y={-layout.radius + 70} textAnchor="middle" className="bandlabel" pointerEvents="none">{BANDS[BANDS.length - 1].name}: {BANDS[BANDS.length - 1].milestone}</text>
+        {/* stage rings: one band per stage of the recommended path; the learner's current stage is emphasised, a chosen stage is lit */}
+        {layout.stages.map(st => {
+          const ring = (r: number) => `M${r},0 A${r},${r} 0 1 1 ${-r},0 A${r},${r} 0 1 1 ${r},0 Z`
+          return <path key={`stage-${st.index}`} d={st.inner > 0 ? ring(st.outer) + ring(st.inner) : ring(st.outer)} fillRule="evenodd" pointerEvents="none"
+            className={`stageband${highlightStage === st.index ? ' hi' : ''}${hereStage === st.index ? ' here' : ''}`} />
+        })}
+        {layout.stages.map(st => {
+          const t = PATH_STAGES[st.index]; if (!t) return null
+          const here = hereStage === st.index, nm = `Stage ${st.index + 1}`
+          const plan = ringLabelPlan(st.mid, labelUnits, here ? [`You are here · ${nm} · ${t.title}`, `You are here · ${nm}`, nm] : [`${nm} · ${t.title}`, nm])
+          return <TextRing key={`sn-${st.index}`} id={`arc-stage-${st.index}`} outer={st.outer} text={plan.text} size={Math.min(plan.size, RING_TEXT_MAX)} className={`arclabel stagename${here ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} />
+        })}
         {/* broad regions round the outside; readable when the section names are too small */}
         {REGIONS.map(rg => {
           const ws = layout.wedges.filter(w => rg.strands.includes(w.strand)); if (!ws.length) return null
@@ -302,13 +349,13 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
           const lvl = level(n.id)
           const ready = (readiness.get(n.id) ?? 0)
           const next = lvl < 4 && ready >= 1 && !p?.noExercises
-          const dim = (picked && !linked.has(n.id)) || (!picked && highlightStrand && n.strand !== highlightStrand)
+          const dim = (picked && !linked.has(n.id)) || (!picked && ((highlightStrand && n.strand !== highlightStrand) || (highlightStage !== null && n.stage !== highlightStage)))
           const cid = `cp-${n.id.replace(/[^A-Za-z0-9]/g, '_')}`
           // unstarted skills fade with how few of their prerequisites are done, but stay readable
-          const op = lvl > 0 || next ? 1 : 0.38 + 0.62 * ready
+          const op = lvl > 0 || next ? 1 : 0.62 + 0.38 * ready
           return (
-            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
-              tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, ${LEVEL_NAMES[lvl]}${next ? ', ready to start' : ''}`}
+            <g key={n.id} onMouseEnter={e => showTip(n.id, e.currentTarget)} onMouseLeave={hideTip} onFocus={e => showTip(n.id, e.currentTarget)} className={`mapnode${picked === n.id ? ' sel' : ''}${dim ? ' dim' : ''}${relation.pre.has(n.id) ? ' prereq' : ''}${relation.lead.has(n.id) ? ' leadsto' : ''}${p?.due ? ' due' : ''}${next ? ' next' : ''}`} transform={`translate(${n.x},${n.y})`} style={dim ? undefined : { opacity: op }}
+              tabIndex={0} role="button" aria-label={`${p?.title ?? n.id}, ${stageSentence(n.stage)}, ${LEVEL_NAMES[lvl]}${next ? ', ready to start' : ''}`}
               onClick={() => onPick(n.id)} data-id={n.id} onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(n.id) }
                 else if (['ArrowRight', 'ArrowUp', 'ArrowLeft', 'ArrowDown'].includes(e.key)) {
@@ -325,7 +372,23 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
               {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} />}
               <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className="nodemark" textAnchor="middle" dy="5">✓</text>}
-              {picked !== n.id && hov !== n.id && (view.k >= 3.5 || ((view.k >= 1.7 || next) && (lvl > 0 || next))) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+              {picked !== n.id && hov !== n.id && !(dim && zone !== 'near') && (zone !== 'far' || relation.pre.has(n.id) || relation.lead.has(n.id)) && <text className="nodelabel" y={40} textAnchor="middle">{(p?.title ?? n.id).slice(0, 26)}</text>}
+              {zone === 'near' && picked !== n.id && hov !== n.id && <text className="nodestatus" y={62} textAnchor="middle">{LEVEL_NAMES[lvl]}{p?.lessonDone ? ' · lesson done' : ''}</text>}
+            </g>
+          )
+        })}
+        {/* ghost markers: where the chosen skill returns on the other stage rings; each is a button that moves the camera there */}
+        {pickedSkill && byId.get(pickedSkill.id) && ghosts.map(g => {
+          const n = byId.get(pickedSkill.id)!
+          const what = g.items.map(i => i.adds).join(', ')
+          return (
+            <g key={`ghost-${g.stageId}`} className="mapghost">
+              <line x1={n.x} y1={n.y} x2={g.x} y2={g.y} className="ghostline" pointerEvents="none" />
+              <g transform={`translate(${g.x},${g.y}) scale(${Math.max(1, Math.min(5, 3.2 / view.k))})`} tabIndex={0} role="button" className="ghostmark" aria-label={`${pickedSkill.title} returns in ${stageSentence(g.stageIndex)}: ${what}. Move the map here.`}
+                onClick={() => centreOn(g.x, g.y, 2.2)} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); centreOn(g.x, g.y, 2.2) } }}>
+                <circle r={24} className="ghostring" />
+                <text className="ghostnum" textAnchor="middle" dy="8">{g.stageIndex + 1}</text>
+              </g>
             </g>
           )
         })}
@@ -359,18 +422,20 @@ export function RadialMap({ skills, progress, picked, onPick, strandNames, highl
       </svg>
       {tip && (() => {
         const p = progress.get(tip.id), sk = skills.find(x => x.id === tip.id)
-        const ls = lessons.filter(l => l.skill === tip.id || (l.also ?? []).includes(tip.id))
-        const steps = Object.fromEntries(ls.map(l => [l.id, l.steps.length]))
+        const sl = lessonsForSkill(lessons, tip.id)
+        const ls = sl.teaching.length ? sl.teaching : sl.alsoTeaching // the skill's own teaching lessons; course applications and checks are not counted as its lessons
+        const first = primaryLesson(lessons, tip.id, id => !!doneBy.get(id)?.done) ?? ls[0]
         const allDone = ls.length > 0 && ls.every(l => doneBy.get(l.id)?.done)
         return (
           <div className={`maptip ${tip.corner}`} role="tooltip" onMouseEnter={() => window.clearTimeout(hideTimer.current)} onMouseLeave={hideTip}>
-            <h3>{p?.title ?? tip.id}</h3>
+            <h3>{p?.title ?? tip.id}{tip.id === rec && <span className="upnextbadge">Up next</span>}</h3>
+            <p className="small"><strong>{stageSentence(homeStages.get(tip.id) ?? 0)}</strong>{homeStages.get(tip.id) === hereStage ? ' · you are here' : ''}</p>
             <p className="small muted">{sk?.strand} {strandNames[sk?.strand ?? ''] ?? ''} · tier {sk?.tier} · {LEVEL_NAMES[Math.min(4, p?.level ?? 0)]}{p?.due ? ' · refresher due' : ''}{p?.assumed ? ' · assumed from a test-out' : ''}</p>
             <p className="small">{ls.length === 0 ? 'No lesson for this skill yet.' : `${ls.filter(l => doneBy.get(l.id)?.done).length} of ${ls.length} lesson${ls.length === 1 ? '' : 's'} finished`}</p>
             <div className="row">
-              {ls.length > 0 && !allDone && <button type="button" onClick={() => void mark(ls.map(l => l.id), steps, true)}>Mark as already done</button>}
-              {ls.some(l => doneBy.get(l.id)) && <button type="button" className="link" onClick={() => void mark(ls.map(l => l.id), steps, false)}>Reset</button>}
-              {ls[0] && <button type="button" className="link" onClick={() => navigate(`/lesson/${ls[0].id}`)}>Open lesson</button>}<button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
+              {ls.length > 0 && !allDone && <button type="button" onClick={() => void mark(ls.map(l => l.id), true)}>Mark as already done</button>}
+              {ls.some(l => doneBy.get(l.id)) && <button type="button" className="link" onClick={() => void mark(ls.map(l => l.id), false)}>Reset</button>}
+              {first && <button type="button" className="link" onClick={() => navigate(`/lesson/${first.id}`)}>Open lesson</button>}<button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
             </div>
           </div>
         )

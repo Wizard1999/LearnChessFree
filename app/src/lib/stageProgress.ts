@@ -1,6 +1,6 @@
 // Progress by stage of the recommended path. Two separate measures, never merged:
 // 'lessons finished' (completed a lesson, or marked it done) and 'shown in exercises' (evidence at Level one or better).
-import type { Lesson } from '../types'
+import type { LessonMeta } from '../types'
 import type { Mastery } from './mastery'
 import { PATH_STAGES } from './pathStages'
 
@@ -23,7 +23,7 @@ export interface StageProgress {
 
 interface Prog { lessonId: string; done: boolean; skipped?: boolean }
 
-export function stageProgress(lessons: readonly Lesson[], lessonProgress: readonly Prog[], masteries: ReadonlyMap<string, Mastery>): StageProgress[] {
+export function stageProgress(lessons: readonly LessonMeta[], lessonProgress: readonly Prog[], masteries: ReadonlyMap<string, Mastery>): StageProgress[] {
   const done = new Map(lessonProgress.filter(p => p.done).map(p => [p.lessonId, p]))
   const reliable = new Set<string>()
   for (const [key, m] of masteries) if (m.state === 'reliable' || m.state === 'refresh') reliable.add(key.slice(0, key.lastIndexOf('.')))

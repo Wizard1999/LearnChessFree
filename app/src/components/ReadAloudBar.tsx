@@ -2,7 +2,7 @@ import { pauseSpeech, resumeSpeech, savePrefs, stopSpeech, useSpeech } from '../
 
 /** Lesson-header control for read-aloud. Renders nothing when the browser has no speech voices. */
 export function ReadAloudBar() {
-  const { prefs, available, playing } = useSpeech()
+  const { prefs, available, playing, source } = useSpeech()
   if (!available) return null
   return (
     <div className="readaloud" role="group" aria-label="Read aloud">
@@ -17,6 +17,7 @@ export function ReadAloudBar() {
           <button type="button" className="small" onClick={stopSpeech} disabled={playing === 'idle'}>Stop</button>
         </>
       )}
+      {prefs.on && source === 'browser' && playing !== 'idle' && <span className="voicenote" role="status">Voice: your browser's built-in voice, not the recorded one.</span>}
     </div>
   )
 }

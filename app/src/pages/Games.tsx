@@ -7,14 +7,10 @@ import { fetchChessCom, fetchLichess, parseGame, plyList, splitPgn, type Ply } f
 import { CONCEPT_LABEL, CONCEPT_SKILL, momentFor, type Moment } from '../lib/opportunities'
 import { useContent } from '../lib/content'
 import { Link } from 'react-router-dom'
+import { analysePlies, type Analysis } from '../lib/gameAnalysis'
 import type { ConceptName } from '../chess/detectors'
 
 interface Mark { ply: number; unsure: string; expected: string }
-interface MoveEval { before: number; after: number; best?: string; loss: number } // centipawns from the mover's point of view
-interface Analysis { depth: string; evals: MoveEval[]; whiteEvals: number[]; at: number; bests?: string[]; tags?: Record<number, { missed: ConceptName[]; allowed: ConceptName[] }> } // bests[k]: engine's preferred move (UCI) in the position before ply k+1; bests[n]: in the final position
-
-const clamp = (v: number) => Math.max(-1000, Math.min(1000, v))
-const toCp = (kind: 'cp' | 'mate', value: number) => (kind === 'mate' ? (value > 0 ? 1000 - value : -1000 - value) : clamp(value))
 const DIAG = ['I did not see their threat', 'I saw it but miscalculated', 'I misjudged the position', 'Time pressure', 'I did not know the opening / plan', 'Something else']
 
 export function Games() {
@@ -98,33 +94,8 @@ function Review({ game, onBack }: { game: GameRec; onBack: () => void }) {
 
   async function runAnalysis() {
     cancel.current = false
-    const eng = getEngine()
-    const whiteEvals: number[] = []
-    const bests: string[] = []
-    const fens = [plies[0].fenBefore, ...plies.map(p => p.fenAfter)]
-    for (let k = 0; k < fens.length; k++) {
-      if (cancel.current) return
-      setProgress(k / fens.length)
-      const lines = await eng.analyse(fens[k], { movetime: 140 })
-      const turnWhite = fens[k].split(' ')[1] === 'w'
-      const s = lines[0] ? toCp(lines[0].kind, lines[0].value) : 0
-      whiteEvals.push(turnWhite ? s : -s)
-      bests.push(lines[0]?.pv[0] ?? '')
-    }
-    const evals: MoveEval[] = plies.map((pl, k) => {
-      const mover = pl.color === 'w' ? 1 : -1
-      const before = whiteEvals[k] * mover
-      const after = whiteEvals[k + 1] * mover
-      return { before, after, loss: Math.max(0, before - after) }
-    })
-    // Name the patterns behind every drop of a pawn or more once, here, so the cross-game summary never has to re-run the detectors.
-    const tags: NonNullable<Analysis['tags']> = {}
-    plies.forEach((pl, k) => {
-      if (evals[k].loss < 100) return
-      const m = momentFor({ ply: k + 1, san: pl.san, played: pl.uci, loss: evals[k].loss, fenBefore: pl.fenBefore, fenAfter: pl.fenAfter, bestBefore: bests[k], bestReply: bests[k + 1] })
-      tags[k] = { missed: m.missed?.concepts ?? [], allowed: m.allowed?.concepts ?? [] }
-    })
-    const a: Analysis = { depth: '140 ms per position (Stockfish 19 Lite)', evals, whiteEvals, bests, tags, at: Date.now() }
+    const a = await analysePlies(plies, getEngine(), { onProgress: setProgress, cancelled: () => cancel.current })
+    if (!a) return
     setAnalysis(a); setProgress(null)
     await db.games.update(game.id!, { analysis: a })
   }

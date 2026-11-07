@@ -20,15 +20,18 @@ export function shuffled<T>(xs: readonly T[], seed: string): T[] {
 /**
  * Pick n items from a pool preferring FRESH ones: families the learner has not seen, then least recently attempted.
  * One item per family per pick, so a set never contains two variations of the same position (leakage guard).
+ * By default a set that cannot be filled from distinct families is topped up from families already chosen. `strictFamilies` never
+ * does that: the set comes back shorter instead (use it wherever the set is a check of independence: mastery challenges, stage
+ * checks, warm-ups), and the caller says so to the learner.
  */
-export function pickFresh(pool: Item[], attempts: Attempt[], n: number, seed: string, opts: { exclude?: ReadonlySet<string>; minCue?: number } = {}): Item[] {
+export function pickFresh(pool: Item[], attempts: Attempt[], n: number, seed: string, opts: { exclude?: ReadonlySet<string>; minCue?: number; strictFamilies?: boolean; excludeFamilies?: ReadonlySet<string> } = {}): Item[] {
   const lastByItem = new Map<string, number>()
   const seenFamily = new Set<string>()
   for (const a of attempts) {
     lastByItem.set(a.itemId, Math.max(lastByItem.get(a.itemId) ?? 0, a.ts))
     seenFamily.add(a.family)
   }
-  const cands = pool.filter(i => !opts.exclude?.has(i.id) && (opts.minCue === undefined || i.cue >= opts.minCue))
+  const cands = pool.filter(i => !opts.exclude?.has(i.id) && !opts.excludeFamilies?.has(i.family) && (opts.minCue === undefined || i.cue >= opts.minCue))
   const order = shuffled(cands, seed)
   order.sort((x, y) => {
     const fx = seenFamily.has(x.family) ? 1 : 0
@@ -43,7 +46,7 @@ export function pickFresh(pool: Item[], attempts: Attempt[], n: number, seed: st
     fams.add(it.family); out.push(it)
     if (out.length >= n) break
   }
-  if (out.length < n) for (const it of order) { if (!out.includes(it)) out.push(it); if (out.length >= n) break }
+  if (out.length < n && !opts.strictFamilies) for (const it of order) { if (!out.includes(it)) out.push(it); if (out.length >= n) break }
   return out
 }
 

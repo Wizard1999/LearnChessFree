@@ -197,7 +197,7 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
     if (picks.length >= 3) break
     if (n.level === 4 && mastered >= 1) continue
     const pool = usablePool(n)
-    const chosen = pickFresh(pool, attempts, 2, `${seed}:${n.id}`)
+    const chosen = pickFresh(pool, attempts, 2, `${seed}:${n.id}`, { strictFamilies: true })
     if (chosen.length < 2 || chosen[0].family === chosen[1].family) continue // two variants of one position test memory, not the skill
     if (n.level === 4) mastered++
     picks.push({ node: n, items: chosen })

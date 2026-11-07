@@ -1,4 +1,5 @@
 import Dexie, { type Table } from 'dexie'
+import { safeWrite } from './lib/saveStatus'
 
 export type AttemptSource = 'lesson' | 'practice' | 'placement' | 'warmup' | 'review' | 'daily' | 'challenge' | 'game'
 export interface Attempt {
@@ -21,12 +22,30 @@ export interface Attempt {
   scan?: string[]
   /** The answer was not in the item's accepted set but the engine rated it as sound (find-the-move items at cue 3+). */
   alt?: boolean
+  /** How the attempt ended, in the app's three words: correct for this task, sound alternative, unsuccessful. */
+  result?: 'correct' | 'sound-alternative' | 'unsuccessful'
   /** Aids used besides the numbered hints, for example 'controlMap' (counted as one hint). */
   aids?: string[]
 }
 export interface Reflection { id?: number; kind: string; lessonId?: string; data: Record<string, string>; ts: number }
-export interface LessonProgress { lessonId: string; step: number; done: boolean; ts: number; /** Marked done by the learner without doing it. */ skipped?: boolean }
-export interface GameRec { id?: number; source: string; white: string; black: string; result: string; date?: string; pgn: string; ts: number; analysis?: unknown; me?: 'white' | 'black' }
+export interface LessonProgress {
+  lessonId: string; step: number; done: boolean; ts: number
+  /** Marked done by the learner without doing it. */
+  skipped?: boolean
+  /** The stable id of the step the learner is on (or was on): a saved place survives a rewrite that moves steps about (D43). */
+  sid?: string
+  /** The lesson revision this place or completion applies to (a hash of the lesson's steps made at build time). */
+  revision?: string
+  /** 1 = written before step ids and revisions were recorded (stamped by the version 3 migration); 2 = current. */
+  format?: 1 | 2
+}
+/** The version 3 migration for one row: mark rows that carry no revision as the old format. Rows are otherwise left exactly as they were. */
+export function stampLegacyProgress(p: LessonProgress): void { if (p.revision === undefined && p.format === undefined) p.format = 1 }
+/** How a game played in the app came about (set for games against the practice opponent). */
+export interface GameContext { startFen: string; opponent: 'stockfish' | 'maia'; level: string; color: 'white' | 'black'; completed: boolean; lessonId?: string }
+export interface GameRec { id?: number; source: string; white: string; black: string; result: string; date?: string; pgn: string; ts: number; analysis?: unknown; me?: 'white' | 'black'; context?: GameContext }
+/** Time on one lesson step, for the learner's own pace estimate (lib/measuredTime.ts). Stays on this device. */
+export interface StepTimeRow { id?: number; lessonId: string; sid: string; type: string; ms: number; ts: number }
 export interface KV { key: string; value: unknown }
 /** A reviewer's report on a lesson or an exercise. Stored on the reviewer's device, exported as a file, optionally posted to the project's feedback address. */
 export interface Feedback {
@@ -49,6 +68,7 @@ class AppDB extends Dexie {
   games!: Table<GameRec, number>
   kv!: Table<KV, string>
   feedback!: Table<Feedback, number>
+  stepTimes!: Table<StepTimeRow, number>
   constructor() {
     super('chess-school')
     this.version(1).stores({
@@ -66,6 +86,25 @@ class AppDB extends Dexie {
       kv: 'key',
       feedback: '++id,targetType,targetId,ts',
     })
+    // Version 3: lesson progress also records the step id and the lesson revision. No index changes; existing rows are stamped as the old format.
+    this.version(3).stores({
+      attempts: '++id,itemId,skillKey,family,ts,source',
+      reflections: '++id,kind,ts',
+      lessonProgress: 'lessonId',
+      games: '++id,ts',
+      kv: 'key',
+      feedback: '++id,targetType,targetId,ts',
+    }).upgrade(tx => tx.table('lessonProgress').toCollection().modify(stampLegacyProgress))
+    // Version 4: time per lesson step (new table; nothing else changes).
+    this.version(4).stores({
+      attempts: '++id,itemId,skillKey,family,ts,source',
+      reflections: '++id,kind,ts',
+      lessonProgress: 'lessonId',
+      games: '++id,ts',
+      kv: 'key',
+      feedback: '++id,targetType,targetId,ts',
+      stepTimes: '++id,type,lessonId,ts',
+    })
   }
 }
 export const db = new AppDB()
@@ -74,7 +113,8 @@ export async function kvGet<T>(key: string, fallback: T): Promise<T> {
   try { const r = await db.kv.get(key); return (r ? r.value : fallback) as T } catch { return fallback }
 }
 export async function kvSet(key: string, value: unknown): Promise<void> {
-  try { await db.kv.put({ key, value }) } catch { /* storage may be unavailable (private mode); the app still works for the session */ }
+  // The app keeps working when storage is unavailable, but the failure is reported (one calm notice per session), never hidden.
+  await safeWrite(() => db.kv.put({ key, value }))
 }
 
 /** Everything the learner owns, as one JSON object (the 'succession portfolio': readable without the app). */

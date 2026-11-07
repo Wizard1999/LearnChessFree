@@ -22,6 +22,7 @@ export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[],
   const out: Item[] = []
   const tierOf = new Map<string, number>()
   const used = new Set<string>()
+  const usedFamilies = new Set<string>() // a warm-up never asks two positions of one family: strict families, so a tier may end up with fewer questions
   for (const t of tiers) {
     // a different sample of the tier's skills each time, so a retake does not ask the same few questions and call them the whole tier
     const nodes = shuffled(t.nodes.filter(n => !n.noExercises && n.level < 4), `${seed}:${t.tier}`)
@@ -30,16 +31,16 @@ export function planWarmup(mission: Mission, items: Item[], attempts: Attempt[],
     for (const n of nodes) {
       if (picked >= perTier || out.length >= WARMUP_MAX_ITEMS) break
       const pool = depthPool(n, bySkill)
-      const it = pickFresh(pool, attempts, 1, `${seed}:${n.id}`, { exclude: used })[0]
+      const it = pickFresh(pool, attempts, 1, `${seed}:${n.id}`, { exclude: used, excludeFamilies: usedFamilies, strictFamilies: true })[0]
       if (!it) continue
-      used.add(it.id); out.push(it); tierOf.set(it.id, t.tier); picked++; asked.push(n)
+      used.add(it.id); usedFamilies.add(it.family); out.push(it); tierOf.set(it.id, t.tier); picked++; asked.push(n)
     }
     // A tier with a single usable skill still gets MIN_PER_TIER questions (a different position of the same skill): one answer cannot vouch for a tier.
     for (let k = 0; picked > 0 && picked < MIN_PER_TIER && k < asked.length * 3 && out.length < WARMUP_MAX_ITEMS; k++) {
       const n = asked[k % asked.length]
-      const it = pickFresh(depthPool(n, bySkill), attempts, 1, `${seed}:${n.id}:more${k}`, { exclude: used })[0]
+      const it = pickFresh(depthPool(n, bySkill), attempts, 1, `${seed}:${n.id}:more${k}`, { exclude: used, excludeFamilies: usedFamilies, strictFamilies: true })[0]
       if (!it) continue
-      used.add(it.id); out.push(it); tierOf.set(it.id, t.tier); picked++
+      used.add(it.id); usedFamilies.add(it.family); out.push(it); tierOf.set(it.id, t.tier); picked++
     }
   }
   return { items: out, tierOf }

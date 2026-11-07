@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { betai, masteryOf, probAtLeast } from './mastery'
+import { betai, describeMastery, masteryOf, probAtLeast } from './mastery'
 import { isDue, nextDue } from './schedule'
 import type { Attempt } from '../db'
 
@@ -79,18 +79,96 @@ describe('mastery', () => {
   })
 })
 
+describe('independent evidence only (roadmap 2h)', () => {
+  const guided = (n: number) => Array.from({ length: n }, (_, i) => att({ itemId: `g${i}`, cue: i % 2 ? 1 : 2, ts: T0 + i }))
+  const indep = (n: number, over: Partial<Attempt> = {}, off = 1000) => Array.from({ length: n }, (_, i) => att({ itemId: `i${i}`, ts: T0 + off + i, ...over }))
+  it('100 guided successes plus 5 independent successes is not reliable, and the old Beta(56,1) cannot arise', () => {
+    const m = masteryOf([...guided(100), ...indep(5)], { now: T0 + 5000 })
+    expect(m.state).toBe('practising'); expect(m.reliableNow).toBe(false)
+    expect(m.a).toBeCloseTo(6, 9); expect(m.b).toBeCloseTo(1, 9)
+    expect(m.pReliable).toBeLessThan(0.85)
+    expect(m.guidedN).toBe(100); expect(m.n).toBe(5)
+  })
+  it('guided attempts never change the reliability probability, only the counts', () => {
+    const base = masteryOf(indep(6), { now: T0 + 5000 })
+    const withGuided = masteryOf([...guided(50), ...indep(6)], { now: T0 + 5000 })
+    expect(withGuided.pReliable).toBeCloseTo(base.pReliable, 12); expect(withGuided.state).toBe(base.state)
+  })
+  it('guided failures do not lower the reliable state either', () => {
+    const bad = Array.from({ length: 20 }, (_, i) => att({ itemId: `bad${i}`, cue: 1, correct: false, ts: T0 + i }))
+    expect(masteryOf([...bad, ...indep(10)], { now: T0 + 5000 }).state).toBe('reliable')
+  })
+  it('repeated families and repeated exercises count less, even across guided and independent', () => {
+    const fam = Array.from({ length: 12 }, (_, i) => att({ itemId: `f${i}`, family: 'one', ts: T0 + i }))
+    expect(masteryOf(fam, { now: T0 + 100 }).state).toBe('practising')
+    const seenGuided = [att({ itemId: 'x', cue: 1, ts: T0 }), att({ itemId: 'x', cue: 3, ts: T0 + 1 })]
+    expect(masteryOf(seenGuided, { now: T0 + 10 }).unlabeledWeight).toBeCloseTo(0.25, 9)
+  })
+  it('hinted answers do not count as success and count against the posterior', () => {
+    const m = masteryOf(indep(12, { hints: 1 }), { now: T0 + 5000 })
+    expect(m.ok).toBe(0); expect(m.state).toBe('practising'); expect(m.lastIndependentSuccess).toBeNull()
+  })
+  it('a lesson answer is guided even at cue 3, also in a depth that has only cued exercises', () => {
+    const lesson = Array.from({ length: 10 }, (_, i) => att({ itemId: `l${i}`, cue: 3, source: 'lesson', ts: T0 + i }))
+    expect(masteryOf(lesson, { now: T0 + 100 }).state).toBe('introduced')
+    expect(masteryOf(lesson, { now: T0 + 100, cuedOnly: true }).state).toBe('introduced')
+  })
+  it('long inactivity: reliable turns to refresh, with the accomplishment date kept', () => {
+    const m = masteryOf(indep(10), { now: T0 + 1000 + 60 * DAY })
+    expect(m.state).toBe('refresh'); expect(m.wasReliableOn).not.toBeNull()
+    expect(describeMastery(m)).toMatch(/^Was reliable on \d{4}-\d\d-\d\d/)
+  })
+  it('a recent failed attempt does not refresh the clock: old record + recent miss shows "was reliable, recent check missed"', () => {
+    const old = indep(10)
+    const miss = att({ itemId: 'late', correct: false, ts: T0 + 1000 + 39 * DAY })
+    const m = masteryOf([...old, miss], { now: T0 + 1000 + 40 * DAY })
+    expect(m.lastIndependentSuccess).toBe(T0 + 1000 + 9)
+    expect(m.recentMiss).toBe(true); expect(m.state).toBe('refresh')
+    expect(describeMastery(m)).toContain('Was reliable on'); expect(describeMastery(m)).toContain('recent check was missed')
+  })
+  it('a fresh success after the old record keeps it reliable and restarts the clock', () => {
+    const m = masteryOf([...indep(10), att({ itemId: 'again', ts: T0 + 1000 + 39 * DAY })], { now: T0 + 1000 + 40 * DAY })
+    expect(m.state).toBe('reliable'); expect(m.lastIndependentSuccess).toBe(T0 + 1000 + 39 * DAY)
+  })
+  it('describes counts and dates, never a probability', () => {
+    const r = masteryOf(indep(10), { now: T0 + 5000 })
+    const text = describeMastery(r)
+    expect(text).toMatch(/Demonstrated in independent checks \(10 counted, last on \d{4}-\d\d-\d\d\)/)
+    expect(text).not.toMatch(/%|probab/i)
+    expect(describeMastery(masteryOf([...guided(3), ...indep(2)], { now: T0 + 5000 }))).not.toMatch(/%|probab/i)
+  })
+  it('placement results count like any other independent attempt, and a wrong warm-up answer is left out upstream', () => {
+    const placed = Array.from({ length: 6 }, (_, i) => att({ itemId: `p${i}`, source: 'placement', ts: T0 + i }))
+    expect(masteryOf(placed, { now: T0 + 100 }).n).toBe(6)
+  })
+})
+
 describe('spacing', () => {
-  const base = 20000 * DAY
-  it('a failed day is due the next day', () => {
-    expect(nextDue([att({ ts: base, correct: false })])).toBe(base + DAY)
+  // local-calendar dates: due dates follow the learner's day, not UTC midnight
+  const at = (y: number, mo: number, d: number, h = 12) => new Date(y, mo, d, h).getTime()
+  const midnight = (y: number, mo: number, d: number) => new Date(y, mo, d).getTime()
+  it('a failed day is due the next local day', () => {
+    expect(nextDue([att({ ts: at(2026, 5, 1, 23), correct: false })])).toBe(midnight(2026, 5, 2))
+  })
+  it('a late-evening answer belongs to that evening, whatever UTC says', () => {
+    const lateOk = [att({ ts: at(2026, 5, 1, 23, ) })]
+    expect(nextDue(lateOk)).toBe(midnight(2026, 5, 2))
   })
   it('intervals grow with consecutive good days', () => {
-    const at = [0, 1, 3].map(k => att({ ts: base + k * DAY }))
-    expect(nextDue(at)! - (base + 3 * DAY)).toBe(4 * DAY)
+    const list = [1, 2, 4].map((d, k) => att({ itemId: `d${k}`, ts: at(2026, 5, d) }))
+    expect(nextDue(list)).toBe(midnight(2026, 5, 4 + 4))
   })
   it('isDue compares with now', () => {
-    const at = [att({ ts: base })]
-    expect(isDue(at, base + 12 * 3600000)).toBe(false)
-    expect(isDue(at, base + 2 * DAY)).toBe(true)
+    const list = [att({ ts: at(2026, 5, 1) })]
+    expect(isDue(list, at(2026, 5, 1, 23))).toBe(false)
+    expect(isDue(list, at(2026, 5, 3))).toBe(true)
+  })
+  it('assisted repetition is not a fresh demonstration', () => {
+    const first = att({ itemId: 'a', ts: at(2026, 5, 1), correct: false })
+    const repeatOk = att({ itemId: 'a', ts: at(2026, 5, 2), correct: true }) // same exercise again: memory, not skill
+    const inLesson = att({ itemId: 'b', ts: at(2026, 5, 2), source: 'lesson', correct: true })
+    expect(nextDue([first, repeatOk, inLesson])).toBe(midnight(2026, 5, 2)) // still the failed day
+    const fresh = att({ itemId: 'c', ts: at(2026, 5, 2), correct: true })
+    expect(nextDue([first, fresh])).toBe(midnight(2026, 5, 3))
   })
 })

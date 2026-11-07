@@ -1,9 +1,12 @@
 import { useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { Chess } from 'chess.js'
 import { PlayGame, type GameEnd } from '../components/PlayOut'
 import { BOTS } from '../engine'
 import { db } from '../db'
+import { PostGame } from '../components/PostGame'
+import { colorFromParams, helpFromParams, opponentFromParams } from '../lib/firstGame'
+import { gameContext, resultOf } from '../lib/postGame'
 import { loadOpponent, saveOpponent, MAIA_LEVELS, MAIA_RUNTIME_BYTES, mb, type OpponentChoice } from '../lib/maia'
 
 const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
@@ -11,31 +14,42 @@ const START = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 export function PlayPage() {
   const [params] = useSearchParams()
   const startParam = params.get('fen')
-  const [opp, setOppState] = useState<OpponentChoice>(() => loadOpponent())
+  const [opp, setOppState] = useState<OpponentChoice>(() => opponentFromParams(params, loadOpponent(), BOTS.map(b => b.id)))
   const botId = opp.botId
   const setOpp = (patch: Partial<OpponentChoice>) => setOppState(o => { const n = { ...o, ...patch }; saveOpponent(n); return n })
   const maia = opp.kind === 'maia'
-  const [color, setColor] = useState<'white' | 'black'>(() => (startParam && startParam.split(' ')[1] === 'b' ? 'black' : 'white'))
+  const [color, setColor] = useState<'white' | 'black'>(() => colorFromParams(params) ?? (startParam && startParam.split(' ')[1] === 'b' ? 'black' : 'white'))
+  const fromInvite = params.get('from') === 'invite'
+  const [help, setHelp] = useState(() => helpFromParams(params))
+  const lessonId = params.get('lesson') ?? undefined
   const [fen, setFen] = useState(() => { try { if (startParam) { new Chess(startParam); return startParam } } catch { /* ignore */ } return START })
   const [fenInput, setFenInput] = useState('')
   const [fenError, setFenError] = useState<string | null>(null)
   const [running, setRunning] = useState(false)
-  const [saved, setSaved] = useState<number | null>(null)
+  const [saved, setSaved] = useState<{ id: number | null; e: GameEnd; color: 'white' | 'black' } | null>(null)
   const [round, setRound] = useState(0)
 
   function applyFen() {
     try { new Chess(fenInput.trim()); setFen(fenInput.trim()); setFenError(null) } catch { setFenError('That is not a valid position.') }
   }
   async function ended(e: GameEnd) {
-    const result = e.outcome === 'win' ? (color === 'white' ? '1-0' : '0-1') : e.outcome === 'loss' ? (color === 'white' ? '0-1' : '1-0') : e.outcome === 'draw' ? '1/2-1/2' : '*'
-    const bot = maia ? `Maia ${opp.maiaRating}` : BOTS.find(b => b.id === botId)?.label ?? botId
-    const id = await db.games.add({ source: 'practice', white: color === 'white' ? 'You' : `Bot (${bot})`, black: color === 'white' ? `Bot (${bot})` : 'You', result, date: new Date().toISOString().slice(0, 10), pgn: e.pgn, ts: Date.now() })
-    setSaved(id as number)
+    const result = resultOf(e.outcome, color)
+    const level = maia ? `Maia ${opp.maiaRating}` : BOTS.find(b => b.id === botId)?.label ?? botId
+    // A game with no moves (stopped at once) is not worth keeping.
+    if (e.moves.length === 0) { setSaved({ id: null, e, color }); return }
+    const id = await db.games.add({
+      source: 'practice', white: color === 'white' ? 'You' : `Bot (${level})`, black: color === 'white' ? `Bot (${level})` : 'You', result,
+      date: new Date().toISOString().slice(0, 10), pgn: e.pgn, ts: Date.now(), me: color,
+      context: gameContext({ startFen: fen, opponent: maia ? 'maia' : 'stockfish', level, color, outcome: e.outcome, lessonId }),
+    })
+    setSaved({ id: id as number, e, color })
   }
+  const again = () => { setSaved(null); setRunning(true); setRound(r => r + 1) }
 
   return (
     <main className="page">
       <h1>Play the practice opponent</h1>
+      {fromInvite && !running && <p className="small invitenote" role="note">A gentle game: Stockfish on its Beginner setting, you play White, and a hint button is on. Change anything below if you like.</p>}
       <p className="lede">A game against the computer. Strength labels describe how the engine is limited; they are <strong>not human ratings</strong>, and beating a bot does not prove you would beat people. Finished games are saved so you can review them before looking at engine analysis.</p>
       {!running ? (
         <section className="card">
@@ -67,15 +81,15 @@ export function PlayPage() {
             {fenError && <p className="warn">{fenError}</p>}
             <p className="muted small">Current start: <code>{fen === START ? 'standard' : fen}</code></p>
           </details>
-          <div className="row"><button type="button" className="primary" onClick={() => { setSaved(null); setRunning(true); setRound(r => r + 1) }}>Start game</button></div>
+          <label className="small muted"><input type="checkbox" checked={help} onChange={e => setHelp(e.target.checked)} /> Show a hint button during the game (each hint is counted)</label>
+          <div className="row"><button type="button" className="primary" onClick={again}>Start game</button></div>
         </section>
       ) : (
         <>
-          <PlayGame key={round} startFen={fen} humanColor={color} botId={botId} opponent={opp} onEnd={e => void ended(e)} />
-          {saved !== null && (
-            <section className="card"><p>Game saved. <Link to="/games">Review it in My games</Link> (mark your own critical moments first, then see the engine).</p>
-              <div className="row"><button type="button" className="primary" onClick={() => { setSaved(null); setRound(r => r + 1) }}>Play again</button><button type="button" onClick={() => setRunning(false)}>Change settings</button></div></section>
-          )}
+          <PlayGame key={round} startFen={fen} humanColor={color} botId={botId} opponent={opp} allowHint={help} onEnd={e => void ended(e)} />
+          {saved !== null && (saved.id !== null
+            ? <PostGame key={saved.id} gameId={saved.id} pgn={saved.e.pgn} color={saved.color} reason={saved.e.reason} onAgain={again} onSettings={() => { setSaved(null); setRunning(false) }} />
+            : <section className="card"><p>No moves were played, so nothing was saved.</p><div className="row"><button type="button" className="primary" onClick={again}>Play again</button><button type="button" onClick={() => { setSaved(null); setRunning(false) }}>Change settings</button></div></section>)}
         </>
       )}
     </main>

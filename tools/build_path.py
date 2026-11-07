@@ -39,15 +39,25 @@ EXPLICIT = [
     # stage 0: moves and the board
     ("L-FND-BOARD-1", 0), ("L-FND-ROOKBISHOP-1", 0), ("L-FND-PIECE-BISHOP-1", 0), ("L-FND-QUEENKING-1", 0), ("L-FND-KNIGHT-1", 0), ("L-FND-PAWN-1", 0),
     ("L-FND-PIECE-KING-1", 0),
-    # stage 1: legal play (attacked squares, check, mate, stalemate), then the special moves
-    ("L-FND-CAPTURE-1", 1), ("L-FND-ATTACK-1", 1), ("L-FND-CHECK-1", 1), ("L-FND-CHECK-2", 1), ("L-FND-PIECE-KING-2", 1), ("L-FND-STALEMATE-1", 1),
-    ("L-FND-PIECE-ROOK-2", 1), ("L-FND-PIECE-BISHOP-2", 1), ("L-FND-PIECE-QUEEN-2", 1), ("L-FND-PIECE-KNIGHT-2", 1), ("L-FND-PIECE-PAWN-2", 1),
-    ("L-FND-CASTLE-1", 1), ("L-FND-CASTLE-2", 1), ("L-FND-PROMOTE-1", 1), ("L-FND-PROMOTE-2", 1), ("L-FND-SPECIAL-1", 1), ("L-FND-ENPASSANT-2", 1),
-    ("L-FND-STALEMATE-2", 1), ("L-FND-PROMOTE-3", 1),
+    # stage 1: legal play. Only the FIRST teaching lesson (D1) of each rule is here, so that S0 plus S1 is about two hours and a first
+    # full game is invited after them (roadmap 2e, review of 7 Nov 2026). The "in a busy position" and "can I now" lessons (D2, D3 of the
+    # same rule skills) are not lost: they return as a spiral in S2 and S3 (see SPIRAL below), after their own D1 lesson.
+    ("L-FND-CAPTURE-1", 1), ("L-FND-ATTACK-1", 1), ("L-FND-CHECK-1", 1), ("L-FND-STALEMATE-1", 1),
+    ("L-FND-CASTLE-1", 1), ("L-FND-PROMOTE-1", 1), ("L-FND-SPECIAL-1", 1),
     # stage 2: first complete games
     ("L-FND-NOTATION-1", 2), ("L-FND-VALUE-1", 2), ("L-FND-CAPTURE-2", 2), ("L-FND-OPENING-1", 2), ("L-SELF-1-1", 2),
 ]
+# Spiral: consolidation lessons of the rule skills, met again after the first games. No explicit index, so they sort by tier and
+# prerequisite rank behind the hand-ordered first-game lessons of their stage; the topological pass keeps each behind its own D1.
+SPIRAL = {
+    # S2: the piece moves and the king, now met inside real positions while the first games are being played
+    "L-FND-PIECE-ROOK-2": 2, "L-FND-PIECE-BISHOP-2": 2, "L-FND-PIECE-QUEEN-2": 2, "L-FND-PIECE-KNIGHT-2": 2, "L-FND-PIECE-PAWN-2": 2,
+    "L-FND-CHECK-2": 2, "L-FND-PIECE-KING-2": 2,
+    # S3: the special moves and stalemate, tested in busy positions and as "is it possible right now?"
+    "L-FND-CASTLE-2": 3, "L-FND-PROMOTE-2": 3, "L-FND-ENPASSANT-2": 3, "L-FND-STALEMATE-2": 3, "L-FND-PROMOTE-3": 3,
+}
 OVERRIDE = {
+    **SPIRAL,
     "L-FND-BOARD-2": 5,        # fast naming from either side: recurring optional practice, never an entrance requirement
     "L-OPN-PRINCIPLES-1": 3,   # when the opening habits fail
     "L-GAME-OWN-1": 3,         # annotating your own game starts soon after the first games

@@ -795,8 +795,10 @@ main.page > p.small.muted > a { display: inline-flex; align-items: center; min-h
 .readaloud button.small { padding: 0.2rem 0.7rem; }
 
 /* Line player: static controls (back to start, previous, next) that never move while the sentence below them changes */
-.lineplayer .linecontrols { display: flex; flex-wrap: nowrap; align-items: center; gap: 0.5rem; margin: 0.4rem 0 0.6rem; }
-.lineplayer .linecontrols button { flex: 0 0 auto; width: 3.2rem; min-height: 2.6rem; padding: 0; font-size: 1.1rem; }
+.lineplayer .linecontrols { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.4rem 0 0.6rem; max-width: 100%; padding-right: 0.5rem; }
+.lineplayer { column-gap: 2rem; }
+.lineplayer > *:not(.board-wrap) { min-width: 0; } /* the controls and text may never run under the board */
+.lineplayer .linecontrols button { flex: 0 0 auto; width: 2.9rem; min-height: 2.6rem; padding: 0; font-size: 1.1rem; }
 .lineplayer .linecount { min-width: 4rem; margin-left: 0.3rem; }
 
 /* A chosen section must look chosen whatever its place in the light/dark alternation: it takes the accent colour and a clear edge, the others recede */
@@ -871,3 +873,136 @@ html { scrollbar-gutter: stable; }
 .upnext li.linked, .maplist .linked { background: color-mix(in srgb, var(--accent) 16%, transparent); border-radius: 6px; }
 .minilink { fill: var(--accent); stroke: var(--text); stroke-width: 8; }
 .maptop .topring { stroke-width: 6; }
+
+/* Task 2g: explanation first / "How this was checked" folded below it; contrast worked example. */
+.howchecked { margin: 0.5rem 0; }
+.howchecked > summary { cursor: pointer; font-size: 0.9rem; }
+.howchecked[open] > summary { margin-bottom: 0.4rem; }
+.workedexample { margin: 0.6rem 0; padding: 0.6rem 0.8rem; border: 1px solid var(--border, #8884); border-radius: 8px; }
+
+/* ---- Safe resume, honest saving, chapters, backup (roadmap 2h, D43): components/SaveNotice.tsx, BackupNudge.tsx, LessonPlayer.tsx ChapterBar, pages/Settings.tsx ---- */
+.savenotice { margin: 0.5rem 1rem; padding: 0.6rem 0.9rem; border: 1px solid var(--warn, #c77d1a); border-radius: 8px; background: var(--surface, #fff); }
+.savenotice p { margin: 0 0 0.4rem; }
+.chapterbar { margin: 0 0 0.6rem; }
+.chapterbar summary { cursor: pointer; }
+.chapterlist { margin: 0.4rem 0 0; display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; }
+.chapterlist .current { font-weight: 600; }
+.chapterbar .stoppoint { margin: 0.4rem 0 0; }
+.backupnudge { margin: 1rem 0 0; }
+.importpreview { margin-top: 0.8rem; padding: 0.7rem 0.9rem; border: 1px solid var(--border, #ccc); border-radius: 8px; }
+.importpreview h3 { margin: 0 0 0.3rem; }
+
+/* The view buttons and the window toggles sit either side of a centre line: the divider is centred on the column, the views end at it and the windows start at it */
+.viewtabs { display: grid !important; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.4rem 0.6rem; overflow: visible; }
+.viewtabs .tabsleft, .viewtabs .tabsright { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.viewtabs .tabsleft { justify-content: flex-end; }
+.viewtabs .tabsright { justify-content: flex-start; }
+.viewtabs .tabsep { margin: 0; width: 1px; height: 2.4rem; align-self: center; background: var(--text-secondary); opacity: 0.55; } /* the centre line (a grid item, so it needs its own width and height) */
+@media (min-width: 1301px) {
+  main.mappage.curriculum .viewtabs { width: min(1100px, calc(100vw - 2 * (330px + 1.5rem))); }
+}
+@media (max-width: 700px) {
+  .viewtabs { grid-template-columns: 1fr; justify-items: center; }
+  .viewtabs .tabsep { display: none; }
+  .viewtabs .tabsleft, .viewtabs .tabsright { justify-content: center; }
+}
+
+/* "Up next" is a colour, not a button: the recommended skill, lesson or course carries the persimmon highlight and an "Up next" label on hover (D46) */
+.upnextbadge { display: inline-block; margin-left: 0.5rem; padding: 0.1rem 0.55rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: middle; }
+
+/* Beginner journey (roadmap 2e): the first-game invitation, the post-game screen and the pace line. Quiet, in the flow, nothing overlaps. */
+.invite { border-style: dashed; }
+.invite p { margin: 0 0 .5rem; }
+.invitenote { margin: 0 0 .75rem; }
+.postgame h2 { margin-top: 0; }
+.postgame .postmoment { margin: .75rem 0; padding: .6rem .8rem; border-left: 3px solid var(--line, currentColor); }
+.postgame .postmoment h3 { margin: 0 0 .35rem; font-size: 1rem; }
+.postgame .postmoment p { margin: .25rem 0; }
+.sectionhead > span { white-space: normal; } /* the longer "about" durations must wrap, not push the page sideways on a phone */
+
+/* ===== Stages on the map (D42, roadmap 2f) =====
+   Rings are the eight stages of the recommended path, slices stay the subjects. A chosen stage takes the accent colour and a clear edge (like a chosen section),
+   the learner's own stage is outlined, the chosen skill's other stages show as ghost markers. Nothing is ever hidden: dimmed skills stay clickable and focusable.
+   The section and stage chips wrap (never scroll sideways); on a phone each row folds into one menu that opens above the map. */
+.mappage .sectionbar { flex-wrap: wrap; overflow-x: visible; gap: 0.3rem; margin: 0 0 0.3rem; padding-bottom: 0; }
+.mappage .sectionbar .chip { white-space: normal; flex: 0 1 auto; font-size: 0.82rem; padding: 0.15rem 0.65rem; min-height: 32px; line-height: 1.25; }
+.mappage .sectionbar .sectionlabel { flex: 0 0 4.2rem; }
+.mappage .sectionbar .chip.stagechip { text-align: left; }
+.chipmenu { position: relative; flex: 0 0 auto; margin: 0 0 0.3rem; }
+.chipmenubtn { min-height: 38px; width: 100%; text-align: left; }
+.chipmenubody { position: absolute; z-index: 70; left: 0; right: 0; top: calc(100% + 2px); display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.55rem; background: var(--surface); border: 1px solid var(--control-boundary); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); max-height: min(60vh, 24rem); overflow-y: auto; }
+.chipmenubody .chip { font-size: 0.85rem; min-height: 34px; text-align: left; }
+.mappage .sectionbar .chip.stagechip.here:not(.on) { border-color: var(--accent); border-width: 2px; }
+@media (max-width: 700px) {
+  .mappage .sectionbar { position: relative; flex-wrap: nowrap; }
+  .chipmenu { position: static; flex: 1 1 0; min-width: 0; }
+  .chipmenubtn { width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .chipmenubody { left: 0; right: 0; width: auto; top: calc(100% + 2px); }
+}
+
+.stageband { fill: none; stroke: none; } /* no outline: the stage text ring is the boundary */
+.stageband.here { fill: var(--accent); fill-opacity: 0.07; }
+.mapsvg .stageband.hi { fill: var(--accent); fill-opacity: 0.3; }
+.arclabel.stagename { fill: var(--text-secondary); font-weight: 800; stroke-width: 0.2em; letter-spacing: 0.02em; }
+.arclabel.stagename.here, .arclabel.stagename.hi { fill: var(--accent); }
+
+.mapnode .nodecircle { stroke-opacity: 0.9; stroke-width: 4; }
+.mapnode.dim { opacity: 0.4; }
+.mapnode.prereq .nodecircle { stroke: #3aa0ff; stroke-opacity: 1; stroke-width: 9; }
+.mapnode.leadsto .nodecircle { stroke: var(--accent); stroke-opacity: 1; stroke-width: 9; }
+.mapnode.sel .nodecircle { stroke: var(--accent); stroke-opacity: 1; stroke-width: 11; }
+.maptop .topring { stroke-width: 9; }
+.maprec .recring { stroke-width: 10; }
+.maprec .recpill { fill: var(--accent); }
+.nodestatus { font-size: 17px; fill: var(--text-secondary); paint-order: stroke; stroke: var(--surface); stroke-width: 5px; pointer-events: none; }
+.zoom-far .mapedge:not(.pre):not(.next) { opacity: 0.1; }
+.zoom-near .mapedge:not(.pre):not(.next) { opacity: 0.4; }
+
+.ghostline { stroke: var(--accent); stroke-width: 3; stroke-dasharray: 8 8; opacity: 0.65; }
+.ghostmark { cursor: pointer; outline: none; }
+.ghostring { fill: var(--surface); fill-opacity: 0.9; stroke: var(--accent); stroke-width: 4; stroke-dasharray: 6 5; }
+.ghostnum { fill: var(--text); font-size: 24px; font-weight: 800; pointer-events: none; }
+.ghostmark:hover .ghostring, .ghostmark:focus-visible .ghostring { stroke: var(--focus); stroke-width: 7; stroke-dasharray: none; }
+.skilldetail .returns li { margin: 0.25rem 0; }
+.skilldetail .stageline { margin: 0.2rem 0 0.4rem; }
+
+/* No dotted lines: the stage names running round the circle ARE the boundaries between the layers */
+.stageband, .stageband.here, .mapsvg .stageband.hi { stroke: none; stroke-dasharray: none; }
+.bandring { display: none; }
+
+/* Phone hotfix (7 Nov 2026): the map page stacked four rows of controls and left almost no map. Controls become single scrolling rows, small and quiet, and the map takes the rest.
+   A real redesign (floating round map buttons, one filters sheet) is planned in ROADMAP 2j. */
+@media (max-width: 700px) {
+  main.mappage.curriculum { padding-top: 0.35rem; padding-bottom: 0.3rem; }
+  main.mappage.curriculum .viewtabs { display: flex !important; flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; gap: 0.35rem; margin: 0 0 0.3rem; width: auto; scrollbar-width: none; }
+  main.mappage.curriculum .viewtabs .tabsleft, main.mappage.curriculum .viewtabs .tabsright { flex-wrap: nowrap; gap: 0.35rem; justify-content: flex-start; }
+  main.mappage.curriculum .viewtabs .chip { padding: 0.3rem 0.75rem; font-size: 0.85rem; min-height: 2.2rem; white-space: nowrap; flex: 0 0 auto; }
+  main.mappage.curriculum .viewtabs .tabsep { display: block; height: 1.6rem; margin: 0 0.2rem; }
+  .mappage .sectionbar { flex-wrap: nowrap !important; overflow-x: auto !important; gap: 0.35rem; margin: 0 0 0.3rem; scrollbar-width: none; }
+  .mappage .sectionbar > *, .mappage .sectionbar .chip, .mappage .sectionbar button { flex: 0 0 auto; white-space: nowrap; font-size: 0.82rem; min-height: 2.2rem; padding: 0.25rem 0.6rem; }
+  .mappage .mapbar { flex-wrap: nowrap; overflow-x: auto; gap: 0.35rem; padding: 0.3rem 0.4rem; scrollbar-width: none; }
+  .mappage .mapbar button { flex: 0 0 auto; min-height: 2.2rem; padding: 0.25rem 0.65rem; font-size: 0.85rem; }
+  .mappage .mapbar .mapsearch { flex: 0 0 8rem; width: 8rem; }
+  .mappage .mapbar .maplegend, .mappage .mapbar > .muted, .mappage .mapbar > .small.muted { display: none; }
+}
+
+/* Roadmap readiness table (task 9): on a narrow screen each area becomes a stacked block so nothing scrolls sideways or overlaps. */
+@media (max-width: 640px) {
+  table.readiness, table.readiness tbody, table.readiness tr, table.readiness td { display: block; width: 100%; }
+  table.readiness thead { display: none; }
+  table.readiness tr { padding: 8px 0; border-bottom: 1px solid var(--border, rgba(128, 128, 128, 0.3)); }
+  table.readiness td { padding: 2px 0; border: 0; overflow-wrap: anywhere; }
+}
+
+/* Accessibility pass (roadmap 2h; docs/accessibility.md): focus is never hidden under the sticky header, a visible focus ring everywhere, bigger small targets, reduced motion in one place. */
+html { scroll-padding-top: 5.5rem; scroll-padding-bottom: 2rem; }
+a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.mvbtn { min-height: 28px; min-width: 28px; }
+input[type="checkbox"], input[type="radio"] { width: 1.25rem; height: 1.25rem; }
+label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) { min-height: 32px; display: inline-flex; align-items: center; gap: 0.4rem; }
+.voicenote { font-size: 0.85rem; color: var(--text-secondary); align-self: center; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
+:root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+/* chessground's own stylesheet shifts the file letters 24px right of the board, which pushed the page wider than a phone and put every letter under the wrong file */
+.board-wrap .cg-wrap coords.files { left: 0; width: 100%; }
+@media (max-width: 1000px) { .opngrid { grid-template-columns: minmax(0, 1fr); } .opngrid > * { min-width: 0; } }

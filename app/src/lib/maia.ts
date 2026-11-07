@@ -18,7 +18,8 @@ export const mb = (bytes: number) => `${(bytes / 1048576).toFixed(bytes > 9.5 * 
 
 export type OpponentKind = 'stockfish' | 'maia'
 export interface OpponentChoice { kind: OpponentKind; botId: string; maiaRating: number; maiaBest: boolean }
-export const DEFAULT_OPPONENT: OpponentChoice = { kind: 'stockfish', botId: 'b3', maiaRating: 1500, maiaBest: false }
+/** The first-ever opponent is Beginner, never Club strength; a saved choice always wins. */
+export const DEFAULT_OPPONENT: OpponentChoice = { kind: 'stockfish', botId: 'b1', maiaRating: 1500, maiaBest: false }
 const KEY = 'chess-school-opponent-v1'
 export function loadOpponent(): OpponentChoice {
   try {
