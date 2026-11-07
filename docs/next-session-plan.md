@@ -26,6 +26,10 @@ Reshape the path into tracks with a published Foundation and a capstone (before 
 
 A hotfix is in (single scrolling control rows, hidden hint and legend). When the app queue finishes, run the real redesign as one agent task: full-bleed map, thin top bar, floating round map buttons, one filters sheet, a draggable skill sheet.
 
+## A dedicated mobile design (D49, roadmap 2k, contains 2j)
+
+Not a hotfix. After the current app queue: first `docs/mobile-design.md` (wireframes of the bottom tab bar, the map, a lesson, an exercise, Practice and Play, Today and Progress at 375x812, with the touch and safe-area rules), then build it page by page, then test on a real phone. Keep the byline in the phone header (rule 9).
+
 ## Start with (in this order)
 
 1. **Check the deploy.** The built site is about 200 MB (70 MB lesson audio, 17 MB Maia models, onnxruntime wasm, 10 MB items, 7 MB master statistics). Confirm the latest Vercel build is green; the size and file-count limits of his plan were never checked. If it fails, move the audio to separate hosting before anything else.

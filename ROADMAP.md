@@ -239,6 +239,18 @@ Promise to work toward: **a complete foundation in practical chess, from the rul
 - [ ] Real redesign: the map is full-bleed; one thin top bar (the three views as a segmented control and a menu button); a floating column of round map buttons at the edge (zoom in, zoom out, fit all, where I am, back, search); ONE bottom filters sheet holding sections, stages, Progress, Mastery challenge, the skill list and the legend; the selected-skill panel is a bottom sheet that can be dragged down to see the map; nothing else covers the map; pinch zoom and two-finger pan are the main gestures
 - [ ] Acceptance: at 375x812 the map is at least 70 percent of the height with the sheet closed; every control reachable with one thumb; every node selectable; keyboard and screen-reader paths still work; tested with the browser's mobile preset and on a real phone
 
+## Phase 2k: A dedicated mobile design for the whole app (Andrew, 7 November 2026: "a mobile redesign specifically"; decision D49)
+The phone is designed on its own, not squeezed from the desktop. Default scope: the whole app, in this order of value: navigation, the map, a lesson, an exercise, Practice and Play, Today and Progress, Settings.
+- [ ] Navigation: a bottom tab bar for the thumb (Today, Curriculum, Practice, Progress, More) replaces the top navigation on phones; the header shrinks to the brand, the permanent byline "Created by Andrew Valentine" (CLAUDE.md rule 9) and Settings
+- [ ] Map: full-bleed, thin top bar, floating round map buttons, one filters sheet, a draggable skill sheet (the plan in 2j)
+- [ ] Lessons and exercises: the board sits at the top and stays in view, the text and question below it, the main action (next, check) in a bottom bar with large targets; hints, the control map and "how this was checked" open as bottom sheets; step and chapter progress as a slim bar; swipe never conflicts with moving pieces
+- [ ] Practice and Play: a full-height board with a bottom action bar; opponent and level choices in a sheet; the finale and the post-game moment fit one screen
+- [ ] Today and Progress: one column, one primary card, folded detail
+- [ ] Touch and safe areas: targets at least 44 px, safe-area insets (notches, home bar), `dvh` heights, viewport-fit=cover, no hover-only information (every hover card has a tap equivalent), text size and reduced motion respected, one-handed reach checked
+- [ ] Tablets and landscape: two columns (board beside the text) from about 700 px; phones in landscape use the compact board layout
+- [ ] Install and offline: the app installs from the browser (manifest, icons, theme colour from the palette) and the first lessons work offline
+- [ ] Test matrix: 360x640, 375x812, 390x844, 412x915, a tablet, and a real phone and real tablet (Andrew's step); acceptance: the first lesson, a practice set, a game and the map are all usable one-handed without covering the board or the map
+
 ## Phase 2c: Radial curriculum map (Andrew's idea, 29 October 2026; design: docs/map-radial-design.md)
 - [x] Layout engine `lib/mapLayout.ts`: rings by prerequisite chain, a wedge per strand, crowding-aware radii, tests
 - [x] `RadialMap` SVG with pan, zoom, fit, where-I-am, hover card with mark-as-done, nodes that fill with progress, lit paths, glowing next skills
