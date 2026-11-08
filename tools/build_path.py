@@ -37,7 +37,7 @@ STAGE_BY_TIER = {0: (1, 1, 1), 1: (2, 3, 3), 2: (3, 4, 4), 3: (4, 5, 5), 4: (5, 
 # the king before the games, and the opening habits before the first full game
 EXPLICIT = [
     # stage 0: moves and the board
-    ("L-FND-BOARD-1", 0), ("L-FND-ROOKBISHOP-1", 0), ("L-FND-PIECE-BISHOP-1", 0), ("L-FND-QUEENKING-1", 0), ("L-FND-KNIGHT-1", 0), ("L-FND-PAWN-1", 0),
+    ("L-FND-FIRSTGAME-1", 0), ("L-FND-BOARD-1", 0), ("L-FND-ROOKBISHOP-1", 0), ("L-FND-PIECE-BISHOP-1", 0), ("L-FND-QUEENKING-1", 0), ("L-FND-KNIGHT-1", 0), ("L-FND-PAWN-1", 0),
     ("L-FND-PIECE-KING-1", 0),
     # stage 1: legal play. Only the FIRST teaching lesson (D1) of each rule is here, so that S0 plus S1 is about two hours and a first
     # full game is invited after them (roadmap 2e, review of 7 Nov 2026). The "in a busy position" and "can I now" lessons (D2, D3 of the

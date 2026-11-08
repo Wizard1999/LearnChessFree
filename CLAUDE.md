@@ -5,6 +5,8 @@ Read `README.md` for the document index and `03-product-design.md` for decisions
 ## Goal
 The best possible place to learn chess and to learn how to learn: text-and-board lessons, unlabeled testing, machine-verified claims, contrast lab, games feeding a visible curriculum graph, support that fades with evidence. Not a play platform, not video, not a business. Andrew (student zero, a mid-level player) is the first user; the work doubles as an experiment in teaching self-directed learning.
 
+**The hook (permanent):** the first moments decide whether anyone stays. Get a new learner looking at a board and playing a guided real game within about 10 minutes, and able to play a legal (bad) game about an hour later; teach rules when the game needs them; every early lesson is a small win plus a visible next want. Length follows difficulty (decisions D55, D56; `tools/check_path_time.py` measures it).
+
 ## Hard rules
 1. **No learner-facing claim without a check.** Every item needs claims that `tools/validate.py` passes (rules, engine, tablebase) or a named human reviewer. Verify the *claim* ("wins the queen and keeps the knight"), not just the engine's score. A "wins material" claim must not end in a dead draw (the validator enforces this).
 2. **Never trust a position you wrote by hand.** In this project, about half of hand-written tactical positions had defects (dead draw, trapped piece, hidden back-rank mate). Run the validator and `tools/selftest.py` after any change to it.
@@ -18,6 +20,7 @@ The best possible place to learn chess and to learn how to learn: text-and-board
 ## How to work
 - **Keep the roadmap current.** `ROADMAP.md` is the visible plan (also shown in the app on the Roadmap page). When a task finishes, tick it (`[x]`, or `[~]` while in progress) and run `./tools/.venv/Scripts/python.exe -I tools/update_roadmap.py`, which recomputes the percentages and the coverage metrics from the real files. Add new tasks when new work appears. Andrew wants to see what is built and what is next at all times.
 - **Agent waves:** use `tools/workflows/lesson-wave.js` and follow `docs/workflow-guide.md` (batched authors, every lesson reviewed with its own verdict, explicit models and effort, short briefs, one full check at the end). Never economise on review or on the Foundation audit.
+- **Player feedback never gates readiness (Andrew, 8 Nov 2026).** There is no room to pilot or trial before release: it ships soon and the data arrives over time. Tasks that wait on real people (reviewers, pilots, testers) carry the tag `(feedback)` in `ROADMAP.md`, sit under "After release", and are left out of every percentage and readiness condition. The Roadmap also shows one headline figure, **Complete core**, computed by `tools/readiness.py` (`core_complete`).
 - Explain design reasoning so Andrew can agree or disagree. Prefer a decision with a stated default over a question.
 - He dislikes permission interruptions: batch work, avoid unnecessary browsing, and do not ask in chat for access he has already granted. Reddit is blocked in the browser tool; bot-checked sites (US Chess) are not to be bypassed.
 - Work in milestones with gates (`03-product-design.md` §7). Do not build features beyond the current milestone. Update the docs and the memory file when a decision changes.

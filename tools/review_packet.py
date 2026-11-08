@@ -34,6 +34,7 @@ def _step_key(st):
     elif t == "contrast": raw = str(st.get("working", ""))
     elif t == "reflect": raw = st.get("prompt", "")[:40]
     elif t == "finale": raw = st.get("fen", "") + "|" + str(st.get("color", ""))
+    elif t == "guided": raw = (st.get("fen") or "start") + "|" + "|".join(m.get("move", "") for m in (st.get("moves") or [])[:4])
     else: raw = json.dumps(st, sort_keys=True)[:60]
     return t[0] + hashlib.sha1((t + "|" + raw).encode("utf-8")).hexdigest()[:7]
 
@@ -213,6 +214,23 @@ def render_step(n, st, items, positions):
         if st.get("feedback"): out.append("Feedback shown: " + (st["feedback"] if isinstance(st["feedback"], str) else json.dumps(st["feedback"], ensure_ascii=False)))
         cb = claims_block(st.get("claims"))
         if cb: out.append(cb.rstrip())
+    elif t == "guided":
+        import chess
+        b = chess.Board(st["fen"]) if st.get("fen") else chess.Board()
+        start = b.fen()
+        rows, learner = [], None
+        for m in st.get("moves") or []:
+            try: mv = b.parse_san(m["move"])
+            except Exception: rows.append(f"**{m.get('move')}** (NOT LEGAL HERE)"); break
+            who = "learner" if m.get("by") == "learner" else "opponent"
+            if who == "learner" and learner is None: learner = "white" if b.turn == chess.WHITE else "black"
+            rows.append(f"**{b.san(mv)}** ({who}): {m.get('say', '')}" + (f" [hint: {m['hint']}]" if m.get("hint") else ""))
+            b.push(mv)
+        out.append(f"Title: {st.get('title', '')}\n\nA guided game: the learner plays the marked moves (any other legal move is refused gently), the opponent replies by itself.")
+        out.append(diagram(start, learner or "white", "Starting position."))
+        out.append("The moves, with the sentence the learner sees:\n" + "\n".join(f"{n2}. {r}" for n2, r in enumerate(rows, 1)))
+        out.append(diagram(b.fen(), learner or "white", "Position at the end."))
+        if st.get("end"): out.append(f"Closing sentence: {st['end']}")
     elif t == "finale":
         out.append(f"Prompt: {st.get('prompt', '')}\n\nThe learner plays {st.get('color')} from this position, using what the lesson taught.")
         out.append(diagram(st["fen"], "black" if st.get("color") == "black" else "white"))

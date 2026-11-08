@@ -18,29 +18,36 @@ EMPTY = {
     "pilots": 0, "trials": 0, "journeys": 6, "journeysTested": 0, "tests": None,
     "phases": {"beginner": (0, 4), "game": (0, 5), "reliability": (0, 7)},
 }
-NAMES = ["Beginner journey", "Core lesson quality", "Independent assessment", "Game integration", "Accessibility", "Reliability", "Human review"]
+NAMES = ["Beginner journey", "Core lesson quality", "Independent assessment", "Game integration", "Accessibility", "Reliability"]
 
-# 1. seven areas, in the named order, every one with the four parts
+# 1. six areas, in the named order, every one with the four parts
 r = rd.build_readiness(FULL)
 assert [a["name"] for a in r["areas"]] == NAMES
 for a in r["areas"]:
     assert {"id", "name", "state", "evidence", "conditions", "next"} <= set(a) and a["evidence"]
 
 # 2. everything met -> every area ready, no next condition, nothing experimental
-assert all(a["state"] == rd.READY and a["next"] is None for a in r["areas"]) and r["summary"] == {"ready": 7, "total": 7} and r["experimental"] == []
+assert all(a["state"] == rd.READY and a["next"] is None for a in r["areas"]) and r["summary"] == {"ready": 6, "total": 6} and r["experimental"] == []
 
 # 3. nothing done -> nothing ready; areas with no evidence at all are 'not started'; each names a next condition
 e = rd.build_readiness(EMPTY)
 assert all(a["state"] != rd.READY and a["next"] for a in e["areas"]) and e["summary"]["ready"] == 0
 by = {a["id"]: a for a in e["areas"]}
 assert by["beginner"]["state"] == rd.NOT_STARTED and by["accessibility"]["state"] == rd.NOT_STARTED and by["reliability"]["state"] == rd.NOT_STARTED
-assert by["review"]["state"] == rd.NOT_STARTED and by["assessment"]["state"] == rd.NOT_STARTED
-assert len(e["experimental"]) == 7 and e["rely"] == []
+assert by["assessment"]["state"] == rd.NOT_STARTED
+assert len(e["experimental"]) == 6 and e["rely"] == []
 
-# 4. one unmet condition keeps an otherwise complete area 'in progress', and the next condition is that one
-f = copy.deepcopy(FULL); f["pilots"] = 4
+# 4. real-people feedback never gates: with no pilots, trials or human review every area is still ready, and the numbers appear under afterRelease
+f = copy.deepcopy(FULL); f["pilots"] = 0; f["trials"] = 0; f["humanLessons"] = 0; f["itemsHuman"] = 0
+q = rd.build_readiness(f)
+assert q["summary"] == {"ready": 6, "total": 6} and any("0 sessions" in x for x in q["afterRelease"])
+# one unmet machine condition still keeps an area 'in progress', and the next condition is that one
+f = copy.deepcopy(FULL); f["depthByClass"]["A"] = [3, 4]
 a = {x["id"]: x for x in rd.build_readiness(f)["areas"]}["beginner"]
-assert a["state"] == rd.IN_PROGRESS and "real beginners" in a["next"] and "4 sessions" in a["next"]
+assert a["state"] == rd.IN_PROGRESS and "beginner" in a["next"]
+# the complete-core figure is the even blend of the depth share and the checklist, and shows both parts
+c = rd.core_complete(FULL, 50); assert c["percent"] == 75 and [p["percent"] for p in c["parts"]] == [100, 50]
+assert "Complete core: about 75%" in " ".join(rd.render_core(c))
 
 # 5. a failing test or a failing evidence record blocks readiness; counts quoted come from the facts
 f = copy.deepcopy(FULL); f["tests"]["failed"] = 2
@@ -58,16 +65,18 @@ s = rd.build_readiness(f)
 assert any("12 of 20" in x for x in s["rely"]) and any("2 of 10" in x for x in s["rely"])
 assert any(x.startswith("Core lesson quality: in progress. Next:") for x in s["experimental"])
 
-# 7. depth rule agrees with tools/check_depth.py: a class-A lesson needs 15+ steps and no long move chain in prose
+# 7. depth rule agrees with tools/check_depth.py: a stage-S0 lesson needs 6 to 14 steps and no long move chain in prose; too long fails too
 early = {"L-X-1"}
 card = {"type": "card", "text": "A plain sentence."}
-ok_l = {"id": "L-X-1", "steps": [card] * 15}
-assert rd.meets_depth(ok_l, early) == ("A", True, 0)
-assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 14}, early)[1] is False
-heavy = {"id": "L-X-1", "steps": [card] * 14 + [{"type": "card", "text": "1.e4 e5 2.Nf3 Nc6 3.Bb5"}]}
-assert rd.meets_depth(heavy, early) == ("A", False, 1)
-assert rd.meets_depth({"id": "L-Y-1", "steps": [card] * 60}, early)[:2] == ("B", False)  # B needs boards in half of the steps
-assert rd.meets_depth({"id": "L-Y-1", "steps": [{"type": "board"}] * 30}, early)[:2] == ("B", True)
+ok_l = {"id": "L-X-1", "steps": [card] * 8}
+assert rd.meets_depth(ok_l, early, "S0") == ("A", True, 0)
+assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 5}, early, "S0")[1] is False   # too short
+assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 30}, early, "S0")[1] is False  # far too long for the first stage
+heavy = {"id": "L-X-1", "steps": [card] * 7 + [{"type": "card", "text": "1.e4 e5 2.Nf3 Nc6 3.Bb5"}]}
+assert rd.meets_depth(heavy, early, "S0") == ("A", False, 1)
+assert rd.meets_depth({"id": "L-Y-1", "steps": [card] * 20}, early, "S3")[:2] == ("B", False)  # B needs boards in half of the steps
+assert rd.meets_depth({"id": "L-Y-1", "steps": [{"type": "board"}] * 20}, early, "S3")[:2] == ("B", True)
+assert rd.meets_depth({"id": "L-Y-1", "steps": [{"type": "board"}] * 40}, early, "S3")[:2] == ("B", False)  # S3 lessons stay under 28 steps
 
 # 8. phase tasks are summed by id, not by prefix
 ph = [{"title": "Phase 2e: x", "done": 1, "total": 4}, {"title": "Phase 2eb: y", "done": 3, "total": 3}, {"title": "Phase 5g: z", "done": 2, "total": 5}, {"title": "Phase 5f: w", "done": 1, "total": 2}]
@@ -82,8 +91,8 @@ import update_roadmap
 phases = update_roadmap.parse(update_roadmap.MD.read_text(encoding="utf-8"))
 live = rd.build_readiness(rd.gather(phases))
 json.dumps(live)
-assert len(live["areas"]) == 7
+assert len(live["areas"]) == 6
 for a in live["areas"]:
     assert (a["state"] == rd.READY) == all(c["met"] for c in a["conditions"]) and (a["next"] is None) == (a["state"] == rd.READY)
-print(f"live: {live['summary']['ready']}/7 ready; " + ", ".join(f"{a['id']}={a['state']}" for a in live["areas"]))
+print(f"live: {live['summary']['ready']}/6 ready; " + ", ".join(f"{a['id']}={a['state']}" for a in live["areas"]))
 print("ALL READINESS TESTS PASSED")

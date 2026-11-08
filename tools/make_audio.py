@@ -141,7 +141,7 @@ def main():
     batch = a.workers * 8
     with mp.get_context("spawn").Pool(a.workers, initializer=_init, initargs=(VOICE,)) as pool:
         for i in range(0, len(todo), batch):
-            if total >= budget: print("budget reached"); break
+            if total >= budget - 30_000: print("budget reached"); break
             for h, b, s, err in pool.imap(_work, todo[i:i + batch]):
                 if err: fails += 1; print("FAIL", h, err); continue
                 if total + b > budget: continue

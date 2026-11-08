@@ -41,6 +41,7 @@ try:
         for iid in {x for x in sets[l["id"]] if not x.startswith("tags:")}:
             if iid in items: by_fen.setdefault(fen_key(items[iid]), set()).add(l["id"])
     for k, ls in by_fen.items():
+        if any(i.startswith("L-OD-") for i in ls): continue   # an opening deep dive deliberately revisits main-line positions that general opening lessons also show (D58)
         if len(ls) > 1 and len({series[i] for i in ls}) > 1 or (len(ls) > 1 and not series[sorted(ls)[0]]): problems.append(f"same position in several lessons {sorted(ls)}: {k}")
 except FileNotFoundError:
     print("note: app/public/content/items.json missing, position check skipped (run tools/build_content.py)")

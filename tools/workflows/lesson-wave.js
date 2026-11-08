@@ -2,6 +2,7 @@
 // Run with the Workflow tool: Workflow({scriptPath: 'O:/_Chessteaching/tools/workflows/lesson-wave.js', args: {kind, jobs, audit?}}).
 //   args.kind:  'beginner' | 'core' | 'opening' | 'culture' | 'game'  (chooses the rules text and batch sizes)
 //   args.jobs:  [{id, title, outline?}]  one per lesson (outline: sections, boards, tests from a planner; optional for rewrites)
+//   args.skipAuthor: true to review and fix lessons that already exist (jobs need only ids)
 //   args.audit: [lesson ids] that also get a second, stronger-model chess-accuracy audit (use for the Foundation and every exemplar)
 // What it does differently from the older one-off scripts, and why quality is kept:
 //   1. Authors take a small BATCH of related lessons (beginner 5, core 3, opening 2, culture 3, game 1) so the standards are read once per batch, not once per lesson. A batch is small enough that each lesson still gets full attention.
@@ -45,7 +46,7 @@ const reviewPrompt = (ids) => `You are an adversarial reviewer. Review EACH of t
 const fixPrompt = (results) => `${READ}\n\nTask FIX: apply the reviewers' findings. For each finding, reproduce it (run a check for chess claims), apply the exact edit if confirmed, reject with a reason if not. Findings: ${JSON.stringify(results.filter(r => r.verdict !== 'pass'))}. Keep cards at most 90 words, JSON valid, ids unchanged; re-run tools/validate.py on any item file you change and tools/validate_lessons.py on your lesson files. Return {done, notDone, files}.`
 
 phase('Author')
-const authored = await parallel(chunk(JOBS, BATCH).map((b, i) => () => agent(authorPrompt(b), { label: `author ${i + 1} (${b.length})`, phase: 'Author', schema: REPORT, ...AUTHOR_MODEL })))
+const authored = args && args.skipAuthor ? [] : await parallel(chunk(JOBS, BATCH).map((b, i) => () => agent(authorPrompt(b), { label: `author ${i + 1} (${b.length})`, phase: 'Author', schema: REPORT, ...AUTHOR_MODEL })))
 const ids = JOBS.map(j => j.id)
 
 phase('Review')

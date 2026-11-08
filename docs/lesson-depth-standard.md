@@ -21,15 +21,32 @@ Related: `docs/authoring-guide.md` (claims, wording, validation: all still bindi
 6. Every board that makes an evaluative or tactical statement carries a machine claim (authoring guide). Conjecture needs no claim but must be labelled (section 7).
 
 ## 3. Lesson classes and targets
-Steps = cards, boards, contrasts, items, practice and reflect steps. "Boards" = board plus contrast steps (the learner steps through a shown position); item steps come on top. `tools/check_depth.py` uses these numbers.
+**Length follows difficulty (Andrew, 8 Nov 2026).** The earlier and simpler the idea, the shorter the lesson. A lesson on how one basic piece moves is a few minutes, not half an hour; nobody spends the first hour on square names and a single piece. Two promises set the shape of the whole early path: **(1) within about 10 minutes of starting, the learner is playing guided moves in a real game and sees and feels what a game is; (2) about an hour after that, the learner can play a legal game, badly.** At that point they will not see tactics or finish a mating pattern, and that is fine: the course builds from there. Depth means explanation, not length (section 2): a short lesson still shows, then says, then lets the learner act.
+
+**The hook (Andrew, 8 Nov 2026).** The first moments decide whether anyone stays, so the opening of the course is designed to draw people in, not to be complete. The goal of the first hour is not knowledge; it is that the learner sits in front of a board, plays a real game with guidance, and thinks "this is cool". Once they can play a legal game the hook is set: they feel what they lack and want the lessons that come next. So: (1) the first screen puts a board and a move in front of them, with no menu, no theory and no sign-up; (2) every early lesson is a small win followed by a visible next thing they now want ("you just saw a piece trapped: soon you will spot that yourself"), never a wall of information; (3) rules are taught when the game needs them, not in advance (castling, promotion, en passant and stalemate come after the first game); (4) there is always a way to play now, never a gate; (5) the lessons that follow answer questions the game has already made them ask.
+
+Steps = cards, boards, contrasts, items, practice and reflect steps. "Boards" = board plus contrast steps (the learner steps through a shown position); item steps come on top. `tools/check_depth.py` uses these numbers and now enforces the **upper** bound and the minute ceiling as well as the lower bound.
 
 | Class | What | Id prefix | Steps | Boards | Minutes |
 |---|---|---|---|---|---|
-| **A** | Beginner building block (stages S0 to S1) | the lessons of S0, S1 in `path.json` | 15 to 30 | as needed; each rule shown | 8 to 15 |
-| **B** | Core skill lesson | `L-TAC-`, `L-POS-`, `L-END-`, ... | 30 to 60 | at least half of steps | 25 to 45 |
+| **A** | Beginner building block (stages S0 to S1) | the lessons of S0, S1 in `path.json` | by stage, below | as needed; each rule shown | 3 to 10 |
+| **B** | Core skill lesson, length by stage | `L-TAC-`, `L-POS-`, `L-END-`, ... | by stage, below | at least half of steps | by stage, below |
 | **C** | Opening deep dive, a **series** of 8 to 10 lessons | `L-OD-<NAME>-n` | 40 to 70 each | at least half | 25 to 45 each |
-| **D** | Culture / history / playstyle lesson | `L-HI-`, `L-PS-` | 20 to 40 | at least 40% (positions, maps or games illustrating each fact) | 20 to 35 |
-| **E** | Famous game | `L-FG-` | 40 to 60 | at least half | 30 to 45 |
+| **D** | Culture / history / playstyle lesson | `L-HI-`, `L-PS-` | 15 to 36 | at least 40% (positions, maps or games illustrating each fact) | 15 to 30 |
+| **E** | Famous game | `L-FG-` | 30 to 55 | at least half | 25 to 45 |
+
+Steps and minute ceiling for classes A and B, by recommended-path stage (`STAGE_STEPS` in `tools/check_depth.py`):
+
+| Stage | Steps | Max minutes | Why |
+|---|---|---|---|
+| S0 Moves and the board | 6 to 14 | 8 | one idea each; the learner acts in the first minute |
+| S1 Legal play | 8 to 16 | 10 | rules the learner needs to play a legal game |
+| S2 First complete games | 10 to 22 | 15 | the first habits |
+| S3 First wins | 14 to 28 | 20 | |
+| S4 Becoming independent | 18 to 34 | 25 | |
+| S5 Developing strength | 22 to 42 | 30 | |
+| S6 Advanced craft | 26 to 50 | 35 | |
+| S7 Specialization | 28 to 56 | 40 | |
 
 Lessons from stage S2 on are class B unless the id puts them elsewhere. A lesson that honestly needs fewer steps (a single rule fact) is merged with a neighbour; do not pad. Padding is repeated cards, restated tests and filler boards. Depth is more positions, more contrasts and more reasons.
 
