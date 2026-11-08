@@ -1,258 +1,157 @@
 {
-  "id": "L-FND-PIECE-KING-1",
-  "title": "How the king moves",
-  "skill": "FND.PIECE.KING",
-  "depth": "D1",
-  "minutes": 6,
-  "outcomes": [
-    "Taps the squares a king can step to, never onto an attacked square or next to the enemy king",
-    "Says in a sentence why the king avoids attacked squares"
-  ],
-  "steps": [
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-1",
-      "chapter": "One step"
-    },
-    {
-      "type": "card",
-      "text": "The **king** moves one square in any direction, straight or diagonal. That is eight squares in the open, fewer at an edge. Losing the king loses the game, so it moves with care. It can also capture an enemy piece, if that piece is not protected. Castling is a special extra move that comes later."
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/8/8/4K3/8/8/8 w - - 0 1",
-      "caption": "From e4 the king can reach any of the eight squares around it.",
-      "line": [
-        {
-          "move": "e4d5",
-          "say": "A diagonal step is still only one square."
-        },
-        {
-          "move": "a8b8",
-          "say": "Black's king takes a step of its own."
-        },
-        {
-          "move": "d5d6",
-          "say": "A straight step is also just one square."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e4",
-          "to": "d5"
-        },
-        {
-          "from": "e4",
-          "to": "e5"
-        },
-        {
-          "from": "e4",
-          "to": "f5"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "d5",
-        "e3",
-        "e5",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "d5",
-              "e3",
-              "e5",
-              "f3",
-              "f4",
-              "f5"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "A king may never step onto a square the enemy **attacks** (a square where an enemy piece could capture it), and never next to the enemy king. If the king stepped there, the enemy could capture it next move, and the king may never be captured, so that move is simply not allowed. The full rule comes with check; for now, cross those squares out.",
-      "chapter": "Where it may not go"
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/8/8/4K3/7r/8/8 w - - 0 1",
-      "caption": "The black rook on h3 attacks every square along the third rank (the arrow). The five marked squares are the ones the king may use.",
-      "line": [
-        {
-          "move": "e4d4",
-          "say": "Rank four is not on the rook's line, so d4 is safe."
-        },
-        {
-          "move": "a8b8",
-          "say": "Black's king takes a step."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "h3",
-          "to": "d3"
-        }
-      ],
-      "highlight": [
-        "d4",
-        "d5",
-        "e5",
-        "f4",
-        "f5"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d4",
-              "d5",
-              "e5",
-              "f4",
-              "f5"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e3",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The rook on h3 attacks e3.",
-          "id": "C2"
-        },
-        {
-          "type": "illegal_move",
-          "params": {
-            "move": "e4e3"
-          },
-          "statement": "The king may not step to e3.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "8/8/4k3/8/4K3/8/8/8 w - - 0 1",
-      "caption": "The black king on e6 attacks d5, e5 and f5, just as the white king attacks the squares around e4. So the white king may not go to those three.",
-      "line": [
-        {
-          "move": "e4d4",
-          "say": "One empty square between the kings is allowed."
-        },
-        {
-          "move": "e6d6",
-          "say": "Black keeps the same gap. Neither king may step next to the other."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e6",
-          "to": "e5"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "e3",
-        "f3",
-        "f4"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "e3",
-              "f3",
-              "f4"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The black king attacks e5.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The black king attacks d5.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "The king captures like it moves: one square. But it may only take a piece that is **not protected**. If a friend of that piece could take back on the square, the king would be captured, so the capture is not allowed."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-8"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-9"
-    },
-    {
-      "type": "item",
-      "item": "IA0-24"
-    },
-    {
-      "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Say it back. Explain to a friend why the white king cannot go to e3 in the rook position, and which other squares are off limits. Then read the model answer.",
-      "chapter": "Say it back"
-    },
-    {
-      "type": "card",
-      "text": "**Model answer.** The king steps one square any way, but never onto a square an enemy piece attacks (the rook covers the whole third rank) and never next to the enemy king. If it stepped there it could be captured, and the king may never be captured. Before a king move, check the enemy pieces' lines and the squares around the enemy king."
-    },
-    {
-      "type": "reflect",
-      "kind": "confidence",
-      "prompt": "Before moving your king, which two things do you check? Then say how sure you are: not yet, mostly, or ready to use it."
-    }
-  ],
-  "review": {
-    "status": "needs-human",
-    "reviewer": null
+ "id": "L-FND-PIECE-KING-1",
+ "title": "The king",
+ "skill": "FND.PIECE.KING",
+ "depth": "D1",
+ "minutes": 4,
+ "outcomes": [
+  "Taps the squares a king can step to, never next to the enemy king or onto an attacked square",
+  "Knows the king can capture an enemy piece that is not protected",
+  "Says in a sentence why the king avoids attacked squares"
+ ],
+ "steps": [
+  {
+   "chapter": "One step",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/4K3 w - - 0 1",
+   "stars": [
+    "f2"
+   ],
+   "order": "any",
+   "par": 1,
+   "say": "Move the king one square to the star."
   },
-  "sources": [
-    "docs/first-hours.md session 1",
-    "docs/council-synthesis.md CD-1, CD-4",
-    "positions: python-chess constructions, see content/items/lesson-bg-l-fnd-piece-king-1.json"
-  ]
+  {
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/4K3 w - - 0 1",
+   "stars": [
+    "g3"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Two squares away needs two steps."
+  },
+  {
+   "type": "card",
+   "text": "The king steps one square any way. It never steps next to the other king or onto a square an enemy piece attacks. It may capture an enemy piece, but only one that is not protected.",
+   "chapter": "Where it may not go"
+  },
+  {
+   "chapter": "Round the other king",
+   "type": "reach",
+   "fen": "8/8/8/8/8/4k3/8/4K3 w - - 0 1",
+   "stars": [
+    "c3"
+   ],
+   "order": "any",
+   "par": 3,
+   "say": "You cannot step next to the other king. Find the way round."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/3k4/8/3K4/8/8 w - - 0 1",
+   "caption": "The kings face each other with one square between. The three squares c4, d4 and e4 touch both kings, so the white king may not step there.",
+   "chapter": "Face to face",
+   "highlight": [
+    "c4",
+    "d4",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d3",
+      "to": [
+       "c2",
+       "c3",
+       "d2",
+       "e2",
+       "e3"
+      ]
+     },
+     "statement": "The white king can step to these five squares only."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "d3d4"
+     },
+     "statement": "The white king may not step to d4, next to the black king."
+    }
+   ]
+  },
+  {
+   "chapter": "Round the danger",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/4b3/8/4K3 w - - 0 1",
+   "stars": [
+    "h1"
+   ],
+   "order": "any",
+   "par": 3,
+   "say": "Squares the bishop attacks are off limits. Find a safe path."
+  },
+  {
+   "chapter": "A different attacker",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/4n3/8/4K3 w - - 0 1",
+   "stars": [
+    "g1"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "A knight attacks in L shapes, not diagonals. Find the safe route."
+  },
+  {
+   "chapter": "Taking a piece",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/4n3/4K3 w - - 0 1",
+   "stars": [
+    "e2"
+   ],
+   "order": "any",
+   "par": 1,
+   "say": "This knight is not protected. The king may take it."
+  },
+  {
+   "type": "reflect",
+   "kind": "teachback",
+   "prompt": "Say it back: how does the king move, where may it never go, and why?",
+   "fields": [
+    {
+     "id": "teach",
+     "label": "My explanation:"
+    }
+   ],
+   "chapter": "Say it back"
+  },
+  {
+   "type": "card",
+   "text": "**Model answer.** The king steps one square in any direction. It never steps next to the other king, and never onto a square an enemy piece attacks, because a king there could be captured and a king may never be left to be captured. It may capture an enemy piece that is not protected."
+  },
+  {
+   "chapter": "Victory lap",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/4K3 w - - 0 1",
+   "stars": [
+    "d3",
+    "f3"
+   ],
+   "order": "any",
+   "par": 4,
+   "say": "One last run: two stars."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Rebuilt as a star-grab lesson on 8 Nov 2026 (docs/reach-step.md); wording original.",
+  "King movement and the forbidden squares are rules of the game; the board's squares are legal_destinations and illegal_move claims [V]. The idea of check is named elsewhere and not taught here [I].",
+  "Every reach round is solved by tools/validate_lessons.py (legal moves, par) [V]; the learning effect of moving first is a design bet [I]."
+ ]
 }

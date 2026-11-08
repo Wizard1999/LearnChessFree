@@ -1,151 +1,136 @@
 {
  "id": "L-FND-PIECE-BISHOP-1",
- "title": "How the bishop moves",
+ "title": "The bishop",
  "skill": "FND.PIECE.BISHOP",
  "depth": "D1",
- "minutes": 6,
+ "minutes": 4,
  "outcomes": [
   "Taps every square a bishop can reach, including captures and blocked diagonals",
-  "Says why a bishop can never reach a square of the other colour or a square straight ahead",
+  "Says why a bishop can never reach a square of the other colour",
   "Frees a boxed-in bishop with a pawn move"
  ],
  "steps": [
   {
-   "type": "item",
-   "item": "IBG-LFNDPIECEBISHOP1-1",
-   "chapter": "Slide it"
+   "chapter": "Slide it",
+   "type": "reach",
+   "fen": "k7/8/8/8/8/8/8/2B1K3 w - - 0 1",
+   "stars": [
+    "e3"
+   ],
+   "order": "any",
+   "par": 1,
+   "say": "Slide the bishop to the star."
+  },
+  {
+   "type": "reach",
+   "fen": "k7/8/8/8/8/8/8/2B1K3 w - - 0 1",
+   "stars": [
+    "e5"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Two slides this time."
   },
   {
    "type": "card",
-   "text": "That was a **bishop**. It slides along a **diagonal**, a line of squares that touch at their corners, any distance, and like the rook it cannot jump over pieces. From d4 it has four diagonals and 13 squares."
+   "chapter": "The rule",
+   "text": "A bishop slides any distance along a **diagonal**: a slanting line of squares that touch at their corners."
   },
   {
-   "type": "board",
-   "fen": "4k3/8/8/8/3B4/8/8/4K3 w - - 0 1",
-   "caption": "All 13 squares, along four diagonals. Straight ahead and sideways are never allowed.",
-   "arrows": [
-    {
-     "from": "d4",
-     "to": "h8"
-    },
-    {
-     "from": "d4",
-     "to": "a1"
-    },
-    {
-     "from": "d4",
-     "to": "a7"
-    },
-    {
-     "from": "d4",
-     "to": "g1"
-    }
+   "chapter": "Blocked",
+   "type": "reach",
+   "fen": "k7/8/8/8/8/8/3K4/2B5 w - - 0 1",
+   "stars": [
+    "e3"
    ],
-   "highlight": [
-    "a1",
-    "a7",
-    "b2",
-    "b6",
-    "c3",
-    "c5",
-    "e3",
-    "e5",
-    "f2",
-    "f6",
-    "g1",
-    "g7",
-    "h8"
-   ],
-   "claims": [
-    {
-     "id": "C1",
-     "type": "legal_destinations",
-     "params": {
-      "from": "d4",
-      "to": [
-       "a1",
-       "a7",
-       "b2",
-       "b6",
-       "c3",
-       "c5",
-       "e3",
-       "e5",
-       "f2",
-       "f6",
-       "g1",
-       "g7",
-       "h8"
-      ]
-     },
-     "statement": "These are exactly the squares the bishop on d4 can move to."
-    }
-   ]
+   "order": "any",
+   "par": 3,
+   "say": "The king blocks the diagonal. Find a way round."
   },
   {
-   "type": "board",
-   "fen": "4k3/8/5p2/8/3B4/8/1P6/4K3 w - - 0 1",
-   "caption": "Own pawn on b2: the bishop stops on c3. Black pawn on f6: it may land there and capture, but not go beyond. Your own pawns can box a bishop in; moving one opens its diagonal.",
-   "chapter": "Blocked and captured",
-   "arrows": [
-    {
-     "from": "d4",
-     "to": "c3"
-    },
-    {
-     "from": "d4",
-     "to": "f6"
-    }
-   ],
-   "highlight": [
-    "b2",
-    "c3",
-    "f6"
-   ],
-   "claims": [
-    {
-     "id": "C1",
-     "type": "legal_destinations",
-     "params": {
-      "from": "d4",
-      "to": [
-       "a7",
-       "b6",
-       "c3",
-       "c5",
-       "e3",
-       "e5",
-       "f2",
-       "f6",
-       "g1"
-      ]
-     },
-     "statement": "With a white pawn on b2 and a black pawn on f6, the bishop reaches these squares and no others."
-    }
-   ]
+   "type": "card",
+   "chapter": "Pieces in the way",
+   "text": "Like the rook, a bishop cannot jump. Its own piece blocks it. It may take an enemy piece by landing there."
   },
   {
-   "type": "item",
-   "item": "IBG-LFNDPIECEBISHOP1-7"
+   "chapter": "Taking a piece",
+   "type": "reach",
+   "fen": "k7/8/8/8/5p2/8/8/2B1K3 w - - 0 1",
+   "stars": [
+    "f4",
+    "h6"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Take the pawn, then slide on."
   },
   {
-   "type": "board",
-   "fen": "4k3/8/8/8/8/8/8/2B1KB2 w - - 0 1",
-   "caption": "Moving one square sideways, or straight up or down, changes a square's colour. A diagonal step is one of each, so the colour comes back: it never changes. All seven squares marked for the c1 bishop are dark, and all seven for the f1 bishop are light. So the two bishops of one side cover both colours between them.",
+   "type": "card",
    "chapter": "One colour for life",
+   "text": "A bishop always stays on the colour it started on."
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/8/8/8/8/2B1K3 w - - 0 1",
+   "chapter": "Why the colour holds",
+   "caption": "Stepping sideways flips the colour, and stepping up flips it again. A diagonal step does both, so the colour never changes.",
    "arrows": [
     {
      "from": "c1",
-     "to": "h6"
+     "to": "d1"
     },
     {
-     "from": "f1",
-     "to": "a6"
+     "from": "d1",
+     "to": "d2"
     }
    ],
    "highlight": [
     "c1",
-    "f1",
+    "d1",
+    "d2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on c1."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "c1d2"
+     },
+     "statement": "The bishop can step to d2."
+    },
+    {
+     "id": "C3",
+     "type": "legal_destinations",
+     "params": {
+      "from": "c1",
+      "to": [
+       "a3",
+       "b2",
+       "d2",
+       "e3",
+       "f4",
+       "g5",
+       "h6"
+      ]
+     },
+     "statement": "From c1 the bishop reaches exactly these squares, all on its two diagonals."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/8/8/8/8/2B1KB2 w - - 0 1",
+   "caption": "The c1 bishop is dark, the f1 bishop light. Together they reach every square, so keeping both is usually good; one alone reaches half.",
+   "highlight": [
     "a3",
     "b2",
     "d2",
@@ -164,6 +149,24 @@
    "claims": [
     {
      "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on the dark square c1."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "f1",
+      "piece": "B"
+     },
+     "statement": "A white bishop stands on the light square f1."
+    },
+    {
+     "id": "C3",
      "type": "legal_destinations",
      "params": {
       "from": "c1",
@@ -177,10 +180,10 @@
        "h6"
       ]
      },
-     "statement": "The bishop on c1 reaches exactly these squares."
+     "statement": "The bishop on c1 reaches exactly these dark squares."
     },
     {
-     "id": "C2",
+     "id": "C4",
      "type": "legal_destinations",
      "params": {
       "from": "f1",
@@ -194,17 +197,31 @@
        "h3"
       ]
      },
-     "statement": "The bishop on f1 reaches exactly these squares."
+     "statement": "The bishop on f1 reaches exactly these light squares."
     }
-   ]
+   ],
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "h6"
+    },
+    {
+     "from": "f1",
+     "to": "a6"
+    }
+   ],
+   "chapter": "The pair"
   },
   {
-   "type": "item",
-   "item": "IBG-LFNDPIECEBISHOP1-12"
-  },
-  {
-   "type": "item",
-   "item": "IBG-LFNDPIECEBISHOP1-13"
+   "chapter": "Boxed in",
+   "type": "reach",
+   "fen": "k7/8/8/8/8/8/1P1P4/2B1K3 w - - 0 1",
+   "stars": [
+    "e3"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Your pawns box the bishop in. Free it, then reach the star."
   },
   {
    "type": "reflect",
@@ -215,15 +232,24 @@
      "id": "teach",
      "label": "My explanation:"
     }
-   ]
+   ],
+   "chapter": "Say it back"
   },
   {
    "type": "card",
-   "text": "**Compare.** A bishop slides along diagonals and stops before its own pieces or on an enemy piece it captures. A diagonal step is a sideways step plus an up-or-down step, which flip the colour twice, so the colour of its square never changes: the c1 bishop stays on dark squares for the whole game."
+   "text": "**Model answer.** A bishop slides along diagonals. Each diagonal step flips the colour twice, so the c1 bishop only ever lands on dark squares."
   },
   {
-   "type": "item",
-   "item": "IBG-LFNDPIECEBISHOP1-2"
+   "chapter": "Which bishop?",
+   "type": "reach",
+   "fen": "k7/8/8/8/8/8/8/2B1KB2 w - - 0 1",
+   "stars": [
+    "d3",
+    "f4"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "One star is light, one is dark. Which bishop can reach which?"
   }
  ],
  "review": {
@@ -231,8 +257,8 @@
   "reviewer": null
  },
  "sources": [
-  "Rewritten short on 8 Nov 2026 to the S0 standard (docs/lesson-depth-standard.md section 3); wording original.",
-  "Bishop movement is a rule of the game; the destination sets are checked by legal_destinations claims [V]. That all of those squares are one colour is arithmetic on file and rank (a1 is dark), not a machine claim [I].",
-  "Cut from the earlier long version: written move notation, bishop versus knight, attack and guard, bishop check; their items stay in content/items for Practice."
+  "Rebuilt as a star-grab lesson on 8 Nov 2026 (docs/reach-step.md); wording original.",
+  "Bishop movement is a rule of the game; the destination sets and piece squares are claims checked by tools/validate_lessons.py [V]. That a diagonal step keeps the square colour is arithmetic on file and rank [I].",
+  "Every reach round is solved by tools/validate_lessons.py (legal moves, par) [V]; the learning effect of moving first is a design bet [I]."
  ]
 }

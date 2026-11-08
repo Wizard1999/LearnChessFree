@@ -62,7 +62,7 @@
   },
   {
    "id": "PBG-LFNDROOKBISHOP1-7",
-   "fen": "7k/3P4/8/p2R1P2/8/8/3p4/6K1 w - - 0 1",
+   "fen": "7k/8/3P4/p2R1P2/8/3p4/8/6K1 w - - 0 1",
    "family": "FAM-BG-FND-ROOK-7",
    "provenance": {
     "kind": "authored",
@@ -122,11 +122,11 @@
   },
   {
    "id": "PBG-LFNDROOKBISHOP1-13",
-   "fen": "7k/8/1p6/8/8/8/1R6/6K1 w - - 0 1",
+   "fen": "7k/8/8/8/6p1/5R2/8/6K1 w - - 0 1",
    "family": "FAM-BG-FND-ROOK-13",
    "provenance": {
     "kind": "authored",
-    "ref": "authored: rook on b2, black pawn on b6 on an open file",
+    "ref": "authored: rook on f3, black pawn on g4 diagonally next to it",
     "licence": "project"
    }
   },
@@ -137,6 +137,16 @@
    "provenance": {
     "kind": "authored",
     "ref": "authored: lone rook on c3, e5 is off its rank and file",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDROOKBISHOP1-15",
+   "fen": "k7/8/3p4/8/1P1R4/8/8/6K1 w - - 0 1",
+   "family": "FAM-BG-FND-ROOK-15",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: rook on d4, own pawn beside it, black pawn above it; black king off every rook line",
     "licence": "project"
    }
   }
@@ -221,7 +231,7 @@
    "cue": 1,
    "task": "find_move",
    "position": "PBG-LFNDROOKBISHOP1-2",
-   "prompt": "Move the white rook (the tower-shaped piece) to the top edge of the board, the eighth rank, in one move.",
+   "prompt": "Move the white rook (the tower-shaped piece) to the top row of the board (the eighth rank) in one move.",
    "answer": {
     "moves": [
      "b3b8"
@@ -511,10 +521,8 @@
      "a5",
      "b5",
      "c5",
-     "d2",
      "d3",
      "d4",
-     "d6",
      "e5"
     ]
    },
@@ -528,10 +536,8 @@
        "a5",
        "b5",
        "c5",
-       "d2",
        "d3",
        "d4",
-       "d6",
        "e5"
       ]
      },
@@ -552,7 +558,7 @@
     "Which pieces are yours, which are the enemy's?",
     "A line ends before your own piece and on an enemy piece."
    ],
-   "explain": "The rook can go to d6 and e5 (its own pawns stop it), to d4, d3 and d2 (a capture), and to c5, b5 and a5 (a capture). Eight squares.",
+   "explain": "The rook is stopped by its own pawns on d6 and f5, so it cannot go up and can go right only as far as e5. Down, it takes the pawn on d3. Left, it takes the pawn on a5. That makes 6 squares: a5, b5, c5, d3, d4, e5.",
    "orientation": "white",
    "review": {
     "status": "machine-only",
@@ -815,9 +821,9 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBG-LFNDROOKBISHOP1-13",
-   "prompt": "A black pawn stands on b6, straight above the white rook on b2. Can the rook take it in one move? Predict, then check.",
+   "prompt": "A black pawn stands on g4, one step diagonally up and right from the white rook on f3. Can the rook take it in one move? Predict, then check.",
    "answer": {
-    "outcome": "yes",
+    "outcome": "no",
     "options": [
      "yes",
      "no"
@@ -826,11 +832,19 @@
    "claims": [
     {
      "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "f3g4"
+     },
+     "statement": "The rook cannot capture on g4."
+    },
+    {
+     "id": "C2",
      "type": "legal_move",
      "params": {
-      "move": "b2b6"
+      "move": "f3f4"
      },
-     "statement": "The rook can capture on b6."
+     "statement": "The rook can move straight up one square."
     }
    ],
    "tags": [
@@ -842,11 +856,11 @@
     "task.predict_outcome"
    ],
    "hints": [
-    "Is the pawn on the rook's file or rank?",
-    "Is anything between b2 and b6?",
-    "An enemy piece at the end of a clear line can be captured."
+    "Is g4 on the rook's column or on its row?",
+    "The rook is on the f-file and the third rank. Which file and rank is g4 on?",
+    "A rook only captures along a row or a column, never diagonally."
    ],
-   "explain": "The pawn is on the rook's own file and b3, b4 and b5 are empty, so the rook slides up and captures it. The slide ends there.",
+   "explain": "The pawn is on g4, which is on neither the f-file nor the third rank. A rook never moves or captures diagonally, so it cannot take the pawn from f3.",
    "orientation": "white",
    "review": {
     "status": "machine-only",
@@ -891,6 +905,71 @@
     "e5 is on neither, so reaching it would need a diagonal."
    ],
    "explain": "The rook is on the c-file and rank 3. The square e5 is on the e-file and rank 5, so it shares neither line with the rook. A rook never moves diagonally, so it cannot get there in one move.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDROOKBISHOP1-15",
+   "skill": "FND.PIECE.ROOK.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LFNDROOKBISHOP1-15",
+   "prompt": "Tap every square the white rook can move to. It may stop on any square along the way, and taking is allowed but never forced.",
+   "answer": {
+    "from": "d4",
+    "squares": [
+     "c4",
+     "d1",
+     "d2",
+     "d3",
+     "d5",
+     "d6",
+     "e4",
+     "f4",
+     "g4",
+     "h4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "c4",
+       "d1",
+       "d2",
+       "d3",
+       "d5",
+       "d6",
+       "e4",
+       "f4",
+       "g4",
+       "h4"
+      ]
+     },
+     "statement": "These are exactly the squares the rook on d4 can move to."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.ROOK",
+    "tier.0",
+    "cue.1",
+    "kind.authored",
+    "family.FAM-BG-FND-ROOK-15",
+    "lang.en",
+    "task.select_squares"
+   ],
+   "hints": [
+    "Follow the rook along its row and its column, one direction at a time.",
+    "Your own pawn stops the rook on the square before it. The black pawn can be taken, and that ends the slide.",
+    "Count four squares to the right, one to the left, three down and two up."
+   ],
+   "explain": "To the left the rook stops before its own pawn. Upward it may stop on the empty square or take the black pawn, but it cannot go past. Right and down are open to the edge.",
    "orientation": "white",
    "review": {
     "status": "machine-only",

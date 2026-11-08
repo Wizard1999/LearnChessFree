@@ -1,58 +1,96 @@
 {
  "id": "L-FND-ROOKBISHOP-1",
- "title": "How the rook moves",
+ "title": "The rook",
  "skill": "FND.PIECE.ROOK",
  "depth": "D1",
- "minutes": 6,
+ "minutes": 4,
  "outcomes": [
-  "Taps every square a rook can reach, including captures and blocked lines",
-  "Predicts whether a line is blocked before moving",
-  "Says why a rook cannot reach a square that is off its rank and file"
+  "Taps every square a rook can reach, including a capture and the squares up to a blocking piece",
+  "Works out how far a rook can slide along a row or column before a piece blocks it",
+  "Says why a rook cannot reach a square that shares neither its row nor its column"
  ],
  "steps": [
   {
-   "type": "item",
-   "item": "IBG-LFNDROOKBISHOP1-2",
-   "chapter": "Slide it"
+   "chapter": "Slide it",
+   "type": "reach",
+   "fen": "8/8/8/8/8/8/8/R3K2k w - - 0 1",
+   "stars": [
+    "a5"
+   ],
+   "order": "any",
+   "par": 1,
+   "say": "Slide the rook to the star. Moves that give check are not offered."
+  },
+  {
+   "type": "reach",
+   "fen": "8/8/8/8/8/8/8/R3K2k w - - 0 1",
+   "stars": [
+    "d4"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Two slides this time: along a row, then up a column."
   },
   {
    "type": "card",
-   "text": "That was a **rook**, the piece shaped like a castle tower. It slides in a straight line along its **file** (column) or its **rank** (row), one square or many, and never diagonally. Look at the next board: from d4 it reaches 14 squares.",
-   "chapter": "How it slides"
+   "chapter": "The rule",
+   "text": "The rook slides any distance along a **row** or a **column**, and may stop on any square along the way."
+  },
+  {
+   "chapter": "Blocked",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/R2K4 w - - 0 1",
+   "stars": [
+    "g1"
+   ],
+   "order": "any",
+   "par": 3,
+   "say": "Your king is in the way. Go round it."
+  },
+  {
+   "type": "card",
+   "chapter": "Pieces in the way",
+   "text": "The rook cannot jump. Its own piece blocks it. It may take an enemy piece by landing there, but never has to."
+  },
+  {
+   "chapter": "Taking a piece",
+   "type": "reach",
+   "fen": "8/8/8/3p4/8/8/8/3RK2k w - - 0 1",
+   "stars": [
+    "d5",
+    "a5"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "A star can hold an enemy piece. Take it."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDROOKBISHOP1-15",
+   "chapter": "Your turn"
   },
   {
    "type": "board",
-   "fen": "k7/8/8/8/3R4/8/8/7K w - - 0 1",
-   "caption": "All 14: the whole d-file and the whole fourth rank. The rook may stop on any of them.",
+   "chapter": "What it reaches",
+   "fen": "k7/8/3p4/8/1P1R4/8/8/6K1 w - - 0 1",
+   "caption": "Lit squares are where the rook can go. Its own pawn and the black pawn block it. It may take the black pawn.",
    "arrows": [
     {
      "from": "d4",
-     "to": "d8"
+     "to": "d6"
     },
     {
      "from": "d4",
-     "to": "d1"
-    },
-    {
-     "from": "d4",
-     "to": "a4"
-    },
-    {
-     "from": "d4",
-     "to": "h4"
+     "to": "c4"
     }
    ],
    "highlight": [
-    "a4",
-    "b4",
     "c4",
     "d1",
     "d2",
     "d3",
     "d5",
     "d6",
-    "d7",
-    "d8",
     "e4",
     "f4",
     "g4",
@@ -65,134 +103,87 @@
      "params": {
       "from": "d4",
       "to": [
-       "a4",
-       "b4",
        "c4",
        "d1",
        "d2",
        "d3",
        "d5",
        "d6",
-       "d7",
-       "d8",
        "e4",
        "f4",
        "g4",
        "h4"
       ]
      },
-     "statement": "These are exactly the squares the rook on d4 can move to."
+     "statement": "From d4 the rook reaches these squares and no others."
     }
    ]
   },
   {
-   "type": "board",
-   "fen": "8/8/3P3k/8/3R4/8/8/6K1 w - - 0 1",
-   "caption": "A white pawn (the small piece that starts in front of the army) stands on d6. The rook reaches d5 and no further up: it cannot jump, and it cannot land on its own piece.",
-   "chapter": "Blocked and captures",
-   "arrows": [
-    {
-     "from": "d4",
-     "to": "d5"
-    }
+   "chapter": "Off its lines",
+   "type": "reach",
+   "fen": "8/8/8/8/8/2R5/8/5K1k w - - 0 1",
+   "stars": [
+    "e5"
    ],
+   "order": "any",
+   "par": 2,
+   "say": "The star shares no row or column with the rook. Find the way."
+  },
+  {
+   "type": "board",
+   "chapter": "Why two moves",
+   "fen": "8/8/8/8/8/2R5/8/5K1k w - - 0 1",
+   "caption": "The lit square shares neither the rook's row nor its column, and a rook never moves diagonally. One slide cannot reach it.",
    "highlight": [
-    "d5",
-    "d6"
+    "e5"
    ],
    "claims": [
     {
      "id": "C1",
-     "type": "legal_destinations",
+     "type": "illegal_move",
      "params": {
-      "from": "d4",
-      "to": [
-       "a4",
-       "b4",
-       "c4",
-       "d1",
-       "d2",
-       "d3",
-       "d5",
-       "e4",
-       "f4",
-       "g4",
-       "h4"
-      ]
+      "move": "c3e5"
      },
-     "statement": "With a white pawn on d6, the rook reaches these squares and no others."
-    }
-   ]
-  },
-  {
-   "type": "board",
-   "fen": "7k/8/3p4/8/3R4/8/8/6K1 w - - 0 1",
-   "caption": "Make the pawn Black's and the rook may take it: it lands on the pawn's square, the pawn leaves the board, and the slide ends there.",
-   "line": [
+     "statement": "The rook cannot move from c3 to e5 in one move."
+    },
     {
-     "move": "d4d6",
-     "say": "The rook lands on d6, removes the pawn and stops."
-    }
-   ],
-   "arrows": [
-    {
-     "from": "d4",
-     "to": "d6"
-    }
-   ],
-   "highlight": [
-    "d6"
-   ],
-   "claims": [
-    {
-     "id": "C1",
+     "id": "C2",
      "type": "legal_move",
      "params": {
-      "move": "d4d6"
+      "move": "c3c5"
      },
-     "statement": "The rook can move from d4 to d6, capturing the pawn."
+     "statement": "The rook can move up its own column to c5."
     }
    ]
-  },
-  {
-   "type": "card",
-   "text": "Before you move a rook, ask three questions. Is the square on its file or its rank? Is anything standing in between? If a piece stands on the target square, is it yours (not allowed) or the enemy's (a capture, and the slide ends)?"
-  },
-  {
-   "type": "item",
-   "item": "IA0-10",
-   "chapter": "Your turn"
-  },
-  {
-   "type": "item",
-   "item": "IBG-LFNDROOKBISHOP1-4"
-  },
-  {
-   "type": "item",
-   "item": "IBG-LFNDROOKBISHOP1-13"
-  },
-  {
-   "type": "item",
-   "item": "IBG-LFNDROOKBISHOP1-14"
   },
   {
    "type": "reflect",
    "kind": "teachback",
-   "prompt": "Say it back in two or three sentences: how does a rook move, what stops it, and which squares can it never reach?",
+   "chapter": "Say it back",
+   "prompt": "Say it back: how does a rook move, and what stops it?",
    "fields": [
     {
      "id": "teach",
-     "label": "My two sentences:"
+     "label": "My explanation:"
     }
    ]
   },
   {
    "type": "card",
-   "text": "**Compare.** A rook slides any number of squares along a rank or a file, never diagonally. It stops before its own pieces, and it may land on an enemy piece to capture it, which ends the slide."
+   "text": "**Model answer.** A rook slides along a row or column, stopping before its own pieces or taking an enemy piece. It never moves diagonally."
   },
   {
-   "type": "item",
-   "item": "IA0-16"
+   "chapter": "Victory lap",
+   "type": "reach",
+   "fen": "8/8/8/8/3p4/8/8/R3K2k w - - 0 1",
+   "stars": [
+    "d4",
+    "a4"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "One last run: take the pawn, then reach the second star."
   }
  ],
  "review": {
@@ -200,8 +191,9 @@
   "reviewer": null
  },
  "sources": [
-  "Rewritten short on 8 Nov 2026 to the S0 standard (docs/lesson-depth-standard.md section 3); wording original.",
-  "Rook movement is a rule of the game; every destination set on the boards is checked by a legal_destinations claim [V].",
-  "Boards from the earlier long version (empty-board count, rook activity conjecture, two-move routes) were cut; items stay in content/items for Practice."
+  "Rebuilt as a star-grab lesson on 8 Nov 2026 (docs/reach-step.md); wording original.",
+  "Id kept from the former rook-and-bishop lesson; this lesson covers the rook only.",
+  "Rook movement is a rule of the game; the board's destination set is a legal_destinations claim [V].",
+  "Every reach round is solved by tools/validate_lessons.py (legal moves, par) [V]; the learning effect of moving first is a design bet [I]."
  ]
 }

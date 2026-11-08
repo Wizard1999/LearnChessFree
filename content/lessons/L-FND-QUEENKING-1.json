@@ -1,9 +1,9 @@
 {
  "id": "L-FND-QUEENKING-1",
- "title": "How the queen moves",
+ "title": "The queen",
  "skill": "FND.PIECE.QUEEN",
  "depth": "D1",
- "minutes": 5,
+ "minutes": 4,
  "outcomes": [
   "Taps every square a queen can reach, stopping in front of its own pieces and on the first enemy piece",
   "Rejects a knight-shaped jump for the queen",
@@ -11,51 +11,57 @@
  ],
  "steps": [
   {
-   "type": "item",
-   "item": "IBG-LFNDQUEENKING1-1",
-   "chapter": "Try it first"
+   "chapter": "Straight",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/3QK3 w - - 0 1",
+   "stars": [
+    "d5"
+   ],
+   "order": "any",
+   "par": 1,
+   "say": "Slide the queen to the star."
+  },
+  {
+   "chapter": "Then diagonal",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/3QK3 w - - 0 1",
+   "stars": [
+    "b4"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Straight, then diagonal. The queen can do both."
   },
   {
    "type": "card",
-   "text": "The **queen** is the rook and the bishop in one piece: any distance along a file, a rank or a diagonal. From d4 that is 27 squares, the rook's 14 plus the bishop's 13. She cannot jump, and the same blockers apply: stop before your own piece, or land on an enemy piece and stop there.",
+   "text": "The queen moves like a rook and a bishop together: any distance, straight or diagonal. In one move she picks one line and stays on it; she cannot turn a corner.",
    "chapter": "Rook plus bishop"
   },
   {
+   "chapter": "Stops and takes",
+   "type": "reach",
+   "fen": "7k/8/8/3p4/8/8/8/3QK3 w - - 0 1",
+   "stars": [
+    "d5",
+    "b3"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "Take the pawn on the star, then reach the other one."
+  },
+  {
    "type": "board",
-   "fen": "k7/8/8/8/3Q4/8/8/7K w - - 0 1",
-   "caption": "Eight lines out of d4 and 27 squares in all. Nothing is in her way.",
+   "fen": "k7/8/3p4/8/3Q4/8/5P2/7K w - - 0 1",
+   "caption": "Every lit square is a place the queen can go: 23 in all. Her own pawn on f2 stops her on e3 and shuts the line to g1. The black pawn on d6 can be taken, but d7 and d8 are behind it, out of reach.",
+   "chapter": "What it reaches",
    "arrows": [
     {
      "from": "d4",
-     "to": "d8"
+     "to": "d6"
     },
     {
      "from": "d4",
-     "to": "d1"
-    },
-    {
-     "from": "d4",
-     "to": "a4"
-    },
-    {
-     "from": "d4",
-     "to": "h4"
-    },
-    {
-     "from": "d4",
-     "to": "h8"
-    },
-    {
-     "from": "d4",
-     "to": "a1"
-    },
-    {
-     "from": "d4",
-     "to": "a7"
-    },
-    {
-     "from": "d4",
-     "to": "g1"
+     "to": "e3"
     }
    ],
    "highlight": [
@@ -73,15 +79,11 @@
     "d3",
     "d5",
     "d6",
-    "d7",
-    "d8",
     "e3",
     "e4",
     "e5",
-    "f2",
     "f4",
     "f6",
-    "g1",
     "g4",
     "g7",
     "h4",
@@ -108,104 +110,106 @@
        "d3",
        "d5",
        "d6",
-       "d7",
-       "d8",
        "e3",
        "e4",
        "e5",
-       "f2",
        "f4",
        "f6",
-       "g1",
        "g4",
        "g7",
        "h4",
        "h8"
       ]
      },
-     "statement": "These are exactly the squares the queen on d4 can move to."
+     "statement": "From d4 the queen reaches these squares and no others."
     }
    ]
   },
   {
    "type": "board",
-   "fen": "k7/3p4/8/8/3Q4/8/5P2/7K w - - 0 1",
-   "caption": "Her own pawn on f2 ends that diagonal at e3. The black pawn on d7 can be taken, and that ends the line upward. The other six lines are untouched: a piece in her way ends only the line it stands on.",
-   "chapter": "Blocked lines",
+   "fen": "k7/8/8/8/8/8/3P4/3QK3 w - - 0 1",
+   "chapter": "One line shut",
+   "caption": "The pawn on d2 shuts the queen's line up the d-file, and only that line. She still slides along the first rank and along both diagonals. A blocker closes only its own line.",
    "arrows": [
     {
-     "from": "d4",
-     "to": "e3"
+     "from": "d1",
+     "to": "h5"
     },
     {
-     "from": "d4",
-     "to": "d7"
+     "from": "d1",
+     "to": "a4"
     }
    ],
    "highlight": [
-    "f2",
-    "e3",
-    "d7"
+    "a1",
+    "a4",
+    "b1",
+    "b3",
+    "c1",
+    "c2",
+    "e2",
+    "f3",
+    "g4",
+    "h5"
    ],
    "claims": [
     {
      "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d1d3"
+     },
+     "statement": "The queen cannot go up the d-file past her own pawn."
+    },
+    {
+     "id": "C2",
      "type": "legal_destinations",
      "params": {
-      "from": "d4",
+      "from": "d1",
       "to": [
        "a1",
        "a4",
-       "a7",
-       "b2",
-       "b4",
-       "b6",
-       "c3",
-       "c4",
-       "c5",
-       "d1",
-       "d2",
-       "d3",
-       "d5",
-       "d6",
-       "d7",
-       "e3",
-       "e4",
-       "e5",
-       "f4",
-       "f6",
+       "b1",
+       "b3",
+       "c1",
+       "c2",
+       "e2",
+       "f3",
        "g4",
-       "g7",
-       "h4",
-       "h8"
+       "h5"
       ]
      },
-     "statement": "With a white pawn on f2 and a black pawn on d7, the queen reaches these squares and no others."
+     "statement": "From d1 the queen reaches exactly these squares, on her open lines."
     }
    ]
-  },
-  {
-   "type": "item",
-   "item": "IA0-22"
   },
   {
    "type": "reflect",
    "kind": "teachback",
-   "prompt": "Say it back in two sentences: how does the queen move, and does a blocker on one line stop her on the others?",
+   "prompt": "Say it back: how does the queen move, and what happens when a piece is in the way?",
    "fields": [
     {
      "id": "teach",
-     "label": "My two sentences:"
+     "label": "My explanation:"
     }
-   ]
+   ],
+   "chapter": "Say it back"
   },
   {
    "type": "card",
-   "text": "**Compare.** The queen moves like a rook and a bishop together, any distance along a rank, a file or a diagonal. She stops before her own pieces or on an enemy piece she captures. A piece in her way closes only that one line (pins, which come later, are the one twist), and she never makes an L-shaped jump."
+   "text": "**Model answer.** The queen moves like a rook and a bishop together. Any line is open until a piece blocks it: she stops before her own piece and takes an enemy piece. A blocker closes only its own line, and the other lines stay open. A legal square is not always a safe one; that comes later."
   },
   {
-   "type": "item",
-   "item": "IBG-LFNDQUEENKING1-4"
+   "chapter": "Victory lap",
+   "type": "reach",
+   "fen": "7k/8/8/8/8/8/8/3QK3 w - - 0 1",
+   "stars": [
+    "g4",
+    "c4"
+   ],
+   "order": "any",
+   "par": 2,
+   "say": "One last run: two stars."
   }
  ],
  "review": {
@@ -213,8 +217,9 @@
   "reviewer": null
  },
  "sources": [
-  "Rewritten short to the S0 standard (docs/lesson-depth-standard.md section 3); wording original.",
-  "Queen movement is a rule of the game; the destination sets are checked by legal_destinations claims [V]. The 14 plus 13 split was enumerated with python-chess for d4 [V].",
-  "Cut from the earlier long version: queen value, the double attack, hypotheses; items stay in content/items for Practice."
+  "Rebuilt as a star-grab lesson on 8 Nov 2026 (docs/reach-step.md); wording original.",
+  "Queen movement is a rule of the game; the board's destination set is a legal_destinations claim [V].",
+  "Every reach round is solved by tools/validate_lessons.py (legal moves, par) [V]; the learning effect of moving first is a design bet [I].",
+  "The id says QUEENKING for historical reasons: this lesson teaches the queen only; the king has its own lesson, L-FND-PIECE-KING-1."
  ]
 }

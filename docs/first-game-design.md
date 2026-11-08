@@ -39,6 +39,9 @@ The time to step 2 depends on the lesson files: the app only guarantees that a g
 ## 3. The gentle opponent
 The invitation and the Play now button open `/play?from=invite&kind=stockfish&bot=b1&color=white&help=1` (`GENTLE_PLAY_PATH` in `lib/firstGame.ts`): **Stockfish "Beginner"** (`b1` in `app/src/engine.ts`: Skill Level 0, search depth 1), the learner plays White from the standard start, and the hint button is on. Why Stockfish b1 and not Maia 1100: Maia needs a download of about 18 MB the first time and is trained on games of club players (rated about 1100), which is far stronger than a learner in their first hour; b1 is already in the app, works offline at once and blunders often [I: not measured against beginners]. The learner can change anything on the Play page before starting. Nothing in the curriculum waits for the game.
 
+## 3b. Learning the pieces by moving them
+The piece lessons use the `reach` step ("grab the stars"): the learner moves one piece to collect stars, with almost no reading. Design, rules and validation: `docs/reach-step.md`.
+
 ## 4. Not done here
 - The guided games themselves (lesson files, another agent).
 - Measuring the real time to the first guided move with beginners (G1 baseline).

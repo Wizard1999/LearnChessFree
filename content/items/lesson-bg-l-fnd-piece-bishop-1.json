@@ -22,7 +22,7 @@
   },
   {
    "id": "PBG-LFNDPIECEBISHOP1-3",
-   "fen": "6k1/8/4p3/2p5/1pBp4/8/8/4K3 w - - 0 1",
+   "fen": "7k/8/4p3/2p5/1pBp4/8/8/4K3 w - - 0 1",
    "family": "FAM-BG-COLOUR-PAWN",
    "provenance": {
     "kind": "authored",
@@ -132,11 +132,11 @@
   },
   {
    "id": "PBG-LFNDPIECEBISHOP1-13",
-   "fen": "4k3/8/5p2/8/3B4/8/8/4K3 w - - 0 1",
+   "fen": "4k3/8/8/8/3Bp3/8/8/4K3 w - - 0 1",
    "family": "FAM-LFNDPIECEBISHOP1-13",
    "provenance": {
     "kind": "authored",
-    "ref": "authored: bishop on d4, black pawn on f6 on its diagonal",
+    "ref": "authored: bishop on d4, black pawn beside it on e4",
     "licence": "project"
    }
   }
@@ -326,7 +326,7 @@
     "The pawns on b2 and d2 stand on those first squares.",
     "Moving the d-pawn or the b-pawn opens one diagonal. Moving the e-pawn does not touch the c1 bishop."
    ],
-   "explain": "The c1 bishop is blocked by its own pawns on b2 and d2. Moving either pawn opens a diagonal for it: the d-pawn opens a long one, the b-pawn a short one. The e-pawn opens the bishop on f1, not this one. The d-pawn moves (d2d3 or d2d4) are the best answers: they free five squares for the bishop, against two for the b-pawn.",
+   "explain": "The c1 bishop is blocked by its own pawns on b2 and d2. Moving either pawn opens a diagonal for it: the d-pawn frees five squares for the bishop, the b-pawn only two. Any of the four moves lets the bishop out. The e-pawn opens the bishop on f1, not this one.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -476,7 +476,7 @@
     "From b8 one diagonal runs down to the right: c7, d6, e5. Another touches a7.",
     "Two squares are on both a diagonal of d4 and a diagonal of b8. Find them."
    ],
-   "explain": "A square of the bishop's own colour that is off its diagonals takes two moves. The first move must land on a diagonal of b8. Both a7 and e5 do, and both are reachable from d4. From either one the bishop then goes to b8.",
+   "explain": "On an open board, any square of the bishop's colour that is off its diagonals takes exactly two moves. The first move must land on a diagonal of b8: a7 and e5 both do.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -533,7 +533,7 @@
     "The counts are close, so count carefully: a short diagonal still adds squares.",
     "b3 has one very short diagonal; f4 has no very short one."
    ],
-   "explain": "The bishop on b3 reaches 9 squares and the bishop on f4 reaches 11. Neither is in a corner, so the gap is small, but the more central bishop still has more squares.",
+   "explain": "The bishop on b3 reaches 9 squares and the bishop on f4 reaches 11. A bishop on the edge reaches 7, and each step closer to the centre adds 2. f4 is one step closer than b3.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -546,7 +546,7 @@
    "cue": 1,
    "task": "find_move",
    "position": "PBG-LFNDPIECEBISHOP1-6",
-   "prompt": "Play the move written Bxf6.",
+   "prompt": "Take the black pawn on f6 with the bishop.",
    "answer": {
     "moves": [
      "d4f6"
@@ -581,11 +581,11 @@
     "task.find_move"
    ],
    "hints": [
-    "B is the bishop, x means a capture, and the last two characters are the square.",
-    "The move ends on f6, where a black pawn stands.",
+    "The bishop captures by landing on the enemy pawn. Is f6 on a diagonal of d4?",
+    "Look at the square between d4 and f6: is it empty?",
     "The bishop on d4 slides through e5 and takes the pawn on f6."
    ],
-   "explain": "B names the piece, x means it captures, and f6 is the square it lands on. The bishop on d4 slides through the empty square e5 and takes the pawn on f6.",
+   "explain": "f6 lies on the diagonal d4, e5, f6, and e5 is empty. The bishop slides through e5 and lands on the pawn, which captures it.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -768,7 +768,7 @@
    "cue": 2,
    "task": "find_move",
    "position": "PBG-LFNDPIECEBISHOP1-10",
-   "prompt": "White to move. Find the bishop move that gives check.",
+   "prompt": "White to move. A check is a move that attacks the enemy king. Find the bishop move that gives check.",
    "answer": {
     "moves": [
      "f3d5"
@@ -822,7 +822,7 @@
    "cue": 3,
    "task": "find_move",
    "position": "PBG-LFNDPIECEBISHOP1-11",
-   "prompt": "Two black pawns stand on the long diagonal from c3. Which capture does the bishop have?",
+   "prompt": "White to move. Which black pawn can the bishop capture?",
    "answer": {
     "moves": [
      "c3e5"
@@ -902,7 +902,7 @@
    "hints": [
     "Is d5 on a diagonal of d4?",
     "d4 is a dark square. What colour is d5?",
-    "A bishop never moves straight ahead."
+    "A bishop never moves straight ahead in one move."
    ],
    "explain": "d5 is straight ahead, not on a diagonal. It is also a square of the other colour than d4, which a bishop can never reach.",
    "orientation": "white",
@@ -917,9 +917,9 @@
    "cue": 2,
    "task": "predict_outcome",
    "position": "PBG-LFNDPIECEBISHOP1-13",
-   "prompt": "A black pawn stands on f6. Can the white bishop on d4 take it in one move? Predict, then check.",
+   "prompt": "A black pawn stands on e4, right beside the white bishop on d4. Can the bishop take it in one move? Predict, then check.",
    "answer": {
-    "outcome": "yes",
+    "outcome": "no",
     "options": [
      "yes",
      "no"
@@ -928,11 +928,11 @@
    "claims": [
     {
      "id": "C1",
-     "type": "legal_move",
+     "type": "illegal_move",
      "params": {
-      "move": "d4f6"
+      "move": "d4e4"
      },
-     "statement": "The bishop can capture on f6."
+     "statement": "The bishop cannot capture on e4."
     }
    ],
    "tags": [
@@ -944,11 +944,11 @@
     "task.predict_outcome"
    ],
    "hints": [
-    "Is f6 on a diagonal of d4?",
-    "Is e5, the square between them, empty?",
-    "A bishop may land on an enemy piece at the end of a clear diagonal."
+    "Is e4 on a diagonal of d4?",
+    "e4 is on the same row as d4. A bishop moves along diagonals only.",
+    "A bishop captures only along a diagonal."
    ],
-   "explain": "f6 is on the diagonal d4, e5, f6 and e5 is empty, so the bishop slides there and captures the pawn.",
+   "explain": "e4 sits on the same row as the bishop, not on a diagonal. The bishop moves and captures only diagonally, so it cannot take the pawn.",
    "orientation": "white",
    "review": {
     "status": "machine-only",
