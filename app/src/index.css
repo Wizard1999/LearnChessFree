@@ -1119,3 +1119,24 @@ main.mappage.curriculum .mapbar { padding-top: 0.2rem; padding-bottom: 0.2rem; g
 .hookpage .guided { max-width: 640px; margin-inline: auto; }
 .invite .invite-title { font-size: 1.1rem; margin: 0 0 0.3rem; }
 /* ==== end first game ==== */
+
+/* ==== Reach step: grab the stars (docs/reach-step.md) ==== */
+.starlayer { position: absolute; inset: 0; pointer-events: none; }
+.boardstar { position: absolute; width: 12.5%; height: 12.5%; display: grid; place-items: center; pointer-events: none; }
+.boardstar svg { width: 62%; height: 62%; fill: var(--gold, goldenrod); stroke: var(--warning, darkgoldenrod); stroke-width: 1.2; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35)); }
+.boardstar b { position: absolute; right: 8%; bottom: 6%; font-size: clamp(0.6rem, 2.2vw, 0.85rem); line-height: 1; color: var(--on-gold, black); background: var(--gold, gold); font-weight: 700; box-shadow: 0 0 0 1px var(--warning, darkgoldenrod); border-radius: 999px; padding: 0.1em 0.35em; }
+.boardstar.onpiece { place-items: start end; }
+.boardstar.onpiece svg { width: 40%; height: 40%; margin: 4%; }
+.boardstar.dim svg { opacity: 0.45; }
+.boardstar.gone { animation: star-collect 480ms ease-out forwards; }
+@keyframes star-collect { 0% { transform: scale(1); opacity: 1; } 45% { transform: scale(1.45); opacity: 1; } 100% { transform: scale(0.2) translateY(-60%); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .boardstar.gone { display: none; } }
+:root[data-motion='reduce'] .boardstar.gone { display: none; }
+.reach .reach-status { min-height: 2.4rem; margin: 0.4rem 0 0.2rem; display: flex; flex-wrap: wrap; gap: 0.3rem 1rem; align-items: baseline; }
+.reach .reach-stars { list-style: none; padding: 0; margin: 0.2rem 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.reach .reach-stars li { background: var(--chip); border-radius: 999px; padding: 0.1rem 0.6rem; font-size: 0.9rem; }
+.reach .reach-stars li.got { opacity: 0.6; text-decoration: line-through; }
+.reach .reach-stars li .mark { color: var(--warning, darkgoldenrod); margin-right: 0.25rem; }
+.reach .reach-result { margin: 0.3rem 0; }
+.reach .reach-rating { color: var(--warning, darkgoldenrod); font-size: 1.25rem; letter-spacing: 0.1em; margin-left: 0.4rem; }
+/* ==== end reach step ==== */

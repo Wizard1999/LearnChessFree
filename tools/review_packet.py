@@ -35,6 +35,7 @@ def _step_key(st):
     elif t == "reflect": raw = st.get("prompt", "")[:40]
     elif t == "finale": raw = st.get("fen", "") + "|" + str(st.get("color", ""))
     elif t == "guided": raw = (st.get("fen") or "start") + "|" + "|".join(m.get("move", "") for m in (st.get("moves") or [])[:4])
+    elif t == "reach": raw = st.get("fen", "") + "|" + ",".join(st.get("stars") or [])
     else: raw = json.dumps(st, sort_keys=True)[:60]
     return t[0] + hashlib.sha1((t + "|" + raw).encode("utf-8")).hexdigest()[:7]
 
@@ -85,7 +86,7 @@ def slice_ids(lessons=None):
 
 
 # ---- rendering ----
-def ascii_board(fen, orientation="white"):
+def ascii_board(fen, orientation="white", stars=()):
     b = chess.Board(fen)
     files = "abcdefgh"; ranks = range(7, -1, -1); cols = range(8)
     if orientation == "black": ranks = range(8); cols = range(7, -1, -1)
@@ -94,16 +95,16 @@ def ascii_board(fen, orientation="white"):
         row = []
         for c in cols:
             p = b.piece_at(chess.square(c, r))
-            row.append(p.symbol() if p else ".")
+            row.append(p.symbol() if p else "*" if chess.square_name(chess.square(c, r)) in stars else ".")
         lines.append(f"  {r + 1}  " + " ".join(row))
     lines.append("     " + " ".join(files[c] for c in cols))
     return "\n".join(lines)
 
 
-def diagram(fen, orientation="white", note=None):
+def diagram(fen, orientation="white", note=None, stars=()):
     try:
         side = "White" if chess.Board(fen).turn else "Black"
-        body = ascii_board(fen, orientation)
+        body = ascii_board(fen, orientation, stars)
     except Exception as ex:
         return f"```\n[bad FEN: {ex}]\n{fen}\n```"
     cap = f"{side} to move. Capitals = White, lower case = Black." + (f" {note}" if note else "")
@@ -231,6 +232,18 @@ def render_step(n, st, items, positions):
         out.append("The moves, with the sentence the learner sees:\n" + "\n".join(f"{n2}. {r}" for n2, r in enumerate(rows, 1)))
         out.append(diagram(b.fen(), learner or "white", "Position at the end."))
         if st.get("end"): out.append(f"Closing sentence: {st['end']}")
+    elif t == "reach":
+        out.append(f"Title: {st.get('title') or 'Grab the stars'}\n\nGrab the stars: the learner moves their piece (not the king, unless it is the only one) and collects a star "
+                   "each time it lands on a starred square. The other side never moves; moves that would give check are not offered. "
+                   "The learner sees a move counter, the best number and a 1-3 star rating that never blocks going on.")
+        rounds = [st] + [{"fen": r.get("fen", st.get("fen")), "order": r.get("order", st.get("order", "any")), **r} for r in st.get("rounds") or []]
+        for n2, r in enumerate(rounds, 1):
+            head = f"**Round {n2} of {len(rounds)}**: " if len(rounds) > 1 else ""
+            order = "in this order" if r.get("order") == "in-order" else "in any order"
+            out.append(f"{head}stars on {', '.join(r.get('stars') or [])} ({order}); best {r.get('par', '?')} moves." + (f"\n\nSentence under the board: {r['say']}" if r.get("say") else ""))
+            try: side = "black" if chess.Board(r["fen"]).turn == chess.BLACK else "white"
+            except Exception: side = "white"
+            out.append(diagram(r.get("fen", ""), side, "Starting position; * marks an empty starred square (a star on an enemy piece shows the piece).", r.get("stars") or ()))
     elif t == "finale":
         out.append(f"Prompt: {st.get('prompt', '')}\n\nThe learner plays {st.get('color')} from this position, using what the lesson taught.")
         out.append(diagram(st["fen"], "black" if st.get("color") == "black" else "white"))
@@ -271,7 +284,7 @@ Revision to review: `{rev}`. If the lesson text changes after your review, your 
 def render_lesson(l, items, positions, stage=""):
     rev = revision(l)
     steps = l.get("steps", [])
-    n_task = sum(1 for s in steps if s.get("type") in ("item", "contrast", "practice", "finale"))
+    n_task = sum(1 for s in steps if s.get("type") in ("item", "contrast", "practice", "finale", "reach"))
     out = [f"# Review packet: {l['id']}", "",
            f"**{l.get('title', '')}**", "",
            f"- Skill: {l.get('skill')} ({l.get('depth')}); stage: {stage or 'n/a'}; stated length: {l.get('minutes', '?')} minutes",

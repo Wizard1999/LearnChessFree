@@ -5,6 +5,7 @@ import { ChessBoard } from './ChessBoard'
 import { ItemPlayer, type ItemResult } from './ItemPlayer'
 import { LinePlayer } from './LinePlayer'
 import { GuidedGame } from './GuidedGame'
+import { ReachStep } from './ReachStep'
 import { db, type AttemptSource } from '../db'
 import { planResume, finishedEarlierVersion, placeOf, REWRITTEN_QUESTION } from '../lib/resume'
 import { saveStep, saveFinished } from '../lib/lessonSave'
@@ -250,6 +251,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       {step.type === 'contrast' && <ContrastStep key={`${lesson.id}:${i}`} step={step} lessonId={lesson.id} onNext={next} />}
       {step.type === 'reflect' && <ReflectStep step={step} lessonId={lesson.id} onNext={next} />}
       {step.type === 'guided' && <GuidedGame key={`${lesson.id}:${i}`} fen={step.fen} moves={step.moves ?? []} title={step.title} end={step.end} onDone={next} playedKey={`${lesson.id}:${placeOf(lesson, i).sid ?? i}`} />}
+      {step.type === 'reach' && <ReachStep key={`${lesson.id}:${i}`} step={step} onDone={next} />}
       {step.type === 'finale' && (
         <section className="card">
           <h3>Play it out</h3>

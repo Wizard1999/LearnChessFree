@@ -6,7 +6,7 @@
 Per lesson: steps, boards, board share (boards + items/contrasts with a position, over steps), words in cards,
 cards with 4 or more moves in prose, and the class target it misses. Class is inferred from the id prefix:
 L-OD- = C (opening deep dive), L-FG- = E (famous game), L-HI-/L-PS- = D (culture), lessons in stages S0-S1
-of content/path.json = A, everything else = B. Boards counted: board, contrast and guided-game steps.
+of content/path.json = A, everything else = B. Boards counted: board, contrast, guided-game and reach steps.
 """
 import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent))
 import json, statistics, collections
@@ -30,6 +30,7 @@ def target(cls, stage):
         lo, hi, mx = STAGE_STEPS[stage]
         return lo, hi, share, mx
     return lo, hi, share, None
+BOARD_STEPS = ("board", "contrast", "guided", "reach")   # step types that count as a board (tools/readiness.py uses the same tuple)
 NAME = {"A": "beginner block", "B": "core skill", "C": "opening deep dive", "D": "culture/history", "E": "famous game"}
 
 
@@ -47,6 +48,7 @@ def lessonMinutes(steps):
         elif k == "reflect": t += 1
         elif k == "practice": t += min(x.get("n") if x.get("n") is not None else 3, 3) * 0.7
         elif k == "guided": t += 0.4 + 0.15 * len(x.get("moves") or [])
+        elif k == "reach": t += 0.25 * (len(x.get("stars") or []) + sum(len(r.get("stars") or []) for r in x.get("rounds") or []))
     return max(3, math.floor(t + 0.5))
 
 
@@ -65,7 +67,7 @@ def main():
     for f in sorted((ROOT / "content" / "lessons").glob("*.json")):
         d = json.loads(f.read_text(encoding="utf-8"))
         st = d.get("steps", [])
-        boards = sum(s.get("type") in ("board", "contrast", "guided") for s in st)
+        boards = sum(s.get("type") in BOARD_STEPS for s in st)
         cards = [s.get("text", "") for s in st if s.get("type") == "card"]
         words = sum(len(t.split()) for t in cards)
         heavy = sum(card_moves(t) >= MOVES_LIMIT for t in cards)

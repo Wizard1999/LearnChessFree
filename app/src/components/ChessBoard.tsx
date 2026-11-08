@@ -47,7 +47,13 @@ export interface Props {
   controlMap?: boolean
   /** Called the first time the control map is switched on: in a test or a game that use counts as a hint. */
   onControlUse?: () => void
+  /** Stars drawn on squares (the reach step, docs/reach-step.md). `n` numbers them, `dim` marks one that does not count yet, `gone` plays the
+   * collect animation once. Each live star is also read out with its square ("e4, empty, star"). */
+  stars?: StarMark[]
+  /** Leaves check, mate and draw out of the spoken position updates (a reach step is not a game: the other side never moves). */
+  noGameStatus?: boolean
 }
+export interface StarMark { sq: string; n?: number; dim?: boolean; gone?: boolean }
 
 /** Arrow colours of the Scholarmate look, read from its tokens (jade, persimmon, cobalt, gold) so they follow light and dark; undefined in the other looks, which keep Chessground's own. */
 function lookBrushes(): Partial<DrawBrushes> | undefined {
@@ -59,7 +65,7 @@ function lookBrushes(): Partial<DrawBrushes> | undefined {
 }
 
 /** Thin React wrapper around Chessground (GPL-3.0-or-later): rendering, drag/touch input, arrows, highlights. */
-export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false, onControlUse }: Props) {
+export function ChessBoard({ fen, orientation = 'white', movable = null, picker = null, shapes = [], highlight = [], marks, lastMove = null, check = false, label, edit = null, apiRef , controlMap: controlMapOn = false, onControlUse, stars, noGameStatus = false }: Props) {
   const el = useRef<HTMLDivElement>(null)
   const api = useRef<Api | null>(null)
   const cb = useRef({ movable, picker, edit })
@@ -152,12 +158,13 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       const p = pieces.get(lastMove[1])
       if (p && (!movable || movable.color !== (p.color === 'w' ? 'white' : 'black'))) t = `${p.color === 'w' ? 'White' : 'Black'} ${announce.moved(lastMove[1], p).replace(/^Moved /, 'moved ')}`
     }
-    const full = [t, st.text].filter(Boolean).join(' ')
+    const full = [t, noGameStatus ? '' : st.text].filter(Boolean).join(' ')
     if (full) say(full)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen])
 
   const cellId = (sq: string) => `${uid}-sq-${sq}`
+  const starWords = (sq: string) => { const s = stars?.find(x => x.sq === sq && !x.gone); return s ? `, star${s.n !== undefined ? ` ${s.n}` : ''}` : '' }
   const startSquare = () => {
     if (movable) { const first = order.find(sq => (movable.dests.get(sq as Key)?.length ?? 0) > 0); if (first) return first }
     return orientation === 'white' ? 'e2' : 'e7'
@@ -264,10 +271,20 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
         {[0, 1, 2, 3, 4, 5, 6, 7].map(r => (
           <div key={r} role="row" className="kbdrow">
             {order.slice(r * 8, r * 8 + 8).map(sq => (
-              <div key={sq} id={cellId(sq)} role="gridcell" className="kbdcell" aria-selected={kbSel === sq} aria-label={squareLabel(sq, pieces.get(sq))} />
+              <div key={sq} id={cellId(sq)} role="gridcell" className="kbdcell" aria-selected={kbSel === sq} aria-label={squareLabel(sq, pieces.get(sq)) + starWords(sq)} />
             ))}
           </div>
         ))}
+        {stars && stars.length > 0 && (
+          <div className="starlayer" aria-hidden="true">
+            {stars.map(s => { const p = screenPos(s.sq, orientation); return (
+              <span key={`${s.sq}${s.gone ? '-gone' : ''}`} className={`boardstar${s.dim ? ' dim' : ''}${s.gone ? ' gone' : ''}${pieces.has(s.sq) && !s.gone ? ' onpiece' : ''}`} style={{ left: `${p.col * 12.5}%`, top: `${p.row * 12.5}%` }}>
+                <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2.2l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" /></svg>
+                {s.n !== undefined && !s.gone && <b>{s.n}</b>}
+              </span>
+            ) })}
+          </div>
+        )}
         {interactive && focused && cursorPos && <span className="kbdcursor" aria-hidden="true" style={{ left: `${cursorPos.col * 12.5}%`, top: `${cursorPos.row * 12.5}%` }} />}
         {interactive && selPos && <span className="kbdselected" aria-hidden="true" style={{ left: `${selPos.col * 12.5}%`, top: `${selPos.row * 12.5}%` }} />}
       </div>

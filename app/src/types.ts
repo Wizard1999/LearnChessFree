@@ -81,8 +81,14 @@ export type LessonStep = StepMeta & (
   | { type: 'finale'; fen: string; color?: 'white' | 'black' | 'both'; prompt?: string; moves?: string[] }
   /** A guided game (docs/first-game-design.md): the learner plays the marked moves (SAN), the opponent replies by itself, one sentence per move. */
   | { type: 'guided'; fen?: string; title?: string; moves: GuidedMove[]; end?: string }
+  /** Grab the stars (docs/reach-step.md): the learner moves a piece to collect a star on each target square; the other side never moves. */
+  | ({ type: 'reach' } & ReachStepSpec)
 )
 export interface GuidedMove { move: string; by: 'learner' | 'opponent'; say?: string; hint?: string }
+/** One round of a reach step. In `rounds`, fen and order may be left out (they default to the step's own). */
+export interface ReachRoundSpec { fen?: string; stars: string[]; order?: 'any' | 'in-order'; par?: number; say?: string }
+/** A reach step: its own fen, stars, order, par and say are round 1; `rounds` adds further rounds played one after another. */
+export interface ReachStepSpec { fen: string; title?: string; stars: string[]; order?: 'any' | 'in-order'; par?: number; say?: string; rounds?: ReachRoundSpec[] }
 
 /** A step's stable id and chapter name: all the catalog keeps of a lesson's steps (their bodies are in the lesson's own file). */
 export interface StepRef { sid: string; chapter?: string }

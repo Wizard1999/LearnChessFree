@@ -16,7 +16,7 @@ States: 'not started' (no evidence yet), 'in progress', 'ready for a first audie
 import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent))  # allow `python -I tools/<script>.py`
 import json, re
 from pathlib import Path
-from check_depth import TARGET, classify, target, stage_map, lessonMinutes
+from check_depth import TARGET, classify, target, stage_map, lessonMinutes, BOARD_STEPS
 from check_text_notation import card_moves, MOVES_LIMIT
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -36,7 +36,7 @@ def meets_depth(lesson, early, stage=None):
     steps = lesson.get("steps", [])
     cls = classify(lesson["id"], early)
     lo, hi, share, mx = target(cls, stage)
-    boards = sum(s.get("type") in ("board", "contrast", "guided") for s in steps)
+    boards = sum(s.get("type") in BOARD_STEPS for s in steps)
     heavy = sum(card_moves(s.get("text", "")) >= MOVES_LIMIT for s in steps if s.get("type") == "card")
     ok = lo <= len(steps) <= hi and (mx is None or lessonMinutes(steps) <= mx) and (boards / len(steps) if steps else 0) >= share and not heavy
     return cls, ok, heavy

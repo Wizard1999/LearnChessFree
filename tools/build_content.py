@@ -40,6 +40,7 @@ def lesson_minutes(steps):
         elif k == "reflect": t += 1
         elif k == "practice": t += min(s.get("n") if s.get("n") is not None else 3, 3) * 0.7
         elif k == "guided": t += 0.4 + 0.15 * len(s.get("moves") or [])
+        elif k == "reach": t += 0.25 * (len(s.get("stars") or []) + sum(len(r.get("stars") or []) for r in s.get("rounds") or []))
     return max(3, math.floor(t + 0.5))
 
 
@@ -124,6 +125,7 @@ def main():
         elif t == "reflect": raw = st.get("prompt", "")[:40]
         elif t == "finale": raw = st.get("fen", "") + "|" + str(st.get("color", ""))
         elif t == "guided": raw = (st.get("fen") or "start") + "|" + "|".join(m.get("move", "") for m in (st.get("moves") or [])[:4])
+        elif t == "reach": raw = st.get("fen", "") + "|" + ",".join(st.get("stars") or [])
         else: raw = json.dumps(st, sort_keys=True)[:60]
         return t[0] + hashlib.sha1((t + "|" + raw).encode("utf-8")).hexdigest()[:7]
     for l in lessons:

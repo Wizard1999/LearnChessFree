@@ -30,6 +30,11 @@ describe('practice and contrast steps', () => {
     expect(stepMinutes({ type: 'guided', moves } as never)).toBeCloseTo(1.6)
     expect(stepMinutes({ type: 'guided' } as never)).toBeCloseTo(0.4)
   })
+  it('counts a reach step as 0.25 per star, every round included (tools/test_reach.py checks the Python side)', () => {
+    expect(stepMinutes({ type: 'reach', fen: 'x', stars: ['a1', 'b2'] } as never)).toBeCloseTo(0.5)
+    expect(stepMinutes({ type: 'reach', fen: 'x', stars: ['a1', 'b2'], rounds: [{ stars: ['c3'] }, { stars: ['d4'] }] } as never)).toBeCloseTo(1)
+    expect(lessonMinutes({ ...base, steps: Array(4).fill({ type: 'reach', fen: 'x', stars: ['a5', 'd5'], rounds: [{ stars: ['c3'] }, { stars: ['d5'] }] }) } as unknown as Lesson)).toBe(4)
+  })
 })
 
 describe('aboutMinutes', () => {

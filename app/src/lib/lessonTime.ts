@@ -5,7 +5,7 @@ export const PRACTICE_COUNTED = 3
 
 /** Planned minutes for one step, estimated from what is in it: reading at about 200 words a minute, 0.8 min per exercise, 0.7 per
  * counted practice question (only the first three: the rest is optional), 1.5 for a contrast trio, 1 for a reflection, 0.4 for a board,
- * 0.4 plus 0.15 per move for a guided game.
+ * 0.4 plus 0.15 per move for a guided game, 0.25 per star for a reach step (every round's stars).
  * A planning estimate [I], not a measurement: lib/measuredTime.ts replaces it with the learner's own pace once enough steps are timed. */
 export function stepMinutes(s: LessonStep): number {
   switch (s.type) {
@@ -16,6 +16,10 @@ export function stepMinutes(s: LessonStep): number {
     case 'reflect': return 1
     case 'practice': return Math.min(s.n ?? 3, PRACTICE_COUNTED) * 0.7
     case 'guided': return 0.4 + 0.15 * (Array.isArray(s.moves) ? s.moves.length : 0)
+    case 'reach': {
+      const n = (x: { stars?: unknown }) => (Array.isArray(x.stars) ? x.stars.length : 0)
+      return 0.25 * (n(s) + (Array.isArray(s.rounds) ? s.rounds.reduce((a, r) => a + n(r), 0) : 0))
+    }
     default: return 0
   }
 }
