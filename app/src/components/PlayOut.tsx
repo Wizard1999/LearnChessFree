@@ -147,8 +147,8 @@ export function PlayGame({ startFen, humanColor, botId, opponent, maxMoves, allo
       </p>
       {useMaia && maiaFailed && <p className="warn small" role="status">Maia could not load here ({maiaFailed}). This usually means you are offline for the first time, or this browser lacks WebAssembly. The game goes on against the Stockfish level closest to Maia {maiaRating} ({bot.label}); nothing is lost.</p>}
       {moveText && <p className="moves small">{moveText}</p>}
-      <div className="row">
-        {!end && allowHint && humanTurn && !thinking && <button type="button" onClick={hint}>Ask the engine for a move ({hintsUsed} used)</button>}
+      <div className="row actionbar">
+        {!end && allowHint && humanTurn && !thinking && <button type="button" onClick={hint}><span className="longlabel">Ask the engine for a move ({hintsUsed} used)</span><span className="shortlabel" aria-hidden="true">Hint ({hintsUsed} used)</span></button>}
         {!end && <button type="button" onClick={() => finish({ outcome: 'resigned', reason: 'You stopped this game.', moves: chess.current.history(), pgn: chess.current.pgn() })}>Stop</button>}
       </div>
     </div>
@@ -180,7 +180,7 @@ export function PlayOut({ item, source, onDone, nextLabel = 'Next' }: { item: It
           <ResultMark kind={res.ok ? 'correct' : 'unsuccessful'} />
           <p><strong>{res.ok ? 'Goal reached.' : 'Goal not reached.'}</strong> {res.reason}</p>
           {item.explain && <p>{item.explain}</p>}
-          {onDone && <button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button>}
+          {onDone && <div className="nextbar actionbar"><button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button></div>}
         </div>
       )}
     </section>

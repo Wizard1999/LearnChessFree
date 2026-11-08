@@ -9,6 +9,7 @@ import { LessonPlayer } from '../components/LessonPlayer'
 import { connectionsFor } from '../lib/connections'
 import type { LessonMeta } from '../types'
 import { ReviewPanel } from '../components/ReviewPanel'
+import { usePhone } from '../lib/usePhone'
 
 function LessonBody({ meta }: { meta: LessonMeta }) {
   const { lesson, failed, retry } = useLesson(meta)
@@ -17,6 +18,7 @@ function LessonBody({ meta }: { meta: LessonMeta }) {
 }
 
 export function LessonPage() {
+  const phone = usePhone() // phones: the lesson tools fold so the board comes sooner (docs/mobile-design.md)
   const { id } = useParams()
   const { lessonById, skillById, lessons } = useContent()
   const lesson = id ? lessonById.get(id) : undefined
@@ -27,7 +29,9 @@ export function LessonPage() {
       <p className="small muted"><Link to="/course">Curriculum</Link> › {sk?.title ?? lesson.skill} › {lesson.depth}</p>
       <h1>{lesson.title}</h1>
       <p className="muted small">Planned: {aboutMinutes(lessonMinutes(lesson))}</p>
-      <p className="small lessontools"><button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now(), skipped: true })}>Skip this lesson</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now() })}>Mark finished</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.delete(lesson.id).then(() => location.reload())}>Start this lesson over</button> · <Link to="/course?view=lessons">All lessons</Link></p>
+      {phone
+        ? <details className="lessonmore small"><summary>Lesson options</summary><p className="small lessontools"><button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now(), skipped: true })}>Skip this lesson</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now() })}>Mark finished</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.delete(lesson.id).then(() => location.reload())}>Start this lesson over</button> · <Link to="/course?view=lessons">All lessons</Link></p></details>
+        : <p className="small lessontools"><button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now(), skipped: true })}>Skip this lesson</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.put({ lessonId: lesson.id, step: lesson.stepCount, done: true, ts: Date.now() })}>Mark finished</button> · <button type="button" className="link" onClick={() => void db.lessonProgress.delete(lesson.id).then(() => location.reload())}>Start this lesson over</button> · <Link to="/course?view=lessons">All lessons</Link></p>}
       <LessonBody key={lesson.id} meta={lesson} />
       <ReviewPanel key={`rev-${lesson.id}`} lessonId={lesson.id} />
       {(() => { const c = connectionsFor(lesson, lessons, skillById); const row = (label: string, ls: typeof lessons) => ls.length > 0 && <p className="small" key={label}><strong>{label}:</strong> {ls.map((l, i) => <span key={l.id}>{i > 0 && ' · '}<Link to={`/lesson/${l.id}`}>{l.title}</Link></span>)}</p>

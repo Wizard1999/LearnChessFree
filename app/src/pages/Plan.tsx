@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { kvGet, kvSet } from '../db'
 import { useContent } from '../lib/content'
 import { useAttempts } from '../lib/progress'
-import { pickFresh } from '../lib/select'
+import { planTestSet } from '../lib/select'
 import { ItemSequence } from '../components/LessonPlayer'
 import type { Item } from '../types'
 
@@ -43,11 +43,8 @@ export function PlanPage() {
   const testItems = useMemo<Item[]>(() => {
     if (!mode || !active || !attempts) return []
     const pool = content.items.filter(i => i.skill === active.focus && i.cue >= 3)
-    const exclude = new Set(mode.kind === 'check' ? active.baseline?.itemIds ?? [] : [])
-    // families already used at baseline are excluded too, so the check measures transfer to new positions, not memory
-    const baseFamilies = new Set((active.baseline?.itemIds ?? []).map(id => content.itemById.get(id)?.family))
-    const filtered = mode.kind === 'check' ? pool.filter(i => !exclude.has(i.id) && !baseFamilies.has(i.family)) : pool
-    return pickFresh(filtered, attempts, 8, `plan:${active.id}:${mode.kind}`)
+    // strict families; the check also excludes baseline exercises and families, so it measures transfer to new positions, not memory
+    return planTestSet(pool, attempts, mode.kind, active.baseline, id => content.itemById.get(id)?.family, 8, `plan:${active.id}:${mode.kind}`)
   }, [mode, active, attempts, content])
 
   if (mode && active) {
@@ -55,6 +52,7 @@ export function PlanPage() {
       <main className="page">
         <h1>{mode.kind === 'baseline' ? 'Baseline' : 'Check'}: {active.focus}</h1>
         <p className="muted small">{mode.kind === 'baseline' ? 'Silent: no hints. This records where you start so the later check means something.' : 'Silent again, on positions you have not seen. If you improved, it should show here.'}</p>
+        {testItems.length > 0 && testItems.length < 8 && <p className="muted small">This set has {testItems.length} position{testItems.length === 1 ? '' : 's'} instead of 8: each comes from a different family, so no two are variations of one position.</p>}
         <ItemSequence items={testItems} source="practice" silent intro={mode.kind} onComplete={async r => {
           const ok = r.filter(x => x.correct).length
           const next = plans.map(p => p.id !== active.id ? p : mode.kind === 'baseline' ? { ...p, baseline: { ts: Date.now(), ok, n: r.length, itemIds: testItems.map(i => i.id) } } : { ...p, check: { ts: Date.now(), ok, n: r.length } })

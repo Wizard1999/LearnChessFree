@@ -2,7 +2,7 @@ import { GeoArt } from '../components/GeoArt'
 import { Crest } from '../components/Crest'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useContent, useContentFull } from '../lib/content'
+import { useContent, useContentFull, useLesson } from '../lib/content'
 import { MapPreview } from '../components/MapPreview'
 import { BackupNudge } from '../components/BackupNudge'
 import { independence, masteryMap, nextLessons, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from '../lib/progress'
@@ -15,7 +15,10 @@ import { describeMastery } from '../lib/mastery'
 import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/drill'
 import { useStorageStatus } from '../lib/persist'
 import { stageLine, stageProgress } from '../lib/stageProgress'
-import { FirstGameInvite } from '../components/FirstGameInvite'
+import { FirstGameInvite, useFirstGameInvite } from '../components/FirstGameInvite'
+import { GuidedGame } from '../components/GuidedGame'
+import { anyLessonDone, firstGuided, GENTLE_PLAY_PATH } from '../lib/firstGame'
+import type { LessonMeta } from '../types'
 
 const NONE: never[] = []
 
@@ -29,6 +32,9 @@ export function Today() {
   const [doneIds, setDoneIds] = useState<string[]>([])
   // The block being worked on is a snapshot: finishing a lesson changes what 'the next lesson' is, and the screen must not switch under the learner.
   const [active, setActive] = useState<Block | null>(null)
+  // The hook (D56): on the start screen, "Start learning" first opens the guided game of the first lesson that has one, a board and a marked move within seconds.
+  const [hook, setHook] = useState(false)
+  const inviteUp = useFirstGameInvite()
   const [extras, setExtras] = useState<Extras>(NO_EXTRAS)
   const missionData = useMissionData()
   const storage = useStorageStatus()
@@ -86,6 +92,7 @@ export function Today() {
     const next = [...new Set([...doneIds, id])]
     setDoneIds(next); setActive(null); await kvSet(`daily:${day}:done`, next)
   }
+  const guided = useMemo(() => firstGuided(content.lessons), [content.lessons])
   if (!ready) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
 
   const activeBlock = active
@@ -107,6 +114,17 @@ export function Today() {
     return <button type="button" className={cls} onClick={() => setActive(b)}>{done ? 'Do it again' : 'Start'}</button>
   }
 
+  const guidedMeta = guided ? content.lessonById.get(guided.lessonId) : undefined
+  if (firstLesson && !activeBlock && hook && guided && guidedMeta) {
+    return (
+      <main className="page startpage hookpage">
+        <h1 className="sr-only">Your first moves</h1>
+        <HookGame meta={guidedMeta} sid={guided.sid} nextLabel={`Next: ${firstLesson.title}`} onNext={() => { setHook(false); setActive(firstLesson) }} />
+        <p className="small"><button type="button" className="link" onClick={() => setHook(false)}>← Back</button></p>
+      </main>
+    )
+  }
+
   if (firstLesson && !activeBlock) {
     return (
       <main className="page startpage">
@@ -119,9 +137,9 @@ export function Today() {
           <p className="eyebrow">First lesson · about {firstLesson.minutes} min</p>
           <h2>{firstLesson.title}</h2>
           <p>Lessons run in order from the beginning, and each one has you try things on a real board. Already know the basics? Skip ahead below.</p>
-          <div className="row">{action(firstLesson, true, 'Start learning')}</div>
+          <div className="row">{guidedMeta ? <button type="button" className="primary big" onClick={() => setHook(true)}>Start learning</button> : action(firstLesson, true, 'Start learning')}</div>
         </section>
-        <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting level <span className="muted">(about 15 minutes, optional)</span></Link><Link to="/course">See the whole course</Link></div>
+        <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting level <span className="muted">(about 15 minutes, optional)</span></Link><Link to="/course">See the whole course</Link><Link to={GENTLE_PLAY_PATH}>Just play a game</Link></div>
         <details className="small howitworks">
           <summary>How this school works</summary>
           <ul>
@@ -149,7 +167,7 @@ export function Today() {
               <p className="eyebrow">Up next · about {upNext.minutes} min</p>
               <h2>{upNext.title}</h2>
               <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
-              <div className="row">{action(upNext, true)}</div>
+              <div className="row">{action(upNext, true)}{anyLessonDone(P) && inviteUp === false && <Link className="button" to={GENTLE_PLAY_PATH}>Play now</Link>}</div>
             </section>
           ) : blocks.length > 0 ? (
             <section className="card hero">
@@ -219,6 +237,16 @@ export function Today() {
       {!activeBlock && <BackupNudge />}
     </main>
   )
+}
+
+/** The guided game of the first lesson that has one, played on its own from the start screen; then the first lesson. If it cannot load, the first lesson opens. */
+function HookGame({ meta, sid, nextLabel, onNext }: { meta: LessonMeta; sid: string; nextLabel: string; onNext: () => void }) {
+  const { lesson, failed } = useLesson(meta)
+  const step = lesson?.steps.find(s => s.sid === sid)
+  const missing = failed || (!!lesson && (!step || step.type !== 'guided'))
+  useEffect(() => { if (missing) onNext() }, [missing]) // eslint-disable-line react-hooks/exhaustive-deps -- once, when it turns out missing
+  if (!step || step.type !== 'guided') return <p className="muted">Setting up the board…</p>
+  return <GuidedGame fen={step.fen} moves={step.moves ?? []} title={step.title ?? 'Your first moves'} end={step.end} onDone={onNext} doneLabel={nextLabel} playedKey={`${meta.id}:${sid}`} />
 }
 
 function ReflectToday({ onDone, intention }: { onDone: () => void; intention: string | null }) {

@@ -158,10 +158,21 @@ export const MIN_BAND_SAMPLES = 8
 export interface BandAccuracy { band: ConfidenceBand; n: number; correct: number; accuracy: number | null; enough: boolean }
 export interface ConfidenceMiss { itemId: string; skillKey: string; ts: number }
 
+/** The probability of being right that each confidence band stands for (a pilot reading of "low / medium / high", not a measurement). */
+export const CONFIDENCE_P: Record<ConfidenceBand, number> = { low: 0.3, medium: 0.6, high: 0.9 }
+/** Brier score of one answer: squared distance between the stated probability and the result (0 best, 1 worst). A proper scoring
+ *  rule: the expected score is lowest when the stated probability is the true one, so honest reporting is never beaten by bravado.
+ *  (Absolute error is not proper: with a true rate of 0.7 it gives 0.42 for saying 0.7 but 0.34 for saying 0.9.) */
+export const brier = (p: number, correct: boolean) => (p - (correct ? 1 : 0)) ** 2
+/** Expected Brier score when stating `reported` while the true chance of being right is `trueP`. */
+export const expectedBrier = (reported: number, trueP: number) => trueP * brier(reported, true) + (1 - trueP) * brier(reported, false)
+export interface ConfidenceScore { n: number; score: number | null; enough: boolean }
+
 /**
  * Independence ledger: how often the learner got it right unprompted (cue >= 3, no hints) in the last N attempts, and how the
- * learner's stated confidence relates to the result. Confidence is reported as accuracy by band with sample sizes (no single
- * "calibration" number: an absolute-error score rewards always saying "high"), and the recent high-confidence misses are listed for review.
+ * learner's stated confidence relates to the result. Confidence is reported as accuracy by band with sample sizes, plus one mean
+ * Brier score (a proper scoring rule; absolute error was dropped because it rewards always saying "high"), and the recent
+ * high-confidence misses are listed for review.
  */
 export function independence(attempts: Attempt[], last = 60) {
   const recent = evidenceAttempts(attempts).sort((x, y) => x.ts - y.ts).filter(a => a.firstAttempt).slice(-last)
@@ -176,11 +187,15 @@ export function independence(attempts: Attempt[], last = 60) {
   })
   const highMisses: ConfidenceMiss[] = withConf.filter(a => a.confidence === 'high' && !a.correct).slice(-5).reverse()
     .map(a => ({ itemId: a.itemId, skillKey: a.skillKey, ts: a.ts }))
+  const scoreEnough = withConf.length >= MIN_BAND_SAMPLES
+  const confidenceScore: ConfidenceScore = { n: withConf.length, enough: scoreEnough,
+    score: scoreEnough ? withConf.reduce((s, a) => s + brier(CONFIDENCE_P[a.confidence!], a.correct), 0) / withConf.length : null }
   return {
     counted: recent.length,
     hintRate: cued.length ? 1 - unprompted.length / cued.length : null,
     unpromptedAccuracy: unprompted.length ? unprompted.filter(a => a.correct).length / unprompted.length : null,
     confidenceBands,
+    confidenceScore,
     highMisses,
   }
 }

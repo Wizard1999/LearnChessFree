@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { GENTLE_PLAY_PATH, colorFromParams, helpFromParams, inviteSlot, isExplicitPlay, opponentFromParams, rulesDone, showInvite } from './firstGame'
+import { CHECK_LESSON_ID, GENTLE_PLAY_PATH, anyLessonDone, colorFromParams, firstGuided, helpFromParams, inviteSlot, isExplicitPlay, opponentFromParams, rulesDone, rulesStarted, showInvite } from './firstGame'
 import { DEFAULT_OPPONENT } from './maia'
 
 const L = (id: string, stage?: string) => ({ id, stage })
@@ -19,6 +19,39 @@ describe('rulesDone', () => {
   })
 })
 
+describe('rulesStarted (the invitation trigger)', () => {
+  it('any finished lesson of S1 is enough', () => {
+    expect(rulesStarted(lessons, done('c'))).toBe(true)
+    expect(rulesStarted(lessons, done('a', 'b'))).toBe(false)
+    expect(rulesStarted(lessons, [{ lessonId: 'c', done: false }])).toBe(false)
+  })
+  it('finishing the check lesson is enough wherever the path puts it', () => {
+    expect(rulesStarted([L('a', 'S0'), L(CHECK_LESSON_ID, 'S2')], done(CHECK_LESSON_ID))).toBe(true)
+    expect(rulesStarted([], done(CHECK_LESSON_ID))).toBe(true)
+  })
+})
+
+describe('anyLessonDone (the Play now button)', () => {
+  it('needs one finished lesson', () => {
+    expect(anyLessonDone([])).toBe(false)
+    expect(anyLessonDone([{ lessonId: 'a', done: false }])).toBe(false)
+    expect(anyLessonDone(done('a'))).toBe(true)
+  })
+})
+
+describe('firstGuided (what the Start button opens)', () => {
+  const M = (id: string, order: number, sids: string[], course?: string) => ({ id, order, course, stepRefs: sids.map(sid => ({ sid })) })
+  it('finds the first guided step in path order', () => {
+    expect(firstGuided([M('x', 2, ['c1', 'gabc']), M('y', 1, ['c2', 'b3'])])).toEqual({ lessonId: 'x', sid: 'gabc' })
+    expect(firstGuided([M('x', 2, ['g1']), M('y', 1, ['g2'])])).toEqual({ lessonId: 'y', sid: 'g2' })
+  })
+  it('ignores course lessons and lessons far down the path', () => {
+    expect(firstGuided([M('k', 1, ['g1'], 'italian')])).toBeNull()
+    expect(firstGuided([M('a', 1, ['c']), M('b', 2, ['c']), M('c', 3, ['c']), M('d', 4, ['g9'])])).toBeNull()
+  })
+  it('is null with no guided step (the start screen then opens the first lesson as before)', () => { expect(firstGuided([M('a', 1, ['c1'])])).toBeNull() })
+})
+
 describe('showInvite', () => {
   const base = { lessons, progress: done('a', 'b', 'c'), hasPlayed: false, dismissedUntil: null, now: 1000 }
   it('shows once the rules are done', () => { expect(showInvite(base)).toBe(true) })
@@ -27,7 +60,8 @@ describe('showInvite', () => {
     expect(showInvite({ ...base, dismissedUntil: 5000 })).toBe(false)
     expect(showInvite({ ...base, dismissedUntil: 5000, now: 5000 })).toBe(true)
   })
-  it('hides before the rules are done', () => { expect(showInvite({ ...base, progress: done('a') })).toBe(false) })
+  it('hides before the rules are started', () => { expect(showInvite({ ...base, progress: done('a') })).toBe(false) })
+  it('shows after one S1 lesson, before the whole stage is done', () => { expect(showInvite({ ...base, progress: done('c') })).toBe(true) })
 })
 
 describe('inviteSlot', () => {

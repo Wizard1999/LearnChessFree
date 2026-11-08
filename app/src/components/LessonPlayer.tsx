@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ChessBoard } from './ChessBoard'
 import { ItemPlayer, type ItemResult } from './ItemPlayer'
 import { LinePlayer } from './LinePlayer'
+import { GuidedGame } from './GuidedGame'
 import { db, type AttemptSource } from '../db'
 import { planResume, finishedEarlierVersion, placeOf, REWRITTEN_QUESTION } from '../lib/resume'
 import { saveStep, saveFinished } from '../lib/lessonSave'
@@ -90,7 +91,7 @@ function ReflectStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { t
         </label>
       ))}
       {failed ? <p className="small warn-text" role="status">This note could not be saved on this device. You can still continue.</p> : saved ? <p className="muted small" role="status">Saved on this device.</p> : <p className="muted small">Saved only on this device. You can skip this.</p>}
-      <div className="row">
+      <div className="row actionbar">
         {!saved && <button type="button" onClick={save} disabled={Object.values(vals).every(v => !v)}>Save note</button>}
         <button type="button" className="primary" onClick={onNext}>Continue</button>
       </div>
@@ -230,15 +231,15 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       </div>
       {step.type === 'card' && (
         <section className="card">{step.title && <h3>{step.title}</h3>}<RichText text={step.text} />
-          <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
+          <div className="row actionbar"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
       )}
       {step.type === 'board' && (
         step.line && step.line.length > 0
           ? <section className="card"><LinePlayer fen={step.fen} line={step.line} caption={step.caption} arrows={step.arrows} highlight={step.highlight} readAloud />
-              <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
+              <div className="row actionbar"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
           : <section className="card"><ChessBoard fen={step.fen} orientation={sideToMove(step.fen)} shapes={(step.arrows ?? []).map(a => ({ from: a.from, to: a.to }))} highlight={step.highlight} controlMap />
               {step.caption && <p className="caption">{step.caption}</p>}
-              <div className="row"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
+              <div className="row actionbar"><button type="button" className="primary" onClick={next}>Continue</button></div></section>
       )}
       {step.type === 'item' && (() => {
         const it = content.itemById.get(step.item)
@@ -248,6 +249,17 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       {step.type === 'practice' && <ItemSequence items={practice} source="lesson" silent={step.silent} askConfidence={step.ask_confidence} loopShown={loopLevel} onComplete={next} intro="Practice set" />}
       {step.type === 'contrast' && <ContrastStep key={`${lesson.id}:${i}`} step={step} lessonId={lesson.id} onNext={next} />}
       {step.type === 'reflect' && <ReflectStep step={step} lessonId={lesson.id} onNext={next} />}
+      {step.type === 'guided' && <GuidedGame key={`${lesson.id}:${i}`} fen={step.fen} moves={step.moves ?? []} title={step.title} end={step.end} onDone={next} playedKey={`${lesson.id}:${placeOf(lesson, i).sid ?? i}`} />}
+      {step.type === 'finale' && (
+        <section className="card">
+          <h3>Play it out</h3>
+          <p>{step.prompt ?? 'Play a game from the position this lesson taught.'} <span className="muted small">Optional.</span></p>
+          <div className="row actionbar">
+            <Link className="button" to={`/play?fen=${encodeURIComponent(step.fen)}&lesson=${encodeURIComponent(lesson.id)}${step.color === 'white' || step.color === 'black' ? `&color=${step.color}` : ''}`}>Play this position</Link>
+            <button type="button" className="primary" onClick={next}>Continue</button>
+          </div>
+        </section>
+      )}
     </div>
   )
 }
@@ -305,7 +317,7 @@ function ContrastStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { 
           <p>Here is a position where the idea <strong>works</strong>.{working.task === 'predict_outcome' && working.answer.outcome ? <> The result: <strong>{working.answer.outcome}</strong>.</> : null}</p>
           <ChessBoard fen={working.fen} orientation={orient} shapes={wMove ? [{ from: wMove.slice(0, 2), to: wMove.slice(2, 4) }] : []} label="The original position, where the idea works" />
           {lead.written && <p>{lead.text}</p>}
-          <div className="row"><button type="button" className="primary" onClick={advance}>Now change one thing</button></div>
+          <div className="row actionbar"><button type="button" className="primary" onClick={advance}>Now change one thing</button></div>
         </>
       )}
       {stage === 'predict' && (
@@ -324,7 +336,7 @@ function ContrastStep({ step, lessonId, onNext }: { step: Extract<LessonStep, { 
               <p>{lead.written ? lead.text : 'Look at the arrow on the original board: that is the move the idea is built on.'}</p>
             </div>
           )}
-          <div className="row"><button type="button" className="primary" onClick={() => void startAsking()}>{guess ? 'Show the changed position' : wantsExample ? 'I have seen it: show the changed position' : 'Skip the guess and look'}</button></div>
+          <div className="row actionbar"><button type="button" className="primary" onClick={() => void startAsking()}>{guess ? 'Show the changed position' : wantsExample ? 'I have seen it: show the changed position' : 'Skip the guess and look'}</button></div>
         </>
       )}
       {stage === 'failing' && (

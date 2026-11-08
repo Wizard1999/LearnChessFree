@@ -10,8 +10,8 @@ const STATES = ['not started', 'in progress', 'ready for a first audience']
 
 describe.skipIf(!existsSync(file))('readiness.json', () => {
   const r: Readiness = JSON.parse(readFileSync(file, 'utf-8'))
-  it('has the seven named areas, each with evidence', () => {
-    expect(r.areas.map(a => a.name)).toEqual(['Beginner journey', 'Core lesson quality', 'Independent assessment', 'Game integration', 'Accessibility', 'Reliability', 'Human review'])
+  it('has the six named areas, each with evidence', () => {
+    expect(r.areas.map(a => a.name)).toEqual(['Beginner journey', 'Core lesson quality', 'Independent assessment', 'Game integration', 'Accessibility', 'Reliability'])
     for (const a of r.areas) { expect(STATES).toContain(a.state); expect(a.evidence.length).toBeGreaterThan(0) }
   })
   it('is ready exactly when every condition is met, and names the next condition otherwise', () => {

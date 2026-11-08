@@ -4,7 +4,8 @@ import type { LessonStep } from '../types'
 export const PRACTICE_COUNTED = 3
 
 /** Planned minutes for one step, estimated from what is in it: reading at about 200 words a minute, 0.8 min per exercise, 0.7 per
- * counted practice question (only the first three: the rest is optional), 1.5 for a contrast trio, 1 for a reflection, 0.4 for a board.
+ * counted practice question (only the first three: the rest is optional), 1.5 for a contrast trio, 1 for a reflection, 0.4 for a board,
+ * 0.4 plus 0.15 per move for a guided game.
  * A planning estimate [I], not a measurement: lib/measuredTime.ts replaces it with the learner's own pace once enough steps are timed. */
 export function stepMinutes(s: LessonStep): number {
   switch (s.type) {
@@ -14,6 +15,7 @@ export function stepMinutes(s: LessonStep): number {
     case 'contrast': return 1.5
     case 'reflect': return 1
     case 'practice': return Math.min(s.n ?? 3, PRACTICE_COUNTED) * 0.7
+    case 'guided': return 0.4 + 0.15 * (Array.isArray(s.moves) ? s.moves.length : 0)
     default: return 0
   }
 }

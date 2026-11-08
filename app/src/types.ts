@@ -79,7 +79,10 @@ export type LessonStep = StepMeta & (
   | { type: 'reflect'; kind: string; prompt: string; fields?: ReflectField[] }
   /** An optional game from the position the lesson taught: against Maia or Stockfish, as White, Black or both (D41). */
   | { type: 'finale'; fen: string; color?: 'white' | 'black' | 'both'; prompt?: string; moves?: string[] }
+  /** A guided game (docs/first-game-design.md): the learner plays the marked moves (SAN), the opponent replies by itself, one sentence per move. */
+  | { type: 'guided'; fen?: string; title?: string; moves: GuidedMove[]; end?: string }
 )
+export interface GuidedMove { move: string; by: 'learner' | 'opponent'; say?: string; hint?: string }
 
 /** A step's stable id and chapter name: all the catalog keeps of a lesson's steps (their bodies are in the lesson's own file). */
 export interface StepRef { sid: string; chapter?: string }

@@ -16,8 +16,10 @@ import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
 import { hueOfStrand } from '../lib/hue'
 import type { LessonMeta, Skill } from '../types'
+import { usePhone } from '../lib/usePhone'
+import { Sheet } from './Sheet'
 
-interface Props { /** Controls placed at the start of the toolbar (the view, section and stage menus), so everything sits on one line. */ toolbarLead?: ReactNode; skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: LessonMeta[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null; /** The next few skills (prerequisites met): their names stay visible. */ upNext?: string[]; /** A stage (index 0..7) to light on every slice; the rest dim. */ highlightStage?: number | null }
+interface Props { /** Controls placed at the start of the toolbar (the view, section and stage menus), so everything sits on one line. */ toolbarLead?: ReactNode; /** Phones (docs/mobile-design.md): the thin top bar's lead (the view switch) and the content of the one Filters sheet. */ phoneLead?: ReactNode; phoneFilters?: ReactNode; skills: Skill[]; progress: Map<string, NodeProgress>; picked: string | null; onPick: (id: string) => void; strandNames: Record<string, string>; /** A strand to emphasise: its nodes stay bright, the rest dim, and the view moves to it. */ highlightStrand?: string | null; lessons: LessonMeta[]; lessonProgress: LessonProgress[]; /** The skill of the lesson recommended next: marked on the map so the next step is unmistakable. */ recommended?: string | null; /** The next few skills (prerequisites met): their names stay visible. */ upNext?: string[]; /** A stage (index 0..7) to light on every slice; the rest dim. */ highlightStage?: number | null }
 
 /** Text that follows an arc of a circle round the map, centred on `mid` (radians), reading upright: on the top half it runs clockwise outside the baseline,
  * on the bottom half the path is reversed so the letters are not upside down. The size shrinks to fit the arc a label may use. */
@@ -81,7 +83,7 @@ function TextRing({ id, outer, tiny, big, text, bigText, className }: { id: stri
 }
 /** The curriculum as a map: the first skill at the centre, one ring per stage of the recommended path, a wedge per subject (strand). Pan by dragging,
  * zoom with the wheel or the buttons; arrow keys move between connected skills when a skill is focused. */
-export function RadialMap({ toolbarLead, skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null, upNext = [], highlightStage = null }: Props) {
+export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progress, picked, onPick, strandNames, highlightStrand = null, lessons, lessonProgress, recommended = null, upNext = [], highlightStage = null }: Props) {
   const homeStages = useMemo(() => skillHomeStages(skills, lessons), [skills, lessons])
   const layout = useMemo(() => layoutMap(skills, homeStages), [skills, homeStages])
   const hereStage = useMemo(() => currentStageIndex(lessons, new Set(lessonProgress.filter(p => p.done).map(p => p.lessonId))), [lessons, lessonProgress])
@@ -132,6 +134,10 @@ export function RadialMap({ toolbarLead, skills, progress, picked, onPick, stran
   }
   const [q, setQ] = useState('')
   const [listOpen, setListOpen] = useState(false)
+  // phones: one Filters sheet and a search field that opens from the round search button (docs/mobile-design.md)
+  const phone = usePhone()
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const [findOpen, setFindOpen] = useState(false)
   const listRef = useRef<HTMLDivElement>(null)
   // the list follows the map: when it opens, the picked skill is scrolled into view
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
@@ -289,8 +295,14 @@ export function RadialMap({ toolbarLead, skills, progress, picked, onPick, stran
   const labelUnits = Math.max(26, Math.min(130, (15 * 2 * R) / view.k / 800)) // about 15 screen pixels, in map units
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
-    <div className="radialmap">
+    <div className={phone ? 'radialmap phonemap' : 'radialmap'}>
       <div className="mapbarwrap">
+      {phone ? (
+        <div className="mapbar phonebar">
+          {phoneLead}
+          <button type="button" className="filtersbtn" aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(true)}>Filters</button>
+        </div>
+      ) : (
       <div className="row filters mapbar">
         {toolbarLead}
         <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
@@ -304,6 +316,14 @@ export function RadialMap({ toolbarLead, skills, progress, picked, onPick, stran
         <span className="levellegend small" aria-label="Skill colours">{LEVEL_NAMES.map((nm, i) => <span key={nm} className="lvkey"><i className={`lvdot lv${i}`} />{nm}</span>)}</span>
         <span className="small"><strong>Overall {pct.all}%</strong></span>
       </div>
+      )}
+      {phone && findOpen && (
+        <div className="mapfind">
+          <input type="search" className="mapsearch" autoFocus value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) { showSkill(hits[0].n.id); setFindOpen(false) } if (e.key === 'Escape') { setFindOpen(false); setQ('') } }} />
+          <button type="button" onClick={() => { setListOpen(o => !o); setQ('') }} aria-expanded={listOpen}>List</button>
+          <button type="button" onClick={() => { setFindOpen(false); setListOpen(false); setQ('') }}>Close</button>
+        </div>
+      )}
       {/* skill names: plates in screen pixels above the map and its stage rings, planned so no two overlap and each is easy to read */}
       <div className="maplabels" aria-hidden="true" style={{ left: box.left, top: box.top, width: box.w, height: box.h }}>
         {(hotExtra ? [...labelPlan, hotExtra] : labelPlan).map(l => <span key={l.id} className={`maplabel${l.forced ? ' forced' : ''}${l.id === picked ? ' sel' : ''}${l.id === hotId ? ' hot' : ''}${hotExtra && l.id === hotExtra.id ? ` ghost${hotId === l.id ? ' on' : ''}` : ''}`} style={{ left: l.box.x, top: l.box.y, minWidth: l.box.w, height: l.box.h }}>{l.text}</span>)}
@@ -534,6 +554,27 @@ export function RadialMap({ toolbarLead, skills, progress, picked, onPick, stran
           </div>
         )
       })()}
+      {phone && (
+        <div className="mapfab" role="group" aria-label="Map controls">
+          <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in"><span aria-hidden="true">+</span></button>
+          <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out"><span aria-hidden="true">−</span></button>
+          <button type="button" onClick={fit} aria-label="Fit all"><span aria-hidden="true">⤢</span></button>
+          <button type="button" onClick={locate} aria-label="Where I am"><span aria-hidden="true">◎</span></button>
+          <button type="button" onClick={back} disabled={past.length === 0} aria-label="Back"><span aria-hidden="true">‹</span></button>
+          <button type="button" onClick={() => { setFindOpen(o => !o); setListOpen(false); setQ('') }} aria-expanded={findOpen} aria-label="Find a skill"><span aria-hidden="true">⌕</span></button>
+        </div>
+      )}
+      {phone && (
+        <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Map filters" className="filtersheet">
+          <div onClick={e => { if ((e.target as HTMLElement).closest('button.chip')) setFiltersOpen(false) }}>{phoneFilters}</div>
+          <h3>Skills</h3>
+          <div className="options"><button type="button" className="chip" onClick={() => { setFiltersOpen(false); setFindOpen(true); setListOpen(true); setQ('') }}>Skill list</button></div>
+          <h3>Colours</h3>
+          <p className="levellegend small" aria-label="Skill colours">{LEVEL_NAMES.map((nm, i) => <span key={nm} className="lvkey"><i className={`lvdot lv${i}`} />{nm}</span>)}</p>
+          {picked && <p className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</p>}
+          <p className="small"><strong>Overall {pct.all}%</strong></p>
+        </Sheet>
+      )}
     </div>
   )
 }

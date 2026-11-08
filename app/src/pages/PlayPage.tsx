@@ -82,7 +82,7 @@ export function PlayPage() {
             <p className="muted small">Current start: <code>{fen === START ? 'standard' : fen}</code></p>
           </details>
           <label className="small muted"><input type="checkbox" checked={help} onChange={e => setHelp(e.target.checked)} /> Show a hint button during the game (each hint is counted)</label>
-          <div className="row"><button type="button" className="primary" onClick={again}>Start game</button></div>
+          <div className="row actionbar"><button type="button" className="primary" onClick={again}>Start game</button></div>
         </section>
       ) : (
         <>

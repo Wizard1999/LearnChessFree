@@ -15,6 +15,8 @@ import { prefersReducedMotion } from '../lib/appearance'
 import { getEngine, resetEngine } from '../engine'
 import { askAboutSquare, formatVerdict, SQUARE_ASK_CAUTION } from '../lib/squareAsk'
 import 'chessground/assets/chessground.cburnett.css'
+import { usePhone } from '../lib/usePhone'
+import { Sheet } from './Sheet'
 
 export interface BoardShape { from: string; to?: string; brush?: 'green' | 'red' | 'blue' | 'yellow'; /** Arrow thickness, 2 (thin) to 14 (thick); default 10. */ width?: number }
 export interface EditMode {
@@ -223,6 +225,8 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   const usedOnce = useRef(false)
   // 'Ask the engine about this square': optional, one click, never offered where it would give an answer (a test or a game passes onControlUse)
   const canAsk = controlMapOn && !onControlUse
+  const phone = usePhone()
+  const [keyOpen, setKeyOpen] = useState(false)
   const [ask, setAsk] = useState<{ state: 'busy' | 'done' | 'error'; lines: string[] } | null>(null)
   const askRun = useRef(0)
   useEffect(() => { askRun.current++; setAsk(null); return () => { askRun.current++ } }, [picked, fen, showControl])
@@ -304,7 +308,10 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
               )}
             </div>
           )}
-          {map && !picked && !hoverSq && <span className="controldetail muted" role="note"><span className="lk-old">Blue</span><span className="lk-new">Cobalt with stripes</span>: White holds the square more strongly. <span className="lk-old">Orange</span><span className="lk-new">Persimmon with dots</span>: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Point at a square to read it (touch screens: use the inspect button).</span>}
+          {map && !picked && !hoverSq && !phone && <span className="controldetail muted" role="note"><span className="lk-old">Blue</span><span className="lk-new">Cobalt with stripes</span>: White holds the square more strongly. <span className="lk-old">Orange</span><span className="lk-new">Persimmon with dots</span>: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Point at a square to read it (touch screens: use the inspect button).</span>}
+          {/* phones: the key is a bottom sheet behind a button, so the board and the lesson's action bar stay clear (docs/mobile-design.md) */}
+          {map && phone && <button type="button" className="controltoggle" aria-haspopup="dialog" onClick={() => setKeyOpen(true)}>Key</button>}
+          {phone && <Sheet open={keyOpen && !!map} onClose={() => setKeyOpen(false)} title="Control map key"><p className="small"><span className="lk-old">Blue</span><span className="lk-new">Cobalt with stripes</span>: White holds the square more strongly. <span className="lk-old">Orange</span><span className="lk-new">Persimmon with dots</span>: Black. Strength counts the value of the pieces and the exchange, not just how many attack. Numbers: White attackers - Black attackers (+ means an x-ray piece behind another, ! means a defender is loose). Tap "Tap squares to inspect", then tap a square to read it.</p></Sheet>}
         </div>
       )}
     </div>

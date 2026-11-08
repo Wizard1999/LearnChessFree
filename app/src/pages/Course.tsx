@@ -76,6 +76,8 @@ function useNarrow(): boolean {
 
 /** Choice chips. A row (`menu` off) wraps inside the bar and never scrolls sideways; a menu is one button that opens the chips above the map and closes when a choice is made.
  * On a phone every group is a menu. */
+const MAP_HELP = 'Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.'
+
 function ChipGroup({ label, current, menu = false, children }: { label: string; current: string; menu?: boolean; children: ReactNode }) {
   const narrow = useNarrow()
   const [open, setOpen] = useState(false)
@@ -283,7 +285,6 @@ export function Course() {
               <p className="small linkrow"><span className="muted">Builds on:</span> {cn.from.length ? cn.from.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">nothing: you can start here</span>}</p>
               <p className="small linkrow"><span className="muted">Leads to:</span> {cn.to.length ? cn.to.map(id => <span key={id}><button type="button" className="link" onClick={() => pick(id)}>{skillName(id)}</button> <button type="button" className="link why" aria-label={`Why ${skillName(id)}`} onClick={() => setWhy(w => w === id ? null : id)}>why?</button></span>) : <span className="muted">no skill after this one yet</span>}</p>
               {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
-              {why && cn.why.get(why) && <p className="small whybox" role="status">{cn.why.get(why)}</p>}
               <details><summary>Lessons for this skill ({ls.length})</summary>
                 {ls.map(l => lessonRow(l))}
                 {ls.length === 0 && <p className="small muted">No lesson for this skill yet.</p>}
@@ -439,13 +440,39 @@ export function Course() {
 
   const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
+  const sectionChips = <>
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
+        {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
+  </>
+  const stageChips = <>
+        <button type="button" className={stageSel === null ? 'chip on' : 'chip'} aria-pressed={stageSel === null} onClick={() => setStage(null)}>All stages</button>
+        {PATH_STAGES.map((st, i) => <button key={st.id} type="button" className={`chip stagechip${stageSel === i ? ' on' : ''}${hereStage === i ? ' here' : ''}`} aria-pressed={stageSel === i} aria-label={`${stageSentence(i)}${hereStage === i ? ', you are here' : ''}`} title={`${st.milestone}${hereStage === i ? ' (You are here.)' : ''}`} onClick={() => setStage(i)}>{stageSentence(i)}</button>)}
+  </>
+  // phones (docs/mobile-design.md): a thin bar with the three views as a segmented control; everything else is in one Filters sheet
+  const phoneLead = (
+    <div className="segmented" role="group" aria-label="Curriculum views">
+      <button type="button" onClick={() => setTab('lessons')}>Lessons</button>
+      <button type="button" onClick={() => setTab('courses')}>Courses</button>
+      <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
+    </div>
+  )
+  const phoneFilters = <>
+    <h3>Sections</h3><div className="options">{sectionChips}</div>
+    <h3>Stages</h3><div className="options">{stageChips}</div>
+    <h3>Windows</h3>
+    <div className="options">
+      <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
+      <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
+    </div>
+    <details className="maphelptext"><summary>How the map fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
+  </>
   return (
     <>
     <main className={`page wide mappage curriculum${dockOpen ? ' winleft' : ''}${node && sk && !busy ? ' winright' : ''}`}>
       <h1 className="sr-only">Curriculum</h1>
       <div className="missiongrid mapgrid">
 
-        <div className="mapcenter"><RadialMap toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
+        <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
       <ChipGroup label="View" menu current="Map">
         <button type="button" className="chip" onClick={() => setTab('lessons')}>All lessons</button>
         <button type="button" className="chip" onClick={() => setTab('courses')}>Courses</button>
@@ -454,14 +481,12 @@ export function Course() {
         <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge window</button>
       </ChipGroup>
       <ChipGroup label="Sections" menu current={isAll ? 'Whole curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
-        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
-        {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
+        {sectionChips}
       </ChipGroup>
       <ChipGroup label="Stages" menu current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
-        <button type="button" className={stageSel === null ? 'chip on' : 'chip'} aria-pressed={stageSel === null} onClick={() => setStage(null)}>All stages</button>
-        {PATH_STAGES.map((st, i) => <button key={st.id} type="button" className={`chip stagechip${stageSel === i ? ' on' : ''}${hereStage === i ? ' here' : ''}`} aria-pressed={stageSel === i} aria-label={`${stageSentence(i)}${hereStage === i ? ', you are here' : ''}`} title={`${st.milestone}${hereStage === i ? ' (You are here.)' : ''}`} onClick={() => setStage(i)}>{stageSentence(i)}</button>)}
+        {stageChips}
       </ChipGroup>
-      <button type="button" className="chip maphelp" aria-label="How the map fills in" title="Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll to zoom. Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.">?</button>
+      <button type="button" className="chip maphelp" aria-label="How the map fills in" title={MAP_HELP}>?</button>
       </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
       </div>

@@ -19,6 +19,8 @@ import { useLessonProgress } from '../lib/progress'
 import { destsFor, flipTurn, hidePieces, isUci, sideToMove, tryMove, uciFor } from '../lib/play'
 import { leadText, resultHeadline, resultKind, RESULT_LABEL, type ResultKind } from '../lib/resultText'
 import type { Item } from '../types'
+import { usePhone } from '../lib/usePhone'
+import { PhoneFold, Sheet } from './Sheet'
 
 export interface ItemResult { correct: boolean; hints: number; wrongs: number; timeMs: number }
 interface Props {
@@ -50,6 +52,12 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const [correct, setCorrect] = useState<boolean | null>(null)
   const [wrongs, setWrongs] = useState(0)
   const [hintsShown, setHintsShown] = useState(0)
+  const phone = usePhone() // phones: hints and 'how this was checked' open as bottom sheets (docs/mobile-design.md)
+  const [hintSheet, setHintSheet] = useState(false)
+  const [checkedSheet, setCheckedSheet] = useState(false)
+  const resultRef = useRef<HTMLDivElement>(null)
+  // phones: the result (and its Next bar) comes into view under the board when the exercise ends
+  useEffect(() => { if (phone && phase === 'done') resultRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' }) }, [phone, phase])
   // switching on the control map while answering is an aid like a hint: it is recorded as one and lowers the credit the answer earns
   const [controlUsed, setControlUsed] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
@@ -294,20 +302,27 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       {phase === 'answer' && message && <p className="msg warn" role="status">{message}</p>}
 
       {phase === 'answer' && !studying && (
-        <div className="row">
+        <div className="row actionbar">
           {!silent && hints.length > 0 && hintsShown < hints.length && (
-            <button type="button" onClick={() => setHintsShown(h => h + 1)}>Hint ({hintsShown}/{hints.length})</button>
+            <button type="button" onClick={() => { setHintsShown(h => h + 1); if (phone) setHintSheet(true) }}>Hint ({hintsShown}/{hints.length})</button>
           )}
-          <button type="button" onClick={() => { setBoardKey(k => k + 1); setMessage(null) }}>Reset the board</button>
-          <button type="button" onClick={() => finish(false)}>Show me the answer</button>
+          {phone && hintsShown > 0 && hintsShown >= hints.length && <button type="button" onClick={() => setHintSheet(true)}>Hints</button>}
+          <button type="button" onClick={() => { setBoardKey(k => k + 1); setMessage(null) }}><span className="longlabel">Reset the board</span><span className="shortlabel" aria-hidden="true">Reset</span></button>
+          <button type="button" onClick={() => finish(false)}><span className="longlabel">Show me the answer</span><span className="shortlabel" aria-hidden="true">Answer</span></button>
         </div>
       )}
-      {hintsShown > 0 && phase === 'answer' && (
+      {hintsShown > 0 && phase === 'answer' && !phone && (
         <ol className="hints">{hints.slice(0, hintsShown).map((h, i) => <li key={i}>{h}</li>)}</ol>
+      )}
+      {phone && (
+        <Sheet open={hintSheet && hintsShown > 0 && phase === 'answer'} onClose={() => setHintSheet(false)} title="Hints">
+          <ol className="hints">{hints.slice(0, hintsShown).map((h, i) => <li key={i}>{h}</li>)}</ol>
+          {hintsShown < hints.length && <div className="row"><button type="button" onClick={() => setHintsShown(h => h + 1)}>Another hint ({hintsShown}/{hints.length})</button></div>}
+        </Sheet>
       )}
 
       {phase === 'done' && (
-        <div className={correct ? 'result ok' : 'result no'} role="status">
+        <div className={correct ? 'result ok' : 'result no'} role="status" ref={resultRef}>
           <ResultMark kind={resultKind(!!correct, !!altNote)} />
           <p><strong>{resultHeadline(resultKind(!!correct, !!altNote), wrongs)}</strong>
             {altNote && <> <strong>{altNote.san}</strong> also works. The exercise was looking for <strong>{answerSan}</strong>.</>}
@@ -325,8 +340,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
               </div>)}
           </div>
           {item.cue >= 3 && correct && <p className="small"><button type="button" className="link" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
-          <details className="howchecked">
-            <summary>How this was checked</summary>
+          <PhoneFold className="howchecked" summary="How this was checked" open={checkedSheet} onToggle={setCheckedSheet}>
             <p className="small muted">Result recorded: {RESULT_LABEL[resultKind(!!correct, !!altNote)]}.</p>
             {altNote && <p className="small">{altNote.san}: engine, depth 14, so evidence rather than proof.</p>}
             {item.claims.filter(c => c.statement).length > 0 && (
@@ -340,8 +354,8 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
             <p className="muted small badges">
               <span title="Every claim in this exercise was checked by software">{v ? `Checked by ${v.engine ?? 'rules'}${v.depth ? ` at depth ${v.depth}` : ''}` : 'Checked by rules'}</span>
             </p>
-          </details>
-          {onDone && <button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button>}
+          </PhoneFold>
+          {onDone && <div className="nextbar actionbar"><button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button></div>}
         </div>
       )}
     </section>

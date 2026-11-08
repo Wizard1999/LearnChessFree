@@ -25,6 +25,11 @@ describe('practice and contrast steps', () => {
     expect(stepMinutes({ type: 'practice', tags: [], n: 2 } as never)).toBeCloseTo(1.4)
   })
   it('counts a contrast trio as 1.5 minutes', () => { expect(stepMinutes({ type: 'contrast', working: 'a', failing: 'b' } as never)).toBe(1.5) })
+  it('counts a guided game as 0.4 plus 0.15 per move', () => {
+    const moves = Array.from({ length: 8 }, () => ({ move: 'e4', by: 'learner' }))
+    expect(stepMinutes({ type: 'guided', moves } as never)).toBeCloseTo(1.6)
+    expect(stepMinutes({ type: 'guided' } as never)).toBeCloseTo(0.4)
+  })
 })
 
 describe('aboutMinutes', () => {

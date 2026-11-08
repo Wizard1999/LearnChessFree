@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Attempt } from '../db'
 import type { Skill } from '../types'
-import { evidenceAttempts, frontierFor, independence, masteryMap, prereqMet, statusOf, type Placement } from './progress'
+import { brier, CONFIDENCE_P, evidenceAttempts, expectedBrier, frontierFor, independence, masteryMap, prereqMet, statusOf, type Placement } from './progress'
 
 const att = (o: Partial<Attempt>): Attempt => ({ itemId: 'i', skillKey: 'N.D2', cue: 3, family: o.itemId ?? 'i', correct: true, firstAttempt: true, hints: 0, timeMs: 1, source: 'practice', ts: 1, unprompted: true, ...o })
 
@@ -99,6 +99,40 @@ describe('independence(): confidence is accuracy by band, with sample sizes', ()
   })
   it('lesson answers are not unprompted and are left out', () => {
     expect(independence([att({ source: 'lesson', confidence: 'high', correct: false })]).highMisses).toHaveLength(0)
+  })
+  it('scores confidence with the Brier rule once there are enough answers', () => {
+    expect(independence(conf(7, 'high', true)).confidenceScore).toEqual({ n: 7, enough: false, score: null })
+    // 8 "high" (0.9): 6 right (0.01 each), 2 wrong (0.81 each) -> (0.06 + 1.62) / 8 = 0.21
+    const r = independence([...conf(6, 'high', true), ...conf(2, 'high', false, 100)])
+    expect(r.confidenceScore.n).toBe(8)
+    expect(r.confidenceScore.score).toBeCloseTo(0.21, 10)
+  })
+  it('a learner who always says "high" while right 60% of the time scores worse than one who says "medium"', () => {
+    const say = (band: 'medium' | 'high') => independence([...conf(6, band, true), ...conf(4, band, false, 100)]).confidenceScore.score!
+    expect(say('medium')).toBeLessThan(say('high'))
+  })
+})
+
+describe('Brier score is a proper scoring rule: honest reporting scores best', () => {
+  const grid = Array.from({ length: 101 }, (_, i) => i / 100)
+  it('for every true rate, the stated probability with the lowest expected score is the true rate', () => {
+    for (const trueP of [0, 0.1, 0.3, 0.5, 0.7, 0.9, 1]) {
+      const best = grid.reduce((b, r) => (expectedBrier(r, trueP) < expectedBrier(b, trueP) ? r : b), grid[0])
+      expect(best).toBeCloseTo(trueP, 10)
+    }
+  })
+  it('the case from the review: true rate 0.7, saying 0.7 now beats saying 0.9 (absolute error had it the other way round)', () => {
+    const absErr = (r: number, p: number) => p * (1 - r) + (1 - p) * r
+    expect(absErr(0.9, 0.7)).toBeLessThan(absErr(0.7, 0.7)) // the old flaw, kept as a record
+    expect(expectedBrier(0.7, 0.7)).toBeCloseTo(0.21, 10)
+    expect(expectedBrier(0.9, 0.7)).toBeCloseTo(0.25, 10)
+    expect(expectedBrier(0.7, 0.7)).toBeLessThan(expectedBrier(0.9, 0.7))
+  })
+  it('scores single answers as squared distance', () => {
+    expect(brier(1, true)).toBe(0)
+    expect(brier(0.9, false)).toBeCloseTo(0.81, 10)
+    expect(CONFIDENCE_P.low).toBeLessThan(CONFIDENCE_P.medium)
+    expect(CONFIDENCE_P.medium).toBeLessThan(CONFIDENCE_P.high)
   })
 })
 

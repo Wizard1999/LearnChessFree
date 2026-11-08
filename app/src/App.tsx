@@ -24,10 +24,12 @@ import { Crest } from './components/Crest'
 import { BuildStamp } from './components/BuildStamp'
 import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
+import { PhoneTabBar } from './components/PhoneTabBar'
+import { MORE_LINKS } from './lib/phoneNav'
 
 // Five places for a learner; the rest are tools, one click away under More.
 const links: [string, string][] = [['/', 'Today'], ['/course', 'Curriculum'], ['/practice', 'Practice'], ['/progress', 'Progress']]
-const more: [string, string][] = [['/games', 'My games'], ['/openings', 'Openings'], ['/analysis', 'Analysis'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/play', 'Play'], ['/library', 'Library'], ['/roadmap', 'Roadmap']]
+const more = MORE_LINKS // shared with the phone tab bar's More sheet
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -72,6 +74,7 @@ export default function App() {
         <Route path="*" element={<main className="page"><h1>Not found</h1></main>} />
       </Routes>
       </ErrorBoundary>
+      <PhoneTabBar />
       <footer className="sitefooter">{BRAND.name} was created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
     </ContentProvider>
   )

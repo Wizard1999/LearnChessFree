@@ -50,6 +50,18 @@ export function pickFresh(pool: Item[], attempts: Attempt[], n: number, seed: st
   return out
 }
 
+/**
+ * The silent set for a training plan (pages/Plan.tsx). Both the baseline and the later check are measurements, so neither repeats a
+ * family; the check also leaves out every exercise and family used at baseline, so it measures transfer, not memory. May be shorter than n.
+ */
+export function planTestSet(pool: Item[], attempts: Attempt[], kind: 'baseline' | 'check', baseline: { itemIds: string[] } | undefined,
+  familyOf: (id: string) => string | undefined, n: number, seed: string): Item[] {
+  const usedIds = new Set(kind === 'check' ? baseline?.itemIds ?? [] : [])
+  const usedFamilies = new Set<string>()
+  if (kind === 'check') for (const id of baseline?.itemIds ?? []) { const f = familyOf(id); if (f !== undefined) usedFamilies.add(f) }
+  return pickFresh(pool, attempts, n, seed, { exclude: usedIds, excludeFamilies: usedFamilies, strictFamilies: true })
+}
+
 /** Interleave several lists round-robin so unlike skills alternate (CD-9: interleave after the initial block). */
 export function interleave<T>(lists: T[][]): T[] {
   const out: T[] = []

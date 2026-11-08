@@ -35,7 +35,7 @@ describe('shipped content files', () => {
       if (lessonMinutes({ steps: l.steps }) !== l.minutes) bad.push(`${l.id}: minutes ${l.minutes} vs ${lessonMinutes({ steps: l.steps })}`)
     }
     expect(bad.slice(0, 10)).toEqual([])
-  })
+  }, 30_000) // reads every lesson body (441 files): under a full parallel run this took over the 5 s default
   it('the first visit stays small: the catalog is under a fifth of the old lessons file and the lists need no bodies', () => {
     const lessonsJson = JSON.stringify(readLessons()).length
     expect(JSON.stringify(catalog).length).toBeLessThan(lessonsJson / 5)
