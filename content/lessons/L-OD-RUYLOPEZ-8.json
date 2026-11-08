@@ -1,0 +1,1861 @@
+{
+ "id": "L-OD-RUYLOPEZ-8",
+ "course": "opening-deep-dives",
+ "title": "Ruy Lopez: when it goes wrong and how to repair it",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "series": "ruylopez",
+ "uses": [
+  "OPN.STRUCT",
+  "OPN.PRINCIPLES",
+  "OPN.TRAPS",
+  "SAF.COUNT",
+  "POS.STRUCTURE.CHAIN"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Counts the guards of a pawn before grabbing it and sorts errors into cheap, costly and beyond repair",
+  "Names the six typical errors of the Ruy Lopez and the one piece or pawn each one forgets",
+  "Chooses a plan in four quiet positions from the structure, the weak point and the worst piece",
+  "Meets a third move from outside the main line with three questions",
+  "Explains the whole opening to a beginner in four parts and checks the explanation"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "app/public/masters/stats.json: 329,379 top-level games (both players 2500+), counts quoted from the tree rows [V]",
+  "content/items/lesson-od-l-od-ruylopez-8.json: positions replayed from SAN with python-chess; engine claims Stockfish 19 lite, depth 16 (evidence under recorded limits, not proof) [V]",
+  "docs/lesson-depth-standard.md sections 4, 6 and 7 (series lesson 8)",
+  "[H] The cheap/costly/beyond-repair scheme and the three plan questions are mine and labelled in the text"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 6",
+   "caption": "Hook. You are Black and it is your move. The knight on f6 can take the pawn on e4, and White's king has left the centre. Before any explanation: do you take it, and what do you expect?",
+   "highlight": [
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the rook on e1, attacks e4 along the open file.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the knight on f6, attacks e4.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 600,
+      "depth": 16,
+      "after_moves": [
+       "f6e4",
+       "e1e4"
+      ]
+     },
+     "statement": "After the knight takes and the rook takes the knight, the engine has White clearly ahead (depth 16).",
+     "id": "C3"
+    }
+   ],
+   "chapter": "Hook and question"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write your move and one reason. Then guess how the grab on e4 turns out for Black.",
+   "fields": [
+    {
+     "id": "move",
+     "label": "My move:"
+    },
+    {
+     "id": "why",
+     "label": "Because:"
+    },
+    {
+     "id": "bad",
+     "label": "Taking e4 is:",
+     "options": [
+      "safe, a free pawn",
+      "about equal",
+      "worse for Black",
+      "a lost piece"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 6",
+   "caption": "The answer first. Black does not take. The main line chases the bishop with a pawn and gets on with development.",
+   "line": [
+    {
+     "move": "b7b5",
+     "say": "The pawn attacks the bishop and wins space."
+    },
+    {
+     "move": "a4b3",
+     "say": "The bishop retreats and keeps its diagonal toward f7."
+    },
+    {
+     "move": "d7d6",
+     "say": "The pawn guards e5 and frees the bishop on c8."
+    },
+    {
+     "move": "c2c3",
+     "say": "White prepares d4 and gives the bishop a retreat square."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 100,
+      "depth": 16,
+      "after_moves": [
+       "b7b5",
+       "a4b3",
+       "d7d6",
+       "c2c3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.0 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** The Ruy Lopez has many sound moves, but a few natural-looking ones cost real material. So where do games go wrong? You will meet six instructive errors [I], three for each colour, learn to tell cheap errors from costly ones, repair what can be repaired, and then build plans from quiet positions."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 6",
+   "caption": "Error one: the grab that looks free. Step through it and ask who guards e4.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "The knight takes a pawn that looks undefended."
+    },
+    {
+     "move": "e1e4",
+     "say": "The rook takes the knight: the rook on e1 guarded the pawn all along."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black attacks the rook with a pawn."
+    },
+    {
+     "move": "a4c6",
+     "say": "The bishop takes with check and removes a defender of e5."
+    },
+    {
+     "move": "b7c6",
+     "say": "Black retakes."
+    },
+    {
+     "move": "e4e5",
+     "say": "The rook takes the pawn that nothing defends any more."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "e5"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f6e4"
+      ]
+     },
+     "statement": "After the knight takes, one white piece still attacks the knight on e4: the rook.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 350,
+      "max": 700,
+      "depth": 16,
+      "after_moves": [
+       "f6e4",
+       "e1e4",
+       "d7d5",
+       "a4c6",
+       "b7c6",
+       "e4e5"
+      ]
+     },
+     "statement": "After this line the engine has White clearly ahead (depth 16).",
+     "id": "C2"
+    }
+   ],
+   "chapter": "Errors by Black"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-25"
+  },
+  {
+   "type": "card",
+   "text": "**Counting before grabbing.** A pawn is free only when nobody guards it after your capture. Count the attackers and defenders of the square, including pieces that look along a file you thought was shut. Here the rook was the guard. [H] Before you count, look along every open file: a guard that looks shut out is often just a rook with a clear line."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n5/4p3/B3R3/5N2/PPPP1PPP/RNBQ2K1 b kq - 0 7",
+   "caption": "Damage control. Black has lost a knight for a pawn. The best the engine finds is to guard e5 and develop; nothing gets the piece back.",
+   "line": [
+    {
+     "move": "d7d6",
+     "say": "The pawn guards e5 and opens the bishop on c8."
+    },
+    {
+     "move": "e4e1",
+     "say": "The rook steps back and keeps the file."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black chases the bishop away."
+    },
+    {
+     "move": "a4b3",
+     "say": "The bishop keeps its diagonal toward f7."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 420,
+      "max": 530,
+      "depth": 16,
+      "after_moves": [
+       "d7d6",
+       "e4e1",
+       "b7b5",
+       "a4b3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +4.2 and +5.3 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three kinds of error.** [H] Sort an error by what it gives up. *Cheap*: no piece or pawn is lost at once; the price is time or structure, and the repair may offer a pawn. *Costly*: a pawn lost and kept. *Beyond repair*: a piece lost for nothing. The grab on e4 is the third kind: the repair above only limits the damage. The engine's costs overlap, so the sort goes by what is lost, not by the number."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQR1K1 b kq - 5 6",
+   "caption": "Error two: the central break too early. Black plays the pawn move that works in the Marshall Attack, but the king is still on e8. Count the pieces that aim at e5.",
+   "line": [
+    {
+     "move": "d7d5",
+     "say": "Black strikes in the centre, as in the Marshall."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes and opens the e-file."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight retakes; the rook on e1 now sees the pawn on e5."
+    },
+    {
+     "move": "f3e5",
+     "say": "The knight takes the pawn that has too few defenders."
+    },
+    {
+     "move": "c8d7",
+     "say": "Black can only develop and unpin; the pawn on e5 is gone."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "e5"
+    },
+    {
+     "from": "e1",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d5"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d7d5"
+      ]
+     },
+     "statement": "After ...d5 one white piece, the knight on f3, attacks e5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d7d5",
+       "e4d5",
+       "f6d5"
+      ]
+     },
+     "statement": "After the exchange on d5 two white pieces attack e5: the knight and the rook.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d7d5",
+       "e4d5",
+       "f6d5"
+      ]
+     },
+     "statement": "Only one black piece, the knight on c6, aims at e5.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 250,
+      "max": 380,
+      "depth": 16,
+      "after_moves": [
+       "d7d5",
+       "e4d5",
+       "f6d5",
+       "f3e5",
+       "c8d7"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +2.5 and +3.8 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-26"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pp1bppp/p1n5/3nN3/B7/8/PPPP1PPP/RNBQR1K1 b kq - 0 8",
+   "caption": "Why the knight cannot retake: look along the diagonal from a4 to e8. The knight on c6 stands on it, and nothing else shields the king. This pin is why e5 counts two attackers against one defender.",
+   "arrows": [
+    {
+     "from": "a4",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "c6",
+    "e5"
+   ],
+   "claims": [
+    {
+     "type": "illegal_move",
+     "params": {
+      "move": "c6e5"
+     },
+     "statement": "The knight cannot take on e5, because it is pinned to the king by the bishop on a4.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**When the same break works.** Castle first and the pin is gone. In the Marshall Attack Black plays the same pawn move after castling, and it is a gambit: Black pays a pawn on purpose for play against the king. Our master file holds 579 games of that position, and ...d5 was played in 350 [V]. Predict, then check: the next position differs from the failing one in one thing. What?"
+  },
+  {
+   "type": "contrast",
+   "title": "Is the central break playable?",
+   "prompt": "Predict for each position, then check. One change matters; one does not.",
+   "working": "IOD-LODRUYLOPEZ8-3",
+   "failing": "IOD-LODRUYLOPEZ8-4",
+   "irrelevant": "IOD-LODRUYLOPEZ8-5"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2ppbppp/p1n2n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 b - - 0 8",
+   "caption": "The Marshall idea, played: a gambit that costs a pawn on purpose. Black gives the pawn on e5 back at once and the pieces come alive, with the king safe on g8. Step through it.",
+   "line": [
+    {
+     "move": "d7d5",
+     "say": "Black offers a pawn to open lines toward the white king."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight retakes and the e-file opens."
+    },
+    {
+     "move": "f3e5",
+     "say": "White takes the pawn on e5."
+    },
+    {
+     "move": "c6e5",
+     "say": "Black takes back."
+    },
+    {
+     "move": "e1e5",
+     "say": "The rook takes again: White is a pawn up, as the gambit intends."
+    },
+    {
+     "move": "c7c6",
+     "say": "The pawn attacks the bishop and prepares ...Bd6."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 120,
+      "depth": 16,
+      "after_moves": [
+       "d7d5",
+       "e4d5",
+       "f6d5",
+       "f3e5",
+       "c6e5",
+       "e1e5",
+       "c7c6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.2 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/2ppbppp/p1n2n2/1p2p3/4P3/1B1P1N2/PPP2PPP/RNBQ1RK1 b kq - 1 7",
+   "caption": "Error three: the knight leaves its post. Black wants the bishop on b3 and sends the knight after it. Step through it and ask what the knight on c6 was doing.",
+   "line": [
+    {
+     "move": "c6a5",
+     "say": "The knight attacks the bishop on b3."
+    },
+    {
+     "move": "f3e5",
+     "say": "White takes the pawn: the knight on c6 was its only guard."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black fights back in the centre."
+    },
+    {
+     "move": "e4d5",
+     "say": "White takes and the knight on e5 stays."
+    },
+    {
+     "move": "a5b3",
+     "say": "Black takes the bishop."
+    },
+    {
+     "move": "a2b3",
+     "say": "The a-pawn retakes and White keeps the extra pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "a5"
+    },
+    {
+     "from": "f3",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "c6"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the knight on c6, defends e5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 0,
+      "after_moves": [
+       "c6a5"
+      ]
+     },
+     "statement": "After ...Na5 no black piece defends e5.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c6a5"
+      ]
+     },
+     "statement": "The knight on f3 attacks e5.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 60,
+      "max": 190,
+      "depth": 16,
+      "after_moves": [
+       "c6a5",
+       "f3e5",
+       "d7d5",
+       "e4d5",
+       "a5b3",
+       "a2b3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +0.6 and +1.9 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-6"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/2ppbppp/p1n2n2/1p2p3/4P3/1B1P1N2/PPP2PPP/RNBQ1RK1 b kq - 1 7",
+   "caption": "The quiet alternative: guard e5 with a pawn first, then the knight may go.",
+   "line": [
+    {
+     "move": "d7d6",
+     "say": "The pawn guards e5, so the knight on c6 is free to leave later."
+    },
+    {
+     "move": "c2c3",
+     "say": "White prepares d4."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles; the knight can still go to a5 when e5 is guarded."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d7d6",
+       "e8g8"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 80,
+      "depth": 16,
+      "after_moves": [
+       "d7d6",
+       "c2c3",
+       "e8g8"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.3 and +0.8 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Repair or not?** [H] This error is costly, not fatal. After the pawn falls, Black cannot win it back, but two ideas keep the deficit small: strike in the centre at once, or trade the knight for the bishop that White retreated. Try it: find a sound reply after the capture."
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-7"
+  },
+  {
+   "type": "card",
+   "text": "**The mirror.** White errs too, and the typical error is the same kind: a move that is right in one order and wrong in another. The pawn break d4 is White's main plan, but it needs the pawn on c3 to recapture. Played before c3, it is a cheap error: the cost is small (about 0.8 of a pawn), and the repair offers a pawn back.",
+   "chapter": "Errors by White"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/2p1bppp/p1np1n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w kq - 0 8",
+   "caption": "Error four: d4 before c3. White strikes in the centre at once. Count what can recapture on d4: two attackers meet two defenders, so the count says the pawn holds, but a tactic decides it. After the exchanges 10.Qxd4 meets ...c5, and the queen has no good square.",
+   "line": [
+    {
+     "move": "d2d4",
+     "say": "White strikes at the centre."
+    },
+    {
+     "move": "c6d4",
+     "say": "Black takes: d4 is attacked by the knight and the pawn."
+    },
+    {
+     "move": "f3d4",
+     "say": "The knight takes back."
+    },
+    {
+     "move": "e5d4",
+     "say": "The pawn takes again, and no white pawn can recapture. The queen cannot safely take either: ...c5 hits it."
+    },
+    {
+     "move": "c2c3",
+     "say": "White has to offer the pawn: the c-pawn strikes at d4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "d4"
+    },
+    {
+     "from": "c6",
+     "to": "d4"
+    },
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "d2d4"
+      ]
+     },
+     "statement": "After d4 two black pieces attack d4: the knight on c6 and the pawn on e5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d2d4"
+      ]
+     },
+     "statement": "Two white pieces defend d4: the knight and the queen.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -120,
+      "max": 10,
+      "depth": 16,
+      "after_moves": [
+       "d2d4",
+       "c6d4",
+       "f3d4",
+       "e5d4",
+       "c2c3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -1.2 and +0.1 pawns for White.",
+     "id": "C3"
+    },
+    {
+     "id": "C4",
+     "statement": "If White's queen takes on d4 and Black plays ...c5, the engine rates Black clearly better, by at least 3 pawns (depth 16).",
+     "type": "eval_range",
+     "params": {
+      "max": -300,
+      "depth": 16,
+      "after_moves": [
+       "d2d4",
+       "c6d4",
+       "f3d4",
+       "e5d4",
+       "d1d4",
+       "c7c5"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-8"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/2p1bppp/p2p1n2/1p6/3pP3/1B6/PPP2PPP/RNBQR1K1 w kq - 0 10",
+   "caption": "The repair. White is slightly worse after the exchanges. The engine's resource is the pawn offer c3: it opens lines for the pieces. Step through it.",
+   "line": [
+    {
+     "move": "c2c3",
+     "say": "The pawn offers itself to open the c-file and the diagonal."
+    },
+    {
+     "move": "d4c3",
+     "say": "Black takes."
+    },
+    {
+     "move": "b1c3",
+     "say": "The knight develops with the pawn gone from c3."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles, safe and a pawn up."
+    },
+    {
+     "move": "c3d5",
+     "say": "The knight heads for the centre and aims at the bishop on e7."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a2a4",
+       "c2c3",
+       "d1f3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -110,
+      "max": 20,
+      "depth": 16,
+      "after_moves": [
+       "c2c3",
+       "d4c3",
+       "b1c3",
+       "e8g8",
+       "c3d5"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -1.1 and +0.2 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/2p1bppp/p1np1n2/1p2p3/4P3/1B3N2/PPPP1PPP/RNBQR1K1 w kq - 0 8",
+   "caption": "The quiet way: c3 first, h3 next, and d4 only when the pieces are ready.",
+   "line": [
+    {
+     "move": "c2c3",
+     "say": "The pawn will recapture on d4 later."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "h2h3",
+     "say": "The pawn takes g4 from the black bishop."
+    },
+    {
+     "move": "c8b7",
+     "say": "Black develops the bishop."
+    },
+    {
+     "move": "d2d4",
+     "say": "Now the break meets a pawn that can recapture."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 90,
+      "depth": 16,
+      "after_moves": [
+       "c2c3",
+       "e8g8",
+       "h2h3",
+       "c8b7",
+       "d2d4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.2 and +0.9 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Error five: c3 too soon.** The pawn on c3 prepares d4, but here it comes before the rook reaches e1. Nothing of White's then guards the pawn on e4, and the knight may take it. This is the mirror of Black's grab: now the pawn really is loose. White gets play in the centre, so the cost is small."
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 4 6",
+   "caption": "Step through it. After c3, count the white pieces that guard e4.",
+   "line": [
+    {
+     "move": "c2c3",
+     "say": "The pawn prepares d4."
+    },
+    {
+     "move": "f6e4",
+     "say": "The knight takes the pawn: nothing of White's guards it."
+    },
+    {
+     "move": "d2d4",
+     "say": "White strikes at once to get activity for the pawn."
+    },
+    {
+     "move": "e5d4",
+     "say": "Black takes and the knight on e4 stays."
+    },
+    {
+     "move": "c3d4",
+     "say": "The pawn retakes."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black attacks the bishop and prepares ...d5."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e4"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 0,
+      "after_moves": [
+       "c2c3"
+      ]
+     },
+     "statement": "After c3 no white piece guards e4.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f1e1"
+      ]
+     },
+     "statement": "After Re1 one white piece guards e4.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -130,
+      "max": 0,
+      "depth": 16,
+      "after_moves": [
+       "c2c3",
+       "f6e4",
+       "d2d4",
+       "e5d4",
+       "c3d4",
+       "b7b5"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -1.3 and +0.0 pawns for White.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-9"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 4 6",
+   "caption": "Error six: the greedy capture. White takes the pawn on e5 and hopes to fork the knight. Step through it and watch where the knight goes.",
+   "line": [
+    {
+     "move": "f3e5",
+     "say": "White takes the pawn."
+    },
+    {
+     "move": "c6e5",
+     "say": "The knight takes back."
+    },
+    {
+     "move": "d2d4",
+     "say": "White attacks the knight and hopes to win it."
+    },
+    {
+     "move": "e5g6",
+     "say": "The knight steps to a safe square."
+    },
+    {
+     "move": "e4e5",
+     "say": "White attacks the knight on f6."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight finds a good square in the centre."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "e5"
+    },
+    {
+     "from": "c6",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "g6"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the knight on f3, attacks e5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the knight on c6, defends e5.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g6",
+      "color": "white",
+      "count": 0,
+      "after_moves": [
+       "f3e5",
+       "c6e5",
+       "d2d4"
+      ]
+     },
+     "statement": "After d4 the knight on e5 can step to g6, which no white piece attacks.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -370,
+      "max": -240,
+      "depth": 16,
+      "after_moves": [
+       "f3e5",
+       "c6e5",
+       "d2d4",
+       "e5g6",
+       "e4e5",
+       "f6d5"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -3.7 and -2.4 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-10"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqk2r/1pppbppp/p4nn1/8/B2PP3/8/PPP2PPP/RNBQ1RK1 w kq - 1 8",
+   "caption": "Repair or not? White is a piece for a pawn down. The engine's best limits the damage; it does not win the piece back.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "White attacks the knight on f6 and gains space."
+    },
+    {
+     "move": "f6d5",
+     "say": "The knight steps to a strong square."
+    },
+    {
+     "move": "f2f4",
+     "say": "White supports the pawn on e5 and prepares f5."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -320,
+      "max": -190,
+      "depth": 16,
+      "after_moves": [
+       "e4e5",
+       "f6d5",
+       "f2f4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -3.2 and -1.9 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Six errors so far: the grab on e4, ...d5 with the king in the centre, ...Na5 leaving e5, d4 before c3, c3 before Re1, and Nxe5. Which are cheap, which costly, which beyond repair? Write your sort before the next card.",
+   "fields": [
+    {
+     "id": "cheap",
+     "label": "Cheap (about a pawn or less):"
+    },
+    {
+     "id": "costly",
+     "label": "Costly:"
+    },
+    {
+     "id": "beyond",
+     "label": "Beyond repair:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The sort, with engine costs at depth 16.** Cheap, no material lost: the early central break (about 0.8 of a pawn worse than the best move) and the early c-pawn move (about 0.7). Costly, a pawn lost: the break with the king in the centre (about 2.2) and the knight sortie (about 1.1). Beyond repair, a piece lost: the grab on e4 (about 3.9) and the white capture on e5 (about 3.3). Scores shift between runs. [H] Material is a better guide than the score. Agree?"
+  },
+  {
+   "type": "card",
+   "text": "**From repair to plan.** Repairing is reactive. A plan starts from a quiet position. [H] Three questions find one: what is the structure (which pawns are locked or free)? What is the weak point of the other side? Which of my pieces is worst, and where would it do most? Try them on four positions, two per colour.",
+   "chapter": "Plans"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 b - - 0 9",
+   "caption": "Plan one, Black to move in the Closed structure. Structure: the pawns on e4 and e5 face each other. Weak point: none yet; White is ready to play d4. Worst piece [H]: the bishop on c8, shut in by its own pawns. Step through a plan that frees it.",
+   "line": [
+    {
+     "move": "c8b7",
+     "say": "The bishop leaves c8 and aims at e4."
+    },
+    {
+     "move": "d2d4",
+     "say": "White takes the centre."
+    },
+    {
+     "move": "f8e8",
+     "say": "The rook supports the pawn on e5 and the knight."
+    },
+    {
+     "move": "b1d2",
+     "say": "White brings the knight to the centre."
+    },
+    {
+     "move": "e7f8",
+     "say": "The bishop steps back to free e7 and guard the king side."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8e8",
+       "c8b7",
+       "c8e6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "P"
+     },
+     "statement": "A white pawn stands on e4.",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on e5.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 80,
+      "depth": 16,
+      "after_moves": [
+       "c8b7",
+       "d2d4",
+       "f8e8",
+       "b1d2",
+       "e7f8"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.3 and +0.8 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-11"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 b - - 0 9",
+   "caption": "The plan that fails. Black has no piece ready, so a wing pawn storm only drops a pawn. Step through it and count the guards of g5.",
+   "line": [
+    {
+     "move": "g7g5",
+     "say": "Black pushes a wing pawn before the pieces are ready."
+    },
+    {
+     "move": "f3g5",
+     "say": "The knight takes it: no black piece guards g5."
+    },
+    {
+     "move": "c6a5",
+     "say": "Black chases the bishop, hoping for play."
+    },
+    {
+     "move": "b3c2",
+     "say": "The bishop steps back and keeps its diagonal."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "g5"
+    }
+   ],
+   "highlight": [
+    "g5"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 0,
+      "after_moves": [
+       "g7g5"
+      ]
+     },
+     "statement": "After ...g5 no black piece defends g5.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "g7g5"
+      ]
+     },
+     "statement": "The knight on f3 attacks g5.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 140,
+      "max": 270,
+      "depth": 16,
+      "after_moves": [
+       "g7g5",
+       "f3g5",
+       "c6a5",
+       "b3c2"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +1.4 and +2.7 pawns for White.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qrbk1/1bp2ppp/p1np1n2/1p2p3/3PP3/1BP2N1P/PP1N1PP1/R1BQR1K1 w - - 3 12",
+   "caption": "Plan two, White to move. Structure: the pawn on d4 already attacks the pawn on e5, so there is tension in the centre. Weak point: e5, which Black must keep guarded. Worst piece [H]: the bishop on b3, which has little to aim at. Step through a plan that reroutes it.",
+   "line": [
+    {
+     "move": "b3c2",
+     "say": "The bishop retreats to c2, where it eyes the king side and clears b3."
+    },
+    {
+     "move": "g7g6",
+     "say": "Black replies on the king side."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b3c2",
+       "a2a4",
+       "a2a3",
+       "d4d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white pawn, on d4, attacks e5.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 90,
+      "depth": 16,
+      "after_moves": [
+       "b3c2",
+       "g7g6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.2 and +0.9 pawns for White.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-12"
+  },
+  {
+   "type": "board",
+   "fen": "r2qrbk1/1bp2ppp/p1np1n2/1p2p3/3PP3/1BP2N1P/PP1N1PP1/R1BQR1K1 w - - 3 12",
+   "caption": "The plan that fails. White pushes the c-pawn to gain space and forgets what guards d4. Count the guards of d4 after the pawn has moved.",
+   "line": [
+    {
+     "move": "c3c4",
+     "say": "White grabs space on the queen side."
+    },
+    {
+     "move": "c6d4",
+     "say": "Black takes: the pawn on d4 has lost its pawn guard."
+    },
+    {
+     "move": "f3d4",
+     "say": "White takes back."
+    },
+    {
+     "move": "e5d4",
+     "say": "The pawn takes again and White cannot recapture."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d4"
+    },
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c3c4"
+      ]
+     },
+     "statement": "After c4 only one white piece, the knight on f3, defends d4.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "c3c4"
+      ]
+     },
+     "statement": "Two black pieces attack d4: the knight on c6 and the pawn on e5.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -310,
+      "max": -190,
+      "depth": 16,
+      "after_moves": [
+       "c3c4",
+       "c6d4",
+       "f3d4",
+       "e5d4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -3.1 and -1.9 pawns for White.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bk1b1r/ppp2ppp/2p5/4Pn2/8/5N2/PPP2PPP/RNB2RK1 w - - 0 9",
+   "caption": "Plan three, White to move in the Berlin endgame. Structure: the queens are off and White has four pawns against three on the king side. Weak point: Black has lost the right to castle, and its king stands in the centre for now. Worst piece [H]: the knight on b1 and the bishop on c1, which have not moved. Step through the plan.",
+   "line": [
+    {
+     "move": "b1c3",
+     "say": "The knight develops and eyes the centre."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black tucks the king back toward safety."
+    },
+    {
+     "move": "h2h3",
+     "say": "The pawn takes g4 from the black bishop and prepares Ng5."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "a2a4",
+       "f1d1",
+       "b1c3",
+       "h2h3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "count": 4
+     },
+     "statement": "White has four pawns on the king side.",
+     "id": "C2"
+    },
+    {
+     "type": "wing_pawns",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "count": 3
+     },
+     "statement": "Black has three pawns on the king side.",
+     "id": "C3"
+    },
+    {
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "centre"
+     },
+     "statement": "Black's king is in the centre.",
+     "id": "C4"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 70,
+      "depth": 16,
+      "after_moves": [
+       "b1c3",
+       "d8e8",
+       "h2h3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.4 and +0.7 pawns for White.",
+     "id": "C5"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-13"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/2p2ppp/p1n5/1pbpPb2/4n3/2P2N2/PPBN1PPP/R1BQ1RK1 w - - 5 12",
+   "caption": "Plan four, White to move in the Open Ruy Lopez. Structure: White's pawn on e5 cramps Black, whose pieces are active. Weak point: the black bishop on c5 and the knight on e4. Worst piece [H]: the knight on d2, which has no square yet. Step through the plan.",
+   "line": [
+    {
+     "move": "d2b3",
+     "say": "The knight attacks the bishop on c5."
+    },
+    {
+     "move": "c5b6",
+     "say": "The bishop retreats and keeps its diagonal."
+    },
+    {
+     "move": "f3d4",
+     "say": "The other knight comes to the centre."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2b3",
+       "d2e4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "P"
+     },
+     "statement": "A white pawn stands on e5.",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "n"
+     },
+     "statement": "A black knight stands on e4.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 100,
+      "depth": 16,
+      "after_moves": [
+       "d2b3",
+       "c5b6",
+       "f3d4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.0 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-14"
+  },
+  {
+   "type": "card",
+   "text": "**Three questions for a surprise.** When your opponent leaves the book, do not search for a memorised refutation. Ask what the move threatens, what it leaves undefended, and which of your plans it changes. Master games show the common third moves for Black: the main line 3...a6 was played 15,591 times and 3...Nf6 9,642; the rest are rare [V, our file, 2500+, 26,541 listed].",
+   "chapter": "Surprises and the test"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkbnr/pppp2pp/2n5/1B2pp2/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+   "caption": "A surprise: the Schliemann, 3...f5. The pawn attacks e4 and opens the f-file. Step through a sound reply.",
+   "line": [
+    {
+     "move": "d2d3",
+     "say": "White guards e4 with a pawn."
+    },
+    {
+     "move": "f5e4",
+     "say": "Black takes."
+    },
+    {
+     "move": "d3e4",
+     "say": "The pawn retakes and the d-file opens."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black develops with a threat on e4."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d3",
+       "b1c3"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 90,
+      "depth": 16,
+      "after_moves": [
+       "d2d3",
+       "f5e4",
+       "d3e4",
+       "g8f6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.2 and +0.9 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-15"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkbnr/pppp1ppp/8/1B2p3/3nP3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
+   "caption": "A surprise: the Bird, 3...Nd4. It offers a trade of knights and hits the bishop. Step through a sound reply.",
+   "line": [
+    {
+     "move": "f3d4",
+     "say": "White trades the knight."
+    },
+    {
+     "move": "e5d4",
+     "say": "The pawn retakes and attacks nothing yet."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles and keeps the bishop on b5."
+    },
+    {
+     "move": "c7c6",
+     "say": "Black asks the bishop where it goes."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f3d4",
+       "b5c4",
+       "b5e2"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 90,
+      "depth": 16,
+      "after_moves": [
+       "f3d4",
+       "e5d4",
+       "e1g1",
+       "c7c6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.2 and +0.9 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-16"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkbnr/pppp1p1p/2n3p1/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 0 4",
+   "caption": "A surprise: 3...g6. The bishop heads for g7. Step through a sound reply.",
+   "line": [
+    {
+     "move": "c2c3",
+     "say": "White prepares d4."
+    },
+    {
+     "move": "g8e7",
+     "say": "Black develops and keeps ...a6 ready."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles."
+    },
+    {
+     "move": "a7a6",
+     "say": "Black asks the bishop where it goes."
+    }
+   ],
+   "claims": [
+    {
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c2c3",
+       "e1g1",
+       "d2d4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "At depth 16 the engine's best move is in this set and every move in it is within 40 centipawns of the best.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 100,
+      "depth": 16,
+      "after_moves": [
+       "c2c3",
+       "g8e7",
+       "e1g1",
+       "a7a6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.0 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODRUYLOPEZ8-17"
+  },
+  {
+   "type": "card",
+   "text": "**Before the test.** No labels from here. 'Sound' means the engine rates the move within about half a pawn of its best at depth 16: a proxy, noisy by about 0.2. Count guards and attackers aloud if you can. Expect new positions and no hints that name the idea."
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "od.ruylopez8.final"
+   ],
+   "n": 7,
+   "silent": true
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+   "caption": "The set-up to teach: the bishop on b3, the pawn on c3, the rook on e1 guarding e4. The break d4 waits for h3.",
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e4"
+    },
+    {
+     "from": "d2",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "d4"
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the rook on e1, guards e4.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d2d4"
+     },
+     "statement": "d4 is legal here.",
+     "id": "C2"
+    }
+   ],
+   "chapter": "Teach it back"
+  },
+  {
+   "type": "card",
+   "text": "**The Ruy Lopez in five lines.** [I] Idea: pressure the knight that guards e5, keep e4 guarded by a rook, and build c3 and d4. Works when: e4 is guarded and the centre can stay closed while you improve. Fails when: a pawn is grabbed without counting, d4 comes before c3, or a knight leaves e5 undefended. Warning: count the guards first. Repair: limit the damage, then develop."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it back. A beginner who knows how the pieces move has five minutes. Write (1) the idea of the Ruy Lopez in one sentence, (2) when it works, (3) one position they could set up on a board, (4) one warning: a typical error and what it costs.",
+   "fields": [
+    {
+     "id": "tb1",
+     "label": "1. The idea:"
+    },
+    {
+     "id": "tb2",
+     "label": "2. When it works:"
+    },
+    {
+     "id": "tb3",
+     "label": "3. A position to set up:"
+    },
+    {
+     "id": "tb4",
+     "label": "4. One warning:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Compare with a model answer. (1) Pressure e5 and build the centre. (2) It works while e4 stays guarded. (3) Rook on e1, pawn on c3, bishop on b3. (4) Warning: a grabbed pawn with a guard behind it loses a piece. Did you say when it fails? The app grades nothing; you judge. [H] Teaching exposes gaps faster than a test."
+  },
+  {
+   "type": "finale",
+   "fen": "r1bqk2r/1pppbppp/p1n2n2/4p3/B3P3/5N2/PPPP1PPP/RNBQ1RK1 w kq - 4 6",
+   "color": "both",
+   "prompt": "Optional. Play one game from this Ruy Lopez position as White and one as Black. You pick the level; the app marks it as a quiet record, never a gate."
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.**\n- Count the guards before you grab, break or move a defender.\n- Errors are cheap, costly or beyond repair.\n- Cheap: no material lost. Costly: a pawn. Beyond repair: a piece.\n- A pinned knight cannot count as a defender: the same break is an error with the king on e8 and only a gambit once it has castled [H].\n- A plan starts from structure, weak point and worst piece.\n- Surprise: what does it threaten, what is undefended, which plan changes?"
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "After your games: did you count before you grabbed, and did you know your plan by move eight? How sure are you now that you could teach the Ruy Lopez in five minutes? Which of the four parts (idea, when it works, example, warning) is your weakest?",
+   "fields": [
+    {
+     "id": "conf",
+     "label": "My confidence:",
+     "options": [
+      "not yet",
+      "nearly",
+      "yes"
+     ]
+    },
+    {
+     "id": "weak",
+     "label": "My weakest part:"
+    }
+   ]
+  }
+ ]
+}

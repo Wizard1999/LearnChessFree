@@ -129,6 +129,26 @@
     "ref": "authored: start position, first written move; variant for lesson L-FND-BOARD-1: quiet moves a2a3 a7a6 added so the position is not shared (checked with python-chess)",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBG-LFNDBOARD1-10",
+   "fen": "6k1/8/3p4/8/4B3/8/8/4K3 w - - 0 1",
+   "family": "FAM-LFNDBOARD1-10",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: bishop on e4, a few pieces, for tapping a named square",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDBOARD1-11",
+   "fen": "6k1/8/8/8/8/6N1/8/4K3 w - - 0 1",
+   "family": "FAM-LFNDBOARD1-11",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: knight on g3, for naming a non-corner square",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -558,7 +578,7 @@
    "cue": 1,
    "task": "classify_position",
    "position": "PBG-LFNDBOARD1-9-V2",
-   "prompt": "You set up the pieces and the corner square on your right, seen from White's side, is dark. What should you do?",
+   "prompt": "On a physical board, the corner square on your right, seen from White's side, is dark. What should you do?",
    "answer": {
     "class": "turn the board half way round",
     "options": [
@@ -592,7 +612,99 @@
     "Each player has a light square at their right-hand corner.",
     "If the right-hand corner is dark, the board is the wrong way round."
    ],
-   "explain": "The light square belongs at each player's right-hand corner, so a dark one there means the board is the wrong way round. Turning it half way round fixes it.",
+   "explain": "The light square belongs at each player's right-hand corner, so a dark one there means the board is the wrong way round. Turning it half way round fixes it. On screen the app always draws the board the right way round, so this matters when you play over a real board.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDBOARD1-10",
+   "skill": "FND.BOARD.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PBG-LFNDBOARD1-10",
+   "prompt": "Tap the square e4. (File letter first, then rank number.)",
+   "answer": {
+    "squares": [
+     "e4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "B"
+     },
+     "statement": "The white bishop stands on e4."
+    }
+   ],
+   "tags": [
+    "node.FND.BOARD",
+    "tier.0",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.select_squares",
+    "board.tap"
+   ],
+   "hints": [
+    "Find the e-file first: the fifth column from White's left.",
+    "Now go up that column to rank 4, the fourth row from White's side.",
+    "The two cross where the bishop stands."
+   ],
+   "explain": "The e-file is the fifth column and rank 4 is the fourth row. They cross on e4, where the bishop stands. Letter first, then number.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDBOARD1-11",
+   "skill": "FND.BOARD.D1",
+   "cue": 1,
+   "task": "classify_position",
+   "position": "PBG-LFNDBOARD1-11",
+   "prompt": "What is the name of the square the white knight stands on?",
+   "answer": {
+    "class": "g3",
+    "options": [
+     "f3",
+     "g3",
+     "g5",
+     "h3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g3",
+      "piece": "N"
+     },
+     "statement": "The white knight stands on g3."
+    }
+   ],
+   "tags": [
+    "node.FND.BOARD",
+    "tier.0",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.classify_position",
+    "board.name"
+   ],
+   "hints": [
+    "Count the files from White's left: a, b, c, d, e, f, g. Which letter is the knight's column?",
+    "Count the ranks from White's side. Which number is the knight's row?",
+    "Letter first, then number. Each wrong option has the wrong letter or the wrong number."
+   ],
+   "explain": "The knight is on the seventh file from the left, g, and the third rank from White's side, 3: the square is g3. The other options each get either the file or the rank wrong.",
    "orientation": "white",
    "review": {
     "status": "machine-only",

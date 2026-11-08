@@ -1,0 +1,1264 @@
+{
+ "id": "L-OD-NAJDORF-2",
+ "course": "opening-deep-dives",
+ "title": "Najdorf: the structure and the pawn breaks",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "series": "najdorf",
+ "uses": [
+  "OPN.STRUCT",
+  "POS.WEAKSQ",
+  "POS.PLAN",
+  "POS.STRUCTURE.CHAIN",
+  "SAF.COUNT"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Reads the two Najdorf pawn skeletons (...e5 and ...e6) and names the hole, the backward pawn and the outpost each one gives",
+  "Says when the central break ...d5 works and when it fails, from what White's queen and pawns are doing",
+  "Names the queen-side pawn storm ...b5 and ...b4 and what it gains",
+  "Says when g4-g5 needs a recapture and what stops it, and sees why f4 and e5 come too early in two positions",
+  "Explains the structures and breaks to a beginner in four parts and checks the explanation"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "app/public/masters/stats.json: 329,379 top-level games (both players 2500+), counts after 6.Be3 and 7.f3 quoted from the tree rows [V]",
+  "content/items/lesson-od-l-od-najdorf-2.json: positions replayed from SAN with python-chess; engine claims Stockfish 19 lite, depth 16 (evidence under recorded limits, not proof); structure claims from tools/structure.py [V]",
+  "docs/lesson-depth-standard.md sections 4, 6 and 7 (series lesson 2: structure and breaks)",
+  "[H] The 'a break works while the other side's pieces are not ready' rule and the three skeleton questions are mine and labelled in the text"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/1p3ppp/p2pbn2/4p3/4P3/1NN1BP2/PPP3PP/R2QKB1R b KQkq - 0 8",
+   "caption": "Hook. Black has played ...e5, and White's knight on c3 has a square that no black pawn can ever attack. Black to move. Before any explanation: which square is it, and what did Black get in return for allowing it?",
+   "claims": [
+    {
+     "type": "outposts",
+     "params": {
+      "color": "white",
+      "occupied": "empty",
+      "squares": [
+       "d5"
+      ]
+     },
+     "statement": "d5 is the one empty outpost square for White: the e4 pawn defends it and no black pawn can attack it.",
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black pawn attacks d5.",
+     "id": "C2"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The e4 pawn defends d5.",
+     "id": "C3"
+    }
+   ],
+   "chapter": "Hook and question"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Look back at the board: White's pawn stands on e4 and its knight on c3; Black's pawns stand on a6, b7, d6 and e5. Write the square where White's knight could settle and no black pawn could ever chase it away, and one thing you think Black gets in return.",
+   "fields": [
+    {
+     "id": "sq",
+     "label": "The square:"
+    },
+    {
+     "id": "gain",
+     "label": "What Black gets:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** The Najdorf is played with the same first six moves and then two different pawn skeletons. A skeleton tells each side where it can break open the position and where it cannot. After this lesson you can read a Najdorf position from its pawns, name the break each side wants, and say when that break fails."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N1B3/PPP2PPP/R2QKB1R b KQkq - 1 6",
+   "caption": "The skeleton with ...e5. Black answers the bishop move by putting a pawn on e5, so the knight on d4 must go. In our master file (2500+, 329,379 games) Black chose ...e5 in 1,546 games, against 673 for ...Ng4 and 370 for ...e6 [V]. Step through the set-up.",
+   "line": [
+    {
+     "move": "e7e5",
+     "say": "The pawn attacks the knight on d4 and fixes the centre."
+    },
+    {
+     "move": "d4b3",
+     "say": "The knight retreats; the d-file is now half-open for White."
+    },
+    {
+     "move": "c8e6",
+     "say": "The bishop develops and eyes the knight's future square."
+    },
+    {
+     "move": "f2f3",
+     "say": "The pawn guards e4, ready for a king-side attack."
+    }
+   ],
+   "claims": [
+    {
+     "type": "outposts",
+     "params": {
+      "color": "white",
+      "occupied": "empty",
+      "squares": [
+       "d5"
+      ],
+      "after_moves": [
+       "e7e5",
+       "d4b3",
+       "c8e6",
+       "f2f3"
+      ]
+     },
+     "statement": "After these moves d5 is an empty outpost for White.",
+     "id": "C1"
+    },
+    {
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "c"
+      ],
+      "after_moves": [
+       "e7e5",
+       "d4b3",
+       "c8e6",
+       "f2f3"
+      ]
+     },
+     "statement": "The d-file is half-open for White and the c-file half-open for Black.",
+     "id": "C2"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "backward",
+      "color": "black",
+      "squares": [
+       "d6"
+      ],
+      "after_moves": [
+       "e7e5",
+       "d4b3",
+       "c8e6",
+       "f2f3"
+      ]
+     },
+     "statement": "Black's pawn on d6 is backward: its stop square d5 is attacked by the pawn on e4.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 100,
+      "depth": 16,
+      "after_moves": [
+       "e7e5",
+       "d4b3",
+       "c8e6",
+       "f2f3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.3 and +1.0 pawns for White.",
+     "id": "C4"
+    }
+   ],
+   "chapter": "Two skeletons"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N1B3/PPP2PPP/R2QKB1R b KQkq - 1 6",
+   "caption": "The skeleton with ...e6. Black keeps the pawn chain flexible and does not allow a knight to settle. Step through the set-up.",
+   "line": [
+    {
+     "move": "e7e6",
+     "say": "The pawn guards d5 and opens the bishop on f8."
+    },
+    {
+     "move": "f2f3",
+     "say": "The pawn guards e4 and prepares the English attack."
+    }
+   ],
+   "claims": [
+    {
+     "type": "outposts",
+     "params": {
+      "color": "white",
+      "occupied": "any",
+      "squares": [],
+      "after_moves": [
+       "e7e6",
+       "f2f3"
+      ]
+     },
+     "statement": "After ...e6 White has no outpost square: the pawn on e6 attacks d5.",
+     "id": "C1"
+    },
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "e7e6",
+       "f2f3"
+      ]
+     },
+     "statement": "One black pawn, on e6, attacks d5.",
+     "id": "C2"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "backward",
+      "color": "black",
+      "squares": [],
+      "after_moves": [
+       "e7e6",
+       "f2f3"
+      ]
+     },
+     "statement": "Black has no backward pawn here.",
+     "id": "C3"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 120,
+      "depth": 16,
+      "after_moves": [
+       "e7e6",
+       "f2f3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.2 pawns for White.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What each skeleton gives.** [H] The ...e5 skeleton buys space and a firm grip on d4 and f4, and it costs a backward d6 pawn and a hole on d5. The ...e6 skeleton keeps d6 healthy and leaves d5 covered, and it costs space and the e5 square. In these two lines neither is clearly better: both scores are close to level [V, depth 16]. Which one you play is a choice of weaknesses."
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-1"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-2"
+  },
+  {
+   "type": "contrast",
+   "title": "Is d5 an outpost?",
+   "prompt": "Predict for each position, then check. One change matters; one does not.",
+   "working": "IOD-LODNAJDORF2-3",
+   "failing": "IOD-LODNAJDORF2-4",
+   "irrelevant": "IOD-LODNAJDORF2-5"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11",
+   "caption": "The outpost, used. The knight lands on d5 and Black can only trade it, since no pawn can attack it. Step through it.",
+   "line": [
+    {
+     "move": "c3d5",
+     "say": "The knight jumps to the outpost."
+    },
+    {
+     "move": "f6d5",
+     "say": "Black takes it, the only way to dislodge it."
+    },
+    {
+     "move": "e4d5",
+     "say": "The pawn retakes, gains space and attacks the bishop on e6."
+    },
+    {
+     "move": "e6f5",
+     "say": "The bishop steps away to f5."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black pawn attacks d5.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 70,
+      "depth": 16,
+      "after_moves": [
+       "c3d5",
+       "f6d5",
+       "e4d5",
+       "e6f5"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.4 and +0.7 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What a pawn break is.** A break is a pawn move that challenges the enemy pawn structure, usually by offering a trade: ...d5 and e5 are breaks. A pawn storm, such as ...b5-b4 or g4-g5, pushes pawns at pieces to win time. [H] A break or a storm works when it comes before the opponent's pieces are ready for it: a hypothesis from the three positions here, and ...d5 is still slightly worse for Black even when it works. Test it on the central break first.",
+   "chapter": "Black's breaks"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/1p3ppp/p2ppn2/8/3NP3/2N1BP2/PPP3PP/R2QKB1R b KQkq - 0 7",
+   "caption": "The central break at once. White has played f3 and not yet moved the queen. Black strikes in the centre. Our master file has no game with this move; ideas can be sound and rare [V]. How does White answer the attack on e4?",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "The pawn strikes at e4 before White is ready."
+    },
+    {
+     "move": "e4e5",
+     "say": "White closes the centre and gains space."
+    },
+    {
+     "move": "f6d7",
+     "say": "The knight steps back and attacks the pawn on e5."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 130,
+      "depth": 16,
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After ...d5 the engine score is between -0.2 and +1.3 (depth 16): Black is not worse by more than a pawn.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "d6d5"
+     },
+     "statement": "d5 is legal here.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/1p1n1ppp/p3p3/3pP3/3N4/2N1BP2/PPP3PP/R2QKB1R w KQkq - 1 9",
+   "caption": "White supports e5 with f4 and Black adds a second attacker. Count the attackers of e5.",
+   "line": [
+    {
+     "move": "f3f4",
+     "say": "The pawn supports e5."
+    },
+    {
+     "move": "b8c6",
+     "say": "The second knight joins the attack on e5."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 130,
+      "depth": 16,
+      "after_moves": [
+       "f3f4",
+       "b8c6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +0.0 and +1.3 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p2ppn2/1p6/3NP1P1/2N1BP2/PPPQ3P/R3KB1R b KQkq - 0 9",
+   "caption": "The same break, three moves later. Here White has played Qd2 and g4, and Black has played ...b5 and ...Nbd7. After ...d5, which black piece is attacked at once?",
+   "line": [
+    {
+     "move": "d6d5",
+     "say": "Black strikes at e4, but the knight on f6 can be attacked at once."
+    },
+    {
+     "move": "g4g5",
+     "say": "The pawn attacks the knight before it can leave."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black attacks the other knight in return."
+    },
+    {
+     "move": "c3a4",
+     "say": "The knight steps aside."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g4",
+     "to": "g5"
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 200,
+      "max": 1000,
+      "depth": 16,
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After ...d5 the engine has White clearly ahead (depth 16).",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p3pn2/3p2P1/Np1NP3/4BP2/PPPQ3P/R3KB1R b KQkq - 1 11",
+   "caption": "Black takes e4 and White takes the knight. Count what Black has left.",
+   "line": [
+    {
+     "move": "d5e4",
+     "say": "Black takes the pawn."
+    },
+    {
+     "move": "g5f6",
+     "say": "White takes the knight."
+    },
+    {
+     "move": "d7f6",
+     "say": "Black retakes, a piece down for two pawns."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 250,
+      "max": 370,
+      "depth": 16,
+      "after_moves": [
+       "d5e4",
+       "g5f6",
+       "d7f6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +2.5 and +3.7 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Is the central break playable?",
+   "prompt": "Predict for each position, then check. One change matters; one does not.",
+   "working": "IOD-LODNAJDORF2-6",
+   "failing": "IOD-LODNAJDORF2-7",
+   "irrelevant": "IOD-LODNAJDORF2-8"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/5ppp/p2ppn2/1p6/3NP3/2N1BP2/PPPQ2PP/R3KB1R b KQkq - 1 8",
+   "caption": "The queen-side storm. After 7...b5 (in 146 master games here) and 8.Qd2, Black develops a knight and White commits g4. Which white knight does ...b4 attack?",
+   "line": [
+    {
+     "move": "b8d7",
+     "say": "The knight develops and guards the knight on f6."
+    },
+    {
+     "move": "g2g4",
+     "say": "White starts the king-side pawn storm."
+    },
+    {
+     "move": "b5b4",
+     "say": "The break: the pawn attacks the knight on c3."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b8d7",
+       "g2g4",
+       "b5b4"
+      ]
+     },
+     "statement": "After ...b4 one black pawn attacks the knight on c3.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p2ppn2/8/1p1NP1P1/2N1BP2/PPPQ3P/R3KB1R w KQkq - 0 10",
+   "caption": "The knight steps back and Black stops g5 before it comes with tempo.",
+   "line": [
+    {
+     "move": "c3e2",
+     "say": "The knight steps back and keeps the e-file guarded."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black stops g5 before it comes with tempo."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 110,
+      "depth": 16,
+      "after_moves": [
+       "c3e2",
+       "h7h6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +0.0 and +1.1 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-9"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p2ppn2/1p6/3NP1P1/2N1BP2/PPPQ3P/R3KB1R b KQkq - 0 9",
+   "caption": "Two ways to go wrong. The pawn on g4 invites a grab: the knight takes it. Count the guards of g4 first.",
+   "line": [
+    {
+     "move": "f6g4",
+     "say": "Black grabs the pawn with the knight."
+    },
+    {
+     "move": "f3g4",
+     "say": "The f-pawn takes the knight: g4 was guarded all along."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black attacks the knight on c3."
+    },
+    {
+     "move": "c3d1",
+     "say": "The knight steps back."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f6g4"
+      ]
+     },
+     "statement": "After the knight lands on g4 one white pawn, on f3, attacks it.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 320,
+      "max": 450,
+      "depth": 16,
+      "after_moves": [
+       "f6g4",
+       "f3g4",
+       "b5b4",
+       "c3d1"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between +3.2 and +4.5 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p2ppn2/1p6/3NP1P1/2N1BP2/PPPQ3P/R3KB1R b KQkq - 0 9",
+   "caption": "The counter-push ...g5. It tries to stop g5 by taking the square, but it leaves f5 and h5 to the white pieces. What attacks the new pawn at once?",
+   "line": [
+    {
+     "move": "g7g5",
+     "say": "Black pushes his own pawn to meet the storm."
+    },
+    {
+     "move": "h2h4",
+     "say": "White attacks the pawn at once."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black attacks the knight on c3."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 250,
+      "max": 1000,
+      "depth": 16,
+      "after_moves": [
+       "g7g5"
+      ]
+     },
+     "statement": "After ...g5 the engine has White clearly ahead (depth 16).",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1p1p/p2ppn2/6p1/1p1NP1PP/2N1BP2/PPPQ4/R3KB1R w KQkq - 0 11",
+   "caption": "The knight steps back and Black's knight takes a strong square, but the pawn on g5 is already lost.",
+   "line": [
+    {
+     "move": "c3e2",
+     "say": "The knight steps back."
+    },
+    {
+     "move": "d7e5",
+     "say": "Black's knight takes a strong square."
+    },
+    {
+     "move": "h4g5",
+     "say": "White takes the pawn: the counter-push has dropped it."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the masters did.** In our file (2500+), once White's queen had gone to d2, Black developed the knight to d7 in 74 games, pushed the b-pawn in 28 and played the bishop to b7 in 10 [V; moves with fewer than 3 games dropped]. The counts say what was played and how often, not what is strongest. [H] A rare move can be as good as a common one; check a move by counting guards, not by counting games."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "After 8.Qd2 (White's queen is on d2 and Black is to move) the knight move was played 74 times and the bishop move 10 times. Does that make the knight move the stronger one?",
+   "fields": [
+    {
+     "id": "verdict",
+     "label": "My answer:",
+     "options": [
+      "yes, it is played more",
+      "no, the count shows what was played, not its strength"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**White's breaks.** White has a king-side break and a central one. The pawn storm g4 and g5 hits the knight on f6; the break e5 (in lines with a bishop on g5 and a pawn on f4) hits d6. [H] The mirror of Black's rule: a break works only while the other side cannot answer it by winning time against the pieces the break leaves behind. Test it.",
+   "chapter": "White's breaks"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1pp1/p2ppn1p/1p6/3NP1P1/2N1BP2/PPPQ3P/R3KB1R w KQkq - 0 10",
+   "caption": "The break g5 when Black has played ...h6. Step through it and count what recaptures on g5.",
+   "line": [
+    {
+     "move": "g4g5",
+     "say": "White pushes at once, hoping for tempo on the knight."
+    },
+    {
+     "move": "h6g5",
+     "say": "Black takes, and the bishop is needed to recapture."
+    },
+    {
+     "move": "e3g5",
+     "say": "The bishop recaptures and eyes the knight on f6."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black attacks the knight on c3 and gains time."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g4",
+     "to": "g5"
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g4g5"
+      ]
+     },
+     "statement": "After g5 one black pawn, on h6, attacks g5.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -90,
+      "max": 20,
+      "depth": 16,
+      "after_moves": [
+       "g4g5",
+       "h6g5",
+       "e3g5",
+       "b5b4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.9 and +0.2 pawns for White.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1pp1/p2ppn1p/1p6/3NP1P1/2N1BP2/PPPQ3P/R3KB1R w KQkq - 0 10",
+   "caption": "The prepared break. White puts a second pawn behind g5 first, so that the break comes with a recapture. What does h4 add?",
+   "line": [
+    {
+     "move": "h2h4",
+     "say": "A second pawn now attacks g5, so a push will have support."
+    },
+    {
+     "move": "b5b4",
+     "say": "Black attacks the knight on c3."
+    },
+    {
+     "move": "c3a4",
+     "say": "The knight steps aside and eyes the queen side."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "h2h4"
+      ]
+     },
+     "statement": "After h4 one white pawn, on h4, attacks g5.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1pp1/p2ppn1p/8/Np1NP1PP/4BP2/PPPQ4/R3KB1R b KQkq - 1 11",
+   "caption": "Black's knight takes a strong central square and the rook joins the g-file.",
+   "line": [
+    {
+     "move": "d7e5",
+     "say": "Black's knight takes a strong central square."
+    },
+    {
+     "move": "h1g1",
+     "say": "The rook joins the g-file for the storm."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 120,
+      "depth": 16,
+      "after_moves": [
+       "d7e5",
+       "h1g1"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.1 and +1.2 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-10"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/3n1ppp/p2ppn2/8/1p1NP1P1/2N1BP2/PPPQ3P/R3KB1R w KQkq - 0 10",
+   "caption": "The break g5 when Black has answered with ...b4. The pawn attack on c3 changes the order of play. Step through the engine's choice: the knight steps away first.",
+   "line": [
+    {
+     "move": "c3e2",
+     "say": "The knight steps back and is not lost."
+    },
+    {
+     "move": "h7h6",
+     "say": "Black stops g5."
+    },
+    {
+     "move": "e2f4",
+     "say": "The knight comes to a strong square that eyes e6 and d5."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "c3"
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black pawn, on b4, attacks the knight on c3.",
+     "id": "C1"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "g4g5",
+      "cp": 210
+     },
+     "statement": "At depth 16 g5 is at least 2.1 pawns worse than the best move.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 90,
+      "depth": 16,
+      "after_moves": [
+       "c3e2",
+       "h7h6",
+       "e2f4"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.2 and +0.9 pawns for White.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-11"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11",
+   "caption": "A break that fails in the same skeleton. White has castled long and Black short, and the push f4 looks natural. Black's best reply is a knight move. Where does it go, and what does it hit?",
+   "line": [
+    {
+     "move": "f3f4",
+     "say": "White strikes at e5."
+    },
+    {
+     "move": "f6g4",
+     "say": "The knight attacks the bishop on e3 and the pawn on f4 is loose."
+    },
+    {
+     "move": "c1b1",
+     "say": "The king steps out of the way."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "At depth 16 f4 is at least 0.7 pawns worse than the best move.",
+     "type": "move_loses",
+     "params": {
+      "move": "f3f4",
+      "cp": 70
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After f4 and ...Ng4 the knight attacks the bishop on e3.",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f3f4",
+       "f6g4"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1nbppp/p2pb3/4p3/4PPn1/1NN1B3/PPPQ2PP/1K1R1B1R b - - 2 12",
+   "caption": "White gives up the bishop pair, and Black wins the pawn on f4. Why did f4 come too early?",
+   "line": [
+    {
+     "move": "g4e3",
+     "say": "The knight takes the bishop."
+    },
+    {
+     "move": "d2e3",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "e5f4",
+     "say": "The pawn takes the pawn on f4 and Black is a pawn up."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After this line Black stands level or better (depth 16).",
+     "type": "eval_range",
+     "params": {
+      "min": -200,
+      "max": 30,
+      "depth": 16,
+      "after_moves": [
+       "g4e3",
+       "d2e3",
+       "e5f4"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-12"
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11",
+   "caption": "The pawn storm in the ...e5 skeleton. White pushes g4 and g5, and Black counters on the queen side. Both wings race. Which knight does each pawn attack?",
+   "line": [
+    {
+     "move": "g2g4",
+     "say": "The storm starts."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black counters on the other wing."
+    },
+    {
+     "move": "g4g5",
+     "say": "The pawn attacks the knight on f6."
+    },
+    {
+     "move": "b5b4",
+     "say": "The pawn attacks the knight on c3."
+    }
+   ],
+   "claims": [
+    {
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "g2g4",
+       "b7b5",
+       "g4g5"
+      ]
+     },
+     "statement": "After g5 one white pawn attacks the knight on f6.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/3nbppp/p2pbn2/4p1P1/1p2P3/1NN1BP2/PPPQ3P/2KR1B1R w - - 0 13",
+   "caption": "White takes the knight first, Black takes the other, and the pieces recapture. Who is ahead?",
+   "line": [
+    {
+     "move": "g5f6",
+     "say": "White takes the knight first."
+    },
+    {
+     "move": "b4c3",
+     "say": "Black takes the knight on c3."
+    },
+    {
+     "move": "d2c3",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "d7f6",
+     "say": "The knight retakes."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 100,
+      "depth": 16,
+      "after_moves": [
+       "g5f6",
+       "b4c3",
+       "d2c3",
+       "d7f6"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.3 and +1.0 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-13"
+  },
+  {
+   "type": "board",
+   "fen": "r1b1k2r/1pqnbppp/p2ppn2/6B1/3NPP2/2N2Q2/PPP3PP/2KR1B1R w kq - 5 10",
+   "caption": "The central break in the other White set-up. With the bishop on g5 and the pawn on f4, the break e5 hits d6. What does fxe5 attack?",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "White opens the centre at once."
+    },
+    {
+     "move": "d6e5",
+     "say": "Black takes."
+    },
+    {
+     "move": "f4e5",
+     "say": "The f-pawn retakes and attacks the knight on f6."
+    }
+   ],
+   "claims": [
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "e4e5",
+      "cp": 40
+     },
+     "statement": "At depth 16 e5 is at least 0.4 pawns worse than the best move.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1b1k2r/1pqnbppp/p3pn2/4P1B1/3N4/2N2Q2/PPP3PP/2KR1B1R b kq - 0 11",
+   "caption": "Black takes the pawn on e5. What does the queen on g3 attack, and what has Black gained?",
+   "line": [
+    {
+     "move": "d7e5",
+     "say": "Black takes the pawn on e5."
+    },
+    {
+     "move": "f3g3",
+     "say": "The queen hits the knight on e5 and the pawn on g7."
+    }
+   ],
+   "claims": [
+    {
+     "type": "eval_range",
+     "params": {
+      "min": -80,
+      "max": 50,
+      "depth": 16,
+      "after_moves": [
+       "d7e5",
+       "f3g3"
+      ]
+     },
+     "statement": "At depth 16 the engine score after this line is between -0.8 and +0.5 pawns for White.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODNAJDORF2-14"
+  },
+  {
+   "type": "card",
+   "text": "**Reading a skeleton.** [H] Three questions. Which break is mine, and has the other side's piece placement let it work yet? Which break is theirs? Which square is the pawn structure giving away for free? Answer these before you choose a plan, then check the plan against a count of attackers and defenders."
+  },
+  {
+   "type": "card",
+   "text": "**Before the test.** No labels from here. 'Sound' for a find-the-move item means within about half a pawn of the engine's best at depth 16; 'playable' for a break means the score stays within about a pawn of equal. Both are proxies, noisy by about 0.2. Expect new positions and no hints that name the idea.",
+   "chapter": "Mixed test"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "od.najdorf2.final"
+   ],
+   "n": 7,
+   "silent": true
+  },
+  {
+   "type": "board",
+   "fen": "r2q1rk1/1p1nbppp/p2pbn2/4p3/4P3/1NN1BP2/PPPQ2PP/2KR1B1R w - - 5 11",
+   "caption": "The skeleton to teach: pawns on e4 and f3 against d6 and e5, the half-open d-file for White and the c-file for Black, and the outpost on d5.",
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d6"
+   ],
+   "claims": [
+    {
+     "type": "outposts",
+     "params": {
+      "color": "white",
+      "occupied": "empty",
+      "squares": [
+       "d5"
+      ]
+     },
+     "statement": "d5 is White's only empty outpost square.",
+     "id": "C1"
+    },
+    {
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "d"
+      ],
+      "half_open_black": [
+       "c"
+      ]
+     },
+     "statement": "The d-file is half-open for White and the c-file half-open for Black.",
+     "id": "C2"
+    },
+    {
+     "type": "pawn_set",
+     "params": {
+      "kind": "backward",
+      "color": "black",
+      "squares": [
+       "d6"
+      ]
+     },
+     "statement": "Black's pawn on d6 is backward.",
+     "id": "C3"
+    }
+   ],
+   "chapter": "Teach it back"
+  },
+  {
+   "type": "card",
+   "text": "**The Najdorf skeleton in five lines.** [I] The skeleton fixes where each side can break. With ...e5: space for Black, a hole on d5 and a backward d6 pawn, and an outpost for White. With ...e6: a healthier d6 pawn, no outpost, and the central break ...d5 while White's pieces are not ready. White's levers: the storm g4 and g5 when a pawn or piece can recapture, and the break e5 only after the pieces are placed."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it back. A beginner knows how the pieces move. In five minutes explain (1) the two Black skeletons, (2) what a pawn break is, (3) one break that works and why, (4) one break that fails and what it ran into.",
+   "fields": [
+    {
+     "id": "tb1",
+     "label": "1. Two skeletons:"
+    },
+    {
+     "id": "tb2",
+     "label": "2. A break is:"
+    },
+    {
+     "id": "tb3",
+     "label": "3. A break that works:"
+    },
+    {
+     "id": "tb4",
+     "label": "4. A break that fails:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** (1) ...e5 and ...e6: one pawn, two different sets of weaknesses. (2) A pawn move that challenges the enemy pawns, usually by offering a trade; a storm pushes pawns at pieces. (3) ...d5 right after f3: the white queen and pawns are not ready. (4) ...d5 after Qd2 and g4: the pawn on g4 hits the knight with tempo. Did you say when each fails? The app grades nothing; you judge. [H] Teaching exposes gaps faster than a test."
+  },
+  {
+   "type": "finale",
+   "fen": "rnbqkb1r/1p2pppp/p2p1n2/8/3NP3/2N1B3/PPP2PPP/R2QKB1R b KQkq - 1 6",
+   "color": "both",
+   "prompt": "Optional. Play one game from this Najdorf position as Black (or as White) and try to steer toward the skeleton you chose. You pick the level; the app marks it as a quiet record, never a gate."
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.**\n- A skeleton fixes where each side can break.\n- ...e5: space, a hole on d5, a backward d6 pawn.\n- ...e6: no hole, a flexible chain.\n- A break works while the other side's pieces are not ready [H].\n- g5 needs a recapture; e5 needs the pieces placed.\n- Read the pawns first, then count attackers."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "After your game: which skeleton did you reach, and which break did you play or stop? How sure are you now that you could teach the Najdorf pawn structures in five minutes? Which of the four parts is your weakest?",
+   "fields": [
+    {
+     "id": "conf",
+     "label": "My confidence:",
+     "options": [
+      "not yet",
+      "nearly",
+      "yes"
+     ]
+    },
+    {
+     "id": "weak",
+     "label": "My weakest part:"
+    }
+   ]
+  }
+ ]
+}

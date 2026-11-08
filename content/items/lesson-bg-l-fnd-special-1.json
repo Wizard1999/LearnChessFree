@@ -89,6 +89,16 @@
         "ref": "authored: black g-pawn has just jumped beside a white pawn on h5; en passant on g6",
         "licence": "project"
       }
+    },
+    {
+      "id": "PBG-LFNDSPECIAL1-10",
+      "fen": "8/4k3/8/3pP3/8/8/4K3/8 w - - 0 1",
+      "family": "FAM-ENPASSANT-BG",
+      "provenance": {
+        "kind": "authored",
+        "ref": "authored: the chance has expired; black pawn beside white pawn, no en passant square",
+        "licence": "project"
+      }
     }
   ],
   "items": [
@@ -555,6 +565,60 @@
         "You can step to h6 or capture on g6, the square the black pawn passed over."
       ],
       "explain": "The black pawn jumped from g7 to g5 and landed right beside White's pawn on h5. White may capture it en passant on g6, or simply step to h6.",
+      "orientation": "white",
+      "review": {
+        "status": "machine-only"
+      }
+    },
+    {
+      "id": "IBG-LFNDSPECIAL1-10",
+      "skill": "FND.ENPASSANT.D2",
+      "cue": 2,
+      "task": "select_squares",
+      "position": "PBG-LFNDSPECIAL1-10",
+      "prompt": "White to move. Black's pawn jumped from d7 to d5 two moves ago, and each side has moved since. Tap every square the pawn on e5 can move to.",
+      "answer": {
+        "from": "e5",
+        "squares": [
+          "e6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "e5",
+            "to": [
+              "e6"
+            ]
+          },
+          "statement": "White's pawn on e5 can only step ahead."
+        },
+        {
+          "id": "C2",
+          "type": "illegal_move",
+          "params": {
+            "move": "e5d6"
+          },
+          "statement": "The en passant capture is no longer legal."
+        }
+      ],
+      "tags": [
+        "node.FND.ENPASSANT",
+        "tier.0",
+        "cue.2",
+        "kind.authored",
+        "family.FAM-ENPASSANT-BG",
+        "lang.en",
+        "task.select_squares"
+      ],
+      "hints": [
+        "Did the black pawn jump on its very last move?",
+        "The chance lasts for one move only. How many moves have passed?",
+        "The chance has gone, so the pawn on e5 can only step ahead."
+      ],
+      "explain": "The black pawn jumped two moves ago. En passant had to be played on the very next move, and White played something else, so the chance expired. The pawn on e5 can only step to e6.",
       "orientation": "white",
       "review": {
         "status": "machine-only"

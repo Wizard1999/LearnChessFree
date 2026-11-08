@@ -1,0 +1,501 @@
+{
+ "positions": [
+  {
+   "id": "POD-ALIEN8-1",
+   "fen": "rn1q1bkr/pp2p1p1/2p2n1p/4Nb2/2BP4/8/PPP2PPP/R1BQK2R b KQ - 5 9",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Gavrilescu v Yashmetov, 2024.03.19 (chess.com titled event): position after 9.Bc4+; legal moves replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POD-ALIEN8-2",
+   "fen": "rn1q1bkr/pp2p1p1/2p4p/3nNb1Q/2BP4/8/PPP2PPP/R1B1K2R b KQ - 7 10",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Gavrilescu v Yashmetov, 2024.03.19: position after 10.Qh5",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POD-ALIEN8-3",
+   "fen": "rn1q1b1r/pp3Qpk/2p1p2p/3nNb2/2BP2P1/8/PPP2P1P/R1B1K2R b KQ - 0 12",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Gavrilescu v Yashmetov, 2024.03.19: position after 12.g4",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POD-ALIEN8-4",
+   "fen": "rnb2b2/pp3kpr/4RnNp/2p5/2B5/8/PPP2PPP/R1B3K1 w - - 1 16",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Khodko v Shafer, 2024.08.20 (chess.com titled event): position after 15...Kf7; legal moves replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POD-ALIEN8-5",
+   "fen": "rn1qkb1r/pp4p1/2p1pn1p/4Nb2/2BP2P1/8/PPP2P1P/R1BQK2R b KQ - 0 10",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Shearsby v Schutte, 2025.07.08 (chess.com titled event): position after 10.g4; legal moves replayed with python-chess",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "POD-ALIEN8-6",
+   "fen": "rn1qkb1r/pp4p1/2p1pn1p/4N3/2bP2P1/3Q1P2/PPP4P/R1B1K2R w KQ - 0 13",
+   "family": "FAM-OD-ALIEN-8",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Shearsby v Schutte, 2025.07.08: position after 12...Bxc4; legal moves replayed with python-chess",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IOD-ALIEN8-1",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-1",
+   "prompt": "Black to move. Find the reply that keeps Black's advantage.",
+   "answer": {
+    "moves": [
+     "f6d5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f6d5"
+      ],
+      "within_cp": 30
+     },
+     "statement": "The engine (depth 16) rates Nd5 as the best move."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "g8h7",
+      "cp": 120
+     },
+     "statement": "Kh7 scores at least 120 centipawns worse than Nd5."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f5e6",
+      "cp": 500
+     },
+     "statement": "Be6 loses by force or nearly so."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1,
+      "after_move": "f6d5"
+     },
+     "statement": "After Nd5 one white piece, the bishop on c4, attacks the knight."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "e7e6",
+      "cp": 60
+     },
+     "statement": "The pawn block e6 scores at least 60 centipawns worse than Nd5."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "The bishop checks along a diagonal. Blocking the diagonal puts a piece or pawn between the bishop and the king. Which blocker keeps Black clearly ahead?",
+    "A bishop block on e6 can be taken with check. A pawn block on e6 is safe but passive. A knight block on d5 can be challenged only once.",
+    "Nd5."
+   ],
+   "explain": "Nd5 blocks the bishop's diagonal with a knight that only the bishop attacks, and it keeps the king on g8. Kh7 steps off the diagonal but into the queen's range; Be6 blocks with a piece that White can take with check. At depth 16 Nd5 is the best move, Kh7 scores at least 120 worse, and Be6 loses by force or nearly so. The pawn block e6 is safe, but it leaves White the initiative and scores at least 60 worse.",
+   "feedback_by_move": {
+    "g8h7": "Kh7 walks away from the diagonal but loses time against the queen and knight. It scores at least 120 centipawns worse than Nd5 (depth 16).",
+    "f5e6": "Be6 blocks with a piece that the bishop takes with check, after which the king is exposed; it loses by force or nearly so (depth 16).",
+    "e7e6": "e6 blocks with a pawn, which is legal and safe, but it leaves White the initiative. It scores at least 60 centipawns worse than Nd5 (depth 16)."
+   },
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IOD-ALIEN8-2",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-2",
+   "prompt": "Black to move. The bishop on f5 is attacked by the queen. Find the move that saves the bishop and keeps Black clearly ahead.",
+   "answer": {
+    "moves": [
+     "e7e6",
+     "f5e6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e7e6",
+       "f5e6"
+      ],
+      "within_cp": 100
+     },
+     "statement": "The engine (depth 16) rates e6 best, with Be6 within one pawn of it and still clearly ahead for Black."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "f5c2",
+      "cp": 100
+     },
+     "statement": "Bxc2 scores at least 100 centipawns worse than e6."
+    },
+    {
+     "id": "C3",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c2"
+      ]
+     },
+     "statement": "The pawn on c2 is White's only loose piece: attacked by the bishop, defended by nothing."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f5",
+      "color": "black",
+      "count": 1,
+      "after_move": "e7e6"
+     },
+     "statement": "After e6 a black pawn defends the bishop on f5."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "The bishop is attacked once. It can be defended, moved to safety, or moved to take something. List all three before choosing.",
+    "A pawn on e6 would defend the bishop. The bishop could also take a pawn on c2, but ask what leaves with it.",
+    "e6."
+   ],
+   "explain": "The bishop is attacked only by the queen. A pawn on e6 defends it, so Qxf5 exf5 would give White a queen for a bishop. Bxc2 saves the bishop and wins the pawn on c2, which has been loose since the queen left d1, but it sends the bishop to the edge while White's queen, knight and bishop aim at the king. At depth 16 e6 is the engine's best move, Be6 is also good, and Bxc2 scores at least 100 centipawns worse than e6.",
+   "feedback_by_move": {
+    "f5c2": "Bxc2 saves the bishop and wins a loose pawn, but the bishop leaves the kingside. It scores at least 100 centipawns worse than e6 (depth 16).",
+    "f5e6": "Be6 also saves the bishop (the pawn on e7 defends it) and keeps Black clearly ahead; e6 is a little more accurate (depth 16)."
+   },
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IOD-ALIEN8-3",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-3",
+   "prompt": "Black to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "f5c2"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f5c2"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) rates Bxc2 as the best move."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white pawn, on g4, attacks the bishop on f5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "Two white pieces, the pawn and the queen, attack the bishop on f5."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "f5e4",
+      "cp": 100
+     },
+     "statement": "Be4 scores at least 100 centipawns worse than Bxc2."
+    },
+    {
+     "id": "C5",
+     "type": "move_loses",
+     "params": {
+      "move": "f8b4",
+      "cp": 50
+     },
+     "statement": "The check Bb4+ scores at least 50 centipawns worse than Bxc2."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "The bishop is attacked by a pawn. Can any defender make a capture by that pawn bad?",
+    "A pawn is worth less than a bishop, so with a pawn attacking, the bishop is usually moved rather than defended. Some squares win something.",
+    "Bxc2."
+   ],
+   "explain": "A pawn attacks the bishop, and a pawn is worth less than a bishop, so defending the bishop usually does not help here: it should move. Bxc2 moves it and wins the loose pawn on c2 in the same move. At depth 16 Bxc2 is the best move, and Be4 scores at least 100 centipawns worse.",
+   "feedback_by_move": {
+    "f5e4": "Be4 saves the bishop and keeps a lead, but wins nothing and stays in front of the g-pawn. It scores at least 100 centipawns worse than Bxc2 (depth 16).",
+    "f8b4": "Bb4+ is a legal check and keeps Black ahead, but it leaves the bishop on f5 to the pawn attack. It scores at least 50 centipawns worse than Bxc2 (depth 16)."
+   },
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IOD-ALIEN8-4",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-4",
+   "prompt": "White to move. Find the best move.",
+   "answer": {
+    "moves": [
+     "g6e5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "g6e5",
+      "n": 4
+     },
+     "statement": "Ne5+ leads to a forced mate in at most four moves."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g6e5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) rates Ne5+ as the best move."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "The knight on g6 and the rook on e6 both stand near the black king. Which check starts the sequence?",
+    "A knight check from e5 forces the king; then the rook can leave e6 and uncover a check from the bishop.",
+    "Ne5+."
+   ],
+   "explain": "The knight returns to e5 with check and the king must go back to g8. Then Rxf6+ is a discovered check: the rook leaves e6 and the bishop on c4 attacks g8. The king goes to h8 and Ng6 is mate; if Black blocks with the bishop on e6, Bxe6+ Kh8 Rxf8 is mate. At depth 16 the engine confirms a forced mate in at most four moves from here.",
+   "feedback_by_move": {},
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IOD-ALIEN8-5",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-5",
+   "prompt": "Black to move. The bishop on f5 is attacked by a pawn. Find the best square for it.",
+   "answer": {
+    "moves": [
+     "f5h7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f5h7"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) rates Bh7 as the best move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 0,
+      "after_move": "f5h7"
+     },
+     "statement": "After Bh7 no white piece attacks the bishop."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f5e4",
+      "cp": 50
+     },
+     "statement": "Be4 scores at least 50 centipawns worse than Bh7."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "A pawn attacks the bishop, so it must move. Which squares on its diagonals are not attacked by any white piece?",
+    "The bishop can stay on the long diagonal through c2, or step in front of the e-pawn.",
+    "Bh7."
+   ],
+   "explain": "The bishop must move, and on h7 nothing of White's attacks it while it keeps the long diagonal. On e4 it stands in front of the f-pawn's advance, which gains White time. At depth 16 Bh7 is the best move and Be4 scores at least 50 centipawns worse.",
+   "feedback_by_move": {
+    "f5e4": "Be4 keeps a lead but can be hit by the f-pawn, which gives White a tempo. It scores at least 50 centipawns worse than Bh7 (depth 16); it was played in the game."
+   },
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IOD-ALIEN8-6",
+   "skill": "OPN.PUNISH.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "POD-ALIEN8-6",
+   "prompt": "White to move. The bishop on c4 has been taken and the black king stands on e8. Find the best move.",
+   "answer": {
+    "moves": [
+     "d3g6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d3g6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "The engine (depth 16) rates Qg6+ as the best move."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "d3g6",
+      "min": 1
+     },
+     "statement": "Qg6+ wins at least a pawn by force along the engine line."
+    }
+   ],
+   "tags": [
+    "cue.3",
+    "tier.4",
+    "kind.game",
+    "lang.en",
+    "od.alien",
+    "od.alien-test"
+   ],
+   "hints": [
+    "The black king has no pawn in front of it on the e-file. Which check does the queen have?",
+    "From g6 the queen checks along the diagonal; after the king moves, another check follows.",
+    "Qg6+."
+   ],
+   "explain": "The queen checks on g6 and, after the king steps aside, checks again on f7 with the knight on e5 guarding her; the black bishop on c4 is left hanging to the knight. At depth 16 the engine rates Qg6+ best, and the line wins material by force.",
+   "feedback_by_move": {},
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

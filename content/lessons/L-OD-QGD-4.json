@@ -1,0 +1,2256 @@
+{
+ "id": "L-OD-QGD-4",
+ "course": "opening-deep-dives",
+ "series": "qgd",
+ "title": "Queen's Gambit Declined: the main line move by move, with reasons",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "OPN.PRINCIPLES",
+  "OPN.SETUP",
+  "POS.PLAN",
+  "SAF.COUNT",
+  "SAF.THREAT"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Says what each of White's first seven moves in the main line is for (the bishop attacks the defender of d5, e3 guards d4, Nf3 develops, the bishop retreats to h4) and what the bishop on e7 does for Black",
+  "Names Black's three answers at move seven (knight to e4, pawn to b6, knight to d7), the job of each, and how often strong players chose them, with the sample size",
+  "Steps through the trade-pieces line and the build line to about move fourteen and gives a reason for each move and naming the half-open c-file and e-file that the exchange on d5 creates",
+  "Recognises the typical mistakes (taking a piece while the queen is attacked, developing while a piece is attacked twice, ignoring a capture) and asks what the opponent's last move attacked before replying"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/ppp2ppp/4pn2/3p2B1/2PP4/2N5/PP2PPPP/R2QKBNR b KQkq - 3 4",
+   "caption": "Black to move after 4.Bg5. The bishop attacks the knight on f6, and the knight guards d5. What does Black want to do about it? And what could White do if Black ignores it?",
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "f6"
+    },
+    {
+     "from": "f6",
+     "to": "d5"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g5",
+      "includes": [
+       "f6"
+      ]
+     },
+     "statement": "The bishop on g5 attacks the knight on f6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f6",
+      "includes": [
+       "d5"
+      ]
+     },
+     "statement": "The knight on f6 guards d5."
+    }
+   ],
+   "chapter": "The pin and the question"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before any explanation, even if you are unsure: if Black ignores the bishop and develops elsewhere, what could White do with it? Give one idea.",
+   "fields": [
+    {
+     "id": "g",
+     "label": "My guess:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** The main line of the Declined looks like a long list of moves, but each move answers a threat or prepares a plan. By the end you can say what White's first seven moves are for, what Black's three answers to the bishop try to do, and step through two lines to about move fourteen and give a reason for every move. You will also see which alternatives the engine marks as mistakes, and why."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4",
+   "caption": "White's first moves, with the reason for each. Step through and ask of every move: what does it make possible?",
+   "line": [
+    {
+     "move": "c1g5",
+     "say": "The bishop attacks the knight on f6, the piece that guards d5. A trade on f6 would take away a defender of Black's centre."
+    },
+    {
+     "move": "f8e7",
+     "say": "The bishop defends f6 and stands between the bishop on g5 and the queen. If the knight leaves f6, White can trade bishops on e7; whether that is only a trade depends on what else is attacked at that moment."
+    },
+    {
+     "move": "e2e3",
+     "say": "The pawn defends d4 and opens the diagonal of the bishop on f1. The queen's bishop is already out, so no tempo is lost."
+    },
+    {
+     "move": "e8g8",
+     "say": "The king is safe and the rook on f8 is ready. Black has not yet decided how to free the bishop on c8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "f6"
+    },
+    {
+     "from": "e3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "g5",
+    "e7",
+    "e3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g5",
+      "includes": [
+       "f6"
+      ],
+      "after_moves": [
+       "c1g5"
+      ]
+     },
+     "statement": "After Bg5 the bishop attacks f6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "f6"
+      ],
+      "after_moves": [
+       "c1g5",
+       "f8e7"
+      ]
+     },
+     "statement": "After Be7 the bishop defends f6."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c1g5",
+       "f8e7",
+       "e2e3"
+      ]
+     },
+     "statement": "After e3 the pawn on e3 attacks d4, so it defends the pawn on d4."
+    },
+    {
+     "id": "C4",
+     "type": "mobility",
+     "params": {
+      "square": "f1",
+      "mode": "legal",
+      "count": 2,
+      "after_moves": [
+       "c1g5",
+       "f8e7",
+       "e2e3"
+      ]
+     },
+     "statement": "After e3 the bishop on f1 can move to e2 and d3."
+    },
+    {
+     "id": "C5",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "c1g5",
+       "f8e7",
+       "e2e3",
+       "e8g8"
+      ]
+     },
+     "statement": "After O-O the black king is on the kingside."
+    }
+   ],
+   "chapter": "White's seven moves, with reasons"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bppp/4pn2/3p2B1/2PP4/2N1P3/PP3PPP/R2QKBNR w KQ - 1 6",
+   "caption": "Black asks the bishop a question. Step through White's answer.",
+   "line": [
+    {
+     "move": "g1f3",
+     "say": "The knight defends d4, watches e5 and clears the first rank for castling. Development first, plans later."
+    },
+    {
+     "move": "h7h6",
+     "say": "The pawn attacks the bishop and forces a decision. It also gives Black's king the square h7."
+    },
+    {
+     "move": "g5h4",
+     "say": "The bishop keeps the pressure on f6 and avoids the trade for now. It stays on the same diagonal as Black's bishop on e7."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "h6",
+     "to": "g5"
+    },
+    {
+     "from": "g5",
+     "to": "h4"
+    }
+   ],
+   "highlight": [
+    "h6",
+    "h4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "includes": [
+       "d4",
+       "e5"
+      ],
+      "after_moves": [
+       "g1f3"
+      ]
+     },
+     "statement": "After Nf3 the knight attacks e5 and defends d4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "g5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g1f3",
+       "h7h6"
+      ]
+     },
+     "statement": "After h6 the pawn on h6 attacks g5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "h4",
+      "includes": [
+       "f6"
+      ],
+      "after_moves": [
+       "g1f3",
+       "h7h6",
+       "g5h4"
+      ]
+     },
+     "statement": "After Bh4 the bishop still attacks f6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-1"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p2B1/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 7",
+   "caption": "The other answer to the pawn on h6: trade on f6. Step through it and count the bishops at the end.",
+   "line": [
+    {
+     "move": "g5f6",
+     "say": "The trade is sound: the engine ranks it with the retreat, within a few hundredths of a pawn (depth 16)."
+    },
+    {
+     "move": "e7f6",
+     "say": "Black recaptures and now holds both bishops. [H] Two bishops are an asset when the position opens, and this is why many White players avoid the trade."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "f6"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "g5h4",
+       "g5f6"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Retreating to h4 and trading on f6 are each within 40 cp of the engine's best move (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_moves": [
+       "g5f6",
+       "e7f6"
+      ]
+     },
+     "statement": "After the trade Black owns both bishops and White does not."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What strong players chose.** Source: our masters data, 329,379 games, both players rated 2500 or more [V]. At this position White retreated the bishop to h4 in 129 games (33 wins, 77 draws, 19 losses) and traded on f6 in 51 (11 wins, 16 draws, 24 losses). White's score: 55% against 37%. [H] The two bishops explain the gap: the trade hands Black the easier game. Samples are small and the players' strength also matters."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] The engine says the trade on f6 is as good as the retreat to h4, yet masters retreat more than twice as often. Write a hypothesis for the difference in one sentence, and say what you would measure to test it.",
+   "fields": [
+    {
+     "id": "h",
+     "label": "My hypothesis [H]:"
+    },
+    {
+     "id": "m",
+     "label": "What I would measure:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Black's three answers at move seven.** Our masters data lists 581 games here. Black simplifies with the knight jump to e4 (173 games, White scored 50%), builds with the pawn to b6 (274 games, 53%) or develops the queen's knight (124 games, 52%). [I] All three score close to half, which is why the line is called solid. Pick the plan by the job you want done.",
+   "chapter": "Plan A: trade pieces"
+  },
+  {
+   "type": "card",
+   "text": "**Plan A: trade pieces.** [H] A side with less room often improves by trading pieces, because the pieces that remain get more squares. The knight jump to e4 offers the first trade and also uncovers the bishop on e7, which now attacks the bishop on h4. White must answer at once. Our opening names call this the Lasker Defense (ECO D56) [V]. Step through the first two moves and see why."
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "Plan A begins. Step through both moves.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "The knight leaves f6, and the bishop on e7 now attacks the bishop on h4. The knight on f3 defends h4, so no piece is lost."
+    },
+    {
+     "move": "h4e7",
+     "say": "White takes first: the bishop on e7 attacks the queen on d8, so Black must answer at once."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "h4"
+    },
+    {
+     "from": "e4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "h4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "h4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f6e4"
+      ]
+     },
+     "statement": "After Ne4 the bishop on e7 attacks h4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "includes": [
+       "h4"
+      ]
+     },
+     "statement": "The knight on f3 defends h4."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "d8"
+      ],
+      "after_moves": [
+       "f6e4",
+       "h4e7"
+      ]
+     },
+     "statement": "After Bxe7 the bishop attacks the queen on d8."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-2"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1Bpp1/4p2p/3p4/2PPn3/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "The first trade has happened. Step through the next four moves and count the attackers on e4 at the end.",
+   "line": [
+    {
+     "move": "d8e7",
+     "say": "The queen retakes. The knight on e4 stays, and the pieces come off one pair at a time."
+    },
+    {
+     "move": "a1c1",
+     "say": "The rook goes to the c-file before the centre opens. It also defends c3, which Black's knight is aiming at."
+    },
+    {
+     "move": "c7c6",
+     "say": "The pawn defends d5. Black can now take on c4 later without giving up the centre."
+    },
+    {
+     "move": "f1d3",
+     "say": "The bishop attacks the knight on e4 a second time. The knight is attacked twice and defended once."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d3",
+     "to": "e4"
+    },
+    {
+     "from": "c3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e7",
+      "piece": "q",
+      "after_moves": [
+       "d8e7"
+      ]
+     },
+     "statement": "After Qxe7 the queen stands on e7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8e7",
+       "a1c1"
+      ]
+     },
+     "statement": "After Rc1 two white pieces (the b2 pawn and the rook) attack c3."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c6",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "d8e7",
+       "a1c1",
+       "c7c6"
+      ]
+     },
+     "statement": "After c6 the pawn defends d5."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8e7",
+       "a1c1",
+       "c7c6",
+       "f1d3"
+      ]
+     },
+     "statement": "After Bd3 the knight on c3 and the bishop attack e4."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d8e7",
+       "a1c1",
+       "c7c6",
+       "f1d3"
+      ]
+     },
+     "statement": "Only the pawn on d5 defends e4."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-3"
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/pp2qpp1/2p1p2p/3p4/2PPn3/2NBPN2/PP3PPP/2RQK2R b K - 1 10",
+   "caption": "Black trades knights. Step through the trade and look at White's pawns.",
+   "line": [
+    {
+     "move": "e4c3",
+     "say": "Black removes one attacker, since the knight cannot hold e4."
+    },
+    {
+     "move": "c1c3",
+     "say": "The rook retakes and the pawns stay whole. Retaking with the b-pawn would give White doubled pawns on the c-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "c4"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "white",
+      "squares": [],
+      "after_moves": [
+       "e4c3",
+       "c1c3"
+      ]
+     },
+     "statement": "After Rxc3 White has no doubled pawns."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "R",
+      "after_moves": [
+       "e4c3",
+       "c1c3"
+      ]
+     },
+     "statement": "The rook stands on c3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-4"
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/pp2qpp1/2p1p2p/3p4/2PP4/2RBPN2/PP3PPP/3QK2R b K - 0 11",
+   "caption": "Black frees the position. Step through these moves and look at who has more room at the end.",
+   "line": [
+    {
+     "move": "d5c4",
+     "say": "Black opens the centre: the bishop on c8 and the queen get room, and White's bishop must retake."
+    },
+    {
+     "move": "d3c4",
+     "say": "The bishop retakes. It has now moved twice, but it stands on an active diagonal."
+    },
+    {
+     "move": "b8d7",
+     "say": "The last knight develops and supports a later ...e5."
+    },
+    {
+     "move": "e1g1",
+     "say": "White finishes development. The centre is clear and both sides know their plans."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c4",
+     "to": "e6"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "B",
+      "after_moves": [
+       "d5c4",
+       "d3c4"
+      ]
+     },
+     "statement": "After Bxc4 the white bishop is on c4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d7",
+      "includes": [
+       "e5"
+      ],
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "b8d7"
+      ]
+     },
+     "statement": "After Nd7 the knight supports e5."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "b8d7",
+       "e1g1"
+      ]
+     },
+     "statement": "After O-O the white king is on the kingside."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 60,
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "b8d7",
+       "e1g1"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the position after the castling between -0.30 and +0.60 pawns for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1b2rk1/pp1nqpp1/2p1p2p/8/2BP4/2R1PN2/PP3PPP/3Q1RK1 b - - 2 13",
+   "caption": "Plan A in action: a sensible line for both sides. Step through and look at what the pawn on c5 changes.",
+   "line": [
+    {
+     "move": "b7b6",
+     "say": "The pawn makes room for the bishop on b7 and prepares the break ...c5."
+    },
+    {
+     "move": "c4d3",
+     "say": "The bishop steps off c4 before ...b5 or ...c5 can chase it, and it eyes h7."
+    },
+    {
+     "move": "c6c5",
+     "say": "Black challenges the pawn on d4 with the c-pawn."
+    },
+    {
+     "move": "d3e4",
+     "say": "The bishop takes the long diagonal and attacks the rook on a8."
+    },
+    {
+     "move": "a8b8",
+     "say": "The rook steps off the long diagonal and keeps the b-file for the pawn break."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c5",
+     "to": "d4"
+    },
+    {
+     "from": "e4",
+     "to": "a8"
+    }
+   ],
+   "highlight": [
+    "c5",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "h7"
+      ],
+      "after_moves": [
+       "b7b6",
+       "c4d3"
+      ]
+     },
+     "statement": "After Bd3 the bishop attacks h7."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7b6",
+       "c4d3",
+       "c6c5"
+      ]
+     },
+     "statement": "After c5 the pawn on c5 attacks d4."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e4",
+      "includes": [
+       "a8"
+      ],
+      "after_moves": [
+       "b7b6",
+       "c4d3",
+       "c6c5",
+       "d3e4"
+      ]
+     },
+     "statement": "After Be4 the bishop attacks the rook on a8."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "b8",
+      "piece": "r",
+      "after_moves": [
+       "b7b6",
+       "c4d3",
+       "c6c5",
+       "d3e4",
+       "a8b8"
+      ]
+     },
+     "statement": "After Rb8 the rook stands on b8."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1Bpp1/4p2p/3p4/2PPn3/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "A second answer for White at move nine: the queen to c2 (24 games in our masters data, 54% for White) [V]. Step through the engine's line.",
+   "line": [
+    {
+     "move": "d8e7",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "d1c2",
+     "say": "The queen attacks the knight on e4 from c2 and keeps the c-file free for the rook."
+    },
+    {
+     "move": "e4c3",
+     "say": "Black trades now, because the knight on e4 is attacked twice (Nc3, Qc2) and defended only once."
+    },
+    {
+     "move": "c2c3",
+     "say": "The queen retakes and stays central."
+    },
+    {
+     "move": "d5c4",
+     "say": "Black takes the pawn on c4."
+    },
+    {
+     "move": "c3c4",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "b7b6",
+     "say": "The pawn makes room for the bishop on b7."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c2",
+     "to": "e4"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c2",
+      "includes": [
+       "e4"
+      ],
+      "after_moves": [
+       "d8e7",
+       "d1c2"
+      ]
+     },
+     "statement": "After Qc2 the queen attacks the knight on e4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "Q",
+      "after_moves": [
+       "d8e7",
+       "d1c2",
+       "e4c3",
+       "c2c3"
+      ]
+     },
+     "statement": "After Qxc3 the white queen stands on c3."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "Q",
+      "after_moves": [
+       "d8e7",
+       "d1c2",
+       "e4c3",
+       "c2c3",
+       "d5c4",
+       "c3c4"
+      ]
+     },
+     "statement": "After Qxc4 the white queen stands on c4."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 60,
+      "after_moves": [
+       "d8e7",
+       "d1c2",
+       "e4c3",
+       "c2c3",
+       "d5c4",
+       "c3c4",
+       "b7b6"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the final position between -0.30 and +0.60 pawns for White."
+    },
+    {
+     "id": "C5",
+     "statement": "After Qc2 the knight on e4 is attacked twice by White (Nc3, Qc2).",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8e7",
+       "d1c2"
+      ]
+     }
+    },
+    {
+     "id": "C6",
+     "statement": "After Qc2 the knight on e4 is defended once, by the pawn on d5.",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d8e7",
+       "d1c2"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1Bpp1/4p2p/3p4/2PPn3/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "A third answer: the capture on d5 at once (21 games in our masters data, 55% for White) [V]. Step through a sensible line.",
+   "line": [
+    {
+     "move": "d8e7",
+     "say": "The queen retakes."
+    },
+    {
+     "move": "c4d5",
+     "say": "White takes in the centre before Black can support d5."
+    },
+    {
+     "move": "e4c3",
+     "say": "Black trades the knight, since the pawn on d5 leaves the knight on e4 alone."
+    },
+    {
+     "move": "b2c3",
+     "say": "The pawn retakes and the pawn on c3 and the pawn on e3 both defend d4."
+    },
+    {
+     "move": "e6d5",
+     "say": "The queen's pawn is gone, so the e-pawn retakes."
+    },
+    {
+     "move": "d1b3",
+     "say": "The queen attacks the pawn on b7 and the pawn on d5."
+    },
+    {
+     "move": "f8d8",
+     "say": "The rook defends d5."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "b7"
+    },
+    {
+     "from": "b3",
+     "to": "d5"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8e7",
+       "c4d5",
+       "e4c3",
+       "b2c3"
+      ]
+     },
+     "statement": "After bxc3 two white pawns defend d4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b3",
+      "includes": [
+       "b7",
+       "d5"
+      ],
+      "after_moves": [
+       "d8e7",
+       "c4d5",
+       "e4c3",
+       "b2c3",
+       "e6d5",
+       "d1b3"
+      ]
+     },
+     "statement": "After Qb3 the queen attacks b7 and d5."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 70,
+      "after_moves": [
+       "d8e7",
+       "c4d5",
+       "e4c3",
+       "b2c3",
+       "e6d5",
+       "d1b3",
+       "f8d8"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the final position between -0.10 and +0.70 pawns for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/ppp1qpp1/4p2p/3p4/2PPn3/2N1PN2/PP3PPP/2RQKB1R b K - 1 9",
+   "caption": "The other move at move nine for Black: take the knight at once. Step through the engine's line. Compare the position with the one after Bd3.",
+   "line": [
+    {
+     "move": "e4c3",
+     "say": "Black does not wait for Bd3 and trades at once."
+    },
+    {
+     "move": "c1c3",
+     "say": "The rook retakes and keeps the pawns whole."
+    },
+    {
+     "move": "c7c6",
+     "say": "The pawn defends d5."
+    },
+    {
+     "move": "d1c2",
+     "say": "The queen defends the rook on c3 and prepares the pawn push."
+    },
+    {
+     "move": "b8d7",
+     "say": "The knight develops."
+    },
+    {
+     "move": "c4d5",
+     "say": "White takes in the centre."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c2",
+     "to": "c3"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "R",
+      "after_moves": [
+       "e4c3",
+       "c1c3"
+      ]
+     },
+     "statement": "After Rxc3 the white rook stands on c3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c6",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "e4c3",
+       "c1c3",
+       "c7c6"
+      ]
+     },
+     "statement": "After c6 the pawn defends d5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c2",
+      "includes": [
+       "c3"
+      ],
+      "after_moves": [
+       "e4c3",
+       "c1c3",
+       "c7c6",
+       "d1c2"
+      ]
+     },
+     "statement": "After Qc2 the queen defends the rook on c3."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 70,
+      "after_moves": [
+       "e4c3",
+       "c1c3",
+       "c7c6",
+       "d1c2",
+       "b8d7",
+       "c4d5"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the final position between -0.10 and +0.70 pawns for White."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Of the 168 games in our masters data that reached the position after the queen retook on e7, 118 were drawn (70 percent), 24 were White wins and 26 Black wins. Name one feature of the boards in this lesson that makes a draw likely, and one thing in our data that would make you change your mind.",
+   "fields": [
+    {
+     "id": "why",
+     "label": "A feature that makes a draw likely [H]:"
+    },
+    {
+     "id": "mind",
+     "label": "What would change my mind:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Plan B: build, do not trade.** (Our opening names: the Tartakower Defense, ECO D58 [V].) The pawn move to b6 lets the bishop on c8 out on the long diagonal and keeps all the pieces for a later fight. It also changes what a capture on d5 means: after White takes, Black can retake with the knight, and then the bishop on h4 attacks the bishop on e7. Who gains from the trades that follow?",
+   "chapter": "Plan B: build, do not trade"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "Plan B begins. Step through the first two moves.",
+   "line": [
+    {
+     "move": "b7b6",
+     "say": "The pawn leaves b7 so the bishop on c8 can use the long diagonal. The bishop's squares are now b7, a6 and d7."
+    },
+    {
+     "move": "c4d5",
+     "say": "White clarifies the tension in the centre. Now Black must decide how to retake."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c8",
+     "to": "b7"
+    },
+    {
+     "from": "c4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "b6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 3,
+      "after_moves": [
+       "b7b6"
+      ]
+     },
+     "statement": "After b6 the bishop on c8 can move to three squares."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d5",
+      "includes": [
+       "e6"
+      ],
+      "after_moves": [
+       "b7b6",
+       "c4d5"
+      ]
+     },
+     "statement": "After cxd5 the pawn on d5 attacks e6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-5"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/p1p1bpp1/1p2pn1p/3P4/3P3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "The trades in Plan B. Step through and then name the half-open files.",
+   "line": [
+    {
+     "move": "f6d5",
+     "say": "The knight retakes. It left f6, so the bishop on h4 now attacks the bishop on e7."
+    },
+    {
+     "move": "h4e7",
+     "say": "White takes the bishop. Black can retake with the queen or the knight."
+    },
+    {
+     "move": "d8e7",
+     "say": "The queen retakes so the knight stays in the centre."
+    },
+    {
+     "move": "c3d5",
+     "say": "White trades the strong knight. Only the e-pawn can retake."
+    },
+    {
+     "move": "e6d5",
+     "say": "The structure appears: Black has no e-pawn and White has no c-pawn. The c-file is half-open for White and the e-file for Black."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "h4",
+     "to": "e7"
+    },
+    {
+     "from": "e6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "c7",
+    "e3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "h4",
+      "includes": [
+       "e7"
+      ],
+      "after_moves": [
+       "f6d5"
+      ]
+     },
+     "statement": "After Nxd5 the bishop on h4 attacks e7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "f6d5",
+       "h4e7"
+      ]
+     },
+     "statement": "After Bxe7 the queen and the knight both attack e7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f6d5",
+       "h4e7",
+       "d8e7",
+       "c3d5"
+      ]
+     },
+     "statement": "After Nxd5 only the pawn on e6 can retake."
+    },
+    {
+     "id": "C4",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ],
+      "after_moves": [
+       "f6d5",
+       "h4e7",
+       "d8e7",
+       "c3d5",
+       "e6d5"
+      ]
+     },
+     "statement": "After exd5 the c-file is half-open for White and the e-file for Black."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-6"
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/p1p1qpp1/1p5p/3p4/3P4/4PN2/PP3PPP/R2QKB1R w KQ - 0 11",
+   "caption": "A map of the Plan B structure (White to move). A pawn island is a group of pawns on neighbouring files, and each side has two. White has no c-pawn and Black has no e-pawn, so the c-file is half-open for White and the e-file for Black. [H] Each plan follows the files: White's rook goes to the c-file, Black's break ...c5 trades off the target.",
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "c7"
+    },
+    {
+     "from": "e3",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "c7",
+    "d5",
+    "d4",
+    "e3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_islands",
+     "params": {
+      "color": "white",
+      "count": 2,
+      "islands": [
+       "ab",
+       "defgh"
+      ]
+     },
+     "statement": "White has two pawn islands: a and b, and d to h."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_islands",
+     "params": {
+      "color": "black",
+      "count": 2,
+      "islands": [
+       "abcd",
+       "fgh"
+      ]
+     },
+     "statement": "Black has two pawn islands: a to d, and f to h."
+    },
+    {
+     "id": "C3",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ]
+     },
+     "statement": "The c-file is half-open for White and the e-file for Black."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/p1p1qpp1/1p5p/3p4/3P4/4PN2/PP3PPP/R2QKB1R w KQ - 0 11",
+   "caption": "The plan on the half-open c-file. Step through to about move fourteen.",
+   "line": [
+    {
+     "move": "a1c1",
+     "say": "The rook takes the half-open c-file and attacks the pawn on c7."
+    },
+    {
+     "move": "c8e6",
+     "say": "The bishop defends d5 and clears c8 for a rook."
+    },
+    {
+     "move": "f1d3",
+     "say": "The last minor piece develops and eyes h7."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black challenges d4 with the c-pawn and gets rid of the target on c7."
+    },
+    {
+     "move": "b2b3",
+     "say": "The pawn guards c4, so Black's pieces cannot use that square."
+    },
+    {
+     "move": "b8d7",
+     "say": "The last knight develops, ready to support the centre."
+    },
+    {
+     "move": "e1g1",
+     "say": "White finishes development."
+    },
+    {
+     "move": "a8c8",
+     "say": "Black puts a rook on the c-file facing the white rook."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "c7"
+    },
+    {
+     "from": "c5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "c1",
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c1",
+      "includes": [
+       "c7"
+      ],
+      "after_moves": [
+       "a1c1"
+      ]
+     },
+     "statement": "After Rc1 the rook attacks c7."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e6",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "a1c1",
+       "c8e6"
+      ]
+     },
+     "statement": "After Be6 the bishop defends d5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "h7"
+      ],
+      "after_moves": [
+       "a1c1",
+       "c8e6",
+       "f1d3"
+      ]
+     },
+     "statement": "After Bd3 the bishop attacks h7."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a1c1",
+       "c8e6",
+       "f1d3",
+       "c7c5"
+      ]
+     },
+     "statement": "After c5 the pawn on c5 attacks d4."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b3",
+      "includes": [
+       "c4"
+      ],
+      "after_moves": [
+       "a1c1",
+       "c8e6",
+       "f1d3",
+       "c7c5",
+       "b2b3"
+      ]
+     },
+     "statement": "After b3 the pawn on b3 attacks c4."
+    },
+    {
+     "id": "C6",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "a1c1",
+       "c8e6",
+       "f1d3",
+       "c7c5",
+       "b2b3",
+       "b8d7",
+       "e1g1"
+      ]
+     },
+     "statement": "After O-O the white king is on the kingside."
+    },
+    {
+     "id": "C7",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 50,
+      "after_moves": [
+       "a1c1",
+       "c8e6",
+       "f1d3",
+       "c7c5",
+       "b2b3",
+       "b8d7",
+       "e1g1",
+       "a8c8"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the final position between -0.30 and +0.50 pawns for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-7"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "A quieter eighth move for White (81 games in our masters data, 59% for White). Step through and compare the final structure with Plan B.",
+   "line": [
+    {
+     "move": "b7b6",
+     "say": "The same pawn move as in Plan B."
+    },
+    {
+     "move": "f1e2",
+     "say": "The bishop develops and prepares to castle. It waits to see how Black recaptures before it commits to a square."
+    },
+    {
+     "move": "c8b7",
+     "say": "The bishop takes the long diagonal at once."
+    },
+    {
+     "move": "h4f6",
+     "say": "White takes the knight with the bishop that was pressing on f6."
+    },
+    {
+     "move": "e7f6",
+     "say": "Black recaptures with the bishop and keeps both bishops."
+    },
+    {
+     "move": "c4d5",
+     "say": "White opens the c-file."
+    },
+    {
+     "move": "e6d5",
+     "say": "Black recaptures with the e-pawn. Compare the half-open files with Plan B."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e2",
+     "to": "f1"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "black"
+      ],
+      "after_moves": [
+       "b7b6",
+       "f1e2",
+       "c8b7",
+       "h4f6",
+       "e7f6"
+      ]
+     },
+     "statement": "After Bxf6 Bxf6 Black holds the two bishops."
+    },
+    {
+     "id": "C2",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ],
+      "after_moves": [
+       "b7b6",
+       "f1e2",
+       "c8b7",
+       "h4f6",
+       "e7f6",
+       "c4d5",
+       "e6d5"
+      ]
+     },
+     "statement": "The same half-open files appear: the c-file for White and the e-file for Black."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "The third answer: develop the queen's knight. Step through the first six moves.",
+   "line": [
+    {
+     "move": "b8d7",
+     "say": "The knight develops and defends the knight on f6, so the pin loses its sting."
+    },
+    {
+     "move": "a1c1",
+     "say": "The rook goes to the c-file."
+    },
+    {
+     "move": "c7c6",
+     "say": "The pawn defends d5 and prepares to capture on c4."
+    },
+    {
+     "move": "f1d3",
+     "say": "The bishop prepares to retake on c4 with tempo and eyes h7."
+    },
+    {
+     "move": "d5c4",
+     "say": "Black captures now that the bishop has gone to d3."
+    },
+    {
+     "move": "d3c4",
+     "say": "The bishop retakes. Compare with Plan A: no pieces have been traded, and Black still has both knights."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d7",
+     "to": "f6"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d7",
+      "includes": [
+       "f6"
+      ],
+      "after_moves": [
+       "b8d7"
+      ]
+     },
+     "statement": "After Nbd7 the knight defends f6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c6",
+      "includes": [
+       "d5"
+      ],
+      "after_moves": [
+       "b8d7",
+       "a1c1",
+       "c7c6"
+      ]
+     },
+     "statement": "After c6 the pawn defends d5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "B",
+      "after_moves": [
+       "b8d7",
+       "a1c1",
+       "c7c6",
+       "f1d3",
+       "d5c4",
+       "d3c4"
+      ]
+     },
+     "statement": "After Bxc4 the bishop stands on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "A third eighth move for White (58 games in our masters data, 48% for White). Here the centre stays closed for a long time. Step through the seven moves and count what attacks d4.",
+   "line": [
+    {
+     "move": "b7b6",
+     "say": "The same pawn move as in Plan B."
+    },
+    {
+     "move": "f1d3",
+     "say": "The bishop develops on the diagonal to h7 and stands ready to castle."
+    },
+    {
+     "move": "c8b7",
+     "say": "The bishop takes the long diagonal."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles first and keeps the tension in the centre."
+    },
+    {
+     "move": "b8d7",
+     "say": "The last knight develops and defends the knight on f6."
+    },
+    {
+     "move": "d1e2",
+     "say": "The queen prepares the rook lift to d1 and keeps an eye on the e-file."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black breaks in the centre at once."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d3",
+     "to": "h7"
+    },
+    {
+     "from": "c5",
+     "to": "d4"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "h7"
+      ],
+      "after_moves": [
+       "b7b6",
+       "f1d3"
+      ]
+     },
+     "statement": "After Bd3 the bishop attacks h7."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7b6",
+       "f1d3",
+       "c8b7",
+       "e1g1",
+       "b8d7",
+       "d1e2",
+       "c7c5"
+      ]
+     },
+     "statement": "After c5 the pawn on c5 attacks d4."
+    },
+    {
+     "id": "C3",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "b7b6",
+       "f1d3",
+       "c8b7",
+       "e1g1"
+      ]
+     },
+     "statement": "After O-O the white king is on the kingside."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bpp1/4pn1p/3p4/2PP3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 1 7",
+   "caption": "The fourth answer: take on c4 immediately (10 games in our masters data). Step through it.",
+   "line": [
+    {
+     "move": "d5c4",
+     "say": "Black takes the pawn at once. It is the rarest of the four answers in our data."
+    },
+    {
+     "move": "f1c4",
+     "say": "The bishop retakes, so material is level and the bishop attacks e6."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black strikes at the centre before White can castle and play the rook to d1."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c4",
+     "to": "e6"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "B",
+      "after_moves": [
+       "d5c4",
+       "f1c4"
+      ]
+     },
+     "statement": "After Bxc4 the white bishop stands on c4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d5c4",
+       "f1c4",
+       "c7c5"
+      ]
+     },
+     "statement": "After c5 the pawn on c5 attacks d4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three habits behind most mistakes here.** First, taking a piece while your own is attacked. Second, developing while a piece of yours is attacked more often than it is defended. Third, ignoring a capture the opponent has just made. All three come from skipping one question: what did my opponent's last move attack? The next three boards show the price.",
+   "chapter": "What fails, and why"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1Bpp1/4p2p/3p4/2PPn3/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "Mistake one: taking the knight before retaking the bishop. This is the engine's line. Step through and keep a running count of the pieces.",
+   "line": [
+    {
+     "move": "e4c3",
+     "say": "Black takes the knight first and leaves the queen attacked."
+    },
+    {
+     "move": "e7d8",
+     "say": "White takes the queen. Black's knight can take the queen on d1, but the bishop on d8 stays alive."
+    },
+    {
+     "move": "c3d1",
+     "say": "Black takes White's queen, but the loose bishop on d8 is attacked by the rook on a8 and the rook on f8."
+    },
+    {
+     "move": "d8e7",
+     "say": "The bishop steps away from the rooks and attacks the rook on f8."
+    },
+    {
+     "move": "d1b2",
+     "say": "Black grabs a pawn and attacks nothing important."
+    },
+    {
+     "move": "e7f8",
+     "say": "White wins the exchange as well."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "d8"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "d8"
+      ]
+     },
+     "statement": "At the start the bishop on e7 attacks the queen on d8."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d8",
+      "piece": "B",
+      "after_moves": [
+       "e4c3",
+       "e7d8"
+      ]
+     },
+     "statement": "After Bxd8 a white bishop stands on d8."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 150,
+      "max": 2000,
+      "after_moves": [
+       "e4c3",
+       "e7d8",
+       "c3d1",
+       "d8e7",
+       "d1b2",
+       "e7f8"
+      ]
+     },
+     "statement": "At the end the engine rates the position at least 1.5 pawns for White (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/pp2qpp1/2p1p2p/3p4/2PPn3/2NBPN2/PP3PPP/2RQK2R b K - 1 10",
+   "caption": "Mistake two: developing while a piece is attacked twice. Step through.",
+   "line": [
+    {
+     "move": "b8d7",
+     "say": "Black develops and forgets the knight on e4."
+    },
+    {
+     "move": "c3e4",
+     "say": "White takes the knight with the knight on c3."
+    },
+    {
+     "move": "d5e4",
+     "say": "Black retakes with the pawn."
+    },
+    {
+     "move": "d3e4",
+     "say": "The bishop takes the pawn on e4 and White is a pawn up."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "e4"
+    },
+    {
+     "from": "d3",
+     "to": "e4"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "At the start two white pieces attack the knight on e4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "B",
+      "after_moves": [
+       "b8d7",
+       "c3e4",
+       "d5e4",
+       "d3e4"
+      ]
+     },
+     "statement": "After Bxe4 the white bishop stands on e4."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 100,
+      "max": 2000,
+      "after_moves": [
+       "b8d7",
+       "c3e4",
+       "d5e4",
+       "d3e4"
+      ]
+     },
+     "statement": "At the end the engine rates the position at least a pawn better for White (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/p1p1bpp1/1p2pn1p/3P4/3P3B/2N1PN2/PP3PPP/R2QKB1R b KQ - 0 8",
+   "caption": "Mistake three: ignoring a capture. Step through.",
+   "line": [
+    {
+     "move": "c7c5",
+     "say": "Black plays on the queenside and ignores the pawn on d5."
+    },
+    {
+     "move": "d5e6",
+     "say": "White takes the pawn on e6. Black can retake with the bishop, but White is a pawn up and Black's queenside play is too slow."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "e6"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d5",
+      "includes": [
+       "e6"
+      ]
+     },
+     "statement": "At the start the pawn on d5 attacks e6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e6",
+      "piece": "P",
+      "after_moves": [
+       "c7c5",
+       "d5e6"
+      ]
+     },
+     "statement": "After dxe6 a white pawn stands on e6."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 80,
+      "max": 2000,
+      "after_moves": [
+       "c7c5",
+       "d5e6"
+      ]
+     },
+     "statement": "At the end the engine rates the position at least 0.8 pawns better for White (depth 16)."
+    },
+    {
+     "id": "C4",
+     "statement": "After dxe6 the bishop on c8 attacks e6, so Black can retake.",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c8",
+      "includes": [
+       "e6"
+      ],
+      "after_moves": [
+       "c7c5",
+       "d5e6"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Does taking on c3 work?",
+   "prompt": "Predict first. In all three positions Black can take the knight on c3. In the first the bishop trade is finished. In the second a white bishop on e7 has just taken and attacks Black's queen on d8 (White's other bishop is still on f1). In the third the position is the first one with Black's a-pawn on a6. Which change decides whether the capture works?",
+   "working": "IOD-LQGD4-8",
+   "failing": "IOD-LQGD4-9",
+   "irrelevant": "IOD-LQGD4-10"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IOD-LQGD4-13",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "od.qgd4",
+    "cue.3"
+   ],
+   "n": 2,
+   "silent": true
+  },
+  {
+   "type": "board",
+   "fen": "r1b2rk1/pp1nqpp1/2p1p2p/8/2BP4/2R1PN2/PP3PPP/3Q1RK1 b - - 2 13",
+   "caption": "A map of Plan A (trade pieces) at move fourteen. Material is level. White is fully developed; Black still has the bishop on c8 and the rook on a8 to bring out. [H] Black's next task is to free the queenside with pawn breaks; White's is to keep the pieces coordinated and wait for a mistake. Compare this quiet picture with the open files of Plan B.",
+   "highlight": [
+    "c6",
+    "d4",
+    "e6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -60,
+      "max": 60
+     },
+     "statement": "At depth 16 the engine rates the position between -0.6 and +0.6 pawns for White."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "backward",
+      "color": "black",
+      "squares": []
+     },
+     "statement": "Black has no backward pawn here."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_islands",
+     "params": {
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Black has two pawn islands."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What strong players do.** Source: our masters data, 329,379 games, both players rated 2500 or more [V]. After the bishop came to g5, Black played the bishop to e7 in 560 games (56% for White), took on c4 in 122 (61%) and developed the knight to d7 in 75 (53%). The data thins after move eleven. Counts are samples: they show what strong players chose, not what is best.",
+   "chapter": "Test, data, teach it back"
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach it back. Imagine you teach a friend who knows how the pieces move. Write five sentences: (1) what the bishop on g5 attacks and why Black plays Be7, (2) what e3, Nf3, h6 and Bh4 are each for, (3) Black's three answers at move seven and the job of each, (4) one mistake and the question that avoids it, (5) one plan for each side in the Lasker structure and the Tartakower structure.",
+   "fields": [
+    {
+     "id": "tb1",
+     "label": "1. The bishop and the pin:"
+    },
+    {
+     "id": "tb2",
+     "label": "2. The four White moves:"
+    },
+    {
+     "id": "tb3",
+     "label": "3. Black's three answers:"
+    },
+    {
+     "id": "tb4",
+     "label": "4. A mistake and the question:"
+    },
+    {
+     "id": "tb5",
+     "label": "5. A plan for each side:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Did you say why the knight on f6 matters (it guards d5)? Did you give the job of each of the three black answers: trade, build, develop? Did you name one mistake and the question that avoids it (what did my opponent's last move attack)? Did you say what the half-open c-file gives White in Plan B? If one answer is missing, set the position up on a board and say it aloud once more."
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.**\n- The bishop on g5 attacks the knight that guards d5; the bishop on e7 ends the pin.\n- White develops and protects d4; the pawn on h6 asks the bishop to decide.\n- Black has three jobs: trade (knight to e4), build (pawn to b6), develop (knight to d7).\n- Retake first, then count attackers on every piece you leave behind.\n- The exchange on d5 gives White the c-file and Black the e-file."
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Did your teach-back pass the self-check? Which of the five sentences was weakest, and which position would you set up to show it?",
+   "fields": [
+    {
+     "id": "weak",
+     "label": "The weakest sentence and the fix:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Move orders and counts: app/public/masters/stats.json (329,379 games, both players rated 2500 or more, first 24 plies, moves with fewer than 3 games dropped; White's score = (wins + draws/2) / games) [V]",
+  "Engine claims: Stockfish 19 lite, single thread, depth 16, in this lesson's board claims and in content/items/lesson-od-l-od-qgd-4.json (evidence under recorded limits, not proof) [V]",
+  "Positions: replayed move by move with python-chess from the move sequences in the provenance fields; one item position is a one-feature edit of a replayed position (a black pawn moved from a7 to a6) [V]",
+  "[H] and [I] marks in the cards are my own hypotheses and inferences; the explanation that the two bishops explain the gap between masters' choices and the engine is a hypothesis, not a finding",
+  "docs/lesson-depth-standard.md section 6, row 4 (series lesson 4: the main line move by move, with reasons)"
+ ]
+}

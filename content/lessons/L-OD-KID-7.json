@@ -1,0 +1,2019 @@
+{
+  "id": "L-OD-KID-7",
+  "course": "opening-deep-dives",
+  "series": "kid",
+  "title": "King's Indian: model games",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "POS.STRUCTURE.KID",
+    "POS.PLAN.RACE",
+    "ATK.PAWNSTORM",
+    "OPN.TEMPO",
+    "OPN.PUNISH",
+    "DEF.DIAGNOSE"
+  ],
+  "minutes": 40,
+  "outcomes": [
+    "Predicts the next move at thirteen decision points in three real King's Indian games between players rated above 2,500, and names what decided each game with the engine's numbers",
+    "Says in a sentence what each side is doing in the Classical line with Ne1 (White's c5 break against Black's f4, g5 and g4 advance) and in the line with b4 and Ng5",
+    "Names the capture that cost a game in each of two games (the knight taking on b4, the queen taking on c4) and finds the safer move",
+    "Reads our master counts at the branch point and says what they do and do not show",
+    "Teaches the three games back in a few sentences, with one typical mistake for each side"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "library/data/games (TWIC weekly zips and Lichess broadcast PGN, 2012 to 2026): games starting 1.d4 Nf6 2.c4 g6 3.Nc3 Bg7 4.e4 d6 with both players rated 2500 or more were collected by script (3,855 games) and engines excluded by name; three games chosen by hand, their moves and results read with python-chess. Game A: Kasimdzhanov - Nakamura, 1st FIDE Grand Prix, London, 22 Sep 2012, 0-1 (2684 and 2783). Game B: So - Ding Liren, 8th Grand Slam Masters, Bilbao, 26 Oct 2015, 1-0 (2760 and 2782). Game C: Wang Hao - Bacrot, 45th Biel GM, 23 Jul 2012, 1-0 (2739 and 2713). Moves and results are facts; every comment is our own wording [S]",
+    "app/public/masters/stats.json (329,379 games, both players 2500+, first 24 plies, built 2026-10-29): after 8...Ne7 the listed continuations sum to 613 games (b4 307 games, White won 136, drew 107, lost 64; Ne1 198 games, 81/74/43); after b4: Nh5 138 games 58/53/27, a5 122 games 52/39/31, Ne8 38 games 22/11/5; after Ne1: Nd7 140 games 58/42/40, Ne8 44 games 22/20/2; the data include engine games from broadcasts [V]",
+    "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-l-od-kid-7.json and the board claims of this lesson; evidence under recorded limits, not proof [V]",
+    "Purposes of moves on game boards are the usual textbook ideas and are stated as aims, not verified outcomes [R]; conjecture is labelled [H] or [I] in the text",
+    "docs/lesson-depth-standard.md section 6 (opening series, lesson 7: model games); docs/competition-chess-steps.md"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppn2bp/3p2n1/3Pp1p1/2P1Pp2/2N2P2/PP2BBPP/2RQNRK1 w - - 2 14",
+      "caption": "Position after 13...Ng6 in the King's Indian, Classical line. White to move. Two grandmasters reached it with the same thirteen moves, in 2012 and in 2015; one of them lost as White and the other won. [S] Black's pawns stand on e5, f4 and g5; White's play is on the queenside. The engine (depth 16) reads between +0.1 and +0.6 pawns (White's view, depth 16). What would you do?",
+      "highlight": [
+        "f4",
+        "g5",
+        "g6",
+        "c4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 60
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.1 and +0.6 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "g6",
+            "piece": "n"
+          },
+          "statement": "Black's knight stands on g6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "g5",
+            "piece": "p"
+          },
+          "statement": "Black's pawn stands on g5."
+        },
+        {
+          "id": "C4",
+          "type": "piece_on",
+          "params": {
+            "square": "f4",
+            "piece": "p"
+          },
+          "statement": "Black's pawn stands on f4."
+        }
+      ],
+      "chapter": "Two games from one position"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before we look at any moves: what is your plan as White here?",
+      "fields": [
+        {
+          "id": "plan",
+          "label": "My plan:",
+          "options": [
+            "Break with the c-pawn",
+            "Bring a knight to b5",
+            "Stop the g-pawn first",
+            "A quiet waiting move",
+            "No idea yet"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-1"
+    },
+    {
+      "type": "card",
+      "text": "**What you can do after this lesson.** You will step through three real games between players rated above 2,500, predict the decision points, and say what decided each game, which is not the same as who won. Move orders and results are facts. The purposes we give for moves are the usual textbook ideas [R]; engine numbers are [V] at depth 16; where evidence stops we say [H] or [I]. Predict before you press."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1npbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 w - - 1 9",
+      "caption": "Games A and B, the first three plies after 8...Ne7 (the Ne1 line): the knight steps back, Black clears e7, White develops. Every purpose is the usual textbook aim [R].",
+      "line": [
+        {
+          "move": "f3e1",
+          "say": "The knight leaves f3 so the f-pawn can advance to f3 and support e4. [R]"
+        },
+        {
+          "move": "f6d7",
+          "say": "Black clears e7 and keeps the f-pawn free to advance. [R]"
+        },
+        {
+          "move": "c1e3",
+          "say": "The bishop develops and eyes the a7 pawn."
+        }
+      ],
+      "chapter": "How both games began",
+      "highlight": [
+        "e1",
+        "f3",
+        "f4",
+        "e3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "e3",
+            "piece": "B",
+            "after_moves": [
+              "f3e1",
+              "f6d7",
+              "c1e3"
+            ]
+          },
+          "statement": "After the last move the bishop stands on e3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppnnpbp/3p2p1/3Pp3/2P1P3/2N1B3/PP2BPPP/R2QNRK1 b - - 4 10",
+      "caption": "Next three plies: Black's thematic break, White's support of e4, and the pawn push that attacks the bishop on e3. The engine reads between +0.7 and +1.2 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "f7f5",
+          "say": "Black's thematic break: the pawn attacks e4 and starts the kingside play."
+        },
+        {
+          "move": "f2f3",
+          "say": "White supports e4 with the pawn and takes g4 away from a black knight. [R]"
+        },
+        {
+          "move": "f5f4",
+          "say": "Black gains space: the pawn attacks the bishop on e3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 70,
+            "max": 120,
+            "after_moves": [
+              "f7f5",
+              "f2f3",
+              "f5f4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.7 and +1.2 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f4",
+            "piece": "p",
+            "after_moves": [
+              "f7f5",
+              "f2f3",
+              "f5f4"
+            ]
+          },
+          "statement": "After the last move the pawn stands on f4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-2"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppnn1bp/3p2p1/3Pp3/2P1Pp2/2N1BP2/PP2B1PP/R2QNRK1 w - - 0 12",
+      "caption": "Moves 12 and 13 of both games. After 13...Ng6 the engine reads between +0.1 and +0.6 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "e3f2",
+          "say": "The bishop retreats and keeps the diagonal toward c5."
+        },
+        {
+          "move": "g6g5",
+          "say": "Black adds the g-pawn: both pawns now march toward the white king."
+        },
+        {
+          "move": "a1c1",
+          "say": "White brings the rook to the c-file for the queenside break. [R]"
+        },
+        {
+          "move": "e7g6",
+          "say": "The knight comes to g6 to guard f4 and eye h4. [R]"
+        }
+      ],
+      "highlight": [
+        "f2",
+        "g5",
+        "c1",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 60,
+            "after_moves": [
+              "e3f2",
+              "g6g5",
+              "a1c1",
+              "e7g6"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.1 and +0.6 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "g6",
+            "piece": "n",
+            "after_moves": [
+              "e3f2",
+              "g6g5",
+              "a1c1",
+              "e7g6"
+            ]
+          },
+          "statement": "After the last move the knight stands on g6."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two plans, one race.** White opens the queenside, Black the kingside. Whoever lands the first real blow gains time; a blow that loses material is not a blow. In our masters tree (329,379 games, both players 2500+; it includes engine games) the position after the knight move to e7 occurs 613 times. White chose the b-pawn push in 307 games (won 136, drew 107, lost 64) and the knight retreat in 198 (81, 74, 43). Both are played; the counts show popularity, not truth. [V]"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppn2bp/3p2n1/3Pp1p1/2P1Pp2/2N2P2/PP2BBPP/2RQNRK1 w - - 2 14",
+      "caption": "GAME A: Kasimdzhanov - Nakamura (London 2012, White 2684, Black 2783, Black won). White jumps a knight to b5 and advances the b-pawn; Black prepares ...a6. Seventeen moves of preparation come before the first pawn break.",
+      "line": [
+        {
+          "move": "c3b5",
+          "say": "The knight eyes c7, a7 and d6, the squares behind Black's pawns."
+        },
+        {
+          "move": "b7b6",
+          "say": "Black prepares ...a6 to chase the knight and takes c5 away from White's pieces."
+        },
+        {
+          "move": "b2b4",
+          "say": "White gains queenside space; the pawn will support the break. [R]"
+        },
+        {
+          "move": "a7a6",
+          "say": "The pawn attacks the knight on b5."
+        }
+      ],
+      "chapter": "Game A: the slow break",
+      "highlight": [
+        "b5",
+        "c5",
+        "b4",
+        "h5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "a6",
+            "piece": "p",
+            "after_moves": [
+              "c3b5",
+              "b7b6",
+              "b2b4",
+              "a7a6"
+            ]
+          },
+          "statement": "After the last move the pawn stands on a6."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-13"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/2pn2bp/pp1p2n1/1N1Pp1p1/1PP1Pp2/5P2/P3BBPP/2RQNRK1 w - - 0 16",
+      "caption": "The knight returns to c3, Black's rook and h-pawn join the kingside storm, and White's other knight lands on d3.",
+      "line": [
+        {
+          "move": "b5c3",
+          "say": "The knight returns; the b-pawn and the c-file are ready for the break."
+        },
+        {
+          "move": "f8f7",
+          "say": "The rook steps off the back rank to help the kingside pawns advance. [R]"
+        },
+        {
+          "move": "e1d3",
+          "say": "The knight attacks f4 and e5 and supports the coming break."
+        },
+        {
+          "move": "h7h5",
+          "say": "Black adds the h-pawn to the storm; ...g4 is the next idea. [R]"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "h5",
+            "piece": "p",
+            "after_moves": [
+              "b5c3",
+              "f8f7",
+              "e1d3",
+              "h7h5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on h5."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq2k1/2pn1rb1/pp1p2n1/3Pp1pp/1PP1Pp2/2NN1P2/P3BBPP/2RQ1RK1 w - - 0 18",
+      "caption": "Now the break: c5, and Black takes. After 18...bxc5 the engine reads between +1.0 and +1.5 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "c4c5",
+          "say": "The break at last: the pawn attacks b6 and d6."
+        },
+        {
+          "move": "b6c5",
+          "say": "Black takes and attacks the pawn on b4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "c5"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 100,
+            "max": 150,
+            "after_moves": [
+              "c4c5",
+              "b6c5"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +1.0 and +1.5 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c5",
+            "piece": "p",
+            "after_moves": [
+              "c4c5",
+              "b6c5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on c5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-3"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq2k1/2pn1rb1/p2p2n1/2pPp1pp/1P2Pp2/2NN1P2/P3BBPP/2RQ1RK1 w - - 0 19",
+      "caption": "Moves 19 and 20. After 20...Bxd6 the engine reads between +0.3 and +0.8 pawns (White's view, depth 16): neither side has won anything yet.",
+      "line": [
+        {
+          "move": "b4c5",
+          "say": "White recaptures; the new pawn on c5 attacks d6 again."
+        },
+        {
+          "move": "g7f8",
+          "say": "The bishop retreats to defend the pawn on d6."
+        },
+        {
+          "move": "c5d6",
+          "say": "White takes on d6 and the pawn now attacks c7."
+        },
+        {
+          "move": "f8d6",
+          "say": "Black recaptures and keeps a solid centre."
+        }
+      ],
+      "highlight": [
+        "c5",
+        "d6",
+        "c7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 30,
+            "max": 80,
+            "after_moves": [
+              "b4c5",
+              "g7f8",
+              "c5d6",
+              "f8d6"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.3 and +0.8 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "d6",
+            "piece": "b",
+            "after_moves": [
+              "b4c5",
+              "g7f8",
+              "c5d6",
+              "f8d6"
+            ]
+          },
+          "statement": "After the last move the bishop stands on d6."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq2k1/2pn1r2/p2b2n1/3Pp1pp/4Pp2/2NN1P2/P3BBPP/2RQ1RK1 w - - 0 21",
+      "caption": "Moves 21 and 22. White's pieces flow to the queenside; Black regroups. The engine reads between +0.0 and +0.5 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "c3a4",
+          "say": "The knight prepares to jump to c5 or b6. [R]"
+        },
+        {
+          "move": "d7f6",
+          "say": "Black brings the knight back; it attacks e4 and d5."
+        },
+        {
+          "move": "d3c5",
+          "say": "The other knight lands on c5 and attacks the pawn on a6."
+        },
+        {
+          "move": "f7g7",
+          "say": "The rook goes to g7 to guard the seventh rank and the pawn on g5. [R]"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "a6",
+        "g7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 0,
+            "max": 50,
+            "after_moves": [
+              "c3a4",
+              "d7f6",
+              "d3c5",
+              "f7g7"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.0 and +0.5 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "g7",
+            "piece": "r",
+            "after_moves": [
+              "c3a4",
+              "d7f6",
+              "d3c5",
+              "f7g7"
+            ]
+          },
+          "statement": "After the last move the rook stands on g7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq2k1/2p3r1/p2b1nn1/2NPp1pp/N3Pp2/5P2/P3BBPP/2RQ1RK1 w - - 4 23",
+      "caption": "Moves 23 and 24 of game A: the knight forks the queen and the rook, Black takes it, and White's pawn recapture leaves a pawn on e6 that cramps Black but needs defending.",
+      "line": [
+        {
+          "move": "c5e6",
+          "say": "The knight attacks Black's queen and the rook on g7 at once."
+        },
+        {
+          "move": "c8e6",
+          "say": "Black takes the knight; it attacked two heavy pieces."
+        },
+        {
+          "move": "d5e6",
+          "say": "White recaptures; the pawn on e6 cramps Black but needs defending."
+        },
+        {
+          "move": "d8e7",
+          "say": "The queen attacks the pawn on e6."
+        }
+      ],
+      "highlight": [
+        "e6",
+        "b7",
+        "c5",
+        "a3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "e7",
+            "piece": "q",
+            "after_moves": [
+              "c5e6",
+              "c8e6",
+              "d5e6",
+              "d8e7"
+            ]
+          },
+          "statement": "After the last move the queen stands on e7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r5k1/2p1q1r1/p2bPnn1/4p1pp/N3Pp2/5P2/P3BBPP/2RQ1RK1 w - - 1 25",
+      "caption": "Moves 25 and 26: White brings the knight back to defend e6 and then jumps to b7. After 26...Ba3 the engine reads between +0.9 and +1.4 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "a4c5",
+          "say": "The knight returns to c5 to defend e6 and attack a6."
+        },
+        {
+          "move": "g8h8",
+          "say": "Black removes the king from the long diagonal. [R]"
+        },
+        {
+          "move": "c5b7",
+          "say": "The knight attacks the bishop on d6."
+        },
+        {
+          "move": "d6a3",
+          "say": "The bishop leaves with an attack on the rook on c1."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 140,
+            "after_moves": [
+              "a4c5",
+              "g8h8",
+              "c5b7",
+              "d6a3"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.9 and +1.4 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "a3",
+            "piece": "b",
+            "after_moves": [
+              "a4c5",
+              "g8h8",
+              "c5b7",
+              "d6a3"
+            ]
+          },
+          "statement": "After the last move the bishop stands on a3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np1q1r1/p3Pnn1/4p1pp/4Pp2/b4P2/P3BBPP/2RQ1RK1 w - - 5 27",
+      "caption": "Moves 27 and 28 of game A: the rook attacks the bishop on a3, the bishop steps to b4 and hits the rook back, and the rook steps aside.",
+      "line": [
+        {
+          "move": "c1c3",
+          "say": "The rook attacks the bishop on a3 and the pawn on c7."
+        },
+        {
+          "move": "a3b4",
+          "say": "The bishop attacks the rook on c3 and stays on the dark squares."
+        },
+        {
+          "move": "c3d3",
+          "say": "The rook steps aside to the third rank."
+        }
+      ],
+      "highlight": [
+        "g5",
+        "f4",
+        "h5",
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d3",
+            "piece": "R",
+            "after_moves": [
+              "c1c3",
+              "a3b4",
+              "c3d3"
+            ]
+          },
+          "statement": "After the last move the rook stands on d3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np1q1r1/p3Pnn1/4p1pp/1b2Pp2/3R1P2/P3BBPP/3Q1RK1 b - - 8 28",
+      "caption": "28...Qxe6: Black takes the pawn White had left unprotected. White then offers a queen trade and Black accepts.",
+      "line": [
+        {
+          "move": "e7e6",
+          "say": "Black takes the pawn on e6; White had left it unprotected."
+        },
+        {
+          "move": "d1b3",
+          "say": "The queen offers a queen trade and attacks the bishop on b4."
+        },
+        {
+          "move": "e6b3",
+          "say": "Black takes: the queens come off."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "b3",
+            "piece": "q",
+            "after_moves": [
+              "e7e6",
+              "d1b3",
+              "e6b3"
+            ]
+          },
+          "statement": "After the last move the queen stands on b3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/p4nn1/4p1pp/1b2Pp2/1q1R1P2/P3BBPP/5RK1 w - - 0 30",
+      "caption": "Moves 30 and 31. The queens are off. The engine reads between -0.1 and +0.4 pawns (White's view, depth 16). Black's kingside pawns on f4, g5 and h5 are all still there.",
+      "line": [
+        {
+          "move": "d3b3",
+          "say": "The rook recaptures and attacks the bishop on b4."
+        },
+        {
+          "move": "a6a5",
+          "say": "The pawn defends the bishop on b4."
+        },
+        {
+          "move": "f1c1",
+          "say": "The rook goes back to the c-file."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -10,
+            "max": 40,
+            "after_moves": [
+              "d3b3",
+              "a6a5",
+              "f1c1"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.1 and +0.4 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c1",
+            "piece": "R",
+            "after_moves": [
+              "d3b3",
+              "a6a5",
+              "f1c1"
+            ]
+          },
+          "statement": "After the last move the rook stands on c1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-4"
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/5nn1/p3p2p/1b2Ppp1/1R3P2/P3BBPP/2R3K1 w - - 0 32",
+      "caption": "White to move after 31...g4. The engine's choice is a counter-strike with a knight or rook (Nc5 or Rc6); White's 32.Kf1 gives away about half a pawn. Black's pawn lands on g3.",
+      "line": [
+        {
+          "move": "g1f1",
+          "say": "The king steps aside. The engine prefers a counter-strike with a knight or rook; this costs about half a pawn."
+        },
+        {
+          "move": "g4g3",
+          "say": "Black's pawn arrives on g3 and attacks f2 and h2."
+        },
+        {
+          "move": "h2g3",
+          "say": "White takes."
+        },
+        {
+          "move": "f4g3",
+          "say": "Black recaptures and attacks the bishop on f2."
+        }
+      ],
+      "highlight": [
+        "g3",
+        "f4",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "b7c5",
+              "c1c6"
+            ],
+            "within_cp": 40
+          },
+          "statement": "The engine (depth 16) prefers Nc5, Rc6."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "g1f1",
+            "cp": 40
+          },
+          "statement": "Kf1 is worse than the best move by at least 40 centipawns."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/5nn1/p3p2p/1b2P3/1R3Pp1/P3BBP1/2R2K2 w - - 0 34",
+      "caption": "White wins the pawn back with the bishop, Black's h-pawn attacks it, and it retreats to f2.",
+      "line": [
+        {
+          "move": "f2g3",
+          "say": "The bishop takes the pawn on g3."
+        },
+        {
+          "move": "h5h4",
+          "say": "The h-pawn attacks the bishop."
+        },
+        {
+          "move": "g3f2",
+          "say": "The bishop retreats to f2."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "f2",
+            "piece": "B",
+            "after_moves": [
+              "f2g3",
+              "h5h4",
+              "g3f2"
+            ]
+          },
+          "statement": "After the last move the bishop stands on f2."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/5nn1/p3p3/1b2P2p/1R3P2/P3BBP1/2R2K2 b - - 1 35",
+      "caption": "Moves 35 and 36: Black's knight heads for f4, White pushes f4, and Black takes. After 36...Nhxf4 the engine reads between -0.7 and +0.0 pawns (White's view, depth 16). The kingside is open and both sides have chances.",
+      "line": [
+        {
+          "move": "f6h5",
+          "say": "The knight heads for f4."
+        },
+        {
+          "move": "f3f4",
+          "say": "White pushes f4 to meet the knight; the pawn attacks e5."
+        },
+        {
+          "move": "h5f4",
+          "say": "Black takes on f4 and attacks the bishop on e2 and the pawn on g2."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -70,
+            "max": 0,
+            "after_moves": [
+              "f6h5",
+              "f3f4",
+              "h5f4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.7 and +0.0 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f4",
+            "piece": "n",
+            "after_moves": [
+              "f6h5",
+              "f3f4",
+              "h5f4"
+            ]
+          },
+          "statement": "After the last move the knight stands on f4."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What decided game A.** Two things, in order [V, depth 16]. From 26...Ba3 to 31...g4 White's edge fell from about +1.1 to level, because the pawn on e6 was lost. Then 32.Kf1 cost about half a pawn more, leaving White about half a pawn behind. [I] A pawn left unguarded costs more than it looks. This is one game, a sample of one, so treat the pattern as a question, not a rule."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Look back at the boards for moves 27 and 28 of game A. Which White move first let the pawn on e6 go, and what would you play instead?",
+      "fields": [
+        {
+          "id": "slip",
+          "label": "The move that let e6 go:"
+        },
+        {
+          "id": "better",
+          "label": "What I would play instead:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppn2bp/3p2n1/3Pp1p1/2P1Pp2/2N2P2/PP2BBPP/2RQNRK1 w - - 2 14",
+      "caption": "GAME B: So - Ding Liren (Bilbao 2015, White 2760, Black 2782, White won). The same thirteen moves as game A, but White breaks at once with the c-pawn. Black takes it.",
+      "line": [
+        {
+          "move": "c4c5",
+          "say": "White's break comes at once: the pawn attacks d6."
+        },
+        {
+          "move": "d7c5",
+          "say": "Black takes the pawn; the knight attacks e4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "c5"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "e4",
+        "b2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "c5",
+            "piece": "n",
+            "after_moves": [
+              "c4c5",
+              "d7c5"
+            ]
+          },
+          "statement": "After the last move the knight stands on c5."
+        }
+      ],
+      "chapter": "Game B: the break at once"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-5"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp3bp/3p2n1/2nPp1p1/4Pp2/2N2P2/PP2BBPP/2RQNRK1 w - - 0 15",
+      "caption": "Moves 15 and 16 of game B: White's b-pawn attacks the knight, the knight retreats to the edge, and White's other knight goes to d3. The pawn move came with tempo because it attacked something.",
+      "line": [
+        {
+          "move": "b2b4",
+          "say": "The pawn attacks the knight; White gains time and queenside space."
+        },
+        {
+          "move": "c5a6",
+          "say": "The knight retreats to the edge, where it attacks b4."
+        },
+        {
+          "move": "e1d3",
+          "say": "The knight attacks f4 and e5 and defends b4."
+        }
+      ],
+      "highlight": [
+        "b4",
+        "a6",
+        "b5",
+        "c5"
+      ],
+      "arrows": [
+        {
+          "from": "b2",
+          "to": "b4"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d3",
+            "piece": "N",
+            "after_moves": [
+              "b2b4",
+              "c5a6",
+              "e1d3"
+            ]
+          },
+          "statement": "After the last move the knight stands on d3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp3bp/n2p2n1/3Pp1p1/1P2Pp2/2NN1P2/P3BBPP/2RQ1RK1 b - - 2 16",
+      "caption": "Moves 16 and 17: Black's h-pawn joins the storm, White's second knight jumps to b5, and Black takes c5 and a5 away with ...b6. After 17...b6 the engine reads between -0.2 and +0.2 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "h7h5",
+          "say": "Black adds the h-pawn to the storm."
+        },
+        {
+          "move": "c3b5",
+          "say": "The other knight jumps to b5, attacking d6, a7 and c7."
+        },
+        {
+          "move": "b7b6",
+          "say": "The pawn takes a5 and c5 away from White's pieces."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -20,
+            "max": 20,
+            "after_moves": [
+              "h7h5",
+              "c3b5",
+              "b7b6"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.2 and +0.2 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "b6",
+            "piece": "p",
+            "after_moves": [
+              "h7h5",
+              "c3b5",
+              "b7b6"
+            ]
+          },
+          "statement": "After the last move the pawn stands on b6."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p1p3b1/np1p2n1/1N1Pp1pp/1P2Pp2/3N1P2/P3BBPP/2RQ1RK1 w - - 0 18",
+      "caption": "Moves 18 to 20 of game B. White regroups to meet the pawn storm: the bishop heads for d2 to defend b4 and attack f4, while Black's rook and bishop swing toward the kingside.",
+      "line": [
+        {
+          "move": "f2e1",
+          "say": "The bishop heads for d2, from where it defends b4."
+        },
+        {
+          "move": "f8f7",
+          "say": "The rook leaves the back rank for the kingside break. [R]"
+        },
+        {
+          "move": "e1d2",
+          "say": "The bishop defends b4 and attacks f4."
+        },
+        {
+          "move": "g7f6",
+          "say": "Black's bishop swings toward the kingside. [R]"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "b4",
+        "a6",
+        "a3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "f6",
+            "piece": "b",
+            "after_moves": [
+              "f2e1",
+              "f8f7",
+              "e1d2",
+              "g7f6"
+            ]
+          },
+          "statement": "After the last move the bishop stands on f6."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq2k1/p1p2r2/np1p1bn1/1N1Pp1pp/1P2Pp2/3N1P2/P2BB1PP/2RQ1RK1 w - - 4 20",
+      "caption": "The knight heads for f2 to guard g4 and h3. Black's queen attacks the knight on b5 and White's queen answers from a4.",
+      "line": [
+        {
+          "move": "d3f2",
+          "say": "The knight heads for f2 to guard g4 and h3."
+        },
+        {
+          "move": "d8e8",
+          "say": "The queen attacks the knight on b5."
+        },
+        {
+          "move": "d1a4",
+          "say": "The queen attacks the knight on a6 and takes away the queen's check on b5."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "a4",
+            "piece": "Q",
+            "after_moves": [
+              "d3f2",
+              "d8e8",
+              "d1a4"
+            ]
+          },
+          "statement": "After the last move the queen stands on a4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1b1q1k1/p1p2r2/np1p1bn1/1N1Pp1pp/QP2Pp2/5P2/P2BBNPP/2R2RK1 b - - 7 21",
+      "caption": "Black's bishop returns to d8, White's queen keeps hitting the knight on a6, and Black breaks with the g-pawn.",
+      "line": [
+        {
+          "move": "f6d8",
+          "say": "The bishop covers b6 and c7 and gets out of the way of the g-pawn. [R]"
+        },
+        {
+          "move": "a4a3",
+          "say": "The queen keeps hitting the knight on a6."
+        },
+        {
+          "move": "g5g4",
+          "say": "Black's break: the pawn attacks f3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g4",
+            "piece": "p",
+            "after_moves": [
+              "f6d8",
+              "a4a3",
+              "g5g4"
+            ]
+          },
+          "statement": "After the last move the pawn stands on g4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bbq1k1/p1p2r2/np1p2n1/1N1Pp2p/1P2Ppp1/Q4P2/P2BBNPP/2R2RK1 w - - 0 23",
+      "caption": "White takes, Black recaptures and opens the h-file, and the knight returns to the centre. After 24.Nc3 the engine reads between +0.1 and +0.7 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "f3g4",
+          "say": "White takes, and the new pawn attacks h5."
+        },
+        {
+          "move": "h5g4",
+          "say": "Black recaptures and opens the h-file."
+        },
+        {
+          "move": "b5c3",
+          "say": "The knight returns to the centre."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 70,
+            "after_moves": [
+              "f3g4",
+              "h5g4",
+              "b5c3"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.1 and +0.7 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c3",
+            "piece": "N",
+            "after_moves": [
+              "f3g4",
+              "h5g4",
+              "b5c3"
+            ]
+          },
+          "statement": "After the last move the knight stands on c3."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-6"
+    },
+    {
+      "type": "board",
+      "fen": "r1bbq1k1/p1p2r2/np1p2n1/3Pp3/1P2Ppp1/Q1N5/P2BBNPP/2R2RK1 b - - 1 24",
+      "caption": "Moves 24 and 25 of game B. Before the capture the engine reads between +0.1 and +0.7 pawns (White's view, depth 16); after 25.Qxb4 it reads between +1.0 and +1.6 pawns.",
+      "line": [
+        {
+          "move": "a6b4",
+          "say": "Black takes the pawn on b4."
+        },
+        {
+          "move": "a3b4",
+          "say": "The queen takes the knight and attacks b6 and d6."
+        },
+        {
+          "move": "f4f3",
+          "say": "Black's pawn arrives on f3, attacking the bishop on e2 and the pawn on g2."
+        }
+      ],
+      "highlight": [
+        "b4",
+        "b5",
+        "e8",
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 10,
+            "max": 70
+          },
+          "statement": "Engine (depth 16): after 0 moves of the line the position is between +0.1 and +0.7 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 100,
+            "max": 160,
+            "after_moves": [
+              "a6b4",
+              "a3b4"
+            ]
+          },
+          "statement": "Engine (depth 16): after 2 moves of the line the position is between +1.0 and +1.6 pawns (White's view, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bbq1k1/p1p2r2/1p1p2n1/3Pp3/1Q2P1p1/2N2p2/P2BBNPP/2R2RK1 w - - 0 26",
+      "caption": "White's bishop leaves with an attack on the queen, the queen steps aside, and White takes g2 away from the pawn on f3.",
+      "line": [
+        {
+          "move": "e2b5",
+          "say": "The bishop leaves with an attack on the queen on e8."
+        },
+        {
+          "move": "e8e7",
+          "say": "The queen steps aside."
+        },
+        {
+          "move": "g2g3",
+          "say": "White takes g2 away from the pawn on f3."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g3",
+            "piece": "P",
+            "after_moves": [
+              "e2b5",
+              "e8e7",
+              "g2g3"
+            ]
+          },
+          "statement": "After the last move the pawn stands on g3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bb2k1/p1p1qr2/1p1p2n1/1B1Pp3/1Q2P1p1/2N2pP1/P2B1N1P/2R2RK1 b - - 0 27",
+      "caption": "Moves 27 and 28: Black's rook swings to h7 and back, White's queen goes to c4. After 28...Rh8 the engine reads between +0.5 and +1.2 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "f7h7",
+          "say": "The rook attacks the pawn on h2."
+        },
+        {
+          "move": "b4c4",
+          "say": "The queen attacks the pawn on c7."
+        },
+        {
+          "move": "h7h8",
+          "say": "The rook returns and keeps the pressure on h2."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 50,
+            "max": 120,
+            "after_moves": [
+              "f7h7",
+              "b4c4",
+              "h7h8"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.5 and +1.2 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h8",
+            "piece": "r",
+            "after_moves": [
+              "f7h7",
+              "b4c4",
+              "h7h8"
+            ]
+          },
+          "statement": "After the last move the rook stands on h8."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What decided game B.** One capture. Before the knight took on b4 White was a little better; after the queen took back, White was ahead by at least a pawn [V, depth 16]. The pawn storm itself was sound; the extra sacrifice was the mistake [I]. [H] A sacrifice needs a forcing follow-up, not just an open file. Games A and B share thirteen moves and the same plan for Black. The plan did not decide game B; one capture did."
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Games A and B start identically. Name the move after which the two games stop looking alike, and say which side's plan (White's break or Black's pawn storm) you would trust more after seeing both.",
+      "fields": [
+        {
+          "id": "diverge",
+          "label": "The diverging move and why:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1npbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 w - - 1 9",
+      "caption": "GAME C: Wang Hao - Bacrot (Biel 2012, White 2739, Black 2713, White won). A different ninth move: White pushes the b-pawn first. Black answers with the knight to h5.",
+      "line": [
+        {
+          "move": "b2b4",
+          "say": "White gains queenside space and prepares the c-pawn break. [R]"
+        },
+        {
+          "move": "f6h5",
+          "say": "The knight goes to h5 to make room for ...f5 and to eye f4. [R]"
+        },
+        {
+          "move": "g2g3",
+          "say": "The pawn covers f4, so the knight cannot land there. [R]"
+        }
+      ],
+      "highlight": [
+        "b4",
+        "h5",
+        "g3",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g3",
+            "piece": "P",
+            "after_moves": [
+              "b2b4",
+              "f6h5",
+              "g2g3"
+            ]
+          },
+          "statement": "After the last move the pawn stands on g3."
+        }
+      ],
+      "chapter": "Game C: the b-pawn line"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-7"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1npbp/3p2p1/3Pp2n/1PP1P3/2N2NP1/P3BP1P/R1BQ1RK1 b - - 0 10",
+      "caption": "10...f5. The pawn attacks e4. The engine reads between +0.4 and +0.9 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "f7f5",
+          "say": "Black's break: the pawn attacks e4 and begins the kingside play."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "e4"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 40,
+            "max": 90,
+            "after_moves": [
+              "f7f5"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.4 and +0.9 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f5",
+            "piece": "p",
+            "after_moves": [
+              "f7f5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on f5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-8"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1n1bp/3p2p1/3Ppp1n/1PP1P3/2N2NP1/P3BP1P/R1BQ1RK1 w - - 0 11",
+      "caption": "Move 11 for both sides. The pawn on e4 is now attacked twice, by the pawn on f5 and the knight on f6. The engine reads between +0.3 and +0.8 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "f3g5",
+          "say": "The knight attacks e6, f7 and h7 and helps defend e4."
+        },
+        {
+          "move": "h5f6",
+          "say": "Black's knight returns from h5 and attacks e4 and d5."
+        }
+      ],
+      "highlight": [
+        "e4",
+        "f5",
+        "f6",
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 30,
+            "max": 80,
+            "after_moves": [
+              "f3g5",
+              "h5f6"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.3 and +0.8 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f6",
+            "piece": "n",
+            "after_moves": [
+              "f3g5",
+              "h5f6"
+            ]
+          },
+          "statement": "After the last move the knight stands on f6."
+        },
+        {
+          "id": "C3",
+          "type": "attackers",
+          "params": {
+            "square": "e4",
+            "color": "black",
+            "count": 2,
+            "after_moves": [
+              "f3g5",
+              "h5f6"
+            ]
+          },
+          "statement": "Two black pieces (the pawn on f5 and the knight on f6) attack e4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-9"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/ppp1n1bp/3p1np1/3PppN1/1PP1P3/2N3P1/P3BP1P/R1BQ1RK1 w - - 2 12",
+      "caption": "Moves 12 and 13 of game C: White supports e4 with the bishop, Black attacks d5 and takes it, and White recaptures.",
+      "line": [
+        {
+          "move": "e2f3",
+          "say": "The bishop defends e4 and keeps the long diagonal."
+        },
+        {
+          "move": "c7c6",
+          "say": "Black attacks d5 and opens the c-file."
+        },
+        {
+          "move": "c1a3",
+          "say": "The bishop develops behind the b-pawn and supports the push toward c5. [R]"
+        },
+        {
+          "move": "c6d5",
+          "say": "Black opens the c-file by taking."
+        }
+      ],
+      "highlight": [
+        "g5",
+        "h6",
+        "e4",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "p",
+            "after_moves": [
+              "e2f3",
+              "c7c6",
+              "c1a3",
+              "c6d5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on d5."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp2n1bp/3p1np1/3pppN1/1PP1P3/B1N2BP1/P4P1P/R2Q1RK1 w - - 0 14",
+      "caption": "Black pushes e4 to attack the bishop, which retreats, and Black's h-pawn attacks the knight on g5. After 15...h6 the engine reads between -0.4 and +0.1 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "e4d5",
+          "say": "White recaptures; the pawn on d5 cramps Black."
+        },
+        {
+          "move": "e5e4",
+          "say": "Black pushes e4: the pawn attacks the bishop on f3."
+        },
+        {
+          "move": "f3e2",
+          "say": "The bishop retreats and stays on the e2-a6 diagonal."
+        },
+        {
+          "move": "h7h6",
+          "say": "The pawn attacks the knight on g5."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -40,
+            "max": 10,
+            "after_moves": [
+              "e4d5",
+              "e5e4",
+              "f3e2",
+              "h7h6"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.4 and +0.1 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h6",
+            "piece": "p",
+            "after_moves": [
+              "e4d5",
+              "e5e4",
+              "f3e2",
+              "h7h6"
+            ]
+          },
+          "statement": "After the last move the pawn stands on h6."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-10"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pp2n1b1/3p1npp/3P1pN1/1PP1p3/B1N3P1/P3BP1P/R2Q1RK1 w - - 0 16",
+      "caption": "Moves 16 and 17. After 17...f4 the engine reads between -0.8 and -0.3 pawns (White's view, depth 16): the pawn on e6 is both a strength and a target.",
+      "line": [
+        {
+          "move": "g5e6",
+          "say": "The knight forks the queen, the rook on f8 and the bishop on g7."
+        },
+        {
+          "move": "c8e6",
+          "say": "Black takes the knight, since it attacked three pieces."
+        },
+        {
+          "move": "d5e6",
+          "say": "White recaptures: the pawn on e6 cramps Black and needs defending."
+        },
+        {
+          "move": "f5f4",
+          "say": "The pawn attacks g3 and wants to reach f3."
+        }
+      ],
+      "highlight": [
+        "e6",
+        "f4",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -80,
+            "max": -30,
+            "after_moves": [
+              "g5e6",
+              "c8e6",
+              "d5e6",
+              "f5f4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.8 and -0.3 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f4",
+            "piece": "p",
+            "after_moves": [
+              "g5e6",
+              "c8e6",
+              "d5e6",
+              "f5f4"
+            ]
+          },
+          "statement": "After the last move the pawn stands on f4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/pp2n1b1/3pPnpp/8/1PP1pp2/B1N3P1/P3BP1P/R2Q1RK1 w - - 0 18",
+      "caption": "Move 18 for both sides. The pawn that reaches f3 cramps White: it attacks the bishop on e2 and the pawn on g2. The engine reads between -1.3 and -0.8 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "d1d2",
+          "say": "White's queen comes to d2 and attacks the pawns on f4 and d6."
+        },
+        {
+          "move": "f4f3",
+          "say": "The pawn reaches f3 and attacks the bishop on e2; it also cramps White's kingside."
+        }
+      ],
+      "highlight": [
+        "f3",
+        "e2",
+        "g2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -130,
+            "max": -80,
+            "after_moves": [
+              "d1d2",
+              "f4f3"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -1.3 and -0.8 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f3",
+            "piece": "p",
+            "after_moves": [
+              "d1d2",
+              "f4f3"
+            ]
+          },
+          "statement": "After the last move the pawn stands on f3."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-11"
+    },
+    {
+      "type": "board",
+      "fen": "r2q1rk1/pp2n1b1/3pPnpp/8/1PP1p3/B1N2pP1/P2QBP1P/R4RK1 w - - 0 19",
+      "caption": "Moves 19 and 20. After 20.Re1 Black's queen stands on c8 with two pawns in reach. The engine reads between -0.8 and -0.3 pawns (White's view, depth 16): Black is better.",
+      "line": [
+        {
+          "move": "e2d1",
+          "say": "The only good retreat."
+        },
+        {
+          "move": "d8c8",
+          "say": "The queen attacks the pawns on c4 and e6."
+        },
+        {
+          "move": "f1e1",
+          "say": "The rook attacks the pawn on e4."
+        }
+      ],
+      "highlight": [
+        "c8",
+        "e6",
+        "c4",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -80,
+            "max": -30,
+            "after_moves": [
+              "e2d1",
+              "d8c8",
+              "f1e1"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.8 and -0.3 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e1",
+            "piece": "R",
+            "after_moves": [
+              "e2d1",
+              "d8c8",
+              "f1e1"
+            ]
+          },
+          "statement": "After the last move the rook stands on e1."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID7-12"
+    },
+    {
+      "type": "board",
+      "fen": "r1q2rk1/pp2n1b1/3pPnpp/8/1PP1p3/B1N2pP1/P2Q1P1P/R2BR1K1 b - - 3 20",
+      "caption": "Moves 20 and 21 of game C. Before the capture on c4 the engine read between -0.9 and -0.2 pawns (White's view, depth 16); after 21.Bb3 it reads between +0.9 and +1.6 pawns.",
+      "line": [
+        {
+          "move": "c8c4",
+          "say": "Black takes the pawn on c4; the queen is now far from the king."
+        },
+        {
+          "move": "d1b3",
+          "say": "The bishop attacks the queen."
+        },
+        {
+          "move": "c4a6",
+          "say": "The queen attacks the bishop on a3."
+        },
+        {
+          "move": "a3b2",
+          "say": "The bishop moves out of the way."
+        }
+      ],
+      "highlight": [
+        "c4",
+        "b3",
+        "e4",
+        "d5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -90,
+            "max": -20
+          },
+          "statement": "Engine (depth 16): after 0 moves of the line the position is between -0.9 and -0.2 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 160,
+            "after_moves": [
+              "c8c4",
+              "d1b3"
+            ]
+          },
+          "statement": "Engine (depth 16): after 2 moves of the line the position is between +0.9 and +1.6 pawns (White's view, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pp2n1b1/q2pPnpp/8/1P2p3/1BN2pP1/PB1Q1P1P/R3R1K1 b - - 3 22",
+      "caption": "Black develops the rook, White takes the pawn on e4, the knights trade and the rook recaptures.",
+      "line": [
+        {
+          "move": "a8d8",
+          "say": "Black develops the rook; the queen on a6 is far from the king."
+        },
+        {
+          "move": "c3e4",
+          "say": "White takes the pawn on e4 and attacks d6 and the knight on f6."
+        },
+        {
+          "move": "f6e4",
+          "say": "Black trades; the knight attacks the queen on d2."
+        },
+        {
+          "move": "e1e4",
+          "say": "The rook recaptures."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "e4",
+            "piece": "R",
+            "after_moves": [
+              "a8d8",
+              "c3e4",
+              "f6e4",
+              "e1e4"
+            ]
+          },
+          "statement": "After the last move the rook stands on e4."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "3r1rk1/pp2n1b1/q2pP1pp/8/1P2R3/1B3pP1/PB1Q1P1P/R5K1 b - - 0 24",
+      "caption": "The bishops trade on b2 and Black's d-pawn attacks the rook. After 25...d5 the engine reads between +1.7 and +2.4 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "g7b2",
+          "say": "Black takes the bishop and attacks the rook on a1."
+        },
+        {
+          "move": "d2b2",
+          "say": "The queen recaptures the bishop."
+        },
+        {
+          "move": "d6d5",
+          "say": "Black attacks the rook on e4."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 170,
+            "max": 240,
+            "after_moves": [
+              "g7b2",
+              "d2b2",
+              "d6d5"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +1.7 and +2.4 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "p",
+            "after_moves": [
+              "g7b2",
+              "d2b2",
+              "d6d5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on d5."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What decided game C.** Black's attack was working: the engine had Black ahead until the queen took the pawn on c4 [V, depth 16]. [I] A good attack can be thrown away by a greedy capture: ask what the capture does to the piece that was making the threats. In games B and C one capture did. [H] In these three games the plan got a position and one move decided it."
+    },
+    {
+      "type": "card",
+      "text": "**What the games share.** Each side had a plan: a queenside break and knight play, a pawn storm. In game A White lost the e6 pawn, then slipped with the king. In game B Black's extra sacrifice failed. In game C Black's attack worked until a greedy capture. Masters tree, after the b-pawn push: Black played the knight to h5 in 138 games (White won 58, drew 53, lost 27) and the a-pawn push in 122 (52, 39, 31). Small samples: popularity, not best play. [V]",
+      "chapter": "What the games teach"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one of the three games. Name the move that decided it and the move that should have been played, in your own words.",
+      "fields": [
+        {
+          "id": "game",
+          "label": "Game (A, B or C):"
+        },
+        {
+          "id": "bad",
+          "label": "The deciding move:"
+        },
+        {
+          "id": "good",
+          "label": "What I would play instead:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Recap.**\n- [I] Opposite wings, so speed counts.\n- A pawn move gains time when it attacks something. [V]\n- A capture is free only if you count the defenders and the follow-up. [V]\n- Game A: White lost the e6 pawn, then slipped with the king. Game B: one capture. Game C: Black's attack worked until one capture. [V]\n- [I] The plan gets you a position; the next move decides.\n- Counts show popularity, not truth."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Teach it back to a friend who knows the opening moves of the King's Indian. Fill all four fields, then check them against the list below.\nSelf-check: Did I say what each side's plan is? Did I say when a plan fails? Did I give one example a beginner could set up on a board? Did I name one mistake and its repair?",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "What each side is trying to do:"
+        },
+        {
+          "id": "when",
+          "label": "When a plan fails:"
+        },
+        {
+          "id": "example",
+          "label": "One example I would show:"
+        },
+        {
+          "id": "warn",
+          "label": "One mistake and its repair:"
+        }
+      ],
+      "chapter": "Teach it back"
+    }
+  ]
+}

@@ -119,6 +119,26 @@
     "ref": "standard starting position; variant for lesson L-FND-PIECE-BISHOP-1: quiet moves h2h3 a7a6 added so the position is not shared (checked with python-chess)",
     "licence": "project"
    }
+  },
+  {
+   "id": "PBG-LFNDPIECEBISHOP1-12",
+   "fen": "6k1/8/8/8/3B4/8/8/6K1 w - - 0 1",
+   "family": "FAM-LFNDPIECEBISHOP1-12",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: lone bishop on d4, d5 is straight ahead",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PBG-LFNDPIECEBISHOP1-13",
+   "fen": "4k3/8/5p2/8/3B4/8/8/4K3 w - - 0 1",
+   "family": "FAM-LFNDPIECEBISHOP1-13",
+   "provenance": {
+    "kind": "authored",
+    "ref": "authored: bishop on d4, black pawn on f6 on its diagonal",
+    "licence": "project"
+   }
   }
  ],
  "items": [
@@ -306,7 +326,7 @@
     "The pawns on b2 and d2 stand on those first squares.",
     "Moving the d-pawn or the b-pawn opens one diagonal. Moving the e-pawn does not touch the c1 bishop."
    ],
-   "explain": "The c1 bishop is blocked by its own pawns on b2 and d2. Moving either pawn opens a diagonal for it: the d-pawn opens a long one, the b-pawn a short one. The e-pawn opens the bishop on f1, not this one.",
+   "explain": "The c1 bishop is blocked by its own pawns on b2 and d2. Moving either pawn opens a diagonal for it: the d-pawn opens a long one, the b-pawn a short one. The e-pawn opens the bishop on f1, not this one. The d-pawn moves (d2d3 or d2d4) are the best answers: they free five squares for the bishop, against two for the b-pawn.",
    "orientation": "white",
    "review": {
     "status": "needs-human",
@@ -844,6 +864,94 @@
    "orientation": "white",
    "review": {
     "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDPIECEBISHOP1-12",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDPIECEBISHOP1-12",
+   "prompt": "Can the white bishop go to d5 in one move? Predict, then check.",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "d5 is straight ahead of the bishop, not on a diagonal."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is d5 on a diagonal of d4?",
+    "d4 is a dark square. What colour is d5?",
+    "A bishop never moves straight ahead."
+   ],
+   "explain": "d5 is straight ahead, not on a diagonal. It is also a square of the other colour than d4, which a bishop can never reach.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IBG-LFNDPIECEBISHOP1-13",
+   "skill": "FND.PIECE.BISHOP.D1",
+   "cue": 2,
+   "task": "predict_outcome",
+   "position": "PBG-LFNDPIECEBISHOP1-13",
+   "prompt": "A black pawn stands on f6. Can the white bishop on d4 take it in one move? Predict, then check.",
+   "answer": {
+    "outcome": "yes",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4f6"
+     },
+     "statement": "The bishop can capture on f6."
+    }
+   ],
+   "tags": [
+    "node.FND.PIECE.BISHOP",
+    "tier.0",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.predict_outcome"
+   ],
+   "hints": [
+    "Is f6 on a diagonal of d4?",
+    "Is e5, the square between them, empty?",
+    "A bishop may land on an enemy piece at the end of a clear diagonal."
+   ],
+   "explain": "f6 is on the diagonal d4, e5, f6 and e5 is empty, so the bishop slides there and captures the pawn.",
+   "orientation": "white",
+   "review": {
+    "status": "machine-only",
     "reviewer": null
    }
   }

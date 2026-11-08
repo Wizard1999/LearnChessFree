@@ -1,0 +1,1446 @@
+{
+  "id": "L-OD-ALIEN-2",
+  "title": "Black's choice at move 5: allow it, or not",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "course": "opening-deep-dives",
+  "series": "alien",
+  "uses": [
+    "OPN.STRUCT",
+    "OPN.PRINCIPLES",
+    "OPN.TRAPS",
+    "TAC.FORK",
+    "SAF.COUNT"
+  ],
+  "minutes": 35,
+  "outcomes": [
+    "Compares Black's five main replies on move five (h6, c5, Bf5, Bg4, e6) by engine evaluation at a stated depth and by our online counts with their sample sizes",
+    "Says which replies invite the knight sacrifice and which decline it, and what White does in each case",
+    "Names the first check on the sacrifice (can the king take on f7?) and the second (does the knight still fork a queen or rook), and predicts which one-feature changes make it work or fail, from two tested positions",
+    "Spots the Black moves that really go wrong on move five (Be6, e5, Kd7)",
+    "Checks a claim by replay and engine: states it, sets the position on the Analysis page, plays the claimed move, reads the engine line, and says whether it held"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Black to move on move five. The white knight on g5 attacks f7 and h7, and none of Black's pieces is attacked yet. Black has five sensible replies, and one of them invites a sacrifice. Which would you pick?",
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        },
+        {
+          "from": "g5",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "g5",
+        "f7",
+        "h7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The knight on g5 attacks exactly these squares.",
+          "type": "piece_attacks",
+          "params": {
+            "square": "g5",
+            "squares": [
+              "e4",
+              "e6",
+              "f3",
+              "f7",
+              "h3",
+              "h7"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "...h6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "h7h6"
+          }
+        },
+        {
+          "id": "C3",
+          "statement": "...c5 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c6c5"
+          }
+        },
+        {
+          "id": "C4",
+          "statement": "...Bf5 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c8f5"
+          }
+        },
+        {
+          "id": "C5",
+          "statement": "...Bg4 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c8g4"
+          }
+        },
+        {
+          "id": "C6",
+          "statement": "...e6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "e7e6"
+          }
+        }
+      ],
+      "chapter": "A first look"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before reading on: which reply would you choose, and do you want White to be able to sacrifice the knight? Write your pick and one reason.",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My pick and reason:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question of this lesson.** On move five Black can invite the Alien Gambit or avoid it. By the end you can compare the five main replies with engine and game data, say when the knight sacrifice on f7 works and when it fails, and check a claim before you trust it. Marks: [V] checked here, [S] one source, [R] recalled, [I] inference, [H] guess."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Reply one: ...h6 invites the sacrifice. The pawn attacks the knight at once. White can retreat (the engine's first choice) or sacrifice. [V] Engine, depth 16: after the retreat and ...c5 the position is level to slightly better for Black.",
+      "line": [
+        {
+          "move": "h7h6",
+          "say": "The pawn attacks the knight and takes g5 away from it."
+        },
+        {
+          "move": "g5f3",
+          "say": "The knight retreats to the centre and keeps every piece."
+        },
+        {
+          "move": "c6c5",
+          "say": "Black attacks the d4 pawn."
+        },
+        {
+          "move": "c2c3",
+          "say": "The pawn supports d4."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h6",
+          "to": "g5"
+        }
+      ],
+      "highlight": [
+        "h6",
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...c5, ...h6, ...Bf5 and ...Bg4 are each within 40 cp of the top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6c5",
+              "h7h6",
+              "c8f5",
+              "c8g4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After this line the engine value is between -0.7 and +0.4 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": -70,
+            "max": 40,
+            "after_moves": [
+              "h7h6",
+              "g5f3",
+              "c6c5",
+              "c2c3"
+            ]
+          }
+        }
+      ],
+      "chapter": "Five replies, one engine"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "If White does sacrifice after ...h6, the knight goes to f7 and the king takes it. [V] Engine, depth 20: Black is then about two pawns ahead. This is the line lesson 1 studied; here it is the price of inviting.",
+      "line": [
+        {
+          "move": "h7h6",
+          "say": "Black invites."
+        },
+        {
+          "move": "g5f7",
+          "say": "White gives a knight for a pawn."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes it; Black is a piece up for a pawn."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After ...h6 Nxf7 Kxf7 the engine value is between -2.6 and -1.2 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -260,
+            "max": -120,
+            "depth": 20,
+            "after_moves": [
+              "h7h6",
+              "g5f7",
+              "e8f7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Reply two: ...c5 does not touch the knight. It attacks the d4 pawn, so White has to answer a threat of its own. [V] Engine, depth 20: ...c5 is the engine's first choice for Black, with Black slightly ahead.",
+      "line": [
+        {
+          "move": "c6c5",
+          "say": "The pawn attacks d4, which only the queen defends."
+        },
+        {
+          "move": "f1b5",
+          "say": "White gives check first and trades the bishops."
+        },
+        {
+          "move": "c8d7",
+          "say": "Black blocks the check with the bishop."
+        },
+        {
+          "move": "b5d7",
+          "say": "White takes the bishop with check."
+        },
+        {
+          "move": "b8d7",
+          "say": "The knight takes back and develops."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c5",
+          "to": "d4"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...c5 is the engine's top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6c5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After this line the engine value is between -0.8 and +0.4 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": -80,
+            "max": 40,
+            "after_moves": [
+              "c6c5",
+              "f1b5",
+              "c8d7",
+              "b5d7",
+              "b8d7"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/5n2/2p3N1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 0 6",
+      "caption": "After ...c5 the sacrifice 6.Nxf7 is still legal. The king takes the knight, and the extra tempo ...c5 gave Black is wasted for White. [V] Depth 16: Nxf7 is at least 150 centipawns worse than the best move.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight takes a pawn and forks the queen and a rook."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "Nxf7 is at least 150 cp worse than the best move (depth 16).",
+          "type": "move_loses",
+          "params": {
+            "move": "g5f7",
+            "cp": 150
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-2"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Reply three: ...Bf5 develops the bishop outside the pawn chain. It does not attack the knight, but it eyes c2 and e4, and ...h6 can follow. [V] Engine, depth 16: level to slightly better for Black.",
+      "line": [
+        {
+          "move": "c8f5",
+          "say": "The bishop develops and aims at the queenside and the centre."
+        },
+        {
+          "move": "g1e2",
+          "say": "White develops the other knight and prepares Nf3."
+        },
+        {
+          "move": "h7h6",
+          "say": "Black kicks the knight now."
+        },
+        {
+          "move": "g5f3",
+          "say": "The knight retreats to f3 and supports the centre."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...c5, ...h6, ...Bf5 and ...Bg4 are each within 40 cp of the top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6c5",
+              "h7h6",
+              "c8f5",
+              "c8g4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After this line the engine value is between -0.7 and +0.4 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": -70,
+            "max": 40,
+            "after_moves": [
+              "c8f5",
+              "g1e2",
+              "h7h6",
+              "g5f3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-3"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Reply four: ...Bg4 develops with a threat: the bishop attacks the queen. White must deal with the attack on the queen: block, or move the queen. [V] Engine, depth 16: level to slightly better for Black.",
+      "line": [
+        {
+          "move": "c8g4",
+          "say": "The bishop attacks the queen along the diagonal."
+        },
+        {
+          "move": "f1e2",
+          "say": "The bishop blocks the diagonal and develops."
+        },
+        {
+          "move": "g4f5",
+          "say": "The bishop steps back to a safer square, still eyeing c2."
+        },
+        {
+          "move": "e2d3",
+          "say": "White offers a trade of the bishops."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "d1"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "d1"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...c5, ...h6, ...Bf5 and ...Bg4 are each within 40 cp of the top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c6c5",
+              "h7h6",
+              "c8f5",
+              "c8g4"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After this line the engine value is between -0.7 and +0.4 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": -70,
+            "max": 40,
+            "after_moves": [
+              "c8g4",
+              "f1e2",
+              "g4f5",
+              "e2d3"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-6"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Reply five: ...e6 is the solid move. It opens the diagonal for the bishop on f8 and supports d5, but it shuts in the bishop on c8. [V] Engine, depth 20, in our run: ...e6 scored a shade lower for Black than the other four.",
+      "line": [
+        {
+          "move": "e7e6",
+          "say": "The pawn opens the bishop's diagonal and supports d5."
+        },
+        {
+          "move": "f1d3",
+          "say": "White develops the bishop to its best diagonal."
+        },
+        {
+          "move": "h7h6",
+          "say": "Black kicks the knight."
+        },
+        {
+          "move": "g5e4",
+          "say": "The knight returns to e4, attacking the knight on f6."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After this line the engine value is between -0.7 and +0.4 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": -70,
+            "max": 40,
+            "after_moves": [
+              "e7e6",
+              "f1d3",
+              "h7h6",
+              "g5e4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "All five side by side. [V] Engine, depth 20, White's view: ...c5 about -0.2 pawns, and between -0.1 and +0.1 for the other four (run-to-run noise is about 0.2). Each is within half a pawn of level. The choice is about the kind of position you want, not about who is better.",
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "c5"
+        },
+        {
+          "from": "c8",
+          "to": "f5"
+        },
+        {
+          "from": "h7",
+          "to": "h6"
+        }
+      ],
+      "highlight": [
+        "c5",
+        "f5",
+        "h6",
+        "g4",
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After ...h6 the engine value is between -0.6 and +0.4 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 40,
+            "depth": 20,
+            "after_move": "h7h6"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After ...c5 the engine value is between -0.6 and +0.4 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 40,
+            "depth": 20,
+            "after_move": "c6c5"
+          }
+        },
+        {
+          "id": "C3",
+          "statement": "After ...Bf5 the engine value is between -0.6 and +0.4 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 40,
+            "depth": 20,
+            "after_move": "c8f5"
+          }
+        },
+        {
+          "id": "C4",
+          "statement": "After ...Bg4 the engine value is between -0.6 and +0.4 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 40,
+            "depth": 20,
+            "after_move": "c8g4"
+          }
+        },
+        {
+          "id": "C5",
+          "statement": "After ...e6 the engine value is between -0.6 and +0.4 pawns for White (depth 20).",
+          "type": "eval_range",
+          "params": {
+            "min": -60,
+            "max": 40,
+            "depth": 20,
+            "after_move": "e7e6"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-1"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Replies that do go wrong. 5...Be6? puts the bishop where the knight attacks it. The knight takes the bishop and Black must retake with the f-pawn, doubling its pawns and opening the f-file. The king is then exposed.",
+      "line": [
+        {
+          "move": "c8e6",
+          "say": "The bishop develops, but onto a square the knight attacks."
+        },
+        {
+          "move": "g5e6",
+          "say": "The knight takes the bishop; Black must retake with the f-pawn."
+        },
+        {
+          "move": "f7e6",
+          "say": "Black takes back; the pawns on e6 and e7 are doubled and the f-file is open."
+        },
+        {
+          "move": "g1f3",
+          "say": "White develops, with the better position."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...Be6 is at least 150 cp worse than the best move (depth 16).",
+          "type": "move_loses",
+          "params": {
+            "move": "c8e6",
+            "cp": 150
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After ...Be6 Nxe6 the knight on e6 attacks exactly these squares.",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e6",
+            "squares": [
+              "c5",
+              "c7",
+              "d4",
+              "d8",
+              "f4",
+              "f8",
+              "g5",
+              "g7"
+            ],
+            "after_moves": [
+              "c8e6",
+              "g5e6"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "statement": "After Nxe6 fxe6, Black's pawns on e6 and e7 are doubled.",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "black",
+            "squares": [
+              "e6",
+              "e7"
+            ],
+            "after_moves": [
+              "c8e6",
+              "g5e6",
+              "f7e6"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "5...e5? grabs space but opens the diagonal to f7. Bc4 is the engine's best reply: the pawn on f7 is attacked twice, by the knight and the bishop, and defended only once. [V] Depth 16: the move is roughly 100 to 150 centipawns worse than the best move, and White is about a pawn and a half ahead after Bc4.",
+      "line": [
+        {
+          "move": "e7e5",
+          "say": "The pawn challenges the centre but opens lines."
+        },
+        {
+          "move": "f1c4",
+          "say": "The bishop adds a second attacker on f7."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        },
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After ...e5 Bc4 two white pieces attack f7.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e7e5",
+              "f1c4"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After ...e5 Bc4 one black piece defends f7.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e7e5",
+              "f1c4"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "statement": "...e5 is at least 100 cp worse than the best move (depth 16).",
+          "type": "move_loses",
+          "params": {
+            "move": "e7e5",
+            "cp": 100
+          }
+        },
+        {
+          "id": "C4",
+          "statement": "After 5...e5 6.Bc4 the engine value is at least +0.8 pawns for White (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": 80,
+            "depth": 16,
+            "after_moves": [
+              "e7e5",
+              "f1c4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "caption": "A move-order note. White can reach the same position with 3.Nd2 instead of 3.Nc3. First the same opening moves: White opens, Black prepares ...d5, White takes the centre.",
+      "line": [
+        {
+          "move": "e2e4",
+          "say": "White opens."
+        },
+        {
+          "move": "c7c6",
+          "say": "Black prepares ...d5."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pp1ppppp/2p5/8/3PP3/8/PPP2PPP/RNBQKBNR b KQkq - 0 2",
+      "caption": "Black strikes at e4. This time the knight defends from d2, and Black takes the pawn. What will the knight do next?",
+      "line": [
+        {
+          "move": "d7d5",
+          "say": "Black strikes at e4."
+        },
+        {
+          "move": "b1d2",
+          "say": "The knight defends e4 from d2."
+        },
+        {
+          "move": "d5e4",
+          "say": "Black takes the pawn."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkbnr/pp2pppp/2p5/8/3Pp3/8/PPPN1PPP/R1BQKBNR w KQkq - 0 4",
+      "caption": "Whichever knight takes on e4, the other stays at home, and the board is identical. [V] So the lessons on 3.Nc3 apply to 3.Nd2.",
+      "line": [
+        {
+          "move": "d2e4",
+          "say": "The knight takes back."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black attacks the knight."
+        },
+        {
+          "move": "e4g5",
+          "say": "The knight goes to g5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After 6.Nxe4 Nf6 7.Ng5 the knight on g5 attacks exactly these squares.",
+          "type": "piece_attacks",
+          "params": {
+            "square": "g5",
+            "squares": [
+              "e4",
+              "e6",
+              "f3",
+              "f7",
+              "h3",
+              "h7"
+            ],
+            "after_moves": [
+              "d2e4",
+              "g8f6",
+              "e4g5"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "The knight on g1 is still at home.",
+          "type": "piece_on",
+          "params": {
+            "square": "g1",
+            "piece": "N",
+            "after_moves": [
+              "d2e4",
+              "g8f6",
+              "e4g5"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "What people play. [V] Online counts (Lichess, Sept 2026) after 5.Ng5: 2,299 games. White's score is wins plus half the draws over games. ...h6: 1,041 games, 51.8%. ...Bf5: 460, 55.8%. ...e6: 226, 60.0%. ...c5: 215, 50.7%. ...Bg4: 142, 47.2%. The 2500+ master file has no row for this position, so there are no master counts. Online amateur data is not master theory.",
+      "arrows": [
+        {
+          "from": "h7",
+          "to": "h6"
+        },
+        {
+          "from": "c8",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "h6",
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...h6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "h7h6"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "...Bf5 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c8f5"
+          }
+        }
+      ],
+      "chapter": "What the games say"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "White scored 60% after ...e6 (226 games) and 47% after ...Bg4 (142 games). Does that show ...Bg4 is the better move?",
+      "fields": [
+        {
+          "id": "verdict",
+          "label": "My answer:",
+          "options": [
+            "yes, 47% is below 60%, so ...Bg4 is better",
+            "no, the gap may be chance, other players, or other time controls"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "caption": "Who invites. [V] The share of ...h6 hardly changes with rating: 43.7% of 387 games below 1500, 44.6% of 1,485 games at 1700 and above. The share of ...Bf5 doubles: 12.4% below 1500, 23.1% at 1700 and above. [I] Players at every level invite about equally often; stronger players choose ...Bf5 more and ...Bg4 less.",
+      "arrows": [
+        {
+          "from": "h7",
+          "to": "h6"
+        },
+        {
+          "from": "c8",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "h6",
+        "f5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...h6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "h7h6"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "...Bf5 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c8f5"
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Engine and crowd.** [I] The reply the engine scored a shade lower for Black in our run (...e6, by a hair) is also the one White scored best against (60%), but 226 games is a small sample and one month is one month. [H] The pull of ...h6 is probably its look: it kicks the knight. Counts show what people choose and how they fare, not what is best."
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2ppp1/2p2n1p/6N1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 0 6",
+      "caption": "If White retreats, the game is level. [V] Online, only 129 of 1,041 games went this way; the commonest reply was ...Bg4 (84 games). The bishop attacks the knight on f3, and White usually develops a piece to cover the queen's diagonal.",
+      "line": [
+        {
+          "move": "g5f3",
+          "say": "The knight retreats to the centre."
+        },
+        {
+          "move": "c8g4",
+          "say": "The bishop develops with an attack on the knight on f3."
+        },
+        {
+          "move": "f1e2",
+          "say": "White develops the bishop and covers the queen's diagonal."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "f3"
+        }
+      ],
+      "highlight": [
+        "f3",
+        "g4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The retreat to f3 is within 40 cp of the top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5f3"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After N5f3 Bg4 one black piece attacks f3.",
+          "type": "attackers",
+          "params": {
+            "square": "f3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g5f3",
+              "c8g4"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**When does the sacrifice work?** The knight on f7 forks the queen and a rook, but the king can take it. The king taking is the first thing to check: if it can, the sacrifice just loses a piece. If it cannot, also check that the knight on f7 still forks something worth winning. Look at the original position, then change one thing and predict. Two tested positions are not a law [I].",
+      "chapter": "When the sacrifice works"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2ppp1/2p2n1p/6N1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 0 6",
+      "caption": "The original. White plays 6.Nxf7. Nothing defends the knight, the king takes it, and White has given a knight for a pawn. [V] Depth 16: Black is ahead by at least a pawn afterwards.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight takes a pawn and forks."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes the knight."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e8",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After Nxf7 no white piece defends the knight.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 0,
+            "after_move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After Nxf7 Black is ahead by at least 1 pawn (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "max": -100,
+            "after_move": "g5f7"
+          }
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "One change to this position could stop the king from taking on f7. Before the next board, what would you change?",
+      "fields": [
+        {
+          "id": "change",
+          "label": "My change:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp3pp1/2p2n1p/4p1N1/2BP4/8/PPP2PPP/R1BQK1NR w KQkq - 0 7",
+      "caption": "A sacrifice that works, in a real line. After 5...e5? 6.Bc4 the bishop already defends f7, so on 6...h6? 7.Nxf7 the king cannot take. [V] Depth 16: White is ahead by at least four pawns. This is why ...e5 is a mistake: it invites Bc4, and Black's pawn on h6 does nothing.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight takes f7, defended by the bishop, and forks the queen and a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        },
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After Nxf7 one white piece (the bishop) defends the knight.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 1,
+            "after_move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After Nxf7 White is ahead by at least 4 pawns (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": 400,
+            "after_move": "g5f7"
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2ppp1/2p2n1p/6N1/2BP4/8/PPP2PPP/R1BQK1NR w KQkq - 0 6",
+      "caption": "The change: White's bishop stands on c4 instead of f1 (an edited position, not reachable in this move order). The bishop defends f7, so after Nxf7 the king may not take. [V] Depth 16: White is ahead by at least five pawns.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight takes f7, defended by the bishop, and forks the queen and a rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "f7"
+        },
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After Nxf7 one white piece (the bishop) defends the knight.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 1,
+            "after_move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After Nxf7 White is ahead by at least 5 pawns (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": 500,
+            "after_move": "g5f7"
+          }
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Can the king take on f7?",
+      "prompt": "Predict for each position, then check. One change matters; one does not.",
+      "working": "IOD-LODALIEN2-8",
+      "failing": "IOD-LODALIEN2-7",
+      "irrelevant": "IOD-LODALIEN2-9"
+    },
+    {
+      "type": "board",
+      "fen": "rnbq1b1r/pp1kpppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR w KQ - 3 6",
+      "caption": "The same idea from the other side: the king moves away. After 5...Kd7? the king no longer touches f7, so 6.Nxf7 forks the queen and the rook and nothing takes the knight. [V] Depth 16: White is ahead by more than five pawns.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "The knight forks the queen and the rook; the king is two files away."
+        },
+        {
+          "move": "d8e8",
+          "say": "The queen moves."
+        },
+        {
+          "move": "f7h8",
+          "say": "The knight takes the rook."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "d8"
+        },
+        {
+          "from": "f7",
+          "to": "h8"
+        }
+      ],
+      "highlight": [
+        "f7",
+        "d7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "After ...Kd7 Nxf7 White is ahead by at least 5 pawns (depth 16).",
+          "type": "eval_range",
+          "params": {
+            "min": 500,
+            "after_move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After ...Kd7 Nxf7 no black piece attacks the knight.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 0,
+            "after_move": "g5f7"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-5"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-4",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**How to check a claim [I].** A claim is a sentence about a position and a move, such as 'after ...c5 the knight sacrifice wins'. Check it in three steps. One: write the claim down, with its position and move. Two: open the Analysis page, set up the position and play the claimed move. Three: read the engine line and say whether the claim held. Two claims are checked below; then you test one.",
+      "chapter": "Checking the claims"
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2pppp/5n2/2p3N1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 0 6",
+      "caption": "Worked example, claim one: 'after ...c5 the sacrifice wins' (steps two and three). The sacrifice is legal and bad. The king takes, and the engine prefers Black.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "Legal, but the knight is undefended."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "Nxf7 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "Nxf7 is at least 150 cp worse than the best move (depth 16).",
+          "type": "move_loses",
+          "params": {
+            "move": "g5f7",
+            "cp": 150
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkb1r/pp2pppp/2p2n2/5bN1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 3 6",
+      "caption": "Claim one, part two: after ...Bf5 the sacrifice is legal and bad as well.",
+      "line": [
+        {
+          "move": "g5f7",
+          "say": "Legal, but the knight is undefended."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king takes it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "Nxf7 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "g5f7"
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "Nxf7 is at least 150 cp worse than the best move (depth 16).",
+          "type": "move_loses",
+          "params": {
+            "move": "g5f7",
+            "cp": 150
+          }
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnbqkb1r/pp2ppp1/2p2n1p/6N1/3P4/8/PPP2PPP/R1BQKBNR w KQkq - 0 6",
+      "caption": "Claim two: after ...h6 the retreat to f3 is legal, keeps every piece and is the engine's first choice.",
+      "line": [
+        {
+          "move": "g5f3",
+          "say": "The knight retreats and eyes e5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g5",
+          "to": "f3"
+        }
+      ],
+      "highlight": [
+        "f3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The retreat to f3 is within 40 cp of the top move (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g5f3"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "The retreat to f3 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "g5f3"
+          }
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODALIEN2-10"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "After ...h6, 901 of 1,041 online White players (87%) took on f7. The sacrifice is available after other replies too, but those counts are small. Give one concrete reason why so many tried it, and one measurable test of your reason.",
+      "fields": [
+        {
+          "id": "conj",
+          "label": "My view:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Say it like this.** [I] 'On move five Black chooses between inviting the knight sacrifice with a pawn on h6 and declining with ...c5, ...Bf5, ...Bg4 or ...e6. The engine finds all five close to level. Look at f7 first: if the king can take the knight, the sacrifice loses a piece. If f7 is defended or the king has left, check the knight still forks something worth winning.'",
+      "chapter": "Test yourself and teach it back"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Teach-back: explain to a friend how Black should choose a reply on move five. Say what the sacrifice needs to work, give one reply that invites it and one that declines, and one mistake to warn about. Self-check: did you say when it works and when it fails, give an example a beginner could set up, and name a mistake? The app grades nothing; compare with the recap.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The choice:"
+        },
+        {
+          "id": "when",
+          "label": "When the sacrifice works and fails:"
+        },
+        {
+          "id": "example",
+          "label": "One example:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Recap.** Five replies are within half a pawn of level (engine, depth 20) [V]. ...h6 invites the sacrifice; the other four decline it. Check first whether the king can take on f7: if it can, the sacrifice just loses a piece [V]. If it cannot, also check that the knight still forks the queen or a rook. Tested in two positions only [I]. ...Be6 and ...e5 are real mistakes. Counts show choice, not strength [I]."
+    },
+    {
+      "type": "finale",
+      "fen": "rnbqkb1r/pp2pppp/2p2n2/6N1/3P4/8/PPP2PPP/R1BQKBNR b KQkq - 2 5",
+      "color": "black",
+      "prompt": "Optional: play a short game as Black from this position. Try one reply that invites the sacrifice and one that declines, and see which position you like."
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "app/public/openings (Lichess standard rated games, CC0, September 2026, 4,752,291 games): node after 5.Ng5 (2,299 games) and its edge counts per reply, per rating band (below 1500 and 1700+ computed from the band arrays); White's score = (wins + draws/2) / games [V]",
+    "app/public/masters/stats.json (329,379 games, both players 2500+): the tree holds no row for 5.Ng5 in this position (moves with only a handful of games are dropped), so no master counts are quoted [V]",
+    "content/items/lesson-od-l-od-alien-2.json (positions replayed from SAN with python-chess; the edited positions are labelled; engine claims Stockfish 19 lite, depth 16 unless a claim states depth 20; evidence under recorded limits, not proof)",
+    "Engine runs of 8 Nov 2026 on every fifth move (Stockfish 19 lite, depth 13 to 20): the sacrifice on f7 stays below minus 1.3 pawns for White after every natural reply; it wins only after absurd moves such as ...Kd7 [V]",
+    "docs/research-alien-martian.md (credit and naming: Volen Dyulgerov, online name Witty_Alien; the lesson series is our own wording) [S]",
+    "[R] A pasted AI-written opening guide supplied two claims (that ...c5 and ...Bf5 avoid the gambit, and that White may retreat after ...h6); both were replayed and engine-checked here; its wording is not reused"
+  ]
+}

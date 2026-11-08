@@ -3,7 +3,7 @@
   "title": "Stalemate: no move, but no check",
   "skill": "FND.STALEMATE",
   "depth": "D1",
-  "minutes": 20,
+  "minutes": 8,
   "outcomes": [
     "Says stalemate when the side to move has no legal move and is not in check",
     "Tells checkmate from stalemate",
@@ -13,16 +13,12 @@
     {
       "type": "item",
       "item": "IBG-LFNDSTALEMATE1-1",
-      "chapter": "Meet the idea"
-    },
-    {
-      "type": "card",
-      "text": "Black had exactly one square, so Black simply had to use it: on your turn you must make a legal move. This lesson is about the strange case where a player has **no** legal move at all. Watch the white queen choose between two almost identical moves, one square apart."
+      "chapter": "Two almost identical moves"
     },
     {
       "type": "board",
       "fen": "k7/8/1K6/8/8/8/8/2Q5 w - - 0 1",
-      "caption": "White to move, same position. The queen travels up the open file.",
+      "caption": "Now give White the move in the same arrangement. The queen travels up the open file.",
       "line": [
         {
           "move": "c1c8",
@@ -110,308 +106,25 @@
     },
     {
       "type": "card",
-      "text": "**Stalemate:** the player to move is **not** in check and has no legal move with any piece. The game ends at once as a **draw**: nobody wins. First confirm the side to move has no legal move at all. Then ask one question: is the king attacked right now? Yes: checkmate. No: stalemate. (If it is attacked but a legal move exists, that is simply check.)"
-    },
-    {
-      "type": "item",
-      "item": "IB1-027"
-    },
-    {
-      "type": "card",
-      "text": "**The rule, and where it comes from.** Under the FIDE Laws of Chess, a game is drawn when the player to move has no legal move and is not in check [R: Article 5.2.a, number not re-checked here]. This was not always so: older rule sets treated the position differently in different places and times [R], which is why you may hear other claims."
-    },
-    {
-      "type": "card",
-      "text": "**Why a draw? [H]** My guess, not a checked fact: if boxing a king in counted as a win, a big lead could end the game with no further skill, and the stronger side would never have to finish the job with care. [I] The rule also gives the weaker side a last resource, which is why careful players count before they box."
-    },
-    {
-      "type": "reflect",
-      "kind": "expect",
-      "prompt": "Predict: if stalemate counted as a win for the side doing the boxing, what would change in a king and queen against a lone king? Write one sentence."
-    },
-    {
-      "type": "board",
-      "fen": "7k/8/8/8/8/8/8/K4Q2 w - - 0 1",
-      "caption": "White to move. The queen is far from the black king in the corner.",
-      "line": [
-        {
-          "move": "f1f7",
-          "say": "The queen covers g8, g7 and h7 from a distance. The king is not attacked and cannot move: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f1",
-          "to": "f7"
-        },
-        {
-          "from": "f7",
-          "to": "g8"
-        },
-        {
-          "from": "f7",
-          "to": "g7"
-        },
-        {
-          "from": "f7",
-          "to": "h7"
-        }
-      ],
-      "highlight": [
-        "g8",
-        "g7",
-        "h7"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "h8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "f1f7"
-          },
-          "statement": "After Qf7 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "f1f7"
-          },
-          "statement": "Qf7 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h8",
-            "color": "white",
-            "count": 0,
-            "after_move": "f1f7"
-          },
-          "statement": "After Qf7 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
+      "text": "**Stalemate:** the player to move is **not** in check and has **no legal move** with any piece. The game ends at once as a **draw**: nobody wins.\nOne question tells it from checkmate: is the king attacked right now? Yes means checkmate, no means stalemate. A king may never step onto a square an enemy piece attacks, so a king can be stuck even when its neighbouring squares are empty.",
+      "chapter": "Mate or stalemate"
     },
     {
       "type": "contrast",
       "title": "One square, opposite results",
-      "prompt": "The white queen moves from f8 to f7, one square down. Predict first: is the result still checkmate?",
+      "prompt": "Black's king is on h8 in both positions, but White's pieces are arranged differently. On the left the white king is on g6 and the queen on f8; on the right the king is on f8 and the queen on g6. Predict first: is the right-hand result still checkmate?",
       "working": "IA0-71",
       "failing": "IA0-72"
     },
     {
       "type": "card",
-      "text": "**Count before you decide.** Two questions, in this order. One: is the king attacked? Two: if it is not, does the side to move have any legal move? Check the king's squares one by one, then every other piece. Only the answer 'none' means stalemate.",
-      "chapter": "Count before you decide"
-    },
-    {
-      "type": "card",
-      "text": "**A move into attack is not legal.** A king may never step onto a square an enemy piece attacks. So a king whose every neighbouring square is covered has no legal move, even though nothing stands on those squares. This is the heart of 'no legal move'."
-    },
-    {
-      "type": "board",
-      "fen": "7k/5Q2/8/8/8/8/8/K7 b - - 0 1",
-      "caption": "Black to move. Each of the king's three neighbouring squares is covered by the queen, so none is legal.",
-      "arrows": [
-        {
-          "from": "f7",
-          "to": "g8"
-        },
-        {
-          "from": "f7",
-          "to": "g7"
-        },
-        {
-          "from": "f7",
-          "to": "h7"
-        }
-      ],
-      "highlight": [
-        "g8",
-        "g7",
-        "h7"
-      ],
-      "claims": [
-        {
-          "type": "game_state",
-          "params": {
-            "state": "stalemate"
-          },
-          "statement": "Black is stalemated.",
-          "id": "C1"
-        },
-        {
-          "type": "legal_moves_set",
-          "params": {
-            "moves": []
-          },
-          "statement": "Black has no legal move.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-6"
-    },
-    {
-      "type": "board",
-      "fen": "8/8/8/8/8/1K6/3Q4/k7 w - - 0 1",
-      "caption": "Same position, White to move. Black had one square, b1.",
-      "line": [
-        {
-          "move": "d2d3",
-          "say": "The queen covers b1 along the diagonal. Black is not in check and has no square left: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d2",
-          "to": "d3"
-        },
-        {
-          "from": "d3",
-          "to": "b1"
-        }
-      ],
-      "highlight": [
-        "a2",
-        "b2",
-        "b1"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "a1",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "d2d3"
-          },
-          "statement": "After Qd3 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "d2d3"
-          },
-          "statement": "Qd3 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "a1",
-            "color": "white",
-            "count": 0,
-            "after_move": "d2d3"
-          },
-          "statement": "After Qd3 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/5Q2/8/8/8/8/8/K7 w - - 0 1",
-      "caption": "Same pieces as the corner stalemate, but now it is White's turn.",
-      "arrows": [
-        {
-          "from": "f7",
-          "to": "h7"
-        }
-      ],
-      "highlight": [
-        "h8",
-        "f7"
-      ],
-      "claims": [
-        {
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          },
-          "statement": "White is to move and has legal moves.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h8",
-            "color": "white",
-            "count": 0
-          },
-          "statement": "Nothing attacks the black king.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Whose turn it is matters.** Stalemate is judged for the player who must move. The same pieces with White to move are an ordinary position. And stalemate is never a win for the player who just moved: with no check and no legal move, the game is a draw."
-    },
-    {
-      "type": "card",
-      "text": "**It works for either colour.** Everything so far had White doing the boxing. The rule is the same when Black does it and White is the one with no move: count the moves of the side whose turn it is."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-7"
-    },
-    {
-      "type": "card",
-      "text": "**Both facts are needed.** A boxed-in king is not stalemated if another piece of its side can still move: a pawn, a knight, anything. A big lead does not protect you. *Rule of thumb:* before a quiet move near the enemy king, count its legal moves, and the legal moves of its other pieces too.",
-      "chapter": "When it does and does not apply"
-    },
-    {
-      "type": "board",
-      "fen": "k7/2Q5/1K6/6p1/8/8/8/8 b - - 0 1",
-      "caption": "Black to move. The king has no square, but there is a black pawn.",
-      "line": [
-        {
-          "move": "g5g4",
-          "say": "The pawn can step forward, so Black has a legal move. The king is boxed in, but the game goes on."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "g5",
-          "to": "g4"
-        }
-      ],
-      "highlight": [
-        "g5",
-        "a8"
-      ],
-      "claims": [
-        {
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "g5g4"
-            ]
-          },
-          "statement": "The pawn move is Black's only legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          },
-          "statement": "The game goes on.",
-          "id": "C2"
-        }
-      ]
+      "text": "**Both things must be true.** A boxed-in king is not stalemated if any other piece of its side can still move, even a lone pawn. A pawn blocked by an enemy pawn directly in front has no push, and it can still move if it can capture something diagonally. Here it has neither. Stalemates often happen when one side is far ahead and moves quickly, so count the king's squares, and the other pieces' moves, before a quiet move.",
+      "chapter": "Other pieces count"
     },
     {
       "type": "board",
       "fen": "k7/2Q5/1K6/6p1/6P1/8/8/8 b - - 0 1",
-      "caption": "Now a white pawn stands in front of the black pawn.",
+      "caption": "Black to move. The king has no square, and Black's only other piece is a pawn that White's pawn blocks.",
       "arrows": [
         {
           "from": "g4",
@@ -457,424 +170,9 @@
       "item": "ISsp5-1"
     },
     {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-3"
-    },
-    {
-      "type": "card",
-      "text": "**Any piece can do it.** The shape is always the same: every square beside the king is covered or blocked, the king is not attacked, and nothing else of its side can move. Next you see it with a knight, a rook, a pawn, and a king that is not in the corner.",
-      "chapter": "Not only the queen"
-    },
-    {
-      "type": "board",
-      "fen": "8/8/8/8/8/2N3K1/8/7k w - - 0 1",
-      "caption": "White to move. A knight and king cannot force mate, so this is a draw whatever happens; the point is only that a knight can complete the cage.",
-      "line": [
-        {
-          "move": "c3e2",
-          "say": "The knight covers g1 and the king covers g2 and h2. Black is not in check and cannot move: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c3",
-          "to": "e2"
-        },
-        {
-          "from": "e2",
-          "to": "g1"
-        }
-      ],
-      "highlight": [
-        "g1",
-        "g2",
-        "h2"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "h1",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "c3e2"
-          },
-          "statement": "After the knight move the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "c3e2"
-          },
-          "statement": "The knight move is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h1",
-            "color": "white",
-            "count": 0,
-            "after_move": "c3e2"
-          },
-          "statement": "After the knight move nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "6R1/8/8/8/8/5K2/8/7k w - - 0 1",
-      "caption": "White to move. A rook and king against the lone king.",
-      "line": [
-        {
-          "move": "g8g2",
-          "say": "The rook covers the whole second row and g1, and the king guards the rook. Black cannot move and is not in check: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "g8",
-          "to": "g2"
-        }
-      ],
-      "highlight": [
-        "g1",
-        "h2",
-        "g2"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "h1",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "g8g2"
-          },
-          "statement": "After Rg2 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "g8g2"
-          },
-          "statement": "Rg2 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h1",
-            "color": "white",
-            "count": 0,
-            "after_move": "g8g2"
-          },
-          "statement": "After Rg2 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/5K2/8/6P1/8/8/8/8 w - - 0 1",
-      "caption": "White to move. A king and a pawn against the lone king.",
-      "line": [
-        {
-          "move": "g5g6",
-          "say": "The pawn steps up and covers h7, the last square. Black is not in check and cannot move: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "g5",
-          "to": "g6"
-        },
-        {
-          "from": "g6",
-          "to": "h7"
-        }
-      ],
-      "highlight": [
-        "h7",
-        "g7",
-        "g8"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "h8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "g5g6"
-          },
-          "statement": "After g6 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "g5g6"
-          },
-          "statement": "g6 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h8",
-            "color": "white",
-            "count": 0,
-            "after_move": "g5g6"
-          },
-          "statement": "After g6 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/3K4/8/8/8/8/5Q2 w - - 0 1",
-      "caption": "White to move. This time the black king is on the edge, not in a corner.",
-      "line": [
-        {
-          "move": "f1f6",
-          "say": "The queen covers d8, f8 and f7, and the king covers d7 and e7. The king is not attacked and cannot move: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f1",
-          "to": "f6"
-        }
-      ],
-      "highlight": [
-        "d8",
-        "f8",
-        "d7",
-        "e7",
-        "f7"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "e8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "f1f6"
-          },
-          "statement": "After Qf6 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "f1f6"
-          },
-          "statement": "Qf6 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e8",
-            "color": "white",
-            "count": 0,
-            "after_move": "f1f6"
-          },
-          "statement": "After Qf6 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "8/3B1P2/8/8/8/1K6/8/k7 w - - 0 1",
-      "caption": "White to move. A bishop and a pawn: White is winning, so a careless bishop move would throw the win away.",
-      "line": [
-        {
-          "move": "d7f5",
-          "say": "The bishop covers b1 and the king covers a2 and b2. Black cannot move and is not in check: stalemate, though White could have won."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d7",
-          "to": "f5"
-        },
-        {
-          "from": "f5",
-          "to": "b1"
-        }
-      ],
-      "highlight": [
-        "a2",
-        "b2",
-        "b1"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "a1",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "d7f5"
-          },
-          "statement": "After the move the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "d7f5"
-          },
-          "statement": "The move is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "a1",
-            "color": "white",
-            "count": 0,
-            "after_move": "d7f5"
-          },
-          "statement": "After the move nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**A piece can be there and still not move.** A pinned piece may not leave the line to its king, so it counts as having no legal move. Always test each black piece, not only the king. Here the stalemate comes from a pin, not from a wall."
-    },
-    {
-      "type": "board",
-      "fen": "6bk/8/6K1/8/R7/8/8/8 w - - 0 1",
-      "caption": "White to move. Black has a bishop, but look at which way it can move.",
-      "line": [
-        {
-          "move": "a4a8",
-          "say": "The rook pins the bishop to its king, and the white king covers g7 and h7. The pinned bishop cannot move: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a4",
-          "to": "a8"
-        }
-      ],
-      "highlight": [
-        "g8",
-        "g7",
-        "h7"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "h8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "a4a8"
-          },
-          "statement": "After the rook move the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "mobility",
-          "params": {
-            "square": "g8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "a4a8"
-          },
-          "statement": "The pinned bishop has no legal move.",
-          "id": "C2"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "a4a8"
-          },
-          "statement": "The rook move is not checkmate.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "8/8/8/2p5/1QPk1K2/8/8/8 w - - 0 1",
-      "caption": "White to move. The black king is in the middle of the board, with one blocked pawn.",
-      "line": [
-        {
-          "move": "b4b3",
-          "say": "The queen covers c3, d3 and e3, the king covers e5 and e4, and the pawn guards d5. The black pawn is blocked. Stalemate, even in the centre."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b4",
-          "to": "b3"
-        }
-      ],
-      "highlight": [
-        "c3",
-        "d3",
-        "e3",
-        "c5"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "d4",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "b4b3"
-          },
-          "statement": "After the move the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "b4b3"
-          },
-          "statement": "The move is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d4",
-            "color": "white",
-            "count": 0,
-            "after_move": "b4b3"
-          },
-          "statement": "After the move nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-4"
-    },
-    {
-      "type": "card",
-      "text": "**If you are the stronger side.** Capablanca's *Chess Fundamentals*, in its queen endings, cautions about stalemate and about a wrong check [S, from our reading sheet]. [H] My guess about why it happens: when we are far ahead we stop counting the opponent's moves. The habit that cures it is the count.",
-      "chapter": "If you are far ahead"
-    },
-    {
       "type": "board",
       "fen": "k7/8/1K6/8/8/8/8/2Q5 b - - 0 1",
-      "caption": "Black to move. The king has one square. Here is a careful way to finish.",
+      "caption": "Black to move. The king has one square. Here is a careful way to finish: first a waiting move.",
       "line": [
         {
           "move": "a8b8",
@@ -883,24 +181,12 @@
         {
           "move": "c1c2",
           "say": "A quiet waiting move: the queen keeps the cage and still leaves the king one square."
-        },
-        {
-          "move": "b8a8",
-          "say": "Again Black's only legal move."
-        },
-        {
-          "move": "c2c8",
-          "say": "Now the queen gives check with the escape squares covered: checkmate."
         }
       ],
       "arrows": [
         {
           "from": "c1",
           "to": "c2"
-        },
-        {
-          "from": "c2",
-          "to": "c8"
         }
       ],
       "highlight": [
@@ -932,38 +218,73 @@
           },
           "statement": "After the waiting move the king still has exactly one legal move.",
           "id": "C2"
+        }
+      ],
+      "chapter": "Finish with care"
+    },
+    {
+      "type": "board",
+      "fen": "1k6/8/1K6/8/8/8/2Q5/8 b - - 2 2",
+      "caption": "Black to move again. The king still has exactly one square, and then the queen mates.",
+      "line": [
+        {
+          "move": "b8a8",
+          "say": "Again Black's only legal move."
         },
         {
+          "move": "c2c8",
+          "say": "Now the queen gives check with the escape squares covered: checkmate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c2",
+          "to": "c8"
+        }
+      ],
+      "highlight": [
+        "a8",
+        "b8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "legal_destinations",
+          "params": {
+            "from": "b8",
+            "to": [
+              "a8"
+            ]
+          },
+          "statement": "The black king has one move."
+        },
+        {
+          "id": "C2",
           "type": "mobility",
           "params": {
             "square": "a8",
             "mode": "legal",
             "count": 0,
             "after_moves": [
-              "a8b8",
-              "c1c2",
               "b8a8",
               "c2c8"
             ]
           },
-          "statement": "At the end the king has no legal move.",
-          "id": "C3"
+          "statement": "At the end the king has no legal move."
         },
         {
+          "id": "C3",
           "type": "attackers",
           "params": {
             "square": "a8",
             "color": "white",
             "count": 1,
             "after_moves": [
-              "a8b8",
-              "c1c2",
               "b8a8",
               "c2c8"
             ]
           },
-          "statement": "At the end the king is attacked, so it is checkmate.",
-          "id": "C4"
+          "statement": "At the end the king is attacked, so it is checkmate."
         }
       ]
     },
@@ -972,125 +293,13 @@
       "item": "IA0-73"
     },
     {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-2"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDSTALEMATE1-5"
-    },
-    {
       "type": "card",
-      "text": "**If you are the weaker side.** The same rule is your hope. [I] When you are losing, keep your king near the edge, keep other pieces blocked, and make the opponent's winning move look natural. [H] Strong opponents rarely allow it, but tired or hurried ones sometimes do, so treat it as a hope, never a plan. One built example follows; the lesson L-TAC-STALEMATE-TRICK-1 goes further.",
-      "chapter": "If you are far behind"
-    },
-    {
-      "type": "board",
-      "fen": "K7/8/k7/2Q5/8/1r6/8/8 b - - 0 1",
-      "caption": "Black to move, a rook against a queen and clearly lost. Black has one resource.",
-      "line": [
-        {
-          "move": "b3b8",
-          "say": "The rook gives check. The white king is attacked and its only legal reply is to take the rook."
-        },
-        {
-          "move": "a8b8",
-          "say": "Forced. Now the black king on a6 has every square covered by the queen and the white king, and is not attacked: stalemate."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b3",
-          "to": "b8"
-        }
-      ],
-      "highlight": [
-        "a5",
-        "b5",
-        "b6",
-        "a7",
-        "b7"
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "a8",
-            "mode": "legal",
-            "count": 1,
-            "after_move": "b3b8"
-          },
-          "statement": "After the rook check, the white king has exactly one legal move (taking the rook).",
-          "id": "C1"
-        },
-        {
-          "type": "mobility",
-          "params": {
-            "square": "a6",
-            "mode": "legal",
-            "count": 0,
-            "after_moves": [
-              "b3b8",
-              "a8b8"
-            ]
-          },
-          "statement": "After the capture the black king has no legal move.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "a6",
-            "color": "white",
-            "count": 0,
-            "after_moves": [
-              "b3b8",
-              "a8b8"
-            ]
-          },
-          "statement": "The black king is not attacked.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "ISsp5-2",
-      "silent": true,
-      "chapter": "Check yourself"
-    },
-    {
-      "type": "item",
-      "item": "IB1-031",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IA0-75",
-      "silent": true
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.FND.STALEMATE",
-        "kind.generated"
-      ],
-      "n": 6,
-      "silent": true
+      "text": "**Model answer, to compare with yours.** Stalemate is when the player to move is not in check but has no legal move with any piece; it is a draw. It differs from checkmate by one question: is the king attacked? Before a quiet move near the enemy king, count its moves, and count its other pieces too."
     },
     {
       "type": "reflect",
       "kind": "review",
-      "prompt": "Teach it. Explain to a friend, in your own words, how to tell checkmate from stalemate, and what to count before a quiet queen move. Write it out before you open the model answer on the next card."
-    },
-    {
-      "type": "card",
-      "text": "**Model answer, to compare with yours.** Stalemate is when the player to move is not in check but has no legal move with any piece; it is a draw. It differs from checkmate by one question: is the king attacked? Before a quiet move near the enemy king, count its moves, and count its other pieces too, pinned ones included."
-    },
-    {
-      "type": "reflect",
-      "kind": "confidence",
-      "prompt": "Which of the two questions (is the king attacked? does any piece have a legal move?) would you forget first, and what will you do about it? Rate how sure you were in the last questions. (low / medium / high)"
+      "prompt": "Read the model answer, cover it, then explain to a friend how to tell checkmate from stalemate, and what you count before a quiet queen move."
     }
   ],
   "review": {
@@ -1101,6 +310,7 @@
     "docs/first-hours.md session 2",
     "sources/sheets/capablanca_chess-fundamentals.md (CI-03 and CI-15: stalemate care in queen endings, paraphrased)",
     "content/skills/FND.STALEMATE.json (D1 outcome, conditions, contrasts)",
-    "content/items/lesson-bg-l-fnd-stalemate-1.json (new items; positions built by hand and replayed in python-chess)"
+    "content/items/lesson-bg-l-fnd-stalemate-1.json (new items; positions built by hand and replayed in python-chess)",
+    "Rewritten shorter (stage S1, length rule): boards and items kept from the earlier version."
   ]
 }

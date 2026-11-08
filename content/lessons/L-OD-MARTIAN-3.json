@@ -1,0 +1,1350 @@
+{
+  "id": "L-OD-MARTIAN-3",
+  "title": "Martian Gambit: White's attack against 8...Bf7 and 8...Bf5",
+  "course": "opening-deep-dives",
+  "series": "martian",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "OPN.TRAPS",
+    "OPN.PRINCIPLES",
+    "POS.BISHOPS"
+  ],
+  "minutes": 40,
+  "outcomes": [
+    "Names the squares for the attacked bishop on g6 and what each gives White (a target, a tempo, a queen route)",
+    "Explains why 9.Bc4 develops first against 8...Bf7 and why a knight on f6 closes the g4 route",
+    "Finds the checkable refutation of 9...Nbd7 (the capture on f7 first, then the queen to g4) and sees that the queen-first order fails",
+    "Explains the pawn push against 8...Bf5 and why the retreat to h7 leaves e6 without a defender",
+    "Checks, before a queen move, whether a black piece attacks the landing square and whether the queen would be defended there"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/research-alien-martian.md (move lines recalled from a blog and a pasted guide, all re-checked by the engine here) [S/R]",
+    "docs/research-witty-alien-videos.md (auto-caption notes: the order 9...Nd7 10.Qg4 does not hold as recalled; corrected by engine) [S-video]",
+    "content/items/lesson-od-l-od-martian-3.json (positions replayed from the Martian move order with python-chess; engine claims at depth 16) [V]"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p1bp/4N3/3P4/8/PPP2PPP/R1BQKB1R b KQkq - 1 8",
+      "caption": "Black to move. White gave a knight for nothing on e6, and now the knight on e5 attacks the bishop on g6. Before any words: where would you put the bishop, and what do you fear most?",
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "g6"
+      ],
+      "claims": [
+        {
+          "statement": "One white piece, the knight on e5, attacks the bishop on g6.",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "A white knight stands on e5.",
+          "type": "piece_on",
+          "params": {
+            "square": "e5",
+            "piece": "N"
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: ...Bf5 is the best move here.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g6f5"
+            ],
+            "within_cp": 40
+          },
+          "id": "C3"
+        }
+      ],
+      "chapter": "The position after 8.Ne5"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Your pick and the thing you fear most:",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My square and my fear:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question of this lesson.** With the white knight on e5, the bishop has to leave g6. Which squares are real, and what does each one give White: a target, a tempo, a path for the queen? By the end you can name White's best set-up against each of the two main retreats, and the natural Black moves that lose. Marks: [V] checked here by the engine, [S] a source, [I] inference, [H] hypothesis."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-sq"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p1bp/4N3/3P4/8/PPP2PPP/R1BQKB1R b KQkq - 1 8",
+      "caption": "Option one: 8...Bf7. The bishop steps back toward its own king.",
+      "line": [
+        {
+          "move": "g6f7",
+          "say": "The bishop now guards e6, e8 and h5, and the king stands next to it. The knight on e5 can still attack it, so it needs the king's help."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "f7"
+        }
+      ],
+      "highlight": [
+        "f7",
+        "e6",
+        "h5"
+      ],
+      "claims": [
+        {
+          "statement": "After ...Bf7 one white piece, the knight on e5, attacks the bishop.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "g6f7"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After ...Bf7 one black piece, the king, defends the bishop.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g6f7"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 8...Bf7 Black is still ahead (White's side is not above zero).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -200,
+            "max": 0,
+            "after_moves": [
+              "g6f7"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p1bp/4N3/3P4/8/PPP2PPP/R1BQKB1R b KQkq - 1 8",
+      "caption": "Option two: 8...Bf5. The bishop goes outward to the open board.",
+      "line": [
+        {
+          "move": "g6f5",
+          "say": "The bishop develops and still guards e6, and it leaves the knight's reach. Its drawback is that a pawn can attack it."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "e6"
+      ],
+      "claims": [
+        {
+          "statement": "After ...Bf5 no white piece attacks the bishop yet.",
+          "type": "attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "g6f5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After ...Bf5 one black piece defends the e6 pawn.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g6f5"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 8...Bf5 Black is clearly ahead (White's side is at least 100 cp down).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -100,
+            "after_moves": [
+              "g6f5"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Same piece, two jobs.** On f7 the bishop stays close to the king and keeps the knight's attack in sight. On f5 it is active, and it also guards the e6 pawn, but a pawn push can drive it away. [I] Either way e6 is the pawn to watch: it stands alone with a hole behind it, and White's pieces will point at it."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-e6cnt"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/3P4/8/PPP2PPP/R1BQKB1R w KQkq - 2 9",
+      "caption": "Why not hurry? White's queen can reach h5 in one move and eye f7. Step through it and ask who guards h5.",
+      "line": [
+        {
+          "move": "d1h5",
+          "say": "The queen leaves d1 and aims at f7, stepping onto a square the bishop on f7 also watches."
+        },
+        {
+          "move": "f7h5",
+          "say": "The bishop takes the queen. No white piece defends h5, so White has lost the queen for nothing."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "h5"
+        },
+        {
+          "from": "f7",
+          "to": "h5"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "f7"
+      ],
+      "claims": [
+        {
+          "statement": "After 9.Qh5 the bishop on f7 attacks the queen.",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d1h5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9.Qh5 no other white piece defends the queen.",
+          "type": "attackers",
+          "params": {
+            "square": "h5",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "d1h5"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: 9.Qh5 is at least 400 cp worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "d1h5",
+            "cp": 400
+          },
+          "id": "C3"
+        }
+      ],
+      "chapter": "8...Bf7: finish development, then strike"
+    },
+    {
+      "type": "card",
+      "text": "**Why 9.Bc4 and not a queen raid.** [I] White is a knight down, so each move has to bring a piece out or add a threat. The bishop does both: it develops, and it points at e6, the pawn the f7 bishop has to guard. Attacks with the queen come later, once the other pieces stand ready and the squares she needs are not covered."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "Black to move after 9.Bc4. Five natural replies: ...Nf6, ...Nbd7, ...g6, ...Qc8, ...b5. Only some keep Black ahead. Pick one before you go on.",
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "e6",
+        "f7"
+      ],
+      "claims": [
+        {
+          "statement": "One white piece, the bishop on c4, attacks the e6 pawn.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "One black piece, the bishop on f7, defends it.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: ...Nf6 is the best move here.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g8f6"
+            ],
+            "within_cp": 40
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which move do you pick, and why?",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My move and the reason:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-find1"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "The quiet reply and what White does next. Watch where the queen can and cannot go.",
+      "line": [
+        {
+          "move": "g8f6",
+          "say": "The knight comes out and covers g4 and h5, so the queen cannot use those squares."
+        },
+        {
+          "move": "d1e2",
+          "say": "The queen comes out and backs up the knight on e5, a second defender next to the d4 pawn."
+        },
+        {
+          "move": "d8d6",
+          "say": "Black defends e6 with the queen and attacks the knight on e5."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After ...Nf6 a black piece attacks g4, so the queen has no safe route there.",
+          "type": "attackers",
+          "params": {
+            "square": "g4",
+            "color": "black",
+            "count": 1,
+            "after_move": "g8f6"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 10.Qe2 two white pieces defend the knight on e5 (pawn and queen).",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "g8f6",
+              "d1e2"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "After 10...Qd6 one black piece attacks the knight on e5.",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g8f6",
+              "d1e2",
+              "d8d6"
+            ]
+          },
+          "id": "C3"
+        },
+        {
+          "statement": "Engine, depth 16: after 10.Qe2 Black is still ahead (White's side below zero).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -200,
+            "max": 0,
+            "after_moves": [
+              "g8f6",
+              "d1e2"
+            ]
+          },
+          "id": "C4"
+        },
+        {
+          "statement": "Engine, depth 16: after 10.Qd3 Black is still ahead (White's side below zero).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -200,
+            "max": 0,
+            "after_moves": [
+              "g8f6",
+              "d1d3"
+            ]
+          },
+          "id": "C5"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f6",
+          "to": "g4"
+        },
+        {
+          "from": "e2",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "f6",
+        "g4",
+        "e2"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp2pbp1/2pqpn1p/4N3/2BP4/8/PPP1QPPP/R1B1K2R w KQkq - 6 11",
+      "caption": "White trades off the bishop that guards e6. The king recaptures and is exposed on f7, but nothing attacks it yet, and the white bishop attacks the queen with tempo.",
+      "line": [
+        {
+          "move": "e5f7",
+          "say": "White trades off the f7 bishop, the main guard of e6."
+        },
+        {
+          "move": "e8f7",
+          "say": "The king recaptures. It is exposed on f7, but no white piece attacks it yet."
+        },
+        {
+          "move": "c1f4",
+          "say": "White attacks the queen with the bishop and wins a tempo."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After the recapture no white piece attacks the king on f7.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 0,
+            "after_moves": [
+              "e5f7",
+              "e8f7"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 12.Bf4 the bishop attacks the queen on d6.",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e5f7",
+              "e8f7",
+              "c1f4"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: at the end of this line Black is still ahead (White's side below zero).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -300,
+            "max": -20,
+            "after_moves": [
+              "e5f7",
+              "e8f7",
+              "c1f4"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two queen routes, one reason.** [I] Against ...Nf6 the queen goes to e2 or d3: no black piece attacks either square, so she can develop without losing time. The route via g4 is closed while a knight watches it. Before a queen move ask the question this lesson keeps asking: which black piece attacks the square I want?"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "Now the natural-looking mistake. The b8 knight attacks the intruder on e5, so it is tempting. White takes on f7 first.",
+      "line": [
+        {
+          "move": "b8d7",
+          "say": "Black attacks the knight on e5 and develops, but leaves g4 uncovered."
+        },
+        {
+          "move": "e5f7",
+          "say": "The knight takes the bishop first. This removes the guard of e6 and gains a tempo."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: ...Nbd7 is at least 250 cp worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "b8d7",
+            "cp": 250
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After ...Nbd7 no black piece covers g4.",
+          "type": "attackers",
+          "params": {
+            "square": "g4",
+            "color": "black",
+            "count": 0,
+            "after_move": "b8d7"
+          },
+          "id": "C2"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d7",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "d7",
+        "g4",
+        "e6"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r2qkbnr/pp1npNp1/2p1p2p/8/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 0 10",
+      "caption": "The king has to recapture, so e6 now has one defender, the king. The queen reaches g4 and, with the bishop on c4, attacks e6 twice.",
+      "line": [
+        {
+          "move": "e8f7",
+          "say": "The king has to recapture. Now e6 has one defender, the king."
+        },
+        {
+          "move": "d1g4",
+          "say": "The queen reaches g4 and, with the bishop on c4, attacks e6 twice against one defender."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After the four moves two white pieces attack e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "e8f7",
+              "d1g4"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After the four moves only one black piece, the king, defends e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "e8f7",
+              "d1g4"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after the four moves White is clearly ahead (at least 200 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 200,
+            "after_moves": [
+              "e8f7",
+              "d1g4"
+            ]
+          },
+          "id": "C3"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "e6"
+        },
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "e6"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r2qkbnr/pp1npbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R w KQkq - 4 10",
+      "caption": "A common idea is 10.Qg4 at once. We tested it: the order matters. Step through what happens if the queen goes first.",
+      "line": [
+        {
+          "move": "d1g4",
+          "say": "The queen heads for g4 at once, before the knight on f7 trick has removed the guard."
+        },
+        {
+          "move": "d7e5",
+          "say": "Black takes the intruder; the knight on d7 was attacking it all along."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: 10.Qg4 is at least 400 cp worse than the best move (10.Nxf7).",
+          "type": "move_loses",
+          "params": {
+            "move": "d1g4",
+            "cp": 400
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: 10.Nxf7 is the best move.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e5f7"
+            ],
+            "within_cp": 40
+          },
+          "id": "C2"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "d1",
+          "to": "g4"
+        },
+        {
+          "from": "d7",
+          "to": "e5"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "e5"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r2qkbnr/pp2pbp1/2p1p2p/4n3/2BP2Q1/8/PPP2PPP/R1B1K2R w KQkq - 0 11",
+      "caption": "White recaptures with the pawn and has lost a knight for a pawn so far. Black checks; after White blocks, the queen takes the pawn on e5 with check, and Black is far ahead.",
+      "line": [
+        {
+          "move": "d4e5",
+          "say": "White recaptures with the pawn and has lost a knight for a pawn so far."
+        },
+        {
+          "move": "d8a5",
+          "say": "Black checks; after White blocks, the queen can take the pawn on e5 with check, and Black is far ahead."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after 10.Qg4 Nxe5 11.dxe5 Qa5+ Black is clearly ahead (White's side at least 300 cp down).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -300,
+            "after_moves": [
+              "d4e5",
+              "d8a5"
+            ]
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-t1"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the square g4 covered?",
+      "prompt": "Predict for each position, then check. Only one thing changes: where Black's pieces stand.",
+      "working": "IOD-LODMARTIAN3-g4w",
+      "failing": "IOD-LODMARTIAN3-g4f",
+      "irrelevant": "IOD-LODMARTIAN3-g4i"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Look back at the position after 9...Nbd7. What does the knight on d7 attack, and what does it leave unguarded?",
+      "fields": [
+        {
+          "id": "conj",
+          "label": "My answer:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**8...Bf5: the bishop that can be chased.** On f5 the bishop develops and defends e6, but a pawn on g2 is one push from attacking it. White also has other tries, such as the bishop to c4 or a queen check. Your job in this chapter is to see which White move makes the bishop move away from its defensive post, and why that helps White.",
+      "chapter": "8...Bf5: the pawn push"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb2/3P4/8/PPP2PPP/R1BQKB1R w KQkq - 2 9",
+      "caption": "White to move after 8...Bf5. Four candidates: 9.g4, 9.Bc4, 9.Bd3, 9.Qh5+. Pick one and say what it attacks.",
+      "arrows": [
+        {
+          "from": "g2",
+          "to": "g4"
+        },
+        {
+          "from": "f1",
+          "to": "c4"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "e6",
+        "g4",
+        "c4"
+      ],
+      "claims": [
+        {
+          "statement": "One black piece, the bishop on f5, defends e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: 9.g4 is the best move here.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g2g4"
+            ],
+            "within_cp": 40
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "9.Qh5+ is a legal move.",
+          "type": "legal_move",
+          "params": {
+            "move": "d1h5"
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which one would you play?",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My move and what it attacks:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb2/3P4/8/PPP2PPP/R1BQKB1R w KQkq - 2 9",
+      "caption": "The pawn push. Black's bishop is attacked by a pawn, and it has to decide where to go.",
+      "line": [
+        {
+          "move": "g2g4",
+          "say": "The pawn attacks the bishop and takes away its post. Black's bishop must move or be traded."
+        },
+        {
+          "move": "f5h7",
+          "say": "The bishop retreats along the same diagonal. It stays alive, but it no longer guards e6."
+        },
+        {
+          "move": "f1d3",
+          "say": "White offers a trade of bishops and brings a piece out; the bishop attacks h7."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After 9.g4 one white pawn attacks the bishop on f5.",
+          "type": "attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 1,
+            "after_move": "g2g4"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9.g4 Bh7 no black piece defends e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "g2g4",
+              "f5h7"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 9.g4 Bh7 Black is still clearly ahead (White's side at least 100 cp down).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -100,
+            "after_moves": [
+              "g2g4",
+              "f5h7"
+            ]
+          },
+          "id": "C3"
+        },
+        {
+          "statement": "After 9.g4 Bh7 10.Bd3 the bishop on d3 attacks the bishop on h7.",
+          "type": "attackers",
+          "params": {
+            "square": "h7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "g2g4",
+              "f5h7",
+              "f1d3"
+            ]
+          },
+          "id": "C4"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "f5"
+        },
+        {
+          "from": "f5",
+          "to": "h7"
+        }
+      ],
+      "highlight": [
+        "g4",
+        "f5",
+        "h7"
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**What the push achieves.** [I] The pawn does not win the bishop. It takes away a good square. On h7 the bishop no longer looks at e6, so a white bishop on c4 attacks a pawn that nobody guards, and Black must spend a move on it. That is the real gain."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-bh7"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb2/3P2P1/8/PPP2P1P/R1BQKB1R b KQkq - 0 9",
+      "caption": "Natural, and wrong. Black develops and forgets that the bishop on f5 is attacked by the pawn.",
+      "line": [
+        {
+          "move": "g8f6",
+          "say": "Black brings out a piece, but the pawn on g4 still attacks the bishop on f5."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: ...Nf6 is at least 250 cp worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "g8f6",
+            "cp": 250
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "The pawn on g4 attacks the bishop on f5.",
+          "type": "attackers",
+          "params": {
+            "square": "f5",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C2"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g4",
+          "to": "f5"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "f6",
+        "g4"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkb1r/pp2p1p1/2p1pn1p/4Nb2/3P2P1/8/PPP2P1P/R1BQKB1R w KQkq - 1 10",
+      "caption": "White takes the bishop. [V] Material is level after the capture, because Black was a knight up before it, yet the engine has White clearly ahead (depth 16): the extra is activity, not a piece.",
+      "line": [
+        {
+          "move": "g4f5",
+          "say": "White takes the bishop for free. This only wins back the knight Black was ahead by, so material is level."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after ...Nf6 gxf5 White is clearly ahead (at least 200 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 200,
+            "after_move": "g4f5"
+          },
+          "id": "C1"
+        },
+        {
+          "id": "C2",
+          "statement": "10.gxf5 wins the bishop (net at least 2 points of material along the engine best line).",
+          "type": "material_after_move",
+          "params": {
+            "move": "g4f5",
+            "min": 2
+          }
+        }
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Does a black piece guard e6?",
+      "prompt": "Predict for each position, then check. The difference is where the bishop stands.",
+      "working": "IOD-LODMARTIAN3-e6w",
+      "failing": "IOD-LODMARTIAN3-e6f"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1pb/2p1p2p/4N3/3P2P1/8/PPP2P1P/R1BQKB1R w KQkq - 1 10",
+      "caption": "The point of the push. The bishop on h7 no longer guards e6, so the bishop on c4 aims at it for free.",
+      "line": [
+        {
+          "move": "f1c4",
+          "say": "The bishop develops with a direct attack on e6, which has no defender."
+        },
+        {
+          "move": "d8d6",
+          "say": "The queen defends e6 and eyes the knight on e5; the engine's best reply."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "e6",
+        "d6"
+      ],
+      "claims": [
+        {
+          "statement": "After 10.Bc4 one white piece attacks e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "f1c4"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 10.Bc4 no black piece defends e6 yet.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 0,
+            "after_moves": [
+              "f1c4"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 10.Bc4 Qd6 Black is still clearly ahead (White's side at least 100 cp down).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -100,
+            "after_moves": [
+              "f1c4",
+              "d8d6"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-bc4q"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb2/3P4/8/PPP2PPP/R1BQKB1R w KQkq - 2 9",
+      "caption": "White's other idea is the check 9.Qh5+. Black has two blocks. First the good one, then the bad one.",
+      "line": [
+        {
+          "move": "d1h5",
+          "say": "The queen checks along the h5-e8 diagonal; g6 and f7 are empty."
+        },
+        {
+          "move": "g7g6",
+          "say": "The pawn blocks the check and attacks the queen. This is the only good answer."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "g6"
+      ],
+      "claims": [
+        {
+          "statement": "9.Qh5+ is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "d1h5"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: after 9.Qh5+ g6 Black is clearly ahead (White's side at least 200 cp down).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -200,
+            "after_moves": [
+              "d1h5",
+              "g7g6"
+            ]
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb1Q/3P4/8/PPP2PPP/R1B1KB1R b KQkq - 3 9",
+      "caption": "Black to move in check. One interposition is a blunder: look at the squares around g6 before you step.",
+      "line": [
+        {
+          "move": "f5g6",
+          "say": "A bishop can block the check on g6, but the queen simply takes it."
+        },
+        {
+          "move": "h5g6",
+          "say": "The queen takes the bishop. The king has nowhere to go: mate."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "g6",
+        "h5"
+      ],
+      "claims": [
+        {
+          "statement": "Black is in check.",
+          "type": "game_state",
+          "params": {
+            "state": "check"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After ...Bg6 the move Qxg6 is checkmate.",
+          "type": "mate_in",
+          "params": {
+            "move": "h5g6",
+            "n": 1,
+            "after_moves": [
+              "f5g6"
+            ]
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1p1/2p1p2p/4Nb2/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "9.Bc4, the other main try. The bishop eyes e6 at once, but the bishop on f5 still guards it. Black's accurate answer stops g4.",
+      "line": [
+        {
+          "move": "h6h5",
+          "say": "The pawn takes g4 away from White. If g4 now, ...hxg4 opens the h-file for Black's rook."
+        },
+        {
+          "move": "e1g1",
+          "say": "White castles; development first, as before."
+        },
+        {
+          "move": "b8d7",
+          "say": "Black trades or challenges the knight on e5 and keeps e6 guarded."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h7",
+          "to": "h5"
+        },
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "c4",
+        "e6"
+      ],
+      "claims": [
+        {
+          "statement": "One white piece, the bishop on c4, attacks e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "h6h5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "One black piece, the bishop on f5, defends e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "h6h5"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: ...h5 and ...Qd6 are both within 60 cp of the top choice.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h6h5",
+              "d8d6"
+            ],
+            "within_cp": 60
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-c4h5"
+    },
+    {
+      "type": "card",
+      "text": "**What the routes teach.** [I] Against ...Bf7 White develops first and waits for a queen route to open. Against ...Bf5 White uses a pawn to chase the bishop away from e6. The common idea: attack the single defender of e6, then use the pawn as the target. Before a queen move, check whether a black piece attacks the landing square and whether the queen would be defended there."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "What our archive shows. Our file holds six replayable games with the full Martian line (Titled Tuesday and online events, 2024 to 2026, players rated 2073 to 2570). In all six Black chose 8...Bf7 and none chose 8...Bf5. Five continued 9.Bc4, one 9.Bd3, and all five answered 9.Bc4 with ...Nf6. White's tenth move was Qd3 twice, then Qe2, O-O and Nxf7 once each. White scored four wins in the six games. [V, but six games prove nothing]",
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "f6"
+      ],
+      "claims": [
+        {
+          "statement": "9...Nf6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "g8f6"
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Six games, four White wins. Name two things besides the move itself that could explain four wins in six games.",
+      "fields": [
+        {
+          "id": "verdict",
+          "label": "Two other explanations:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-ta",
+      "silent": true,
+      "chapter": "Test yourself"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-tb",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-tc",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN3-td",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Recap: what to remember.** The bishop must leave g6, and e6 is the target either way. Against ...Bf7, White develops the bishop first. Against ...Bf5, a pawn push chases the bishop and leaves e6 unguarded. The queen needs a landing square that no black piece attacks (or one she can defend), so a knight on f6 shuts the g4 route. Attacking the intruder with the b8 knight loses to a capture on f7 first.",
+      "chapter": "Recap and teach it back"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Teach-back: in a few sentences explain to a beginner how White attacks after 8...Bf5 or 8...Bf7. Say what each side wants, one natural move that fails and why, and one condition under which the queen route works. Self-check: did you say when it works and when it fails, give an example a beginner could set up, and name a mistake? The app grades nothing; compare with the recap.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea:"
+        },
+        {
+          "id": "when",
+          "label": "When it works / fails:"
+        },
+        {
+          "id": "example",
+          "label": "One example:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "finale",
+      "fen": "rn1qkb1r/pp2pbp1/2p1pn1p/4N3/2BP4/8/PPP2PPP/R1BQK2R w KQkq - 4 10",
+      "color": "white",
+      "prompt": "Optional: play on as White from the position after 9...Nf6. Develop with the queen to e2 or d3 and aim at e6."
+    }
+  ]
+}

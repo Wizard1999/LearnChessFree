@@ -1,0 +1,481 @@
+{
+  "positions": [
+    {
+      "id": "POD-LODALIEN6-1",
+      "fen": "r1bqr3/pp1n1kp1/3bpn1p/4N3/3P4/3B4/PP3PPP/R1BQR1K1 b - - 2 13",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "POD-LODALIEN6-2",
+      "fen": "r1bqr1k1/pp1n2p1/4p2p/3nP2Q/8/3B4/PP3PPP/R1B1R1K1 w - - 3 16",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "POD-LODALIEN6-3",
+      "fen": "r1bqr1k1/pp1n2p1/4p2B/3nP2Q/8/3B4/PP3PPP/R3R1K1 b - - 0 16",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "POD-LODALIEN6-4",
+      "fen": "r1bqr1k1/pp1n2p1/2pbpn1p/4N3/3P4/3B1Q2/PPP2PPP/R1B1R1K1 b - - 7 12",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "POD-LODALIEN6-5",
+      "fen": "4r2k/3n1Qp1/1q1bp1Bp/1p1b4/2pP4/2P5/1P3PPP/R3R1K1 b - - 2 23",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "POD-LODALIEN6-6",
+      "fen": "rn1qkb1r/pp4p1/2p1pn1p/4Nb2/2BP2P1/8/PPP2P1P/R1BQK2R b KQ - 0 10",
+      "family": "FAM-OD-ALIEN-SERIES",
+      "provenance": {
+        "kind": "authored",
+        "ref": "positions replayed from real games in content/_work/alien-games.json with python-chess (TWIC)",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IOD-LODALIEN6-fir13",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-1",
+      "prompt": "Black to move: White's knight has just checked from e5, and Black's bishop on d6 could take it. Find a reply that keeps Black ahead; one of them is clearly best.",
+      "answer": {
+        "moves": [
+          "f7g8",
+          "f7f8"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after ...Kg8 Black is clearly better.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -100,
+            "after_move": "f7g8"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: ...Bxe5 is at least 250 centipawns worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "d6e5",
+            "cp": 250
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after ...Kf8 Black is still ahead, but by less than after ...Kg8.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -30,
+            "after_move": "f7f8"
+          },
+          "id": "C3"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "The check must be answered. Which pieces could take the knight, and which squares can the king use?",
+        "Taking the knight with the bishop recaptures on e5 with a pawn that then attacks the knight on f6.",
+        "Step the king to g8 and let the knight stay."
+      ],
+      "explain": "The knight on e5 is protected by the d4 pawn, so after ...Bxe5 dxe5 White's pawn lands on e5 and attacks the knight on f6, and Black's king has lost its dark-squared bishop. Moving the king to g8 keeps every Black piece. Engine, depth 16: ...Kg8 keeps Black clearly better; ...Bxe5 gives most of that back.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d6e5": "Takes the knight but the pawn recaptures on e5 with a threat to the knight on f6, and the bishop that guarded the king's side is gone; the game went wrong from here.",
+        "f7f8": "Also holds, but ...Kg8 keeps more."
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-fir15",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-2",
+      "prompt": "White to move. Black's king has just gone to g8 after the check on h5. Find White's strongest move.",
+      "answer": {
+        "moves": [
+          "c1h6"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "The engine's best move at depth 16 is Bxh6.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c1h6"
+            ],
+            "within_cp": 40
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: after Bxh6 and Black's best reply White is better.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 80,
+            "after_moves": [
+              "c1h6",
+              "e8e7"
+            ]
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "Count the white pieces that attack the pawn on h6, and the black pieces that defend it.",
+        "The queen on h5 and the bishop on c1 both point at h6; only the pawn on g7 guards it.",
+        "Bishop takes h6."
+      ],
+      "explain": "Two white pieces, the queen on h5 and the bishop on c1, attack h6 and only the g7 pawn defends it. Bxh6 also threatens Bxg7. If ...gxh6 the g-file opens and Qg6+ mates by force; Qxh6 would only equalise. Engine, depth 16: Bxh6 is the best move and keeps White better against the best defence.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-fir16",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-3",
+      "prompt": "Black to move after the bishop took h6. Find the move that keeps Black in the game.",
+      "answer": {
+        "moves": [
+          "e8e7"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after ...Re7 White is still clearly better, but the game goes on.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 100,
+            "after_move": "e8e7"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: ...Nf8 is at least 400 centipawns worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "d7f8",
+            "cp": 400
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "The bishop on h6 threatens Bxg7 and the queen sits on h5. What does Black need to cover?",
+        "Look at the rook on e8 and the seventh rank.",
+        "The rook can go to e7 and cover g7."
+      ],
+      "explain": "The rook on e7 defends the seventh rank and g7, so the threat on g7 is parried. The knight move to f8 leaves g7 hanging to the bishop and does not stop the queen. Engine, depth 16: ...Nf8 loses at least four pawns' worth compared with ...Re7. The game continued ...Nf8.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d7f8": "The game move: it leaves g7 to the bishop, and after Bxg7 the black king is stripped."
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-h6count",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "POD-LODALIEN6-2",
+      "prompt": "Back to the position before Bxh6. Compare the attackers of the pawn on h6 with its defenders.",
+      "answer": {
+        "outcome": "White has more attackers",
+        "options": [
+          "White has more attackers",
+          "equal",
+          "Black has more defenders"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Two white pieces attack h6.",
+          "type": "attackers",
+          "params": {
+            "square": "h6",
+            "color": "white",
+            "count": 2
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "One black piece (the g7 pawn) defends h6.",
+          "type": "attackers",
+          "params": {
+            "square": "h6",
+            "color": "black",
+            "count": 1
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "Count the white pieces that could capture on h6.",
+        "The queen on h5 and the bishop on c1.",
+        "Two against one."
+      ],
+      "explain": "Queen and bishop attack h6; only the pawn on g7 defends it. When attackers outnumber defenders and the defender is a pawn that guards the king, a sacrifice on that square can win.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-bor12",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-4",
+      "prompt": "Black to move: White's queen has just gone to f3 with the knight on e5. Several moves are close; find one.",
+      "answer": {
+        "moves": [
+          "d8b6",
+          "d6e5",
+          "d8c7",
+          "c6c5",
+          "e8e7"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Engine, depth 16: these five moves are within 65 centipawns of the best and keep Black ahead (about 0.6 to 0.9 pawns).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d8b6",
+              "d6e5",
+              "d8c7",
+              "c6c5",
+              "e8e7"
+            ],
+            "within_cp": 65
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: ...Nf8 is at least 100 centipawns worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "d7f8",
+            "cp": 100
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "The knight on e5 is annoying. Which Black move strikes at the centre or removes the knight?",
+        "Either the queen hits the d4 pawn, or the bishop takes the knight.",
+        "...Qb6, ...Qc7, ...c5, ...Re7 or ...Bxe5."
+      ],
+      "explain": "The knight on d7 defends f6 and covers the king's side, and the pawn on h6 is within reach of the bishop on c1. Moving the knight away with ...Nf8 invites Bxh6. The game continued ...Nf8. Engine, depth 16: the five moves in the key keep Black ahead; ...Nf8 gives the edge up.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d7f8": "Loosens the defence of f6 and invites Bxh6; the engine rates it at least 100 centipawns worse than the best moves."
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-sva23",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-5",
+      "prompt": "Black to move. White's queen has just landed on f7, protected by the bishop on g6. Find Black's strongest move.",
+      "answer": {
+        "moves": [
+          "e8e7"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after ...Re7 Black is much better.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -300,
+            "after_move": "e8e7"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: ...Rd8 is at least 300 centipawns worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "e8d8",
+            "cp": 300
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "The white queen is deep in Black's position. Which Black piece can attack it with tempo?",
+        "A rook move along the seventh rank hits the queen.",
+        "The rook goes to e7."
+      ],
+      "explain": "Re7 attacks the queen, and every square the queen can go to is covered (the bishop on d6 covers f4, the bishop on d5 covers f3), so White has to give the queen for a rook. Engine, depth 16: ...Re7 gives Black a large advantage; the game continued ...Rd8, which throws it away.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "e8d8": "The game move: it lets White play Be4 and escape; the engine rates it at least 300 centipawns worse than ...Re7."
+      }
+    },
+    {
+      "id": "IOD-LODALIEN6-sev10",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "POD-LODALIEN6-6",
+      "prompt": "Black to move. White's pawn on g4 attacks the bishop on f5. Find a retreat that keeps Black clearly better.",
+      "answer": {
+        "moves": [
+          "f5h7",
+          "f5e4"
+        ]
+      },
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after ...Bh7 Black is clearly better.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -100,
+            "after_move": "f5h7"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: after ...Be4 Black is also ahead.",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -80,
+            "after_move": "f5e4"
+          },
+          "id": "C2"
+        }
+      ],
+      "tags": [
+        "theme.alien",
+        "od.alien",
+        "cue.2",
+        "tier.4",
+        "kind.authored",
+        "lang.en"
+      ],
+      "hints": [
+        "The bishop is attacked by a pawn. Which retreat squares are safe?",
+        "Check g6 first: the knight on e5 covers it. Then look for the squares no white piece can reach.",
+        "...Bh7 and ...Be4 both keep the bishop safe from the pawn."
+      ],
+      "explain": "The bishop must leave f5. Both retreats keep Black ahead at depth 16; ...Bh7 is about 0.6 pawn better than ...Be4, and ...Be4 allows f3 with a tempo on the bishop. The game continued ...Be4.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    }
+  ]
+}

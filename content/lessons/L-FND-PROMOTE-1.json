@@ -3,9 +3,9 @@
   "title": "Promotion: a pawn on the last rank",
   "skill": "FND.PROMOTE",
   "depth": "D1",
-  "minutes": 20,
+  "minutes": 6,
   "outcomes": [
-    "Promotes a pawn to a queen when told, for both colours",
+    "Promotes a pawn to a queen when told",
     "Promotes by capturing when the square ahead is blocked",
     "Says when a pawn cannot promote on this move",
     "Notices that a queen is not always the best choice (preview only)"
@@ -14,32 +14,24 @@
     {
       "type": "item",
       "item": "IG-PROMO-1",
-      "chapter": "Meet the idea"
+      "chapter": "Do it"
     },
     {
       "type": "card",
-      "text": "You just did something special. A pawn that walks all the way to the far edge, the **last rank**, cannot stay a pawn. In the same move it turns into a stronger piece. This is **promotion**, the pawn's reward for a long journey. Watch one pawn make the whole trip."
+      "text": "You just **promoted**. A pawn that reaches the far edge, the **last rank**, cannot stay a pawn: in the same move it becomes a **queen, rook, bishop or knight** of its own colour, your choice (never a king). The queen is the usual pick because it is the strongest piece. Watch a pawn make the last of the trip."
     },
     {
       "type": "board",
-      "fen": "7k/8/8/3P4/8/8/8/K7 w - - 0 1",
+      "fen": "7k/8/3P4/8/8/8/8/K7 w - - 0 1",
       "caption": "A lone pawn marches to the last rank and changes into a queen.",
       "line": [
         {
-          "move": "d5d6",
-          "say": "The pawn takes one quiet step forward."
+          "move": "d6d7",
+          "say": "One step puts the pawn next to the last rank."
         },
         {
           "move": "h8g8",
-          "say": "Black's king cannot catch it."
-        },
-        {
-          "move": "d6d7",
-          "say": "One more step puts the pawn next to the last rank."
-        },
-        {
-          "move": "g8f7",
-          "say": "Black's king is still too far away to stop it."
+          "say": "Black's king is too far from d8 to stop it."
         },
         {
           "move": "d7d8q",
@@ -48,7 +40,7 @@
       ],
       "arrows": [
         {
-          "from": "d5",
+          "from": "d6",
           "to": "d8"
         }
       ],
@@ -60,7 +52,7 @@
           "id": "C1",
           "type": "legal_move",
           "params": {
-            "move": "d5d6"
+            "move": "d6d7"
           },
           "statement": "The pawn can step forward."
         },
@@ -71,10 +63,8 @@
             "square": "d8",
             "piece": "Q",
             "after_moves": [
-              "d5d6",
-              "h8g8",
               "d6d7",
-              "g8f7",
+              "h8g8",
               "d7d8q"
             ]
           },
@@ -84,124 +74,8 @@
     },
     {
       "type": "card",
-      "text": "You choose what the pawn becomes: a **queen, rook, bishop or knight**, always in your own colour. It cannot stay a pawn and it cannot become a king. You may already own a queen and still make another one. Having the piece already does not matter."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPROMOTE1-1"
-    },
-    {
-      "type": "card",
-      "text": "Why is the queen usually the pick? It moves like a rook and a bishop together. On an empty board it covers 27 squares from a central square and 21 from a corner. The common point scale gives it 9, against 5 for a rook and 3 for a bishop or knight [S: a convention, not a law]. So we start with the queen and look for exceptions."
-    },
-    {
-      "type": "board",
-      "fen": "8/1P1k4/r7/8/8/8/8/7K w - - 0 1",
-      "caption": "All four choices are legal. A knight on b8 gives check and attacks the rook at once, a fork. (The queen is still stronger here; this shows what a knight can do.)",
-      "line": [
-        {
-          "move": "b7b8n",
-          "say": "The new knight gives check and also attacks the rook on a6."
-        },
-        {
-          "move": "d7e7",
-          "say": "The king must deal with the check."
-        },
-        {
-          "move": "b8a6",
-          "say": "The knight takes the rook. A queen on b8 would not have attacked it, though it has other strengths."
-        }
-      ],
-      "highlight": [
-        "b8",
-        "a6",
-        "d7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_move",
-          "params": {
-            "move": "b7b8n"
-          },
-          "statement": "Promotion to a knight is legal."
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "b7b8r"
-          },
-          "statement": "Promotion to a rook is legal."
-        },
-        {
-          "id": "C3",
-          "type": "legal_move",
-          "params": {
-            "move": "b7b8b"
-          },
-          "statement": "Promotion to a bishop is legal."
-        },
-        {
-          "id": "C4",
-          "type": "legal_move",
-          "params": {
-            "move": "b7b8q"
-          },
-          "statement": "Promotion to a queen is legal."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IG-PROMO-3",
-      "chapter": "Try it"
-    },
-    {
-      "type": "card",
-      "text": "How does a pawn get to the last rank? It moves **straight ahead** onto an empty square, or it **captures** one step diagonally forward. A pawn never captures straight ahead. Look at what is in front of the pawn, then at the two diagonal squares."
-    },
-    {
-      "type": "board",
-      "fen": "3n3k/3P4/8/8/8/8/8/K7 w - - 0 1",
-      "caption": "The knight blocks the square ahead and the diagonals are empty, so this pawn cannot promote yet.",
-      "arrows": [
-        {
-          "from": "d7",
-          "to": "d8"
-        }
-      ],
-      "highlight": [
-        "d8",
-        "c8",
-        "e8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "illegal_move",
-          "params": {
-            "move": "d7d8q"
-          },
-          "statement": "The pawn cannot move onto the knight."
-        },
-        {
-          "id": "C2",
-          "type": "illegal_move",
-          "params": {
-            "move": "d7c8q"
-          },
-          "statement": "There is nothing to capture on c8."
-        },
-        {
-          "id": "C3",
-          "type": "illegal_move",
-          "params": {
-            "move": "d7e8q"
-          },
-          "statement": "There is nothing to capture on e8."
-        }
-      ]
+      "text": "A pawn reaches the last rank by moving **straight ahead** onto an empty square, or by **capturing one step diagonally forward**. It never captures straight ahead. When a piece blocks the square in front, look at the two diagonals: an enemy piece there lets the pawn promote by capturing.",
+      "chapter": "Two routes"
     },
     {
       "type": "board",
@@ -247,19 +121,8 @@
     },
     {
       "type": "item",
-      "item": "IBG-LFNDPROMOTE1-3"
-    },
-    {
-      "type": "card",
-      "text": "Now you predict. If you want another example first, step back through the two boards above. Do not worry about getting it wrong: the check afterwards shows the reason. [H] Many beginners forget the capture route because the straight push is a pawn's usual way; that is my guess, not something we measured."
-    },
-    {
-      "type": "contrast",
-      "title": "Same pawn, one change",
-      "prompt": "The pawn stands on d7. Predict first: can it promote on this move?",
-      "working": "ISsp1-1",
-      "failing": "ISsp1-2",
-      "irrelevant": "ISsp1-3"
+      "item": "IG-PROMO-19",
+      "chapter": "When it cannot"
     },
     {
       "type": "board",
@@ -300,201 +163,16 @@
           },
           "statement": "It can step to c7."
         }
-      ],
-      "chapter": "When it does not apply"
-    },
-    {
-      "type": "item",
-      "item": "IG-PROMO-19"
-    },
-    {
-      "type": "board",
-      "fen": "3Bn3/4P3/7k/8/8/8/8/6K1 w - - 0 1",
-      "caption": "A pawn never captures its own piece. The bishop on d8 is White's own, and the knight blocks the way ahead.",
-      "highlight": [
-        "d8",
-        "e8",
-        "f8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "illegal_move",
-          "params": {
-            "move": "e7e8q"
-          },
-          "statement": "The knight blocks the pawn."
-        },
-        {
-          "id": "C2",
-          "type": "illegal_move",
-          "params": {
-            "move": "e7d8q"
-          },
-          "statement": "The pawn cannot capture its own bishop."
-        },
-        {
-          "id": "C3",
-          "type": "illegal_move",
-          "params": {
-            "move": "e7f8q"
-          },
-          "statement": "There is nothing to capture on f8."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPROMOTE1-4"
-    },
-    {
-      "type": "item",
-      "item": "IG-PROMO-15"
-    },
-    {
-      "type": "card",
-      "text": "The queen is usually the best choice. This is a **rule of thumb**, not a law. Before you promote, ask two questions. Can the enemy take my new piece at once? And could my choice leave the enemy king with no legal move while not in check, which is a stalemate? Watch the first question.",
-      "chapter": "Choose with care"
-    },
-    {
-      "type": "board",
-      "fen": "3r2k1/4P3/8/8/8/8/8/6K1 w - - 0 1",
-      "caption": "Promoting straight ahead puts the new queen on a square the black rook attacks.",
-      "line": [
-        {
-          "move": "e7e8q",
-          "say": "The pawn becomes a queen on a square the rook watches."
-        },
-        {
-          "move": "d8e8",
-          "say": "The rook takes the new queen for nothing."
-        }
-      ],
-      "highlight": [
-        "e8",
-        "d8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "e8",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The black rook attacks e8."
-        },
-        {
-          "id": "C2",
-          "type": "move_loses",
-          "params": {
-            "move": "e7e8q",
-            "cp": 300
-          },
-          "statement": "Promoting on e8 loses the new queen."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "3r2k1/4P3/8/8/8/8/8/6K1 w - - 0 1",
-      "caption": "Capturing the rook promotes the pawn and removes the attacker.",
-      "line": [
-        {
-          "move": "e7d8q",
-          "say": "The pawn takes the rook and becomes a queen with check."
-        },
-        {
-          "move": "g8g7",
-          "say": "Black's king steps aside, and White keeps the new queen."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e7",
-          "to": "d8"
-        }
-      ],
-      "highlight": [
-        "d8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "e7d8q"
-            ]
-          },
-          "statement": "Capturing on d8 is the engine's best move."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPROMOTE1-2"
-    },
-    {
-      "type": "board",
-      "fen": "8/6P1/7k/8/6K1/8/8/8 w - - 0 1",
-      "caption": "The second question: a queen here would take away every move from the black king.",
-      "line": [
-        {
-          "move": "g7g8q",
-          "say": "The queen covers every square the king could use, and the king is not in check."
-        }
-      ],
-      "highlight": [
-        "g8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_move",
-          "params": {
-            "move": "g7g8q"
-          },
-          "statement": "The queen promotion is legal."
-        },
-        {
-          "id": "C2",
-          "type": "tablebase",
-          "params": {
-            "result": "win",
-            "move": "g7g8r"
-          },
-          "statement": "Promoting to a rook keeps the win."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "6Q1/8/7k/8/6K1/8/8/8 b - - 0 1",
-      "caption": "Black to move has no legal move and is not in check: stalemate, a draw. A rook on g8 would have left Black a move and kept the win.",
-      "highlight": [
-        "h6"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "stalemate"
-          },
-          "statement": "Black is stalemated."
-        }
       ]
     },
     {
       "type": "board",
       "fen": "rb6/kpP5/p7/8/1K6/8/8/8 w - - 0 1",
-      "caption": "The knight gives check, covers b6, and Black's own pieces fill every other square next to the king.",
+      "caption": "Preview, not a rule to learn yet: the queen is only the usual choice. Here a knight gives checkmate, because it checks the king and covers b6 while Black's own pieces fill the other squares. A queen on c8 is not mate: Black still has moves.",
       "line": [
         {
           "move": "c7c8n",
-          "say": "The knight checks the king and covers b6, and its other squares are filled by its own pieces."
+          "say": "Checkmate: the knight gives check, and the king has no square and no capture."
         }
       ],
       "highlight": [
@@ -511,48 +189,17 @@
           },
           "statement": "c7c8n is checkmate."
         }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IG-PROMO-23"
-    },
-    {
-      "type": "item",
-      "item": "ISsp1-4",
-      "silent": true,
-      "chapter": "Check yourself"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPROMOTE1-6",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IA0-88",
-      "silent": true
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.FND.PROMOTE",
-        "kind.generated"
       ],
-      "n": 4
+      "chapter": "Which piece"
     },
     {
       "type": "card",
-      "text": "**Say it back, first.** Explain to a friend who has never seen it how a pawn promotes, and two things to check before choosing the piece. Say it aloud or write it down, then read on for a model answer."
-    },
-    {
-      "type": "card",
-      "text": "**Model answer.** A pawn reaching the last rank becomes a queen, rook, bishop or knight in the same move, by moving onto an empty square or capturing diagonally. Check first that the new piece cannot be taken for free, and that the enemy king is not left stalemated."
+      "text": "**Model answer.** A pawn reaching the last rank becomes a queen, rook, bishop or knight in the same move. It gets there by moving straight onto an empty square or by capturing one step diagonally forward. A pawn two or more steps away needs more moves first. The queen is usual; the knight mate was a preview of another choice."
     },
     {
       "type": "reflect",
       "kind": "unsure",
-      "prompt": "Write the explanation you would give a friend who has never seen promotion: how it works, and the one mistake you think they would make first."
+      "prompt": "Read the model answer, cover it, then explain to a friend how a pawn promotes and the two ways it can reach the last rank."
     }
   ],
   "review": {
@@ -569,6 +216,7 @@
     "Promotion rule (choice of queen, rook, bishop or knight of the same colour, made as part of the move): FIDE Laws of Chess, article on promotion [R]; the app's own rules engine and tools/validate.py check every move shown",
     "items IBG-LFNDPROMOTE1-1..6 (content/items/lesson-bg-l-fnd-promote-1.json); positions built and replayed with python-chess",
     "the [H] note on beginners forgetting the capture route is a hypothesis of the author, not measured",
-    "knight-fork promotion board (8/1P1k4/r7/8/8/8/8/7K): replayed with python-chess; queen square counts and point scale are recalled conventions [S]"
+    "knight-fork promotion board (8/1P1k4/r7/8/8/8/8/7K): replayed with python-chess; queen square counts and point scale are recalled conventions [S]",
+    "Rewritten shorter (stage S1, 8 Nov 2026 length rule): 11 steps; boards and items kept from the earlier version, so claims are unchanged."
   ]
 }

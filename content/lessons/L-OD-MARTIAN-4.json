@@ -1,0 +1,1131 @@
+{
+  "id": "L-OD-MARTIAN-4",
+  "title": "Martian Gambit: declining the knight and the traps",
+  "course": "opening-deep-dives",
+  "series": "martian",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "OPN.TRAPS",
+    "OPN.PRINCIPLES",
+    "POS.BISHOPS"
+  ],
+  "minutes": 40,
+  "outcomes": [
+    "Names the squares the knight on e6 attacks and finds the queen squares where it captures her at once",
+    "Explains why taking the knight is best and what the best refusal, 7...Qd6, costs (the castling right, a tempo, development: about a pawn and a half)",
+    "Predicts whether a knight jump forks a queen by listing the knight's squares",
+    "Finds the quiet knight move after 7...Qb6 that makes two threats, and the knight checks that win the queen after 7...Qd5 and 7...Qc7",
+    "Tests a natural-looking move by counting the opponent's best reply, using one mate trap and one give-away as examples"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "docs/research-alien-martian.md and docs/research-witty-alien-videos.md (queen-move claims recalled from a guide and auto-captions; each re-checked by the engine here) [R/S-video]",
+    "content/_work/martian-games.json (six replayable Martian games, 2024 to 2026, count and ratings quoted) [V, tiny sample]",
+    "content/items/lesson-od-l-od-martian-4.json (positions replayed from the Martian move order with python-chess; engine claims at depth 16) [V]"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "Black to move after 7.Ne6. The knight attacks the queen on d8 and the bishop on f8 at the same time. Before reading on: list every way Black can answer, and guess what each one costs.",
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "d8"
+        },
+        {
+          "from": "e6",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "e6",
+        "d8",
+        "f8"
+      ],
+      "claims": [
+        {
+          "statement": "The knight on e6 attacks exactly these squares.",
+          "type": "piece_attacks",
+          "params": {
+            "square": "e6",
+            "squares": [
+              "c5",
+              "c7",
+              "d4",
+              "d8",
+              "f4",
+              "f8",
+              "g5",
+              "g7"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: the capture ...fxe6 is the best move.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f7e6"
+            ],
+            "within_cp": 40
+          },
+          "id": "C2"
+        }
+      ],
+      "chapter": "What the knight on e6 attacks"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Your list of answers and your guess about their costs:",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My list:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question of this lesson.** Black can take the knight on e6 or answer with a queen move. Which answers survive, and which lose at once? By the end you can say why taking is best, what the best refusal costs, which queen moves lose, and how to test a natural move. Marks: [V] checked here, [S] a source, [I] inference, [H] hypothesis."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-sqk"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-qsafe"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "The answer that wins a piece: take the knight.",
+      "line": [
+        {
+          "move": "f7e6",
+          "say": "Black takes the knight with the pawn and is a piece up. The queen and the bishop are no longer attacked, and White must find something quick."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after 7...fxe6 Black is ahead (White's side below zero).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "max": -30,
+            "after_moves": [
+              "f7e6"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "7...fxe6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "f7e6"
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "Now the refusal. Black moves the queen, and the knight takes the bishop. [V] Depth 18: this is Black's cheapest refusal, about a pawn and a half for White. Step through it and count the pieces.",
+      "line": [
+        {
+          "move": "d8d6",
+          "say": "The queen moves out of the way. The bishop on f8 is now attacked by the knight and defended only by the king."
+        },
+        {
+          "move": "e6f8",
+          "say": "The knight takes the bishop."
+        },
+        {
+          "move": "e8f8",
+          "say": "The king takes the knight. Pieces are level again, but the king stands on f8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "f8",
+        "d6"
+      ],
+      "claims": [
+        {
+          "statement": "After ...Qd6 one white piece, the knight, attacks the bishop on f8.",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "d8d6"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After ...Qd6 one black piece, the king, defends the bishop on f8.",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d8d6"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 7...Qd6 8.Nxf8 Kxf8 White is clearly ahead (at least 60 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 60,
+            "after_moves": [
+              "d8d6",
+              "e6f8",
+              "e8f8"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**A decline is a trade, not a loss of a piece.** [I] The bishop and the knight trade, so material stays level. What Black pays is smaller but real: the king loses castling, a tempo went to the queen, and White's pieces come out first. Engine, depth 16: White is ahead by about a pawn and a half here. Taking the knight is better."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "A worse refusal: the queen goes to d7. Watch what the knight does once it has taken on f8.",
+      "line": [
+        {
+          "move": "d8d7",
+          "say": "The queen steps next to the bishop. Again the knight on e6 attacks the bishop on f8."
+        },
+        {
+          "move": "e6f8",
+          "say": "The knight takes the bishop."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kNnr/pp1qppp1/2p3bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 0 8",
+      "caption": "The king recaptures, and a second knight jumps to e5 and attacks the queen on d7 and the bishop on g6 at once.",
+      "line": [
+        {
+          "move": "e8f8",
+          "say": "The king recaptures."
+        },
+        {
+          "move": "f3e5",
+          "say": "A second knight jumps to e5 and attacks the queen on d7 and the bishop on g6 at once."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After the four moves the knight on e5 attacks the queen on d7.",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e8f8",
+              "f3e5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After the four moves the knight on e5 attacks the bishop on g6.",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e8f8",
+              "f3e5"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after the four moves White is clearly ahead (at least 200 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 200,
+            "after_moves": [
+              "e8f8",
+              "f3e5"
+            ]
+          },
+          "id": "C3"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "d7"
+        },
+        {
+          "from": "e5",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "d7",
+        "g6",
+        "e5"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-fd7"
+    },
+    {
+      "type": "contrast",
+      "title": "Is the queen forked?",
+      "prompt": "Predict for each position, then check. Only the queen's square differs.",
+      "working": "IOD-LODMARTIAN4-kw",
+      "failing": "IOD-LODMARTIAN4-kf"
+    },
+    {
+      "type": "card",
+      "text": "**Where the queen goes decides.** [I] A fork works only if the forked pieces stand on squares the knight reaches. From e5 the knight reaches d7 and g6, so a queen on d7 is forked; a queen on d6 or c8 is not. So the refusals worth comparing are queen moves the next knight jump does not touch. The cheapest is the queen to d6, about a pawn and a half for White; even that falls short of taking."
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/1qp1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R w KQkq - 2 8",
+      "caption": "White to move after 7...Qb6. The queen attacks the b2 pawn, and the bishop on f8 hangs to the knight. The obvious capture is 8.Nxf8. There is a better, quiet move. Find it.",
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "b6",
+        "f8",
+        "e6"
+      ],
+      "claims": [
+        {
+          "statement": "One white piece, the knight on e6, attacks the bishop on f8.",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "white",
+            "count": 1
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: 8.Ne5 is the best move.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ],
+            "within_cp": 40
+          },
+          "id": "C2"
+        }
+      ],
+      "chapter": "Queen moves that lose"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Which move would you play, and what is the idea?",
+      "fields": [
+        {
+          "id": "pick",
+          "label": "My move and idea:"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-qb6"
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/1qp1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R w KQkq - 2 8",
+      "caption": "The quiet move and its two threats. Step through the main line.",
+      "line": [
+        {
+          "move": "f3e5",
+          "say": "A quiet knight move: no capture, no check. It attacks the bishop on g6 and prepares Nc4 against the queen."
+        },
+        {
+          "move": "g6f5",
+          "say": "Black saves the bishop and attacks the knight on e6."
+        },
+        {
+          "move": "e5c4",
+          "say": "The knight attacks the queen on b6; the knight on e6 is left en prise."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After 8.Ne5 the knight attacks the bishop on g6.",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "white",
+            "count": 1,
+            "after_move": "f3e5"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9.Nc4 the knight attacks the queen on b6.",
+          "type": "attackers",
+          "params": {
+            "square": "b6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "f3e5",
+              "g6f5",
+              "e5c4"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 8.Ne5 White is far ahead (at least 400 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 400,
+            "after_move": "f3e5"
+          },
+          "id": "C3"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "g6"
+        },
+        {
+          "from": "c4",
+          "to": "b6"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "c4",
+        "b6"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/1qp1N2p/5b2/2NP4/8/PPP2PPP/R1BQKB1R b KQkq - 5 9",
+      "caption": "Black takes the knight on e6, but the queen is still attacked, and the knight on c4 takes it.",
+      "line": [
+        {
+          "move": "f5e6",
+          "say": "Black takes the knight, but the queen is still attacked."
+        },
+        {
+          "move": "c4b6",
+          "say": "The knight takes the queen."
+        },
+        {
+          "move": "a7b6",
+          "say": "Black recaptures with the a-pawn, but the queen has gone for only a knight."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: at the end of the line White is clearly ahead (at least 250 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 250,
+            "after_moves": [
+              "f5e6",
+              "c4b6",
+              "a7b6"
+            ]
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/1qp1N1bp/4N3/3P4/8/PPP2PPP/R1BQKB1R b KQkq - 3 8",
+      "caption": "Black can try to take the knight instead. The same quiet move punishes that too.",
+      "line": [
+        {
+          "move": "f7e6",
+          "say": "Black takes the knight on e6."
+        },
+        {
+          "move": "e5g6",
+          "say": "The knight takes the bishop and attacks the rook on h8 and the bishop on f8 at once: a fork."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "g6",
+          "to": "h8"
+        },
+        {
+          "from": "g6",
+          "to": "f8"
+        }
+      ],
+      "highlight": [
+        "g6",
+        "h8",
+        "f8"
+      ],
+      "claims": [
+        {
+          "statement": "After 9.Nxg6 the knight attacks the rook on h8.",
+          "type": "attackers",
+          "params": {
+            "square": "h8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "f7e6",
+              "e5g6"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9.Nxg6 the knight attacks the bishop on f8.",
+          "type": "attackers",
+          "params": {
+            "square": "f8",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "f7e6",
+              "e5g6"
+            ]
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "Engine, depth 16: after 8...fxe6 9.Nxg6 White is far ahead (at least 400 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 400,
+            "after_moves": [
+              "f7e6",
+              "e5g6"
+            ]
+          },
+          "id": "C3"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**One quiet move, two threats.** [I] The knight on e5 does not capture or give check, yet it makes two threats at once: take the bishop, or hit the queen. Quiet moves that create two threats are easy to miss, because the eye goes to the capture. Before you grab, ask: which move attacks two things?"
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/2p1N1bp/q7/3P4/5N2/PPP2PPP/R1BQKB1R w KQkq - 2 8",
+      "caption": "The same idea works against the check. White blocks, the queen goes to b6, and the knight jumps.",
+      "line": [
+        {
+          "move": "c1d2",
+          "say": "White blocks the check and develops."
+        },
+        {
+          "move": "a5b6",
+          "say": "The queen goes back to b6, as in the main line."
+        },
+        {
+          "move": "f3e5",
+          "say": "The same quiet knight move, with the same two threats."
+        }
+      ],
+      "highlight": [
+        "a5",
+        "b6",
+        "e5"
+      ],
+      "claims": [
+        {
+          "statement": "8.Bd2 blocks the check; it is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "c1d2"
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "Engine, depth 16: after 8.Bd2 Qb6 9.Ne5 White is far ahead (at least 400 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 400,
+            "after_moves": [
+              "c1d2",
+              "a5b6",
+              "f3e5"
+            ]
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/ppq1ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R w KQkq - 2 8",
+      "caption": "Two other queen moves lose at once. First 7...Qc7: the knight attacks c7.",
+      "line": [
+        {
+          "move": "e6c7",
+          "say": "The knight captures the queen with check. Nothing of Black's defends c7."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king steps aside."
+        },
+        {
+          "move": "c7a8",
+          "say": "The knight also takes the rook on a8."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e6",
+          "to": "c7"
+        }
+      ],
+      "highlight": [
+        "c7",
+        "a8"
+      ],
+      "claims": [
+        {
+          "statement": "Nxc7+ wins at least 8 points of material along the engine's best line.",
+          "type": "material_after_move",
+          "params": {
+            "move": "e6c7",
+            "min": 8
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "No black piece defends the queen on c7.",
+          "type": "attackers",
+          "params": {
+            "square": "c7",
+            "color": "black",
+            "count": 0
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn2kbnr/pp2ppp1/2p1N1bp/3q4/3P4/5N2/PPP2PPP/R1BQKB1R w KQkq - 2 8",
+      "caption": "And 7...Qd5: the queen walks into a fork.",
+      "line": [
+        {
+          "move": "e6c7",
+          "say": "The knight checks the king and attacks the queen on d5 at the same time."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king must move."
+        },
+        {
+          "move": "c7d5",
+          "say": "The knight takes the queen, and Black has lost a queen for a knight at best."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c7",
+          "to": "e8"
+        },
+        {
+          "from": "c7",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "c7",
+        "d5"
+      ],
+      "claims": [
+        {
+          "statement": "Nc7+ wins at least 5 points of material along the engine's best line.",
+          "type": "material_after_move",
+          "params": {
+            "move": "e6c7",
+            "min": 5
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "The queen on d5 is attacked by the knight after Nc7+.",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e6c7",
+              "e8d8"
+            ]
+          },
+          "id": "C2"
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-qd5"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "A second refusal that avoids every fork: the queen goes to c8. [V] Depth 18: it costs more than ...Qd6, about +1.8 for White against about +1.4, because the queen develops nothing.",
+      "line": [
+        {
+          "move": "d8c8",
+          "say": "The queen retreats where no knight jump touches her."
+        },
+        {
+          "move": "e6f8",
+          "say": "The knight takes the bishop."
+        }
+      ],
+      "chapter": "Taking versus refusing, and the traps"
+    },
+    {
+      "type": "board",
+      "fen": "rnq1kNnr/pp2ppp1/2p3bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 0 8",
+      "caption": "The king recaptures. The pieces are level, and White's second knight attacks the bishop on g6 and keeps the initiative.",
+      "line": [
+        {
+          "move": "e8f8",
+          "say": "The king recaptures. Pieces are level."
+        },
+        {
+          "move": "f3e5",
+          "say": "White's second knight attacks the bishop on g6 and keeps the initiative."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after 7...Qc8 8.Nxf8 Kxf8 9.Ne5 White is ahead (at least 80 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": 80,
+            "after_moves": [
+              "e8f8",
+              "f3e5"
+            ]
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9.Ne5 the knight attacks the bishop on g6.",
+          "type": "attackers",
+          "params": {
+            "square": "g6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "e8f8",
+              "f3e5"
+            ]
+          },
+          "id": "C2"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "g6"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "g6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-qc8"
+    },
+    {
+      "type": "contrast",
+      "title": "Take or refuse?",
+      "prompt": "Predict who the engine prefers in each position, then check. Only Black's seventh move differs.",
+      "working": "IOD-LODMARTIAN4-acc",
+      "failing": "IOD-LODMARTIAN4-dec"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In the six games on the next board Black always took on e6. What does that tell you, and what does it not tell you?",
+      "fields": [
+        {
+          "id": "conj",
+          "label": "What it tells / what it does not:"
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "caption": "What public games show. Six games from public Titled Tuesday and online events (2024 to 2026, players rated 2073 to 2570) reach the full Martian line to move seven. In all six Black took on e6. No game has a queen move on move seven. [V, but six games say little]",
+      "arrows": [
+        {
+          "from": "f7",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "e6"
+      ],
+      "claims": [
+        {
+          "statement": "7...fxe6 is legal.",
+          "type": "legal_move",
+          "params": {
+            "move": "f7e6"
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Traps are natural moves that lose.** To test a natural move before you play it, ask: what is the opponent's best reply, and what does it capture or attack? The next boards show two replies that look sensible. The first loses to a mate you can count. The second loses the whole edge, which is a different kind of mistake: no blunder, just a gift back."
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2pbp1/2p1p2p/4N3/2BP4/8/PPP2PPP/R1BQK2R b KQkq - 3 9",
+      "caption": "Trap one, reached by 7...fxe6 8.Ne5 Bf7 9.Bc4 b5. The pawn attacks the bishop on c4 and looks like it wins a tempo. White ignores it and takes on e6, and Black's bishop takes back.",
+      "line": [
+        {
+          "move": "b7b5",
+          "say": "The pawn attacks the bishop on c4 and looks like it wins a tempo."
+        },
+        {
+          "move": "c4e6",
+          "say": "The bishop takes the pawn on e6 and attacks the bishop on f7, which the knight on e5 also attacks."
+        },
+        {
+          "move": "f7e6",
+          "say": "Black takes the bishop. This is the natural recapture."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: 9...b5 is at least 400 cp worse than the best move.",
+          "type": "move_loses",
+          "params": {
+            "move": "b7b5",
+            "cp": 400
+          },
+          "id": "C1"
+        },
+        {
+          "statement": "After 9...b5 the pawn attacks the bishop on c4.",
+          "type": "attackers",
+          "params": {
+            "square": "c4",
+            "color": "black",
+            "count": 1,
+            "after_move": "b7b5"
+          },
+          "id": "C2"
+        },
+        {
+          "statement": "After 10.Bxe6 two white pieces attack the bishop on f7.",
+          "type": "attackers",
+          "params": {
+            "square": "f7",
+            "color": "white",
+            "count": 2,
+            "after_moves": [
+              "b7b5",
+              "c4e6"
+            ]
+          },
+          "id": "C3"
+        },
+        {
+          "statement": "After 10...Bxe6 the knight on e5 covers d7.",
+          "type": "attackers",
+          "params": {
+            "square": "d7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "b7b5",
+              "c4e6",
+              "f7e6"
+            ]
+          },
+          "id": "C4"
+        },
+        {
+          "statement": "After 9...b5 10.Bxe6 Bxe6 White mates in three with 11.Qh5+.",
+          "type": "mate_in",
+          "params": {
+            "move": "d1h5",
+            "n": 3,
+            "after_moves": [
+              "b7b5",
+              "c4e6",
+              "f7e6"
+            ]
+          },
+          "id": "C5"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "e6"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/p3p1p1/2p1b2p/1p2N3/3P4/8/PPP2PPP/R1BQK2R w KQkq - 0 11",
+      "caption": "The queen checks along the h5-e8 diagonal; the knight on e5 covers d7 and f7, so the king has no flight square. Black has two blocks: ...g6 delays mate, ...Bf7 mates at once. After ...g6 the queen takes with check.",
+      "line": [
+        {
+          "move": "d1h5",
+          "say": "The queen checks along the h5-e8 diagonal; the knight on e5 covers d7 and f7, so the king has no flight square."
+        },
+        {
+          "move": "g7g6",
+          "say": "The pawn blocks and delays mate by a move. ...Bf7 would be mate at once."
+        },
+        {
+          "move": "h5g6",
+          "say": "The queen takes the pawn with check."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "h5",
+          "to": "e8"
+        }
+      ],
+      "highlight": [
+        "h5",
+        "e8"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/p3p3/2p1b1Qp/1p2N3/3P4/8/PPP2PPP/R1B1K2R b KQkq - 0 12",
+      "caption": "The bishop interposes on f7, the queen takes it, and the king is mated.",
+      "line": [
+        {
+          "move": "e6f7",
+          "say": "The bishop interposes."
+        },
+        {
+          "move": "g6f7",
+          "say": "The queen takes the bishop: checkmate."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-t1"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-t2"
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkbnr/pp2p1pb/2p1p2p/4N3/3P2P1/8/PPP2P1P/R1BQKB1R w KQkq - 1 10",
+      "caption": "Trap two, reached by 8...Bf5 9.g4 Bh7. The bishop on h7 leaves e6 without a defender, and White's bishop comes out with an attack on it. A natural developing move is a gift.",
+      "line": [
+        {
+          "move": "f1c4",
+          "say": "The bishop attacks the e6 pawn, which nothing defends."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a piece and forgets the pawn."
+        },
+        {
+          "move": "c4e6",
+          "say": "White takes the pawn with a bishop that now attacks f7."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "After 10.Bc4 nothing of Black's defends e6.",
+          "type": "attackers",
+          "params": {
+            "square": "e6",
+            "color": "black",
+            "count": 0,
+            "after_move": "f1c4"
+          },
+          "id": "C1"
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c4",
+          "to": "e6"
+        }
+      ],
+      "highlight": [
+        "c4",
+        "e6",
+        "f6"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rn1qkb1r/pp2p1pb/2p1Bn1p/4N3/3P2P1/8/PPP2P1P/R1BQK2R b KQkq - 0 11",
+      "caption": "The queen attacks the bishop and the b2 pawn, and the bishop gives check and drives the king. The king loses castling. The engine now rates the position as roughly level.",
+      "line": [
+        {
+          "move": "d8b6",
+          "say": "The queen attacks the bishop and the b2 pawn."
+        },
+        {
+          "move": "e6f7",
+          "say": "The bishop gives check and drives the king."
+        },
+        {
+          "move": "e8d8",
+          "say": "The king loses castling. The engine now rates the position as roughly level."
+        }
+      ],
+      "claims": [
+        {
+          "statement": "Engine, depth 16: after the whole line the position is roughly level (between -150 and +150 cp).",
+          "type": "eval_range",
+          "params": {
+            "depth": 16,
+            "min": -150,
+            "max": 150,
+            "after_moves": [
+              "d8b6",
+              "e6f7",
+              "e8d8"
+            ]
+          },
+          "id": "C1"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Two kinds of mistake.** [I] The first trap loses by force: a count of attackers and a mate. The second gives back the whole advantage without any blunder, which is why it is easy to play. The remedy is the same question in both cases: which of my pawns has no defender, and which of my squares does the other side's next piece reach?"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-ta",
+      "silent": true,
+      "chapter": "Test yourself"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-tb",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-tc",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODMARTIAN4-td",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**Recap: what to remember.** The knight on e6 forks queen and bishop; taking it keeps Black a piece up. A queen move costs the castling right, and some squares cost the queen: c7 and d5 at once, b6 and a5 after a quiet knight move with two threats. A fork needs the targets on the knight's squares, and a knight never attacks the next square. Count the reply before a tempting move.",
+      "chapter": "Recap and teach it back"
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Teach-back: in a few sentences, say why Black should take the knight on e6, what the best refusal costs, and name one queen square that loses at once and why.",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "Why take:"
+        },
+        {
+          "id": "when",
+          "label": "What a refusal costs:"
+        },
+        {
+          "id": "example",
+          "label": "A losing queen square and why:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    },
+    {
+      "type": "finale",
+      "fen": "rn1qkbnr/pp2ppp1/2p1N1bp/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQkq - 1 7",
+      "color": "black",
+      "prompt": "Optional: play on as Black from the position after 7.Ne6 and take the knight. Then answer the attack on g6 with the bishop move you prefer."
+    }
+  ]
+}

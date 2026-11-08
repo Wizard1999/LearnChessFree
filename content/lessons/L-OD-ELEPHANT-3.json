@@ -1,0 +1,1527 @@
+{
+ "id": "L-OD-ELEPHANT-3",
+ "title": "The Elephant Gambit: traps, model games and when to play it",
+ "course": "opening-deep-dives",
+ "series": "elephant",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "OPN.TRAPS",
+  "OPN.PRINCIPLES",
+  "TAC.PIN",
+  "SAF.COUNT"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Names three traps of the Elephant Gambit (the bishop check on b5, the knight attacking the queen, the knight sacrifice on f7) and the count that refutes each, and one trap for Black",
+  "Distinguishes a trap from the book from a trap that happens in games, using sample sizes from our archive",
+  "Reads two real games move by move, finds the decisive errors for each side, and explains how the e-file and the king's place decided both",
+  "Reads archive numbers with a stated sample and says why a few specialists can skew them",
+  "Designs a small experiment to decide whether to play the gambit, with a hypothesis, a record and a sample size"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/_work/elephant-games.json (2,852 games from TWIC and Lichess broadcast files, found by tools/scan_elephant.py; 2,842 replay legally with python-chess; counts and scores computed here; one source per game, so every figure is [S]; players and results are public records, moves are facts) [S/V]",
+  "app/public/openings (Lichess standard rated games, CC0, September 2026, 4,752,291 games; counts after 2.Nf3, 2...d5 and 3.Nxe5 Bd6; White's score = (wins + draws/2) / games; lines below the kept thresholds are called absent) [V]",
+  "Model games: Deac, B.-D. v Gadimbayli, A., Titled Arena 3 April 2021, and Dubov, D. v Timofeev, A., Titled Tuesday 28 March 2023, moves from the TWIC files, replayed legally with python-chess; the engine marks at decisive points are Stockfish 19 lite, depth 16 (evidence under recorded limits, not proof) [S/V]",
+  "docs/research-witty-alien-videos.md (the Elephant Gambit is taught in videos by the creator Witty_Alien; they are references only, the notes are caption-based and unverified, nothing is quoted and no claim here depends on them) [S]",
+  "content/items/lesson-od-l-od-elephant-3.json (every position replayed from SAN with python-chess; claims validated by tools/validate.py) [V]"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/1B1P4/4p3/5N2/PPPP1PPP/RNBQK2R b KQkq - 1 4",
+   "caption": "Black to move after 4.Bb5+. White has not defended the knight; the bishop checks the king and the black pawn on e4 still attacks the knight on f3. Black has several ways to answer a check: block with a pawn, a bishop or a knight, or move the king. Which would you choose, and what will your pieces attack next?",
+   "arrows": [
+    {
+     "from": "b5",
+     "to": "e8"
+    },
+    {
+     "from": "e4",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "b5",
+    "e8",
+    "f3"
+   ],
+   "claims": [
+    {
+     "statement": "Black is in check from the bishop on b5.",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: the pawn block ...c6 is Black's best.",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c7c6"
+      ],
+      "within_cp": 40
+     },
+     "id": "C2"
+    }
+   ],
+   "chapter": "Traps that really occur"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before any explanation: which answer to the check do you choose, and which white piece does it attack?",
+   "fields": [
+    {
+     "id": "pick",
+     "label": "My move and what it attacks:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** Which traps does the Elephant Gambit hold for each side, what do real games show, and when is it worth playing? Marks: [V] checked here, [S] our archive, [I] inference, [H] hypothesis."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/1B1P4/4p3/5N2/PPPP1PPP/RNBQK2R b KQkq - 1 4",
+   "caption": "Trap 1: the check on b5. [V] After the pawn recapture two white pieces are attacked by pawns at once, and the engine rates Black clearly better. [S] In our archive the bishop check appears in 11 games and White scored 50%, so players do not always lose the piece: the engine's verdict and the results of mixed-strength games differ.",
+   "line": [
+    {
+     "move": "c7c6",
+     "say": "The pawn blocks the check and asks the bishop a question."
+    },
+    {
+     "move": "d5c6",
+     "say": "White takes the pawn, perhaps expecting a knight recapture."
+    },
+    {
+     "move": "b7c6",
+     "say": "The b-pawn recaptures: now the bishop on b5 and the knight on f3 are both attacked by pawns."
+    },
+    {
+     "move": "b5c4",
+     "say": "The bishop steps aside; the knight is still attacked."
+    },
+    {
+     "move": "e4f3",
+     "say": "The pawn takes the knight and the pawn on f3 can recapture only at a cost."
+    },
+    {
+     "move": "d1f3",
+     "say": "The queen takes the pawn: White has lost a knight and regained only a pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "b5"
+    },
+    {
+     "from": "e4",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "b5",
+    "f3",
+    "c6"
+   ],
+   "claims": [
+    {
+     "statement": "After the b-pawn recaptures, the bishop on b5 is attacked by a black pawn.",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c7c6",
+       "d5c6",
+       "b7c6"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "After the b-pawn recaptures, the knight on f3 is attacked by a black pawn.",
+     "type": "attackers",
+     "params": {
+      "square": "f3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c7c6",
+       "d5c6",
+       "b7c6"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "statement": "Engine, depth 16: after the recapture on c6 Black is at least 250 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -250,
+      "after_moves": [
+       "c7c6",
+       "d5c6",
+       "b7c6"
+      ]
+     },
+     "id": "C3"
+    },
+    {
+     "statement": "Engine, depth 16: at the end of the line Black is still at least 200 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -200,
+      "after_moves": [
+       "c7c6",
+       "d5c6",
+       "b7c6",
+       "b5c4",
+       "e4f3",
+       "d1f3"
+      ]
+     },
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-bxc6"
+  },
+  {
+   "type": "contrast",
+   "title": "Is the bishop attacked?",
+   "prompt": "Predict for each position, then check. Only the piece that recaptured on c6 differs.",
+   "working": "IOD-LODELEPH3-atky",
+   "failing": "IOD-LODELEPH3-atkn"
+  },
+  {
+   "type": "board",
+   "fen": "rnb1kbnr/ppp2ppp/8/3q4/3Np3/8/PPPP1PPP/RNBQKB1R w KQkq - 0 5",
+   "caption": "Trap 2: attacking the queen. [V] The knight on d4 is loose because the pawn on d2 blocks the queen on d1. [S] This position is not in our data: the Lichess sample holds fewer than 17 games with it, and our TWIC and broadcast archive has none. A trap in the book is not the same as a trap that happens.",
+   "line": [
+    {
+     "move": "b1c3",
+     "say": "White attacks the queen with the other knight and ignores the first."
+    },
+    {
+     "move": "d5d4",
+     "say": "The queen takes the knight on d4, which nobody defends."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d5"
+    },
+    {
+     "from": "d5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "c3"
+   ],
+   "claims": [
+    {
+     "statement": "After the first move the knight on d4 is a loose white piece.",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "d4"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: after the queen takes d4 Black is at least 300 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -300,
+      "after_moves": [
+       "b1c3",
+       "d5d4"
+      ]
+     },
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-qxd4"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/3pp3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 3",
+   "caption": "Trap 3: the knight sacrifice on f7. [S] After 3.Nxe5 Bd6 the sacrifice was played in 210 of 1,338 Lichess games and White scored 44%. [V] The engine says Black stands better by at least a pawn: White gave a knight for a pawn and has only the queen to follow up.",
+   "line": [
+    {
+     "move": "f3e5",
+     "say": "The knight takes the pawn."
+    },
+    {
+     "move": "f8d6",
+     "say": "The bishop attacks the knight, which has no defender."
+    },
+    {
+     "move": "e5f7",
+     "say": "The knight takes a second pawn to pull the king out."
+    },
+    {
+     "move": "e8f7",
+     "say": "Black accepts the knight."
+    },
+    {
+     "move": "d1h5",
+     "say": "The queen checks along the diagonal from h5."
+    },
+    {
+     "move": "f7f8",
+     "say": "The king steps back and keeps the pieces."
+    },
+    {
+     "move": "e4e5",
+     "say": "The pawn attacks the bishop and tries to open lines."
+    },
+    {
+     "move": "d6c5",
+     "say": "The bishop steps out of danger and covers the king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "f7"
+    },
+    {
+     "from": "d1",
+     "to": "h5"
+    }
+   ],
+   "highlight": [
+    "f7",
+    "h5"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: after the king retreats to f8 Black is at least 100 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -100,
+      "after_moves": [
+       "f3e5",
+       "f8d6",
+       "e5f7",
+       "e8f7",
+       "d1h5",
+       "f7f8"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: at the end of the line Black is at least 100 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -100,
+      "after_moves": [
+       "f3e5",
+       "f8d6",
+       "e5f7",
+       "e8f7",
+       "d1h5",
+       "f7f8",
+       "e4e5",
+       "d6c5"
+      ]
+     },
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-avoid"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqk2r/ppp1bppp/5n2/3P4/4N3/5N2/PPPPQPPP/R1B1KB1R b KQkq - 0 6",
+   "caption": "A trap against Black. [S] After 6.Nxe4 the recapture with the knight on e4 occurred in 3 archive games and White won all 3, a tiny sample. [V] The better recapture is on d5, which wins the pawn back; here the recapture on e4 leaves White two pawns ahead.",
+   "line": [
+    {
+     "move": "f6e4",
+     "say": "Black takes the knight with the knight and leaves the pawn on d5."
+    },
+    {
+     "move": "e2e4",
+     "say": "The queen recaptures on e4 and the pawn on d5 stays with White."
+    },
+    {
+     "move": "b8d7",
+     "say": "Black has not won back the pawn on d5 and is two pawns down."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f6",
+     "to": "e4"
+    },
+    {
+     "from": "e2",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: after the queen retakes on e4 White is at least 150 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 150,
+      "after_moves": [
+       "f6e4",
+       "e2e4"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-nxd5"
+  },
+  {
+   "type": "card",
+   "text": "**What makes a trap work.** A trap needs a natural move with a forcing refutation: a double attack by pawns, a loose piece, a sacrifice with too little behind it. [I] In all four examples above the cure is the same: before you answer a move, count what is attacked and what defends it. Trap 3 catches the player who sacrifices (White); the others catch the side that makes the natural move."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/3P4/4p3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 4",
+   "caption": "What our archive shows. [S] Our TWIC and Lichess broadcast files hold 2,852 Elephant Gambit games; 2,842 replay legally and 1,101 reach this position, most from 2020 to 2026 and many from online titled events (so they favour fast, online play). White's fourth move: queen to e2 in 858 games (White scored 52%), knight to d4 in 118 (34%), knight to e5 in 82 (46%), knight to g1 in 30 (40%), bishop check in 11 (50%). Overall White scored 49%.",
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "e2"
+    },
+    {
+     "from": "f3",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "f3"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: White is at least half a pawn better here with best play.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 50
+     },
+     "id": "C1"
+    }
+   ],
+   "chapter": "What real games show"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqk2r/ppp1bppp/5n2/3P4/4N3/5N2/PPPPQPPP/R1B1KB1R b KQkq - 0 6",
+   "caption": "Black's sixth move. [S] Castling occurred in 236 archive games (White scored 44%); the knight capture on d5 in 112 (White 51%). [V] The engine prefers the knight capture to castling by a small margin, and both leave White ahead. The players, then, choose the move the engine likes less.",
+   "line": [
+    {
+     "move": "e8g8",
+     "say": "Black castles at once, so the king leaves the e-file before anything else."
+    },
+    {
+     "move": "e4f6",
+     "say": "White trades the knight with a check and removes the attacker of d5."
+    },
+    {
+     "move": "e7f6",
+     "say": "The bishop recaptures and eyes the long diagonal."
+    },
+    {
+     "move": "d2d4",
+     "say": "White blocks the diagonal and takes space."
+    },
+    {
+     "move": "d8d5",
+     "say": "Black takes the pawn on d5 and regains one of the two pawns; White is still a pawn ahead."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "g8"
+    },
+    {
+     "from": "f6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "g8",
+    "d5"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: at the end of the castling line White is still at least 30 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 30,
+      "after_moves": [
+       "e8g8",
+       "e4f6",
+       "e7f6",
+       "d2d4",
+       "d8d5"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Players castle more often and White scores less after it, but the engine prefers the other move. Which do you trust, and what would settle the question? Pick one, then say what else could explain the numbers.",
+   "fields": [
+    {
+     "id": "verdict",
+     "label": "My answer:",
+     "options": [
+      "the players: results matter more than the engine",
+      "the engine: the sample is too small and skewed",
+      "neither yet: I need more data"
+     ]
+    },
+    {
+     "id": "why",
+     "label": "What else could explain the numbers:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Reading the numbers.** [S] In the 1,101 games one Black player appears 93 times and White scored 64% against him; another appears 54 times and White scored 30%. Specialists can pull a figure in either direction, so the numbers describe the specialists as much as the move. [I] A fair test needs many different players, similar ratings and a stated sample."
+  },
+  {
+   "type": "card",
+   "text": "**A real game.** Deac (rated 2625) against Gadimbayli (2470), Titled Arena, 3 April 2021, as recorded in the TWIC files [S]; Black won in 26 moves. We follow the first 20 moves, replayed move by move and checked by the engine at the decisive points. The question to carry: where does White's king get into trouble?",
+   "chapter": "Model game 1: the king on the d-file"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/3P4/4p3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 4",
+   "caption": "The opening of the game. [V] The engine finds White ahead by at least half a pawn after White's queen recaptures. [I] The pawn on d5 is attacked by the black queen, so the second pawn will not last.",
+   "line": [
+    {
+     "move": "d1e2",
+     "say": "The queen move: it attacks the pawn on e4 and pins it."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black defends the pawn and attacks d5."
+    },
+    {
+     "move": "b1c3",
+     "say": "White develops and attacks the pawn a second time."
+    },
+    {
+     "move": "f8e7",
+     "say": "The bishop blocks the file and prepares to castle."
+    },
+    {
+     "move": "c3e4",
+     "say": "White takes the pawn: two pawns won against none for now."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles, keeping the king safe and the d5 pawn pressured."
+    },
+    {
+     "move": "d2d4",
+     "say": "White takes space with the d-pawn; the knight on e4 is guarded by the queen."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black trades the knight for the one that took e4."
+    },
+    {
+     "move": "e2e4",
+     "say": "The queen retakes; White is two pawns ahead for the moment."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d2",
+     "to": "d4"
+    },
+    {
+     "from": "f6",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: after the queen retakes on e4 White is at least 60 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 60,
+      "after_moves": [
+       "d1e2",
+       "g8f6",
+       "b1c3",
+       "f8e7",
+       "c3e4",
+       "e8g8",
+       "d2d4",
+       "f6e4",
+       "e2e4"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-g1a"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bppp/8/3P4/3PQ3/5N2/PPP2PPP/R1B1KB1R b KQ - 0 8",
+   "caption": "What happened in the game. [V] The bishop check was a mistake: it let White block with a pawn that attacks the bishop. White's king move also gave much of that advantage back. The engine rates the check at least 120 centipawns worse than the rook move, and the king move at least 150 worse than the block.",
+   "line": [
+    {
+     "move": "e7b4",
+     "say": "The game move: a check from the bishop, expecting to win time."
+    },
+    {
+     "move": "e1d1",
+     "say": "White answers by moving the king instead of blocking."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e7",
+     "to": "b4"
+    },
+    {
+     "from": "e1",
+     "to": "d1"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "e1",
+    "d1"
+   ],
+   "claims": [
+    {
+     "statement": "The check ...Bb4+ is at least 120 centipawns worse than ...Re8 (engine, depth 16).",
+     "type": "move_loses",
+     "params": {
+      "move": "e7b4",
+      "cp": 120
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-g1b"
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp2ppp/8/3P4/1b1PQ3/5N2/PPP2PPP/R1BK1B1R b - - 2 9",
+   "caption": "Black regains a pawn. [V] ...Qxd5 wins back one of the two pawns: White is still a pawn ahead (7 pawns against 6), but its king is stuck in the centre and the engine has White only slightly better.",
+   "line": [
+    {
+     "move": "f8e8",
+     "say": "The rook comes to the open file and attacks the queen."
+    },
+    {
+     "move": "e4d3",
+     "say": "The queen steps back but keeps guard of d4."
+    },
+    {
+     "move": "d8d5",
+     "say": "Black takes the pawn on d5, regaining one of the two pawns."
+    },
+    {
+     "move": "c2c3",
+     "say": "White supports d4 and shuts the diagonal of the bishop on b4."
+    },
+    {
+     "move": "b4d6",
+     "say": "The bishop aims at the h2 pawn and prepares the queen move to e4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "e1"
+    },
+    {
+     "from": "d5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "d5",
+    "d1"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: White is better by no more than 150 centipawns at the end.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": 150,
+      "after_moves": [
+       "f8e8",
+       "e4d3",
+       "d8d5",
+       "c2c3",
+       "b4d6"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb1r1k1/ppp2ppp/3b4/3q4/3P4/2PQ1N2/PP3PPP/R1BK1B1R w - - 1 12",
+   "caption": "Both sides develop. [V] White's king is stuck on d1 and cannot castle; Black's pieces are all active. The engine has White's advantage almost gone.",
+   "line": [
+    {
+     "move": "d3c4",
+     "say": "White regroups: the queen goes to c4 and still guards d4."
+    },
+    {
+     "move": "d5e4",
+     "say": "Black's queen centralizes and attacks the pawn on d4 and the knight on f3."
+    },
+    {
+     "move": "c1e3",
+     "say": "White develops the bishop to guard d4."
+    },
+    {
+     "move": "c8f5",
+     "say": "Black develops the last minor piece."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "f3"
+    },
+    {
+     "from": "f5",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "d1",
+    "e4",
+    "f5"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: the game is close to level, between -80 and +150.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": -80,
+      "max": 150,
+      "after_moves": [
+       "d3c4",
+       "d5e4",
+       "c1e3",
+       "c8f5"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn2r1k1/ppp2ppp/3b4/5b2/2QPq3/2P1BN2/PP3PPP/R2K1B1R w - - 5 14",
+   "caption": "The pressure builds. [V] After 16...Qe6 the bishop on e3 is attacked twice, by the queen and the bishop on f4, with the rook behind the queen, and defended three times. [I] The first move that changes the count decides the game.",
+   "line": [
+    {
+     "move": "a1c1",
+     "say": "The rook leaves the corner so that the king can step off the back rank."
+    },
+    {
+     "move": "f5g6",
+     "say": "The bishop retreats and keeps its diagonal."
+    },
+    {
+     "move": "d1d2",
+     "say": "The king steps to d2."
+    },
+    {
+     "move": "d6f4",
+     "say": "The bishop attacks the bishop on e3, which stands in front of the king."
+    },
+    {
+     "move": "c4d3",
+     "say": "White defends it with the queen."
+    },
+    {
+     "move": "e4e6",
+     "say": "Black's queen attacks the bishop on e3 a second time."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e6",
+     "to": "e3"
+    },
+    {
+     "from": "f4",
+     "to": "e3"
+    },
+    {
+     "from": "d3",
+     "to": "e3"
+    }
+   ],
+   "highlight": [
+    "e3",
+    "f4",
+    "e6"
+   ],
+   "claims": [
+    {
+     "statement": "The bishop on e3 is attacked by black pieces twice.",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "a1c1",
+       "f5g6",
+       "d1d2",
+       "d6f4",
+       "c4d3",
+       "e4e6"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "The bishop on e3 is defended by three white pieces.",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "a1c1",
+       "f5g6",
+       "d1d2",
+       "d6f4",
+       "c4d3",
+       "e4e6"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "statement": "Engine, depth 16: after 16...Qe6 Black is already ahead by at least 40 centipawns.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -40,
+      "after_moves": [
+       "a1c1",
+       "f5g6",
+       "d1d2",
+       "d6f4",
+       "c4d3",
+       "e4e6"
+      ]
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-g1c"
+  },
+  {
+   "type": "board",
+   "fen": "rn2r1k1/ppp2ppp/4q1b1/8/3P1b2/2PQBN2/PP1K1PPP/2R2B1R w - - 11 17",
+   "caption": "The decisive moment. [V] The pawn push was a blunder that gave Black a second threat. [S] Black won, as the record says. [I] Look at what ended White's king safety: the early check on e1 sent the king to d1, the bishop on f4 pinned the king's defender, and the queen reached e3 with check.",
+   "line": [
+    {
+     "move": "d4d5",
+     "say": "The pawn attacks the queen: it looks like the strongest move."
+    },
+    {
+     "move": "e6b6",
+     "say": "The queen steps to b6 and attacks both the bishop on e3 and the pawn on b2."
+    },
+    {
+     "move": "d3b5",
+     "say": "White offers a queen trade and hopes to hold."
+    },
+    {
+     "move": "f4e3",
+     "say": "Black takes the bishop with check."
+    },
+    {
+     "move": "f2e3",
+     "say": "White recaptures with the pawn."
+    },
+    {
+     "move": "b6e3",
+     "say": "The queen takes the pawn on e3 with check along the file."
+    },
+    {
+     "move": "d2d1",
+     "say": "The king goes back to d1; White's position is lost."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "d5"
+    },
+    {
+     "from": "e6",
+     "to": "b6"
+    },
+    {
+     "from": "e3",
+     "to": "e1"
+    }
+   ],
+   "highlight": [
+    "e3",
+    "b6",
+    "d1"
+   ],
+   "claims": [
+    {
+     "statement": "After the queen goes to b6 the bishop on e3 is attacked three times.",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 3,
+      "after_moves": [
+       "d4d5",
+       "e6b6"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: after the queen goes to b6 Black is at least 300 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -300,
+      "after_moves": [
+       "d4d5",
+       "e6b6"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "statement": "Engine, depth 16: at the end of the line Black is at least 350 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "max": -350,
+      "after_moves": [
+       "d4d5",
+       "e6b6",
+       "d3b5",
+       "f4e3",
+       "f2e3",
+       "b6e3",
+       "d2d1"
+      ]
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Name two moments in the game where White could have done something different, and say what the king would have gained. Which of them did Black cause?",
+   "fields": [
+    {
+     "id": "moments",
+     "label": "Two moments and what changes:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A second real game.** Dubov (rated 2708) against Timofeev (2567), Titled Tuesday, 28 March 2023, as recorded in the TWIC files [S]; White won in 17 moves. We follow the opening and Black's attack, to see what happens when the attack runs out of pieces. The question: what blocks the e-file check?",
+   "chapter": "Model game 2: an attack that runs out of fuel"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppp2ppp/8/3P4/4p3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 4",
+   "caption": "The opening of the game. [V] White is a pawn ahead (7 pawns against 6) and the engine has White about half a pawn better. [I] Black has a lead in activity and the open e-file for the rook.",
+   "line": [
+    {
+     "move": "d1e2",
+     "say": "The queen move: it attacks the pawn on e4 and pins it."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black defends the pawn and attacks d5."
+    },
+    {
+     "move": "b1c3",
+     "say": "White develops and attacks the pawn a second time."
+    },
+    {
+     "move": "f8e7",
+     "say": "The bishop blocks the file and prepares to castle."
+    },
+    {
+     "move": "c3e4",
+     "say": "White wins the pawn."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles."
+    },
+    {
+     "move": "d2d3",
+     "say": "White supports the knight with a pawn instead of the centre push."
+    },
+    {
+     "move": "f6d5",
+     "say": "Black takes back on d5."
+    },
+    {
+     "move": "e2d1",
+     "say": "The queen leaves the file of the black king."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "g8"
+    },
+    {
+     "from": "f6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "e4"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: White is slightly better, between +10 and +120.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 10,
+      "max": 120,
+      "after_moves": [
+       "d1e2",
+       "g8f6",
+       "b1c3",
+       "f8e7",
+       "c3e4",
+       "e8g8",
+       "d2d3",
+       "f6d5",
+       "e2d1"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bppp/8/3n4/4N3/3P1N2/PPP2PPP/R1BQKB1R b KQ - 1 8",
+   "caption": "Black's attack. [V] Step through the line: ...f5 hits the knight, then ...Bb4+ and ...Re8+ give two checks in a row while White's king is still on e1. After the second check the engine still has White at least a pawn better. How should White meet the checks?",
+   "line": [
+    {
+     "move": "f7f5",
+     "say": "The pawn attacks the knight on e4."
+    },
+    {
+     "move": "e4g3",
+     "say": "The knight retreats out of the pawn's reach."
+    },
+    {
+     "move": "e7b4",
+     "say": "The bishop gives check along the diagonal."
+    },
+    {
+     "move": "c2c3",
+     "say": "White blocks with a pawn that attacks the bishop."
+    },
+    {
+     "move": "f8e8",
+     "say": "The rook gives check along the open e-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "e1"
+    },
+    {
+     "from": "b4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "e1",
+    "e8",
+    "b4"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: White is better by at least 100 centipawns after the rook check.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 100,
+      "after_moves": [
+       "f7f5",
+       "e4g3",
+       "e7b4",
+       "c2c3",
+       "f8e8"
+      ]
+     },
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-be2"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqr1k1/ppp3pp/8/3n1p2/1b6/2PP1NN1/PP3PPP/R1BQKB1R w KQ - 1 11",
+   "caption": "Black goes all in. [V] The knight takes the pawn on c3, where the b-pawn attacks it and the bishop defends it. If White takes the knight and Black takes back with the bishop, Black has given a knight for two pawns, with a check. [V] The engine already had White ahead before the sacrifice.",
+   "line": [
+    {
+     "move": "f1e2",
+     "say": "The bishop blocks the check and defends the king."
+    },
+    {
+     "move": "d5c3",
+     "say": "Black sacrifices a knight to open lines."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d5",
+     "to": "c3"
+    },
+    {
+     "from": "b2",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "e2"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: after the knight sacrifice White is at least 400 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 400,
+      "after_moves": [
+       "f1e2",
+       "d5c3"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: after 11.Be2, before the sacrifice, White is already at least 200 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 200,
+      "after_moves": [
+       "f1e2"
+      ]
+     },
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-g2c"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqr1k1/ppp3pp/8/5p2/1b6/2nP1NN1/PP2BPPP/R1BQK2R w KQ - 0 12",
+   "caption": "The attack ends. Step through the line. [V] After castling the black queen on d3 is attacked by the bishop on e2 and must move, and White's queen aims at g7. The engine rates White at least 250 centipawns better.",
+   "line": [
+    {
+     "move": "b2c3",
+     "say": "The pawn takes the knight."
+    },
+    {
+     "move": "b4c3",
+     "say": "The bishop takes the pawn with check."
+    },
+    {
+     "move": "c1d2",
+     "say": "The bishop blocks the check."
+    },
+    {
+     "move": "c3a1",
+     "say": "The bishop takes the rook on a1."
+    },
+    {
+     "move": "d1a1",
+     "say": "The queen recaptures and now aims down the long diagonal."
+    },
+    {
+     "move": "d8d3",
+     "say": "Black takes the pawn on d3 and attacks the bishop on e2, which cannot move off the file."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles: the king leaves the file, so the bishop is free to take the queen."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "g7"
+    },
+    {
+     "from": "e1",
+     "to": "g1"
+    }
+   ],
+   "highlight": [
+    "a1",
+    "g7",
+    "g1"
+   ],
+   "claims": [
+    {
+     "statement": "After the queen recaptures on a1 it attacks g7.",
+     "type": "attackers",
+     "params": {
+      "square": "g7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b2c3",
+       "b4c3",
+       "c1d2",
+       "c3a1",
+       "d1a1"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "After castling the black queen on d3 is attacked by a white piece.",
+     "type": "attackers",
+     "params": {
+      "square": "d3",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b2c3",
+       "b4c3",
+       "c1d2",
+       "c3a1",
+       "d1a1",
+       "d8d3",
+       "e1g1"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "statement": "Engine, depth 16: at the end of the line White is at least 250 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 250,
+      "after_moves": [
+       "b2c3",
+       "b4c3",
+       "c1d2",
+       "c3a1",
+       "d1a1",
+       "d8d3",
+       "e1g1"
+      ]
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb1r1k1/ppp3pp/8/5p2/8/3q1NN1/P2BBPPP/Q4RK1 b - - 1 15",
+   "caption": "The finish. [V] White threatens to take on g7 with a decisive attack. [S] The record gives 1-0 after 17.Ng5. [I] The sacrifice took a position that was already worse for Black (about +2.7 for White) to about +4.8 and beyond; when the checks end, the side that kept its king safe wins.",
+   "line": [
+    {
+     "move": "d3d5",
+     "say": "The queen escapes the bishop and eyes the knight on f3."
+    },
+    {
+     "move": "g3h5",
+     "say": "The knight attacks g7 a second time, with the queen behind it."
+    },
+    {
+     "move": "d5f7",
+     "say": "The queen defends g7."
+    },
+    {
+     "move": "f3g5",
+     "say": "The knight attacks the queen and takes away its guard of g7."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "g7"
+    },
+    {
+     "from": "g3",
+     "to": "h5"
+    }
+   ],
+   "highlight": [
+    "g7",
+    "g5",
+    "h5"
+   ],
+   "claims": [
+    {
+     "statement": "After the knight reaches h5 two white pieces attack g7.",
+     "type": "attackers",
+     "params": {
+      "square": "g7",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d3d5",
+       "g3h5"
+      ]
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "After the knight reaches g5 it attacks the queen on f7.",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d3d5",
+       "g3h5",
+       "d5f7",
+       "f3g5"
+      ]
+     },
+     "id": "C2"
+    },
+    {
+     "statement": "Engine, depth 16: at the end of the line White is at least 700 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 700,
+      "after_moves": [
+       "d3d5",
+       "g3h5",
+       "d5f7",
+       "f3g5"
+      ]
+     },
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the two games share.** In both, the e-file and the king's position decided the game. [I] In the first game White's king left e1 for d1 and never found shelter; in the second White blocked with the bishop and castled, and Black's attack ran out of pieces. The pin on the e-file is a fight for the king, not only for a pawn."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+   "caption": "Black to move after 2.Nf3, the crossroads. [S] In the Lichess sample the usual 2...Nc6 was played in 498,025 games and White scored 53%; 2...d5 was played in 18,003 and White scored 50%. [V] The engine puts 2...d5 about half a pawn worse for Black than 2...Nc6 (White about +0.9 against +0.3). A gambit is a cost with a purpose.",
+   "arrows": [
+    {
+     "from": "d7",
+     "to": "d5"
+    },
+    {
+     "from": "b8",
+     "to": "c6"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c6"
+   ],
+   "claims": [
+    {
+     "statement": "Engine, depth 16: with best play the position is close to level, between 0 and +60 centipawns.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 0,
+      "max": 60
+     },
+     "id": "C1"
+    },
+    {
+     "statement": "Engine, depth 16: after 2...d5 White is at least 50 centipawns better.",
+     "type": "eval_range",
+     "params": {
+      "depth": 16,
+      "min": 50,
+      "after_move": "d7d5"
+     },
+     "id": "C2"
+    }
+   ],
+   "chapter": "When to play it"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Treat the gambit as an experiment. State your hypothesis (for example: against players of my level, 2...d5 scores at least as well as 2...Nc6), what you will record in each game, and how many games you will play before you decide.",
+   "fields": [
+    {
+     "id": "hypothesis",
+     "label": "My hypothesis:"
+    },
+    {
+     "id": "record",
+     "label": "What I record:"
+    },
+    {
+     "id": "games",
+     "label": "Number of games before I decide:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**How big a sample?** [V] The score of a player over 20 games has a margin of error of about plus or minus 11 percentage points (one standard error, the square root of 0.25 over 20). Over 100 games it is about 5. [I] So ten games of your own tell you almost nothing. The Lichess samples are large, so three points there is not noise; but the players who choose 2...d5 are not the same players who choose 2...Nc6, so it still does not prove the move is better."
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-ta"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-tb"
+  },
+  {
+   "type": "item",
+   "item": "IOD-LODELEPH3-tc"
+  },
+  {
+   "type": "card",
+   "text": "**When to play it.** The honest case for the Elephant Gambit is practical: opponents who know the queen move and the pin will keep an edge, and most players will not. [H] It suits fast games, a player who likes initiative, and a learner who wants to study king safety by doing; it suits badly someone who wants a sound repertoire for the long term. Decide by your own results, not by anyone's boast."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach-back: in a few sentences, explain to a beginner one trap for White and one for Black, what a real game from this lesson showed about the e-file, and when you would play the gambit. Self-check afterwards: did you say when the trap works and when it fails, give an example a beginner could set up on a board, and name one mistake to avoid? The app grades nothing; compare with the recap.",
+   "fields": [
+    {
+     "id": "trap",
+     "label": "One trap and its cure:"
+    },
+    {
+     "id": "game",
+     "label": "What the e-file decided:"
+    },
+    {
+     "id": "when",
+     "label": "When I would play it:"
+    },
+    {
+     "id": "warning",
+     "label": "One mistake to avoid:"
+    }
+   ],
+   "chapter": "Teach it back"
+  },
+  {
+   "type": "card",
+   "text": "**Recap.** 1. Traps need a natural move and a forcing reply: count what is attacked first. 2. The bishop check on move four runs into a pawn recapture that attacks two pieces. 3. Knight sacrifices on f7 fail when only the queen follows. 4. The e-file decides king safety for both sides. 5. A gambit costs roughly half a pawn against best play. 6. Archive numbers need a sample size and an eye on who played. 7. Run the experiment before you trust the story."
+  },
+  {
+   "type": "finale",
+   "fen": "rnb1r1k1/ppp2ppp/3b4/3q4/3P4/2PQ1N2/PP3PPP/R1BK1B1R w - - 1 12",
+   "color": "white",
+   "prompt": "Optional: play on as White from the position of game 1; the engine has it close to level. Bring the king to safety and keep the pawn on d4 guarded."
+  }
+ ]
+}

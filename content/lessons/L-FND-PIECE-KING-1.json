@@ -3,22 +3,20 @@
   "title": "How the king moves",
   "skill": "FND.PIECE.KING",
   "depth": "D1",
-  "minutes": 20,
+  "minutes": 6,
   "outcomes": [
     "Taps the squares a king can step to, never onto an attacked square or next to the enemy king",
-    "Decides whether the king can take a neighbouring piece by checking whether it is guarded",
-    "Ignores a distant enemy piece that attacks none of the squares around the king",
-    "Names which kind of piece attacks each crossed-out square (rook and bishop along lines, knight by its jump, pawn diagonally forward) and says why a pawn's square straight ahead is safe"
+    "Says in a sentence why the king avoids attacked squares"
   ],
   "steps": [
     {
       "type": "item",
       "item": "IBG-LFNDPIECEKING1-1",
-      "chapter": "Meet the king"
+      "chapter": "One step"
     },
     {
       "type": "card",
-      "text": "The **king** is the piece you must protect. Its ordinary move is one square in any direction, straight or diagonal (castling is a special extra move you meet later). In the middle of the board it has eight squares, on an edge five, in a corner three. Watch it walk first, then try the edge yourself."
+      "text": "The **king** moves one square in any direction, straight or diagonal. That is eight squares in the open, fewer at an edge. Losing the king loses the game, so it moves with care. It can also capture an enemy piece, if that piece is not protected. Castling is a special extra move that comes later."
     },
     {
       "type": "board",
@@ -35,7 +33,7 @@
         },
         {
           "move": "d5d6",
-          "say": "A straight step forward is also just one square."
+          "say": "A straight step is also just one square."
         }
       ],
       "arrows": [
@@ -84,54 +82,9 @@
       ]
     },
     {
-      "type": "board",
-      "fen": "7k/8/8/8/8/8/8/K7 w - - 0 1",
-      "caption": "In a corner the edges of the board cut the king down to three squares.",
-      "line": [
-        {
-          "move": "a1b2",
-          "say": "Stepping toward the middle gives the king more room."
-        },
-        {
-          "move": "h8g8",
-          "say": "Black's king steps along the edge."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a1",
-          "to": "b2"
-        }
-      ],
-      "highlight": [
-        "a2",
-        "b1",
-        "b2"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "a1",
-            "to": [
-              "a2",
-              "b1",
-              "b2"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-2"
-    },
-    {
       "type": "card",
-      "text": "Because the king must never be captured, the rules give it one extra rule: **a king may never step onto a square the enemy attacks.** A square is *attacked* when an enemy piece could capture on it, even if that piece happens to be pinned. The king may not end its move there, because it would be in check, and a king that cannot escape check is checkmated. A *rank* is a row of squares across the board; we start with the rook.",
-      "chapter": "Squares the enemy attacks"
+      "text": "A king may never step onto a square the enemy **attacks** (a square where an enemy piece could capture it), and never next to the enemy king. If the king stepped there, the enemy could capture it next move, and the king may never be captured, so that move is simply not allowed. The full rule comes with check; for now, cross those squares out.",
+      "chapter": "Where it may not go"
     },
     {
       "type": "board",
@@ -197,290 +150,6 @@
       ]
     },
     {
-      "type": "item",
-      "item": "IA0-23"
-    },
-    {
-      "type": "board",
-      "fen": "kb6/8/8/8/4K3/8/8/8 w - - 0 1",
-      "caption": "The bishop on b8 attacks along a diagonal, and that diagonal runs through e5 and f4, two squares beside the king.",
-      "line": [
-        {
-          "move": "e4d4",
-          "say": "d4 is not on the bishop's diagonal, so the king may go there."
-        },
-        {
-          "move": "a8a7",
-          "say": "Black's king steps out of the corner."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b8",
-          "to": "f4"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "d5",
-        "e3",
-        "f3",
-        "f5"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "d5",
-              "e3",
-              "f3",
-              "f5"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The bishop on b8 attacks e5.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "f4",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The bishop on b8 attacks f4.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/8/2n5/8/4K3/8/8/8 w - - 0 1",
-      "caption": "The knight on c6 jumps to d4 and e5, both beside the king. A knight's squares are not in a line, so check them one by one.",
-      "line": [
-        {
-          "move": "e4f4",
-          "say": "f4 is not at the end of any jump of this knight, so the king may go there."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c6",
-          "to": "d4"
-        },
-        {
-          "from": "c6",
-          "to": "e5"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d5",
-        "e3",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d5",
-              "e3",
-              "f3",
-              "f4",
-              "f5"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d4",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The knight on c6 attacks d4.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The knight on c6 attacks e5.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/8/4p3/8/4K3/8/8/8 w - - 0 1",
-      "caption": "Pawns move straight but capture diagonally. A Black pawn heads down the board, so the pawn on e6 captures on d5 or f5. It cannot capture on e5, so e5 is safe for the king.",
-      "line": [
-        {
-          "move": "e4e5",
-          "say": "The king may stand right in front of the pawn: a pawn's capture squares are the diagonal ones."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e6",
-          "to": "d5"
-        },
-        {
-          "from": "e6",
-          "to": "f5"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "e3",
-        "e5",
-        "f3",
-        "f4"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "e3",
-              "e5",
-              "f3",
-              "f4"
-            ]
-          },
-          "statement": "These are exactly the squares the king can step to.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "Nothing black attacks e5.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The pawn on e6 attacks d5.",
-          "id": "C3"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "f5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The pawn on e6 attacks f5.",
-          "id": "C4"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "kb6/2P5/8/8/4K3/8/8/8 w - - 0 1",
-      "caption": "A line stops at the first piece in its way. The white pawn on c7 shuts off the bishop on b8, so the bishop attacks nothing beside the king and all eight squares are free.",
-      "line": [
-        {
-          "move": "e4e5",
-          "say": "e5 would be attacked if c7 were empty. The pawn blocks the diagonal, so it is safe."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b8",
-          "to": "c7"
-        }
-      ],
-      "highlight": [
-        "d3",
-        "d4",
-        "d5",
-        "e3",
-        "e5",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "claims": [
-        {
-          "type": "legal_destinations",
-          "params": {
-            "from": "e4",
-            "to": [
-              "d3",
-              "d4",
-              "d5",
-              "e3",
-              "e5",
-              "f3",
-              "f4",
-              "f5"
-            ]
-          },
-          "statement": "All eight squares are free.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "The pawn on c7 blocks the bishop, so nothing attacks e5.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**A habit to build** (a rule of thumb, not a law): take the king's neighbouring squares one at a time and ask, \"If I stood here, which enemy piece could take me?\" Rooks and bishops look along lines, and a line stops at the first piece in its way. The queen attacks like a rook and a bishop together. Knights jump, and pawns capture diagonally. [H] Beginners forget the pawn most often, because it moves straight but captures sideways. My guess, not data."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-4"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-3"
-    },
-    {
       "type": "board",
       "fen": "8/8/4k3/8/4K3/8/8/8 w - - 0 1",
       "caption": "The black king on e6 attacks d5, e5 and f5, just as the white king attacks the squares around e4. So the white king may not go to those three.",
@@ -543,218 +212,38 @@
           "statement": "The black king attacks d5.",
           "id": "C3"
         }
-      ],
-      "chapter": "Kings never touch"
+      ]
     },
     {
       "type": "card",
-      "text": "[H] The rule that kings never touch is probably forgotten almost as often as the pawn rule, because it feels like a rule about distance rather than attack. Treat the other king like any attacker: it covers the eight squares around it. This is my guess, not data."
+      "text": "The king captures like it moves: one square. But it may only take a piece that is **not protected**. If a friend of that piece could take back on the square, the king would be captured, so the capture is not allowed."
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPIECEKING1-8"
+    },
+    {
+      "type": "item",
+      "item": "IBG-LFNDPIECEKING1-9"
     },
     {
       "type": "item",
       "item": "IA0-24"
     },
     {
-      "type": "card",
-      "text": "The king can also **capture**, but only a piece that is not guarded. A piece is **guarded** (also called defended) when a friendly piece could take back on its square, pinned or not. If the king took a guarded piece it would land on an attacked square, which is never allowed. Compare three knights.",
-      "chapter": "Capturing with the king"
-    },
-    {
-      "type": "board",
-      "fen": "k7/p7/8/3n4/4K3/8/P6P/8 w - - 0 1",
-      "caption": "The black knight on d5 stands beside the king and nothing guards it.",
-      "line": [
-        {
-          "move": "e4d5",
-          "say": "The king takes the knight, and no black piece can take the king back."
-        },
-        {
-          "move": "a8b8",
-          "say": "Black's king moves."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e4",
-          "to": "d5"
-        }
-      ],
-      "highlight": [
-        "d5"
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e4d5"
-          },
-          "statement": "The king can capture on d5.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece guards d5.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "k7/p7/2p5/3n4/4K3/8/P6P/8 w - - 0 1",
-      "caption": "Now a black pawn on c6 guards the same knight. The pawn attacks d5, so the king may not take.",
-      "line": [
-        {
-          "move": "e4d4",
-          "say": "The king uses a safe square instead."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c6",
-          "to": "d5"
-        }
-      ],
-      "highlight": [
-        "d5"
-      ],
-      "claims": [
-        {
-          "type": "illegal_move",
-          "params": {
-            "move": "e4d5"
-          },
-          "statement": "The king may not capture on d5.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The pawn on c6 guards d5.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "k7/1b6/8/3n4/4K3/8/P6P/8 w - - 0 1",
-      "caption": "A guard can stand far away. The bishop on b7 looks along its diagonal through c6 and reaches d5, so the knight is guarded again.",
-      "line": [
-        {
-          "move": "e4d4",
-          "say": "Again the king steps somewhere safe."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b7",
-          "to": "d5"
-        }
-      ],
-      "highlight": [
-        "d5"
-      ],
-      "claims": [
-        {
-          "type": "illegal_move",
-          "params": {
-            "move": "e4d5"
-          },
-          "statement": "The king may not capture on d5.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "The bishop on b7 guards d5.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "contrast",
-      "title": "Same capture, one change",
-      "prompt": "Predict first: can the king take the knight each time?",
-      "working": "IBG-LFNDPIECEKING1-8",
-      "failing": "IBG-LFNDPIECEKING1-9",
-      "irrelevant": "ISsp3-4",
-      "chapter": "When it does not apply"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-5"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-6",
-      "chapter": "Check yourself"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDPIECEKING1-7"
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Say it back. Explain to a friend why the white king cannot go to e3 in the rook position, and which other squares are off limits. Then read the model answer.",
+      "chapter": "Say it back"
     },
     {
       "type": "card",
-      "text": "**Why bother with a careful king?** [S] Per our reading sheets of two classic books: Aron Nimzowitsch's *My System* teaches that in the endgame (when few pieces are left) the king should come to the centre and fight, and José Raúl Capablanca's *Chess Fundamentals* also gives king-march examples. [I] Both ideas need today's skill: a king can only fight on squares it may safely stand on."
-    },
-    {
-      "type": "card",
-      "text": "One more thing before the quick ones: boards are sometimes turned so Black sits at the bottom. The rules do not change, only your view of them. Take the same careful look at each square."
-    },
-    {
-      "type": "item",
-      "item": "IG-MOVE-130",
-      "silent": true
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.FND.PIECE.KING",
-        "cue.3",
-        "kind.generated"
-      ],
-      "n": 5
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/8/8/4K3/7r/8/8 w - - 0 1",
-      "caption": "Look at this board again, then put it in your own words.",
-      "claims": [
-        {
-          "type": "illegal_move",
-          "params": {
-            "move": "e4e3"
-          },
-          "statement": "The king may not step to e3.",
-          "id": "C1"
-        }
-      ]
+      "text": "**Model answer.** The king steps one square any way, but never onto a square an enemy piece attacks (the rook covers the whole third rank) and never next to the enemy king. If it stepped there it could be captured, and the king may never be captured. Before a king move, check the enemy pieces' lines and the squares around the enemy king."
     },
     {
       "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Explain to a friend why the white king cannot go to e3 here, and which other squares are off limits. Then read the model answer."
-    },
-    {
-      "type": "card",
-      "text": "**Model answer.** The king steps one square in any direction, but never onto a square an enemy piece attacks and never next to the enemy king. Rooks, bishops and queens attack along lines that stop at the first piece in the way. Knights jump, pawns capture diagonally. The king may capture a piece only if nothing guards it. Before each king move I look at every neighbouring square and ask who could land there."
-    },
-    {
-      "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Optional: which attacker did you most nearly forget when crossing out squares: rook, bishop, knight, queen, pawn or the other king? What will you check first next time?"
+      "kind": "confidence",
+      "prompt": "Before moving your king, which two things do you check? Then say how sure you are: not yet, mostly, or ready to use it."
     }
   ],
   "review": {
@@ -764,11 +253,6 @@
   "sources": [
     "docs/first-hours.md session 1",
     "docs/council-synthesis.md CD-1, CD-4",
-    "sources/sheets/nimzowitsch_my-system.md (idea 22: king in the ending)",
-    "sources/sheets/capablanca_chess-fundamentals.md (CI-26: king march, Game 12)",
-    "docs/citable-views.md 9.1 and 9.3",
-    "docs/competition-chess-steps.md (Step 1 rules before mating)",
-    "[H] pawn-attack slip is a hypothesis, no data",
-    "[H] king-touch rule forgetting is a hypothesis, no data"
+    "positions: python-chess constructions, see content/items/lesson-bg-l-fnd-piece-king-1.json"
   ]
 }

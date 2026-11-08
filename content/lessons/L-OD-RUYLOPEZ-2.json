@@ -1,0 +1,1140 @@
+{
+ "id": "L-OD-RUYLOPEZ-2",
+ "course": "opening-deep-dives",
+ "title": "Ruy Lopez: the structure and the pawn breaks",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "uses": [
+  "OPN.STRUCT",
+  "POS.BREAKS",
+  "POS.STRUCTURE.CHAIN",
+  "SAF.COUNT"
+ ],
+ "minutes": 34,
+ "series": "ruylopez",
+ "outcomes": [
+  "Names the pawn skeleton of the Closed Ruy Lopez and the holes each side has",
+  "Says what the lever d4 needs (c3, so that a pawn can recapture; h3 is a common preparation, not a requirement) and why Black should usually keep the tension rather than capture at once",
+  "Counts attackers and defenders of d4 after ...c5 and decides whether a capture gains anything",
+  "Names Black's three levers and the kind of position in which each is playable",
+  "Explains the structure to a beginner with the idea, when it works, an example and a warning"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+   "caption": "Closed Ruy Lopez, White to move. Both kings are castled. Look for open files, for pawns that touch each other, and for pawn moves each side could make. Nothing is explained yet.",
+   "highlight": [
+    "e4",
+    "e5",
+    "d6",
+    "b5",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "No file is open or half-open: every file still holds a pawn.",
+     "type": "open_files",
+     "params": {
+      "open": [],
+      "half_open_white": [],
+      "half_open_black": []
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "Black's pawns on b5, d6 and e5 are each guarded by another pawn.",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "black",
+      "includes": [
+       "b5",
+       "d6",
+       "e5"
+      ]
+     }
+    }
+   ],
+   "chapter": "A locked centre"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before reading on: name one pawn move you expect White to want here and one for Black, and what you think each costs.",
+   "fields": [
+    {
+     "id": "w",
+     "label": "A pawn move for White:"
+    },
+    {
+     "id": "b",
+     "label": "A pawn move for Black:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Closed does not mean quiet.** In this position no file is open, because every file still holds a pawn. [I] So play happens in two places: behind the pawns, where pieces regroup, and at the pawn levers. A lever is a pawn move that attacks an enemy pawn and can change the structure. This lesson lists the levers, what each one costs, and when a side should take or keep the tension."
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-1"
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-2"
+  },
+  {
+   "type": "card",
+   "text": "**Holes.** A hole is a square that none of your pawns can guard any more. [V] Black has two here, a5 and c6; White has one, d3. A hole is only a weakness if an enemy piece can settle there. [I] So ask who can reach the hole, not only whether you have one. Black's knight on c6 stands on one of its own holes, which is safe while it stays there."
+  },
+  {
+   "type": "card",
+   "text": "**The lever d4.** The pawn on d4 attacks e5, so e5 now has two attackers. The pawn on c3 is what makes the lever work: it guards d4, so a black capture would be met by a recapture with a pawn. [I] The price is that e4 and d4 become targets, and Black's pieces can go after them. Watch what Black does with the knight that stood on c6.",
+   "chapter": "White's lever: d4"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+   "caption": "Step through the lever. Black's knight takes the long way to d7 so it never stands on c6 when d4 arrives.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "White often prepares d4 with h3, which takes g4 from Black's c8 bishop. It is a common preparation, not a requirement (lesson 1 shows why)."
+    },
+    {
+     "move": "c6b8",
+     "say": "The knight leaves c6, where a pawn on d4 would attack it, and heads for d7."
+    },
+    {
+     "move": "d2d4",
+     "say": "The pawn attacks e5 for a second time: knight and pawn."
+    },
+    {
+     "move": "b8d7",
+     "say": "The knight defends e5 again, so two pieces defend it against two attackers."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "e5"
+    },
+    {
+     "from": "f3",
+     "to": "e5"
+    },
+    {
+     "from": "d7",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e5",
+    "d7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After d4 two white pieces attack the pawn on e5.",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "h2h3",
+       "c6b8",
+       "d2d4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After Nbd7 two black pieces defend the pawn on e5.",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "h2h3",
+       "c6b8",
+       "d2d4",
+       "b8d7"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "At depth 16 the position is slightly better for White (between +20 and +90 centipawns).",
+     "type": "eval_range",
+     "params": {
+      "min": 20,
+      "max": 90,
+      "after_moves": [
+       "h2h3",
+       "c6b8",
+       "d2d4",
+       "b8d7"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Black could simply capture on d4. Predict: does the capture help Black, and what does it give away?",
+   "fields": [
+    {
+     "id": "pred",
+     "label": "My prediction:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2pnbppp/p2p1n2/1p2p3/3PP3/1BP2N1P/PP1N1PP1/R1BQR1K1 b - - 2 11",
+   "caption": "Black to move after 11.Nbd2. Black takes on d4 immediately. Look at the pawns that remain.",
+   "line": [
+    {
+     "move": "e5d4",
+     "say": "Black captures at once and releases the tension."
+    },
+    {
+     "move": "c3d4",
+     "say": "White recaptures with the c-pawn and owns pawns on e4 and d4."
+    },
+    {
+     "move": "d7b6",
+     "say": "Black starts to look for targets, but none is attacked yet."
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e4",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "At depth 16 the engine rates exd4 at least 60 centipawns lower than its best move.",
+     "type": "move_loses",
+     "params": {
+      "move": "e5d4",
+      "cp": 60
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After exd4 cxd4 the c-file is half-open for White and the e-file half-open for Black.",
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "c"
+      ],
+      "half_open_black": [
+       "e"
+      ],
+      "after_moves": [
+       "e5d4",
+       "c3d4"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "After exd4 cxd4 Nb6 the engine (depth 16) rates the position at least 70 centipawns in White's favour.",
+     "type": "eval_range",
+     "params": {
+      "min": 70,
+      "after_moves": [
+       "e5d4",
+       "c3d4",
+       "d7b6"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the capture gave away.** [I] exd4 cxd4 is an even pawn trade, but it gives White a free pawn pair on e4 and d4 while Black's pieces have no target. [H] A capture on d4 becomes better for Black when a piece can hit d4 or e4 at once, because then White's recapture costs something. Test the hypothesis before you capture: count the attackers of d4 and the defenders, then ask who recaptures."
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2pnbppp/p2p1n2/1p2p3/3PP3/1BP2N1P/PP1N1PP1/R1BQR1K1 b - - 2 11",
+   "caption": "Now Black keeps the tension with ...c5 instead of capturing.",
+   "line": [
+    {
+     "move": "c7c5",
+     "say": "Black attacks d4 a second time, with a pawn, and keeps the tension."
+    },
+    {
+     "move": "b3c2",
+     "say": "White steps the bishop away from the attack on b3 and keeps d4 guarded."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black adds pressure down the c-file and eyes d4."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c5",
+     "to": "d4"
+    },
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "c5",
+    "d4",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After c5 two black pawns attack d4.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "c7c5"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After c5 two white pieces defend d4.",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "c7c5"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "After Qc7 the position is slightly better for White (between +10 and +90 centipawns, depth 16).",
+     "type": "eval_range",
+     "params": {
+      "min": 10,
+      "max": 90,
+      "after_moves": [
+       "c7c5",
+       "b3c2",
+       "d8c7"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-8"
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-3"
+  },
+  {
+   "type": "card",
+   "text": "**Why not capture on c5?** [V] At depth 16 the engine rates dxc5 at least 70 centipawns below the best move. [I] dxc5 Nxc5 is an even pawn trade, but the knight recaptures with a tempo on the bishop on b3, and White's d4 pawn, which held the centre, is gone. A capture is a decision about who gets the tempo; the side that recaptures with a gain wins that decision."
+  },
+  {
+   "type": "contrast",
+   "title": "Keep or release the tension?",
+   "prompt": "Predict first: in the first position Black has several moves that keep d4 under pressure. In the second Black captures. Which side gains by the capture?",
+   "working": "IODruylopez2-4",
+   "failing": "IODruylopez2-5"
+  },
+  {
+   "type": "card",
+   "text": "**Closing with d5.** If White does not want to keep the tension, the pawn can advance. [I] The centre closes, and Black's reply ...c4 hits the bishop on b3 and gains space on the queenside. Neither side is forced: at depth 16 d5 is within 40 centipawns of Bc2, so the choice is a matter of plan, not of safety."
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/3nbppp/p2p1n2/1pp1p3/3PP3/1BP2N1P/PP1N1PP1/R1BQR1K1 w - - 0 12",
+   "caption": "White closes the centre. Step through and note which side gains space where.",
+   "line": [
+    {
+     "move": "d4d5",
+     "say": "The pawn advances and locks the centre."
+    },
+    {
+     "move": "c5c4",
+     "say": "The pawn attacks the bishop and wins space on the queenside."
+    },
+    {
+     "move": "b3c2",
+     "say": "The bishop steps out of the attack."
+    },
+    {
+     "move": "d8c7",
+     "say": "Black brings the queen behind the advanced pawns."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c4",
+     "to": "b3"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "c4",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After c4 the pawn on c4 attacks the square b3.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d4d5",
+       "c5c4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "At depth 16 the position after Qc7 is between 0 and +80 centipawns for White.",
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 80,
+      "after_moves": [
+       "d4d5",
+       "c5c4",
+       "b3c2",
+       "d8c7"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Black's three levers.** [I] ...c5 attacks d4; it is playable when a piece such as the knight on d7 can recapture on c5. ...exd4 changes the structure; it is playable when a piece can at once hit d4 or e4. ...d5 is a counter-centre; it needs e5 still defended by pieces. Played too early it costs about half a pawn on the engine's scale, and Black must find ...Nxe4 to win the pawn back. One structure shows the first lever through to its end.",
+   "chapter": "Black's levers"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9",
+   "caption": "The Chigorin pattern: Black spends moves on the queenside, then uses the lever ...c5 and ...cxd4. Count what has opened.",
+   "line": [
+    {
+     "move": "h2h3",
+     "say": "White prepares d4 as before."
+    },
+    {
+     "move": "c6a5",
+     "say": "Black attacks the bishop on b3 and heads for the queenside."
+    },
+    {
+     "move": "b3c2",
+     "say": "The bishop retreats to keep its diagonal."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black prepares the lever: the pawn will attack d4 once White plays it."
+    },
+    {
+     "move": "d2d4",
+     "say": "White takes the centre at once."
+    },
+    {
+     "move": "d8c7",
+     "say": "The queen supports ...cxd4 and aims at c2 and c3."
+    },
+    {
+     "move": "b1d2",
+     "say": "White develops the last knight and guards the pawn on e4."
+    },
+    {
+     "move": "c5d4",
+     "say": "Black takes: the lever is used."
+    },
+    {
+     "move": "c3d4",
+     "say": "White recaptures with the pawn."
+    },
+    {
+     "move": "a5c6",
+     "say": "The knight returns and attacks d4 a second time."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d4"
+    },
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "c1",
+    "c8",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After d4 the pawns on c5 and e5 both attack d4.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "h2h3",
+       "c6a5",
+       "b3c2",
+       "c7c5",
+       "d2d4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After cxd4 cxd4 the c-file is open.",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "after_moves": [
+       "h2h3",
+       "c6a5",
+       "b3c2",
+       "c7c5",
+       "d2d4",
+       "d8c7",
+       "b1d2",
+       "c5d4",
+       "c3d4"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "After Nc6 two black pieces attack d4.",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "h2h3",
+       "c6a5",
+       "b3c2",
+       "c7c5",
+       "d2d4",
+       "d8c7",
+       "b1d2",
+       "c5d4",
+       "c3d4",
+       "a5c6"
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "statement": "At depth 16 the position after Nc6 is between +20 and +90 centipawns for White.",
+     "type": "eval_range",
+     "params": {
+      "min": 20,
+      "max": 90,
+      "after_moves": [
+       "h2h3",
+       "c6a5",
+       "b3c2",
+       "c7c5",
+       "d2d4",
+       "d8c7",
+       "b1d2",
+       "c5d4",
+       "c3d4",
+       "a5c6"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "The c-file is now open for both sides. Which side do you expect to use it first, and why?",
+   "fields": [
+    {
+     "id": "guess",
+     "label": "My guess:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the open file means.** [I] Both sides can put a rook on the c-file, but only a rook with a safe square to enter benefits. Neither side has done so yet because the bishops on c1 and c8 are still at home. [H] The bishops tend to move first, and the side that finishes development with tempo, by attacking d4 or e4 as it moves, gets the file first. You can test that guess on the board below."
+  },
+  {
+   "type": "board",
+   "fen": "r1b2rk1/2q1bppp/p1np1n2/1p2p3/3PP3/5N1P/PPBN1PP1/R1BQR1K1 w - - 1 14",
+   "caption": "Both sides use the open c-file. Step through and ask: who had to spend a move on the pawn on a4, and who gained from it?",
+   "line": [
+    {
+     "move": "d2b3",
+     "say": "The knight adds a defender of d4 and opens the d-file for the queen."
+    },
+    {
+     "move": "a6a5",
+     "say": "Black gains space and prepares a4."
+    },
+    {
+     "move": "c1e3",
+     "say": "The bishop develops and guards d4 again."
+    },
+    {
+     "move": "a5a4",
+     "say": "The pawn attacks the knight on b3."
+    },
+    {
+     "move": "b3d2",
+     "say": "The knight steps back to a square that still guards e4."
+    },
+    {
+     "move": "c8d7",
+     "say": "Black develops the last minor piece."
+    },
+    {
+     "move": "a1c1",
+     "say": "White puts a rook on the open file."
+    },
+    {
+     "move": "f8c8",
+     "say": "Black does the same."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "c8"
+    }
+   ],
+   "highlight": [
+    "c1",
+    "c8",
+    "a4",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After a4 the pawn on a4 attacks the knight on b3.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d2b3",
+       "a6a5",
+       "c1e3",
+       "a5a4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After Rfc8 the c-file is still open.",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "after_moves": [
+       "d2b3",
+       "a6a5",
+       "c1e3",
+       "a5a4",
+       "b3d2",
+       "c8d7",
+       "a1c1",
+       "f8c8"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "After Rc1 a white rook stands on c1.",
+     "type": "piece_on",
+     "params": {
+      "square": "c1",
+      "piece": "R",
+      "after_moves": [
+       "d2b3",
+       "a6a5",
+       "c1e3",
+       "a5a4",
+       "b3d2",
+       "c8d7",
+       "a1c1"
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "statement": "After Rfc8 a black rook stands on c8.",
+     "type": "piece_on",
+     "params": {
+      "square": "c8",
+      "piece": "r",
+      "after_moves": [
+       "d2b3",
+       "a6a5",
+       "c1e3",
+       "a5a4",
+       "b3d2",
+       "c8d7",
+       "a1c1",
+       "f8c8"
+      ]
+     }
+    },
+    {
+     "id": "C5",
+     "statement": "At depth 16 the final position is between 0 and +80 centipawns for White.",
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 80,
+      "after_moves": [
+       "d2b3",
+       "a6a5",
+       "c1e3",
+       "a5a4",
+       "b3d2",
+       "c8d7",
+       "a1c1",
+       "f8c8"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Who gained?** Black spent two moves on the a-pawn (...a5 and ...a4), and White spent one retreating the knight from b3. [V] The engine still has the position between level and about +0.8 for White at the end, so neither side clearly gained. A pawn move on the wing is a question, and a calm answer is often enough."
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-12"
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-6"
+  },
+  {
+   "type": "board",
+   "fen": "r2qrbk1/1bpn1p1p/p2p1np1/1p2p3/3PP3/2P2NNP/PPB2PP1/R1BQR1K1 w - - 0 15",
+   "caption": "Both sides pull a lever. White opens the queenside with a4; Black answers with ...d5. Watch what the engine thinks of the second one.",
+   "line": [
+    {
+     "move": "a2a4",
+     "say": "The lever on the queenside: the pawn attacks b5."
+    },
+    {
+     "move": "f8g7",
+     "say": "Black has completed the kingside set-up and the bishop now eyes the long diagonal."
+    },
+    {
+     "move": "c1g5",
+     "say": "White develops the bishop with an attack on the knight on f6."
+    },
+    {
+     "move": "h7h6",
+     "say": "The pawn asks the bishop a question."
+    },
+    {
+     "move": "g5d2",
+     "say": "The bishop retreats and the knights keep their routes."
+    },
+    {
+     "move": "d6d5",
+     "say": "Black tries the third lever, ...d5, before the pieces are ready."
+    },
+    {
+     "move": "d4e5",
+     "say": "White takes. The pawn on d6 that guarded e5 has moved away, so e5 has one defender fewer, and Black must find ...Nxe4 to win the pawn back."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a4",
+     "to": "b5"
+    },
+    {
+     "from": "d4",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "a4",
+    "b5",
+    "d5",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After a4 the pawn on a4 attacks b5.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a2a4"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After Bg5 the bishop on g5 attacks the knight on f6.",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a2a4",
+       "f8g7",
+       "c1g5"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "At depth 16 the position after Bd2 is roughly level (between -20 and +80 centipawns).",
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 80,
+      "after_moves": [
+       "a2a4",
+       "f8g7",
+       "c1g5",
+       "h7h6",
+       "g5d2"
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "statement": "At depth 16 the position after ...d5 and dxe5 is at least 60 centipawns in White's favour.",
+     "type": "eval_range",
+     "params": {
+      "min": 60,
+      "after_moves": [
+       "a2a4",
+       "f8g7",
+       "c1g5",
+       "h7h6",
+       "g5d2",
+       "d6d5",
+       "d4e5"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-7"
+  },
+  {
+   "type": "card",
+   "text": "**Levers and timing.** [I] A lever is a question to the other side: take, ignore or support. The side that plays it needs the supporting pieces behind it first; the side that answers must count before it captures. [H] In this opening the usual order is pieces first, lever second, capture last; the positions above fit that order, but they are a handful of examples, not a proof."
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/1bpnbppp/p2p1n2/1p2p3/3PP3/2P2N1P/PPBN1PP1/R1BQR1K1 w - - 5 13",
+   "caption": "Both sides continue on the queenside. A lever that trades pawns also changes which files are open.",
+   "line": [
+    {
+     "move": "a2a4",
+     "say": "White pulls the queenside lever."
+    },
+    {
+     "move": "e7f8",
+     "say": "Black declines to deal with it at once and frees the e7 square."
+    },
+    {
+     "move": "a4b5",
+     "say": "White takes."
+    },
+    {
+     "move": "a6b5",
+     "say": "Black recaptures and the a-file is open."
+    },
+    {
+     "move": "a1a8",
+     "say": "White trades rooks."
+    },
+    {
+     "move": "d8a8",
+     "say": "Black recaptures and the queen now watches the a-file."
+    }
+   ],
+   "highlight": [
+    "a1",
+    "a8",
+    "b5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After axb5 axb5 the a-file is open.",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "a"
+      ],
+      "after_moves": [
+       "a2a4",
+       "e7f8",
+       "a4b5",
+       "a6b5"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "At depth 16 the position at the end is roughly level (between -30 and +30 centipawns).",
+     "type": "eval_range",
+     "params": {
+      "min": -30,
+      "max": 30,
+      "after_moves": [
+       "a2a4",
+       "e7f8",
+       "a4b5",
+       "a6b5",
+       "a1a8",
+       "d8a8"
+      ]
+     }
+    }
+   ],
+   "chapter": "When the levers meet"
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-9"
+  },
+  {
+   "type": "card",
+   "text": "**What the trade shows.** [V] After the rooks come off, the engine rates the position as roughly level. [I] A lever on the wing does not have to win material: it can trade pieces and pawns, open a file and reduce the risk to the side that is slightly worse. [H] For a learner, that makes the queenside lever a safe plan for either side when the centre is locked: you can aim for it without a tactic being required."
+  },
+  {
+   "type": "board",
+   "fen": "r2qr1k1/1bpnbppp/p2p1n2/1p2p3/3PP3/2P2N1P/PPBN1PP1/R1BQR1K1 w - - 5 13",
+   "caption": "A different queenside plan for White: b4 and a5 instead of trading on b5. Count who gains space and who is cramped.",
+   "line": [
+    {
+     "move": "a2a4",
+     "say": "White pulls the first lever."
+    },
+    {
+     "move": "e7f8",
+     "say": "Black frees e7."
+    },
+    {
+     "move": "b2b4",
+     "say": "White gains queenside space with a second pawn move."
+    },
+    {
+     "move": "d7b6",
+     "say": "The knight joins the pawn on b5 in attacking a4."
+    },
+    {
+     "move": "a4a5",
+     "say": "The pawn attacks the knight and gains more space."
+    },
+    {
+     "move": "b6d7",
+     "say": "The knight goes back and guards e5 again."
+    },
+    {
+     "move": "c1b2",
+     "say": "The bishop develops on the long diagonal."
+    },
+    {
+     "move": "a8c8",
+     "say": "Black brings the rook to the c-file."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a5",
+     "to": "b6"
+    }
+   ],
+   "highlight": [
+    "a5",
+    "b4",
+    "b6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "statement": "After Nb6 the pawn on b5 and the knight on b6 both attack the pawn on a4.",
+     "type": "attackers",
+     "params": {
+      "square": "a4",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "a2a4",
+       "e7f8",
+       "b2b4",
+       "d7b6"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "statement": "After a5 the pawn on a5 attacks the square b6.",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "a2a4",
+       "e7f8",
+       "b2b4",
+       "d7b6",
+       "a4a5"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "statement": "At depth 16 the final position is between -10 and +70 centipawns for White.",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 70,
+      "after_moves": [
+       "a2a4",
+       "e7f8",
+       "b2b4",
+       "d7b6",
+       "a4a5",
+       "b6d7",
+       "c1b2",
+       "a8c8"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODruylopez2-11",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] says: pieces first, lever second, capture last. Write one position from this lesson that supports it and one that you think could contradict it.",
+   "fields": [
+    {
+     "id": "for",
+     "label": "A position that supports it:"
+    },
+    {
+     "id": "against",
+     "label": "A position that could contradict it:"
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it back to a beginner who knows the rules, one box at a time: what a lever is, why d4 is playable here, and what it costs to capture too soon.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea:"
+    },
+    {
+     "id": "when",
+     "label": "When it works:"
+    },
+    {
+     "id": "example",
+     "label": "An example I could set up on a board:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning:"
+    }
+   ],
+   "chapter": "Teach it back"
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Did you say when a lever works (a pawn guards the square it lands on, and pieces stand ready), when it fails (the other side recaptures with a gain), give an example a beginner could set up, and name one mistake such as capturing on d4 or c5 too soon? The app grades nothing; compare your answer with these points."
+  },
+  {
+   "type": "card",
+   "text": "**Recap.**\n- Closed means every file still has a pawn; play is at the levers.\n- A hole is a square your pawns cannot guard; ask who can reach it.\n- White's levers: d4 (needs c3; h3 is a common preparation), later a4.\n- Black's levers: ...c5, ...exd4 when prepared, ...d5.\n- Count attackers and defenders, then ask who recaptures.\n- Keep the tension until a capture gains something. [I]"
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "opening.ruy-lopez"
+   ],
+   "n": 4
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which was least clear: why d4 needs c3, why an early capture on d4 hurts Black, or why dxc5 hurts White? Write the position as a move list or a FEN."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "app/public/masters/stats.json (329,379 top-level games): used for the move-order background in lesson 1; this lesson uses engine statements and structure claims [V]",
+  "Engine statements: Stockfish 19 lite single-thread, depth 16, via tools/validate_lessons.py and tools/validate.py (evidence under recorded limits, not proof)",
+  "Structure claims (holes, pawn attackers, open files) computed by tools/structure.py [V]",
+  "Positions replayed with python-chess from the stated move sequences; hypotheses are labelled [H] and inferences [I]"
+ ]
+}

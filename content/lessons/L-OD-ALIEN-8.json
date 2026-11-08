@@ -1,0 +1,741 @@
+{
+ "id": "L-OD-ALIEN-8",
+ "title": "Alien thinking: the gambit as a weapon, and what it teaches a learner",
+ "course": "opening-deep-dives",
+ "series": "alien",
+ "skill": "OPN.REPERTOIRE.WHITE",
+ "depth": "D1",
+ "uses": [
+  "OPN.REPERTOIRE.WHITE",
+  "OPN.PUNISH",
+  "OPN.TEMPO",
+  "SAF.THREAT",
+  "ATK.CASTLED"
+ ],
+ "minutes": 40,
+ "outcomes": [
+  "Explains with a count why a gambit that loses material on paper can score in fast games, and says what the archive can and cannot show",
+  "Counts the legal moves a check leaves and uses the count to describe the practical value of forcing play",
+  "Decides between grabbing a loose pawn and consolidating by counting attackers, defenders and loose pieces",
+  "Designs a repertoire experiment with a stopping rule written in advance",
+  "Separates what the course knows, believes and cannot know about the gambit and its inventor"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/8/PPP2PPP/R1BQKBNR w KQ - 0 7",
+   "caption": "White has given a knight for a pawn, and the engine (depth 16) rates Black ahead by about 1.8 pawns. Hold this question: would you, as White, play this in a three-minute game, and what would you hope for?",
+   "highlight": [
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -260,
+      "max": -110
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 1.1 and 2.6 pawns."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "f7",
+      "piece": "k"
+     },
+     "statement": "Black's king stands on f7."
+    }
+   ],
+   "chapter": "Why a dubious gambit can score"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Would you play this gambit as White in a three-minute game?",
+   "fields": [
+    {
+     "id": "play",
+     "label": "My answer:",
+     "options": [
+      "Yes, for the surprise",
+      "Only against weaker players",
+      "Only with the lines prepared",
+      "No, it is just a bad opening"
+     ]
+    },
+    {
+     "id": "why",
+     "label": "My reason in one sentence:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** A gambit that loses about two pawns on paper can still score in fast games. Why, when does that stop being true, and how should a learner use gambit knowledge without fooling themselves? You will test three explanations against our archive and the engine, then decide for yourself. Marks: [V] checked here, [I] inference, [H] hypothesis, [S] read in a source."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Predict. In 234 games with both ratings, White averaged 2184 and Black 2234. By the standard rating formula, how many points per 100 should White score?",
+   "fields": [
+    {
+     "id": "exp",
+     "label": "White per 100:",
+     "type": "number",
+     "answer": 45,
+     "tolerance": 3
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**On paper and in practice.** [V] The formula expects about 45 per 100 for White; White scored about 48. A gain of roughly 3 per 100 is within the range chance alone produces, so the honest reading is: against these opponents the gambit cost White nothing measurable, which is not the same as being good. [V] Volen Dyulgerov, 33 games: 50 against about 41 expected. [I] With 33 games that is a hint, not proof."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "What would you need to see before you believed \"this gambit works\"? Write the evidence you would ask for.",
+   "fields": [
+    {
+     "id": "evidence",
+     "label": "I would want to see:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three explanations to test.** [H] (1) Checks leave Black few legal moves, so each reply must be found. (2) The king on f7 needs repairs, and each repair costs a move. (3) In fast games Black has little time to find the repairs while the gambiteer has prepared. The board can test the first, the engine part of the second, and nothing here can test the third: the files hold no clock times."
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQ - 1 7",
+   "caption": "Black to move after 7.Nf3. Six sensible moves are open to Black: ...c5, ...Kg8, ...Be6, ...Bf5, ...e6 and ...Nbd7. [V] The engine (depth 16) puts every one of them within 80 centipawns of the best: no single move refutes the gambit, so [I] the games are probably decided by later accuracy.",
+   "highlight": [
+    "c5",
+    "g8",
+    "e6",
+    "f5",
+    "d7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c6c5",
+       "f7g8",
+       "c8e6",
+       "c8f5",
+       "e7e6",
+       "b8d7"
+      ],
+      "within_cp": 80
+     },
+     "statement": "Six black moves are each within 80 centipawns of the best move (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQ - 1 7",
+   "caption": "Black to move after 7.Nf3. Black has 39 legal moves here. Predict: after 7...Bf5 and White's check 8.Ne5+, how many will Black have?",
+   "line": [
+    {
+     "move": "c8f5",
+     "say": "Black develops the bishop to a square outside the pawn chain."
+    }
+   ],
+   "highlight": [
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "a7a5",
+       "a7a6",
+       "b7b5",
+       "b7b6",
+       "b8a6",
+       "b8d7",
+       "c6c5",
+       "c8d7",
+       "c8e6",
+       "c8f5",
+       "c8g4",
+       "c8h3",
+       "d8a5",
+       "d8b6",
+       "d8c7",
+       "d8d4",
+       "d8d5",
+       "d8d6",
+       "d8d7",
+       "d8e8",
+       "e7e5",
+       "e7e6",
+       "f6d5",
+       "f6d7",
+       "f6e4",
+       "f6e8",
+       "f6g4",
+       "f6g8",
+       "f6h5",
+       "f6h7",
+       "f7e6",
+       "f7e8",
+       "f7g6",
+       "f7g8",
+       "g7g5",
+       "g7g6",
+       "h6h5",
+       "h8g8",
+       "h8h7"
+      ]
+     },
+     "statement": "Black has exactly 39 legal moves here."
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Predict: after 7...Bf5 8.Ne5+ the black king is in check. How many legal moves does Black have?",
+   "fields": [
+    {
+     "id": "n1",
+     "label": "Legal moves for Black:",
+     "type": "number",
+     "answer": 3,
+     "tolerance": 1
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1b1r/pp2pkp1/2p2n1p/4Nb2/3P4/8/PPP2PPP/R1BQKB1R b KQ - 3 8",
+   "caption": "After the knight check, Black has exactly 3 legal moves. Every one of them is a king move.",
+   "line": [
+    {
+     "move": "f7g8",
+     "say": "The king steps to the corner."
+    }
+   ],
+   "highlight": [
+    "e5",
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "f7e6",
+       "f7e8",
+       "f7g8"
+      ]
+     },
+     "statement": "Black has exactly 3 legal moves."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1bkr/pp2p1p1/2p2n1p/4Nb2/2BP4/8/PPP2PPP/R1BQK2R b KQ - 5 9",
+   "caption": "The bishop checks as well. Black has exactly 5 legal moves: the king can move, or a piece can block. Black to move.",
+   "highlight": [
+    "c4",
+    "g8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "d8d5",
+       "e7e6",
+       "f5e6",
+       "f6d5",
+       "g8h7"
+      ]
+     },
+     "statement": "Black has exactly 5 legal moves."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1bkr/pp3Qp1/2p1p2p/3nNb2/2BP4/8/PPP2PPP/R1B1K2R b KQ - 1 11",
+   "caption": "Later in the same game, a third check in four White moves: Black has exactly one legal move, the king to h7.",
+   "highlight": [
+    "f7",
+    "g8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "g8h7"
+      ]
+     },
+     "statement": "Black has exactly one legal move."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the counts say.** [V] In this game Black's legal moves fell from 39 to 3, then 5, then one, over four White moves. [I] This is one game as an example, not a measure of the gambit."
+  },
+  {
+   "type": "card",
+   "text": "Few legal moves does not mean a lost position; it means each reply must be found, and only some of them are good. [H] This is the practical engine of a gambit in fast play: every forcing move costs White one move and costs Black a search."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In a fast game, who gains more from a forcing sequence: the player who has seen it before, or the player who has not? Say why in one sentence.",
+   "fields": [
+    {
+     "id": "forcing",
+     "label": "My view:"
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Predict: among White's moves 7 to 12 in the gambit games, what share were checks or captures? And in ordinary games from the same weekly files?",
+   "fields": [
+    {
+     "id": "gam",
+     "label": "Gambit games, per 100 moves:",
+     "type": "number",
+     "answer": 26,
+     "tolerance": 5
+    },
+    {
+     "id": "ord",
+     "label": "Ordinary games, per 100 moves:",
+     "type": "number",
+     "answer": 19,
+     "tolerance": 5
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A count over the whole archive.** [V] In the 237 gambit games, 364 of White's 1421 moves from move 7 to move 12 were checks or captures: 26 per 100. In 6000 ordinary games (500 from each of twelve weekly files in the same collection, 36000 White moves), 19 per 100."
+  },
+  {
+   "type": "card",
+   "text": "**How far that count goes.** [I] By this one measure the gambit games are more forcing. It does not show that Black has fewer good replies. The comparison is rough: the gambit games are mostly online blitz, the ordinary sample is a mix of events, and part of the forcing share is plain recapture."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Does a more forcing game help the side that prepared it, or the side that must find the replies? What would you need to measure to know?",
+   "fields": [
+    {
+     "id": "measure",
+     "label": "I would measure:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/5N2/PPP2PPP/R1BQKB1R b KQ - 1 7",
+   "caption": "A test of explanation (2), with the engine. Black to move after 7.Nf3 and Black's king has not been repaired. Quiet moves such as ...a6 or ...b6 look harmless, yet [V] each scores about a pawn or more worse than the best move (depth 16, one run; ...a6 only just over a pawn, ...b6 about 1.4). An idle move is expensive here.",
+   "highlight": [
+    "a6",
+    "b6",
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "a7a6",
+      "cp": 100
+     },
+     "statement": "a6 scores at least 100 centipawns worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "b7b6",
+      "cp": 100
+     },
+     "statement": "b6 scores at least 100 centipawns worse than the best move."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-1"
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1bkr/pp2p1p1/2p4p/3nNb2/2BP4/8/PPP2PPP/R1BQK2R w KQ - 6 10",
+   "caption": "After 9...Nd5, White to move. Watch what the queen move does to the bishop on f5.",
+   "line": [
+    {
+     "move": "d1h5",
+     "say": "White's queen attacks the bishop on f5 and eyes f7."
+    }
+   ],
+   "highlight": [
+    "f5",
+    "h5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 1,
+      "after_move": "d1h5"
+     },
+     "statement": "After Qh5 one white piece, the queen, attacks the bishop on f5."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -250,
+      "max": -60
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 0.6 and 2.5 pawns."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-2"
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1bkr/pp2p1p1/2p4p/3nN2Q/2BP4/8/PPb2PPP/R1B1K2R w KQ - 0 11",
+   "caption": "What happens after the grab: Bxc2 and White to move. The engine rates this position about level, though Black has won a pawn.",
+   "line": [
+    {
+     "move": "h5f7",
+     "say": "The queen checks, protected by the knight on e5."
+    },
+    {
+     "move": "g8h7",
+     "say": "The king has one square."
+    },
+    {
+     "move": "c4b3",
+     "say": "White attacks the bishop on c2 and offers a trade."
+    }
+   ],
+   "highlight": [
+    "c2",
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -70,
+      "max": 70
+     },
+     "statement": "The engine (depth 16) rates the position after Bxc2 as about level (within 0.7 pawns)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1q1bkr/pp2p1p1/2p4p/3nNb1Q/2BP4/8/PPP2PPP/R1B1K2R b KQ - 7 10",
+   "caption": "What happened in the game: Black consolidated with e6, White played Qf7+ and Black answered Kh7; g4 followed next. White to move at the end of the line.",
+   "line": [
+    {
+     "move": "e7e6",
+     "say": "Black defends the bishop with a pawn and opens the diagonal of the f8 bishop."
+    },
+    {
+     "move": "h5f7",
+     "say": "The queen checks."
+    },
+    {
+     "move": "g8h7",
+     "say": "The king has one square."
+    }
+   ],
+   "highlight": [
+    "f5",
+    "g4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -250,
+      "max": -60
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 0.6 and 2.5 pawns before Black moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-3"
+  },
+  {
+   "type": "contrast",
+   "title": "Grab or consolidate?",
+   "prompt": "Predict, then check. The same bishop can take the same loose pawn on c2 in both positions, which differ in several ways. In one it is the best move and in the other it hands back the advantage. Which is which?",
+   "working": "IOD-ALIEN8-3",
+   "failing": "IOD-ALIEN8-2"
+  },
+  {
+   "type": "card",
+   "text": "**Same grab, opposite verdicts.** [V] In both positions Bxc2 wins a loose pawn. [I] The positions differ in several ways: a pawn or a queen attacks the bishop, the king stands on h7 or g8, and e6 is open in only one. So the pair suggests a rule but cannot isolate one cause. [H] When a pawn forces the bishop to move anyway, the grab is free; when a defence like e6 exists, it may only send the bishop to the edge. Count the attackers first."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Write your own rule for \"grab or consolidate?\" in one or two sentences, using a count (attackers, defenders, loose pieces) rather than a feeling.",
+   "fields": [
+    {
+     "id": "rule",
+     "label": "My rule:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three honest uses of gambit knowledge.** (1) A repertoire experiment: play it in a fixed number of games, log the results, and stop at a rule you wrote before you started. (2) King-attack practice: gambit lines are full of checks and sacrifices, so replaying them trains pattern recognition. (3) A test of defence: knowing the traps helps you meet them from the other side. None of the three needs the gambit to be sound.",
+   "chapter": "Three honest uses"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Design your experiment before you play any game. Fill each blank; the numbers are yours.",
+   "fields": [
+    {
+     "id": "n",
+     "label": "I will play it in this many games:",
+     "type": "number"
+    },
+    {
+     "id": "log",
+     "label": "I will record:"
+    },
+    {
+     "id": "stop",
+     "label": "I will stop or change plan when:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb2bkr/pp4p1/4pn1p/2p1N3/2Bq4/8/PPP2PPP/R1BQ1RK1 w - - 0 11",
+   "caption": "Khodko v Shafer, 2024. White to move after 10...Qxd4. The queens come off, but the black king is still the one in danger. After the trade Black's knight retakes on e4 and the game goes on; the next item starts later in it.",
+   "line": [
+    {
+     "move": "d1e2",
+     "say": "The queen offers a queen trade and guards the bishop on c4."
+    },
+    {
+     "move": "d4e4",
+     "say": "Black centralises the queen and offers the trade."
+    },
+    {
+     "move": "e2e4",
+     "say": "White accepts: the black king is the one with fewer defenders."
+    }
+   ],
+   "highlight": [
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -250,
+      "max": -60
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 0.6 and 2.5 pawns before White moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-4"
+  },
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/pp4p1/2p1pn1p/4Nb2/2BP4/8/PPP2PPP/R1BQK2R w KQ - 0 10",
+   "caption": "Another way White uses the checks. After 7.Nf3 Bf5 8.Ne5+ Ke8 9.Bc4 e6, White plays g4. Black to move at the end of the line.",
+   "line": [
+    {
+     "move": "g2g4",
+     "say": "The pawn attacks the bishop on f5 and opens the g-file."
+    }
+   ],
+   "highlight": [
+    "f5",
+    "g4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -230,
+      "max": -70
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 0.7 and 2.3 pawns before White moves."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 1,
+      "after_move": "g2g4"
+     },
+     "statement": "After g4 one white pawn attacks the bishop on f5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-5"
+  },
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/pp4p1/2p1pn1p/4Nb2/2BP2P1/8/PPP2P1P/R1BQK2R b KQ - 0 10",
+   "caption": "What happened in the game: Black chose Be4 and, after the f-pawn hit it, went to d5. White's Qd3 and Black's Bxc4 follow in the next item. White to move after the three moves shown.",
+   "line": [
+    {
+     "move": "f5e4",
+     "say": "The bishop steps in front of the f-pawn."
+    },
+    {
+     "move": "f2f3",
+     "say": "The pawn attacks the bishop again."
+    },
+    {
+     "move": "e4d5",
+     "say": "The bishop steps to d5 and offers a trade on c4."
+    }
+   ],
+   "highlight": [
+    "c4",
+    "d3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -230,
+      "max": -70
+     },
+     "statement": "The engine (depth 16) rates Black ahead by between 0.7 and 2.3 pawns before Black moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IOD-ALIEN8-6"
+  },
+  {
+   "type": "card",
+   "text": "**What that practised.** [I] The same three habits as in the defence: list the checks first, count what guards the key squares, and ask which piece has no job. Gambit lines are a cheap way to rehearse them, because the forcing moves are real and the positions repeat. [H] Replaying twenty such games would teach more attacking pattern than playing twenty quiet openings; nobody has tested that here."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which of the three uses would help your own chess most this month, and what would you do in the first week?",
+   "fields": [
+    {
+     "id": "use",
+     "label": "My choice and first step:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Who plays it, and what we do not know.** [V] Volen Dyulgerov supplies 33 of the 237 games in the archive. In them he scored 50 per 100 against about 41 expected from the ratings in the files; with 33 games that is a hint, not proof. This lesson uses only the game archive and the engine. Auto-captions of his videos were read for the Martian lesson; none of it is used here.",
+   "chapter": "Who plays it"
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "List two things this course knows about the gambit, one thing it believes, and one thing it cannot know.",
+   "fields": [
+    {
+     "id": "know",
+     "label": "Two things we know:"
+    },
+    {
+     "id": "believe",
+     "label": "One thing we believe:"
+    },
+    {
+     "id": "cannot",
+     "label": "One thing we cannot know:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What to remember.** [V] On paper the gambit costs about two pawns; in 234 rated games it scored a little above the rating formula, within the range of chance. [H] Checks make White's play more forcing, which may make it uncomfortable to meet; these data cannot show that it helps White. It fails when the defender has time and counts. Grab or consolidate by counting. Use gambit knowledge for experiments, attack practice and defence tests.",
+   "chapter": "Teach it back"
+  },
+  {
+   "type": "reflect",
+   "kind": "confidence",
+   "prompt": "Teach it back. In your own words, to a friend who wants to play this gambit next week: why it can score, when it fails, one position you could set up on a board, and one warning. Self-check: did you say when it works and when it fails, give an example a beginner could set up, and name one mistake?",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "Why it can score:"
+    },
+    {
+     "id": "fails",
+     "label": "When it fails:"
+    },
+    {
+     "id": "example",
+     "label": "One example:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Clean re-scan of library/data/games (TWIC zips and one Lichess broadcast file), 237 games replayed with python-chess [V]; content/_work/alien-games.json is not used because it merges neighbouring games for part of the archive",
+  "Engine figures: Stockfish 19 lite single thread, depth 16, one run each; checked by claims in this lesson and content/items/lesson-od-l-od-alien-8.json [V]",
+  "Elo expectation: the standard logistic rating formula [R], applied by script to the games with both ratings [V]",
+  "Archive facts about the player Dyulgerov (33 games, ratings as in the game files) come from the clean re-scan above [V]; no video or stream material is used in this lesson (auto-captions of his videos were read for the Martian lesson only)"
+ ]
+}

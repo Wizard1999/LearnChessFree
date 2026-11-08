@@ -1,0 +1,1023 @@
+{
+  "id": "L-OD-KID-8",
+  "course": "opening-deep-dives",
+  "series": "kid",
+  "title": "King's Indian: when it goes wrong and how to repair it",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "POS.STRUCTURE.KID",
+    "POS.PLAN.RACE",
+    "ATK.PAWNSTORM",
+    "DEF.DIAGNOSE",
+    "OPN.TEMPO",
+    "POS.OUTPOST",
+    "OPN.PUNISH"
+  ],
+  "minutes": 40,
+  "outcomes": [
+    "Names the pawn move that closes a wing and hands the opponent a permanent outpost (Black's c-pawn to c5 in a real game) and finds the engine's repair",
+    "Finds the engine's move at twelve repair or error points in real King's Indian positions and says what the wrong move allows",
+    "Explains why a quiet waiting move costs time in a pawn race, and why a worse side often needs counterplay rather than passive defence",
+    "Checks what the opponent's last move allows before capturing, and finds the winning move White missed in a real game",
+    "Teaches back one typical mistake for each side, with its repair and the engine evidence"
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "library/data/games (TWIC weekly zips and Lichess broadcast PGN, 2012 to 2026): games starting 1.d4 Nf6 2.c4 g6 3.Nc3 Bg7 4.e4 d6 with both players rated 2500 or more, engines excluded by name; real positions from five games read with python-chess. Game A: Kasimdzhanov - Nakamura, London, 22 Sep 2012, 0-1. Game B: So - Ding Liren, Bilbao, 26 Oct 2015, 1-0. Game C: Wang Hao - Bacrot, Biel, 23 Jul 2012, 1-0. Game E: Gajewski - Bacrot, 41st Olympiad, Tromso, 10 Aug 2014, 0-1 (2659 and 2720). Game F: Wojtaszek - Radjabov, 40th Olympiad, Istanbul, 6 Sep 2012, 1-0 (2717 and 2788). Moves and results are facts; every comment is our own wording [S]",
+    "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-l-od-kid-8.json and the board claims of this lesson; evidence under recorded limits, not proof. A depth-16 reading moves by a few tenths of a pawn when the search settings change, so claims use margins [V]",
+    "docs/citable-views.md 3.1 (Edward Lasker, Chess Strategy: pawns cannot retreat, so the pawn skeleton lasts), 5.5 and 6.4 (Znosko-Borovsky, The Middle Game in Chess: how to defend depends on what was lost; when worse, restore freedom), 10.7 (Aagaard, Excelling at Chess Calculation, as summarised by a reviewer: overlooked candidates cause the worst errors) [V-sheet; 10.7 S]; all paraphrased, no quotations; old advice carries the engine-age caveat [I]",
+    "Purposes of moves on game boards are the usual textbook ideas and are stated as aims, not verified outcomes [R]; conjecture is labelled [H] or [I] in the text",
+    "docs/lesson-depth-standard.md section 6 (opening series, lesson 8: typical errors and repairs)"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p3n1bp/2pp1n2/1P3pN1/2P1p3/2N5/P3BPPP/R1BQR1K1 b - - 1 16",
+      "caption": "WOJTASZEK - RADJABOV (Olympiad, Istanbul, 6 Sep 2012; White won). Position after 16.Be2, Black to move. Black is close to level here: the engine reads between -0.1 and +0.5 pawns (White's view, depth 16). A natural pawn move turns that into a clear disadvantage. Look at the pawn on b5, the pawn on e4 and the black knights, and decide what you would play.",
+      "highlight": [
+        "b5",
+        "c6",
+        "d6",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -10,
+            "max": 50
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.1 and +0.5 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "c6",
+            "piece": "p"
+          },
+          "statement": "Black's pawn stands on c6."
+        },
+        {
+          "id": "C3",
+          "type": "piece_on",
+          "params": {
+            "square": "b5",
+            "piece": "P"
+          },
+          "statement": "White's pawn stands on b5."
+        }
+      ],
+      "chapter": "Diagnose before you repair"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Before any engine numbers: which move would you play as Black?",
+      "fields": [
+        {
+          "id": "move",
+          "label": "My move:",
+          "options": [
+            "A pawn move that closes the queenside (c5)",
+            "A central pawn break (d5)",
+            "Kick the knight (h6)",
+            "Move a knight (Ng4 or Ne8)",
+            "No idea yet"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-1"
+    },
+    {
+      "type": "card",
+      "text": "**What you can do after this lesson.** Find the engine's repair in real King's Indian positions, say what the wrong move allows, and teach back one mistake for each side. Method, paraphrasing Znosko-Borovsky [V-sheet]: name your chief weakness and the opponent's chief threat first, then choose a plan; the right defence depends on whether you lost space, time or material. Old advice [I]; we test it against the engine."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p3n1bp/2pp1n2/1P3pN1/2P1p3/2N5/P3BPPP/R1BQR1K1 b - - 1 16",
+      "caption": "GAME F, 16...c5 and the next moves. Before the move the engine read between -0.1 and +0.5 pawns (White's view, depth 16); after 16...c5 between +0.9 and +1.5 pawns. Black closes the queenside; White uses the space.",
+      "line": [
+        {
+          "move": "c6c5",
+          "say": "Black closes the queenside with a pawn move. A pawn can never go back. [R]"
+        },
+        {
+          "move": "a2a4",
+          "say": "White gains more queenside space; its pieces now have free squares behind the pawns. [R]"
+        },
+        {
+          "move": "e7g6",
+          "say": "The knight heads for the kingside to reach f4 or h4. [R]"
+        }
+      ],
+      "chapter": "Mistake 1: closing the wing you needed",
+      "highlight": [
+        "c5",
+        "d5",
+        "b5",
+        "a4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -10,
+            "max": 50
+          },
+          "statement": "Engine (depth 16): after 0 moves of the line the position is between -0.1 and +0.5 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 150,
+            "after_moves": [
+              "c6c5"
+            ]
+          },
+          "statement": "Engine (depth 16): after 1 moves of the line the position is between +0.9 and +1.5 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C3",
+          "type": "outposts",
+          "params": {
+            "color": "white",
+            "occupied": "empty",
+            "includes": [
+              "d5"
+            ],
+            "after_moves": [
+              "c6c5"
+            ]
+          },
+          "statement": "After the pawn move the square d5 is an outpost for White: supported by the c4 pawn, and no black pawn can ever attack it."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p5bp/3p1nn1/1Pp2pN1/P1P1p3/2N5/4BPPP/R1BQR1K1 w - - 1 18",
+      "caption": "Black's knight heads for the kingside and White's rook swings along the third rank. After 18...Kh8 the engine reads between +2.1 and +2.7 pawns (White's view, depth 16). White has gained about a pawn without capturing anything.",
+      "line": [
+        {
+          "move": "a1a3",
+          "say": "The rook swings along the third rank toward the kingside. [R]"
+        },
+        {
+          "move": "g8h8",
+          "say": "Black steps the king aside."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 210,
+            "max": 270,
+            "after_moves": [
+              "a1a3",
+              "g8h8"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +2.1 and +2.7 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h8",
+            "piece": "k",
+            "after_moves": [
+              "a1a3",
+              "g8h8"
+            ]
+          },
+          "statement": "After the last move the king stands on h8."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-2"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1r1k/p5bp/3p1nn1/1Pp2pN1/P1P1p3/R1N5/4BPPP/2BQR1K1 w - - 3 19",
+      "caption": "The next moves of game F. The knight lands on d5 and Black attacks the knight on g5, which retreats toward f4.",
+      "line": [
+        {
+          "move": "c3d5",
+          "say": "The knight lands on d5 and attacks the knight on f6. A pawn cannot drive it away. [R]"
+        },
+        {
+          "move": "h7h6",
+          "say": "Black attacks the knight on g5."
+        },
+        {
+          "move": "g5h3",
+          "say": "The knight retreats toward f4."
+        }
+      ],
+      "highlight": [
+        "d5",
+        "f4",
+        "e6",
+        "g6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "h3",
+            "piece": "N",
+            "after_moves": [
+              "c3d5",
+              "h7h6",
+              "g5h3"
+            ]
+          },
+          "statement": "After the last move the knight stands on h3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1r1k/p5b1/3p1nnp/1PpN1p2/P1P1p3/R6N/4BPPP/2BQR1K1 b - - 1 20",
+      "caption": "Black attacks the knight on d5 and the white knight reaches f4. The engine reads between +2.0 and +2.6 pawns (White's view, depth 16): White stands clearly better.",
+      "line": [
+        {
+          "move": "c8e6",
+          "say": "Black attacks the knight on d5."
+        },
+        {
+          "move": "h3f4",
+          "say": "The knight reaches f4 and attacks the bishop on e6 and the knight on g6."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 200,
+            "max": 260,
+            "after_moves": [
+              "c8e6",
+              "h3f4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +2.0 and +2.6 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "f4",
+            "piece": "N",
+            "after_moves": [
+              "c8e6",
+              "h3f4"
+            ]
+          },
+          "statement": "After the last move the knight stands on f4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-2b"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Closing the queenside was a mistake here. Before you read on: what did the pawn on c5 stop Black from guarding, and when might closing a wing still be right?",
+      "fields": [
+        {
+          "id": "when",
+          "label": "Closing is right when:"
+        },
+        {
+          "id": "check",
+          "label": "The squares it stops me guarding:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why the pawn move hurts.** A pawn cannot retreat, so the skeleton it leaves lasts for the whole game (Edward Lasker's point, paraphrased [V-sheet]). Closing a wing is right when your pieces already have good squares or when the other side's break is the real danger. [I] Here neither held: Black's pieces had no outpost, White's had one. Before you lock a wing, ask which squares you stop guarding."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p3n1bp/2pp1n2/1P3pN1/2P1p3/2N5/P3BPPP/R1BQR1K1 b - - 1 16",
+      "caption": "A REPAIR LINE (depth 16). Instead of closing the wing, Black breaks in the centre. The engine's first choice here is h6, then after Nh3 d5; it replies 18.bxc6, which is also near level.",
+      "line": [
+        {
+          "move": "h7h6",
+          "say": "The pawn attacks the knight on g5 and keeps the queenside open."
+        },
+        {
+          "move": "g5h3",
+          "say": "The knight retreats toward f4."
+        },
+        {
+          "move": "d6d5",
+          "say": "Black breaks in the centre; the pawn attacks c4."
+        }
+      ],
+      "highlight": [
+        "h6",
+        "d5",
+        "c6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "p",
+            "after_moves": [
+              "h7h6",
+              "g5h3",
+              "d6d5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on d5."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/p3n1b1/2p2n1p/1P1p1p2/2P1p3/2N4N/P3BPPP/R1BQR1K1 w - - 0 18",
+      "caption": "One line, not the engine's reply: 18.cxd5 cxd5 is shown because it is the simplest to follow. After 18...cxd5 the engine reads between -0.3 and +0.3 pawns (White's view, depth 16).",
+      "line": [
+        {
+          "move": "c4d5",
+          "say": "White takes the pawn."
+        },
+        {
+          "move": "c6d5",
+          "say": "Black recaptures and keeps a pawn in the centre."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -30,
+            "max": 30,
+            "after_moves": [
+              "c4d5",
+              "c6d5"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.3 and +0.3 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "d5",
+            "piece": "p",
+            "after_moves": [
+              "c4d5",
+              "c6d5"
+            ]
+          },
+          "statement": "After the last move the pawn stands on d5."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-3"
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppnn1bp/3p2p1/3Pp3/2P1Pp2/2N2P2/PP2BBPP/R2QNRK1 b - - 1 12",
+      "caption": "Back to the Ne1 line of lessons 1 to 7: position after 12.Bf2. Black to move. Black's pawns f4 and e5 face White's queenside; the g-pawn is next in the plan. The engine reads between +0.5 and +1.1 pawns (White's view, depth 16). In a race, every move counts. Which move keeps the pace?",
+      "highlight": [
+        "g5",
+        "h5",
+        "a6",
+        "f4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 50,
+            "max": 110
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.5 and +1.1 pawns (White's view, depth 16)."
+        }
+      ],
+      "chapter": "Mistake 2: the quiet move in a race"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-4"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "In a race, when would a quiet move be right? Give one example in your own words.",
+      "fields": [
+        {
+          "id": "quiet",
+          "label": "A quiet move is right when:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Tempo in a race.** A tempo is one move. If both sides race and a quiet move starts neither plan, the opponent gains a move for free. Znosko-Borovsky advises, against a time lead, to keep making small threats (paraphrased [V-sheet]); a waiting move does the opposite. [H] A quiet move is right only when the opponent's plan is slower than yours by more than that one move. [I] Whether it is, you count: the next board counts it."
+    },
+    {
+      "type": "board",
+      "fen": "r1bq1rk1/pppnn1bp/3p2p1/3Pp3/2P1Pp2/2N2P2/PP2BBPP/R2QNRK1 b - - 1 12",
+      "caption": "ONE LINE, not the engine's choice at every move: only the end is engine-read (depth 16). Two quiet black moves (12...a6, 13...b6) against 13.Nd3 and 14.b4 end between +1.5 and +2.0 pawns, from +0.5 to +1.1 at the start: about a pawn for two quiet moves. A single quiet move costs only a few tenths, inside the noise of depth 16.",
+      "line": [
+        {
+          "move": "a7a6",
+          "say": "Black plays a waiting move on the queenside; it starts neither plan."
+        },
+        {
+          "move": "e1d3",
+          "say": "White develops the knight to d3 with a hit on f4 and e5."
+        },
+        {
+          "move": "b7b6",
+          "say": "Black adds a second queenside pawn move; the pawn storm has not moved."
+        },
+        {
+          "move": "b2b4",
+          "say": "White gains queenside space with the b-pawn; the break comes next."
+        }
+      ],
+      "highlight": [
+        "d3",
+        "b4",
+        "g5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 150,
+            "max": 200,
+            "after_moves": [
+              "a7a6",
+              "e1d3",
+              "b7b6",
+              "b2b4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +1.5 and +2.0 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "b4",
+            "piece": "P",
+            "after_moves": [
+              "a7a6",
+              "e1d3",
+              "b7b6",
+              "b2b4"
+            ]
+          },
+          "statement": "After the last move the pawn stands on b4."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-4b"
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/5nn1/p3p2p/1b2Ppp1/1R3P2/P3BBPP/2R3K1 w - - 0 32",
+      "caption": "Back to game A, position after 31...g4. White to move. Black's pawn on g4 attacks f3, and the queens are off. The engine reads between -0.3 and +0.3 pawns (White's view, depth 16). White needs a plan, not a waiting move. What would you do?",
+      "highlight": [
+        "g4",
+        "f3",
+        "b7",
+        "b3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -30,
+            "max": 30
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.3 and +0.3 pawns (White's view, depth 16)."
+        }
+      ],
+      "chapter": "Mistake 3: stepping aside instead of striking"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-5"
+    },
+    {
+      "type": "board",
+      "fen": "r6k/1Np3r1/5nn1/p3p2p/1b2Ppp1/1R3P2/P3BBPP/2R3K1 w - - 0 32",
+      "caption": "THE REPAIR (engine line, depth 16). White strikes with the knight and lets the pawn storm come: Nc5, and after ...g3 White simply takes.",
+      "line": [
+        {
+          "move": "b7c5",
+          "say": "The knight jumps into the centre; if the bishop takes it, the rook recaptures. [R]"
+        },
+        {
+          "move": "g4g3",
+          "say": "Black's pawn attacks f2 and h2."
+        },
+        {
+          "move": "h2g3",
+          "say": "White takes."
+        }
+      ],
+      "highlight": [
+        "c5",
+        "g3",
+        "h4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "g3",
+            "piece": "P",
+            "after_moves": [
+              "b7c5",
+              "g4g3",
+              "h2g3"
+            ]
+          },
+          "statement": "After the last move the pawn stands on g3."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r6k/2p3r1/5nn1/p1N1p2p/1b2Pp2/1R3PP1/P3BBP1/2R3K1 b - - 0 33",
+      "caption": "Black recaptures, White takes on g3, and the h-pawn attacks the bishop. After 35.h4 the engine reads between -0.3 and +0.4 pawns (White's view, depth 16): the game stays balanced instead of drifting toward Black.",
+      "line": [
+        {
+          "move": "f4g3",
+          "say": "Black recaptures and attacks the bishop on f2."
+        },
+        {
+          "move": "f2g3",
+          "say": "The bishop takes on g3."
+        },
+        {
+          "move": "h5h4",
+          "say": "The pawn attacks the bishop."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -30,
+            "max": 40,
+            "after_moves": [
+              "f4g3",
+              "f2g3",
+              "h5h4"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -0.3 and +0.4 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "h4",
+            "piece": "p",
+            "after_moves": [
+              "f4g3",
+              "f2g3",
+              "h5h4"
+            ]
+          },
+          "statement": "After the last move the pawn stands on h4."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Why the king step is slow.** The pawn storm needs pieces behind it; the king step answers no threat and starts no plan [I]. On f1 the king stays on the f-file, where the pawn landing on g3 attacks the bishop on f2 and the pawn on h2 with tempo. The engine prefers a piece that does something, by about half a pawn. After your move ask: what does the opponent want next, and have I changed it? (Znosko-Borovsky, paraphrased [V-sheet]: how to defend depends on what you have lost.)"
+    },
+    {
+      "type": "board",
+      "fen": "r1bbq1k1/p1p2r2/1p1p2n1/3Pp3/1Q2Ppp1/2N5/P2BBNPP/2R2RK1 b - - 0 25",
+      "caption": "Back to game B, after 25.Qxb4. Black gave a knight for a pawn and the engine reads between +1.0 and +1.6 pawns (White's view, depth 16): White is clearly ahead. Black must choose between keeping the attack going and giving it up. What repairs the position best?",
+      "highlight": [
+        "f3",
+        "b4",
+        "e2",
+        "g2"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 100,
+            "max": 160
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +1.0 and +1.6 pawns (White's view, depth 16)."
+        }
+      ],
+      "chapter": "Repairs: when you are worse, keep the initiative"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-6"
+    },
+    {
+      "type": "board",
+      "fen": "r1bbq1k1/p1p2r2/1p1p2n1/3Pp3/1Q2P1p1/2N2p2/P2BBNPP/2R2RK1 w - - 0 26",
+      "caption": "Game B again, one move later: Black has played 25...f3 and White to move must answer. The pawn on f3 attacks the bishop on e2 and the pawn on g2. The engine reads between +0.9 and +1.6 pawns (White's view, depth 16).",
+      "highlight": [
+        "f3",
+        "e2",
+        "g2",
+        "b5"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 160
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.9 and +1.6 pawns (White's view, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-6b"
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pp2n1b1/3pPnpp/8/1Pq1p3/BBN2pP1/P2Q1P1P/R3R1K1 b - - 1 21",
+      "caption": "Back to game C, after 21.Bb3. Black took the pawn on c4 and the queen is attacked. The engine reads between +0.9 and +1.6 pawns (White's view, depth 16). Black is worse now. The game continued with the queen move to a6. Is there something better?",
+      "highlight": [
+        "c4",
+        "b3",
+        "f3",
+        "e4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 90,
+            "max": 160
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.9 and +1.6 pawns (White's view, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-7"
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/pp2n1b1/3pPnpp/8/1Pq1p3/BBN2pP1/P2Q1P1P/R3R1K1 b - - 1 21",
+      "caption": "THE REPAIR (engine line, depth 16): 21...e3 22.Rxe3. Black is still worse after the capture (the engine reads between +0.6 and +1.3 pawns (White's view, depth 16)), but the white king stays under pressure.",
+      "line": [
+        {
+          "move": "e4e3",
+          "say": "The pawn attacks the queen on d2 and the pawn on f2, so White cannot ignore it."
+        },
+        {
+          "move": "e1e3",
+          "say": "White takes the pawn with the rook."
+        }
+      ],
+      "highlight": [
+        "e3",
+        "f3",
+        "g3"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 60,
+            "max": 130,
+            "after_moves": [
+              "e4e3",
+              "e1e3"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +0.6 and +1.3 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "e3",
+            "piece": "R",
+            "after_moves": [
+              "e4e3",
+              "e1e3"
+            ]
+          },
+          "statement": "After the last move the rook stands on e3."
+        }
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-8"
+    },
+    {
+      "type": "card",
+      "text": "**Two tests of the repair rule.** Znosko-Borovsky, paraphrased [V-sheet]: when you stand worse, defend and restore freedom; but he also warns that playing actively from a worse position is the most dangerous choice. In these two positions the engine's first choice kept the attack alive [V, depth 16]. [I] Two positions do not overturn his advice. They show that counterplay can work while many pieces are near the enemy king. [H] Where the attack has no pieces left, defend."
+    },
+    {
+      "type": "board",
+      "fen": "1r3rk1/7p/Pp3pp1/2pNbn2/5p2/5B2/5PPP/3RR1K1 w - - 0 25",
+      "caption": "GAME E: Gajewski - Bacrot (Olympiad, Tromso, 10 Aug 2014; Black won). White has a passed pawn on a6 and a rook that can take the bishop on e5. The engine reads between +2.7 and +3.6 pawns (White's view, depth 16): White is winning. Which move would you play?",
+      "highlight": [
+        "a6",
+        "e5",
+        "b8",
+        "f6"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 270,
+            "max": 360
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +2.7 and +3.6 pawns (White's view, depth 16)."
+        }
+      ],
+      "chapter": "Mistake 4: capturing before checking what it allows"
+    },
+    {
+      "type": "item",
+      "item": "IOD-KID8-9"
+    },
+    {
+      "type": "board",
+      "fen": "1r3rk1/7p/Pp3pp1/2pNbn2/5p2/5B2/5PPP/3RR1K1 w - - 0 25",
+      "caption": "THE GAME. 25.Rxe5? Before the move the engine read between +2.7 and +3.6 pawns (White's view, depth 16). White takes the bishop, Black recaptures with the pawn and White's knight jumps to c7.",
+      "line": [
+        {
+          "move": "e1e5",
+          "say": "White takes the bishop with the rook."
+        },
+        {
+          "move": "f6e5",
+          "say": "The pawn on f6 recaptures: White has traded a rook for a bishop."
+        },
+        {
+          "move": "d5c7",
+          "say": "The knight jumps to c7 to help the a-pawn."
+        }
+      ],
+      "highlight": [
+        "e5",
+        "f6",
+        "d4"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 270,
+            "max": 360
+          },
+          "statement": "Engine (depth 16): after 0 moves of the line the position is between +2.7 and +3.6 pawns (White's view, depth 16)."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r3rk1/2N4p/Pp4p1/2p1pn2/5p2/5B2/5PPP/3R2K1 b - - 1 26",
+      "caption": "Black's knight lands on d4, the bishop gives check and Black's king steps up. After 26...Kg7 the engine reads between -4.3 and -3.4 pawns (White's view, depth 16). White gave away a winning position in three moves each.",
+      "line": [
+        {
+          "move": "f5d4",
+          "say": "Black's knight lands on d4 and attacks the bishop on f3."
+        },
+        {
+          "move": "f3d5",
+          "say": "The bishop gives check and wins time."
+        },
+        {
+          "move": "g8g7",
+          "say": "Black's king steps up."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": -430,
+            "max": -340,
+            "after_moves": [
+              "f5d4",
+              "f3d5",
+              "g8g7"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between -4.3 and -3.4 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "g7",
+            "piece": "k",
+            "after_moves": [
+              "f5d4",
+              "f3d5",
+              "g8g7"
+            ]
+          },
+          "statement": "After the last move the king stands on g7."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "1r3rk1/7p/Pp3pp1/2pNbn2/5p2/5B2/5PPP/3RR1K1 w - - 0 25",
+      "caption": "THE MISSED MOVE (engine line, depth 16): 25.a7. The pawn attacks the rook on b8 and threatens to queen; Black's rook goes to a8 and White takes the pawn on f6 with check.",
+      "line": [
+        {
+          "move": "a6a7",
+          "say": "The pawn attacks the rook on b8 and threatens to queen."
+        },
+        {
+          "move": "b8a8",
+          "say": "The rook goes to a8 to stop the pawn."
+        },
+        {
+          "move": "d5f6",
+          "say": "The knight takes the pawn on f6 with check: Black must answer it."
+        }
+      ],
+      "highlight": [
+        "a7",
+        "b8",
+        "a8"
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "piece_on",
+          "params": {
+            "square": "f6",
+            "piece": "N",
+            "after_moves": [
+              "a6a7",
+              "b8a8",
+              "d5f6"
+            ]
+          },
+          "statement": "After the last move the knight stands on f6."
+        }
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "r4rk1/P6p/1p3Np1/2p1bn2/5p2/5B2/5PPP/3RR1K1 b - - 0 26",
+      "caption": "The bishop recaptures, White's bishop takes the rook on a8 and Black recaptures. After 27...Rxa8 the engine reads between +2.0 and +2.9 pawns (White's view, depth 16): White keeps a winning advantage.",
+      "line": [
+        {
+          "move": "e5f6",
+          "say": "The bishop recaptures."
+        },
+        {
+          "move": "f3a8",
+          "say": "White's bishop takes the rook on a8."
+        },
+        {
+          "move": "f8a8",
+          "say": "Black recaptures."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "eval_range",
+          "params": {
+            "min": 200,
+            "max": 290,
+            "after_moves": [
+              "e5f6",
+              "f3a8",
+              "f8a8"
+            ]
+          },
+          "statement": "Engine (depth 16): the position at the end of the line is between +2.0 and +2.9 pawns (White's view, depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_on",
+          "params": {
+            "square": "a8",
+            "piece": "r",
+            "after_moves": [
+              "e5f6",
+              "f3a8",
+              "f8a8"
+            ]
+          },
+          "statement": "After the last move the rook stands on a8."
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Check the answer before you capture.** The overlooked candidate does most of the damage in calculation, according to a reviewer's account of Aagaard's book [S, paraphrased]. [I] Here the capture looked natural because the rook attacked a piece, and the pawn push attacked a rook and threatened to queen. Ask three questions before any capture: who defends the piece, what does the recapture open, and which quiet move did I not list?"
+    },
+    {
+      "type": "card",
+      "text": "**The repair table.** Each mistake and the repair that scored best in its position; each rests on one position [I].\n- Closed the queenside with ...c5: that gave White d5. Check which squares you stop guarding.\n- Quiet move in a race: here two cost about a pawn.\n- Stepped aside under a storm: here a knight strike scored better.\n- Gave material: counterplay scored better in two positions, though the source calls it risky.\n- Captured first: count the defenders, list candidates.",
+      "chapter": "Summary and teach-back"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Pick one mistake from the table for Black and one for White. For each, name the position where it happened in this lesson and say in your own words what the repair is.",
+      "fields": [
+        {
+          "id": "black",
+          "label": "A Black mistake and its repair:"
+        },
+        {
+          "id": "white",
+          "label": "A White mistake and its repair:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**Recap.**\n- Closing a wing with a pawn hands over squares for good. [V, one game]\n- A quiet move in a race can cost a tempo; two cost about a pawn here. [I]\n- Under a storm, a piece strike scored better here. [I]\n- When worse after investing material, counterplay scored better in two positions; the source calls it risky. [I]\n- Before a capture, count the defenders and list the candidates. [V]\n- [H] Five positions; we have not counted the commonest errors."
+    },
+    {
+      "type": "reflect",
+      "kind": "unsure",
+      "prompt": "Teach it back to a friend who knows the opening moves of the King's Indian. Fill all four fields, then check them against the list below.\nSelf-check: Did I name the mistake and the position? Did I give the repair? Did I say when the repair fails? Did I give one example a beginner could set up on a board?",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The typical mistake:"
+        },
+        {
+          "id": "repair",
+          "label": "Its repair and the evidence:"
+        },
+        {
+          "id": "fails",
+          "label": "When the repair does not work:"
+        },
+        {
+          "id": "example",
+          "label": "One example I would show:"
+        }
+      ]
+    }
+  ]
+}
