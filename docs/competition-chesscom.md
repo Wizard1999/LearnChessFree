@@ -72,3 +72,23 @@ S0 Moves and the board (7 lessons), S1 Legal play (19), S2 First complete games 
 - Forum thread on the missing beginner roadmap: https://www.chess.com/forum/view/for-beginners/a-call-for-a-real-beginner-roadmap-on-chess-com
 - Community blog on Beginner lesson count: https://www.chess.com/blog/Nightwish85/beginner-complete
 - Not done: chess.com lessons pages themselves, the in-lesson experience, lesson titles. Chessable's and Chess Steps' own pages not read here.
+
+## Addendum, 8 Nov 2026: the chess.com lessons pages, now actually opened
+The first version of this note (and `docs/citable-views.md` 9.x) said the lessons pages were not opened. They were never followed up until Andrew pointed it out; each page took one fetch. Evidence labels: [V] read on the page today, [S] secondary.
+
+**"Learn To Play" (Rules & Basics, Beginner, no videos)** [V, chess.com/lessons/learn-to-play]: 12 lessons, 35 challenges, in this order (challenges in brackets): King (3), Queen (3), Rook (3), Bishop (3), Knight (3), Pawn (4), En Passant (1), Capturing (4), Check (2), Getting out of check (3), Checkmate (3), Castling (3). Basic members get this course free; other categories are limited to one lesson a day on a free account [V, support.chess.com article 8609703].
+- The page says nothing about stars or scoring, so I could not confirm the star-collecting from chess.com; Andrew describes it, and Lichess's learn page does use stars (his screenshots). Challenge format inside a lesson: not seen.
+- Structure of the Learn Path [V, support article]: four levels (New to Chess, Beginner, Intermediate, Advanced), courses made of lessons, a coach explains each lesson, tiles are locked/available/completed, newer lessons are interactive challenges instead of video.
+
+**Their order against ours** [V for theirs]:
+- Theirs: one piece per lesson, **king first, pawn last of the pieces** (the pawn is the most rule-heavy), en passant straight after the pawn as a one-challenge lesson, then capturing, check, getting out of check, checkmate, castling. All rules, about 35 short challenges, no theory.
+- Ours before this week: board names, then rook, bishop, queen, king, knight, pawn; special rules deferred until after the first game (D56).
+- The 12 lessons plus 35 challenges are the whole rules block. Our six piece lessons alone were 37 minutes. The comparable scale is about 3 short challenges per piece.
+
+**Their advice for beginners (Coach Dane's 0-600 guide, paraphrased)** [S, chess.com article, read today]: rules first (how the pieces move; playing the game; respond to check, en passant, castle early), then **play unrated untimed bot games and beat each bot several times**, then "Winning the Game" (checkmate patterns) and "Capturing the Pieces" (piece values, good and bad trades, **basic tactics**), puzzles daily, only then strategy and opening principles; book openings last. Most of the time should go to playing, puzzles and reviewing games.
+
+**What follows for us** [I unless marked]:
+1. Games and bot play are the centre of the beginner path, as D56 says; chess.com says the same.
+2. Basic tactics enter with capturing and trades before strategy (supports D57).
+3. A star-style "reach" step is the shared first-contact format of Lichess (stars) and probably chess.com; the order of pieces is a choice, not a fact: ours becomes rook, bishop, queen (queen = rook + bishop, so it follows them), then king, knight, pawn, with en passant a tiny add-on after the pawn and castling after check. [H: to be changed if first learners stumble]
+4. Not read: the in-lesson challenge screens, the "Playing the Game" and "Winning the Game" course pages (a 404 on one URL), the Intermediate and Advanced courses.
