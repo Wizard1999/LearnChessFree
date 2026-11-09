@@ -8,6 +8,8 @@ Rule behind the order (D54-D57): do what changes a new learner's first hour firs
 3. **Re-sequence the path for the hook**: special rules (castling, promotion, en passant, stalemate) after the first game; first tactics early (loose pieces, mate in one, fork by about hour 2, then pin, skewer, back-rank, discovered). `tools/build_path.py`, then `check_path_time.py` made strict in `tools/check.py`.
 4. **Rebuild stage S2 lessons (21) to the stage budgets**, measure cost per lesson, report cumulative path minutes. S2 is "first complete games", the next thing a hooked learner meets.
 
+   Benchmark gates A1, A2, A3 and A8 (`docs/benchmark.md`, ROADMAP Phase 2m) belong in this tier too: they are cheap checks that make every later lesson better.
+
 ## Tier 2: the core path, in path order
 5. **S3 to S4 lesson rebuilds** (95 lessons): first wins, basic tactics, simple plans. Decide the "-1/-2/-3 sibling merge" question after the S2 cost numbers (Steps needs about a third of our lesson count).
 6. **Pool-depth floor**: about 30 validated unlabelled items per skill in S0-S4 (54 skills are under 20).
