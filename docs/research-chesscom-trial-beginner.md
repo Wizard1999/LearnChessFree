@@ -225,3 +225,94 @@ Lesson 1 The King and the Goal [V]: start screen shows one white king alone on a
 - Claims I checked with the engine: Qf1 draw (earlier), Kh8 holding a draw, Rb1 as the safe move (+0.37, bubble says "good winning chances"), cxb3 over axb3 (the latter loses to Qc1#), Re1 then Re8#, Na6 as the only good defence of c7, Bb4+ best (earlier). One generous claim: Rb1 "good winning chances" [V engine, I judgement]. One text defect earlier: the "does not push a pawn" message on f5-f6.
 - UI defects seen: after a mate in Assisted Checkmates challenge 3 the page once rendered at a huge zoom and the Next control was off-screen; reloading restarts the lesson from the Start screen at challenge 1, so progress inside a lesson is not saved [V]. Next-arrow area and the hint bulb share a position, so an early click opens a hint [V].
 - Account notes: Andrew's account shows "Restart" on courses he has touched and "Start" or "Continue" on others; I did not change any setting, click nothing about upgrade or cancel, and entered no credentials. A promotion click earlier in the first run wrote to the OS clipboard (harness warning), so Andrew should check his clipboard before pasting anything.
+
+# Round 2 (second trial session, 8 Nov 2026): full-library run
+
+Method note [V]: the lesson board is ordinary page markup (pieces carry colour/type/square classes), so a FEN could be read from the screen state of the learner's own lesson with no network or source reading; coach text read from the visible page text. Positions below are FENs read that way (board part, side to move), engine-checked where a claim is made (Stockfish 19 lite depth 14, `tools/engine.py`). No daily-limit modal appeared for any lesson in this session [V].
+
+## Winning with Tactics, lesson 2 "Trapped Piece" (5 challenges, listed 2 min) [V]
+Intro screen: a Giuoco-like position, one bubble of about 35 words (the idea: take away a piece's safe squares with the right pawn move; trades are dangerous for a queen), Start and Explainer Video. Course tags: tactics for beginners/intermediates.
+
+| # | Position (FEN board, side) | Prompt (words) | Accepted | Feedback, hints, refutation |
+|---|---|---|---|---|
+| 1 | r1bq1rk1/ppp2ppp/2np1n2/2b1p3/P1B1P3/2PP1N2/1P3PPP/RNBQK2R w | "Can you find a way to trap Black's c5-bishop?" (10) | b4 (bishop retreats Bb6 by itself), then a5 | Two-move challenge. After b4 the bubble says the bishop retreated to its only safe square and asks to trap it; after a5 "no safe squares to retreat, White will win material". Not tested wrong. |
+| 2 | r1b1k2r/pp2ppbp/2n3p1/2p5/q2PP3/1R3N2/P1QB1PPP/4KB1R w | "Black's queen is all by itself on the edge of the board. Can you find a way to trap it?" (17) | Bb5 (the only move that attacks the queen and leaves it no safe square; python-chess search [V]) | Wrong test Rb4 (attacks the queen but she escapes): red cross, retry button, text "does not trap the black queen, try again" (generic for the theme); no refutation played. |
+| 3 | 2q2rk1/pp5r/2p5/3pQ3/3Pn3/4PN2/PP4P1/2R1R1K1 b (board flipped) | "Can you use a rook to trap White's queen in the middle of the board?" (14) | Rf5 (Qxf5 Qxf5 wins the queen for a rook) | Wrong test Rfe8: the board plays the refutation Qf4 (queen leaves) and the text says the move "allows the queen to survive a little while longer". Wrong test Rh5: generic "does not trap White's queen". Hint 1: "find a move that attacks the queen and does not allow a safe retreat" (18 words) plus the f8 rook square highlighted green. Correct text says "no safe squares"; strictly the queen can take the rook on f5 but loses to the queen on c8 [I]. |
+| 4 | 5k2/pp4pp/4pp2/1P6/8/P3P3/5PPb/2B2K2 w | "Can you find a way to trap the h2-bishop?" (10) | g3 (Black plays ...h5), then Kg2 (Black plays ...h4), then Kxh2: three learner moves | Hints at the later steps: "Which piece can attack Black's bishop?" and "How can White capture Black's bishop?" appear automatically as a question in the bubble if the learner presses Next early. Text after g3 says Black tries to send help with the h-pawn; after Kg2 it says Black should have taken the g3 pawn to get more for the piece. |
+| 5 | rnbqkbnr/p3ppp1/3p3p/1pp5/4P3/1B3N2/PPPP1PPP/RNBQ1RK1 w | "Black just pushed the pawn to c5, planning to trap White's bishop with c4 on the next move. How can White best escape?" (23) | Bd5 (attacks the rook on a8; engine +7.2) | Wrong test a4: red "incorrect", text "not a bad idea, but there is a much stronger move". Engine: a4 about +1.8, Bd5 +7.2, so the text is accurate, but a sound, clearly winning-ish move gets a red cross, not the orange "alternative" state [V engine, I interpretation]. |
+
+Lesson shape [V]: every challenge asks a "trap" question with the theme named in the prompt; two of five are multi-move. Ending: Lesson Complete modal with a graduation cap and Finish button. Nothing about the lesson recalls the previous lesson. Time to play with probes: about 12 minutes.
+
+## Winning with Tactics, lesson 3 "Discovered Attack" (5 challenges, listed 3 min) [V]
+Intro bubble (about 38 words) defines a discovered attack in one sentence and adds why it is strong (the opponent can answer only one piece). Start + Explainer Video. Every one of the five positions is a real or realistic game position with a discovered attack whose first move is a capture or a check.
+
+| # | Position (FEN board, side) | Prompt | Accepted | Wrong-answer feedback |
+|---|---|---|---|---|
+| 1 | r1b2rk1/pp3ppp/3q1n2/3p2B1/8/2PB4/PP1N1PP1/R2Q1RK1 w (from a Gareyev blindfold game) | "Let's play the Grandmaster's next move, 14. Nc4" (tells the move) | Nc4 (...dxc4), Bxh7+ (...Nxh7), Qxd6: three learner moves in one challenge | not tested. Bxh7+ is the engine's only good move (+5.8) [V engine]. Narrative text between moves: Black thought White blundered; "Black resigned in the game". |
+| 2 | r1bqr1k1/p1p2ppp/3b1n2/2P3B1/8/2NQ1N2/PP3PPP/R4RK1 b | "White just captured a pawn on c5, thinking Black would capture on c5 with the bishop and trade queens. What did White miss?" (26) | Bxh2+ (Nxh2), Qxd3 | Bxc5: the board plays the queen trade (Qxd8) and the text says White trades queens with a comfortable game and "there is a much stronger move". Engine: Bxc5 -0.2, Bxh2+ +6.2 [V]. |
+| 3 | r2q1rk1/pbpn1pp1/1p2pb1p/8/2PPN3/6P1/PPQ2PBP/R1BR2K1 w | "How should White use a discovered attack to win material?" (11) | Nxf6+ (Nxf6), Bxb7 | Nd6 (also uncovers Bg2): red, "there is a better option, look for a strong capture", no refutation played. |
+| 4 | k2r4/p2q4/2R5/3B4/8/7P/5PP1/6K1 w | "How can White checkmate?" (5) | Rc8# (double check, only mate in 1) | Rd6+ (a check): "there is a checkmate, but that is not it. Look at your checks." Near-miss text that knows a mate exists. Checkmate/Winner banner on the board. |
+| 5 | rnb2rk1/pp3p1p/4pbp1/q1Pp4/7P/2N5/PPPQPPP1/1K1R1BNR w | "How can White use a discovered attack to win material?" (11) | Nxd5 (Qxd2), Nxf6+ | Ne4 (also discovered, engine +0.5): red, "only a fair trade, find a stronger knight move", and the board plays Qxd2. Rxd2 on the second step: "Black wins a knight, find a better capture". Lesson ends on Nxf6+ with text promising the queen capture next, so the final capture is not played. |
+
+Shape [V]: four of five challenges ask for several learner moves, with opponent replies automatic. Wrong-answer feedback in this lesson is consistently specific (names why the move falls short) and often plays the refutation on the board, the opposite of the Finding Checkmate lesson. Hint button not used. Time about 14 minutes with probes.
+
+## Capturing Pieces, lesson 1 "Evaluating Captures" (URL slug value-of-the-pieces; 5 challenges, listed 3 min) [V]
+The course page lists the lesson as "Value of the Pieces"; the lesson page itself is titled "Evaluating Captures". Intro bubble (about 40 words): the point values (pawn 1, knight 3, bishop 3, rook 5, queen 9, king "the whole game"). The point counts then appear in the feedback texts of every challenge, so the numbers are taught by use.
+
+| # | Position (FEN board, side) | Prompt | Accepted | Wrong-answer feedback |
+|---|---|---|---|---|
+| 1 | 3q2k1/2p2npp/4p3/5p2/3Q3B/4P3/5P2/6K1 w | "What is White's best capture?" (6) | Bxd8 (Nxd8 forced) | Qxd8+ (queen trade): red; "better to capture the queen without losing your own". |
+| 2 | 2r4k/p5pp/1b3n2/3Np3/P3Pp2/2r2B1P/5PP1/R4RK1 w | "Which move wins material for White?" (6) | Nxc3 (rook for knight; engine +4.4) | Nxb6: "only an even trade (3 points for 3 points)". |
+| 3 | 5rk1/1p3pb1/4p3/8/p2n4/6B1/1P1R1P2/3R2K1 w | "How can White win material?" (5) | Rxd4 (Bxd4), Rxd4: two learner moves | Kf1 (quiet): generic "there is a better move, look for a strong capture"; no refutation. |
+| 4 | r2rn1k1/3nqp1p/pp2p1p1/2p3N1/2P2P2/1P4P1/P1Q2PBP/2RR2K1 w | "With White to move, can you find a way to win material?" (12) | Bxa8 (bishop 3 for rook 5; engine +5.2 after the follow-up) | Rxd7: the board plays ...Qxd7 and the text says rook (5) for knight (3) is not a good trade. A refutation shown plus a numbers explanation. |
+| 5 | 3r2k1/4np2/p5b1/1p5p/2pN2p1/P5P1/1P2PP1P/R1N3K1 w | "White's knight on d4 is in trouble. Should White capture the pawn on b5, or is there a stronger defense for White?" (21) | e3 (defend the knight; engine -1.1 for White, best of the options) | Nxb5: board shows the knight lost; text "lost material by trading a knight (3) for a pawn (1)". Correct text explains that if the rook takes, White gains material. |
+
+Shape [V]: the first Capturing Pieces lesson is a counting lesson that uses numbers in every wrong-answer text, two of five challenges are tactics where the "point count" is not the real reason (Rxd4 line, Bxa8 line); the last asks a "capture or defend?" question that anticipates the course's final lesson (Your Opponent's Move). Feedback quality here is the best seen in the 2018 beginner courses [I]. About 12 minutes with probes.
+
+## Playing the Game, lesson 4 "The Language of Chess" (5 challenges, listed 3 min) [V]
+Intro bubble (about 40 words) says squares have names (files a to h, ranks 1 to 8) and that a move is written with a letter for the piece plus the destination square, then sends the learner to the video. All five challenges are "play the move named in the prompt"; every prompt gives the move in notation, so the learner converts notation to action, never the reverse. No tactic or position of interest.
+
+| # | Position | Prompt | Accepted | Wrong-answer feedback |
+|---|---|---|---|---|
+| 1 | 7k/8/8/4p3/P7/8/4P3/6K1 w | "White wants to march a pawn up the board. Play a5." (11) | a5 | e4: "this does not move a pawn to the a5 square" (accurate here). |
+| 2 | 4r2k/1p4p1/p7/P4p2/5P2/6P1/1P6/3R2K1 w | "White would like to attack the b7-pawn by playing Rd7. How can you do that?" (15) | Rd7 | Rd6: "does not move a rook to the d7 square". |
+| 3 | 8/4k3/8/8/8/8/R6P/6K1 w | "White wants to cut the black king off from the f-file. Play Rf2!" (13) | Rf2 | not tested. |
+| 4 | 6k1/8/8/8/7B/8/8/3Q2K1 w | "White can move two pieces to d8. Play Qd8!" (9) | Qd8+ (bishop and queen both reach d8) | Bd8: "this is Bd8, or bishop to d8. We want to play Qd8." Names the move the learner actually made in notation. |
+| 5 | 6k1/8/8/8/8/2N3N1/8/6K1 w | "White can move two knights to e4. Play the knight from the g-file to e4, which is Nge4." (19) | Nge4 | Nce4: "right square, wrong knight! You moved the knight on c3 to e4, known as Nce4. We want to play Nge4." The same-destination ambiguity is the first disambiguation example. |
+
+What it teaches [V]: only the piece letter plus square form, the file-letter disambiguation (in challenge 5, by being told), and nothing about captures (x), check (+), castling (O-O) or the move-number layout of a scoresheet; the lesson ends after 5 moves. Best part [I]: wrong-answer text echoes the learner's move back in notation, so the learner sees how their own move is written. About 8 minutes with probes.
+
+## Playing the Game, lesson 5 "Playing a Game" (slug a-master-chess-game; 5 challenges, listed 3 min) [V]
+The first model game for a beginner: the whole lesson is one short game played out in five prompts, the learner always playing White, opponent moves automatic. Intro bubble (about 15 words) points to the video "with all moves explained"; the interactive part then re-plays the game. Ends on a mate the learner delivers; no game afterwards.
+
+| # | Position before the learner's move | Prompt | Accepted | Notes |
+|---|---|---|---|---|
+| 1 | start position | "Let's start the game by advancing the e-pawn into the center." (12) | e4 (...d5), then exd5 (...Qxd5): two learner moves | Wrong test a3: "there are many playable first moves, but let's start by advancing the pawn in front of the king two squares forward" (tells the answer in words). Black "has played the Scandinavian Defense" (named once). |
+| 2 | rnb1kbnr/ppp1pppp/8/3q4/8/8/PPPP1PPP/RNBQKBNR w | "How can White develop a piece and attack the black queen?" (11) | Nc3 (...Qd8), then Nf3 | Wrong test Nf3: "there is a better option, look for a way to develop a piece and attack the black queen". |
+| 3 | rnbqkb1r/ppp1pppp/5n2/8/8/2N2N2/PPPP1PPP/R1BQKB1R w | "How should White develop another minor piece to control the center?" (11) | Bc4 (only one tried; others untested) | Praise says White "is ready to possibly castle soon" (the course never reaches castling in this game). |
+| 4 | rn1qkb1r/ppp1pppp/5n2/5b2/2B5/2N2N2/PPPP1PPP/R1BQK2R w (Black has played ...Bf5) | "How can White centralize the f3-knight and threaten a quick checkmate?" (12) | Ne5 | The prompt names the idea (threaten a quick mate) but not the target (f7). |
+| 5 | r2qkb1r/ppp1pppp/2n2n2/4Nb2/2B5/2N5/PPPP1PPP/R1BQK2R w | "Black's last move was a huge mistake and White can now win the game. Try to find a checkmate." (18) | Bxf7# (engine: mate in 1) | Nxf7 (engine +4.2, strong): red cross, "there is a checkmate, but that is not it". Final: "A quick win and a well-played game!" Checkmate/Winner banner. |
+
+Shape [V]: the closest thing in the beginner free path to our guided real game, but it is a scripted 8-move game with a hanging mate, only five learner decisions, no opponent choice and no game afterwards [I]. All the white moves are fixed; no black alternatives are shown. About 10 minutes with probes.
+
+### Playing the Game, lesson 3 "Finding the Right Move" (about 4 min, 5 challenges) [V]
+Frame: intro card says to weigh your own options and the opponent's, checking checks, captures and threats. Free, no limit wall.
+
+| # | FEN (board, side) | Prompt (paraphrase) | Accepted | Wrong test and feedback |
+|---|---|---|---|---|
+| 1 | 5rk1/5pp1/8/Q5q1/8/8/5P1P/5RK1 w | How should White escape the check? | Qxg5 | Kh1: "Black wins a queen", look for a capture |
+| 2 | 6k1/6pp/7r/7Q/8/7P/3q2PK/8 w | Mate in 1 | Qe8# | Qg4: a stronger queen move wins at once |
+| 3 | rnbqk1nr/pppp1ppp/8/2b1p3/4P3/5N2/PPPP1PPP/RNBQKB1R w | What should you capture? | Nxe5 (engine +1.5, best) | not tested |
+| 4 | 7k/3R2pp/8/8/8/6N1/5PPP/2r3K1 w | How should White escape the check? | Nf1 (engine +6.2; Rd1 is -0.1) | Rd1: "Black wins the rook", find a better block; board shows the refutation. Success text: the knight is defended by the king |
+| 5 | 6k1/1b4pp/3p4/3N4/r7/2P3P1/7P/5RK1 w | Prompt hints a black king in the h8 corner would allow mate; find the best move | Ne7+ then Rf8# (two-step; reply Kh8 played automatically) | Nb4: "much stronger move". Pressing the hint bulb: "find a knight move that forces the king into the corner" |
+
+Observations [V]: the lesson mixes three ideas (escape check by capture/block, take the free piece, find the forcing mate) in 5 challenges. Wrong-move text names the consequence for escapes (queen/rook lost) and is generic for sound-but-weaker moves. Ending: a Lesson Complete modal with one Finish button. Engine confirmed all five answers as best [V, Stockfish].
+
+### Intro to Book Openings, lesson 2 "d4 Openings for Beginners" (White; listed 3 min, 5 challenges) [V]
+Frame: a short explainer-video intro card (text: 1.d4 is the second most popular start; main line is the Queen's Gambit, 1.d4 d5 2.c4 e6 or c6). Then five challenges that are really one repertoire line replayed against different Black replies. One move prompt in a challenge, with the opponent's reply played automatically and a Next (or hint bulb) step between your moves. Each success message explains the idea and names the Black reply (for example, "Queen's Gambit Declined").
+- c1 (start position): 1.d4. Black answers 1...h6 (a poor move); you play 2.e4 ("place both pawns in the centre if allowed").
+- c2 (after 1.d4 d5): 2.c4. Wrong test Nf3: red, text says it does not attack d5 with the c-pawn (specific, yet Nf3 is a sound move: opening lessons enforce the book move). After 2...dxc4 you play 3.e4 (Black accepts the gambit).
+- c3 (Black replies 2...g6 style, a pawn takes d5): cxd5 then Nc3 (hint text says the b1 knight attacks the queen), then e4 (hint says "the pawn in front of the king, two squares").
+- c4: replays 2.c4 and Black now declines with ...e6. Wrong test Nf3 gave ORANGE "is an alternative": good, but develop the other knight now. Then Nc3, and Bg5 (pin on f6; hint names the bishop and the pin).
+- c5 (after ...Be7): e3 (protect d4, open the light bishop), Black castles, Nf3. Ending: Lesson Complete modal.
+Observations [V]: the opponent varies replies between challenges (weak, accepted, declined), so one lesson shows three branches. The hint bulb text escalates from idea to piece to square (here the first hint already names the piece). Orange alternative is used for a sound move that is not the line being taught, red for a move that fails the stated task. Nothing here was engine-checked (book moves, not claims); no claim that chess.com is wrong.
