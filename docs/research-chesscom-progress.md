@@ -54,7 +54,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |44|learn-the-pirc-defense-and-the-modern-defense|Learn The Pirc Defense And The Modern Defense|Openings|M|CC|3|21|36||listed|
 |45|learn-the-english-opening|Learn The English Opening|Openings|M|CC|3|21|35||listed|
 |46|learn-the-alekhines-defense|Learn The Alekhine's Defense|Openings|M|CC|3|21|33||listed|
-|47|learn-the-scandinavian-defense|Learn The Scandinavian Defense|Openings|M|CC|3|21|24||listed|
+|47|learn-the-scandinavian-defense|Learn The Scandinavian Defense|Openings|M|CC|3|21|24||played-L1-c1-5|
 |48|learn-the-caro-kann-defense|Learn The Caro-Kann Defense|Openings|M|CC|3|21|30||played-partly|
 |49|learn-the-french-defense-tarrasch-and-advance-variations|Learn The French Defense: Tarrasch And Advance Variations|Openings|M|CC|3|21|26||listed|
 |50|learn-the-french-defense-with-3-nc3|Learn The French Defense With 3.Nc3|Openings|M|CC|3|21|22||listed|
@@ -299,7 +299,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |289|hikaru-plays-to-win|Hikaru Plays to Win|Master Games|M|Hikaru Nakamura|6|29|139||listed|
 |290|mastering-the-endgame|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|70||played-L1; L2-5 first challenges|
 |291|immortal-games|Immortal Games|Master Games|M|Simon Williams|5|25|53||listed|
-|292|games-that-changed-chess-history|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|150||listed-first-screens L1-2|
+|292|games-that-changed-chess-history|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|150||played-L1-all-5; L2 first screen|
 |293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||played-L1-2; L3-15 first challenge each|
 |294|make-the-most-of-your-pieces|Make the Most of Your Pieces|Misc|I|CT|7|35|18||played-L1-3|
 |295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-L1-5-all (L2-5 fully)|
@@ -312,7 +312,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |302|attacking-the-king-1|Attacking the King|Misc|A|CT|7|35|53||played-partly|
 |303|choosing-the-best-move|Choosing the Best Move|Misc|A|CT|8|40|65||played-partly|
 |304|winning-the-game|Winning the Game|Misc|B|CT|5|25|16||played-all (sweep-beginner.md)|
-|305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly|
+|305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly (L1; L6 when-to-trade-pieces C1-4)|
 |306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-all-lessons|
 |307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-all (L1 in sweep-beginner.md)|
 |308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons|
@@ -426,3 +426,8 @@ RESUME HERE (segment 4): Playing the Game DONE (all 7 lessons, notes in research
 - Course order of the original brief (Intermediate, Advanced, Mastery library courses) not continued beyond this; remaining `listed` rows are unchanged.
 
 - 9 Nov 2026: Beginner Learn-path tiles 15-28 fully played (all challenges, deliberate wrong moves in most). Notes are in research-chesscom-new-player-journey.md. Defects found: piece-values C9, capturing-decisions C5, promotion C5, castling C6, check C5 (mate in 2 taught as "a check"), saving-the-correct-piece C5 feedback overstated. Intermediate/Advanced path lessons and the library sweep (sweep-<level>.md) not yet started.
+
+## Log, 9 Nov 2026 (segment 4)
+RESUME HERE (segment 5): Games That Changed Chess History L1 DONE (notes in sweep-beginner.md; handoff goes to chess.com/learn, not to L2). Learn The Scandinavian Defense L1 challenges 1-5 of 10 done (same notes file); L1 C6-10, L2 thematic-tactics, L3 model-game not played; the other 13 'Learn the X' courses on the Beginner filter (all-lessons?level=beginner) are unopened, they share the Scandinavian shell (10 challenges in L1, lines of 1-5 learner moves, goal-aware wrong-move text, text hint ladder). Own tab: tab-22 (chess.com, background). JS helpers __fen/__xy(sq,flip)/__txt/__mv(a,b,flip) must be re-injected after each navigation: frame coords = DOM rect * 800/innerWidth; engine helper script is scratchpad eng.py (tools/engine.py search(fen,depth,multipv)). Next: skip to a different opening course (e.g. learn-the-london-and-colle-systems, learn-the-italian-game) L1 C1-C3 only for uniqueness, then start sweep-intermediate.md.
+
+Update (segment 4, later): Scandinavian L3 model game: first 6 learner moves played (notes in sweep-beginner.md). Started docs/research-chesscom-sweep-intermediate.md with Reading the Board L6 When to Trade Pieces C1-3. RESUME HERE (segment 5): continue Reading the Board L6 C4-7 only if cheap, else Reading the Board L2 pawn-chains, L3 space, L4 open-closed-semi-closed-games (6c), L5 push-capture-or-ignore; Understanding Endgames L2-7; Make the Most of Your Pieces L4-7; then Advanced-only courses. Tab tab-22 is the chess.com tab; helpers need re-injection after each navigation (code in segment 4 note above).
