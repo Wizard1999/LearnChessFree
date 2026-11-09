@@ -55,7 +55,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |45|learn-the-english-opening|Learn The English Opening|Openings|M|CC|3|21|35||sampled-L1-c1 (families-a)|
 |46|learn-the-alekhines-defense|Learn The Alekhine's Defense|Openings|M|CC|3|21|33||sampled-L1-c1 + L3 c1 (families-a)|
 |47|learn-the-scandinavian-defense|Learn The Scandinavian Defense|Openings|M|CC|3|21|24||played-L1-c1-5|
-|48|learn-the-caro-kann-defense|Learn The Caro-Kann Defense|Openings|M|CC|3|21|30||played-partly|
+|48|learn-the-caro-kann-defense|Learn The Caro-Kann Defense|Openings|M|CC|3|21|30||played-partly; L2 c1 (seg 17, families-a)|
 |49|learn-the-french-defense-tarrasch-and-advance-variations|Learn The French Defense: Tarrasch And Advance Variations|Openings|M|CC|3|21|26||sampled-L1-c1 (families-a)|
 |50|learn-the-french-defense-with-3-nc3|Learn The French Defense With 3.Nc3|Openings|M|CC|3|21|22||sampled-L1-c1 (families-a)|
 |51|learn-the-center-game-and-danish-gambit|Learn The Center Game And Danish Gambit|Openings|M|CC|3|21|18||sampled-L1-c1 (families-a)|
@@ -72,11 +72,11 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |62|learn-the-benko-gambit|Learn The Benko Gambit|Openings|M|CC|3|21|29||sampled-L1-c1 (families-a)|
 |63|learn-the-queens-indian-defense|Learn The Queen's Indian Defense|Openings|M|CC|3|21|17||sampled-L1-c1 (families-a)|
 |64|learn-the-bogo-indian-defense|Learn The Bogo Indian Defense|Openings|M|CC|3|21|24||sampled-L1-c1 (families-a)|
-|65|learn-the-nimzo-indian-defense|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|20||listed|
-|66|learn-the-benoni-defense|Learn The Benoni Defense|Openings|M|CC|3|21|24||listed|
-|67|learn-the-grunfeld-defense|Learn The Grunfeld Defense|Openings|M|CC|3|21|23||listed|
-|68|learn-the-slav-defense|Learn The Slav Defense|Openings|M|CC|3|21|31||listed|
-|69|learn-the-queens-gambit-accepted|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|19||listed|
+|65|learn-the-nimzo-indian-defense|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|20||sampled-L1-c1 (seg 17, families-a); L2 c1|
+|66|learn-the-benoni-defense|Learn The Benoni Defense|Openings|M|CC|3|21|24||sampled-L1-c1 (seg 17, families-a)|
+|67|learn-the-grunfeld-defense|Learn The Grunfeld Defense|Openings|M|CC|3|21|23||sampled-L1-c1 (seg 17, families-a)|
+|68|learn-the-slav-defense|Learn The Slav Defense|Openings|M|CC|3|21|31||sampled-L1-c1 (seg 17, families-a); L2 c1|
+|69|learn-the-queens-gambit-accepted|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|19||sampled-L1-c1 (seg 17, families-a)|
 |70|learn-the-london-and-colle-systems|Learn The London And Colle Systems|Openings|-|CC|3|21|30||played-partly|
 |71|the-ten-best-games-of-the-1950s|The Top 10 Games Of The 1950s|Master Games|M|Sam Copeland|10|50|144|y|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|
 |72|the-loud-italian|The Loud Italian|Openings|M|A. Kosteniuk|6|30|98||sampled-L1-c1 (seg 13)|
@@ -85,9 +85,9 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |75|play-like-richard-rapport|Play Like Richard Rapport|Master Games|M|Jeremy Kane|5||||sampled-L1-c1 and L5-c1 (seg 15, families-b)|
 |76|play-like-jan-krzysztof-duda|Play Like Jan-Krzysztof Duda|Master Games|M|Jeremy Kane|5||||sampled-L1-c1 (seg 15, families-b)|
 |77|play-like-teimour-radjabov|Play Like Teimour Radjabov|Master Games|M|Jeremy Kane|5|||y|sampled-L1-c1 (seg 15, families-b)|
-|78|learn-the-ruy-lopez-closed-variation|Learn The Ruy Lopez Closed Variation|Openings|IAM|CC|3|21|22||listed|
-|79|learn-the-sicilian-rossolimo-and-moscow-variations|Learn The Sicilian Rossolimo And Moscow Variations|Openings|IAM|CC|3|21|22||listed|
-|80|learn-the-queens-gambit-declined-bf4-variation|Learn The Queen's Gambit Declined: Bf4 Variation|Openings|IAM|CC|3|21|19||listed|
+|78|learn-the-ruy-lopez-closed-variation|Learn The Ruy Lopez Closed Variation|Openings|IAM|CC|3|21|22||sampled-L1-c1 (seg 17, families-a)|
+|79|learn-the-sicilian-rossolimo-and-moscow-variations|Learn The Sicilian Rossolimo And Moscow Variations|Openings|IAM|CC|3|21|22||sampled-L1-c1 (seg 17, families-a)|
+|80|learn-the-queens-gambit-declined-bf4-variation|Learn The Queen's Gambit Declined: Bf4 Variation|Openings|IAM|CC|3|21|19||sampled-L1-c1 (seg 17, families-a)|
 |81|absolutely-must-know-endgames|Absolutely Must Know Endgames|Endgames|M|A. Kosteniuk|12|60|174||played-partly|
 |82|how-to-defeat-a-pawn-weakness|How To Defeat A Pawn Weakness|Strategy|M|Robert Ramirez|5|25|59||sampled-L1-c1 (seg 10)|
 |83|the-10-best-games-of-the-1970s|The 10 Best Games Of The 1970s|Master Games|AM|Sam Copeland|10|50|163||sampled-L1-c1 (seg 15, families-b)|
@@ -110,7 +110,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |100|shakh-vs-the-world-champions|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|86||sampled-L1-c1 (seg 10)|
 |101|carlsen-vs-nepomniachtchi|Carlsen vs. Nepomniachtchi: Their Greatest Games Analyzed|Master Games|M|S. S. Ganguly|5|25|88||sampled-L1-c1 (seg 13)|
 |102|how-to-beat-a-grandmaster|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|63||sampled-L1-c1 (seg 12)|
-|103|genrikh-kasparyans-studies|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||||listed|
+|103|genrikh-kasparyans-studies|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||||sampled-L1-c1 (seg 17, families-a)|
 |104|play-like-a-world-champion-kasparov-vs-karpov|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5|||y|listed|
 |105|every-opening-trap-to-crush-your-opponent|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|156||played-L1-c1|
 |106|every-chess-tactic-explained|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|163||played-partly|
@@ -130,7 +130,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |120|play-like-a-world-champion-fischer-and-karpov|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||||listed|
 |121|play-like-a-world-champion-petrosian-and-spassky|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||||listed|
 |122|my-best-games-shakhriyar-mamedyarov|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|87||sampled-L1-c1 (seg 10)|
-|123|pal-benkos-studies|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||||listed|
+|123|pal-benkos-studies|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||||sampled-L1-c1 (seg 17, families-a)|
 |124|every-gambit-refuted|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|511||sampled-L1-c1 (seg 10); deeper L15, L29 (seg 15, families-b)|
 |125|positional-masterpieces|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|55||sampled-L1-c1 (seg 12)|
 |126|the-top-ten-games-of-the-2000s|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|179||sampled-L1-c1 (seg 15, families-b)|
@@ -146,10 +146,10 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |136|todays-top-juniors|Today's Top Juniors|Master Games|M|M. Khachiyan|5|25|63||sampled-L1-c1 (seg 10)|
 |137|breaking-down-closed-positions|Breaking Down Closed Positions|Strategy|M|J. L. Hammer|4|20|44||sampled-L1-c1 (seg 10; answer not found)|
 |138|learn-from-the-best-komodo|Learn From The Best: Komodo|Master Games|M|Sam Copeland|4|20|48||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|
-|139|alexey-troitskys-studies|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7|||y|listed|
+|139|alexey-troitskys-studies|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7|||y|sampled-L1-c1 (seg 17, families-a)|
 |140|play-like-beth-harmon|Play Like Beth Harmon|Master Games|AM|Jeremy Kane|6||||sampled-L1-c1 and L4 puzzle (seg 15, families-b)|
 |141|play-like-a-speed-chess-champion|Play Like A Speed Chess Champion|Master Games|M|Jeremy Kane|20||||sampled-L1-c1 and L20-c1 (seg 15, families-b)|
-|142|richard-retis-studies|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||||listed|
+|142|richard-retis-studies|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||||sampled-L1-c1 (seg 17, families-a)|
 |143|doubled-pawns-in-the-caro-kann-and-nimzo-indian|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|57||sampled-L1-c1 (seg 10; answer not found)|
 |144|the-latvian-school-of-chess|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|72||sampled-L1-c1 (seg 10)|
 |145|learn-from-the-best-stockfish|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|51||sampled-L1-c1 (families-a)|
@@ -176,8 +176,8 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |166|play-like-max-euwe-1|Play like Max Euwe|Master Games|M|Jeremy Kane|5||||listed|
 |167|play-like-emanual-lasker|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||||listed|
 |168|learn-the-queens-gambit-exchange-variation|Learn the Queen's Gambit Exchange Variation|Openings|BIAM|CC|3|21|28||played-L1-all-10; L3-first-17-moves-ending-not-seen; L2-not-played|
-|169|learn-the-queens-gambit-declined|Learn the Queen's Gambit Declined|Openings|BIAM|CC|3|21|24||listed|
-|170|learn-the-queens-gambit-cambridge-springs-and-orthodox-defense|Learn the Queens Gambit: Cambridge Springs and Orthodox Defense|Openings|BIAM|CC|3|21|23||listed|
+|169|learn-the-queens-gambit-declined|Learn the Queen's Gambit Declined|Openings|BIAM|CC|3|21|24||sampled-L1-c1 (seg 17, families-a)|
+|170|learn-the-queens-gambit-cambridge-springs-and-orthodox-defense|Learn the Queens Gambit: Cambridge Springs and Orthodox Defense|Openings|BIAM|CC|3|21|23||sampled-L1-c1 (seg 17, families-a)|
 |171|top-five-moves-legends-edition|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|112||played-L1-c1|
 |172|tips-and-tricks-of-the-london-system|Tips And Tricks Of The London System|Openings|M|Aman Hambleton|5|25|45||sampled-L1-c1 (seg 13)|
 |173|top-five-moves-candidates-edition|Top Five Moves: Candidates Edition|Master Games|IAM|Simon Williams|8|40|79||sampled-L1-c1 (seg 11)|
@@ -185,26 +185,26 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |175|defending-difficult-positions|Defending Difficult Positions|Strategy|AM|Jeremy Kane|3|15|36||played-L1-c1|
 |176|how-to-defend|How to Defend|Strategy|M|Dejan Bojkov|5|25|51||sampled-L1-c1 (seg 9)|
 |177|2020-candidates-highlights|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|246||sampled-L1-c1 (seg 15, families-b)|
-|178|learn-the-ruy-lopez-tricky-systems|Learn the Ruy Lopez: Tricky Systems|Openings|BIAM|CC|3|21|19||listed|
-|179|learn-the-closed-sicilian|Learn the Closed Sicilian|Openings|BIAM|CC|3|21|19|y|listed|
+|178|learn-the-ruy-lopez-tricky-systems|Learn the Ruy Lopez: Tricky Systems|Openings|BIAM|CC|3|21|19||sampled-L1-c1 (seg 17, families-a)|
+|179|learn-the-closed-sicilian|Learn the Closed Sicilian|Openings|BIAM|CC|3|21|19|y|sampled-L1-c1 (seg 17, families-a)|
 |180|how-to-win-with-the-ruy-lopez-exchange-variation|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|27||sampled-L1-c1 (seg 12)|
 |181|attack-in-the-ruy-lopez-with-5-d4|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|36|y|sampled-L1-c1 (seg 12)|
-|182|learn-the-sicilian-with-2-e6|Learn the Sicilian with 2...e6|Openings|BIAM|CC|3|21|22||listed|
-|183|learn-the-sicilian-alapin-variation|Learn the Sicilian: Alapin Variation|Openings|BIAM|CC|3|21|17||listed|
-|184|learn-the-sicilian-dragon|Learn the Sicilian Dragon|Openings|BIAM|CC|3|21|13||listed|
+|182|learn-the-sicilian-with-2-e6|Learn the Sicilian with 2...e6|Openings|BIAM|CC|3|21|22||sampled-L1-c1 (seg 17, families-a)|
+|183|learn-the-sicilian-alapin-variation|Learn the Sicilian: Alapin Variation|Openings|BIAM|CC|3|21|17||sampled-L1-c1 (seg 17, families-a)|
+|184|learn-the-sicilian-dragon|Learn the Sicilian Dragon|Openings|BIAM|CC|3|21|13||sampled-L1-c1 (seg 17, families-a); L2 c1|
 |185|dont-let-them-castle|Don't Let Them Castle|Strategy|M|Levy Rozman|4|20|44||played-L1-c1|
-|186|learn-the-ruy-lopez-marshall-attack|Learn the Ruy Lopez Marshall Attack|Openings|BIAM|CC|3|21|19||listed|
-|187|learn-the-semi-slav-defense|Learn the Semi-Slav Defense|Openings|BIAM|CC|3|21|14||listed|
+|186|learn-the-ruy-lopez-marshall-attack|Learn the Ruy Lopez Marshall Attack|Openings|BIAM|CC|3|21|19||sampled-L1-c1 (seg 17, families-a); L3 c1|
+|187|learn-the-semi-slav-defense|Learn the Semi-Slav Defense|Openings|BIAM|CC|3|21|14||sampled-L1-c1 (seg 17, families-a)|
 |188|play-like-alireza-firouzja|Play Like Alireza Firouzja|Master Games|M|Jeremy Kane|5||||listed|
-|189|learn-the-ruy-lopez-berlin-defense|Learn the Ruy Lopez Berlin Defense|Openings|BIAM|CC|3|21|19||listed|
-|190|learn-the-kings-indian-defense|Learn the King's Indian Defense|Openings|BIAM|CC|3|21|19||listed|
+|189|learn-the-ruy-lopez-berlin-defense|Learn the Ruy Lopez Berlin Defense|Openings|BIAM|CC|3|21|19||sampled-L1-c1 (seg 17, families-a)|
+|190|learn-the-kings-indian-defense|Learn the King's Indian Defense|Openings|BIAM|CC|3|21|19||sampled-L1-c1 (seg 17, families-a); L3 c1|
 |191|the-five-best-chess-games-of-2019|The Best Chess Games of 2019|Master Games|M|Daniel Rensch|5|25|78||listed|
-|192|learn-the-sicilian-sveshnikov|Learn the Sicilian Sveshnikov|Openings|BIAM|CC|3|21|15||listed|
+|192|learn-the-sicilian-sveshnikov|Learn the Sicilian Sveshnikov|Openings|BIAM|CC|3|21|15||sampled-L1-c1 (seg 17, families-a)|
 |193|hammertime-strategy|Hammertime Strategy|Strategy|M|J. L. Hammer|5|25|63||sampled-L1-c1 (seg 9)|
 |194|how-to-be-lucky-in-chess|How to Be Lucky In Chess|Strategy|IAM|D. Naroditsky|5|25|69||sampled-L1-c1 (seg 5)|
 |195|guide-to-the-alekhines-defense|Guide to the Alekhine's Defense|Openings|AM|Sam Copeland|6|30|84||sampled-L1-c1 (seg 13)|
 |196|play-like-danny-rensch|Play Like Danny Rensch|Master Games|M|Jeremy Kane|5||||listed|
-|197|learn-the-sicilian-najdorf|Learn the Sicilian Najdorf|Openings|BIAM|CC|3|21|10||listed|
+|197|learn-the-sicilian-najdorf|Learn the Sicilian Najdorf|Openings|BIAM|CC|3|21|10||sampled-L1-c1 (seg 17, families-a)|
 |198|play-like-wilhelm-steinitz|Play Like Wilhelm Steinitz|Master Games|M|Jeremy Kane|5||||listed|
 |199|the-greatest-games-youve-never-seen|The Greatest Games You've Never Seen|Master Games|M|T. Abrahamyan|9|45|111||sampled-L1-c1 (seg 12)|
 |200|when-the-amateur-wins|When the Amateur Wins|Master Games|IAM|Simon Williams|4|20|68||sampled-L1-c1 (seg 11)|
@@ -277,7 +277,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |267|crush-with-the-kings-gambit|Crush with the King's Gambit|Openings|M|Simon Williams|5|25|100||sampled-L1-c1 (seg 11)|
 |268|winning-with-the-chigorin|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|51||sampled-L1-c1 (seg 11)|
 |269|how-to-make-a-comeback|How to Make a Comeback|Master Games|M|Mike Klein|3|15|49||sampled-L1-c1 (seg 9)|
-|270|the-amazing-combinations-of-mikhail-tal-2|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||||listed|
+|270|the-amazing-combinations-of-mikhail-tal-2|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||||sampled-L1-c1 (seg 17, families-a)|
 |271|the-amazing-combinations-of-mikhail-tal-1|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||||sampled-L1-c1 (families-a)|
 |272|tactics-from-the-old-masters|Tactics from the Old Masters|Tactics|AM|CT|88||||played-L1-c1|
 |273|attack-with-the-catalan|Attack with the Catalan!|Openings|M|Georg Meier|10|50|172||sampled-L1-c1 (seg 10)|
@@ -358,15 +358,15 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |348|do-or-die-with-rook-endings|Do or Die with Rook Endings|Endgames|IAM|CT|20||||played-L1-c1|
 |349|champion-tactics-with-gm-wolff-back-rank|Champion Tactics with GM Wolff - Back Rank|Tactics|IAM|CT|35||||played-L1-c1|
 |350|champion-tactics-with-gm-wolff-clearance-sacrifice|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||||sampled-L1-c1 + L12 c1 (families-a)|
-|351|champion-tactics-with-gm-wolff-deflecting-the-defender|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||||listed|
-|352|champion-tactics-with-gm-wolff-discovered-check-double-check|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||||listed|
-|353|champion-tactics-with-gm-wolff-double-attacks|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||||listed|
+|351|champion-tactics-with-gm-wolff-deflecting-the-defender|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||||sampled-L1-c1 (seg 17, families-a); L42 c1|
+|352|champion-tactics-with-gm-wolff-discovered-check-double-check|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||||sampled-L1-c1 (seg 17, families-a); L30 c1|
+|353|champion-tactics-with-gm-wolff-double-attacks|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||||sampled-L1-c1 (seg 17, families-a); L29 c1|
 |354|champion-tactics-with-gm-wolff-forks|Champion Tactics with GM Wolff - Forks|Tactics|IAM|CT|37||||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|
-|355|champion-tactics-with-gm-wolff-in-between-moves|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||||listed|
-|356|champion-tactics-with-gm-wolff-interference|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||||listed|
-|357|champion-tactics-with-gm-wolff-misplaced-pieces|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||||listed|
+|355|champion-tactics-with-gm-wolff-in-between-moves|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||||sampled-L1-c1 (seg 17, families-a); L13 c1|
+|356|champion-tactics-with-gm-wolff-interference|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||||sampled-L1-c1 (seg 17, families-a); L21 c1|
+|357|champion-tactics-with-gm-wolff-misplaced-pieces|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||||sampled-L1-c1 (seg 17, families-a); L15 c1|
 |358|champion-tactics-with-gm-wolff-pins-and-skewers|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||||sampled-L1-c1 (families-a)|
-|359|champion-tactics-with-gm-wolff-smother-tactics|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||||listed|
+|359|champion-tactics-with-gm-wolff-smother-tactics|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||||sampled-L1-c1 (seg 17, families-a); L16 c1|
 |360|play-against-bobby-fischer|Play Against Bobby Fischer|Strategy|M|CT|25||||sampled-L1-c1 (seg 8)|
 |361|understanding-the-colle-zukertort|Understanding the Colle-Zukertort|Openings|IAM|CT|25||||sampled-L1-c1 (seg 9)|
 |362|combinations-of-alexander-alekhine|Combinations of Alexander Alekhine|Tactics|M|CT|19||||sampled-L1-c1 (seg 8)|
@@ -563,3 +563,8 @@ Tool notes [V]: browser_batch allows at most 25 actions; a move that is illegal 
 h
 ')[1]` (after the file labels); never hand-type a FEN (one hand-typed FEN with a 7-square rank made the engine search forever and could not be killed from here); two background engine jobs at once on this machine made searches very slow.
 RESUME HERE (segment 17): (1) decade lists, not yet played (FENs and engine lines are in the families-b file): 2000s L4 Krasenkow-Nakamura and L6 Fontaine-MVL, 2010s L5 Gelfand-Nakamura and L9 Wei Yi-Bruzon; (2) Hall of Fame L13 Steinitz, L25 Bronstein, L33 Aronian (FENs read: `r1bq1rk1/ppp2pbp/2npn1p1/4p3/4P3/2PPNN2/PPB2PPP/R1BQK2R w KQ - 0 11`, `r1q2rk1/pp1n1p1p/1n1P2p1/2b1P1B1/4NQ2/1B3P2/PP2K2P/R7 w - - 0 21`, `r1br2k1/1p1nqppp/p1p1pn2/3p4/1bPP4/1PN1PN2/P1BB1PPP/R2Q1RK1 w - - 0 11`), not engined or played; (3) author moves not found: Carlsen-Anand 2013 (Ra1?), Fischer-Karpov none; Zugzwang L10 intended mate in 2; (4) Scotch #213 C4-C5; (5) other long courses' middle lessons (Every Pawn Structure, Silman). Play Like courses are finished for L1 C1; L2-L5 of any Play Like course not played.
+
+## Log, 9 Nov 2026 (segment 17, families A: Learn-the-X remainder, Wolff, Kane Studies, Tal 3)
+Notes in `research-chesscom-sweep-families-a.md` section "Segment 17" (sign convention at its top: eng.py scores are from the side to move). Sampled L1 C1 with a wrong then right move: Nimzo, Benoni, Gruenfeld, Slav, QGA, QGD, Cambridge Springs/Orthodox, QGD Bf4, Semi-Slav, Ruy Closed, Tricky Systems, Marshall, Berlin, Rossolimo, Closed Sicilian, 2...e6, Alapin, Dragon, Sveshnikov, Najdorf, KID; Wolff Deflecting, Discovered/Double Check, Double Attacks, In Between, Interference, Misplaced Pieces, Smother (each L1 and last lesson); Kane Kasparyan, Benko, Troitsky, Reti; Tal Part 3 (L1, L2). Later lessons: Caro-Kann L2, Nimzo L2, Dragon L2, Slav L2, Marshall L3, KID L3. Inventory/progress rows updated (33 each).
+Tool notes [V]: (1) `navigate` straight to `/lessons/<course>/<lesson>` plus one Start script works; the feedback text sits BEFORE the "Challenge n/m" marker, so read `innerText.slice(60,700)`. (2) Wolff lesson URLs end in a series id (`lesson-1-2`, `lesson-42`, `lesson-30-3` titled "Lesson 29"); take them from the course page `fetch`, a guessed number can open another Wolff course or a Missing Page. (3) A helper that prints SAN plus both click coordinates (flipped or not) removed all mis-clicks. (4) The prompt text may arrive 10 s after Start (Tricky Systems); allow 10 s.
+

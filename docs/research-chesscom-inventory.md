@@ -12,19 +12,19 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |1|Learn To Play|Misc|B|CT|12||played|learn-to-play|
 |130|PogChamps Tactics|Tactics|BIAM|Jeremy Kane|4|20|played-partly (C1 of each lesson; fork C1 played)|pogchamps-tactics|
 |168|Learn the Queen's Gambit Exchange Variation|Openings|BIAM|CC|3|21|played-L1-all-10; L3-first-17-moves-ending-not-seen; L2-not-played|learn-the-queens-gambit-exchange-variation|
-|169|Learn the Queen's Gambit Declined|Openings|BIAM|CC|3|21|listed|learn-the-queens-gambit-declined|
-|170|Learn the Queens Gambit: Cambridge Springs and Orthodox Defense|Openings|BIAM|CC|3|21|listed|learn-the-queens-gambit-cambridge-springs-and-orthodox-defense|
-|178|Learn the Ruy Lopez: Tricky Systems|Openings|BIAM|CC|3|21|listed|learn-the-ruy-lopez-tricky-systems|
-|179|Learn the Closed Sicilian|Openings|BIAM|CC|3|21|listed|learn-the-closed-sicilian|
-|182|Learn the Sicilian with 2...e6|Openings|BIAM|CC|3|21|listed|learn-the-sicilian-with-2-e6|
-|183|Learn the Sicilian: Alapin Variation|Openings|BIAM|CC|3|21|listed|learn-the-sicilian-alapin-variation|
-|184|Learn the Sicilian Dragon|Openings|BIAM|CC|3|21|listed|learn-the-sicilian-dragon|
-|186|Learn the Ruy Lopez Marshall Attack|Openings|BIAM|CC|3|21|listed|learn-the-ruy-lopez-marshall-attack|
-|187|Learn the Semi-Slav Defense|Openings|BIAM|CC|3|21|listed|learn-the-semi-slav-defense|
-|189|Learn the Ruy Lopez Berlin Defense|Openings|BIAM|CC|3|21|listed|learn-the-ruy-lopez-berlin-defense|
-|190|Learn the King's Indian Defense|Openings|BIAM|CC|3|21|listed|learn-the-kings-indian-defense|
-|192|Learn the Sicilian Sveshnikov|Openings|BIAM|CC|3|21|listed|learn-the-sicilian-sveshnikov|
-|197|Learn the Sicilian Najdorf|Openings|BIAM|CC|3|21|listed|learn-the-sicilian-najdorf|
+|169|Learn the Queen's Gambit Declined|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-queens-gambit-declined|
+|170|Learn the Queens Gambit: Cambridge Springs and Orthodox Defense|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-queens-gambit-cambridge-springs-and-orthodox-defense|
+|178|Learn the Ruy Lopez: Tricky Systems|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-ruy-lopez-tricky-systems|
+|179|Learn the Closed Sicilian|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-closed-sicilian|
+|182|Learn the Sicilian with 2...e6|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-sicilian-with-2-e6|
+|183|Learn the Sicilian: Alapin Variation|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-sicilian-alapin-variation|
+|184|Learn the Sicilian Dragon|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a); L2 c1|learn-the-sicilian-dragon|
+|186|Learn the Ruy Lopez Marshall Attack|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a); L3 c1|learn-the-ruy-lopez-marshall-attack|
+|187|Learn the Semi-Slav Defense|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-semi-slav-defense|
+|189|Learn the Ruy Lopez Berlin Defense|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-ruy-lopez-berlin-defense|
+|190|Learn the King's Indian Defense|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a); L3 c1|learn-the-kings-indian-defense|
+|192|Learn the Sicilian Sveshnikov|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-sicilian-sveshnikov|
+|197|Learn the Sicilian Najdorf|Openings|BIAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-sicilian-najdorf|
 |283|Your First Tournament|Strategy|BIAM|Ben Finegold|4|20|played-all-4-lessons (L1 reaching-the-time-control, L2 illegal-chess-move, L3 notation, L4 draw claims)|your-first-tournament|
 |290|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|played-L1; L2-5 first challenges|mastering-the-endgame|
 |292|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|played-L1-all-5; L2 first screen|games-that-changed-chess-history|
@@ -52,9 +52,9 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 
 | # | Course | Topic | Lv | Instr | Les | Ch | Sampled | slug |
 |---|---|---|---|---|---|---|---|---|
-|78|Learn The Ruy Lopez Closed Variation|Openings|IAM|CC|3|21|listed|learn-the-ruy-lopez-closed-variation|
-|79|Learn The Sicilian Rossolimo And Moscow Variations|Openings|IAM|CC|3|21|listed|learn-the-sicilian-rossolimo-and-moscow-variations|
-|80|Learn The Queen's Gambit Declined: Bf4 Variation|Openings|IAM|CC|3|21|listed|learn-the-queens-gambit-declined-bf4-variation|
+|78|Learn The Ruy Lopez Closed Variation|Openings|IAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-ruy-lopez-closed-variation|
+|79|Learn The Sicilian Rossolimo And Moscow Variations|Openings|IAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-sicilian-rossolimo-and-moscow-variations|
+|80|Learn The Queen's Gambit Declined: Bf4 Variation|Openings|IAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-queens-gambit-declined-bf4-variation|
 |84|Play The Italian|Openings|IAM|Yuriy Krykun|6|30|played-L1-c1|play-the-italian|
 |118|Candidate Moves|Strategy|IAM|K. Kavutskiy|5|25|played-partly|candidate-moves|
 |150|My Best Game|Master Games|IAM|CT|20|100|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|my-best-game|
@@ -86,15 +86,15 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |348|Do or Die with Rook Endings|Endgames|IAM|CT|20||played-L1-c1|do-or-die-with-rook-endings|
 |349|Champion Tactics with GM Wolff - Back Rank|Tactics|IAM|CT|35||played-L1-c1|champion-tactics-with-gm-wolff-back-rank|
 |350|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||sampled-L1-c1 + L12 c1 (families-a)|champion-tactics-with-gm-wolff-clearance-sacrifice|
-|351|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||listed|champion-tactics-with-gm-wolff-deflecting-the-defender|
-|352|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||listed|champion-tactics-with-gm-wolff-discovered-check-double-check|
-|353|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||listed|champion-tactics-with-gm-wolff-double-attacks|
+|351|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||sampled-L1-c1 (seg 17, families-a); L42 c1|champion-tactics-with-gm-wolff-deflecting-the-defender|
+|352|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||sampled-L1-c1 (seg 17, families-a); L30 c1|champion-tactics-with-gm-wolff-discovered-check-double-check|
+|353|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||sampled-L1-c1 (seg 17, families-a); L29 c1|champion-tactics-with-gm-wolff-double-attacks|
 |354|Champion Tactics with GM Wolff - Forks|Tactics|IAM|CT|37||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|champion-tactics-with-gm-wolff-forks|
-|355|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||listed|champion-tactics-with-gm-wolff-in-between-moves|
-|356|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||listed|champion-tactics-with-gm-wolff-interference|
-|357|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||listed|champion-tactics-with-gm-wolff-misplaced-pieces|
+|355|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||sampled-L1-c1 (seg 17, families-a); L13 c1|champion-tactics-with-gm-wolff-in-between-moves|
+|356|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||sampled-L1-c1 (seg 17, families-a); L21 c1|champion-tactics-with-gm-wolff-interference|
+|357|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||sampled-L1-c1 (seg 17, families-a); L15 c1|champion-tactics-with-gm-wolff-misplaced-pieces|
 |358|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||sampled-L1-c1 (families-a)|champion-tactics-with-gm-wolff-pins-and-skewers|
-|359|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||listed|champion-tactics-with-gm-wolff-smother-tactics|
+|359|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||sampled-L1-c1 (seg 17, families-a); L16 c1|champion-tactics-with-gm-wolff-smother-tactics|
 |361|Understanding the Colle-Zukertort|Openings|IAM|CT|25||sampled-L1-c1 (seg 9)|understanding-the-colle-zukertort|
 |370|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||played-L1-c1|chess-traps-and-miniatures-part-1-quick-knockouts|
 |375|Rook and Other Endgames|Endgames|IAM|Jeremy Silman|39||sampled-L1-c1 (seg 8)|rook-and-other-endgames|
@@ -128,7 +128,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |240|Why Simon Loves the Sicilian Dragandorf|Openings|AM|Simon Williams|7|35|sampled-L1-c1 (seg 11)|why-simon-loves-the-sicilian|
 |246|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|skipped-near-duplicate of #240 (seg 11)|why-simon-loves-the-french|
 |256|Beating the Anti-Sicilians|Openings|AM|Ben Finegold|3|15|sampled-L1-c1 (seg 11; answer not found)|beating-the-anti-sicilians|
-|270|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||listed|the-amazing-combinations-of-mikhail-tal-2|
+|270|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||sampled-L1-c1 (seg 17, families-a)|the-amazing-combinations-of-mikhail-tal-2|
 |271|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||sampled-L1-c1 (families-a)|the-amazing-combinations-of-mikhail-tal-1|
 |272|Tactics from the Old Masters|Tactics|AM|CT|88||played-L1-c1|tactics-from-the-old-masters|
 |276|London System for the Busy Chess Player|Openings|AM|Simon Williams|7|35|sampled-L1-c1 (seg 11)|london-system-for-the-busy-chess-player|
@@ -206,7 +206,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |45|Learn The English Opening|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-english-opening|
 |46|Learn The Alekhine's Defense|Openings|M|CC|3|21|sampled-L1-c1 + L3 c1 (families-a)|learn-the-alekhines-defense|
 |47|Learn The Scandinavian Defense|Openings|M|CC|3|21|played-L1-c1-5|learn-the-scandinavian-defense|
-|48|Learn The Caro-Kann Defense|Openings|M|CC|3|21|played-partly|learn-the-caro-kann-defense|
+|48|Learn The Caro-Kann Defense|Openings|M|CC|3|21|played-partly; L2 c1 (seg 17, families-a)|learn-the-caro-kann-defense|
 |49|Learn The French Defense: Tarrasch And Advance Variations|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-french-defense-tarrasch-and-advance-variations|
 |50|Learn The French Defense With 3.Nc3|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-french-defense-with-3-nc3|
 |51|Learn The Center Game And Danish Gambit|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-center-game-and-danish-gambit|
@@ -223,11 +223,11 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |62|Learn The Benko Gambit|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-benko-gambit|
 |63|Learn The Queen's Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-queens-indian-defense|
 |64|Learn The Bogo Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-bogo-indian-defense|
-|65|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|listed|learn-the-nimzo-indian-defense|
-|66|Learn The Benoni Defense|Openings|M|CC|3|21|listed|learn-the-benoni-defense|
-|67|Learn The Grunfeld Defense|Openings|M|CC|3|21|listed|learn-the-grunfeld-defense|
-|68|Learn The Slav Defense|Openings|M|CC|3|21|listed|learn-the-slav-defense|
-|69|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|listed|learn-the-queens-gambit-accepted|
+|65|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (seg 17, families-a); L2 c1|learn-the-nimzo-indian-defense|
+|66|Learn The Benoni Defense|Openings|M|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-benoni-defense|
+|67|Learn The Grunfeld Defense|Openings|M|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-grunfeld-defense|
+|68|Learn The Slav Defense|Openings|M|CC|3|21|sampled-L1-c1 (seg 17, families-a); L2 c1|learn-the-slav-defense|
+|69|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-queens-gambit-accepted|
 |71|The Top 10 Games Of The 1950s|Master Games|M|Sam Copeland|10|50|family spot check L1-c1 (seg 14) and L4, L10 c1 (seg 16, families-b)|the-ten-best-games-of-the-1950s|
 |72|The Loud Italian|Openings|M|A. Kosteniuk|6|30|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-loud-italian|
 |73|The Top 10 Games Of The 1960s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-top-10-games-of-the-1980s-1|
@@ -251,7 +251,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |99|How to Be Materialistic In Chess|Strategy|M|K. Kavutskiy|5|25|sampled-L1-c1 (seg 12)|how-to-be-materialistic-in-chess|
 |100|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|sampled-L1-c1 (seg 10)|shakh-vs-the-world-champions|
 |101|Carlsen vs. Nepomniachtchi: Their Greatest Games Analyzed|Master Games|M|S. S. Ganguly|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|carlsen-vs-nepomniachtchi|
-|103|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||listed|genrikh-kasparyans-studies|
+|103|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||sampled-L1-c1 (seg 17, families-a)|genrikh-kasparyans-studies|
 |104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-kasparov-vs-karpov|
 |105|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|played-L1-c1|every-opening-trap-to-crush-your-opponent|
 |106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly; seg 16: L10 Zugzwang, L13 Clearance c1 (families-b)|every-chess-tactic-explained|
@@ -268,7 +268,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |120|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-fischer-and-karpov|
 |121|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-petrosian-and-spassky|
 |122|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|sampled-L1-c1 (seg 10)|my-best-games-shakhriyar-mamedyarov|
-|123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||listed|pal-benkos-studies|
+|123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||sampled-L1-c1 (seg 17, families-a)|pal-benkos-studies|
 |126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|sampled-L1-c1 (seg 15, families-b)|the-top-ten-games-of-the-2000s|
 |127|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|henri-rincks-studies|
 |128|Best Of The Best|Master Games|M|Simon Williams|4|20|sampled-L1-c1 (seg 11)|best-of-the-best|
@@ -281,9 +281,9 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |136|Today's Top Juniors|Master Games|M|M. Khachiyan|5|25|sampled-L1-c1 (seg 10)|todays-top-juniors|
 |137|Breaking Down Closed Positions|Strategy|M|J. L. Hammer|4|20|sampled-L1-c1 (seg 10; answer not found)|breaking-down-closed-positions|
 |138|Learn From The Best: Komodo|Master Games|M|Sam Copeland|4|20|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|learn-from-the-best-komodo|
-|139|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7||listed|alexey-troitskys-studies|
+|139|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7||sampled-L1-c1 (seg 17, families-a)|alexey-troitskys-studies|
 |141|Play Like A Speed Chess Champion|Master Games|M|Jeremy Kane|20||sampled-L1-c1 and L20-c1 (seg 15, families-b)|play-like-a-speed-chess-champion|
-|142|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||listed|richard-retis-studies|
+|142|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||sampled-L1-c1 (seg 17, families-a)|richard-retis-studies|
 |143|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|sampled-L1-c1 (seg 10; answer not found)|doubled-pawns-in-the-caro-kann-and-nimzo-indian|
 |144|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|sampled-L1-c1 (seg 10)|the-latvian-school-of-chess|
 |145|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|sampled-L1-c1 (families-a)|learn-from-the-best-stockfish|
