@@ -423,3 +423,5 @@ Your First Tournament (all 4), How To Checkmate L1-2, Mastering the Endgame L1, 
 - Side effects on Andrew's account from this research: the path shows tiles 1 to 12 and 14 as completed, the Next marker is on Piece Values, 2 Day Streak, plus library badges listed in section 5 of the journey file.
 - Library: Advanced Tactics (Ben Finegold, #313) lesson 1 challenges 1 to 3 played with engine checks (notes in `research-chesscom-trial-intermediate.md`).
 - Course order of the original brief (Intermediate, Advanced, Mastery library courses) not continued beyond this; remaining `listed` rows are unchanged.
+
+- 9 Nov 2026: Beginner Learn-path tiles 15-28 fully played (all challenges, deliberate wrong moves in most). Notes are in research-chesscom-new-player-journey.md. Defects found: piece-values C9, capturing-decisions C5, promotion C5, castling C6, check C5 (mate in 2 taught as "a check"), saving-the-correct-piece C5 feedback overstated. Intermediate/Advanced path lessons and the library sweep (sweep-<level>.md) not yet started.
