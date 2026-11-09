@@ -8,6 +8,7 @@ import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { lessonsForSkill } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { LEVEL_HELP, LEVEL_NAMES, STRAND_NAMES, type Level, type Mission, type NodeProgress } from '../lib/missions'
+import { coreLessonsOf } from '../lib/coreLessons'
 import { useMissionData } from '../lib/useMissions'
 
 export function Block({ n, selected, seen, onPick, onHover }: { n: NodeProgress; selected: boolean; seen: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
@@ -49,9 +50,10 @@ export function MissionPanel({ data, picked, onPick }: { data: ReturnType<typeof
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const mission: Mission | undefined = isAll ? undefined : missions.find(m => m.strand === view)
   const current: Mission = mission ?? overall
-  const lessonSeen = (id: string) => content.lessons.some(l => (l.skill === id || l.also?.includes(id)) && progress?.some(p => p.lessonId === l.id)) // a lesson opened, even if not finished
-  const lessonsFor = (id: string) => { const s = lessonsForSkill(content.lessons, id); return s.teaching.length ? s.teaching : s.alsoTeaching }
-  const lessonIdsOf = (nodes: NodeProgress[]) => content.lessons.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
+  const core = coreLessonsOf(content.lessons) // the panel is the core's (D80)
+  const lessonSeen = (id: string) => core.some(l => (l.skill === id || l.also?.includes(id)) && progress?.some(p => p.lessonId === l.id)) // a lesson opened, even if not finished
+  const lessonsFor = (id: string) => { const s = lessonsForSkill(core, id); return s.teaching.length ? s.teaching : s.alsoTeaching }
+  const lessonIdsOf = (nodes: NodeProgress[]) => core.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
   async function markAll(nodes: NodeProgress[], skipped: boolean, label: string) {
     const ls = lessonIdsOf(nodes)
     if (!window.confirm(`${label} ${ls.length} lessons? You can undo this right after, or reset any lesson later.`)) return
@@ -66,11 +68,11 @@ export function MissionPanel({ data, picked, onPick }: { data: ReturnType<typeof
   return (
     <section className="missionpanel" id="mission-panel" aria-label={`${current.name} progress`}>
       <div className="options" role="group" aria-label="Section">
-        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Core curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
       </div>
       {!isAll && <h2>{current.name}</h2>}
-      {complete && <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your badges are in the <Link to="/record">Learning record</Link>.</div>}
+      {complete && <div className="completebanner" role="status"><strong>✓ {isAll ? 'Core' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your badges are in the <Link to="/record">Learning record</Link>.</div>}
       {!isAll && <>
         <p className="small muted">SECTION PROGRESS</p>
         <div className="donutrow">

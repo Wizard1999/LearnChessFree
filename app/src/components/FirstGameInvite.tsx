@@ -1,13 +1,13 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
-import { useContent } from '../lib/content'
+import { useCoreLessons } from '../lib/coreLessons'
 import { useLessonProgress } from '../lib/progress'
 import { GENTLE_PLAY_PATH, INVITE_DISMISS_KEY, INVITE_PAUSE_MS, showInvite } from '../lib/firstGame'
 
 /** Whether the invitation shows now (undefined while loading). Today uses it to hide its own quieter "Play now" while the card is up. */
 export function useFirstGameInvite(): boolean | undefined {
-  const { lessons } = useContent()
+  const lessons = useCoreLessons() // electives never move the invitation (D80)
   const progress = useLessonProgress()
   const dismissedUntil = useLiveQuery(() => kvGet<number | null>(INVITE_DISMISS_KEY, null), [])
   const played = useLiveQuery(() => db.games.filter(g => g.source === 'practice').count().catch(() => 0), [])

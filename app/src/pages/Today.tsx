@@ -16,6 +16,7 @@ import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/dril
 import { useStorageStatus } from '../lib/persist'
 import { stageLine, stageProgress } from '../lib/stageProgress'
 import { FirstGameInvite, useFirstGameInvite } from '../components/FirstGameInvite'
+import { coreLessonsOf } from '../lib/coreLessons'
 import { PlayNudge } from '../components/PlayNudge'
 import { GuidedGame } from '../components/GuidedGame'
 import { anyLessonDone, firstGuided, GENTLE_PLAY_PATH } from '../lib/firstGame'
@@ -104,7 +105,7 @@ export function Today() {
   const startBlock = blocks.find(b => b.kind === 'start' && !doneIds.includes(b.id))
   const upNext = blocks.find(b => !doneIds.includes(b.id) && b.kind !== 'start') ?? startBlock
   const others = blocks.filter(b => b !== upNext && b !== startBlock)
-  const stageText = stageLine(stageProgress(content.lessons, P, masteries))
+  const stageText = stageLine(stageProgress(coreLessonsOf(content.lessons), P, masteries))
   const learning = [...masteries.entries()].filter(([, m]) => m.state !== 'unseen').sort((a, b) => b[1].n - a[1].n).slice(0, 6)
 
   const inProgress = (b: Block) => b.kind === 'lesson' && (progress ?? []).some(p => p.lessonId === b.lessonId && !p.done && p.step > 0)
@@ -187,7 +188,7 @@ export function Today() {
           {planReady && <FirstGameInvite />}
           {planReady && <PlayNudge />}
           {planReady && stageText && <p className="small muted stageline"><Link to="/course?view=lessons">{stageText}</Link></p>}
-          {planReady && missionData.ctx && <MapPreview skills={content.skills} lessons={content.lessons} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
+          {planReady && missionData.ctx && <MapPreview skills={content.skills} lessons={coreLessonsOf(content.lessons)} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
           {startBlock && upNext !== startBlock && <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting point <span className="muted">(optional, about {startBlock.minutes} minutes)</span></Link></div>}
           <details className="card aimcard" open={!!intention}>
             <summary>Set your own aim for today <span className="muted small">· optional</span></summary>

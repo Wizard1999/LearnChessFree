@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
+import { coreLessonsOf } from '../lib/coreLessons'
 import { useContent } from '../lib/content'
 import { describeMastery } from '../lib/mastery'
 import { independenceSentence } from '../lib/labels'
@@ -38,7 +39,7 @@ export function ProgressReport() {
   }, [firsts])
 
   const lessonProg = useLessonProgress()
-  const stages = useMemo(() => stageProgress(content.lessons, lessonProg ?? [], masteries), [content.lessons, lessonProg, masteries])
+  const stages = useMemo(() => stageProgress(coreLessonsOf(content.lessons), lessonProg ?? [], masteries), [content.lessons, lessonProg, masteries])
 
   const diag = useMemo(() => { const m = new Map<string, number>(); for (const r of reflections ?? []) if (r.kind === 'diagnosis') m.set(r.data.cause, (m.get(r.data.cause) ?? 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1]) }, [reflections])
   // First answers by outcome: the same three marks as in the exercises (correct, sound alternative, unsuccessful).

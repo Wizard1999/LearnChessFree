@@ -177,5 +177,33 @@ describe('top bar (D72)', () => {
     expect(container.querySelector('.playnudge a[href$="/people"]')).not.toBeNull()
     await db.games.clear(); await db.lessonProgress.clear()
   })
+  it('the Curriculum counts only core lessons: electives stay out of the totals, the stage sections and the first-game slot, and Core complete is named (D80)', async () => {
+    await db.games.clear(); await db.lessonProgress.clear()
+    const cat = JSON.parse(readFileSync(join(PUBLIC, 'content', 'lessons.json'), 'utf8')) as { lessons?: { id: string; course?: string; stage?: string }[] } | { id: string; course?: string; stage?: string }[]
+    const all = Array.isArray(cat) ? cat : cat.lessons ?? []
+    const core = all.filter(l => !l.course)
+    expect(all.length - core.length).toBeGreaterThan(0) // the catalog really has elective lessons
+    const { container } = await open('/course')
+    await waitFor(() => expect(container.querySelector('.overallbar .overallmeta')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('.overallbar .overallmeta')?.textContent).toContain(`of ${core.length} lessons`)
+    expect(container.querySelector('.overallbar .overalltitle')?.textContent).toContain('Core curriculum')
+    const rows = [...container.querySelectorAll('.card .disclose .discount')].map(e => Number(/of (\d+) done/.exec(e.textContent ?? '')?.[1] ?? 0))
+    expect(rows.reduce((a, b) => a + b, 0)).toBe(core.length) // the stage sections add up to the core
+    expect(container.querySelector('.corenote')?.textContent).toMatch(/Core complete means all \d+ core skills with exercises are Mastered/)
+    expect(container.querySelector('.corenote a')?.getAttribute('href')).toMatch(/view=courses/)
+    expect(container.querySelector('.corenote')?.textContent).toMatch(/Looking for something different\? Electives are bonus chess: history, famous games and more/)
+    expect(container.querySelector('.corenote')?.textContent).not.toMatch(/after the core/i)
+    expect(container.querySelector('.overallbar')?.textContent).not.toMatch(/of 508 lessons/)
+  })
+  it('the Electives page keeps its own totals and says it is bonus chess outside the core', async () => {
+    const { container } = await open('/course?view=courses')
+    await waitFor(() => expect(container.querySelectorAll('.disclose').length).toBeGreaterThan(1), { timeout: 15000 })
+    expect(container.querySelector('.lede')?.textContent).toMatch(/Bonus chess for the curious: history, famous players, iconic games and more\. Not part of the core, so nothing here affects your progress/)
+    expect(container.querySelector('.lede')?.textContent).not.toMatch(/after the core/i)
+    const cat = JSON.parse(readFileSync(join(PUBLIC, 'content', 'lessons.json'), 'utf8')) as { lessons?: { course?: string }[] } | { course?: string }[]
+    const elective = (Array.isArray(cat) ? cat : cat.lessons ?? []).filter(l => l.course).length
+    const totals = [...container.querySelectorAll('.disclose .discount')].map(e => Number(/of (\d+) done/.exec(e.textContent ?? '')?.[1] ?? 0))
+    expect(totals.reduce((a, b) => a + b, 0)).toBe(elective)
+  })
 })
 

@@ -40,7 +40,7 @@ export function CoursesView() {
   const isOpen = (id: string) => open.isOpen(id, !!needle || id === homeId)
   return (
     <section aria-label="Courses">
-      <p className="lede">Courses are optional paths on top of the core curriculum. They never re-teach a skill: each lesson says which core skills it uses.</p>
+      <p className="lede">Bonus chess for the curious: history, famous players, iconic games and more. Not part of the core, so nothing here affects your progress. Dip in any time; each lesson says which core skills it uses.</p>
       {content.courses.length > 0 && (
         <div className="toolbar listbar" role="group" aria-label="Electives controls">
           <input className="listsearch" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search electives" aria-label="Search electives" />

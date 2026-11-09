@@ -3,6 +3,7 @@ import { useContent } from './content'
 import { buildMissions, overallMission, type MissionContext } from './missions'
 import { masteryMap, useAttempts, useLessonProgress, usePlacement, NO_PLACEMENT } from './progress'
 import { splitSkillKey } from '../types'
+import { coreLessonsOf } from './coreLessons'
 
 /** Everything the mission views need, computed once from the learner's evidence. `ctx` is null until storage has loaded. */
 export function useMissionData() {
@@ -17,7 +18,8 @@ export function useMissionData() {
     for (const i of content.items) { const { skill, depth } = splitSkillKey(i.skill); const l = itemDepths.get(skill) ?? []; if (!l.includes(depth)) l.push(depth); itemDepths.set(skill, l) }
     const doneIds = new Set(progress.filter(p => p.done).map(p => p.lessonId))
     const lessonDone = new Set<string>(), hasLesson = new Set<string>()
-    for (const l of content.lessons) for (const node of [l.skill, ...(l.also ?? [])]) { hasLesson.add(node); if (doneIds.has(l.id)) lessonDone.add(node) }
+    // only core lessons give a skill its lesson credit: finishing an elective lesson is not finishing the core lesson (D80)
+    for (const l of coreLessonsOf(content.lessons)) for (const node of [l.skill, ...(l.also ?? [])]) { hasLesson.add(node); if (doneIds.has(l.id)) lessonDone.add(node) }
     return { masteries: masteryMap(attempts, Date.now(), content.cuedOnly), placement, skillById: content.skillById, itemDepths, lessonDone, hasLesson, cuedOnly: content.cuedOnly }
   }, [attempts, progress, placement, content])
   const missions = useMemo(() => (ctx ? buildMissions(content.skills, ctx) : []), [ctx, content.skills])

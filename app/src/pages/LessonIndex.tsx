@@ -5,6 +5,7 @@ import { db } from '../db'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { finishedEarlierVersion } from '../lib/resume'
 import { useContent } from '../lib/content'
+import { useCoreLessons } from '../lib/coreLessons'
 import type { LessonMeta } from '../types'
 import { lessonSort, masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
 import { stageProgress } from '../lib/stageProgress'
@@ -38,6 +39,7 @@ const fmt = aboutMinutes
 /** Every lesson on one page: find it, open it, or mark it finished, skipped or unstarted. Nothing is locked. */
 export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick?: (id: string) => void } = {}) {
   const content = useContent()
+  const coreLessons = useCoreLessons()
   const progress = useLessonProgress()
   const [q, setQ] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
@@ -48,7 +50,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   const challenge = useMasteryChallenge()
   const attempts = useAttempts()
   const md = useMissionData()
-  const stages = useMemo(() => stageProgress(content.lessons, progress ?? [], masteryMap(attempts ?? [], Date.now(), content.cuedOnly)), [content.lessons, content.cuedOnly, progress, attempts])
+  const stages = useMemo(() => stageProgress(coreLessons, progress ?? [], masteryMap(attempts ?? [], Date.now(), content.cuedOnly)), [coreLessons, content.cuedOnly, progress, attempts])
   const open = useOpenSections('lessonlist:open')
   const [flash, setFlash] = useState<string | null>(null)
   const [target, setTarget] = useState<{ id: string; n: number } | null>(null)
@@ -76,7 +78,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   }, [target, q, strandSel, stageSel, filter, view])
   const byId = useMemo(() => new Map((progress ?? []).map(p => [p.lessonId, p])), [progress])
   const groups = useMemo(() => {
-    const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
+    const sorted = [...coreLessons].sort((a, b) => lessonSort(a, b, content.skillById))
     const m = new Map<string, typeof sorted>()
     for (const l of sorted) {
       const sk = content.skillById.get(l.skill)
@@ -95,7 +97,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   }, [content, byId, q, filter, strandSel, stageSel, view])
   // Up next: in the recommended path the first unfinished lesson in path order; by subject, the first unfinished lesson of each subject. Filters and search never move it.
   const upNextIds = useMemo(() => {
-    const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
+    const sorted = [...coreLessons].sort((a, b) => lessonSort(a, b, content.skillById))
     const first = new Map<string, string>()
     for (const l of sorted) {
       if (byId.get(l.id)?.done) continue
@@ -107,9 +109,9 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   }, [content, byId, view])
   const strandIds = useMemo(() => [...new Set(content.skills.map(k => k.strand))].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))), [content.skills])
   const groupOf = (l: LessonMeta) => (view === 'path' ? l.stage : content.skillById.get(l.skill)?.strand)
-  const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
-  const totalMin = content.lessons.reduce((t, l) => t + mins(l), 0)
-  const doneMin = content.lessons.filter(l => byId.get(l.id)?.done).reduce((t, l) => t + mins(l), 0)
+  const doneCount = coreLessons.filter(l => byId.get(l.id)?.done).length
+  const totalMin = coreLessons.reduce((t, l) => t + mins(l), 0)
+  const doneMin = coreLessons.filter(l => byId.get(l.id)?.done).reduce((t, l) => t + mins(l), 0)
   const mark = (l: LessonMeta, skipped: boolean) => saveFinished(db.lessonProgress, l, skipped)
   const reset = (id: string) => resetProgress(db.lessonProgress, id)
 
@@ -141,8 +143,12 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
     <section aria-label="Lesson index">
       <div className="card overallbar">
         <div className="overallinfo">
-          <h2 className="overalltitle">Whole curriculum <Tooltip label={explain}><button type="button" className="infobtn" aria-label={explain}>?</button></Tooltip></h2>
-          <p className="small muted overallmeta"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /><span>{doneCount} of {content.lessons.length} lessons ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%) · {fmt(Math.max(0, totalMin - doneMin))} left</span></p>
+          <h2 className="overalltitle">Core curriculum <Tooltip label={explain}><button type="button" className="infobtn" aria-label={explain}>?</button></Tooltip></h2>
+          <p className="small muted overallmeta"><progress value={doneCount} max={coreLessons.length || 1} aria-label={`${doneCount} of ${coreLessons.length} lessons finished`} /><span>{doneCount} of {coreLessons.length} lessons ({Math.round((100 * doneCount) / (coreLessons.length || 1))}%) · {fmt(Math.max(0, totalMin - doneMin))} left</span></p>
+          <p className="small corenote">{overallSum.complete
+            ? <><strong>Core complete.</strong> Every core skill with exercises is Mastered. </>
+            : <><strong>Core complete</strong> means all {overallSum.liveCount} core skills with exercises are Mastered ({overallSum.counts[4]} so far; each needs success on two separate days). </>}
+            Looking for something different? <Link to="/course?view=courses">Electives</Link> are bonus chess: history, famous games and more.</p>
         </div>
         {mission}
         <div className="nextcta">
@@ -174,12 +180,12 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
         <Fragment key={strand}>
         {view === 'path' && gi === inviteSlot(groups.map(g => g[0])) && <FirstGameInvite />}
         <div className="card" data-hue={view === 'path' ? hueOfStage(Math.max(1, PATH_STAGES.findIndex(x => x.id === strand) + 1)) : hueOfStrand(strand)}>
-          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); const d = all.filter(l => byId.get(l.id)?.done).length; const open = isOpen(strand); const name = view === 'path' ? `${stageLabel(strand)}: ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand); return (
+          {(() => { const all = coreLessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); const d = all.filter(l => byId.get(l.id)?.done).length; const open = isOpen(strand); const name = view === 'path' ? `${stageLabel(strand)}: ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand); return (
             <SectionHead id={`sec-${view}-${strand}`} open={open} onToggle={() => setOpenKey(strand, !open)} name={name} done={d} total={all.length} emblem={strand}
               badge={view === 'path' && stages.find(x => x.id === strand)?.current ? <span className="badge here">You are here</span> : undefined}
               right={<span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span>} />) })()}
           {view === 'path' && PATH_STAGES.find(x => x.id === strand)?.milestone && <p className="stagesub">{PATH_STAGES.find(x => x.id === strand)?.milestone}</p>}
-          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
+          {(() => { const all = coreLessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
             <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped{view === 'path' && (() => { const st = stages.find(x => x.id === strand); return st ? <> · Shown in exercises: <strong>{st.shown} of {st.skills}</strong> skills</> : null })()}</p>) })()}
           {isOpen(strand) && <ul className="plain lessonindex" id={`sec-${view}-${strand}`}>
             {ls.map(l => {

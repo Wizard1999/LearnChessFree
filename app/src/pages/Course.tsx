@@ -1,6 +1,7 @@
 import { RadialMap } from '../components/RadialMap'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import { coreLessonsOf } from '../lib/coreLessons'
 import { LessonIndex } from './LessonIndex'
 import { CoursesView } from './CoursesView'
 import { describeMastery } from '../lib/mastery'
@@ -67,8 +68,8 @@ export function Course() {
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const [why, setWhy] = useState<string | null>(null)
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
-  const homeStages = useMemo(() => skillHomeStages(content.skills, content.lessons), [content.skills, content.lessons])
-  const hereStage = useMemo(() => currentStageIndex(content.lessons, new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
+  const homeStages = useMemo(() => skillHomeStages(content.skills, coreLessonsOf(content.lessons)), [content.skills, content.lessons])
+  const hereStage = useMemo(() => currentStageIndex(coreLessonsOf(content.lessons), new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   if (!ctx || !attempts) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
 
@@ -193,7 +194,7 @@ export function Course() {
   const otherView = showCourses ? <main className="page wide curriculum"><h1 className="sr-only">Curriculum</h1><CoursesView /></main> : showLessons ? <main className={`page wide curriculum${node && sk ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1><LessonIndex picked={picked} onPick={pick} /></main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
   const sectionChips = <>
-        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
+        <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Core curriculum</strong> · {overall.percent}%</button>
         {missions.map(m => <button key={m.strand} type="button" className={!isAll && view === m.strand ? 'chip on' : 'chip'} aria-pressed={!isAll && view === m.strand} onClick={() => setView(m.strand)}>{m.strand} {m.name} · {m.percent}%</button>)}
   </>
   const stageChips = <>
@@ -220,14 +221,14 @@ export function Course() {
       <div className="missiongrid mapgrid">
 
         <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="Sections and stages">
-      <ChipGroup label="Sections" menu current={isAll ? 'Whole curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
+      <ChipGroup label="Sections" menu current={isAll ? 'Core curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
         {sectionChips}
       </ChipGroup>
       <ChipGroup label="Stages" menu current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
         {stageChips}
       </ChipGroup>
       <button type="button" className="chip maphelp" aria-label="How the map fills in" title={MAP_HELP}>?</button>
-      </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={content.lessons} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
+      </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={coreLessonsOf(content.lessons)} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
       </div>
 
