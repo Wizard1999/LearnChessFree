@@ -303,9 +303,9 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||listed|
 |294|make-the-most-of-your-pieces|Make the Most of Your Pieces|Misc|I|CT|7|35|18||played-partly|
 |295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-partly|
-|296|intro-to-book-openings|Intro to Book Openings|Misc|B|CT|5|25|21||played-partly|
+|296|intro-to-book-openings|Intro to Book Openings|Misc|B|CT|5|25|21||played-all-lessons|
 |297|activating-your-pieces|Activating Your Pieces|Misc|A|CT|10|53|66||played-partly|
-|298|opening-principles|Opening Principles|Misc|B|CT|5|26|26||played-partly|
+|298|opening-principles|Opening Principles|Misc|B|CT|5|26|26||played-L1-2|
 |299|advanced-endgames|Advanced Endgames|Misc|A|CT|5|25|38||played-partly|
 |300|key-openings|Key Openings|Misc|A|CT|8|43|50||played-partly|
 |301|finding-checkmate|Finding Checkmate|Misc|B|CT|6|30|20||played|
@@ -313,9 +313,9 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |303|choosing-the-best-move|Choosing the Best Move|Misc|A|CT|8|40|65||played-partly|
 |304|winning-the-game|Winning the Game|Misc|B|CT|5|25|16||played-partly|
 |305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly|
-|306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-partly|
+|306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-all-lessons|
 |307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-partly|
-|308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-partly|
+|308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons (L1 partly)|
 |309|understanding-endgames|Understanding Endgames|Misc|I|CT|7|35|21||played-partly|
 |310|learn-to-play-chess|Learn To Play Chess|Misc|B|CT|13|65|18|y|played|
 |311|endgame-patterns|Endgame Patterns|Misc|A|CT|7|35|41||played-partly|
