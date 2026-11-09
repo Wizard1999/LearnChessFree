@@ -4,6 +4,8 @@ Source: a ten-course plan Andrew pasted from a ChatGPT conversation. **Evidence 
 
 **Framing (Andrew, 9 Nov 2026):** electives are bonus content, any time: history, famous players, iconic games, anything fun or outside the core's scope. They share no lessons with the core and teach no core skill; a lesson may point at "relevant skills to know first" (D80). Each course is bounded: five or six short chapters, a first encounter of about three to seven minutes [I], and a finale of positions never shown in the teaching.
 
+**Timing (Andrew, 9 Nov 2026):** these ideas are parked. No new elective is built until the core curriculum is finished, or at least mostly finished. Structure and overlap fixes (D80, D81) go ahead; new elective authoring does not.
+
 ## Verdict per idea
 
 | Idea | Verdict | Why |
