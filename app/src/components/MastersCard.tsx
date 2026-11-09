@@ -21,7 +21,7 @@ export function MastersCard({ epd, onPlay, canPlay, always }: { epd: string; onP
     <section className="card" aria-label="Top-level games">
       <h2>Top-level games</h2>
       <p className="small muted">Source: {data.info.games.toLocaleString()} over-the-board games between players rated {data.info.minElo}+ (first {data.info.maxPly / 2} moves). {s.totalGames.toLocaleString()} of them reached this position. Counts are results of games, not evaluations of the moves.</p>
-      <table className="mastertable">
+      <div className="tablewrap"><table className="mastertable">
         <thead><tr><th>Move</th><th>Games</th><th>White / draw / Black</th><th>Avg rating</th><th>Years</th></tr></thead>
         <tbody>
           {s.rows.map(r => {
@@ -37,7 +37,7 @@ export function MastersCard({ epd, onPlay, canPlay, always }: { epd: string; onP
             )
           })}
         </tbody>
-      </table>
+      </table></div>
       {s.hiddenMoves > 0 && <p className="small muted">{s.hiddenMoves} rarer move{s.hiddenMoves === 1 ? '' : 's'} ({s.hiddenGames.toLocaleString()} games) not shown. Small samples say little: a move with a few games proves nothing about its strength.</p>}
     </section>
   )

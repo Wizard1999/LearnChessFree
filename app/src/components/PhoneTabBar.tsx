@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { MORE_LINKS, PHONE_TABS, isFocusRoute, phoneTabFor, type PhoneTab } from '../lib/phoneNav'
 import { usePhone } from '../lib/usePhone'
+import { useActiveWindow } from '../lib/activeWindow'
 import { Sheet } from './Sheet'
 
 /** Simple line icons drawn in the text colour (no raw colours). */
@@ -22,8 +23,9 @@ export function PhoneTabBar() {
   const phone = usePhone()
   const loc = useLocation()
   const [moreOpen, setMoreOpen] = useState(false)
+  const openWindow = useActiveWindow()
   if (!phone || isFocusRoute(loc.pathname)) return null
-  const active = phoneTabFor(loc.pathname, loc.search)
+  const active = phoneTabFor(loc.pathname, loc.search, openWindow)
   return (
     <>
       <nav className="tabbar" aria-label="Main">

@@ -11,6 +11,9 @@ describe('phone navigation', () => {
     expect(phoneTabFor('/course')).toBe('curriculum')
     expect(phoneTabFor('/course', '?win=progress')).toBe('progress')
     expect(phoneTabFor('/course', '?win=challenge')).toBe('mastery')
+    expect(phoneTabFor('/course', '', 'progress')).toBe('progress') // the address is cleared after the page reads it; the open window keeps the tab lit
+    expect(phoneTabFor('/course', '', 'challenge')).toBe('mastery')
+    expect(phoneTabFor('/play', '', 'challenge')).toBe('more')
     expect(phoneTabFor('/lesson/L-FND-BOARD-1')).toBe('curriculum')
     expect(phoneTabFor('/practice')).toBe('mastery')
     expect(phoneTabFor('/placement')).toBe('mastery')
