@@ -35,3 +35,9 @@
     .page.stage .lesson .board-wrap, .page.stage:not([data-hue]) .item > .board-wrap, .page.stage:not([data-hue]) .lineplayer > .board-wrap { width: round(down, var(--bsz), 8px); }
   }
 }
+/* analysis on mid-width windows: no spare column on the left, so the board and the panel share the width */
+@media (min-width: 1100px) and (max-width: 1499px) {
+  .page.stage .analysis { --bsz: min(calc(100svh - 17rem), 50vw, 920px); grid-template-columns: calc(var(--bsz) + 40px) minmax(300px, 1fr); }
+  .page.stage .analysis > :first-child { grid-column: 1; }
+  .page.stage .analysis > :nth-child(2) { grid-column: 2; max-width: none; }
+}
