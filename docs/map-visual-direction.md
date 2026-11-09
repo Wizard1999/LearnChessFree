@@ -95,3 +95,5 @@ Copying chess.com's tile look too closely (rights and identity): borrow the prin
 The Map is named **Constellations** in the header and tabs (address and code names unchanged) and is drawn as a star chart (night sky or parchment, stars, thin constellation lines, astrolabe rings, a compass rose). Behaviour, the D74 line rules and the layout are unchanged. The earlier look is kept at tag `map-before-constellations` (commit 52167ae); restore with `git checkout map-before-constellations -- app/src/components/RadialMap.tsx app/src/styles/map.css`. Details in `DECISIONS-LOG.md` D88.
 
 Second pass (D88b): a near-black sky in dark mode, almost no background dust, the open frontier bright and the rest dim, a soft highlight along the chosen skill's whole way in, and an optional "Slice colours" toggle (off by default, stored per device) that tints each subject's slice in its own hue.
+
+D88c: with Slice colours off each slice still has a thin band in its subject hue along its outer edge and its constellation name in that hue (mixed toward the ink so the text stays readable); the wedge tint is the toggle.

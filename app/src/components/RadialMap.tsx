@@ -26,7 +26,7 @@ interface Props { /** Controls placed at the start of the toolbar (the view, sec
 
 /** Text that follows an arc of a circle round the map, centred on `mid` (radians), reading upright: on the top half it runs clockwise outside the baseline,
  * on the bottom half the path is reversed so the letters are not upside down. The size shrinks to fit the arc a label may use. */
-function ArcLabel({ id, mid, radius, text, size, className, region }: { id: string; mid: number; radius: number; text: string; size: number; className: string; region?: string }) {
+function ArcLabel({ id, mid, radius, text, size, className, region, hue }: { id: string; mid: number; radius: number; text: string; size: number; className: string; region?: string; hue?: string }) {
   const top = Math.sin(mid) <= 0
   const r = top ? radius - size * 0.33 : radius + size * 0.33
   const half = Math.min(Math.PI * 0.95, (text.length * size * 0.6) / r / 2 + 0.03)
@@ -34,7 +34,7 @@ function ArcLabel({ id, mid, radius, text, size, className, region }: { id: stri
   const p = (a: number) => `${Math.cos(a) * r},${Math.sin(a) * r}`
   const d = top ? `M${p(a1)} A${r},${r} 0 0 1 ${p(a2)}` : `M${p(a2)} A${r},${r} 0 0 0 ${p(a1)}`
   return (
-    <g pointerEvents="none" data-region={region}>
+    <g pointerEvents="none" data-region={region} data-hue={hue}>
       <path id={id} d={d} fill="none" stroke="none" />
       <text className={className} fontSize={size}><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{text}</textPath></text>
     </g>
@@ -371,6 +371,8 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           return (
             <g key={w.strand} className={`mapwedge${highlightStrand === w.strand ? ' hi' : ''}`} data-hue={hueOfStrand(w.strand)} data-region={regionOfStrand(w.strand)} data-tint={tintOfStrand(w.strand)}>
               <path d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} className="wedgebg" />
+              {/* the crust: a thin band in the subject's hue along the outer edge of the slice, outside the last ring's ticks and numerals and the rim stars */}
+              {(() => { const rb = layout.radius - 10, a0 = w.from + 0.012, a1 = w.to - 0.012, pt = (a: number) => `${(Math.cos(a) * rb).toFixed(2)},${(Math.sin(a) * rb).toFixed(2)}`; return <path d={`M${pt(a0)} A${rb},${rb} 0 ${a1 - a0 > Math.PI ? 1 : 0} 1 ${pt(a1)}`} className={`strandband${pickedSkill?.strand === w.strand ? ' sel' : ''}`} fill="none" pointerEvents="none" /> })()}
             </g>
           )
         })}
@@ -379,7 +381,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           const text = constellationLabel(w.strand, strandNames[w.strand], pct.strand(w.strand))
           const rS = layout.radius + 70
           const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
-          return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} region={regionOfStrand(w.strand)} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
+          return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} region={regionOfStrand(w.strand)} hue={hueOfStrand(w.strand)} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
         })}
         {/* stage rings: one band per stage of the recommended path; the learner's current stage is emphasised, a chosen stage is lit */}
         {layout.stages.map(st => {

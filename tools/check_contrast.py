@@ -175,6 +175,22 @@ def check(look, css_path):
                 f = resolve("--" + fg_name, toks); r = ratio(f, bg); ok = r >= need
                 rows.append((mode, kind, fg_name, f"slice s{n}", f, bg, r, need, ok, f"{what} on slice {n} tinted"))
                 if not ok: problems.append(f"{look} {mode} {kind}: {fg_name} {f} on slice tint s{n} {bg} is {r:.2f}:1, needs {need}:1 ({what})")
+    # Subject colours on the chart (D88c): the constellation name and the crust band are each subject hue mixed toward the sky ink by the share in
+    # --sky-hue-label and --sky-hue-band (map.css does the same mix); they must read on the sky, and on the strongest slice tint when Slice colours are on.
+    for mode, toks in modes.items():
+        try:
+            sky, ink = resolve("--sky", toks), resolve("--sky-ink", toks)
+            share = {k: float(resolve("--sky-hue-" + k, toks).rstrip("%")) / 100 for k in ("label", "band")}
+        except (KeyError, ValueError) as e:
+            problems.append(f"{look} {mode}: cannot resolve {e} for the subject colours"); continue
+        for n in range(1, 12):
+            hue = resolve(f"--s{n}", toks)
+            for k, need, kind, what in (("label", TEXT_MIN, "text", "constellation name"), ("band", GRAPHIC_MIN, "graphic", "crust band")):
+                fg = mix(hue, ink, share[k])
+                for bgname, bg in (("sky", sky), ("tinted", mix(hue, sky, SLICE_TINT_MAX))):
+                    r = ratio(fg, bg); ok = r >= need
+                    rows.append((mode, kind, f"s{n} {k}", bgname, fg, bg, r, need, ok, f"{what} of subject {n} on the {bgname}"))
+                    if not ok: problems.append(f"{look} {mode} {kind}: {what} of subject {n} {fg} on the {bgname} {bg} is {r:.2f}:1, needs {need}:1")
     print(f"== {look} ({css_path.name})")
     print(f"{'mode':5} {'kind':7} {'foreground':17} {'background':14} {'fg':8} {'bg':8} {'ratio':>6}  need  result")
     for mode, kind, fg, bg, f, b, r, need, ok, what in rows:

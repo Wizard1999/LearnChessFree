@@ -51,7 +51,7 @@
 
 /* names: constellations in an italic classical serif at the outer edge of each slice, regions in spaced small capitals, stages in small capitals on their rings */
 :root:not(#_) .chart .arclabel { font-family: var(--chart-serif); font-weight: 400; fill: var(--sky-ink); stroke: var(--sky); stroke-width: 10px; paint-order: stroke; letter-spacing: 0.02em; }
-:root:not(#_) .chart .arclabel.strand { font-style: italic; fill: var(--sky-ink); text-decoration: none; }
+:root:not(#_) .chart .arclabel.strand { font-style: italic; fill: color-mix(in srgb, var(--hue, var(--sky-ink)) var(--sky-hue-label), var(--sky-ink)); text-decoration: none; } /* the subject's own hue, kept readable by the share in --sky-hue-label (checked) */
 :root:not(#_) .chart .arclabel.strand.hi { fill: var(--sky-gold); font-weight: 700; text-decoration: none; }
 :root:not(#_) .chart .arclabel.region { font-style: normal; font-weight: 600; font-variant: small-caps; letter-spacing: 0.14em; fill: var(--sky-ink-soft); }
 :root:not(#_) .chart .regionarc { stroke: var(--sky-line); stroke-width: 2px; opacity: 0.9; vector-effect: non-scaling-stroke; }
@@ -160,3 +160,8 @@
 :root:not(#_) .mapsvg.chart.slices .mapwedge.hi .wedgebg { fill: color-mix(in srgb, var(--hue, var(--sky-line)) 16%, transparent); }
 .slicetoggle { display: inline-flex; align-items: center; gap: 0.35rem; }
 .slicetoggle .slicedot { flex: none; }
+
+/* the crust (D88c): a thin band in each subject's hue along the outer edge of its slice, always on (Slice colours only adds the wedge tint) */
+.chart .strandband { stroke: color-mix(in srgb, var(--hue, var(--sky-line)) var(--sky-hue-band), var(--sky-ink)); stroke-width: 7px; stroke-linecap: butt; opacity: 0.85; }
+.chart .mapwedge:hover .strandband, .chart .strandband.sel { stroke-width: 10px; opacity: 1; }
+.chart .mapwedge.hi .strandband { stroke-width: 11px; opacity: 1; }
