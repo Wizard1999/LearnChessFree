@@ -457,7 +457,7 @@ export function Analysis() {
   const editFen = editing ? `${editPlacement.current} ${editing.turn} - - 0 1` : fen
 
   return (
-    <main className="page wide">
+    <main className="page wide stage">
       <h1>Analysis</h1>
       <p className="lede">Set up a position, load a game, or move the pieces for both sides, and read what Stockfish 19 thinks. Scores are in pawns from White's point of view, from a search to a fixed depth on this device. The engine gives evidence about a position, not the reason behind it.</p>
       <div className="analysis">

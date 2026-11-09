@@ -1,0 +1,37 @@
+/* Big boards (Andrew, 8 Nov 2026): on a wide window the board takes the height of the window, as on the sites people already use, and it sits in the
+   middle of the page with the words beside it in a readable column. Loaded last. Nothing here applies below 1100px, where the single column stays.
+   --bsz is the board's side: as tall as the window allows under the header, never more than 62% of its width, capped at 920px.
+   Three columns: words | board | spare. The two outer columns share what is left; when the window is too narrow for the words to keep 20rem the spare
+   column shrinks to nothing and the board slides toward the right, so a narrow window still reads as words beside a board. */
+:root { --bsz: min(calc(100svh - 5.75rem), 62vw, 920px); --cols: minmax(20rem, 1fr) var(--bsz) minmax(0, 1fr); }
+@media (min-width: 1100px) {
+  .page.stage { max-width: 1760px; }
+
+  /* lesson: breadcrumb, title, planned time and tools share two rows instead of four; the lesson body is the grid */
+  main.page.stage[data-hue] { --bsz: min(calc(100svh - 14.5rem), 62vw, 920px); } /* a lesson's board starts under the title row, so it is a little smaller to fit the first view */
+  main.page.stage[data-hue] { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 1.5rem; }
+  main.page.stage[data-hue] > * { flex: 0 0 100%; min-width: 0; }
+  main.page.stage[data-hue] > p:first-child { margin: 0 0 0.2rem; }
+  main.page.stage[data-hue] > h1 { flex: 0 1 auto; font-size: 1.5rem; padding: 0.5rem 1.2rem; margin: 0.2rem 0 0.5rem; }
+  main.page.stage[data-hue] > p:nth-child(3), main.page.stage[data-hue] > p.lessontools { flex: 0 0 auto; margin: 0 0 0.5rem; }
+  .page.stage .lesson { display: grid; grid-template-columns: var(--cols); grid-template-rows: repeat(14, auto) 1fr; column-gap: 2.5rem; align-items: start; } /* the 1fr row takes the board's height, so the rows beside it keep their own */
+  .page.stage .lesson > * { grid-column: 1; max-width: 36rem; margin-left: auto; width: 100%; }
+  .page.stage .lesson > *:has(.board-wrap), .page.stage .lesson > *:has(.board-wrap) .item, .page.stage .lesson > *:has(.board-wrap) .lineplayer { display: contents; }
+  .page.stage .lesson > *:has(.board-wrap) > *:not(.board-wrap) { grid-column: 1; max-width: 36rem; margin-left: auto; width: 100%; }
+  .page.stage .lesson .board-wrap { grid-column: 2; grid-row: 1 / 16; position: sticky; top: 4.5rem; width: var(--bsz); margin: 0; max-width: none; }
+
+  /* exercises and lines outside a lesson (Practice, Drill, Openings) */
+  .page.stage:not([data-hue]) .item, .page.stage:not([data-hue]) .lineplayer { grid-template-columns: var(--cols); column-gap: 2.5rem; }
+  .page.stage:not([data-hue]) .item > .board-wrap, .page.stage:not([data-hue]) .lineplayer > .board-wrap { grid-column: 2; width: var(--bsz); }
+  .page.stage:not([data-hue]) .item > *:not(.board-wrap), .page.stage:not([data-hue]) .lineplayer > *:not(.board-wrap) { max-width: 36rem; margin-left: auto; width: 100%; }
+
+  /* analysis: the board (with its eval bar) in the middle, the engine and statistics to its right */
+  .page.stage .analysis { --bsz: min(calc(100svh - 17rem), 58vw, 920px); grid-template-columns: minmax(0, 1fr) calc(var(--bsz) + 40px) minmax(300px, 1fr); column-gap: 2rem; } /* the title and intro sit above the board here */
+  .page.stage .analysis > :first-child { grid-column: 2; }
+  .page.stage .analysis > :nth-child(2) { grid-column: 3; max-width: 36rem; }
+}
+@supports (width: round(down, 100%, 8px)) {
+  @media (min-width: 1100px) {
+    .page.stage .lesson .board-wrap, .page.stage:not([data-hue]) .item > .board-wrap, .page.stage:not([data-hue]) .lineplayer > .board-wrap { width: round(down, var(--bsz), 8px); }
+  }
+}

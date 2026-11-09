@@ -71,7 +71,7 @@ export function Practice() {
   const go = () => { const p = new URLSearchParams(params); p.set('go', '1'); setParams(p); setRound(r => r + 1); setFinished(null) }
 
   return (
-    <main className="page">
+    <main className="page stage">
       <h1>Practice</h1>
       {!started && (
         <UpNextMark as="section" className="card">

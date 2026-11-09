@@ -38,7 +38,7 @@ export function Drill() {
   }
 
   return (
-    <main className="page">
+    <main className="page stage">
       <h1>Repertoire drill</h1>
       {!card ? (
         <section className="card">
