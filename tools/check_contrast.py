@@ -208,8 +208,23 @@ def check(look, css_path):
     return problems, len(rows)
 
 
+# D88f: the one exemption from the 3:1 line gate. Constellation lines of the BACKDROP tier (old territory, surplus lines, far-future links) and the soft figure of finished
+# territory are decorative context: all they say is already said by the live lines, the star states and the text, so WCAG 1.4.11 (graphics needed to understand content)
+# does not require them to reach 3:1. Live lines, the chosen skill's links and its trail do, and keep using --sky-edge-floor. The exemption is limited to rules whose
+# selector contains `.backdrop` (halo glow layers are not lines): any other rule in map.css that sets a numeric opacity below 1 on a `.mapglow` fails here.
+def backdrop_exemption_problems():
+    css = strip_comments((STYLES / "map.css").read_text(encoding="utf-8"))
+    bad = []
+    for sel, body in re.findall(r"([^{}@]+)\{([^{}]*)\}", css):
+        sel = " ".join(sel.split())
+        if ".mapglow" not in sel or ".backdrop" in sel or ".edgehalo" in sel: continue  # the halo is a soft glow layer under a core line that carries the 3:1
+        for m in re.finditer(r"(?<![-\w])opacity\s*:\s*([0-9.]+)\s*;", body):
+            if float(m.group(1)) < 1: bad.append(f"map.css: '{sel}' sets opacity {m.group(1)} on a line outside the backdrop tier (the 3:1 gate applies)")
+    return bad
+
+
 def main():
-    problems, total = [], 0
+    problems, total = backdrop_exemption_problems(), 0
     for look, path in LOOKS:
         pr, n = check(look, path); problems += pr; total += n
     if problems:

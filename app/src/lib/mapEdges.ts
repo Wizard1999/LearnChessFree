@@ -81,3 +81,54 @@ export function lineLook(edges: MapEdge[], level: (id: string) => number): (from
   const strength = edgeStrength(edges, level)
   return (from, to) => isDone(level(to)) ? { old: true, power: 0 } : { old: false, power: FRONTIER_MIN + (1 - FRONTIER_MIN) * strength(from, to) }
 }
+
+/** The necessary links only: an edge A to C is dropped when A reaches C some other way (A to B to C). Cycle-safe; the order of the remaining edges is kept. */
+export function transitiveReduction(edges: MapEdge[]): MapEdge[] {
+  const out = new Map<string, string[]>()
+  for (const e of edges) out.set(e.from, [...(out.get(e.from) ?? []), e.to])
+  const reaches = (from: string, target: string, skip: MapEdge): boolean => {
+    const seen = new Set<string>([from]), stack = [from]
+    while (stack.length) {
+      const n = stack.pop()!
+      for (const m of out.get(n) ?? []) {
+        if (n === skip.from && m === skip.to) continue
+        if (m === target) return true
+        if (!seen.has(m)) { seen.add(m); stack.push(m) }
+      }
+    }
+    return false
+  }
+  return edges.filter(e => !reaches(e.from, e.to, e))
+}
+
+/** Three tiers of line (D88f). LIVE: from a skill you have started toward one you have not completed (graded by `edgeStrength`, at most `maxLive` of the strongest);
+ *  FIGURE: the soft shape of finished territory (each completed skill linked to at most its two strongest completed prerequisites), a little brighter when recent;
+ *  BACKDROP: everything else, decorative only (old territory, surplus live lines, links toward skills not reached yet); FAR is the part of the backdrop between two skills
+ *  not started whose neighbours are not live: shown only when `showFar` or an end is the chosen or pointed-at skill. With `all`, links the reduction removed and
+ *  the far ones are shown too, at backdrop strength. Only LIVE lines (and the chosen skill's own links and trail, drawn elsewhere) carry the 3:1 line gate. */
+export type LineTier = 'live' | 'figure' | 'backdrop' | 'far'
+export interface TieredEdge { from: string; to: string; tier: LineTier; /** 0..1, live lines only (FRONTIER_MIN to 1) */ power: number; /** 0..1 how recently a figure line was drawn */ fresh: number }
+export interface TierOptions { maxLive: number; showFar: boolean; focus?: string | null; recent?: (id: string) => number; all?: boolean }
+export function tierEdges(edges: MapEdge[], level: (id: string) => number, opt: TierOptions): TieredEdge[] {
+  const reduced = transitiveReduction(edges), strength = edgeStrength(edges, level)
+  const keyOf = (e: MapEdge) => `${e.from}>${e.to}`
+  const liveC = reduced.filter(e => !isDone(level(e.to)) && level(e.from) >= 1)
+    .map(e => ({ e, s: strength(e.from, e.to) })).sort((a, b) => b.s - a.s || keyOf(a.e).localeCompare(keyOf(b.e)))
+  const live = new Map(liveC.slice(0, Math.max(0, opt.maxLive)).map(x => [keyOf(x.e), x.s]))
+  const liveStars = new Set<string>(); for (const k of live.keys()) { const [f, t] = k.split('>'); liveStars.add(f); liveStars.add(t) }
+  const keepFig = new Set<string>(), byTarget = new Map<string, MapEdge[]>()
+  for (const e of reduced) if (isDone(level(e.from)) && isDone(level(e.to))) byTarget.set(e.to, [...(byTarget.get(e.to) ?? []), e])
+  for (const es of byTarget.values()) es.sort((a, b) => level(b.from) - level(a.from) || a.from.localeCompare(b.from)).slice(0, 2).forEach(e => keepFig.add(keyOf(e)))
+  const out: TieredEdge[] = []
+  const touchesFocus = (e: MapEdge) => !!opt.focus && (e.from === opt.focus || e.to === opt.focus)
+  for (const e of reduced) {
+    const k = keyOf(e), base = { from: e.from, to: e.to, power: 0, fresh: 0 }
+    if (live.has(k)) { out.push({ ...base, tier: 'live', power: FRONTIER_MIN + (1 - FRONTIER_MIN) * live.get(k)! }); continue }
+    if (keepFig.has(k)) { out.push({ ...base, tier: 'figure', fresh: Math.max(0, Math.min(1, opt.recent?.(e.to) ?? 0)) }); continue }
+    const far = level(e.from) === 0 && level(e.to) === 0 && !liveStars.has(e.from) && !liveStars.has(e.to)
+    if (far) { if (opt.showFar || opt.all || touchesFocus(e)) out.push({ ...base, tier: 'far' }); continue }
+    out.push({ ...base, tier: 'backdrop' })
+  }
+  if (opt.all) { const kept = new Set(reduced.map(keyOf)); for (const e of edges) if (!kept.has(keyOf(e))) out.push({ from: e.from, to: e.to, tier: 'backdrop', power: 0, fresh: 0 }) }
+  return out
+}

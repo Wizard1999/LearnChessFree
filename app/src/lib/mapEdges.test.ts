@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ancestorEdges, edgeStrength, FRONTIER_MIN, lineLook, edgesToDraw, prereqShare, starNodes } from './mapEdges'
+import { type TierOptions, tierEdges, transitiveReduction, ancestorEdges, edgeStrength, FRONTIER_MIN, lineLook, edgesToDraw, prereqShare, starNodes } from './mapEdges'
 
 // A -> C, B -> C, C -> D, D -> E
 const edges = [{ from: 'A', to: 'C' }, { from: 'B', to: 'C' }, { from: 'C', to: 'D' }, { from: 'D', to: 'E' }]
@@ -96,5 +96,52 @@ describe('old territory and the live frontier', () => {
   it('every old line is dimmer than every live line', () => {
     const old = look({ A: 2, C: 2 })('A', 'C').power, live = look({})('A', 'C').power
     expect(old).toBeLessThan(live)
+  })
+})
+
+describe('transitive reduction', () => {
+  it('drops A to C when A to B to C exists, keeps necessary links', () => {
+    const r = transitiveReduction([{ from: 'A', to: 'B' }, { from: 'B', to: 'C' }, { from: 'A', to: 'C' }, { from: 'A', to: 'D' }]).map(e => `${e.from}>${e.to}`)
+    expect(r).toEqual(['A>B', 'B>C', 'A>D'])
+  })
+  it('is safe on a cycle and leaves the test graph alone', () => {
+    expect(transitiveReduction([{ from: 'X', to: 'Y' }, { from: 'Y', to: 'X' }])).toHaveLength(2)
+    expect(transitiveReduction(edges)).toHaveLength(4)
+  })
+})
+
+describe('line tiers', () => {
+  // chain a>b>c>d>e plus a shortcut a>c; and a separate far pair p>q (neither started)
+  const E = [{ from: 'a', to: 'b' }, { from: 'b', to: 'c' }, { from: 'c', to: 'd' }, { from: 'd', to: 'e' }, { from: 'a', to: 'c' }, { from: 'p', to: 'q' }]
+  const tiers = (m: Record<string, number>, o: Partial<TierOptions> = {}) => tierEdges(E, lv(m), { maxLive: 12, showFar: false, ...o })
+  const tierOf = (t: ReturnType<typeof tiers>, k: string) => t.find(x => `${x.from}>${x.to}` === k)?.tier
+  it('never draws a shortcut the chain already makes', () => { expect(tiers({}).some(x => x.from === 'a' && x.to === 'c')).toBe(false) })
+  it('finished territory is a figure', () => {
+    const t = tiers({ a: 4, b: 4, c: 3 }); expect(tierOf(t, 'a>b')).toBe('figure'); expect(tierOf(t, 'b>c')).toBe('figure')
+  })
+  it('a line from a started skill toward an unfinished one is live, graded, and above the minimum', () => {
+    const l = tiers({ a: 4, b: 4, c: 4, d: 0 }).find(x => x.from === 'c' && x.to === 'd')!
+    expect(l.tier).toBe('live'); expect(l.power).toBeGreaterThanOrEqual(FRONTIER_MIN)
+  })
+  it('live lines are the only graded ones; all others carry power 0', () => { for (const x of tiers({ a: 4, b: 4, c: 2 })) if (x.tier !== 'live') expect(x.power).toBe(0) })
+  it('far-future lines are hidden unless shown, an end is chosen, or all connections is on', () => {
+    expect(tierOf(tiers({}), 'p>q')).toBeUndefined()
+    expect(tierOf(tiers({}, { showFar: true }), 'p>q')).toBe('far')
+    expect(tierOf(tiers({}, { focus: 'q' }), 'p>q')).toBe('far')
+    expect(tierOf(tiers({}, { all: true }), 'p>q')).toBe('far')
+  })
+  it('caps the live lines, keeping the strongest; the rest drop to the backdrop', () => {
+    const many = Array.from({ length: 20 }, (_, i) => ({ from: 's', to: `t${i}` }))
+    const t = tierEdges(many, id => (id === 's' ? 4 : 0), { maxLive: 5, showFar: false })
+    expect(t.filter(x => x.tier === 'live')).toHaveLength(5); expect(t.filter(x => x.tier === 'backdrop')).toHaveLength(15)
+  })
+  it('all connections adds the links the reduction removed, at backdrop strength', () => { expect(tiers({}, { all: true }).some(x => x.from === 'a' && x.to === 'c' && x.tier === 'backdrop')).toBe(true) })
+  it('recent figure lines carry freshness', () => { expect(tiers({ a: 4, b: 4 }, { recent: id => (id === 'b' ? 1 : 0) }).find(x => x.to === 'b')!.fresh).toBe(1) })
+  it('a fresh learner sees no live and no figure lines at all', () => { expect(tiers({}).filter(x => x.tier === 'live' || x.tier === 'figure')).toHaveLength(0) })
+  it('live strength rises with the completed share of prerequisites in at least 5 distinct steps', () => {
+    const f = (m: Record<string, number>) => tierEdges([{ from: 'A', to: 'C' }, { from: 'B', to: 'C' }], lv(m), { maxLive: 12, showFar: false }).find(x => x.from === 'A')?.power ?? 0
+    const steps = ([{}, { A: 1 }, { A: 2 }, { A: 2, B: 1 }, { A: 2, B: 2 }] as Record<string, number>[]).map(f)
+    for (let i = 1; i < steps.length; i++) expect(steps[i]).toBeGreaterThanOrEqual(steps[i - 1])
+    expect(new Set(steps.map(v => +v.toFixed(4))).size).toBeGreaterThanOrEqual(5)
   })
 })

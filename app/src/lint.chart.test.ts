@@ -22,3 +22,22 @@ describe('star chart subject colours', () => {
   })
   it('every subject has a hue to take', () => { for (let i = 1; i <= 11; i++) expect(hueOfStrand(`S${i}`)).toBe(String(i)) })
 })
+
+describe('the backdrop exemption (D88f)', () => {
+  it('only rules for the backdrop tier set a numeric opacity below 1 on a line; every other line uses the checked floor', () => {
+    const css = read('styles/map.css').replace(/\/\*[\s\S]*?\*\//g, '')
+    const bad: string[] = []
+    for (const m of css.matchAll(/([^{}@]+)\{([^{}]*)\}/g)) {
+      const sel = m[1].replace(/\s+/g, ' ').trim()
+      if (!sel.includes('.mapglow') || sel.includes('.backdrop') || sel.includes('.edgehalo')) continue
+      for (const o of m[2].matchAll(/(?<![-\w])opacity\s*:\s*([0-9.]+)\s*;/g)) if (parseFloat(o[1]) < 1) bad.push(`${sel}: ${o[1]}`)
+    }
+    expect(bad).toEqual([])
+  })
+  it('live lines use the floor token, so the 3:1 gate covers them', () => {
+    expect(read('styles/map.css')).toMatch(/\.edgecore \.mapglow \{[^}]*var\(--sky-edge-floor\)/)
+  })
+  it('the checker documents the exemption', () => {
+    expect(readFileSync(join(__dirname, '..', '..', 'tools', 'check_contrast.py'), 'utf8')).toMatch(/D88f: the one exemption/)
+  })
+})

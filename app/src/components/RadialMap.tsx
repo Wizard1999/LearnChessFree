@@ -11,12 +11,12 @@ import { onMapJump } from '../lib/mapJump'
 import { ringLabelPlan, zoomZone } from '../lib/mapZoom'
 import { planLabels, type LabelNode } from '../lib/mapLabels'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
-import { ancestorEdges, edgesToDraw, lineLook, starNodes } from '../lib/mapEdges'
+import { ancestorEdges, edgesToDraw, tierEdges, transitiveReduction, starNodes } from '../lib/mapEdges'
 import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
 import { hueOfStrand } from '../lib/hue'
-import { readSliceColours, writeSliceColours } from '../lib/mapPrefs'
+import { readAllLinks, readSliceColours, writeAllLinks, writeSliceColours } from '../lib/mapPrefs'
 import { constellationLabel, dustField, pointerTicks, rayPath, roman, rosePath, starSpec } from '../lib/starChart'
 import type { LessonMeta, Skill } from '../types'
 import { usePhone } from '../lib/usePhone'
@@ -124,7 +124,10 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
   // slice colours (each subject's slice tinted in its own hue): optional, off by default, remembered on this device
   const [slices, setSlices] = useState(readSliceColours)
   const toggleSlices = () => setSlices(v => { writeSliceColours(!v); return !v })
+  const [allLinks, setAllLinks] = useState(readAllLinks) // "All connections": every link at backdrop strength; off by default, remembered on this device
+  const toggleAll = () => setAllLinks(v => { writeAllLinks(!v); return !v })
   const sliceButton = (cls: string) => <button type="button" className={cls} aria-pressed={slices} onClick={toggleSlices}><svg className="slicedot" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.4" /><path d="M8,8 L8,1.5 A6.5,6.5 0 0 1 14.5,8 Z" fill="currentColor" /></svg> Slice colours</button>
+  const allButton = (cls: string) => <button type="button" className={cls} aria-pressed={allLinks} onClick={toggleAll}><svg className="slicedot" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true" focusable="false"><path d="M2,12 L6,4 L10,9 L14,3 M6,4 L9,13" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" /><circle cx="2" cy="12" r="1.4" fill="currentColor" /><circle cx="6" cy="4" r="1.4" fill="currentColor" /><circle cx="14" cy="3" r="1.4" fill="currentColor" /></svg> All connections</button>
   const listRef = useRef<HTMLDivElement>(null)
   // the list follows the map: when it opens, the picked skill is scrolled into view
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
@@ -275,6 +278,25 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
   }, [lastHot, labelPlan, layout, progress, view, R, box])
   const labelUnits = Math.max(26, Math.min(130, (15 * 2 * R) / view.k / 800)) // about 15 screen pixels, in map units
   const skyHalf = (R / view.k) * Math.max(1, box.w && box.h ? Math.max(box.w / box.h, box.h / box.w) : 2) * 1.05 // the sky is drawn past the square viewBox, so a wide or tall window has no bare sides
+  // the lines (D88f): live ones toward what you can reach, the soft figure of finished territory, a dim backdrop; far-future links appear when zoomed in or pointed at
+  const focusId = picked ?? hov
+  const near = view.k >= 2
+  const readySet = useMemo(() => new Set(layout.nodes.filter(n => level(n.id) < 4 && (readiness.get(n.id) ?? 0) >= 1 && !progress.get(n.id)?.noExercises).map(n => n.id)), [layout, readiness, progress]) // eslint-disable-line react-hooks/exhaustive-deps
+  const reducedEdges = useMemo(() => transitiveReduction(layout.edges), [layout])
+  const lines = useMemo(() => {
+    const now = Date.now(), recent = (id: string) => { const t = progress.get(id)?.lastTs; return t ? Math.max(0, 1 - (now - t) / (14 * 864e5)) : 0 }
+    const tiered = tierEdges(layout.edges, level, { maxLive: near ? 40 : 12, showFar: near, focus: focusId, recent, all: allLinks }).filter(t => t.from !== focusId && t.to !== focusId)
+    const focusLinks = edgesToDraw(layout.edges, level, focusId).filter(d => d.kind !== 'quiet')
+    const draw = [...tiered.map(t => ({ from: t.from, to: t.to, tier: t.tier as string, kind: 'quiet' as 'quiet' | 'pre' | 'next', power: t.power, fresh: t.fresh })), ...focusLinks.map(d => ({ from: d.from, to: d.to, tier: 'focus', kind: d.kind, power: d.power, fresh: 0 }))].flatMap(d => {
+      const a = byId.get(d.from), b = byId.get(d.to); if (!a || !b) return []
+      const open = d.tier === 'live' && readySet.has(d.to) // the open frontier: a live line into a skill that is ready to start
+      const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = d.kind !== 'quiet' ? 24 : open ? 20 : 0 // a chosen skill's links and the frontier stop short of the nodes so the heads show
+      return [{ d, open, x1: a.x + (dx / len) * r, y1: a.y + (dy / len) * r, x2: b.x - (dx / len) * r, y2: b.y - (dy / len) * r }]
+    })
+    const trail = ancestorEdges(reducedEdges, picked).flatMap(e => { const a = byId.get(e.from), b = byId.get(e.to); return a && b ? [{ e, a, b }] : [] })
+    return { draw, trail }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layout, progress, focusId, near, allLinks, picked, readySet, reducedEdges, byId])
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className={phone ? 'radialmap phonemap' : 'radialmap'}>
@@ -295,6 +317,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         <button type="button" onClick={back} disabled={past.length === 0}>‹ Back</button>
         <button type="button" aria-expanded={listOpen} onClick={() => { setListOpen(o => !o); setQ('') }}>Skill list</button>
         {sliceButton('slicetoggle')}
+        {allButton('slicetoggle')}
         {picked && <span className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</span>}
         <span className="levellegend small" aria-label="Skill colours">{LEVEL_NAMES.map((nm, i) => <span key={nm} className="lvkey"><i className={`lvdot lv${i}`} />{nm}</span>)}</span>
         <span className="small"><strong>Overall {pct.all}%</strong></span>
@@ -437,26 +460,15 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         {/* Lines are white glow (docs/map-visual-direction.md, lib/mapEdges.ts): the more of a skill's prerequisites are done, the stronger the glow into it;
             lines between finished skills are gone, finished skills with only finished neighbours are stars with no lines. One blurred halo layer, one core layer. */}
         {(() => {
-          const readySet = new Set(layout.nodes.filter(n => level(n.id) < 4 && (readiness.get(n.id) ?? 0) >= 1 && !progress.get(n.id)?.noExercises).map(n => n.id))
-          const trail = ancestorEdges(layout.edges, picked).flatMap(e => { const a = byId.get(e.from), b = byId.get(e.to); return a && b ? [{ e, a, b }] : [] })
-          const looks = lineLook(layout.edges, level)
-          const base = edgesToDraw(layout.edges, level, picked ?? hov)
-          const seen = new Set(base.map(d => `${d.from}>${d.to}`))
-          // lines between two completed skills are drawn too, as the thinnest hairline (old territory), unless they are the chosen skill's own links
-          const all = [...base, ...layout.edges.filter(e => !seen.has(`${e.from}>${e.to}`)).map(e => ({ ...e, power: 0, kind: 'quiet' as const }))]
-          const draw = all.map(d => { if (d.kind !== 'quiet') return { ...d, old: false }; const l = looks(d.from, d.to); return { ...d, power: l.power, old: l.old } }).flatMap(d => {
-            const a = byId.get(d.from), b = byId.get(d.to); if (!a || !b) return []
-            const open = d.kind === 'quiet' && !d.old && readySet.has(d.to) // the open frontier: a live line into a skill that is ready to start
-            const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = d.kind !== 'quiet' ? 24 : open ? 20 : 0 // a chosen skill's links and the frontier stop short of the nodes so the heads show
-            return [{ d, open, old: d.old, x1: a.x + (dx / len) * r, y1: a.y + (dy / len) * r, x2: b.x - (dx / len) * r, y2: b.y - (dy / len) * r }]
-          })
-          const props = (x: (typeof draw)[number]) => ({ x1: x.x1, y1: x.y1, x2: x.x2, y2: x.y2, style: { '--edge-power': x.d.power } as CSSProperties })
+          const { draw, trail } = lines
+          const props = (x: (typeof draw)[number]) => ({ x1: x.x1, y1: x.y1, x2: x.x2, y2: x.y2, style: { '--edge-power': x.d.power, '--fresh': x.d.fresh } as CSSProperties })
+          const cls = (x: (typeof draw)[number]) => `mapglow ${x.d.kind} ${x.d.tier}${x.d.tier === 'figure' || x.d.tier === 'backdrop' || x.d.tier === 'far' ? ' backdrop' : ''}${x.open ? ' open' : ''}`
           return (
             <>
               {/* the soft highlight along the whole way into the chosen skill */}
               <g className="edgetrail" pointerEvents="none">{trail.map(t => <line key={`t${t.e.from}>${t.e.to}`} x1={t.a.x} y1={t.a.y} x2={t.b.x} y2={t.b.y} />)}</g>
-              <g className="edgehalo" filter="url(#edge-blur)" pointerEvents="none">{draw.filter(x => !x.old).map(x => <line key={`h${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}`} />)}</g>
-              <g className="edgecore" pointerEvents="none">{draw.map(x => <line key={`${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}${x.old ? ' old' : ''}`} markerEnd={x.d.kind === 'pre' ? 'url(#arrow-pre)' : x.d.kind === 'next' ? 'url(#arrow-next-open)' : x.open ? 'url(#arrow-open)' : undefined} />)}</g>
+              <g className="edgehalo" filter="url(#edge-blur)" pointerEvents="none">{draw.filter(x => x.d.tier === 'live' || x.d.tier === 'focus').map(x => <line key={`h${x.d.from}>${x.d.to}`} {...props(x)} className={cls(x)} />)}</g>
+              <g className="edgecore" pointerEvents="none">{draw.map(x => <line key={`${x.d.from}>${x.d.to}`} {...props(x)} className={cls(x)} markerEnd={x.d.kind === 'pre' ? 'url(#arrow-pre)' : x.d.kind === 'next' ? 'url(#arrow-next-open)' : x.open ? 'url(#arrow-open)' : undefined} />)}</g>
             </>
           )
         })()}
@@ -580,7 +592,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           <h3>Skills</h3>
           <div className="options"><button type="button" className="chip" onClick={() => { setFiltersOpen(false); setFindOpen(true); setListOpen(true); setQ('') }}>Skill list</button></div>
           <h3>Colours</h3>
-          <div className="options">{sliceButton('chip slicetoggle')}</div>
+          <div className="options">{sliceButton('chip slicetoggle')}{allButton('chip slicetoggle')}</div>
           <p className="levellegend small" aria-label="Skill colours">{LEVEL_NAMES.map((nm, i) => <span key={nm} className="lvkey"><i className={`lvdot lv${i}`} />{nm}</span>)}</p>
           {picked && <p className="maplegend small"><i className="swatch pre" />builds on <i className="swatch next" />leads to</p>}
           <p className="small"><strong>Overall {pct.all}%</strong></p>

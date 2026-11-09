@@ -75,7 +75,12 @@
 /* constellation lines: fine strokes; the D74 strength and fade (--edge-power) are untouched, only thinner. The chosen skill's links stay the brightest */
 :root:not(#_) .mapsvg.chart .mapglow { vector-effect: non-scaling-stroke; } /* hairlines that stay fine at every zoom */
 :root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.7px + 1.5px * var(--edge-power)); opacity: calc(var(--sky-edge-floor) + (1 - var(--sky-edge-floor)) * var(--edge-power)); } /* graded: faint (never below the 3:1 floor) to strong, in many small steps (lib/mapEdges.ts edgeStrength) */
-:root:not(#_) .mapsvg.chart .edgecore .mapglow.old { stroke-width: 0.7px; opacity: var(--sky-edge-floor); } /* old territory: the thinnest hairline at the dimmest allowed brightness, no glow, no head */
+/* BACKDROP and FIGURE lines are decorative context (D88f): very dim hairlines. They are the only lines exempt from the 3:1 line gate, because everything they say is already said by the live lines, the star states and the text (WCAG 1.4.11 covers graphics needed to understand content); tools/check_contrast.py documents it and lint.chart.test.ts keeps the exemption to `.backdrop` rules. */
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.backdrop { stroke-width: 0.6px; opacity: 0.14; }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.backdrop.far { opacity: 0.1; }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.backdrop.figure { stroke-width: calc(0.7px + 0.5px * var(--fresh, 0)); opacity: calc(0.22 + 0.4 * var(--fresh, 0)); } /* newest links a little brighter, settling to the hairline as they age */
+@media (prefers-reduced-motion: no-preference) { :root:not([data-motion='reduce']) .mapsvg.chart .edgecore .mapglow.backdrop.far { animation: edgefade 0.6s ease-out; } }
+@keyframes edgefade { from { opacity: 0; } }
 :root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 5px * var(--edge-power)); opacity: calc(0.02 + 0.32 * var(--edge-power)); }
 /* the soft highlight along the whole way into the chosen skill */
 .chart .edgetrail line { stroke: var(--sky-gold); stroke-width: 7px; stroke-linecap: round; opacity: 0.22; vector-effect: non-scaling-stroke; }

@@ -8,3 +8,12 @@ export function readSliceColours(store?: Pick<Storage, 'getItem'>): boolean {
 export function writeSliceColours(on: boolean, store?: Pick<Storage, 'setItem'>): void {
   try { (store ?? localStorage).setItem(SLICE_KEY, on ? '1' : '0') } catch { /* storage unavailable: the choice lasts for this visit only */ }
 }
+
+export const ALL_LINKS_KEY = 'cs-map-all'
+/** "All connections": every link at backdrop strength, for people who want the full web. Off unless turned on. */
+export function readAllLinks(store?: Pick<Storage, 'getItem'>): boolean {
+  try { return (store ?? localStorage).getItem(ALL_LINKS_KEY) === '1' } catch { return false }
+}
+export function writeAllLinks(on: boolean, store?: Pick<Storage, 'setItem'>): void {
+  try { (store ?? localStorage).setItem(ALL_LINKS_KEY, on ? '1' : '0') } catch { /* storage unavailable */ }
+}

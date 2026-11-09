@@ -101,3 +101,5 @@ D88c: with Slice colours off each slice still has a thin band in its subject hue
 D88d: line brightness is graded again (many small steps from how far the source skill and the target's prerequisites have come), with a floor that keeps the faintest line at 3:1; the frontier keeps small arrowheads, a chosen skill keeps its gold trail.
 
 D88e: chart labels are upright and larger (heading serif for subject names, UI sans for the rest); lines into completed skills are the thinnest hairline at the dimmest allowed brightness, lines into unfinished skills are graded.
+
+D88f: lines come in tiers (live, figure, backdrop, far), with transitive reduction, a cap on live lines, far-future links shown only when zoomed in or pointed at, and an optional All connections toggle. Only the live lines and the chosen skill's links carry the 3:1 gate.
