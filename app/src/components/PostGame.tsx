@@ -44,6 +44,7 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
       <ArtScene kind="postgame" />
       <h2>The game is over</h2>
       <p>{reason} It is saved in <Link to="/games">My games</Link>.</p>
+      <p><Link className="button primary" to={`/analysis?game=${gameId}`}>Review this game</Link></p>
       {strength && <p><strong>Something you did well.</strong> {strength.text}</p>}
       {plies.length >= 2 && (
         <div className="postmoment" aria-live="polite">

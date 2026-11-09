@@ -215,7 +215,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
         <p>You finished <strong>{lesson.title}</strong>.</p>
         {lesson.outcomes && <><p className="small muted">What you should now be able to do:</p><ul>{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></>}
         <p className="muted small">Finishing a lesson only means you have <em>seen</em> the idea. It counts as <strong>reliable</strong> only after you solve fresh positions where nobody names it. Those come back as mixed practice{sk ? ` (skill: ${sk.title})` : ''}.</p>
-        <div className="row"><Link className="button primary" to="/" onClick={onExit}>Back to today</Link><Link className="button" to="/practice">Practice mixed positions</Link></div>
+        <div className="row"><Link className="button primary" to="/course" onClick={onExit}>Back to Curriculum</Link><Link className="button" to="/practice">Practice mixed positions</Link></div>
         <BackupNudge />
       </section>
     )

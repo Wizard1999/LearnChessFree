@@ -18,11 +18,11 @@ describe('phone tab bar', () => {
     const { container } = render(<MemoryRouter initialEntries={['/']}><PhoneTabBar /></MemoryRouter>)
     expect(container.querySelector('.tabbar')).toBeNull()
   })
-  it('shows five tabs on a phone, lights the current one, and opens More as a sheet', () => {
+  it('shows four tabs on a phone, lights the current one, and opens More as a sheet', () => {
     phone(true)
-    render(<MemoryRouter initialEntries={['/progress']}><PhoneTabBar /></MemoryRouter>)
+    render(<MemoryRouter initialEntries={['/course?win=progress']}><PhoneTabBar /></MemoryRouter>)
     const nav = screen.getByRole('navigation', { name: 'Main' })
-    expect(nav.querySelectorAll('.tab')).toHaveLength(5)
+    expect(nav.querySelectorAll('.tab')).toHaveLength(4)
     expect(nav.querySelector('.tab.on')?.textContent).toBe('Progress')
     fireEvent.click(screen.getByRole('button', { name: 'More' }))
     const dlg = screen.getByRole('dialog', { name: 'More' })

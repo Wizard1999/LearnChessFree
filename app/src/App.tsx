@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { ContentProvider, RequireFullContent } from './lib/content'
 import { Today } from './pages/Today'
 import { Course } from './pages/Course'
@@ -12,11 +12,11 @@ import { Openings } from './pages/Openings'
 import { Games } from './pages/Games'
 import { Library } from './pages/Library'
 import { Settings } from './pages/Settings'
-import { Progress } from './pages/Progress'
 import { PlanPage } from './pages/Plan'
 import { Lab } from './pages/Lab'
 import { Drill } from './pages/Drill'
 import { Roadmap } from './pages/Roadmap'
+import { ReviewPage } from './pages/Review'
 import { SettingsDrawer } from './components/SettingsDrawer'
 import { BRAND } from './brand'
 import { ErrorBoundary } from './components/ErrorBoundary'
@@ -25,15 +25,16 @@ import { BuildStamp } from './components/BuildStamp'
 import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
 import { PhoneTabBar } from './components/PhoneTabBar'
-import { MORE_LINKS } from './lib/phoneNav'
+import { MORE_LINKS, backBarShown } from './lib/phoneNav'
+import { usePhone } from './lib/usePhone'
 
-// Five places for a learner; the rest are tools, one click away under More.
-const links: [string, string][] = [['/', 'Today'], ['/course', 'Curriculum'], ['/practice', 'Practice'], ['/progress', 'Progress']]
+// The top bar has no tabs (D63, D65): the masthead and one More button. Every place but the Curriculum is under it.
 const more = MORE_LINKS // shared with the phone tab bar's More sheet
 
 export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const loc = useLocation()
+  const phone = usePhone()
   const moreRef = useRef<HTMLDetailsElement>(null)
   return (
     <ContentProvider>
@@ -41,27 +42,31 @@ export default function App() {
       <header className="top">
         <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline}</span></div>
         <nav aria-label="Main">
-          {links.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
-          <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a')) moreRef.current?.removeAttribute('open') }}>
+          <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a, button.morebtn')) moreRef.current?.removeAttribute('open') }}>
             <summary className={more.some(([to]) => loc.pathname.startsWith(to)) ? 'on' : ''}>More</summary>
-            <div className="morelist">{more.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}</div>
+            <div className="morelist">
+              {more.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
+              <button type="button" className="morebtn" aria-haspopup="dialog" onClick={() => setSettingsOpen(true)}>Settings</button>
+            </div>
           </details>
         </nav>
-        <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>
+        {phone && <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>}
       </header>
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <SaveNotice />
+      {backBarShown(loc.pathname) && <nav className="backbar" aria-label="Back"><Link to="/course">‹ Back to Curriculum</Link></nav>}
       <ErrorBoundary resetKey={loc.pathname}>
       <Routes>
         <Route path="/" element={<Today />} />
         <Route path="/today" element={<Navigate to="/" replace />} />
+        <Route path="/review" element={<ReviewPage />} />
         <Route path="/course" element={<RequireFullContent><Course /></RequireFullContent>} />
         <Route path="/lesson/:id" element={<LessonPage />} />
         <Route path="/practice" element={<RequireFullContent><Practice /></RequireFullContent>} />
         <Route path="/placement" element={<RequireFullContent><Placement /></RequireFullContent>} />
         <Route path="/plan" element={<RequireFullContent><PlanPage /></RequireFullContent>} />
         <Route path="/lab" element={<RequireFullContent><Lab /></RequireFullContent>} />
-        <Route path="/progress" element={<RequireFullContent><Progress /></RequireFullContent>} />
+        <Route path="/progress" element={<Navigate to="/course?win=progress&report=1" replace />} />
         <Route path="/play" element={<PlayPage />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/engine" element={<Navigate to="/analysis" replace />} />
