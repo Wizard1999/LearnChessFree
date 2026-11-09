@@ -470,11 +470,6 @@ export function Course() {
   const phoneFilters = <>
     <h3>Sections</h3><div className="options">{sectionChips}</div>
     <h3>Stages</h3><div className="options">{stageChips}</div>
-    <h3>Windows</h3>
-    <div className="options">
-      <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
-      <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
-    </div>
     <details className="maphelptext"><summary>How the map fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
   </>
   return (
@@ -483,14 +478,7 @@ export function Course() {
       <h1 className="sr-only">Curriculum</h1>
       <div className="missiongrid mapgrid">
 
-        <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
-      <ChipGroup label="View" menu current="Map">
-        <button type="button" className="chip" onClick={() => setTab('path')}>Curriculum</button>
-        <button type="button" className="chip" onClick={() => setTab('courses')}>Electives</button>
-        <button type="button" className="chip on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
-        <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress window</button>
-        <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge window</button>
-      </ChipGroup>
+        <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="Sections and stages">
       <ChipGroup label="Sections" menu current={isAll ? 'Whole curriculum' : `${view} ${STRAND_NAMES[view] ?? ''}`.trim()}>
         {sectionChips}
       </ChipGroup>

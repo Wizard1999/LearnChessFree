@@ -94,5 +94,11 @@ describe('top bar (D72)', () => {
     expect(flags().length).toBeGreaterThan(0)
     expect(flags().every(f => f === 'false')).toBe(false) // matches open while searching
   })
+  it('the map toolbar has no View menu (the header and the phone tab bar switch views)', async () => {
+    const { container } = await open('/course?view=map')
+    await waitFor(() => expect(container.querySelector('.sectionbar')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('.sectionbar')?.textContent).not.toMatch(/View:|Progress window|Mastery challenge window/)
+    expect(container.querySelector('header .navmain > a.on')?.textContent).toBe('Map')
+  })
 })
 
