@@ -63,7 +63,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |181|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|listed|attack-in-the-ruy-lopez-with-5-d4|
 |194|How to Be Lucky In Chess|Strategy|IAM|D. Naroditsky|5|25|sampled-L1-c1 (seg 5)|how-to-be-lucky-in-chess|
 |200|When the Amateur Wins|Master Games|IAM|Simon Williams|4|20|listed|when-the-amateur-wins|
-|234|Spicy Gambits!|Openings|IAM|Simon Williams|6|30|listed|spicy-gambits|
+|234|Spicy Gambits!|Openings|IAM|Simon Williams|6|30|sampled-L1-c1 (seg 10)|spicy-gambits|
 |245|Improve Your Puzzle Rush|Tactics|IAM|Simon Williams|7|35|sampled-L1-c1 (seg 5)|improve-your-puzzle-rush|
 |249|Learning From Our Mistakes|Strategy|IAM|Max Illingworth|5|25|sampled-L1-c1-2 (seg 5)|learning-from-our-mistakes|
 |262|Practice the London System|Openings|IAM|CT|16||played-partly|understanding-the-london-system|
@@ -130,7 +130,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |271|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||listed|the-amazing-combinations-of-mikhail-tal-1|
 |272|Tactics from the Old Masters|Tactics|AM|CT|88||played-L1-c1|tactics-from-the-old-masters|
 |276|London System for the Busy Chess Player|Openings|AM|Simon Williams|7|35|listed|london-system-for-the-busy-chess-player|
-|279|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|listed|the-most-amazing-chess-moves|
+|279|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|sampled-L1-c1 (seg 10)|the-most-amazing-chess-moves|
 |281|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|played-L1-c1|basic-attacking-plans|
 |297|Activating Your Pieces|Misc|A|CT|10|53|played-partly|activating-your-pieces|
 |299|Advanced Endgames|Misc|A|CT|5|25|played-partly|advanced-endgames|
@@ -170,7 +170,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |9|Loek's Endgame Strategy|Endgames|M|Loek van Wely|8|40|sampled-L1-c1 (seg 9)|loeks-endgame-strategy|
 |10|How A Prodigy Plays Chess|Master Games|M|Praggnanandhaa|8|40|sampled-L1-c1 (seg 9)|how-a-prodigy-plays-chess|
 |11|Strategies For Rapid Chess|Strategy|M|Liem Le|4|20|played-L1-c1|strategies-for-rapid-chess|
-|12|Artur Yusupov: On Magnus Carlsen|Master Games|M|Artur Yusupov|5|25|listed|on-magnus-carlsen|
+|12|Artur Yusupov: On Magnus Carlsen|Master Games|M|Artur Yusupov|5|25|sampled-L1-c1 (seg 10)|on-magnus-carlsen|
 |13|The Most Amazing Chess Moves Ever Played|Tactics|M|S. S. Ganguly|7|35|listed|the-most-amazing-chess-moves-of-all-time|
 |14|How To Win With Zugzwang|Endgames|M|Dejan Bojkov|5|25|played-partly|how-to-win-with-zugzwang|
 |15|c3 Sicil For The Kill|Openings|M|James Canty|5|25|listed|c3-sicil-for-the-kill|
@@ -178,11 +178,11 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |18|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|played-L50-c1|hall-of-fame-the-50-greatest-chess-players-of-all-time|
 |19|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|sampled-L1-c1 (seg 9)|the-stonewall|
 |20|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|played-L1-c1|hou-yifan-my-career-so-far|
-|21|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|listed|cuban-chess-dominguez-on-capablanca|
+|21|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|sampled-L1-c1 (seg 10)|cuban-chess-dominguez-on-capablanca|
 |22|Learn The Evans Gambit|Openings|M|CC|3|21|listed|learn-the-evans-gambit|
 |23|How To Attack Without Sacrificing|Attacking|M|Magnus Carlsen|4|20|sampled-L1-c1 (seg 9)|attacking-without-sacrificing|
-|24|Perfect Chess Games|Master Games|M|Jeremy Kane|5||listed|perfect-chess-games|
-|25|My Best Loss|Master Games|M|CC|4|20|listed|my-best-loss|
+|24|Perfect Chess Games|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 10)|perfect-chess-games|
+|25|My Best Loss|Master Games|M|CC|4|20|sampled-L1-c1 (seg 10)|my-best-loss|
 |26|How I Became A Five Time World Champion|Master Games|M|V. Anand|10|50|played-partly|how-i-became-a-five-time-world-champion|
 |27|Refute The Sacrifice|Tactics|M|Jeremy Kane|16||played-L1|refute-the-sacrifice|
 |28|The Ten Most Beautiful Chess Moves|Tactics|M|Jeremy Kane|11||listed|the-ten-most-beautiful-chess-moves|
@@ -234,7 +234,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |76|Play Like Jan-Krzysztof Duda|Master Games|M|Jeremy Kane|5||listed|play-like-jan-krzysztof-duda|
 |77|Play Like Teimour Radjabov|Master Games|M|Jeremy Kane|5||listed|play-like-teimour-radjabov|
 |81|Absolutely Must Know Endgames|Endgames|M|A. Kosteniuk|12|60|played-partly|absolutely-must-know-endgames|
-|82|How To Defeat A Pawn Weakness|Strategy|M|Robert Ramirez|5|25|listed|how-to-defeat-a-pawn-weakness|
+|82|How To Defeat A Pawn Weakness|Strategy|M|Robert Ramirez|5|25|sampled-L1-c1 (seg 10)|how-to-defeat-a-pawn-weakness|
 |85|Mamedyarov Teaches Dynamic Pawn Play|Openings|M|S. Mamedyarov|5|25|listed|mamedyarovs-kingside-pawn-play|
 |87|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||played-L1-c1|leonid-kubbels-studies|
 |88|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|listed|modern-chess-masterpieces|
@@ -244,10 +244,10 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly|every-pawn-structure-explained|
 |95|The Complete History Of Computer Chess|Master Games|M|James Coleman|15|75|played-L1-c1|the-complete-history-of-computer-chess|
 |96|World Championship Masterpieces|Master Games|M|Yuriy Krykun|5|25|listed|world-championship-masterpieces|
-|97|My Road To The World Championship|Master Games|M|F. Caruana|5|25|listed|my-road-to-the-world-championship|
+|97|My Road To The World Championship|Master Games|M|F. Caruana|5|25|sampled-L1-c1 (seg 10)|my-road-to-the-world-championship|
 |98|Advanced Bongcloud Theory|Openings|M|J. L. Hammer|11|55|sampled-L1-c1 (seg 9)|advanced-bongcloud-theory|
 |99|How to Be Materialistic In Chess|Strategy|M|K. Kavutskiy|5|25|listed|how-to-be-materialistic-in-chess|
-|100|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|listed|shakh-vs-the-world-champions|
+|100|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|sampled-L1-c1 (seg 10)|shakh-vs-the-world-champions|
 |101|Carlsen vs. Nepomniachtchi: Their Greatest Games Analyzed|Master Games|M|S. S. Ganguly|5|25|listed|carlsen-vs-nepomniachtchi|
 |103|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||listed|genrikh-kasparyans-studies|
 |104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-kasparov-vs-karpov|
@@ -259,13 +259,13 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |110|Mating Nets|Attacking|M|T. Abrahamyan|5|25|played|king-hunts|
 |111|Master Endgame Checkmates|Endgames|M|CC|5|25|played-partly|master-endgame-checkmates|
 |112|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|listed|grandmaster-opening-kitchen|
-|113|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|listed|how-to-play-the-kalashnikov|
+|113|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|sampled-L1-c1 (seg 10)|how-to-play-the-kalashnikov|
 |114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|listed|the-10-best-games-of-the-1990s|
 |115|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|listed|how-levon-aronian-became-americas-newest-super-grandmaster|
 |116|How To Play The King's Indian Attack|Openings|M|Dejan Bojkov|5|25|listed|how-to-play-the-kings-indian-attack|
 |120|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-fischer-and-karpov|
 |121|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-petrosian-and-spassky|
-|122|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|listed|my-best-games-shakhriyar-mamedyarov|
+|122|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|sampled-L1-c1 (seg 10)|my-best-games-shakhriyar-mamedyarov|
 |123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||listed|pal-benkos-studies|
 |126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|listed|the-top-ten-games-of-the-2000s|
 |127|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||listed|henri-rincks-studies|
@@ -276,17 +276,17 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |133|Play Like Anish Giri|Master Games|M|Jeremy Kane|5||listed|play-like-anish-giri|
 |134|A Chess Coach's Favorite Problems|Strategy|M|S. S. Ganguly|5|25|listed|a-chess-coachs-favorite-problems|
 |135|Vasily Smyslov: Master Of Attack|Master Games|M|A. Terekhov|5|25|listed|vasily-smyslov-master-of-attack|
-|136|Today's Top Juniors|Master Games|M|M. Khachiyan|5|25|listed|todays-top-juniors|
-|137|Breaking Down Closed Positions|Strategy|M|J. L. Hammer|4|20|listed|breaking-down-closed-positions|
+|136|Today's Top Juniors|Master Games|M|M. Khachiyan|5|25|sampled-L1-c1 (seg 10)|todays-top-juniors|
+|137|Breaking Down Closed Positions|Strategy|M|J. L. Hammer|4|20|sampled-L1-c1 (seg 10; answer not found)|breaking-down-closed-positions|
 |138|Learn From The Best: Komodo|Master Games|M|Sam Copeland|4|20|listed|learn-from-the-best-komodo|
 |139|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7||listed|alexey-troitskys-studies|
 |141|Play Like A Speed Chess Champion|Master Games|M|Jeremy Kane|20||listed|play-like-a-speed-chess-champion|
 |142|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||listed|richard-retis-studies|
-|143|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|listed|doubled-pawns-in-the-caro-kann-and-nimzo-indian|
-|144|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|listed|the-latvian-school-of-chess|
+|143|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|sampled-L1-c1 (seg 10; answer not found)|doubled-pawns-in-the-caro-kann-and-nimzo-indian|
+|144|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|sampled-L1-c1 (seg 10)|the-latvian-school-of-chess|
 |145|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|listed|learn-from-the-best-stockfish|
 |146|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|listed|daniil-dubovs-amazing-opening-ideas|
-|147|Name Your Pawns|Strategy|M|Simon Williams|8|40|listed|name-your-pawns-the-queenside|
+|147|Name Your Pawns|Strategy|M|Simon Williams|8|40|sampled-L1-c1 (seg 10)|name-your-pawns-the-queenside|
 |148|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|listed|the-sicilian-nimzowitsch-variation|
 |149|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|listed|use-your-pieces-tactically|
 |151|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|listed|how-to-avoid-mistakes|
@@ -299,7 +299,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |162|Play Like A World Champion: The Steinitz Years|Master Games|M|Jeremy Kane|4||listed|play-like-a-world-champion-the-steinitz-years|
 |163|Top Level Trickery|Strategy|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 9)|top-level-trickery-1|
 |164|Tatev's Favorite Studies|Tactics|M|T. Abrahamyan|5|25|listed|tatevs-favorite-studies|
-|165|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|listed|online-nations-cup-highlights-1|
+|165|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|sampled-L1-c1 (seg 10)|online-nations-cup-highlights-1|
 |166|Play like Max Euwe|Master Games|M|Jeremy Kane|5||listed|play-like-max-euwe-1|
 |167|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||listed|play-like-emanual-lasker|
 |172|Tips And Tricks Of The London System|Openings|M|Aman Hambleton|5|25|listed|tips-and-tricks-of-the-london-system|
@@ -333,18 +333,18 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |222|Play Like Hikaru Nakamura|Master Games|M|Jeremy Kane|5||played-L1-first-2-moves|play-like-hikaru|
 |223|Play Like Fabiano Caruana|Master Games|M|Jeremy Kane|5||listed|play-like-fabiano|
 |224|Play Like Magnus Carlsen|Master Games|M|Jeremy Kane|5||listed|play-like-magnus|
-|226|Pirc Defense for Black|Openings|M|M. Molner|8|40|listed|pirc-defense-for-black|
+|226|Pirc Defense for Black|Openings|M|M. Molner|8|40|sampled-L1-c1 (seg 10)|pirc-defense-for-black|
 |227|Pirc Defense for White|Openings|M|R. Dzindzichashvili|2|10|sampled-L1-c1 (seg 9)|pirc-defense-for-white|
 |228|Secrets of the English Attack|Openings|M|T. Abrahamyan|5|25|listed|secrets-of-the-english-attack|
 |229|The Complete English Defense|Openings|M|Simon Williams|5|25|listed|the-complete-english-defense|
 |230|The Belgrade Gambit|Openings|M|Simon Williams|2|10|sampled-L1-c1 (seg 9)|the-belgrade-gambit|
 |231|How to Play the Trompowsky Attack|Openings|M|Keaton Kiewra|8|40|listed|how-to-play-the-trompowsky|
 |232|Playing with Material Imbalances|Master Games|M|Ben Finegold|2|10|sampled-L1-c1 (seg 9)|playing-with-material-imbalances|
-|233|The Complete Queen's Gambit Declined|Openings|M|G. Kaidanov|10|50|listed|the-complete-queens-gambit-declined|
+|233|The Complete Queen's Gambit Declined|Openings|M|G. Kaidanov|10|50|sampled-L1-c1 (seg 10)|the-complete-queens-gambit-declined|
 |235|Rook and Knight vs. Rook|Endgames|M|Ivan Sokolov|3|15|played-L1-c1|rook-and-knight-vs-rook|
 |236|Old School Cool|Master Games|M|Simon Williams|5|25|listed|old-school-cool|
-|237|The Complete Caro|Openings|M|Sam Shankland|9|45|listed|the-complete-caro|
-|241|Mikhail Tal's Brilliancies|Attacking|M|A. Melekhina|3|15|listed|mikhail-tals-brilliancies|
+|237|The Complete Caro|Openings|M|Sam Shankland|9|45|sampled-L1-c1 (seg 10)|the-complete-caro|
+|241|Mikhail Tal's Brilliancies|Attacking|M|A. Melekhina|3|15|sampled-L1-c1 (seg 10)|mikhail-tals-brilliancies|
 |242|How to Develop the Initiative|Master Games|M|V. Mikhalevski|3|15|listed|how-to-develop-the-initiative|
 |243|Think Like a Master|Master Games|M|Keaton Kiewra|4|20|played-L1-c1|think-like-a-master|
 |244|Secrets of the Carlsbad|Strategy|M|M. Khachiyan|3|15|listed|secrets-of-the-carlsbad|
@@ -361,13 +361,13 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |259|Bishop Battles|Master Games|M|J. L. Hammer|5|25|listed|bishop-battles|
 |260|The Scotch Mieses Theory and Middlegame|Openings|M|Daniel Rensch|8||listed|complete-scotch-2-mieses-theory-middlegame|
 |261|Deep Concepts Explained|Strategy|M|J. L. Hammer|2|10|sampled-L1-c1 (seg 9)|deep-concepts-explained|
-|263|The Classical Dutch|Openings|M|Simon Williams|5|25|listed|the-classical-dutch|
+|263|The Classical Dutch|Openings|M|Simon Williams|5|25|sampled-L1-c1 (seg 10)|the-classical-dutch|
 |264|Kasparov's Greatest Combinations|Attacking|M|Dejan Bojkov|3|15|sampled-L1-c1 (seg 9)|kasparovs-greatest-combinations|
 |266|Expect the Unexpected|Master Games|M|M. Khachiyan|3|15|listed|expect-the-unexpected|
 |267|Crush with the King's Gambit|Openings|M|Simon Williams|5|25|listed|crush-with-the-kings-gambit|
 |268|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|listed|winning-with-the-chigorin|
 |269|How to Make a Comeback|Master Games|M|Mike Klein|3|15|sampled-L1-c1 (seg 9)|how-to-make-a-comeback|
-|273|Attack with the Catalan!|Openings|M|Georg Meier|10|50|listed|attack-with-the-catalan|
+|273|Attack with the Catalan!|Openings|M|Georg Meier|10|50|sampled-L1-c1 (seg 10)|attack-with-the-catalan|
 |274|Play the Budapest Gambit!|Openings|M|Simon Williams|3|15|listed|play-the-budapest|
 |277|Sacrifice on h6|Attacking|M|Simon Williams|5|25|listed|sacrifice-on-h6|
 |278|Super GM Rook Endings|Endgames|M|A. Yermolinsky|3|15|listed|super-gm-rook-endings|
@@ -378,7 +378,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |287|How To Sacrifice Your Queen|Attacking|M|Mike Klein|6|30|sampled-L1-c1 (seg 9)|how-to-sacrifice-your-queen|
 |289|Hikaru Plays to Win|Master Games|M|Hikaru Nakamura|6|29|played-L1-c1|hikaru-plays-to-win|
 |291|Immortal Games|Master Games|M|Simon Williams|5|25|listed|immortal-games|
-|314|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||listed|sensing-the-danger-examples-from-my-games|
+|314|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||sampled-L1-c1 + finish (seg 10)|sensing-the-danger-examples-from-my-games|
 |316|En Prise Please!|Tactics|M|CT|10||listed|en-prise-please|
 |318|Master Tactics|Tactics|M|CT|9||listed|master-tactics|
 |334|Finding Tricky Tactics|Tactics|M|CT|15||listed|finding-tricky-tactics|
@@ -419,6 +419,6 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |102|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|listed|how-to-beat-a-grandmaster|
 |117|King Activity In The Endgame|Endgames|-|Romain Edouard|5|25|played-L1-c1|king-activity-in-the-endgame|
 |119|Play Like Ian Nepomniachtchi|Master Games|-|Jeremy Kane|5||listed|play-like-ian-nepomniachtchi|
-|124|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|listed|every-gambit-refuted|
+|124|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|sampled-L1-c1 (seg 10)|every-gambit-refuted|
 |125|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|listed|positional-masterpieces|
 |159|Play Like A World Champion: Botvinnik, Smyslov And Tal|Master Games|-|Jeremy Kane|6||listed|play-like-a-world-champion-botvinnik-smyslov-and-tal|

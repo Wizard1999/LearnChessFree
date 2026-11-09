@@ -416,3 +416,208 @@ Courses whose badge is M only (the newer "Mastery" tag; 248 courses, most of the
 - Finding [V]: the position is not a typical Greek-gift setup (Black's light and dark bishops are missing and White is +6 before the sacrifice), so the lesson's name is attached to a position where almost any move wins; the learner's "I found the sacrifice" is not tested because the title already gave it away and the alternatives are equally winning. The unconditional praise matches nothing the engine can distinguish.
 - Text volume: 85 characters right. Handoff: Next to a follow-up. Retry (733,757).
 - Idea [I]: for named-sacrifice items, build the position from a real game where the sacrifice is the only winning move (or at least where quiet moves are worse by > 2 pawns); a validator check "named-motif item: the named move is within 0.5 of the best and every alternative of the same type is worse by >= 1.5" would reject this position.
+
+## Segment 10 (9 Nov 2026, resumed list: Every Gambit Refuted onward)
+
+### Every Gambit Refuted (E. Perelshteyn, no badge, Openings, 29 lessons, 145 challenges; L1 "Stafford Gambit", 5 challenges) [V]
+- Format: one gambit per lesson (29 gambits), five challenges each, learner plays White against the gambit line already on the board: `r1bqk2r/ppp2ppp/2p2n2/2b5/4P3/2N5/PPPP1PPP/R1BQKB1R w KQkq` (1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.Nc3 Bc5, White to move). Prompt "White to Move" only; the lesson title names the gambit.
+- Engine [V] depth 14: h3 +1.61, Qe2 +1.02, f3 +0.93, Qf3 +0.86, e5 +0.47. So the accepted move h3 is the clear top move and the only one above +1.1.
+- Wrong e5 (+0.47, gap 1.14): red "e5 is incorrect. There's a better move. Try again and look for a way to prevent Ng4 or Bg4 from Black." The wrong text names the opponent's threat class (the Ng4/Bg4 ideas against f2 and the queen), which is checkable and is the lesson's key idea. Right h3: just "h3 is correct" (no reason given on the right move; the reason was only on the wrong text).
+- Finding [V]: here the useful text is on the miss and the praise is bare, the reverse of most courses. Qe2 (+1.02) and f3 (+0.93) are probably also red although they keep a clear edge; not tested, so [I] for their grading.
+- Text volume: 115 characters wrong, 15 right. Handoff: green Next arrow (692,757). Retry (733,757).
+- Idea [I]: a refutation course is a good Scholarmate strand ("what do I play when they gambit?"): store `threat_to_stop` on the item and show it as the wrong text; it doubles as the one-line rule for the opening.
+
+### Sensing the Danger - Examples from My Games (A. Lenderman, M badge, Master Games, 8 lessons; L1 "Keeping the opponent's play under control", 1 challenge) [V]
+- Format: a first-person annotated game moment, one challenge per lesson. The prompt is a story paragraph (2011 Moscow Open, leading group at 6/7, "a very messy opening") with "Black to Move" above it; the learner is Black, flipped: `r5k1/pp1b1pp1/n2p4/2bP4/2p1PP1p/5B2/PP1B1NPP/3R1K2 b`.
+- Engine [V] depth 14: Rae8 +0.48, Bxa4 +0.28, f6 +0.26, b5 +0.16, Nb4 +0.05. Wrong Nb4 (the move the author actually played): red "Nb4 is incorrect", nothing else. Right Re8: "Re8 is correct", then a long author text.
+- The right-move text is the lesson: names the opponent's only active idea (e5), the plan it stops (activating the passive f2 knight), the long-term asset (a passed d5 pawn if d6 goes), and the failed thinking process ("I overestimated my position and went for overkill"). It also says "White seems clearly worse" after Re8; the engine says Black +0.48, so "clearly" is an adjective outrunning the margin [V depth 14; deeper not run, not a key claim].
+- Finding [V]: the strongest use of a single challenge so far for a metacognitive lesson: the learner's miss is the author's own historical miss, and the feedback explains the habit that produced it (overestimation) rather than only the move. Wrong feedback is bare, so the learner gets the thinking-process insight only after the right move; the sensible order for Scholarmate is the reverse, with the opponent's idea ("what does White want here? e5") as the hint.
+- Handoff: ends with a Finish button (Lesson Complete, to /learn). Text volume: 22 characters wrong, about 1,000 right.
+- Idea [I]: "thinking-process" items (what did I believe, what did the opponent want) are exactly what Scholarmate's learning-to-learn goal needs; store `opponent_idea` and `habit_error` fields and pair the item with a self-rating prompt before the move ("how sure are you?") to build calibration.
+
+### Perfect Chess Games (Jeremy Kane, M badge, Master Games, 5 lessons, no stats shown; L1 "Hikaru's Perfect Game", 1 challenge visible) [V]
+- Format: one famous game per lesson in the "Play Like" shell (one challenge line, then a follow-up question inside the same challenge). Prompt: "White to Move, GM Hikaru Na[kamura]". Position `r1bqkb1r/1p1npppp/p2p1n2/6B1/3NP3/2N5/PPP2PPP/R2QKB1R w KQkq` (Najdorf, 6.Bg5 Nbd7).
+- Engine [V] depth 18: Bc4 +0.36, Qe2 +0.29, a4 +0.27, f4 +0.24 (the game move, accepted), Be2 +0.22, Be3 +0.22, f3 +0.17. Seven moves are within 0.25 of each other: this is an opening position with no single best move.
+- Three tiers seen on one item [V]: Be2 (+0.22, only 0.02 below f4) red "Be2 is incorrect" with no text; Bc4 (the engine top, +0.36) amber "Bc4 is an alternative"; f4 green, then a follow-up "How should White continue to develop?".
+- Finding [V]: the grader encodes the game move, not the position: red for a move 0.02 pawns weaker than the accepted one, and the engine's top move only "an alternative". For a "perfect game" the lesson must teach the game move as the story, so this is defensible, but the red label on Be2 is not (red should mean "loses something"). Scholarmate: in opening-choice items with a spread under 0.3, no red at all; the game move is "the move played" and the rest are "also playable".
+- Text volume: wrong 14 characters (just "Be2 is incorrect"), alternative 20, right is a question. Retry (733,757); the green state's retry is the same slot (733,757).
+- Idea [I]: a "played in the game" label distinct from "best" resolves the tension between history lessons and engine truth; show both: "Hikaru played f4; the engine's list is flat (+0.2 to +0.4)".
+
+### Online Nations Cup Highlights (Jeremy Kane, M badge, Master Games, 8 lessons, 37 challenges; L1 "Day One Game Of The Day: Artemiev - Aronian", 5 challenges) [V]
+- Format: one recent online-team game per lesson, a critical moment per challenge, learner plays the winner. Position `3r4/3rkp2/1pbpp3/p1q3p1/P1P1P3/1P1R2PP/3Q2BK/5R2 w` (move 32). Prompt: "White to Move" with the player names in the title.
+- Engine [V] depth 14: Rd5 +2.39 (a rook sacrifice, the lesson move), e5 +1.69, b4 +0.83, Rf3 +0.54, Qb2 +0.18. Rd5 is the clear top by 0.7.
+- Wrong Rf3 (+0.54): red "Rf3 is incorrect" with nothing else. Right Rd5: "Great start! How can you justify the sacrifice?", a follow-up inside the challenge that asks the learner to find the point (Qg5+ after ...cxd5).
+- Finding [V]: the right-move text frames the learner's job as justification of a sacrifice, not just finding it; good. But e5 (+1.69, still winning by a wide margin) was not tested and is likely graded red like Rf3, which would teach that a clearly winning alternative is "incorrect" (same defect as eight earlier samples). Wrong text carries no reason.
+- Text volume: 15 characters wrong, 50 right. Retry (733,757).
+- Idea [I]: the "How can you justify X?" follow-up pattern is worth copying for sacrifice items: after the move, ask for the refutation of the declined/accepted reply (the first ply of the engine line), so the learner proves the sacrifice instead of trusting it.
+
+### Mikhail Tal's Brilliancies (A. Melekhina, M badge, Attacking, 3 lessons, 15 challenges; L1 "Mikhail Tal's Best Queen Sacrifices", 5 challenges) [V]
+- Format: a Tal game per lesson, learner plays Tal's side, a multi-move line with questions after each move. L1 C1 (Black to move, flipped): `1rb1r1k1/4qpbp/pp1p2p1/2pP3n/P3P3/5P2/RPQ1B1PP/2B1RNK1 b` (move 20). Title promises a queen sacrifice; the first position is a quiet middlegame and the sacrifice comes later in the game.
+- Engine [V] depth 14: f5 +1.48 (accepted), b5 +0.73, Bxe5 +0.69, Qh4 +0.59, Ra8 +0.45. f5 is the top by 0.75.
+- Wrong b5 (+0.73): red "b5 is incorrect. There's a better move. Try to find it." (generic, no hint). Right f5: a follow-up question "Since e4 is well defended, Tal switches plans and blocks White's pieces from reaching the kingside, how?" (the next move continues the same line).
+- Finding [V]: the follow-up text mentions the previous move's idea (attack on e4) and the next idea (block the kingside) in one sentence, so the learner is told the plan before the move is asked; the position-to-title mismatch is common in the instructor-led courses (title names the climax; the challenge is a quiet moment two or three moves earlier).
+- Text volume: 60 characters wrong, about 110 follow-up. Retry (733,757).
+- Idea [I]: Scholarmate game-based lessons should mark the item "setup" or "climax" in the title so a learner who expected a queen sacrifice is not surprised by a quiet pawn move.
+
+### Cuban Chess: Dominguez On Capablanca (L. Dominguez, M badge, Master Games, 5 lessons, 25 challenges; L1 "Capablanca - Marshall", 5 challenges) [V]
+- Format: a Capablanca game per lesson, the learner plays Capablanca's side, with no prompt beyond "White to Move". C1 `r2q1rk1/ppp1bpp1/2np1n1p/1B2p3/4P1b1/2PP1N2/PP1N1PPP/R1BQR1K1 w` (Ruy Lopez structure, Black's bishop pinning Nf3).
+- Engine [V] depth 14: Nf1 +0.52 and h3 +0.52 (an exact tie), Ba4 +0.34, a3 +0.30, a4 +0.24.
+- Wrong-ish a4 (+0.24): amber "a4 is an alternative" with a green Retry (733,757), no explanation of what it gives up. Right Nf1: "Nf1 is correct", nothing else.
+- Finding [V]: the author's move has an equal-valued twin (h3 +0.52); whether h3 is accepted was not tested (not played after Nf1), so [I] on its grading. The amber tier fires for a move 0.28 below the top, which fits the "also works" rule from earlier segments, but it carries no cost text, so the learner cannot tell a good alternative from a mediocre one.
+- Text volume: 20 characters each; all teaching is in the audio/lecture layer [not captured].
+- Idea [I]: for an exact tie between a quiet developing move and a prophylactic pawn move, the item should list both as `accepted` and use the game move for the follow-up line only.
+
+### Artur Yusupov: On Magnus Carlsen (M badge, Master Games, 5 lessons, 25 challenges; L1 "Moving Toward The King: On Magnus", 5 challenges) [V]
+- Format: a Carlsen game per lesson, the learner plays the side against the queen hunt. C1 `r4rk1/pb3pbp/1p2p1p1/n7/3PP2q/3BB3/P2QNPP1/2R2RK1 w` (Black's queen has wandered to h4). Prompt: "White to Move" only.
+- Engine [V] depth 14: Bg5 +4.15 (traps the queen, the lesson move), Rc7 +0.32, e5 +0.02, Nc3 0.00. A 3.8-pawn gap, the largest "one clear move" item in this segment.
+- Wrong e5 (+0.02): red "e5 is incorrect", nothing else. Right Bg5: follow-up "How should you continue to chase the black queen?", the hunt continues as a multi-move line.
+- Finding [V]: here the bare red is acceptable because the correct move is a once-in-a-game tactic (a trapped queen) and the follow-up question states the theme ("chase the queen"), which names the idea retroactively. The theme is therefore visible only after success; a hint ladder entry "look at the queen's escape squares" would let a stuck learner find it by reasoning.
+- Handoff: next challenge is the continuation of the same line. Retry (733,757). Slip noted: clicking d3 instead of e3 selects the wrong bishop and nothing is reported; selecting the other piece switches silently.
+- Idea [I]: "trapped piece" items (count the escape squares) are the same motif as Scholarmate's trapped-piece lessons; the validator's engine line must end with the queen won, and it should check that no check or zwischenzug rescues it.
+
+### My Best Loss (Chess.com Coach, M badge, Master Games, 4 lessons, 20 challenges; L1 "My Best Loss: GM Ben Finegold", 5 challenges) [V]
+- Format: a titled player's own lost game, learner plays the player (Black, flipped): `3r4/p1r1k2p/Bp4p1/2pp4/bP1R3P/P1R1PP2/4K1P1/8 b` (move 28, rook ending with bishops). Prompt "Black to Move".
+- Engine [V] depth 14: c4 +0.44 (accepted), Bb3 +0.35, Bd7 -0.05, Be8 -0.08, Bc6 -0.25. 
+- Three tiers measured on one item [V]: c4 green ("Black's c-pawn restricts the white bishop and is the only passed pawn on the board" in the follow-up); Bb3 (+0.35, 0.09 below) amber "Bb3 is an alternative"; Bd7 (-0.05, 0.49 below, and a change of sign) red "Bd7 is incorrect". This is the cleanest threshold behaviour seen so far: amber for within about 0.1-0.4, red for a half-pawn drop or an eval that crosses zero.
+- Checkable claim: "only passed pawn on the board" is true on the diagram (Black's d5 is blocked by the e3 pawn's file, White has no passed pawn) [V by reading the position, not by the engine].
+- Text volume: 14 characters wrong, 20 alternative, about 90 right. Retry (733,757) in all states. Handoff: follow-up in the same line.
+- Idea [I]: Scholarmate can document its tiering rule the same way (amber if within 0.4 and the same side of zero; red otherwise) and show the rule in the lesson settings; the rule makes the grading explainable and testable by the validator.
+
+### Today's Top Juniors (M. Khachiyan, M badge, Master Games, 5 lessons, 25 challenges; L1 "Alireza Firouzja", 5 challenges) [V]
+- Format: one young star's game per lesson, learner plays the junior's side. C1 `4r1k1/b1pq1pp1/p2pr1np/4p2n/P2PP3/2P2N1P/2Q2PP1/1RB1RNK1 w` (move 19, closed Ruy-type middlegame). Prompt "White to Move".
+- Engine [V] depth 14: a5 0.00 (accepted), Rb2 -0.01, Kh2 -0.04, Kh1 -0.06, Bd2 -0.18. A flat list: every sensible move is within 0.2.
+- Wrong Bd2 (-0.18): red "Bd2 is incorrect". Right a5: "a5 is correct" and the board advances to the next challenge (no follow-up question, green Next at (733,757) with the arrow at the right).
+- Finding [V]: a 0.18 gap is red and the grading mirrors the game move; with this flat a list the learner's choice among Rb2/Kh2/Kh1 would also be red, untested. Both feedback lines are bare, so nothing explains why a5 (gaining space and fixing the a7 bishop's diagonal, the plan I infer) beats the rest. [I]
+- Text volume: 15 characters each way. Retry (733,757).
+- Idea [I]: in equal positions the item should ask for a plan, not a move ("which side will you play on?"), and accept any move that serves the plan; the move-by-move grader is the wrong shape for a flat evaluation.
+
+### The Latvian School Of Chess (A. Neiksans, M badge, Attacking, 5 lessons, 25 challenges; L1 "Mikhail Tal", 5 challenges) [V]
+- Format: one Latvian attacker per lesson (Tal first), learner plays the attacker. C1 `r3k2r/pb3pp1/2p1qnnp/1pp1P3/Q1N4B/2PB1P2/P5PP/R4RK1 w kq` (move 19, White has Nc4 and Bh4 aimed at the knights). Prompt "White to Move".
+- Engine [V] depth 14 / depth 20: Qb3 +0.87 / +0.53, exf6 +0.43 / +0.41 (the lesson move), Qc2 +0.16 / +0.16, Qa3 -0.02 / 0.00, Qa5 -0.02. At depth 20 the lesson's move is within 0.12 of the best; at depth 14 it was 0.44 below.
+- Grading [V]: Qa3 (0.00 at depth 20, 0.4 below the author's move) amber "Qa3 is an alternative"; Qb3 (the engine's top at both depths) amber "Qb3 is an alternative"; exf6 green "exf6 is correct". So amber covers both the engine's best and a drawish move: amber means "not the author's move", not "playable but weaker". Compare My Best Loss (amber at -0.09, red at a half-pawn drop): the shells differ by course, and some courses never use red.
+- Finding [V]: a three-tier label whose middle tier mixes "better" and "worse" than the answer cannot teach anything; "alternative" must be graded and explained (`alt` with cost text, and a better-than-answer flag so the author is alerted).
+- Text volume: 25 characters in every state. Retry (733,757).
+- Idea [I]: validator rule: when any engine-top move is not in `accepted`, the item is flagged "author move not best" and routed to a human; the lesson then says "the game continued exf6; the engine slightly prefers Qb3" instead of calling Qb3 an alternative.
+
+### My Road To The World Championship (F. Caruana, M badge, Master Games, 5 lessons, 25 challenges; L1 "An Intense Battle With Kramnik", 5 challenges) [V]
+- Format: first-person game lesson by the player (autobiographical, as in Judit Polgar / Hou Yifan), the learner plays the author's side (Black, flipped): `r3r3/pp3pkp/2pp1b2/4nbp1/2P5/1B5P/PPPN1PPB/2KRR3 b` (move 19). Prompt "Black to Move" only.
+- Engine [V] depth 14: g4 +0.43 (accepted, wins space and kicks the Nd2), a5 +0.28, Rac8 +0.10, Rad8 -0.12, h5 -0.12.
+- Wrong Rad8 (-0.12): red "Rad8 is incorrect". Right g4: "g4 is correct", nothing more on screen at first paint; the board continues to the next question.
+- Finding [V]: a titled player's own lesson gives the shortest feedback of the segment (both states about 15 characters), the explanation being carried by the video/audio. For a text-only product this is the key gap: the chess.com explanatory layer is not in the text.
+- Text volume: 15 characters either way. Retry (733,757). 
+- Idea [I]: Scholarmate writes the missing layer: each accepted move gets one sentence naming what it takes from the opponent (here: the Nd2 loses its e4 square, the g4 pawn gains space) and each distractor one sentence of cost, both machine-checked against the engine line.
+
+### My Games With The World Chess Champions (S. Mamedyarov, M badge, Master Games, 6 lessons, 30 challenges; L1 "Vs Kramnik", 5 challenges) [V]
+- Format: autobiographical, a defence puzzle: Black (flipped) is under attack, `6k1/pp2r1pp/5pb1/2PR2q1/1Q4P1/P3r3/4BP1P/3R2K1 b` (move 27). Prompt "Black to Move".
+- Engine [V] depth 14 (a first run on a mistyped FEN hung for 2 minutes: always check the FEN before sending; a bad FEN makes the engine search forever): Re4 -0.48 (accepted), Rxe2 -1.40, Qxd5 -1.70, Bh5 -3.48, Re5 -4.51. Re4 is the only non-losing move; the rest lose material.
+- Wrong Rxe2 (-1.40): red "Rxe2 is incorrect" (bare). Right Re4: follow-up text "...threatens mate in one move, but Black is still OK. How can you prove it?".
+- Finding [V]: a clean "only move" item where the red label is right and the follow-up question ("prove it") makes the learner calculate the defence, the best wording for a defensive item so far. The claim "Black is still OK" is engine-consistent only loosely: -0.48 is a slightly worse position that holds [V depth 14, no deeper run].
+- Text volume: 15 characters wrong, about 80 follow-up. Retry (733,757).
+- Idea [I]: for defensive items state the evaluation class ("slightly worse but holds") from the margin and make the follow-up ask for the refutation of the attacker's best try; the validator can enumerate the attacker's mate threats and check each is parried.
+
+### My Best Games - Shakhriyar Mamedyarov (S. Mamedyarov, M badge, Master Games, 5 lessons, 25 challenges; L1 "vs Fabiano Caruana", 5 challenges) [V]
+- Format: autobiographical game, learner plays the author (Black, flipped): `r1b1k2r/pp1pp1bp/5np1/q2P1p2/1nP2B2/1Q3P2/PP1NN1PP/R3KB1R b KQkq` (move 12). The prompt loaded only after the hint was pressed (a pre-load "What" fragment, then, after about 4 s: "What incredible move should Black play here to take over the initiative?").
+- Engine [V] depth 14, 14 lines: d6 +0.11, Qa4 +0.06 (the accepted move), O-O +0.02, Nh5 -0.26, Na6 -0.26, Qb6 -0.57. The first three are within 0.1.
+- Grading [V]: d6 (the engine's top move) red "d6 is incorrect"; O-O (0.04 below the top) red "O-O is incorrect"; Qb6 (-0.57) red; only Qa4 green "Qa4 is correct" with no explanation. So three red labels, two of them for moves the engine rates at least as high as the accepted one.
+- Finding [V]: the "incredible move" wording sets the grading rule (the surprising move), and the rest are red even when equal; the learner who plays the natural d6 or castles is told "incorrect" with nothing to repair it. This is the clearest case of the defect "author move vs engine truth" in this segment; the best repair is the prompt's own wording: "find the surprising move" (a style claim) and a gentle amber for the natural ones ("sound, but the game took the initiative with Qa4").
+- Text volume: 15 characters in every state. Prompt arrives late (about 4 s after the hint). Retry (733,757); hint (693,757).
+- Idea [I]: item type "find the move that takes the initiative" needs `accepted` plus `also_sound` with the reason "natural, but leaves the initiative with White"; the validator confirms the margin (within 0.15 of the accepted move) before allowing `also_sound`.
+
+### How To Defeat A Pawn Weakness (Robert Ramirez, M badge, Strategy, 5 lessons, 25 challenges; L1 "How To Defeat An Isolated Pawn", 5 challenges) [V]
+- Format: one weakness type per lesson (isolated pawn first), learner plays the attacker. C1 `r4rk1/pp3ppp/2n1b3/q2p4/8/1P2PN2/PQ2BPPP/R4RK1 w` (isolated d5 pawn, move 15). Prompt "White to Move"; the prompt shows only after a few seconds.
+- Engine [V] depth 14: Rac1 +0.52, Rfd1 +0.48 (accepted), h3 +0.46, Rfc1 +0.46, Rad1 +0.45, a3 +0.43. All six within 0.1: a flat list of reasonable moves.
+- Grading [V]: a3 (0.05 below) amber "a3 is an alternative" (no cost text); Rfd1 green "Rfd1 is correct". No red tested; here the amber tier matches the engine (a quiet useful move is "an alternative").
+- Finding [V]: a strategic item whose correct answer is a concept ("put a rook on the file of the weakness") but the feedback never says the concept; the learner could guess among six rook/pawn moves. The follow-up that arrives after Rfd1 asks for the next step in the same plan.
+- Text volume: 15 and 25 characters. Retry (733,757).
+- Idea [I]: Scholarmate strategy items store `concept` ("attack the isolated pawn: pressure the file, blockade the square in front") and grade by the concept predicate (rook or queen aimed at d5 counts); the validator lists the engine moves that satisfy the predicate.
+
+### Breaking Down Closed Positions (J. L. Hammer, M badge, Strategy, 4 lessons, 20 challenges; L1 "Breaking Down A Locked Kingside", 5 challenges) [V]
+- Format: a locked-pawn middlegame where the learner (Black, flipped) must find the plan: `5n2/2b3k1/2n1q2p/p1Pp2pP/Np1P1pP1/1P3P2/1B3K2/3Q1N2 b` (move 42). Prompt "Black to Move" only.
+- Engine [V] depth 14: Kg8 +0.77, Kf7 +0.74, Nd8 +0.73, Kf6 +0.72, Ne7 +0.69, Nd7 +0.68: six waiting or regrouping moves within 0.1, because the position is closed and no move changes the evaluation.
+- Grading [V]: Kg8 (engine top) red "Kg8 is incorrect"; Nd8 (0.04 below) red; Kf7 (0.03 below) amber "Kf7 is an alternative"; Ne7 amber. The accepted move was not found after four tries (Kf6 and Nd7 untested), so the lesson's answer is one of the two untested; a hint was not used.
+- Finding [V]: in a closed position the grader rewards one regrouping move among six equal ones with a red/amber split that the engine cannot support (red for 0.04 below, amber for 0.03 below); the item cannot be solved by evaluation, only by knowing the author's plan, and the prompt gives none ("Black to Move"). The most severe version of the flat-list problem: the learner is graded on a guess.
+- Text volume: 15 to 25 characters. Retry (733,757).
+- Idea [I]: closed-position items must state the plan in the prompt ("bring the knight to the queenside"), and the validator must refuse an item whose six best moves are within 0.15 unless a `plan` predicate defines the accepted set.
+
+### Doubled Pawns: Pros And Cons (F. Libiszewski, M badge, Strategy, 4 lessons, 20 challenges; L1 "Doubled Pawns: The Aggressive Caro Kann", 5 challenges) [V]
+- Format: pawn-structure lesson on a Caro-Kann-like position, learner plays Black (flipped): `rnbqr1k1/pp3ppp/2pb1p2/8/3P4/2PB4/PPQ1NPPP/R1B1K2R b KQ` (move 9; White's Bd3 and Qc2 aim at h7). Prompt "Black to Move".
+- Engine [V] depth 14: h6 -0.33, f5 -0.41, h5 -0.46, Kh8 -0.49, g6 -0.50, Kf8 -0.78. A flat list again (all within 0.2 apart from Kf8).
+- Grading [V]: h6 (engine top) amber "h6 is an alternative"; f5 (-0.41, 0.08 below) red "f5 is incorrect"; Kh8 (-0.49) red. The accepted move was not found in three tries (h5, g6 untested), another unresolved answer in a flat position.
+- Finding [V]: the lesson title promises a comparison of doubled pawns ("pros and cons") but the first position has no doubled pawns for the learner to evaluate yet (the c6/c3 doubled-pawn structure is not on the board: Black's pawns are c6/d?; the doubled pawns are White's c3 and d4? no, White has c3 and d4 with b2 and a2: not doubled). Title and position mismatch again, plausibly because the lesson uses the Caro-Kann as a setup to a later point [I].
+- Text volume: 15 to 25 characters. Retry (733,757).
+- Idea [I]: a position-title lint ("doubled pawns" must literally appear as two pawns of one colour on a file in the diagram) belongs in the validator; this one would fail it.
+
+### Name Your Pawns (Simon Williams, M badge, Strategy, 8 lessons, 40 challenges; L1 "Arry The a-Pawn", 5 challenges) [V]
+- Format: pawn-by-pawn lessons with personified names ("Arry the a-pawn", then the b-pawn and so on), learner plays one side of a Ruy/Italian structure (Black, flipped): `r1bqk2r/bpp2ppp/p1np1n2/4p3/2B1P3/2PP1N1P/PP1N1PP1/R1BQ1RK1 b kq` (move 8). Prompt "Black to Move".
+- Engine [V] depth 14: h6 +0.11, Qe7 -0.11, Be6 -0.16, Na5 -0.20 (accepted, hits the Bc4 and prepares ...b5), O-O -0.24, Bd7 -0.28. A flat list.
+- Grading [V]: O-O (0.04 below the answer) amber "O-O is an alternative"; Na5 green "Na5 is correct". The lesson's concept (the a-pawn supports the knight's jump and the ...b5 break) is not stated in either message.
+- Finding [V]: the personified title is a memory device (a hook for beginners, and a good one), but the feedback does not use the persona, so the device lives only in the title and the lecture. A small win for Scholarmate: use the nickname in the feedback ("Arry guards the knight on b5").
+- Text volume: 25 characters either way. Retry (733,757).
+- Idea [I]: a pawn-personality layer (each pawn has a role: a-pawn kicks, b-pawn levers, c-pawn pressures) as a mnemonic on the map; items cite the role and the validator checks that the answer move is a move of that pawn or a move that the pawn supports.
+
+### Pirc Defense for Black (M. Molner, M badge, Openings, 8 lessons, 40 challenges; L1 "The Classical 4. Nf3 and Be2!", 5 challenges) [V]
+- Format: the course title says "for Black", yet C1 puts the learner on the White side (`r1bq1rk1/ppp2pbp/4pnp1/3Pp1B1/4P3/2N5/PPP1BPPP/R2Q1RK1 w`, move 10, after ...e6 and ...Ne7-less structure): the lesson shows what White threatens so Black knows what to avoid, or it is a refutation of an inaccurate Black setup [I]. Prompt "White to Move" with the lesson title only.
+- Engine [V] depth 14: f4 +1.32 (accepted), Qd2 +0.40, a4 +0.30, Qc1 +0.25, Re1 +0.16, Bc4 +0.15. f4 is the clear top by 0.9.
+- Wrong Qd2 (+0.40): red "Qd2 is incorrect". Right f4: "f4 is correct. Good start! How should you keep up the attack?".
+- Finding [V]: the learner plays the opponent's side in an opening course for the other colour; there is no prompt telling them (nothing says "Black's move order is inaccurate; punish it"). A learner who selected the course to learn Black will wonder why they are moving White. Scholarmate: an item that flips sides must say so in the prompt and in the title.
+- The glyph before "Qd2 is incorrect" in the screenshot looks like a "!!"-type annotation icon; not zoomed, [I].
+- Text volume: 15 characters wrong, 70 right. Retry (733,757).
+- Idea [I]: "punish the inaccuracy" is a valid opening item type (learner plays the side that gains); label it "punish" so the learner knows it is the other side's opening they are exploring.
+
+### How To Play The Sicilian Kalashnikov (F. Libiszewski, M badge, Openings, 11 lessons, 55 challenges; L1 "Introduction", 5 challenges) [V]
+- Format: opening course that starts, in the Introduction, at a surprise: after 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 e5 White's sideline 5.Nf5 (not the main line 5.Nb5), Black to move (flipped): `r1bqkbnr/pp1p1ppp/2n5/4pN2/4P3/8/PPP2PPP/RNBQKB1R b KQkq`. Prompt "Black to Move".
+- Engine [V] depth 14: d5 0.00 (accepted), Nf6 -0.21, d6 -0.72, h6 -0.88, Rb8 -0.93. d5 is the best by 0.2; the "natural" d6 loses 0.7.
+- Wrong d6 (-0.72): red "d6 is incorrect". Right d5: "d5 is correct. Good start! How should Black win back the sacrificed material?" The follow-up states the idea (a pawn gambit with the central break) as a question and so sets the next challenge.
+- Finding [V]: this is the case where red is exactly right (a 0.7 mistake) and the right move's praise carries the first-principles sentence (the sacrifice is temporary). The weak spot is the missing reason for the wrong move: d6 allows Nxd6+ (a fork-type tactic against the king, [I] from the engine line, not verified as the refutation text).
+- Text volume: 17 characters wrong, 85 right. Retry (733,757).
+- Idea [I]: a "trap a natural move" item type for openings: the book-natural move is wrong in this sideline, flagged with the specific refutation ("Nxd6+ forks king and ...") and a playback; engine-check that the refutation line wins at least 0.5.
+
+### The Complete Caro (Sam Shankland, M badge, Openings, 9 lessons, 45 challenges; L1 "Sidelines First!", 5 challenges) [V]
+- Format: repertoire course for Black; C1 is after 1.e4 c6 2.Ne2 (flipped): `rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPPNPPP/RNBQKB1R b KQkq`. Prompt "Black to Move".
+- Engine [V] depth 14: d5 -0.02 (accepted), g6 -0.25, d6 -0.34, Nf6 -0.36, a6 -0.39, e5 -0.45.
+- The best alternative text of the segment [V]: e5 (-0.45, 0.43 below) amber "e5 is an alternative. This is playable, although White has chances for an advantage thanks to the slight lead in development. Try to find a better move." It names the cost (development lead), gives the size ("chances", "slight"), and invites a retry. Nf6 (-0.36) amber with the short text only (the longer text may be written for the moves the author expected, here the common ones; the screenshot showed just "Nf6 is an alternative"). Right d5: "d5 is correct. Good start! How can you take advantage of White's unusual move order to gain a space advantage in the center?".
+- Finding [V]: the cost text matches the engine class: -0.45 is "slight lead for White", the wording does not overstate. This is the shape Scholarmate's `alt` field should have: [class word from margin] + [specific reason] + [try again].
+- Slip noted: clicking e7 instead of d7 (x=293 vs 356 in the flipped frame) played ...e5; the page reported it as an alternative, as it should.
+- Text volume: about 170 characters for the alternative, 130 for the right move. Retry (733,757).
+- Idea [I]: author-written `alt` text should be required for any move the engine ranks within 0.5 of the answer; for the rest the generator writes the class word and the engine's first reply.
+
+### The Complete Queen's Gambit Declined (G. Kaidanov, M badge, Openings, 10 lessons, 50 challenges; L1 "The Basics", 5 challenges) [V]
+- Format: repertoire course; C1 `rn1qkb1r/pp3ppp/2p2n2/3p1bB1/3P4/2N1P3/PP3PPP/R2QKBNR w KQkq` (White, after ...Bf5 against the Bg5 setup). The prompt took about 10 s to appear and then read: "How can White damage Black's pawn structure and claim a small advantage?" (a goal in the prompt, then "White to Move").
+- Engine [V] depth 14: Qf3 +0.39 (accepted; +0.32 in a 25-line run), Qb3 +0.19/+0.14, Be2 +0.07, Bxf6 -0.20 (rank 18), Qe2 -0.38.
+- Grading [V]: Bxf6 red "Bxf6 is incorrect" (0.52 below the answer; it fits the prompt's wording "damage the structure" only if Black recaptures with the pawn, but Black recaptures with the queen); Qf3 green with the follow-up "Good start! How can you damage Black's pawn structure?" which repeats the prompt's goal (the learner is told the previous step was a setup).
+- Finding [V]: the prompt's goal was ambiguous in a useful way: the learner's natural reading ("capture on f6 now") is the wrong move and the red label carries no reason; the correct plan needs two steps (queen to f3, then Bxf6 with a threat). A two-step plan item is the right shape for a prompt like this, with wrong feedback "Black recaptures with the queen and no pawn is damaged" to repair it.
+- Slips [V]: two clicks missed because rank 2 and rank 3 y-values are 420 and 357 (a click on an occupied own square silently does nothing).
+- Text volume: 17 characters wrong, 70 right. Retry (733,757).
+- Idea [I]: items with multi-step plans should define the plan ("Qf3 and then Bxf6 forcing a pawn recapture") so the validator can check that each wrong first move fails to reach the structure damage.
+
+### Attack with the Catalan! (Georg Meier, M badge, Openings, 10 lessons, 50 challenges; L1 "Keeping The Pawn", 5 challenges) [V]
+- Format: Catalan with the pawn grab: `rnbqkb1r/p1p2ppp/4pn2/1p6/2pP4/5NP1/PP2PPBP/RNBQK2R w KQkq` (after ...b5, White to move). Prompt "White to Move" with the title as the only context.
+- Engine [V] depth 14: a4 +0.62 (accepted), Ne5 +0.57, Nd2 +0.23, Nc3 0.00, b3 -0.10, O-O -0.17.
+- Wrong O-O (-0.17, 0.79 below): red "O-O is incorrect". Right a4: "Good start! How can you take over the long light squared diagonal?" (the follow-up names the next plan: the bishop on g2 and ...b5 weakened c6).
+- Finding [V]: the title "Keeping The Pawn" is the lesson's whole concept and a4 is the move that does it; the red for the natural O-O is right (it gives the pawn back easily) but the text does not say "Black keeps the extra pawn after ...Bb7 and ...a6" (the repair). Ne5 (0.05 below) not tested.
+- Text volume: 15 characters wrong, 65 right. Retry (733,757).
+- Idea [I]: gambit items store `material` ("White is a pawn down but gets the diagonal") so the claim "keeping the pawn" is checked: the engine line after the answer must show the pawn kept for at least 4 plies or the item says why not.
+
+### Spicy Gambits! (Simon Williams, I+A+M badges, Openings, 6 lessons, 30 challenges; L1 "The Hillbilly Attack!", 5 challenges) [V]
+- Format: a gambit per lesson, Williams's short-course shell. C1 (White, move 8): `rn1qkb1r/pp2pp1p/2p2np1/5b2/7Q/1BN1pP2/PPPP2PP/R1B1K1NR w KQkq` (White is a pawn down with queen on h4, Black pawn on e3 capturable). Prompt "White to Move".
+- Engine [V] depth 14: dxe3 +0.93 (accepted), Nge2 +0.74, h3 +0.31, d3 +0.17, d4 +0.05. The accepted move is the obvious recapture; the item's difficulty is low.
+- Wrong d3 (+0.17, 0.76 below, it leaves the e3 pawn alone): red "d3 is incorrect". Right dxe3: "dxe3 is correct. Good start! How can you take over the center with a threat?" (follow-up states the plan).
+- Finding [V]: a recapture item with a plain best answer and a red for the passive alternative; the quality is in the follow-up question's goal-wording ("take over the center with a threat"), which tells the learner what kind of move to look for next (a threat with a central move). The Hillbilly Attack name hooks the beginner; no claim about soundness of the gambit itself is made at the first challenge [I].
+- Text volume: 15 and 65 characters. Retry (733,757).
+- Idea [I]: Scholarmate "spicy opening" strand: label each gambit with the engine's verdict (sound / dubious / refuted) so the fun and the truth sit side by side; the validator can compute the label at authoring time from a depth-18 evaluation of the main line.
+
+### The Most Amazing Chess Moves (Simon Williams, A+M badges, Master Games, 5 lessons, 25 challenges; L1 "American Genius", 5 challenges) [V]
+- Format: a famous brilliancy, learner finds the move (Black, flipped): `3r2k1/ppp2ppp/6q1/b4n2/3nQB2/2p5/P4PPP/RN3RK1 b` (move 19). Prompt "Black to Move".
+- Engine [V] depth 14: Ng3 +8.61 (accepted), c2 +6.95, h6 +5.91, c5 +5.71, Qe6 +5.47, Nh4 +5.30. Every top move is winning by 5 or more; a mate on the board follows the accepted move ("How can you checkmate?").
+- Grading [V]: h6 (+5.91, a clearly winning quiet move) red "h6 is incorrect"; Ng3 green "Ng3 is correct. Great move! How can you checkmate?". Another instance of the "winning move graded red" defect (now about ten across the research).
+- Finding [V]: in a brilliancy item the author's move is the most forcing one; the grader treats "wins but not the brilliancy" as wrong. For a learner, red on a +5.9 move is a lesson that "winning is not enough", which is the opposite of the practical skill. Scholarmate: the item states "find the fastest forced mate" or "find the move that wins by force with check or capture" when it wants the brilliancy, and grades every other winning move amber with "also wins, but ...".
+- Text volume: 15 characters wrong, 45 right. Retry (733,757).
+- Idea [I]: a `style` tag on brilliancy items ("only the forcing move is requested") with amber for the rest and a count of how many winning moves exist ("3 of 8 legal moves win"), drawn from the engine at authoring time.
+
+### The Classical Dutch (Simon Williams, M badge, Openings, 5 lessons, 25 challenges; L1 "Classical Dutch - Part 1", 5 challenges) [V]
+- Format: repertoire course in the first person ("What strong quiet move did Simon play"). C1 (Black, flipped): `rnbq1rk1/ppppb1pp/4pn2/5p2/2PP4/5NP1/PP2PPBP/RNBQ1RK1 b` (Dutch after 6.O-O). Prompt "Black to Move".
+- Engine [V] depth 14: d5 -0.49, c6 -0.51, a5 -0.56, Ne4 -0.56, d6 -0.60 (accepted), Qe8 -0.63, Na6 -0.72. All within 0.25.
+- The first move tried, d6 (0.11 below the engine's top, rank 5), was green: "d6 is correct. Good start! What strong quiet move did Simon play to grab space on the queenside?" The follow-up uses the instructor's name (a human voice in text), and "strong quiet move" is a genre label, not a hint. d5, c6 and the rest were not tested (so the grading of the engine's top two is unknown, [I]).
+- Finding [V]: a first-person phrase ("did Simon play") tells the learner this is the author's choice, not a unique best move: an honest framing for a flat list, and the nearest thing to the "played in the game" label proposed for Perfect Chess Games. Scholarmate: use "the move Simon plays" in repertoire items and reserve "correct" for forced answers.
+- Text volume: 15 characters, 100 follow-up. Retry (733,757).
+- Idea [I]: repertoire items state the recommendation as a coach's choice with an engine note: "chosen because it keeps the structure flexible; the engine rates five moves within 0.25".
