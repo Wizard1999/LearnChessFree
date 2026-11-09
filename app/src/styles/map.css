@@ -1,0 +1,33 @@
+/* The radial map's lines and stars (Andrew, 9 Nov 2026; lib/mapEdges.ts decides which lines exist and how strong each is).
+   Lines are never coloured: a white core with a soft halo. --edge-power (0..1) is the share of the target skill's prerequisites that are completed;
+   it drives opacity, width and halo, so the glow is faint at 0 and strongest at 1. Imported after scholarmate.css and atlas.css. */
+:root {
+  --edge-glow: white;
+  --edge-glow-under: rgba(52, 44, 36, 0.65); /* light maps: the darker neutral under-stroke is what makes the white line read as glowing */
+  --star-glow: rgba(255, 255, 255, 0.95);
+  --star-glow-out: rgba(70, 60, 50, 0);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) { --edge-glow: white; --edge-glow-under: rgba(255, 255, 255, 0.9); --star-glow: rgba(255, 255, 255, 0.5); --star-glow-out: rgba(255, 255, 255, 0); }
+}
+:root[data-theme='dark'] { --edge-glow: white; --edge-glow-under: rgba(255, 255, 255, 0.9); --star-glow: rgba(255, 255, 255, 0.5); --star-glow-out: rgba(255, 255, 255, 0); }
+
+.mapglow { fill: none; stroke-linecap: round; --edge-power: 0; }
+.edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(1.2px + 2.6px * var(--edge-power)); opacity: calc(0.26 + 0.74 * var(--edge-power)); }
+.edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(4px + 9px * var(--edge-power)); opacity: calc(0.1 + 0.6 * var(--edge-power)); }
+/* the chosen skill: brightest both ways; what it builds on is a solid line with a solid head, what it leads to is dashed with an open head (shape, not colour) */
+.edgecore .mapglow.pre, .edgecore .mapglow.next { stroke-width: 4px; opacity: 1; }
+.edgehalo .mapglow.pre, .edgehalo .mapglow.next { stroke-width: 13px; opacity: 0.75; }
+.edgecore .mapglow.next, .edgehalo .mapglow.next { stroke-dasharray: 14 9; stroke-linecap: butt; }
+:root:not(#_) .arrowpre { fill: var(--edge-glow); stroke: var(--edge-glow-under); stroke-width: 1.2; }
+:root:not(#_) .arrownextopen { fill: var(--canvas); stroke: var(--edge-glow); stroke-width: 1.7; stroke-linejoin: round; }
+.zoom-far .edgehalo { display: none; } /* far out the halo is too small to see: skip the blur and keep panning cheap */
+
+/* finished skills keep a soft light, like a star; ones with only finished neighbours have no lines at all */
+.stargl-in { stop-color: var(--star-glow); }
+.stargl-out { stop-color: var(--star-glow-out); }
+.mapnode.done .nodecircle { stroke-opacity: 1; }
+
+/* the legend for a chosen skill's links matches the lines: neutral, solid = builds on, dashed = leads to */
+:root:not(#_) .maplegend .swatch.pre { background: var(--text); }
+:root:not(#_) .maplegend .swatch.next { background: repeating-linear-gradient(90deg, var(--text) 0 6px, transparent 6px 9px); }

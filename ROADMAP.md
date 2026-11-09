@@ -291,6 +291,7 @@ From the question data (`docs/research-beginner-questions.md` forum research, `d
 - [x] Tile states (locked with the missing prerequisite named, available, next, in progress, mastered), never colour alone. **ON HOLD with the Path view (D72).**
 - [ ] Unlock animation: a line of light runs along an edge when its prerequisite is mastered; reduced-motion variant
 - [~] **ON HOLD (D72, with the Path view)** Stage checkpoint gates on the map rings and the Path view (visual only, never blocking): Path view done (gate at the end of each stage, with its stage check); map rings not yet
+- [x] Map lines as a white glow: strength = share of the target's prerequisites completed, lines between completed skills fade, finished skills with finished neighbours become stars (Andrew, 9 Nov 2026; D74; lib/mapEdges.ts, styles/map.css)
 - [ ] With the art pass (Phase 3h): fog of unexplored regions, per-skill icons, stone and brass tile finish
 
 ## Phase 2f: Map shows stages as well as subjects (Andrew, 31 October 2026; decision D42)
