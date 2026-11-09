@@ -305,16 +305,16 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-L1-5-all (L2-5 fully)|
 |296|intro-to-book-openings|Intro to Book Openings|Misc|B|CT|5|25|21||played-all-lessons|
 |297|activating-your-pieces|Activating Your Pieces|Misc|A|CT|10|53|66||played-partly|
-|298|opening-principles|Opening Principles|Misc|B|CT|5|26|26||played-L1-2|
+|298|opening-principles|Opening Principles|Misc|B|CT|5|26|26||played-all (L3-5 in sweep-beginner.md)|
 |299|advanced-endgames|Advanced Endgames|Misc|A|CT|5|25|38||played-partly|
 |300|key-openings|Key Openings|Misc|A|CT|8|43|50||played-partly|
 |301|finding-checkmate|Finding Checkmate|Misc|B|CT|6|30|20||played|
 |302|attacking-the-king-1|Attacking the King|Misc|A|CT|7|35|53||played-partly|
 |303|choosing-the-best-move|Choosing the Best Move|Misc|A|CT|8|40|65||played-partly|
-|304|winning-the-game|Winning the Game|Misc|B|CT|5|25|16||played-partly|
+|304|winning-the-game|Winning the Game|Misc|B|CT|5|25|16||played-all (sweep-beginner.md)|
 |305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly|
 |306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-all-lessons|
-|307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-L2-9|
+|307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-all (L1 in sweep-beginner.md)|
 |308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons (L1 partly)|
 |309|understanding-endgames|Understanding Endgames|Misc|I|CT|7|35|21||played-partly|
 |310|learn-to-play-chess|Learn To Play Chess|Misc|B|CT|13|65|18|y|played|
@@ -418,7 +418,7 @@ Your First Tournament (all 4), How To Checkmate L1-2, Mastering the Endgame L1, 
 
 
 ## Log, 9 Nov 2026 (segment 3)
-RESUME HERE: Learn path tile 56 King and Pawn Endgames (https://www.chess.com/lessons/advanced-chess-endgames/king-and-pawn-endgames, Advanced Endgames strand; reached via /learn then Next Lesson). Tiles 29-55 done and written. After the path ends, start the library sweep (Beginner filter first). Controls audit (docs/research-chesscom-controls-audit.md) done for chess.com lesson/learn/puzzles/bot/analysis/home and lichess analysis/training/learn; optional extras: Game Review tooltips, lesson Solution/Retry hover tooltips. Use tabId tab-12 explicitly (another tab may be fronted). Desktop layout: Start (690,172), Next (690,772), Retry (732,772), Finish (400,561). Flipped-board file x: h103 g165 f227 e289 d352 c413 b475 a537; y=42+62*(rank-1). Helpers __f/__g must be re-injected after each navigation (see segment notes).
+RESUME HERE: library sweep, Beginner: Opening Principles and Winning the Game done. Capturing Pieces L1 and Playing the Game L1 done. Next: Playing the Game L2 onward (check the course page for lesson slugs) (https://www.chess.com/lessons/playing-the-game/the-value-of-the-pieces-2), then the BIAM courses on the Beginner filter (all-lessons?level=beginner): start with Your First Tournament (done earlier), Mastering the Endgame L2-5, How to Checkmate L3-15, PogChamps Tactics, Games That Changed Chess History, then the 14 three-lesson opening courses and the Exploiting/Defeating series. Layout for old 2018 courses: Start (694,678); after a right move Next is the right-edge arrow (748,744), Retry (734,744), green Retry after an 'alternative' (748,744). Learn-path/new lessons: Start (694,166), Next bar (694,744), Retry (734,744), Finish (400,540). Board a1 (170,420), 54.4px squares; flipped board: file x = 172+54.4*(7-fileIndex), rank y = 40+54.4*(rank-1). JS helpers __g/__fen/__xy must be re-injected after each navigation (see the sweep notes). Learn path COMPLETE (59 tiles).
 - Learn path walked from page markup (68 tiles, 10 groups); full table in `research-chesscom-new-player-journey.md`, short form in `research-chesscom-trial-site-tour.md` ("Learn path, full walk").
 - Priority change from coordinator: the Learn path (new-player journey) comes before library courses. Played: all 12 starter lessons (path course learn-to-play) and Beginner tile 14 Capture Pieces (10 challenges). First screens (first prompt, challenge count) read for tiles 15 to 28 and all Intermediate and Advanced lessons (positions 30 to 67).
 - Side effects on Andrew's account from this research: the path shows tiles 1 to 12 and 14 as completed, the Next marker is on Piece Values, 2 Day Streak, plus library badges listed in section 5 of the journey file.
