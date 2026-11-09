@@ -61,6 +61,14 @@ GRAPHIC = [
 ]
 
 
+# The star chart on the Constellations page (D88): labels on the night sky (dark) or parchment (light), and its stars, lines, rings and gold marks.
+TEXT += [("sky-ink", "sky", "constellation names and skill plates on the star chart"), ("sky-ink-soft", "sky", "ring names and numerals on the star chart"),
+         ("sky-gold", "sky", "gold chart labels (Up next, You are here)")]
+GRAPHIC += [("sky-line", "sky", "constellation lines, astrolabe rings and ticks"), ("sky-star", "sky", "the brightest star and the bright end of a line"),
+            ("sky-dim", "sky", "a star not started yet"), ("sky-gold", "sky", "the mastered star, the crest and the pointer ring"),
+            *[(f"sky-lv{n}", "sky", f"a star at level {n} (the lit part)") for n in range(1, 5)]]
+
+
 # Disabled controls are drawn at DISABLED_OPACITY (index.css, controls.css): the label and the fill both blend into whatever is behind them.
 # (label token, fill token, behind token, what). The blended label must still read against the blended fill at 3:1 (legible, though plainly not active).
 DISABLED = [

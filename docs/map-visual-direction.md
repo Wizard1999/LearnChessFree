@@ -90,3 +90,6 @@ Tiles as carved stone or enamel with a brass inlay line, pieces as sculpture (no
 
 ## Risks
 Copying chess.com's tile look too closely (rights and identity): borrow the principles, keep our own forms. A two-view split confusing people: one line on each view says what it is for ("Path: what next", "Map: how it all fits"). Performance: 206 nodes in SVG is fine; animate only the changed edge.
+
+## Update: Constellations (D88, 9 Nov 2026)
+The Map is named **Constellations** in the header and tabs (address and code names unchanged) and is drawn as a star chart (night sky or parchment, stars, thin constellation lines, astrolabe rings, a compass rose). Behaviour, the D74 line rules and the layout are unchanged. The earlier look is kept at tag `map-before-constellations` (commit 52167ae); restore with `git checkout map-before-constellations -- app/src/components/RadialMap.tsx app/src/styles/map.css`. Details in `DECISIONS-LOG.md` D88.

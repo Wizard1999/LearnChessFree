@@ -8,7 +8,7 @@ import { REGIONS, regionOfStrand, tintOfStrand } from '../lib/mapRegions'
 import { PATH_STAGES } from '../lib/pathStages'
 import { currentStageIndex, skillHomeStages, skillReturns, stageSentence } from '../lib/skillStages'
 import { onMapJump } from '../lib/mapJump'
-import { ringLabelPlan, ringTextPaths, zoomZone } from '../lib/mapZoom'
+import { ringLabelPlan, zoomZone } from '../lib/mapZoom'
 import { planLabels, type LabelNode } from '../lib/mapLabels'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { edgesToDraw, starNodes } from '../lib/mapEdges'
@@ -16,6 +16,7 @@ import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
 import { hueOfStrand } from '../lib/hue'
+import { constellationLabel, dustField, pointerTicks, rayPath, roman, rosePath, starSpec } from '../lib/starChart'
 import type { LessonMeta, Skill } from '../types'
 import { usePhone } from '../lib/usePhone'
 import { Sheet } from './Sheet'
@@ -38,45 +39,25 @@ function ArcLabel({ id, mid, radius, text, size, className, region }: { id: stri
     </g>
   )
 }
+/** Two scatters of faint background stars with different tile sizes, so the repeat is not noticed (fixed, no animation). */
+const DUST_A = dustField(11, 26, 233), DUST_B = dustField(29, 17, 377)
 /** The empty channel between two stage rings is 2 x (EDGE_PAD - node radius); the divider text must fit inside it. */
 const RING_TEXT_MAX = 56
-const RING_TEXT_TINY = 9
 const fitSize =(arc: number, chars: number, factor: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, (arc * 0.92) / (chars * factor)))
 
-/** A stage boundary that IS its label, kept calm (8 Nov 2026): round most of the circle the words are a whisper (tiny, so the ring reads as a thin line until you
- * zoom right in); where the ring crosses the vertical centreline (top and bottom of the circle) they are large, upright and readable. Two half circles carry the whisper so it reads upright everywhere. */
-function TextRing({ id, outer, tiny, big, text, bigText, className }: { id: string; outer: number; tiny: number; big: number; text: string; bigText: string; className: string }) {
-  const unit = `${text}   \u2022   `
-  const fit = Math.min(tiny, (Math.PI * outer * 0.97) / (unit.length * 0.6))
-  const { rTop: rt, rBottom: rb } = ringTextPaths(outer, fit)
-  // the large words sit at the top and bottom of the circle (the vertical centreline); the small text runs on from either side of them, so the ring is one
-  // continuous line of text with a larger middle and nothing overlaps: each half circle is cut into two pieces that stop a gap short of the large words
-  const span = Math.min(Math.PI * 0.8, (bigText.length * big * 0.6) / outer), gap = span / 2 + (big * 0.9) / outer
+/** A stage boundary that IS its label: the stage's name in large upright letters where the ring crosses the vertical centreline (top and bottom of the circle).
+ * In the star chart (D88) the ring itself is a thin astrolabe circle with tick marks (drawn separately), so no small text runs round it any more. */
+function TextRing({ id, outer, big, bigText, className }: { id: string; outer: number; big: number; bigText: string; className: string }) {
+  const span = Math.min(Math.PI * 0.8, (bigText.length * big * 0.6) / outer)
   const rT = outer - big * 0.34, rB = outer + big * 0.34
   const pt = (a: number, r: number) => `${(r * Math.cos(a)).toFixed(2)},${(r * Math.sin(a)).toFixed(2)}`
   const P = Math.PI
   const topPath = `M${pt(-P / 2 - span / 2, rT)} A${rT},${rT} 0 0 1 ${pt(-P / 2 + span / 2, rT)}`
   const bottomPath = `M${pt(P / 2 + span / 2, rB)} A${rB},${rB} 0 0 0 ${pt(P / 2 - span / 2, rB)}`
-  // [from angle, to angle, radius, clockwise]: top half runs left to right over the top (clockwise), bottom half left to right along the bottom (counter-clockwise)
-  const pieces: [number, number, number, boolean][] = [
-    [P, 1.5 * P - gap, rt, true], [1.5 * P + gap, 2 * P, rt, true],
-    [P, P / 2 + gap, rb, false], [P / 2 - gap, 0, rb, false],
-  ]
   return (
     <g pointerEvents="none">
       <path id={`${id}-r`} d={topPath} fill="none" stroke="none" />
       <path id={`${id}-l`} d={bottomPath} fill="none" stroke="none" />
-      {pieces.map(([a1, a2, r, cw], i) => {
-        if (cw ? a2 <= a1 : a1 <= a2) return null
-        const len = r * Math.abs(a2 - a1), n = Math.floor(len / (unit.length * fit * 0.6))
-        if (n < 1) return null
-        return (
-          <g key={i}>
-            <path id={`${id}-w${i}`} d={`M${pt(a1, r)} A${r},${r} 0 0 ${cw ? 1 : 0} ${pt(a2, r)}`} fill="none" stroke="none" />
-            <text className={`${className} whisper`} fontSize={fit}><textPath href={`#${id}-w${i}`} textLength={len * 0.99} lengthAdjust="spacing">{unit.repeat(n)}</textPath></text>
-          </g>
-        )
-      })}
       <text className={className} fontSize={big} textAnchor="middle"><textPath href={`#${id}-r`} startOffset="50%">{bigText}</textPath></text>
       <text className={className} fontSize={big} textAnchor="middle"><textPath href={`#${id}-l`} startOffset="50%">{bigText}</textPath></text>
     </g>
@@ -288,6 +269,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
     return planLabels([{ id: n.id, x: n.x, y: n.y, title: progress.get(n.id)?.title ?? n.id, priority: 100, ring: n.ring }], view, R, box.w, box.h, { fontPx: 14, minPriority: 0 })[0] ?? null
   }, [lastHot, labelPlan, layout, progress, view, R, box])
   const labelUnits = Math.max(26, Math.min(130, (15 * 2 * R) / view.k / 800)) // about 15 screen pixels, in map units
+  const skyHalf = (R / view.k) * Math.max(1, box.w && box.h ? Math.max(box.w / box.h, box.h / box.w) : 2) * 1.05 // the sky is drawn past the square viewBox, so a wide or tall window has no bare sides
   const vb = `${-R / view.k - view.x} ${-R / view.k - view.y} ${(2 * R) / view.k} ${(2 * R) / view.k}`
   return (
     <div className={phone ? 'radialmap phonemap' : 'radialmap'}>
@@ -300,7 +282,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
       ) : (
       <div className="row filters mapbar">
         {toolbarLead}
-        <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
+        <input type="search" className="mapsearch" value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill in your constellation" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) showSkill(hits[0].n.id) }} />
         <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in">＋</button>
         <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out">－</button>
         <button type="button" onClick={fit}>Fit all</button>
@@ -314,7 +296,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
       )}
       {phone && findOpen && (
         <div className="mapfind">
-          <input type="search" className="mapsearch" autoFocus value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill on the map" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) { showSkill(hits[0].n.id); setFindOpen(false) } if (e.key === 'Escape') { setFindOpen(false); setQ('') } }} />
+          <input type="search" className="mapsearch" autoFocus value={q} onChange={e => { setQ(e.target.value); setListOpen(false) }} placeholder="Find a skill" aria-label="Find a skill in your constellation" onKeyDown={e => { if (e.key === 'Enter' && hits[0]) { showSkill(hits[0].n.id); setFindOpen(false) } if (e.key === 'Escape') { setFindOpen(false); setQ('') } }} />
           <button type="button" onClick={() => { setListOpen(o => !o); setQ('') }} aria-expanded={listOpen}>List</button>
           <button type="button" onClick={() => { setFindOpen(false); setListOpen(false); setQ('') }}>Close</button>
         </div>
@@ -325,7 +307,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
       </div>
       {(hits.length > 0 || listOpen) && (
         <div className="maplist" role="listbox" aria-label="Skills" ref={listRef}>
-          {hits.length === 0 && <div className="maplisthead"><span className="small muted">All skills, in map order. The one you picked is marked.</span><button type="button" onClick={() => setListOpen(false)}>Close list</button></div>}
+          {hits.length === 0 && <div className="maplisthead"><span className="small muted">All skills, in chart order. The one you picked is marked.</span><button type="button" onClick={() => setListOpen(false)}>Close list</button></div>}
           {hits.length > 0
             ? hits.map(h => <button key={h.n.id} type="button" role="option" aria-selected={picked === h.n.id} className={picked === h.n.id ? 'on' : undefined} onClick={() => showSkill(h.n.id)}>{h.title} <span className="muted small">· {h.n.strand}</span></button>)
             : REGIONS.map(rg => (
@@ -341,7 +323,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         </div>
       )}
       </div>
-      <svg ref={svg} className={`mapsvg zoom-${zone}${highlightStrand ? ' hasHi' : ''}${highlightStage !== null ? ' hasStageHi' : ''}`} viewBox={vb} role="group" aria-label="Curriculum map"
+      <svg ref={svg} className={`mapsvg chart zoom-${zone}${highlightStrand ? ' hasHi' : ''}${highlightStage !== null ? ' hasStageHi' : ''}`} viewBox={vb} role="group" aria-label="Your constellation"
         onPointerDown={e => {
           if (ptrs.current.size === 0) { suppressClick.current = false; pinch.current = null; moved.current = false }
           ptrs.current.set(e.pointerId, { x: e.clientX, y: e.clientY }); lastType.current = e.pointerType;
@@ -375,6 +357,9 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           if (lastType.current === 'touch' || !svg.current) return
           setView(zoomAt(viewRef.current, 1.8, R, svg.current.getBoundingClientRect(), e.clientX, e.clientY))
         }}>
+        {/* the night sky: a fine static dust of faint stars (two patterns of different tile sizes), drawn past the edges of the view; nothing here moves */}
+        <rect x={-view.x - skyHalf} y={-view.y - skyHalf} width={2 * skyHalf} height={2 * skyHalf} fill="url(#dust-a)" pointerEvents="none" />
+        <rect x={-view.x - skyHalf} y={-view.y - skyHalf} width={2 * skyHalf} height={2 * skyHalf} fill="url(#dust-b)" pointerEvents="none" />
         {layout.wedges.map(w => {
           const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
           return (
@@ -385,7 +370,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         })}
         {/* section names: big, bold, curved round the outside of each slice, outside the region arc */}
         {layout.wedges.map(w => {
-          const text = `${w.strand} ${strandNames[w.strand] ?? ''}`.trim() + ` (${pct.strand(w.strand)}%)`
+          const text = constellationLabel(w.strand, strandNames[w.strand], pct.strand(w.strand))
           const rS = layout.radius + 70
           const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
           return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} region={regionOfStrand(w.strand)} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
@@ -396,12 +381,24 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           return <path key={`stage-${st.index}`} d={st.inner > 0 ? ring(st.outer) + ring(st.inner) : ring(st.outer)} fillRule="evenodd" pointerEvents="none"
             className={`stageband${highlightStage === st.index ? ' hi' : ''}${hereStage === st.index ? ' here' : ''}`} />
         })}
+        {/* astrolabe rings: a thin circle per stage with fine tick marks (every 5 degrees, a longer one every 15) and its Roman numeral at east and west */}
+        {layout.stages.map(st => {
+          const C = 2 * Math.PI * st.outer, tick = (n: number, w: number) => ({ strokeDasharray: `${w} ${Math.max(0.1, C / n - w)}`, strokeDashoffset: w / 2 })
+          return (
+            <g key={`astro-${st.index}`} className={`astro${hereStage === st.index ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} pointerEvents="none">
+              <circle r={st.outer} className="astroring" />
+              <circle r={st.outer - 5} className="astrotick minor" style={tick(72, 1.8)} />
+              <circle r={st.outer - 9} className="astrotick major" style={tick(24, 2.8)} />
+              {[st.outer, -st.outer].map(x => <text key={x} x={x} y={0} className="ringnumeral" textAnchor="middle" dominantBaseline="central" fontSize={34}>{roman(st.index + 1)}</text>)}
+            </g>
+          )
+        })}
         {layout.stages.map(st => {
           const t = PATH_STAGES[st.index]; if (!t) return null
           const here = hereStage === st.index, nm = `Stage ${st.index + 1}`
           const sp = `(${pct.stage(st.index)}%)`, full = `${nm}: ${t.title} ${sp}`
           const plan = ringLabelPlan(st.mid, labelUnits, here ? [`You are here · ${full}`, full, `${nm} ${sp}`] : [full, `${nm} ${sp}`], 2.5, here ? 1 : 0)
-          return <TextRing key={`sn-${st.index}`} id={`arc-stage-${st.index}`} outer={st.outer} text={`${nm} · ${t.title}`} bigText={plan.text} tiny={Math.min(RING_TEXT_TINY, plan.size)} big={Math.min(plan.size, RING_TEXT_MAX)} className={`arclabel stagename${here ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} />
+          return <TextRing key={`sn-${st.index}`} id={`arc-stage-${st.index}`} outer={st.outer} bigText={plan.text} big={Math.min(plan.size, RING_TEXT_MAX)} className={`arclabel stagename${here ? ' here' : ''}${highlightStage === st.index ? ' hi' : ''}`} />
         })}
         {/* broad regions round the outside; readable when the section names are too small */}
         {REGIONS.map(rg => {
@@ -420,9 +417,14 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           {/* every arrowhead is white-glow too: the two directions differ by shape (solid line and solid head = builds on; dashed line and open head = leads to) */}
           <marker id="arrow-pre" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrowpre" /></marker>
           <marker id="arrow-next-open" viewBox="-1 -1 12 12" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" className="arrownextopen" /></marker>
-          <radialGradient id="star-glow"><stop offset="0.35" className="stargl-in" /><stop offset="1" className="stargl-out" /></radialGradient>
+          <radialGradient id="sky-halo"><stop offset="0" className="skyh-in" /><stop offset="1" className="skyh-out" /></radialGradient>
+          <radialGradient id="sky-halo-gold"><stop offset="0" className="skyg-in" /><stop offset="1" className="skyg-out" /></radialGradient>
+          <pattern id="dust-a" width={233} height={233} patternUnits="userSpaceOnUse">{DUST_A.map((d, i) => <circle key={i} cx={d.x} cy={d.y} r={d.r} opacity={d.o} className="dust" />)}</pattern>
+          <pattern id="dust-b" width={377} height={377} patternUnits="userSpaceOnUse">{DUST_B.map((d, i) => <circle key={i} cx={d.x} cy={d.y} r={d.r} opacity={d.o} className="dust" />)}</pattern>
           <filter id="edge-blur" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB"><feGaussianBlur stdDeviation="3.5" /></filter>
         </defs>
+        {/* the compass rose behind the first skill: the one gold mark at the centre of the chart */}
+        <g className="crest" pointerEvents="none"><circle r={46} className="crestring" /><path d={rosePath(56, 36, 9)} className="crestrose" /></g>
         {/* Lines are white glow (docs/map-visual-direction.md, lib/mapEdges.ts): the more of a skill's prerequisites are done, the stronger the glow into it;
             lines between finished skills are gone, finished skills with only finished neighbours are stars with no lines. One blurred halo layer, one core layer. */}
         {(() => {
@@ -446,6 +448,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           const next = lvl < 4 && ready >= 1 && !p?.noExercises
           const dim = (picked && !linked.has(n.id)) || (!picked && ((highlightStrand && n.strand !== highlightStrand) || (highlightStage !== null && n.stage !== highlightStage)))
           const cid = `cp-${n.id.replace(/[^A-Za-z0-9]/g, '_')}`
+          const sp = starSpec(lvl, stars.has(n.id))
           // unstarted skills fade with how few of their prerequisites are done, but stay readable
           const op = lvl > 0 || next ? 1 : 0.62 + 0.38 * ready
           return (
@@ -461,17 +464,17 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
                   if (t) { e.preventDefault(); (svg.current?.querySelector(`[data-id="${t}"]`) as SVGElement | null)?.focus() }
                 }
               }}>
-              {stars.has(n.id) && <circle r={46} className="stargl" fill="url(#star-glow)" pointerEvents="none" />}
-              {next && <circle r={36} className="nodeglow" />}
-              {!next && lvl > 0 && <circle r={31} className={`nodeglow soft lv${lvl}`} />}
-              <clipPath id={cid}><rect x={-22} y={22 - 44 * (lvl / 4)} width={44} height={44} /></clipPath>
-              <circle r={22} fill="var(--canvas)" className="nodebase" />
-              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} className={`oldfill lv${lvl}`} />}
-              {lvl > 0 && <circle r={22} className={`nodefill lv${lvl}`} />}
-              <circle r={22} fill="none" className="nodecircle" />
-              {p?.hasLesson && p.lessonDone && <text className={`nodemark lv${lvl}`} textAnchor="middle" dy="5">✓</text>}
-              {lvl > 0 && <g className={`nodepips lv${lvl}`} aria-hidden="true">{lvl === 4 ? <path className="nodestar" d="M0.0,-18.5 L1.8,-13.5 L7.1,-13.3 L2.9,-10.0 L4.4,-4.9 L0.0,-7.9 L-4.4,-4.9 L-2.9,-10.0 L-7.1,-13.3 L-1.8,-13.5 Z" /> : Array.from({ length: lvl }, (_, i) => <circle key={i} className="nodepip" r={2.7} cx={(i - (lvl - 1) / 2) * 7.5} cy={-12} />)}</g>}
-              {zone === 'near' && lvl > 0 && picked !== n.id && hov !== n.id && <text className="nodestatus" y={62} textAnchor="middle">{LEVEL_NAMES[lvl]}{p?.lessonDone ? ' · lesson done' : ''}</text>}
+              {/* a star (D88): glow by level, a disc that fills upward like water, rays when Mastered; not started is a faint dim dot. The big transparent circle is the click and hover target. */}
+              <circle r={26} className="starhit" />
+              {sp.glowR > 0 && <circle r={sp.glowR} className={`starglow${lvl === 4 ? ' gold' : ''}`} fill={lvl === 4 ? 'url(#sky-halo-gold)' : 'url(#sky-halo)'} opacity={sp.glowOpacity} />}
+              {next && <circle r={36} className="starnext" fill="url(#sky-halo-gold)" />}
+              {sp.rays && <path d={rayPath(sp.rayLen)} className="starrays" />}
+              {p?.due && <circle r={sp.r + 6} className="stardue" />}
+              {(relation.pre.has(n.id) || relation.lead.has(n.id)) && <circle r={sp.r + 10} className="starrel" />}
+              <circle r={sp.r} className="starbase" />
+              {lvl > 0 && <><clipPath id={cid}><rect x={-sp.r} y={sp.r - 2 * sp.r * sp.fill} width={2 * sp.r} height={2 * sp.r} /></clipPath><circle r={sp.r} className={`starlit lv${lvl}`} clipPath={`url(#${cid})`} /></>}
+              <circle r={sp.r + 8} className="starfocus" />
+              {zone === 'near' && lvl > 0 && picked !== n.id && hov !== n.id && <text className="nodestatus" y={44} textAnchor="middle">{LEVEL_NAMES[lvl]}{p?.lessonDone ? ' · lesson done' : ''}</text>}
             </g>
           )
         })}
@@ -495,7 +498,9 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           const n = byId.get(id); if (!n) return null
           return (
             <g key={`top-${id}`} transform={`translate(${n.x},${n.y})`} className={`maptop${id === picked ? ' sel' : ''}`} pointerEvents="none">
-              <circle r={27} className="topring" fill="none" />
+              <circle r={26} className="topring" fill="none" />
+              <path d={pointerTicks(26, id === picked ? 11 : 6)} className="topticks" fill="none" />
+              {id === picked && <path d="M0,-40 L4.5,-48 L-4.5,-48 Z" className="toppoint" />}
             </g>
           )
         })}
@@ -510,9 +515,8 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
             </g>
           )
         })()}
-        <circle r={5} className="mapcentre" />
       </svg>
-      <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of the whole map"
+      <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of your whole constellation"
         onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
         <circle r={layout.radius} className="miniback" />
         {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === linkedHoverId ? 40 : n.id === rec ? 26 : 12} className={`${n.id === linkedHoverId ? 'minilink' : n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} lv${level(n.id)}`} />)}
@@ -541,7 +545,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         )
       })()}
       {phone && (
-        <div className="mapfab" role="group" aria-label="Map controls">
+        <div className="mapfab" role="group" aria-label="Constellation controls">
           <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in"><span aria-hidden="true">+</span></button>
           <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out"><span aria-hidden="true">−</span></button>
           <button type="button" onClick={fit} aria-label="Fit all"><span aria-hidden="true">⤢</span></button>
@@ -551,7 +555,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         </div>
       )}
       {phone && (
-        <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Map filters" className="filtersheet">
+        <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Constellation filters" className="filtersheet">
           <div onClick={e => { if ((e.target as HTMLElement).closest('button.chip')) setFiltersOpen(false) }}>{phoneFilters}</div>
           <h3>Skills</h3>
           <div className="options"><button type="button" className="chip" onClick={() => { setFiltersOpen(false); setFindOpen(true); setListOpen(true); setQ('') }}>Skill list</button></div>

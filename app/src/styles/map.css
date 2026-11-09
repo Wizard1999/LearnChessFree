@@ -31,3 +31,118 @@
 /* the legend for a chosen skill's links matches the lines: neutral, solid = builds on, dashed = leads to */
 :root:not(#_) .maplegend .swatch.pre { background: var(--text); }
 :root:not(#_) .maplegend .swatch.next { background: repeating-linear-gradient(90deg, var(--text) 0 6px, transparent 6px 9px); }
+
+/* ===== The star chart (D88, 9 Nov 2026): the Constellations page =====================================================================================
+   The radial map drawn as an antique star chart / astrolabe. Everything here is on the .chart svg and uses the --sky-* tokens (palette.css, atlas.css:
+   a night sky in dark mode, warm parchment with ink-navy marks in light; pairs gated by tools/check_contrast.py). Layout, selection, the dock, the
+   D74 line rules and the keyboard model are unchanged; only the drawing changed. To go back to the circles-and-lines map:
+   `git checkout map-before-constellations -- app/src/components/RadialMap.tsx app/src/styles/map.css` (the tag is commit 52167ae; see D88).
+   Nothing moves unless motion is allowed: the twinkle is wrapped in prefers-reduced-motion: no-preference and the app's Motion setting. */
+:root { --chart-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; }
+:root:not(#_) .mapsvg.chart { background: var(--sky); border: 1px solid var(--sky-line); border-radius: 0.6rem; --edge-glow: var(--sky-star); --edge-glow-under: var(--sky-line); }
+.chart .dust { fill: var(--sky-ink); }
+
+/* subjects: faint region tint and a hairline between slices */
+:root:not(#_) .mapsvg.chart .mapwedge .wedgebg { fill: color-mix(in srgb, var(--rg, var(--sky-line)) 5%, transparent); opacity: 1; stroke: var(--sky-line); stroke-opacity: 0.4; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+:root:not(#_) .mapsvg.chart.hasHi .mapwedge:not(.hi) .wedgebg { opacity: 0.45; }
+:root:not(#_) .mapsvg.chart .mapwedge.hi .wedgebg { fill: color-mix(in srgb, var(--rg, var(--sky-line)) 16%, transparent); stroke: var(--sky-gold); stroke-opacity: 0.9; stroke-width: 1.6px; }
+:root:not(#_) .mapsvg.chart .stageband.here { fill: var(--sky-gold) !important; fill-opacity: 0.06 !important; stroke: none !important; }
+:root:not(#_) .mapsvg.chart .stageband.hi { fill: var(--sky-gold) !important; fill-opacity: 0.12 !important; stroke: none !important; }
+
+/* names: constellations in an italic classical serif at the outer edge of each slice, regions in spaced small capitals, stages in small capitals on their rings */
+:root:not(#_) .chart .arclabel { font-family: var(--chart-serif); font-weight: 400; fill: var(--sky-ink); stroke: var(--sky); stroke-width: 10px; paint-order: stroke; letter-spacing: 0.02em; }
+:root:not(#_) .chart .arclabel.strand { font-style: italic; fill: var(--sky-ink); text-decoration: none; }
+:root:not(#_) .chart .arclabel.strand.hi { fill: var(--sky-gold); font-weight: 700; text-decoration: none; }
+:root:not(#_) .chart .arclabel.region { font-style: normal; font-weight: 600; font-variant: small-caps; letter-spacing: 0.14em; fill: var(--sky-ink-soft); }
+:root:not(#_) .chart .regionarc { stroke: var(--sky-line); stroke-width: 2px; opacity: 0.9; vector-effect: non-scaling-stroke; }
+:root:not(#_) .chart .arclabel.stagename { font-weight: 600; font-variant: small-caps; letter-spacing: 0.08em; fill: var(--sky-ink-soft); stroke-width: 8px; }
+:root:not(#_) .chart .arclabel.stagename.here, :root:not(#_) .chart .arclabel.stagename.hi { fill: var(--sky-gold); }
+
+/* the astrolabe rings: a hairline circle per stage, fine ticks every 5 degrees (longer every 15), the Roman numeral at east and west */
+.chart .astroring { fill: none; stroke: var(--sky-line); stroke-width: 1.2px; vector-effect: non-scaling-stroke; opacity: 0.85; }
+.chart .astrotick { fill: none; stroke: var(--sky-line); }
+.chart .astrotick.minor { stroke-width: 6px; opacity: 0.5; }
+.chart .astrotick.major { stroke-width: 12px; opacity: 0.8; }
+.chart .astro.here .astroring, .chart .astro.hi .astroring { stroke: var(--sky-gold); stroke-width: 2px; opacity: 1; }
+.chart .astro.here .astrotick, .chart .astro.hi .astrotick { stroke: var(--sky-gold); }
+.chart .ringnumeral { font-family: var(--chart-serif); fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 9px; paint-order: stroke; letter-spacing: 0.04em; }
+.chart .astro.here .ringnumeral, .chart .astro.hi .ringnumeral { fill: var(--sky-gold); }
+
+/* the gold compass rose behind the first skill */
+.chart .crestring { fill: none; stroke: var(--sky-gold); stroke-width: 1.5px; opacity: 0.7; }
+.chart .crestrose { fill: var(--sky-gold); fill-opacity: 0.2; stroke: var(--sky-gold); stroke-width: 1.4px; stroke-linejoin: round; }
+
+/* constellation lines: fine strokes; the D74 strength and fade (--edge-power) are untouched, only thinner. The chosen skill's links stay the brightest */
+:root:not(#_) .mapsvg.chart .mapglow { vector-effect: non-scaling-stroke; } /* hairlines that stay fine at every zoom */
+:root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.6px + 0.8px * var(--edge-power)); opacity: calc(0.16 + 0.64 * var(--edge-power)); }
+:root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 2px * var(--edge-power)); opacity: calc(0.05 + 0.22 * var(--edge-power)); }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.pre, :root:not(#_) .mapsvg.chart .edgecore .mapglow.next { stroke-width: 2.2px; opacity: 1; }
+:root:not(#_) .mapsvg.chart .edgehalo .mapglow.pre, :root:not(#_) .mapsvg.chart .edgehalo .mapglow.next { stroke-width: 6px; opacity: 0.55; }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.next, :root:not(#_) .mapsvg.chart .edgehalo .mapglow.next { stroke-dasharray: 9 6; }
+:root:not(#_) .mapsvg.chart .arrowpre { fill: var(--sky-star); stroke: var(--sky); stroke-width: 1; }
+:root:not(#_) .mapsvg.chart .arrownextopen { fill: var(--sky); stroke: var(--sky-star); stroke-width: 1.7; stroke-linejoin: round; }
+
+/* stars: a dim dot when not started; the disc fills upward by level; glow grows with the level; Mastered is gold with rays */
+.chart .starhit { fill: transparent; stroke: none; pointer-events: all; }
+.chart .starglow, .chart .starnext { pointer-events: none; }
+.chart .skyh-in { stop-color: var(--sky-star); stop-opacity: 0.9; } .chart .skyh-out { stop-color: var(--sky-star); stop-opacity: 0; }
+.chart .skyg-in { stop-color: var(--sky-gold); stop-opacity: 0.9; } .chart .skyg-out { stop-color: var(--sky-gold); stop-opacity: 0; }
+.chart .starbase { fill: var(--sky-dim); stroke: none; }
+.chart .starlit.lv1 { fill: var(--sky-lv1); } .chart .starlit.lv2 { fill: var(--sky-lv2); } .chart .starlit.lv3 { fill: var(--sky-lv3); } .chart .starlit.lv4 { fill: var(--sky-lv4); }
+.chart .starlit { pointer-events: none; }
+.chart .starrays { fill: none; stroke: var(--sky-gold); stroke-width: 1.6px; stroke-linecap: round; pointer-events: none; }
+.chart .stardue { fill: none; stroke: var(--sky-gold); stroke-width: 1.2px; stroke-dasharray: 3 3; pointer-events: none; }
+.chart .starrel { fill: none; stroke: var(--sky-star); stroke-width: 1.8px; pointer-events: none; }
+.chart .mapnode.leadsto .starrel { stroke-dasharray: 4 3; } /* shape, not colour: a solid ring builds on, a dashed ring leads to */
+.chart .starfocus { fill: none; stroke: var(--sky-gold); stroke-width: 2.4px; opacity: 0; pointer-events: none; }
+.chart .mapnode:focus-visible .starfocus { opacity: 1; }
+.chart .mapnode:focus-visible .starbase { stroke: var(--sky-gold); stroke-width: 1.5px; }
+.chart .nodestatus { font-family: var(--chart-serif); font-size: 15px; fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 5px; paint-order: stroke; }
+
+/* the chosen skill: a navigator's pointer ring (ring, four ticks, a pointer at north); a skill being pointed at gets a thin ring */
+:root:not(#_) .chart .maptop .topring { stroke: var(--sky-star); stroke-width: 1.6px; opacity: 0.9; }
+:root:not(#_) .chart .maptop .topticks { stroke: var(--sky-star); stroke-width: 1.8px; stroke-linecap: round; opacity: 0.9; }
+:root:not(#_) .chart .maptop.sel .topring { stroke: var(--sky-gold); stroke-width: 2.6px; opacity: 1; }
+:root:not(#_) .chart .maptop.sel .topticks { stroke: var(--sky-gold); stroke-width: 2.6px; opacity: 1; }
+.chart .toppoint { fill: var(--sky-gold); }
+
+/* Up next: a gold dashed ring and a gold pill, the one loud thing on the chart */
+:root:not(#_) .chart .maprec .recring { stroke: var(--sky-gold); stroke-width: 2.4px; stroke-dasharray: 10 7; }
+:root:not(#_) .chart .maprec .recpill { fill: var(--sky-gold); stroke: none; }
+:root:not(#_) .chart .maprec .rectext { fill: var(--sky); }
+:root:not(#_) .chart .ghostline { stroke: var(--sky-gold); stroke-width: 1.6px; opacity: 0.8; }
+:root:not(#_) .chart .ghostring { fill: var(--sky); fill-opacity: 1; stroke: var(--sky-gold); stroke-width: 2.4px; }
+:root:not(#_) .chart .ghostnum { fill: var(--sky-ink); font-family: var(--chart-serif); }
+
+/* the gentle twinkle, only where motion is allowed (reduced motion shows the same picture, still) */
+@keyframes startwinkle { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion='reduce']) .chart .starnext, :root:not([data-motion='reduce']) .chart .maprec .recring:not(.recbg) { animation: startwinkle 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+}
+.chart .starnext { opacity: 0.8; }
+
+/* skill name plates (the HTML labels over the chart) */
+:root:not(#_) .maplabel { color: var(--sky-ink); background: color-mix(in srgb, var(--sky) 92%, transparent); border: 1px solid var(--sky-line); border-radius: 4px; box-shadow: none; font-weight: 600; }
+:root:not(#_) .maplabel.forced { border-color: var(--sky-gold); box-shadow: 0 0 0 1px var(--sky-gold); }
+:root:not(#_) .maplabel.hot { border-color: var(--sky-gold); box-shadow: none; }
+:root:not(#_) .maplabel.sel { border-color: var(--sky-gold); box-shadow: 0 0 0 1px var(--sky-gold); }
+
+/* the overview in the corner, and the level key, use the same sky */
+:root:not(#_) svg.minimap { background: var(--sky); border-color: var(--sky-line); }
+:root:not(#_) .minimap .miniback { fill: none; stroke: var(--sky-line); stroke-width: 6; opacity: 1; }
+:root:not(#_) .minimap .minidot { fill: var(--sky-dim); stroke: none; opacity: 1; }
+:root:not(#_) .minimap .minidone { stroke: none; }
+:root:not(#_) .minimap .minidone.lv1 { fill: var(--sky-lv1); } :root:not(#_) .minimap .minidone.lv2 { fill: var(--sky-lv2); } :root:not(#_) .minimap .minidone.lv3 { fill: var(--sky-lv3); } :root:not(#_) .minimap .minidone.lv4 { fill: var(--sky-lv4); }
+:root:not(#_) .minimap .minirec { fill: var(--sky-gold); stroke: none; } :root:not(#_) .minimap .minilink { fill: var(--sky-star); stroke: none; }
+:root:not(#_) .minimap .miniview { stroke: var(--sky-gold); }
+:root:not(#_) .lvdot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1px solid var(--sky-line); background: var(--sky-dim); }
+:root:not(#_) .lvdot.lv1 { background: linear-gradient(to top, var(--sky-lv1) 25%, var(--sky-dim) 25%); }
+:root:not(#_) .lvdot.lv2 { background: linear-gradient(to top, var(--sky-lv2) 50%, var(--sky-dim) 50%); }
+:root:not(#_) .lvdot.lv3 { background: linear-gradient(to top, var(--sky-lv3) 75%, var(--sky-dim) 75%); }
+:root:not(#_) .lvdot.lv4 { background: var(--sky-lv4); }
+
+/* phones: the longer page name must fit the thin bar's switch */
+@media (max-width: 700px) {
+  .phonebar .segmented { min-width: 0; flex: 1 1 auto; }
+  :root:not(#_) .phonebar .segmented button { flex: 1 1 auto; padding-inline: 0.4rem; font-size: 0.8rem; white-space: nowrap; }
+}
