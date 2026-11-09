@@ -43,7 +43,7 @@
 .chart .dust { fill: var(--sky-ink); }
 
 /* subjects: faint region tint and a hairline between slices */
-:root:not(#_) .mapsvg.chart .mapwedge .wedgebg { fill: color-mix(in srgb, var(--rg, var(--sky-line)) 5%, transparent); opacity: 1; stroke: var(--sky-line); stroke-opacity: 0.4; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+:root:not(#_) .mapsvg.chart .mapwedge .wedgebg { fill: transparent; opacity: 1; stroke: var(--sky-line); stroke-opacity: 0.4; stroke-width: 1px; vector-effect: non-scaling-stroke; }
 :root:not(#_) .mapsvg.chart.hasHi .mapwedge:not(.hi) .wedgebg { opacity: 0.45; }
 :root:not(#_) .mapsvg.chart .mapwedge.hi .wedgebg { fill: color-mix(in srgb, var(--rg, var(--sky-line)) 16%, transparent); stroke: var(--sky-gold); stroke-opacity: 0.9; stroke-width: 1.6px; }
 :root:not(#_) .mapsvg.chart .stageband.here { fill: var(--sky-gold) !important; fill-opacity: 0.06 !important; stroke: none !important; }
@@ -74,8 +74,14 @@
 
 /* constellation lines: fine strokes; the D74 strength and fade (--edge-power) are untouched, only thinner. The chosen skill's links stay the brightest */
 :root:not(#_) .mapsvg.chart .mapglow { vector-effect: non-scaling-stroke; } /* hairlines that stay fine at every zoom */
-:root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.6px + 0.8px * var(--edge-power)); opacity: calc(0.16 + 0.64 * var(--edge-power)); }
-:root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 2px * var(--edge-power)); opacity: calc(0.05 + 0.22 * var(--edge-power)); }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.6px + 0.6px * var(--edge-power)); opacity: calc(0.1 + 0.3 * var(--edge-power)); } /* far lines, not reachable yet: dim and thin */
+:root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 2px * var(--edge-power)); opacity: calc(0.03 + 0.1 * var(--edge-power)); }
+/* the open frontier (lines into skills that are ready to start): thicker, brighter, with a head; the D74 strength rule still scales them */
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.open { stroke-width: calc(1.3px + 0.8px * var(--edge-power)); opacity: calc(0.7 + 0.3 * var(--edge-power)); }
+:root:not(#_) .mapsvg.chart .edgehalo .mapglow.open { stroke-width: calc(5px + 3px * var(--edge-power)); opacity: calc(0.25 + 0.3 * var(--edge-power)); }
+/* the soft highlight along the whole way into the chosen skill */
+.chart .edgetrail line { stroke: var(--sky-gold); stroke-width: 7px; stroke-linecap: round; opacity: 0.22; vector-effect: non-scaling-stroke; }
+.chart .starready { fill: none; stroke: var(--sky-gold); stroke-width: 1.6px; pointer-events: none; }
 :root:not(#_) .mapsvg.chart .edgecore .mapglow.pre, :root:not(#_) .mapsvg.chart .edgecore .mapglow.next { stroke-width: 2.2px; opacity: 1; }
 :root:not(#_) .mapsvg.chart .edgehalo .mapglow.pre, :root:not(#_) .mapsvg.chart .edgehalo .mapglow.next { stroke-width: 6px; opacity: 0.55; }
 :root:not(#_) .mapsvg.chart .edgecore .mapglow.next, :root:not(#_) .mapsvg.chart .edgehalo .mapglow.next { stroke-dasharray: 9 6; }
@@ -119,7 +125,7 @@
 @media (prefers-reduced-motion: no-preference) {
   :root:not([data-motion='reduce']) .chart .starnext, :root:not([data-motion='reduce']) .chart .maprec .recring:not(.recbg) { animation: startwinkle 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 }
-.chart .starnext { opacity: 0.8; }
+.chart .starnext { opacity: 0.95; }
 
 /* skill name plates (the HTML labels over the chart) */
 :root:not(#_) .maplabel { color: var(--sky-ink); background: color-mix(in srgb, var(--sky) 92%, transparent); border: 1px solid var(--sky-line); border-radius: 4px; box-shadow: none; font-weight: 600; }
@@ -146,3 +152,11 @@
   .phonebar .segmented { min-width: 0; flex: 1 1 auto; }
   :root:not(#_) .phonebar .segmented button { flex: 1 1 auto; padding-inline: 0.4rem; font-size: 0.8rem; white-space: nowrap; }
 }
+
+/* Slice colours (optional, off by default; kept per device): each subject's slice tinted in its own hue. The strongest tint is 16 percent (SLICE_TINT_MAX in tools/check_contrast.py,
+   which checks stars, lines and ring text against every hue at that strength in both modes). */
+:root:not(#_) .mapsvg.chart.slices .mapwedge .wedgebg { fill: color-mix(in srgb, var(--hue, var(--sky-line)) 8%, transparent); }
+:root:not(#_) .mapsvg.chart.slices .mapwedge[data-tint='b'] .wedgebg { fill: color-mix(in srgb, var(--hue, var(--sky-line)) 11%, transparent); }
+:root:not(#_) .mapsvg.chart.slices .mapwedge.hi .wedgebg { fill: color-mix(in srgb, var(--hue, var(--sky-line)) 16%, transparent); }
+.slicetoggle { display: inline-flex; align-items: center; gap: 0.35rem; }
+.slicetoggle .slicedot { flex: none; }

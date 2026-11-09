@@ -43,3 +43,17 @@ export function edgesToDraw(edges: MapEdge[], level: (id: string) => number, foc
   }
   return out
 }
+
+/** The whole way into a skill: every line on any chain of prerequisites that ends at `focus` (the direct links included). Used for the soft highlight along the path
+ *  from the chosen skill back to where it starts; cycle-safe. */
+export function ancestorEdges(edges: MapEdge[], focus: string | null): MapEdge[] {
+  if (!focus) return []
+  const into = new Map<string, MapEdge[]>()
+  for (const e of edges) into.set(e.to, [...(into.get(e.to) ?? []), e])
+  const seen = new Set<string>([focus]), out: MapEdge[] = [], queue = [focus]
+  while (queue.length) {
+    const t = queue.shift()!
+    for (const e of into.get(t) ?? []) { out.push(e); if (!seen.has(e.from)) { seen.add(e.from); queue.push(e.from) } }
+  }
+  return out
+}

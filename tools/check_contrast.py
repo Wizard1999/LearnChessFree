@@ -78,6 +78,7 @@ DISABLED = [
     *[("on-field", "surface", f"field-{h}", f"disabled plain button on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon")],
     *[("on-primary", "primary", f"field-{h}", f"disabled primary button on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon")],
 ]
+SLICE_TINT_MAX = 0.16  # the strongest slice tint in map.css (the highlighted slice); keep equal to the 16% there
 DISABLED_MIN = 3.0
 DISABLED_OPACITY = 0.7  # must equal the opacity of `button:disabled` and `.btn:disabled` in index.css and controls.css (a test keeps them equal)
 
@@ -161,6 +162,19 @@ def check(look, css_path):
             ok = r >= DISABLED_MIN
             rows.append((mode, "disabled", fg, fill, ef, efl, r, DISABLED_MIN, ok, what))
             if not ok: problems.append(f"{look} {mode} disabled: {fg} on {fill} over {behind} blends to {ef} on {efl}, {r:.2f}:1, needs {DISABLED_MIN}:1 ({what})")
+    # Slice colours on (Constellations, D88): every subject hue at the strongest tint over the sky; the chart's marks and ring text must still read on it.
+    for mode, toks in modes.items():
+        for n in range(1, 12):
+            try:
+                sky, hue = resolve("--sky", toks), resolve(f"--s{n}", toks)
+            except (KeyError, ValueError) as e:
+                problems.append(f"{look} {mode}: cannot resolve {e} for the slice tint {n}"); continue
+            bg = mix(hue, sky, SLICE_TINT_MAX)
+            for fg_name, need, kind, what in (("sky-ink-soft", TEXT_MIN, "text", "ring names and numerals"), ("sky-ink", TEXT_MIN, "text", "labels"), ("sky-line", GRAPHIC_MIN, "graphic", "rings and lines"),
+                                              ("sky-dim", GRAPHIC_MIN, "graphic", "a star not started"), ("sky-lv1", GRAPHIC_MIN, "graphic", "a Seen star"), ("sky-gold", GRAPHIC_MIN, "graphic", "gold marks"), ("sky-star", GRAPHIC_MIN, "graphic", "the bright line")):
+                f = resolve("--" + fg_name, toks); r = ratio(f, bg); ok = r >= need
+                rows.append((mode, kind, fg_name, f"slice s{n}", f, bg, r, need, ok, f"{what} on slice {n} tinted"))
+                if not ok: problems.append(f"{look} {mode} {kind}: {fg_name} {f} on slice tint s{n} {bg} is {r:.2f}:1, needs {need}:1 ({what})")
     print(f"== {look} ({css_path.name})")
     print(f"{'mode':5} {'kind':7} {'foreground':17} {'background':14} {'fg':8} {'bg':8} {'ratio':>6}  need  result")
     for mode, kind, fg, bg, f, b, r, need, ok, what in rows:

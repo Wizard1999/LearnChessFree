@@ -44,7 +44,7 @@ describe('chart furniture', () => {
   it('the background dust is the same every time and stays inside its tile', () => {
     const a = dustField(7, 30, 240), b = dustField(7, 30, 240)
     expect(a).toEqual(b); expect(a).toHaveLength(30)
-    for (const d of a) { expect(d.x).toBeGreaterThanOrEqual(0); expect(d.x).toBeLessThanOrEqual(240); expect(d.y).toBeLessThanOrEqual(240); expect(d.o).toBeLessThan(0.6) }
+    for (const d of a) { expect(d.x).toBeGreaterThanOrEqual(0); expect(d.x).toBeLessThanOrEqual(240); expect(d.y).toBeLessThanOrEqual(240); expect(d.o).toBeLessThanOrEqual(0.05) }
     expect(dustField(8, 30, 240)).not.toEqual(a)
   })
 })

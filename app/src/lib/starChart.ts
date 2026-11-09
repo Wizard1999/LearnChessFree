@@ -70,6 +70,6 @@ export function dustField(seed: number, count: number, size: number): { x: numbe
   const next = () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296 }
   return Array.from({ length: count }, () => {
     const x = next() * size, y = next() * size, big = next()
-    return { x: +x.toFixed(1), y: +y.toFixed(1), r: big > 0.92 ? 2.6 : big > 0.6 ? 1.7 : 1.1, o: big > 0.92 ? 0.55 : big > 0.6 ? 0.38 : 0.26 }
+    return { x: +x.toFixed(1), y: +y.toFixed(1), r: big > 0.92 ? 1.5 : big > 0.6 ? 1.2 : 0.9, o: big > 0.92 ? 0.05 : big > 0.6 ? 0.04 : 0.03 }
   })
 }

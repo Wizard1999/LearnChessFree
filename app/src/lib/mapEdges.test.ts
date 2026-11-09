@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { edgesToDraw, prereqShare, starNodes } from './mapEdges'
+import { ancestorEdges, edgesToDraw, prereqShare, starNodes } from './mapEdges'
 
 // A -> C, B -> C, C -> D, D -> E
 const edges = [{ from: 'A', to: 'C' }, { from: 'B', to: 'C' }, { from: 'C', to: 'D' }, { from: 'D', to: 'E' }]
@@ -45,4 +45,14 @@ describe('map edges', () => {
     const d = edgesToDraw(edges, l, 'C')
     expect(d.map(x => `${x.kind}:${x.from}>${x.to}:${x.power}`).sort()).toEqual(['next:C>D:1', 'pre:A>C:1', 'pre:B>C:1'])
   })
+})
+
+describe('the trail into a skill', () => {
+  it('finds every line on a chain of prerequisites ending at the skill, and nothing else', () => {
+    const t = ancestorEdges(edges, 'D').map(e => `${e.from}>${e.to}`).sort()
+    expect(t).toEqual(['A>C', 'B>C', 'C>D'])
+    expect(ancestorEdges(edges, 'A')).toEqual([])
+    expect(ancestorEdges(edges, null)).toEqual([])
+  })
+  it('does not loop on a cycle', () => { expect(ancestorEdges([{ from: 'X', to: 'Y' }, { from: 'Y', to: 'X' }], 'X')).toHaveLength(2) })
 })
