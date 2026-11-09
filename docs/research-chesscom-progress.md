@@ -97,8 +97,8 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |87|leonid-kubbels-studies|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||||played-L1-c1|
 |88|modern-chess-masterpieces|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|91||listed|
 |89|pawns-vs-pieces|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|38|y|played-L1|
-|90|grind-like-magnus-carlsen|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|98||listed|
-|91|world-championship-preparation|World Championship Preparation|Openings|M|Romain Edouard|5|25|87||listed|
+|90|grind-like-magnus-carlsen|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|98||sampled-L1-c1 (seg 12)|
+|91|world-championship-preparation|World Championship Preparation|Openings|M|Romain Edouard|5|25|87||sampled-L1-c1 (seg 12)|
 |92|the-top-10-games-of-the-1980s|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|146||listed|
 |93|the-indian-school-of-chess|The Indian School Of Chess|Master Games|M|S. S. Ganguly|11|55|168|y|listed|
 |94|every-pawn-structure-explained|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|816||played-partly|
@@ -106,10 +106,10 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |96|world-championship-masterpieces|World Championship Masterpieces|Master Games|M|Yuriy Krykun|5|25|61||listed|
 |97|my-road-to-the-world-championship|My Road To The World Championship|Master Games|M|F. Caruana|5|25|145||sampled-L1-c1 (seg 10)|
 |98|advanced-bongcloud-theory|Advanced Bongcloud Theory|Openings|M|J. L. Hammer|11|55|122|y|sampled-L1-c1 (seg 9)|
-|99|how-to-be-materialistic-in-chess|How to Be Materialistic In Chess|Strategy|M|K. Kavutskiy|5|25|77||listed|
+|99|how-to-be-materialistic-in-chess|How to Be Materialistic In Chess|Strategy|M|K. Kavutskiy|5|25|77||sampled-L1-c1 (seg 12)|
 |100|shakh-vs-the-world-champions|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|86||sampled-L1-c1 (seg 10)|
 |101|carlsen-vs-nepomniachtchi|Carlsen vs. Nepomniachtchi: Their Greatest Games Analyzed|Master Games|M|S. S. Ganguly|5|25|88||listed|
-|102|how-to-beat-a-grandmaster|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|63||listed|
+|102|how-to-beat-a-grandmaster|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|63||sampled-L1-c1 (seg 12)|
 |103|genrikh-kasparyans-studies|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||||listed|
 |104|play-like-a-world-champion-kasparov-vs-karpov|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5|||y|listed|
 |105|every-opening-trap-to-crush-your-opponent|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|156||played-L1-c1|
@@ -122,7 +122,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |112|grandmaster-opening-kitchen|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|55||sampled-L1-c1 (seg 11)|
 |113|how-to-play-the-kalashnikov|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|230||sampled-L1-c1 (seg 10)|
 |114|the-10-best-games-of-the-1990s|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|183||listed|
-|115|how-levon-aronian-became-americas-newest-super-grandmaster|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|51||listed|
+|115|how-levon-aronian-became-americas-newest-super-grandmaster|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|51||sampled-L1-c1 (seg 12)|
 |116|how-to-play-the-kings-indian-attack|How To Play The King's Indian Attack|Openings|M|Dejan Bojkov|5|25|51|y|listed|
 |117|king-activity-in-the-endgame|King Activity In The Endgame|Endgames|-|Romain Edouard|5|25|76|y|played-L1-c1|
 |118|candidate-moves|Candidate Moves|Strategy|IAM|K. Kavutskiy|5|25|59||played-partly|
@@ -132,14 +132,14 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |122|my-best-games-shakhriyar-mamedyarov|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|87||sampled-L1-c1 (seg 10)|
 |123|pal-benkos-studies|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||||listed|
 |124|every-gambit-refuted|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|511||sampled-L1-c1 (seg 10)|
-|125|positional-masterpieces|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|55||listed|
+|125|positional-masterpieces|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|55||sampled-L1-c1 (seg 12)|
 |126|the-top-ten-games-of-the-2000s|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|179||listed|
 |127|henri-rincks-studies|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||||listed|
 |128|best-of-the-best|Best Of The Best|Master Games|M|Simon Williams|4|20|53||sampled-L1-c1 (seg 11)|
 |129|master-material-imbalances|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|55||sampled-L1-c1 (seg 8)|
 |130|pogchamps-tactics|PogChamps Tactics|Tactics|BIAM|Jeremy Kane|4|20|32||played-partly (C1 of each lesson; fork C1 played)|
 |131|the-10-best-games-of-the-2010s|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|158||listed|
-|132|mugzyyy|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|50||listed|
+|132|mugzyyy|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|50||sampled-L1-c1 (seg 12)|
 |133|play-like-anish-giri|Play Like Anish Giri|Master Games|M|Jeremy Kane|5||||listed|
 |134|a-chess-coachs-favorite-problems|A Chess Coach's Favorite Problems|Strategy|M|S. S. Ganguly|5|25|87||listed|
 |135|vasily-smyslov-master-of-attack|Vasily Smyslov: Master Of Attack|Master Games|M|A. Terekhov|5|25|66||listed|
@@ -153,7 +153,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |143|doubled-pawns-in-the-caro-kann-and-nimzo-indian|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|57||sampled-L1-c1 (seg 10; answer not found)|
 |144|the-latvian-school-of-chess|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|72||sampled-L1-c1 (seg 10)|
 |145|learn-from-the-best-stockfish|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|51||listed|
-|146|daniil-dubovs-amazing-opening-ideas|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|55||listed|
+|146|daniil-dubovs-amazing-opening-ideas|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|55||sampled-L1-c1 (seg 12)|
 |147|name-your-pawns-the-queenside|Name Your Pawns|Strategy|M|Simon Williams|8|40|147||sampled-L1-c1 (seg 10)|
 |148|the-sicilian-nimzowitsch-variation|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|57||listed|
 |149|use-your-pieces-tactically|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|54||sampled-L1-c1 (seg 11)|
@@ -171,7 +171,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |161|play-like-a-world-champion-the-lasker-years|Play Like A World Champion: The Lasker Years|Master Games|M|Jeremy Kane|6||||listed|
 |162|play-like-a-world-champion-the-steinitz-years|Play Like A World Champion: The Steinitz Years|Master Games|M|Jeremy Kane|4||||listed|
 |163|top-level-trickery-1|Top Level Trickery|Strategy|M|Dejan Bojkov|5|25|54||sampled-L1-c1 (seg 9)|
-|164|tatevs-favorite-studies|Tatev's Favorite Studies|Tactics|M|T. Abrahamyan|5|25|61||listed|
+|164|tatevs-favorite-studies|Tatev's Favorite Studies|Tactics|M|T. Abrahamyan|5|25|61||sampled-L1-c1 (seg 12)|
 |165|online-nations-cup-highlights-1|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|101||sampled-L1-c1 (seg 10)|
 |166|play-like-max-euwe-1|Play like Max Euwe|Master Games|M|Jeremy Kane|5||||listed|
 |167|play-like-emanual-lasker|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||||listed|
@@ -187,8 +187,8 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |177|2020-candidates-highlights|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|246||listed|
 |178|learn-the-ruy-lopez-tricky-systems|Learn the Ruy Lopez: Tricky Systems|Openings|BIAM|CC|3|21|19||listed|
 |179|learn-the-closed-sicilian|Learn the Closed Sicilian|Openings|BIAM|CC|3|21|19|y|listed|
-|180|how-to-win-with-the-ruy-lopez-exchange-variation|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|27||listed|
-|181|attack-in-the-ruy-lopez-with-5-d4|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|36|y|listed|
+|180|how-to-win-with-the-ruy-lopez-exchange-variation|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|27||sampled-L1-c1 (seg 12)|
+|181|attack-in-the-ruy-lopez-with-5-d4|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|36|y|sampled-L1-c1 (seg 12)|
 |182|learn-the-sicilian-with-2-e6|Learn the Sicilian with 2...e6|Openings|BIAM|CC|3|21|22||listed|
 |183|learn-the-sicilian-alapin-variation|Learn the Sicilian: Alapin Variation|Openings|BIAM|CC|3|21|17||listed|
 |184|learn-the-sicilian-dragon|Learn the Sicilian Dragon|Openings|BIAM|CC|3|21|13||listed|
@@ -206,7 +206,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |196|play-like-danny-rensch|Play Like Danny Rensch|Master Games|M|Jeremy Kane|5||||listed|
 |197|learn-the-sicilian-najdorf|Learn the Sicilian Najdorf|Openings|BIAM|CC|3|21|10||listed|
 |198|play-like-wilhelm-steinitz|Play Like Wilhelm Steinitz|Master Games|M|Jeremy Kane|5||||listed|
-|199|the-greatest-games-youve-never-seen|The Greatest Games You've Never Seen|Master Games|M|T. Abrahamyan|9|45|111||listed|
+|199|the-greatest-games-youve-never-seen|The Greatest Games You've Never Seen|Master Games|M|T. Abrahamyan|9|45|111||sampled-L1-c1 (seg 12)|
 |200|when-the-amateur-wins|When the Amateur Wins|Master Games|IAM|Simon Williams|4|20|68||sampled-L1-c1 (seg 11)|
 |201|play-like-mikhail-botvinnik|Play Like Mikhail Botvinnik|Master Games|M|Jeremy Kane|5||||listed|
 |202|play-like-vasily-smyslov|Play Like Vasily Smyslov|Master Games|M|Jeremy Kane|5||||listed|
@@ -218,15 +218,15 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |208|play-like-paul-morphy|Play Like Paul Morphy|Master Games|M|Jeremy Kane|5||||listed|
 |209|play-like-jose-raul-capablanca|Play Like Jose Raul Capablanca|Master Games|M|Jeremy Kane|5||||listed|
 |210|play-like-vladimir-kramnik|Play Like Vladimir Kramnik|Master Games|M|Jeremy Kane|5||||listed|
-|211|what-you-should-always-do|What You Should Always Do|Strategy|M|T. Abrahamyan|12|60|149||listed|
-|212|learn-to-play-the-tarrasch-defense|Play the Tarrasch Defense|Openings|AM|Mateusz Bobula|10|50|116|y|listed|
-|213|learn-to-play-the-scotch-game|Play the Scotch Game|Openings|AM|Alex Delchev|9|45|107||listed|
+|211|what-you-should-always-do|What You Should Always Do|Strategy|M|T. Abrahamyan|12|60|149||sampled-L1-c1 (seg 12)|
+|212|learn-to-play-the-tarrasch-defense|Play the Tarrasch Defense|Openings|AM|Mateusz Bobula|10|50|116|y|sampled-L1-c1 (seg 12)|
+|213|learn-to-play-the-scotch-game|Play the Scotch Game|Openings|AM|Alex Delchev|9|45|107||sampled-L1-c1 (seg 12)|
 |214|play-like-judit-polgar|Play Like Judit Polgar|Master Games|M|Jeremy Kane|5||||listed|
 |215|play-like-mikhail-tal|Play Like Mikhail Tal|Master Games|M|Jeremy Kane|5||||listed|
 |216|play-like-garry-kasparov|Play Like Garry Kasparov|Master Games|M|Jeremy Kane|5||||listed|
 |217|play-like-bobby-fischer|Play Like Bobby Fischer|Master Games|M|Jeremy Kane|5||||listed|
 |218|the-fighting-dragon|The Fighting Dragon|Openings|AM|Keaton Kiewra|10|50|232||sampled-L1-c1 (seg 11)|
-|219|the-carlsbad-pawn-structure|The Carlsbad Pawn Structure|Strategy|M|Dejan Bojkov|6|30|109||listed|
+|219|the-carlsbad-pawn-structure|The Carlsbad Pawn Structure|Strategy|M|Dejan Bojkov|6|30|109||sampled-L1-c1 (seg 12)|
 |220|play-like-mvl|Play Like Maxime Vachier-Lagrave|Master Games|M|Jeremy Kane|5||||listed|
 |221|play-like-vishy|Play Like Vishy Anand|Master Games|M|Jeremy Kane|5||||listed|
 |222|play-like-hikaru|Play Like Hikaru Nakamura|Master Games|M|Jeremy Kane|5||||played-L1-first-2-moves|
@@ -235,10 +235,10 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |225|how-to-play-the-philidor-defense|How to Play the Philidor Defense|Openings|AM|Ben Finegold|10|50|81||sampled-L1-c1 (seg 11)|
 |226|pirc-defense-for-black|Pirc Defense for Black|Openings|M|M. Molner|8|40|187||sampled-L1-c1 (seg 10)|
 |227|pirc-defense-for-white|Pirc Defense for White|Openings|M|R. Dzindzichashvili|2|10|50||sampled-L1-c1 (seg 9)|
-|228|secrets-of-the-english-attack|Secrets of the English Attack|Openings|M|T. Abrahamyan|5|25|123||listed|
+|228|secrets-of-the-english-attack|Secrets of the English Attack|Openings|M|T. Abrahamyan|5|25|123||sampled-L1-c1 (seg 12)|
 |229|the-complete-english-defense|The Complete English Defense|Openings|M|Simon Williams|5|25|108||sampled-L1-c1 (seg 11)|
 |230|the-belgrade-gambit|The Belgrade Gambit|Openings|M|Simon Williams|2|10|47||sampled-L1-c1 (seg 9)|
-|231|how-to-play-the-trompowsky|How to Play the Trompowsky Attack|Openings|M|Keaton Kiewra|8|40|83||listed|
+|231|how-to-play-the-trompowsky|How to Play the Trompowsky Attack|Openings|M|Keaton Kiewra|8|40|83||sampled-L1-c1 (seg 12)|
 |232|playing-with-material-imbalances|Playing with Material Imbalances|Master Games|M|Ben Finegold|2|10|45||sampled-L1-c1 (seg 9)|
 |233|the-complete-queens-gambit-declined|The Complete Queen's Gambit Declined|Openings|M|G. Kaidanov|10|50|227||sampled-L1-c1 (seg 10)|
 |234|spicy-gambits|Spicy Gambits!|Openings|IAM|Simon Williams|6|30|128||sampled-L1-c1 (seg 10)|
@@ -255,25 +255,25 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |245|improve-your-puzzle-rush|Improve Your Puzzle Rush|Tactics|IAM|Simon Williams|7|35|79||sampled-L1-c1 (seg 5)|
 |246|why-simon-loves-the-french|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|188||skipped-near-duplicate of #240 (seg 11)|
 |247|ruy-lopez-lessons|Key Ruy Lopez Lessons|Openings|M|Dejan Bojkov|2|10|38||listed|
-|248|mikhail-tals-best-endgames|Mikhail Tal's Best Endgames|Endgames|M|A. Yermolinsky|3|15|54||listed|
+|248|mikhail-tals-best-endgames|Mikhail Tal's Best Endgames|Endgames|M|A. Yermolinsky|3|15|54||sampled-L1-c1 (seg 12)|
 |249|learning-from-our-mistakes|Learning From Our Mistakes|Strategy|IAM|Max Illingworth|5|25|46||sampled-L1-c1-2 (seg 5)|
 |250|spicy-openings-the-max-lange-attack|Spicy Openings: The Max Lange Attack|Openings|M|Simon Williams|3|15|45||sampled-L1-c1 (seg 11)|
-|251|restrict-and-win|Restrict and Win|Strategy|M|M. Khachiyan|6|30|96||listed|
-|252|positional-sacrifices|Positional Sacrifices|Master Games|M|V. Mikhalevski|3|15|56||listed|
-|253|play-in-the-center|Play in the Center|Strategy|M|Dejan Bojkov|4|20|71||listed|
+|251|restrict-and-win|Restrict and Win|Strategy|M|M. Khachiyan|6|30|96||sampled-L1-c1 (seg 12)|
+|252|positional-sacrifices|Positional Sacrifices|Master Games|M|V. Mikhalevski|3|15|56||sampled-L1-c1 (seg 12)|
+|253|play-in-the-center|Play in the Center|Strategy|M|Dejan Bojkov|4|20|71||sampled-L1-c1 (seg 12)|
 |254|using-time-in-chess|Using Time in Chess|Attacking|M|Simon Williams|4|20|91||sampled-L1-c1 (seg 9)|
 |255|storming-the-castle|Storming the Castle|Attacking|M|Keaton Kiewra|3|15|60||sampled-L1-c1 (seg 9)|
 |256|beating-the-anti-sicilians|Beating the Anti-Sicilians|Openings|AM|Ben Finegold|3|15|41||sampled-L1-c1 (seg 11; answer not found)|
 |257|using-the-initiative|Using the Initiative|Attacking|M|M. Molner|3|15|60||listed|
 |258|attacking-king-hunts|Attacking King Hunts|Attacking|M|Simon Williams|5|25|97||sampled-L1-c1 (seg 11)|
-|259|bishop-battles|Bishop Battles|Master Games|M|J. L. Hammer|5|25|106||listed|
+|259|bishop-battles|Bishop Battles|Master Games|M|J. L. Hammer|5|25|106||sampled-L1-c1 (seg 12)|
 |260|complete-scotch-2-mieses-theory-middlegame|The Scotch Mieses Theory and Middlegame|Openings|M|Daniel Rensch|8|||y|sampled-L1-c1 (seg 11)|
 |261|deep-concepts-explained|Deep Concepts Explained|Strategy|M|J. L. Hammer|2|10|24||sampled-L1-c1 (seg 9)|
 |262|understanding-the-london-system|Practice the London System|Openings|IAM|CT|16|||y|played-partly|
 |263|the-classical-dutch|The Classical Dutch|Openings|M|Simon Williams|5|25|95||sampled-L1-c1 (seg 10)|
 |264|kasparovs-greatest-combinations|Kasparov's Greatest Combinations|Attacking|M|Dejan Bojkov|3|15|64||sampled-L1-c1 (seg 9)|
 |265|attacking-pawn-chains|Attacking Pawn Chains|Attacking|IAM|E. Perelshteyn|4|20|75||played-L1-c1|
-|266|expect-the-unexpected|Expect the Unexpected|Master Games|M|M. Khachiyan|3|15|47||listed|
+|266|expect-the-unexpected|Expect the Unexpected|Master Games|M|M. Khachiyan|3|15|47||sampled-L1-c1 (seg 12)|
 |267|crush-with-the-kings-gambit|Crush with the King's Gambit|Openings|M|Simon Williams|5|25|100||sampled-L1-c1 (seg 11)|
 |268|winning-with-the-chigorin|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|51||sampled-L1-c1 (seg 11)|
 |269|how-to-make-a-comeback|How to Make a Comeback|Master Games|M|Mike Klein|3|15|49||sampled-L1-c1 (seg 9)|
@@ -526,4 +526,11 @@ RESUME HERE (segment 11): next in order: Complete Scotch Mieses theory (#260), C
 ## Log, 9 Nov 2026 (segment 11, BREADTH FIRST, Phase 2 continued)
 Sampled (L1 C1, wrong move where it registered, engine depth 14, depth 18 for the rook ending; notes in `research-chesscom-sweep-mastery.md` section "Segment 11" with a summary at its end): Complete Scotch Mieses theory #260, Crush with the King's Gambit #267, Nakamura's KID #280, Sacrifice on h6 #277, Attacking King Hunts #258, Old School Cool #236, Top Five Moves Candidates #173, Immortal Games #291, Best of the Best #128, When the Amateur Wins #200, Complete English Defense #229, Max Lange #250, Why Simon Loves the Sicilian #240, London for the Busy Player #276, Play the Budapest #274, Finegold Philidor #225, Chigorin #268, Anti-Sicilians #256 (answer not found), Kiewra Fighting Dragon #218, Edouard Opening Kitchen #112, Bojkov Use Your Pieces Tactically #149, Mikhalevski Initiative #242, Khachiyan Carlsbad #244, Yermolinsky Super GM Rook Endings #278: 24 courses. Skipped near-duplicate: Why Simon Loves the French #246.
 Tool notes [V]: (1) the second JS call (wait, Start, read) must be sent after the first returns; sent in one message with the navigation JS it is cut off by the page change. (2) A whole test fits in one message: select, move, read text, Retry, select, move, read text (7 calls). (3) eng.py scores are from the side to move: negative for Black means Black is worse (segment-11 notes use this; check older Black-to-move notes for the sign). (4) In a multi-step challenge the Retry slot (733,757) acts as Hint (Old School Cool). (5) Unflipped y: rank 1 483, 2 420, 3 357, 4 294, 5 231, 6 168, 7 105, 8 42; flipped y = 42 + 63*(rank-1).
-RESUME HERE (segment 12): still `listed` and worth sampling, in order: Finegold none left; Kiewra Trompowsky #231, Ruy Lopez Exchange #180, Ruy Lopez 5.d4 #181; Edouard Positional Masterpieces #125, How To Dominate Your Opponent's Pieces #132, World Championship Preparation #91, Dubov's Opening Ideas #146; Bojkov Play in the Center #253, Carlsbad Pawn Structure #219, Grind Like Magnus #90; Mikhalevski Positional Sacrifices #252; Khachiyan Aronian #115, Restrict and Win #251, Expect the Unexpected #266; Yermolinsky Tal's Best Endgames #248; Abrahamyan #164, #199, #211, #228; Hammer Bishop Battles #259; Bobula Tarrasch #212; Delchev Scotch #213. Skip as near-duplicates (logged): Why Simon Loves the French #246, Play Like series (about 40), Top 10 Games of the decade lists, Learn the X (14+), Wolff Champion Tactics (10), Kane Studies (7), Combinations of Tal 2/3, Learn From The Best Komodo/Stockfish/Leela, Candidates Highlights. Own tab: tab-22; 3-call recipe plus the 7-call test batch.
+RESUME HERE (segment 12, superseded by the segment-13 line at the end of this file): was: Finegold none left; Kiewra Trompowsky #231, Ruy Lopez Exchange #180, Ruy Lopez 5.d4 #181; Edouard Positional Masterpieces #125, How To Dominate Your Opponent's Pieces #132, World Championship Preparation #91, Dubov's Opening Ideas #146; Bojkov Play in the Center #253, Carlsbad Pawn Structure #219, Grind Like Magnus #90; Mikhalevski Positional Sacrifices #252; Khachiyan Aronian #115, Restrict and Win #251, Expect the Unexpected #266; Yermolinsky Tal's Best Endgames #248; Abrahamyan #164, #199, #211, #228; Hammer Bishop Battles #259; Bobula Tarrasch #212; Delchev Scotch #213. Skip as near-duplicates (logged): Why Simon Loves the French #246, Play Like series (about 40), Top 10 Games of the decade lists, Learn the X (14+), Wolff Champion Tactics (10), Kane Studies (7), Combinations of Tal 2/3, Learn From The Best Komodo/Stockfish/Leela, Candidates Highlights. Own tab: tab-22; 3-call recipe plus the 7-call test batch.
+
+## Log, 9 Nov 2026 (segment 12, BREADTH FIRST, Phase 2 and extras)
+Sampled (L1 C1, wrong move where it registered, engine depth 14, depth 16 to 20 where the answer was not the top move or a claim looked suspect; notes in `research-chesscom-sweep-mastery.md` section "Segment 12", sign convention stated at its top): Kiewra Trompowsky #231, Ruy Lopez Exchange #180, Ruy Lopez 5.d4 #181; Edouard Positional Masterpieces #125, How To Dominate Your Opponent's Pieces #132, World Championship Preparation #91, Dubov's Opening Ideas #146; Bojkov Play in the Center #253, Carlsbad Pawn Structure #219, Grind Like Magnus #90; Mikhalevski Positional Sacrifices #252; Khachiyan Aronian #115, Restrict and Win #251, Expect the Unexpected #266; Yermolinsky Tal's Best Endgames #248; Abrahamyan #164, #199, #211, #228; Hammer Bishop Battles #259; Bobula Tarrasch #212; Delchev Scotch #213: the whole segment-12 resume list, 22 courses. Phase 2 (second and third challenges, lesson ending): Scotch #213 C1-C3, Tatev's Studies #164 C1-C3, and the Finish/handoff screen via Roots of Positional Understanding "D.Durham-J.Shapiro" (1/1). Also sampled at the end: How To Beat A Grandmaster #102, How to Be Materialistic #99 (24 courses this segment in all). Synthesis at the end of the segment-12 section of the mastery sweep.
+Tool notes [V]: (1) click squares computed from file and rank; a mis-click on a wrong file (e4 for d4) leaves the board unchanged and shows no error. (2) A hand-typed FEN lost a queen and returned a wrong engine score (-6.6); copy the FEN from `game.getFEN()` and compare with the board. (3) The lightbulb hint slot is (693,757) on first press; a second press at (733,757) shows the next hint level; the hint text appears in the bubble, with the piece highlighted. (4) After a right line completes, the Retry slot becomes the green Next arrow at (733,757); Next loads the next challenge in about 6 s. (5) Finish modal at (400,549); Finish goes to /learn.
+
+Segment-12 findings [V] (details in the segment-12 section of `research-chesscom-sweep-mastery.md`): (1) The amber tier is the best feedback chess.com has, and the best examples name the cost or the book: "ties down both your queen and knight" (Restrict and Win), "good move, but it doesn't reach Keaton's favorite d4 system" (Ruy Lopez 5.d4), "good, but it doesn't lead to the Tarrasch Defense", "good move, but there's an even better one" at a 1.5-pawn margin (Greatest Games). (2) State and wording disagree: red boxes with the text "playable", "good chances", "still OK" (Expect the Unexpected Bc2, Trompowsky Be3, Positional Sacrifices Nb1), so one margin field should drive both. (3) Best wrong texts are exact consequences or lines: "After Qa6 and Nxd4! Black wins back the sacrificed pawn" (Materialistic), "White has a winning attack" at -1.9 (Beat a GM), "Black will checkmate" earlier. Loose adjectives: "slightly better" at 1.18 (English Attack), "Black is OK" at +0.66 for White (Scotch), "mistake" for a 0.3 pawn inaccuracy (Scotch). (4) Answers unstable across depth: Dominate Your Opponent's Pieces (accepted move first at depth 14, fourth at depth 18), Expect the Unexpected (second at 14, first at 20). Flat positions graded as one answer: Tal's Best Endgames (seven moves at +0.43), Grind Like Magnus (seven moves within 0.2). (5) Lesson ending: Lesson Complete modal (graduation cap, "Way to go! Continue your journey learning chess.", one Finish button), then /learn with "I have your next lesson ready" and four buttons (Next Lesson, Play Coach, Learn an Opening, Lesson Library); no score, XP, streak or review item on either screen; the suggested next lesson is not driven by the course just played (Advanced Endgames both times).
+RESUME HERE (segment 13): 24 courses sampled in segment 12 (all of the segment-12 list plus #102, #99). Still `listed` and distinct, in order: A Chess Coach's Favorite Problems #134, Using the Initiative #257 (Molner), How to Play the King's Indian Attack #116 (Bojkov), Vasily Smyslov: Master Of Attack #135, The Sicilian Nimzowitsch Variation #148, Mamedyarov's Kingside Pawn Play #85 and Opening Surprises #108, Jan's Four Knights #3, c3 Sicil For The Kill #15, The Loud Italian #72, Tips And Tricks Of The London System #172, Guide to the Alekhine's Defense #195, Key Ruy Lopez Lessons #247, Spicy Openings: The Evans Gambit #285, The Most Amazing Chess Moves Ever Played #13, Modern Chess Masterpieces #88, The Indian School Of Chess #93, Carlsen vs. Nepomniachtchi #101, My Best Game #150 (Team, 20 lessons), Checkmate Grandmaster #152. Then, if the second/third-challenge capture is still wanted, play C4 and C5 and the full ending of one 5-challenge opening lesson (Scotch #213 is at C3 step 2; Tatev #164 at C3 step 2) to see whether the ending differs from the single-challenge one (Roots L1). Skip as near-duplicates (logged): Why Simon Loves the French #246, Play Like series (about 40), Top 10 Games of the decade lists, Learn the X (about 34), Wolff Champion Tactics (10), Kane Studies (7), Combinations of Tal 2/3, Learn From The Best Komodo/Stockfish/Leela, Candidates Highlights. Own tab: tab-22; recipes as in the segment 11 and 12 tool notes.
