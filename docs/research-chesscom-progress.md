@@ -24,7 +24,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |14|how-to-win-with-zugzwang|How To Win With Zugzwang|Endgames|M|Dejan Bojkov|5|25|59||played-partly|
 |15|c3-sicil-for-the-kill|c3 Sicil For The Kill|Openings|M|James Canty|5|25|60||listed|
 |16|judit-polgar-from-child-star-to-super-gm|Judit Polgar: From Child Star To Super-Grandmaster|Master Games|M|Judit Polgar|6|30|234|y|played-L1-c1|
-|17|the-ultimate-blunder|The Ultimate Blunder|Master Games|-|Ben Finegold|4|20|35||listed|
+|17|the-ultimate-blunder|The Ultimate Blunder|Master Games|-|Ben Finegold|4|20|35||sampled-L1-c1 (seg 8)|
 |18|hall-of-fame-the-50-greatest-chess-players-of-all-time|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|623||played-L50-c1|
 |19|the-stonewall|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|75||listed|
 |20|hou-yifan-my-career-so-far|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|109||played-L1-c1|
@@ -61,7 +61,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |51|learn-the-center-game-and-danish-gambit|Learn The Center Game And Danish Gambit|Openings|M|CC|3|21|18||listed|
 |52|learn-the-vienna-game-and-bishops-opening|Learn The Vienna Game And Bishop's Opening|Openings|M|CC|3|21|25||listed|
 |53|learn-the-philidor-defense|Learn The Philidor Defense|Openings|M|CC|3|21|19||listed|
-|54|learn-the-kings-gambit|Learn The King's Gambit|Openings|M|CC|3|21|27||listed|
+|54|learn-the-kings-gambit|Learn The King's Gambit|Openings|M|CC|3|21|27||sampled-L1-c1 (seg 8)|
 |55|learn-the-four-knights-game|Learn The Four Knights Game|Openings|M|CC|3|21|17||listed|
 |56|learn-the-two-knights-defense|Learn The Two Knights Defense|Openings|M|CC|3|21|23||listed|
 |57|learn-the-scotch-game|Learn The Scotch Game|Openings|M|CC|3|21|22||listed|
@@ -136,7 +136,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |126|the-top-ten-games-of-the-2000s|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|179||listed|
 |127|henri-rincks-studies|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||||listed|
 |128|best-of-the-best|Best Of The Best|Master Games|M|Simon Williams|4|20|53||listed|
-|129|master-material-imbalances|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|55||listed|
+|129|master-material-imbalances|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|55||sampled-L1-c1 (seg 8)|
 |130|pogchamps-tactics|PogChamps Tactics|Tactics|BIAM|Jeremy Kane|4|20|32||played-partly (C1 of each lesson; fork C1 played)|
 |131|the-10-best-games-of-the-2010s|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|158||listed|
 |132|mugzyyy|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|50||listed|
@@ -158,7 +158,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |148|the-sicilian-nimzowitsch-variation|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|57||listed|
 |149|use-your-pieces-tactically|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|54||listed|
 |150|my-best-game|My Best Game|Master Games|IAM|CT|20|100|304||listed|
-|151|how-to-avoid-mistakes|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|68||listed|
+|151|how-to-avoid-mistakes|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|68||sampled-L1-c1 (seg 8)|
 |152|checkmate-grandmaster-winning-in-the-opening-1|Checkmate Grandmaster! - Winning In The Opening|Master Games|AM|Jeremy Kane|5||||listed|
 |153|how-to-swindle-your-opponent|How To Swindle Your Opponent|Strategy|AM|Nemo Zhou|5|25|69||listed|
 |154|play-like-alphazero|Learn From The Best: AlphaZero|Master Games|M|Daniel Rensch|5|6|84||listed|
@@ -289,7 +289,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |279|the-most-amazing-chess-moves|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|54||listed|
 |280|nakamuras-kings-indian-defense|Nakamura's King's Indian Defense|Openings|M|Simon Williams|5|25|77||listed|
 |281|basic-attacking-plans|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|89||played-L1-c1|
-|282|knights-vs-bishops|Knights vs Bishops|Strategy|M|Dejan Bojkov|5|25|90||listed|
+|282|knights-vs-bishops|Knights vs Bishops|Strategy|M|Dejan Bojkov|5|25|90||sampled-L1-c1 (seg 8)|
 |283|your-first-tournament|Your First Tournament|Strategy|BIAM|Ben Finegold|4|20|37||played-all-4-lessons (L1 reaching-the-time-control, L2 illegal-chess-move, L3 notation, L4 draw claims)|
 |284|get-better-at-bullet|Get Better at Bullet|Strategy|IAM|Aman Hambleton|5|25|48||played-L1-c1|
 |285|spicy-openings-the-evans-gambit|Spicy Openings: The Evans Gambit|Openings|M|Simon Williams|5|25|86||listed|
@@ -323,16 +323,16 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |313|advanced-tactics-1|Advanced Tactics|Tactics|IAM|Ben Finegold|2|10|34||played-L1-c1-3 (Expect the Unexpected; L2 not opened)|
 |314|sensing-the-danger-examples-from-my-games|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||||listed|
 |315|master-endgame|Master Endgames|Endgames|AM|CT|8||||played-L1-c1|
-|316|en-prise-please|En Prise Please!|Tactics|M|CT|10||||listed|
+|316|en-prise-please|En Prise Please!|Tactics|M|CT|10||||sampled-L1-c1 (seg 8)|
 |317|master-attack-and-defense|Master Attack and Defense|Attacking|AM|CT|9||||played-L1-c1|
-|318|master-tactics|Master Tactics|Tactics|M|CT|9||||listed|
+|318|master-tactics|Master Tactics|Tactics|M|CT|9||||sampled-L1-c1 (seg 8)|
 |319|master-strategy|Master Strategy|Strategy|AM|CT|9||||played-L1-c1|
-|320|capablancas-endgame-masterpieces|Capablanca's Endgame Masterpieces|Endgames|AM|Dejan Bojkov|10||||listed|
+|320|capablancas-endgame-masterpieces|Capablanca's Endgame Masterpieces|Endgames|AM|Dejan Bojkov|10||||sampled-L1-c1 (seg 8)|
 |321|the-technique-of-calculation|The Technique of Calculation|Tactics|AM|CT|10||||played-L1-c1|
 |322|the-drawing-zone-part-2|The Drawing Zone, Part 2|Endgames|IAM|CT|18||||listed|
 |323|same-side-pawn-storms|Same Side Pawn Storms|Attacking|AM|CT|20||||played-L1-c1|
 |324|the-drawing-zone-part-1|The Drawing Zone, Part 1|Endgames|IAM|CT|18||||played-L1-c1|
-|325|exploiting-opening-errors-2|Exploiting Opening Errors 2|Openings|BIAM|CT|19||||listed|
+|325|exploiting-opening-errors-2|Exploiting Opening Errors 2|Openings|BIAM|CT|19||||sampled-L1-c1 (seg 8)|
 |326|weak-color-complexes-explained|Weak Color Complexes Explained|Strategy|AM|David Pruess|22||||listed|
 |327|advanced-tactics|Advanced Tactics|Misc|A|CT|5|24|23||played-partly|
 |328|premature-attacks-on-the-king|Premature Attacks on the King|Attacking|AM|CT|15||||played-L1-c1|
@@ -341,13 +341,13 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |331|clever-escapes-from-common-mating-attacks|Clever Escapes from Common Mating Attacks|Tactics|AM|CT|15||||played-L1-c1|
 |332|pawn-play-in-the-endgame|Pawn Play in the Endgame|Endgames|AM|CT|20||||played-L1-c1|
 |333|pawn-play|Pawn Play|Strategy|AM|CT|18||||played-L1-c1|
-|334|finding-tricky-tactics|Finding Tricky Tactics|Tactics|M|CT|15||||listed|
+|334|finding-tricky-tactics|Finding Tricky Tactics|Tactics|M|CT|15||||sampled-L1-c1 (seg 8)|
 |335|play-against-capablanca|Play Against Capablanca|Master Games|M|I. Khmelnitsky|22||||played-L1-c1|
-|336|slaying-the-sicilian-kingside-storms|Slaying the Sicilian: Kingside Storms|Openings|M|CT|12||||listed|
-|337|the-essence-of-the-initiative|The Essence of the Initiative|Attacking|M|CT|20||||listed|
+|336|slaying-the-sicilian-kingside-storms|Slaying the Sicilian: Kingside Storms|Openings|M|CT|12||||sampled-L1-c1 (seg 8)|
+|337|the-essence-of-the-initiative|The Essence of the Initiative|Attacking|M|CT|20||||sampled-L1-c1 (seg 8)|
 |338|complete-scotch-1-the-mieses-endgames|Complete Scotch #1: The Mieses Endgames|Endgames|M|Daniel Rensch|10||||listed|
 |339|improve-your-chess|Improve your Chess|Strategy|M|Sam Shankland|19||||played-L1-c1|
-|340|play-against-lasker|Play Against Lasker|Misc|M|CT|19||||listed|
+|340|play-against-lasker|Play Against Lasker|Misc|M|CT|19||||sampled-L1-c1 (seg 8)|
 |341|combinations-of-mikhail-tal|Combinations of Mikhail Tal|Tactics|AM|CT|24||||played-L1-c1|
 |342|the-power-of-the-capture-check|The Power of the Capture-Check|Tactics|M|CT|21||||played-L1-c1|
 |343|understanding-the-sicilian-dragon|Understanding the Sicilian Dragon|Openings|IAM|CT|15|||y|listed|
@@ -367,32 +367,32 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |357|champion-tactics-with-gm-wolff-misplaced-pieces|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||||listed|
 |358|champion-tactics-with-gm-wolff-pins-and-skewers|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||||listed|
 |359|champion-tactics-with-gm-wolff-smother-tactics|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||||listed|
-|360|play-against-bobby-fischer|Play Against Bobby Fischer|Strategy|M|CT|25||||listed|
+|360|play-against-bobby-fischer|Play Against Bobby Fischer|Strategy|M|CT|25||||sampled-L1-c1 (seg 8)|
 |361|understanding-the-colle-zukertort|Understanding the Colle-Zukertort|Openings|IAM|CT|25||||listed|
-|362|combinations-of-alexander-alekhine|Combinations of Alexander Alekhine|Tactics|M|CT|19||||listed|
+|362|combinations-of-alexander-alekhine|Combinations of Alexander Alekhine|Tactics|M|CT|19||||sampled-L1-c1 (seg 8)|
 |363|shockers|Shockers!|Tactics|M|CT|20||||played-L1-c1|
 |364|improve-your-decision-making-in-critical-positions|Improve Your Decision Making in Critical Positions|Misc|M|CT|25||||played-L1-c1|
 |365|recognizing-the-opponents-moves|Recognizing the Opponent's Moves|Strategy|AM|CT|26||||played-L1-c1|
 |366|mental-domination|Mental Domination|Strategy|M|Jeremy Silman|20||||played-L1-c1|
-|367|the-art-of-exchanging-pieces|The Art of Exchanging Pieces|Strategy|M|CT|25||||listed|
-|368|bishop-versus-knight-part-1|Bishop versus Knight (Part 1)|Endgames|M|Dejan Bojkov|13||||listed|
+|367|the-art-of-exchanging-pieces|The Art of Exchanging Pieces|Strategy|M|CT|25||||sampled-L1-c1 (seg 8)|
+|368|bishop-versus-knight-part-1|Bishop versus Knight (Part 1)|Endgames|M|Dejan Bojkov|13||||sampled-L1-c1 (seg 8)|
 |369|ibm-deep-blue-vs-kasparov|IBM Deep Blue vs. Kasparov|Master Games|M|CT|24||||listed|
 |370|chess-traps-and-miniatures-part-1-quick-knockouts|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||||played-L1-c1|
-|371|a-kaleidoscope-of-openings|A Kaleidoscope of Openings|Openings|BIAM|CT|90||||listed|
+|371|a-kaleidoscope-of-openings|A Kaleidoscope of Openings|Openings|BIAM|CT|90||||sampled-L1-c1 (seg 8)|
 |372|build-your-technique|Build Your Technique|Misc|M|Thomas Wolski|116||||played-L1-c1|
 |373|pawn-endings-beginner-to-expert|Pawn Endings: Beginner to Expert|Endgames|BIAM|CT|87||||lesson-list-only; played-L1,L87 (L87 c1 only)|
 |374|basic-checkmates-and-more|Basic Checkmates and More|Misc|BIAM|CT|77||||lesson-list-only|
-|375|rook-and-other-endgames|Rook and Other Endgames|Endgames|IAM|Jeremy Silman|39||||listed|
-|376|endings-openings-a-taste-of-the-middle|Endings, Openings, a Taste of the Middle|Misc|IAM|CT|84||||listed|
-|377|chess-potpourri|Chess Potpourri|Misc|AM|CT|102||||listed|
+|375|rook-and-other-endgames|Rook and Other Endgames|Endgames|IAM|Jeremy Silman|39||||sampled-L1-c1 (seg 8)|
+|376|endings-openings-a-taste-of-the-middle|Endings, Openings, a Taste of the Middle|Misc|IAM|CT|84||||sampled-L1-c1 (seg 8)|
+|377|chess-potpourri|Chess Potpourri|Misc|AM|CT|102||||sampled-L1-c1 (seg 8)|
 |378|introduction-to-tactics|Introduction to Tactics|Tactics|BIAM|CT|112||||played-L1,42,108|
 |379|knight-versus-bishop-part-2|Knight versus Bishop (Part 2)|Endgames|M|Dejan Bojkov|14||||listed|
-|380|critical-challenges|Critical Challenges|Misc|M|CT|12||||listed|
-|381|silmans-lessons-in-strategy-2|Silman's Lessons in Strategy (2)|Strategy|M|Jeremy Silman|51||||listed|
+|380|critical-challenges|Critical Challenges|Misc|M|CT|12||||sampled-L1-c1 (seg 8)|
+|381|silmans-lessons-in-strategy-2|Silman's Lessons in Strategy (2)|Strategy|M|Jeremy Silman|51||||sampled-L1-c1 (seg 8)|
 |382|silman-teaches-tactics-1|Silman Teaches Tactics (1)|Tactics|AM|Jeremy Silman|103||||played-L1-c1|
 |383|roots-of-positional-understanding|Roots of Positional Understanding|Strategy|IAM|Jeremy Silman|286||||played-L1|
 |384|silmans-lessons-in-strategy-1|Silman's Lessons in Strategy (1)|Strategy|M|Jeremy Silman|53||||played-L1-c1|
-|385|world-champions-at-their-best-1|World Champions at their Best (1)|Master Games|M|Jeremy Silman|43||||listed|
+|385|world-champions-at-their-best-1|World Champions at their Best (1)|Master Games|M|Jeremy Silman|43||||sampled-L1-c1 (seg 8)|
 |386|world-champions-2-the-lasker-years|World Champions (2): The Lasker Years|Master Games|M|Jeremy Silman|26||||listed|
 |387|the-benoni-and-its-tactics|The Benoni and its Tactics|Openings|M|CT|18|||y|listed|
 |388|intermediate-tactics|Intermediate Tactics|Tactics|IAM|CT|76||||listed|
@@ -453,3 +453,61 @@ RESUME HERE (segment 8): Mastery list: Strategies For Rapid Chess, Hou Yifan, Ju
 Update (segment 7, end): also sampled Strategies For Rapid Chess, Hou Yifan, Judit Polgar, SCC Tactics, Chess in the Movies, Gambit Buffet, Leonid Kubbel's Studies, Think Like a Master, Improve Your Chess, Mental Domination, Build Your Technique, Prophylactic Thinking L2, Play Against Capablanca, Every Opening Trap, The Power of the Capture-Check, Rook and Knight vs Rook, Improve Your Decision Making in Critical Positions, Shockers!, Defeating Pet Openings (Mastery notes in `research-chesscom-sweep-mastery.md`). Total this segment: 33 course samples.
 RESUME HERE (segment 8): remaining `listed` courses favouring distinct formats: Critical Challenges (#380), Bishop versus Knight Part 1 (#368), Master Material Imbalances (#129), Knights vs Bishops (#282), How To Avoid Mistakes (#151), The Ultimate Blunder (#17), En Prise Please! (#316), Finding Tricky Tactics (#334), Master Tactics (#318), Exploiting Opening Errors 2 (#325), Play Against Bobby Fischer (#360) / Lasker (#340), Combinations of Alexander Alekhine (#362), Silman's Lessons in Strategy (2) (#381), World Champions at their Best (1) (#385), Rook and Other Endgames (#375), Chess Potpourri (#377), A Kaleidoscope of Openings (#371), Endings Openings a Taste of the Middle (#376). Skipped as near-duplicates this segment: Combinations of Mikhail Tal Parts 2 and 3, the other Kubbel-style Studies courses (Rinck, Troitsky, Pervakov, Kasparyan, Benko, Reti), Silman Teaches Tactics beyond L1. Tab tab-22; same recipe as above.
 
+
+## Log, 9 Nov 2026 (segment 8, BREADTH FIRST, Phase 2 continued)
+Sampled (lesson 1, challenge 1, one wrong move where it registered, engine depth 14, deeper where suspect; notes in `research-chesscom-sweep-mastery.md` "Segment 8" and `-intermediate.md`/`-advanced.md` "Segment 8"): Critical Challenges, Bishop versus Knight Part 1, Master Material Imbalances, Knights vs Bishops, How To Avoid Mistakes, The Ultimate Blunder, En Prise Please!, Finding Tricky Tactics, Master Tactics, Exploiting Opening Errors 2, Play Against Bobby Fischer, Play Against Lasker, Combinations of Alexander Alekhine, Silman's Lessons in Strategy (2), World Champions at their Best (1), Rook and Other Endgames, Chess Potpourri, A Kaleidoscope of Openings, Endings Openings a Taste of the Middle (the whole segment-7 resume list, 19 courses).
+Tool note [V]: `wc-chess-board.game.getOptions().flipped` works (the board element has no `getOptions`); first lesson link via `a.href.includes('/lessons/<slug>/') && href.split('/').length>5`; a bubble prompt still blank after 12 s is genuinely blank in most 2018-era courses; Retry stays at (733,757) for red and green states in this layout (the narrow frame).
+
+Update (segment 8, end): also sampled Learn The King's Gambit, The Art of Exchanging Pieces, The Essence of the Initiative, Slaying the Sicilian: Kingside Storms, Capablanca's Endgame Masterpieces (24 course samples this segment). Skipped as near-duplicates: IBM Deep Blue vs Kasparov (same shell as Critical Challenges L1), Knight versus Bishop Part 2 (shell as Part 1), the other 13 Learn-the-X opening courses (shell as King's Gambit/Scandinavian), Play Like series (shell known).
+RESUME HERE (segment 9): remaining `listed` courses favouring distinct formats: Complete Scotch #1 Mieses Endgames (#338), The Benoni and its Tactics (#387), Understanding the Sicilian Dragon (#343), Understanding the Colle-Zukertort (#361), Now What? (#345, Silman), Strategic Errors was sampled; Chess Traps and Miniatures Part 2 Checkmates (#347), World Champions (2) The Lasker Years (#386), Bent the Great (#390), Master Your Technique (#393), Intermediate Tactics (done), How To Sacrifice Your Queen (#287), Kasparov's Greatest Combinations (#264), Using Time in Chess (#254), Storming the Castle (#255), How to Defend (#176), Hammertime Strategy (#193), Top Level Trickery (#163), The Drawing Zone Part 2 (#322), Basic Checkmates and More / Exclusively Checkmates (lesson-list-only, #374/#392), then the Anna Rudolf / Mike Klein / Naroditsky Mastery lectures. Tab tab-22; recipe in segment 7 and 8 notes: JS finds the first '/lessons/<slug>/<lesson>' link with `href.split('/').length>5`, Start, wait 12 s, read FEN and flipped via `wc-chess-board.game.getFEN()` and `.game.getOptions().flipped`; Retry (733,757); clicks unflipped x=104+63*file, y=42+63*(8-rank), flipped x=104+63*(7-file), y=42+63*(rank-1).
+
+## What this means for Scholarmate (added end of segment 8, 9 Nov 2026)
+Distilled from about 90 library course samples (segments 5 to 8), the Learn path and the beginner/intermediate sweeps. Each bullet is a requirement we can turn into a task. Labels: [V] seen and engine-checked in the samples, [I] inference. Engine margins are from the local Stockfish 19 lite.
+
+**Feedback tiers**
+- Three tiers, always: correct, "also works" (amber, with what it gives up), incorrect (red, with the refutation). chess.com's newer shells have the amber tier; the 2018 Team shells use red for anything but the author's move [V]. Scholarmate: every item stores `accepted` (all moves meeting the goal) and `alt` (playable but weaker, with a one-line cost).
+- The wrong-move text must name the opponent's best reply or the cost, not "incorrect" or "not the best". Best examples: "...f5 blocks the bishop and forces a queen trade" (En Prise Please!), "that's stalemate" (Rook and Knight vs Rook), and playing the mate out on the board after a blunder (The Ultimate Blunder) [V]. Scholarmate: each distractor carries a `why_wrong` string and, when the engine line ends in mate or a lost piece, a playback.
+- Tell the learner the size of the gap in words (equal / slightly better / clearly better / winning), generated at authoring time from the engine margin, not live. Good wording: "Black is slightly better, but there's a stronger move to force a win of material" (Master Material Imbalances) [V].
+- Wrong-move feedback should escalate: first miss = pure retry or class hint ("look for a check"), second miss = name the theme or target, third = show the move. Do not say "check the hints" on the first miss.
+
+**Grading consistency**
+- Never grade a winning move red because it is not the author's. Seen at least eight times (Step Up in Tactics +10.8 rejected, Improve Your Decision Making +5.6, Slaying the Sicilian four winning moves with one accepted, Silman 1 rejecting the engine's top two, Chess Potpourri +2.1 red, Bishop vs Knight L1 engine-best king move) [V]. Rule: accepted set = every move within 1.0 pawn of the top AND above the item's winning/keeping threshold; anything else in a won position gets amber with "a stronger move exists".
+- Ties are accepted automatically: Master Tactics had Bxd4/Nxd4 at +5.16/+5.15 and the author wrote the equivalence into the text; the validator should detect ties (within 0.2) and add them to `accepted` [V].
+- Goal-conditioned items state the goal in the prompt and accept every move meeting it ("develop the bishop with a threat": Be3 correct, Bf4 only alternative, though both attack an undefended pawn) [V]. Store the goal predicate in the item so the validator can enumerate matches.
+- Best-move claims need a deeper engine check: at depth 14 the lesson's answer was not the top move in Master Material Imbalances; depth 20 confirmed it [V]. Validator: depth 14 first, escalate to depth 20 when the answer is not the top move, a human resolves the rest.
+- Prompt wording must not outrun the evidence: "win material" at +0.6, "huge move" for +0.67, "way off the correct path" for a one-pawn difference, "can't move" for a knight with four losing moves [V/I]. Add a lint for strong adjectives against the margin.
+
+**Hint ladder**
+- Three presses: (1) a concept or target word ("target f5"), (2) the piece or square highlighted, (3) the arrow. The same concept word should appear in the hint, the wrong text and the follow-up question (Strategies for Rapid Chess) [V].
+- Strategy items use the criterion form ("strike at b6 and c5", Silman 2) so the hint states the test, not the move.
+- Hint use is evidence for support fading: count presses per item and reduce support after a streak of clean solves.
+
+**Alternative moves**
+- Wording that works: "equally good" (Defeating Pet Openings), "can also start with Bxd4, it makes no difference" (Master Tactics), "works, here is what it gives up" (Rook and Other Endgames, Kb7 amber with the follow-up line) [V].
+- The accepted-alternative state needs its own Retry/Continue affordance; chess.com's green state moves the button in some shells, which learners miss [V].
+- Mating items: accept every forced mate, then add "a faster mate exists: X" when the shortest is two or more plies shorter (Play Against Lasker accepted mate in 4 over mate in 3 without comment) [V].
+
+**Text volume**
+- Target 60 to 120 characters for the wrong move, 100 to 250 for the right one, with story on an optional panel. chess.com ranges from two words ("No. Be energetic!") to 700+ characters of essay on a right move (Critical Challenges) [V].
+- Every right-move text says why in checkable functions of the move: "pins the knight, stops ...d5, threatens Nd5, prepares X" (The Art of Exchanging Pieces) [V]. A bare "Great start! What's next?" teaches nothing [V].
+- One rule sentence per lesson ("always cut the king off as far away as possible") collected on a notebook page per course (Rook and Other Endgames) [I].
+
+**Handoffs**
+- A right move leads to a follow-up question inside the same challenge (multi-step lines), so the learner stays in the line [V].
+- A lesson's last screen must say what comes next. chess.com's old shells end on a Finish modal with no next-lesson link (Combinations of Alexander Alekhine); Games That Changed Chess History hands off to /learn, not lesson 2 [V]. Scholarmate: the last screen offers the next item in the plan, the missed item, and "come back tomorrow".
+- Single-challenge lessons (Alekhine combinations, Bishop vs Knight L1) need a transfer item sharing the motif so one lucky guess does not complete the idea [I].
+
+**Defects found (use as validator or review checks)**
+- Position does not match the title (Exploiting Opening Errors 2 L1 is an equal position; Endings, Openings, a Taste of the Middle opens with a pawn ending) [V].
+- Numbered titles without topics (Play Against Bobby Fischer, Improve Your Decision Making: "Lesson 1" to "Lesson 25") and titles that give the answer ("Greedy Queens", "Never Play f6") [V].
+- Learn-path content defects (piece values C9, capturing decisions C5, promotion C5, castling C6, check C5 mate-in-2 described as "a check", saving-the-correct-piece C5 overstated), see the journey file [V].
+- Prompts that load about 10 s late or stay blank in most 2018-era courses [V]. Scholarmate: the prompt is part of the item and visible at first paint.
+- Engine-versus-text mismatches: Albin Countergambit's "better game" is conditional and the main line is -0.6; "the knight can't move" in Knights vs Bishops L1 is loose [V].
+
+**Top requirements to turn into tasks**
+1. Item schema: `goal`, `accepted[]`, `alt[]` (with cost text), `distractors[]` (with `why_wrong` and a playback flag), `hint_ladder[3]`, `rule_of_the_lesson`.
+2. Validator: tie detection (0.2 pawn), depth-20 re-check when the answer is not the depth-14 top move, accepted-set by threshold, adjective-versus-margin lint, stalemate and mate-line detection for distractors, title lint (the title must not name the answer or misdescribe the position).
+3. Build-time feedback generator: eval-class words from the margin, a one-sentence refutation from the engine's first plies, a "faster mate exists" line.
+4. Lesson shape: prompt at first paint, 3 to 5 challenges in a line with follow-up questions, a transfer item, a rule sentence, and a clear next step.
+5. Review gate: a human checks every item whose accepted set excludes the engine's top move or whose claim concerns winning or drawing (G3).
+6. Optional "story" panel for narrative, kept out of the main loop.
