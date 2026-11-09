@@ -26,7 +26,7 @@ export function ReviewPanel({ lessonId }: { lessonId: string }) {
     await addFeedback({ targetType: 'lesson', targetId: lessonId, checks: { ...checks, ...(level ? { difficulty: level } : {}) }, step: step ? Number(step) : undefined, text }, manifest.hash)
     setSaved(true); setChecks({}); setLevel(''); setStep(''); setText('')
   }
-  if (!open) return <p className="small"><button type="button" className="link" onClick={() => { setOpen(true); setSaved(false) }}>Review this lesson (check it for mistakes)</button></p>
+  if (!open) return <p className="small reviewopen"><button type="button" className="link" onClick={() => { setOpen(true); setSaved(false) }}>Review this lesson (check it for mistakes)</button></p>
   return (
     <section className="card review" aria-label="Review this lesson">
       <h2>Review this lesson</h2>
