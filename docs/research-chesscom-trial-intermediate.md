@@ -153,3 +153,19 @@ Observations: all mates but c3; c3 is the one "convert the sacrifice into a winn
 Observations
 - The chain of checks in c5 is guided by hints that name only the idea ("what is White's only check") and the feedback just says "keep checking". [V]
 - Whole course ends here: lesson complete, no quiz or final game; the five lessons climb from a one-move tactic (Powerful Moves) to mate in 2 (Combinations), mate in 3, queen sacrifices, and finally defensive resources (draws), so the course ends by switching from attack to defence. [V]
+
+## Advanced Tactics, Ben Finegold (course slug advanced-tactics-1; badge IAM; 2 lessons, 10 challenges, 34 min; released 2014) (9 Nov 2026, segment 3) [V]
+Lessons: Expect the Unexpected (5 challenges, 20 min listed), Pseudo-Pins (5 challenges, 14 min listed). Course page lists three learning points (expect the unexpected, the pseudo-pin, how Carlsen and Anand prepare for surprise tactics) plus a one-line learner testimonial (marketing). The lesson start card has Start and Explainer Video buttons.
+
+### Lesson 1 "Expect the Unexpected" (first 3 of 5 challenges played) [V]
+Method: the board is read from the markup; engine checks with Stockfish 19 lite depth 16 [V engine]. The board is shown from the side to move (flipped when Black is to move).
+
+| # | Start FEN (side) | Prompt (words) | Line played | Feedback seen |
+|---|---|---|---|---|
+| 1 | rn1q1rk1/4ppbp/bn1p2p1/2pP4/4PP2/N2B4/PPQ1N1PP/R1B2RK1 b | "How can Black win material with an unexpected tactic?" (10) | ...c4 (engine +5.1; next best +0.2), Nxc4 Nxc4, Bxc4 Qc8 (pin on the c-file), Bb3 Qxc2, Bxc2 Bxe2 | Four learner moves after the first; each correct move gets a short line ("Good start! How can you win material?", "Great move. How can you win a piece?", "What can you capture for free?"). Wrong ...Bxc4 (engine about 0.0): red "incorrect" plus a specific reason (White escapes the c-file pin by defending the queen with the bishop). Wrong ...Qxc3 on the second step: red "White is OK. Try again." (generic). |
+| 2 | 3r1rk1/pp2bpp1/4pn1p/q1p1N2P/3P1B2/8/PPP1QPP1/1K1R3R w | "How did GM Carlsen start a brilliant attack?" (8) | Ng6 (engine +1.1, next best +0.1), fxg6 Qxe6+ (engine only +0.26 for White here, so objectively marginal), Kh8 hxg6 (engine: Black -4.3, text says White has a winning attack: true) | Wrong Bd2: "There's a better move. Try again and look for a good sacrifice." (names the type of idea but no square). A famous-game position, played as a multi-move chain with scripted opponent replies. |
+| 3 | 3r1rnk/pp2bp1p... (after Ng8): 3r1rnk/pp2b1p1/4Q1Pp/q1p5/3P1B2/8/PPP2PP1/1K1R3R w | "How did GM Carlsen continue the attack?" | Bxh6 (engine +6.9), gxh6 Rxh6+ (engine +4.8) Nxh6 | Wrong Rxh6+ (engine +3.7, still winning): red "White still has a good position, but there's a better move. Try to find it." So the red state is used for sound-but-lesser moves here, with honest wording (not "wrong"). |
+
+Observations [V]: (1) challenge boundaries are plan stages, not single moves: 4 to 6 learner moves per challenge. (2) The wrong-answer text varies from a concrete refutation (best) to "try again" (worst); the best form says why in one sentence. (3) The next-challenge arrow turns green only after the chain ends; a red undo button appears on wrong moves and wrong moves are shown on the board before undo. (4) The opponent replies are scripted, so a sound alternative by the learner can end up in the lesson line only if the author listed it. (5) The "incorrect" mark for sound but lesser moves is soft ("good position, but a better move"). (6) Famous-game framing ("how did GM Carlsen...") changes the task from "find the best move" to "recall or rediscover the master's idea"; engine margins show the master line is not always objectively best, so a verified claim has to be "plays the winning attack" not "the only move".
+
+Not played: challenges 4 and 5 of lesson 1, lesson 2 (Pseudo-Pins) not opened beyond the course page.

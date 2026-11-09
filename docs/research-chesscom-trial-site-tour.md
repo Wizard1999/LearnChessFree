@@ -180,3 +180,49 @@ What to avoid: a rating estimate on short games, coloured grades with no reasons
 - The account carries old games from 2013 to 2024; I left them alone. One bot game and four coach/puzzle sessions were created today (one resigned bot game, take-backs in a coach game, two puzzles, one drill attempt). They affect Home stats only.
 - A seasonal "Grand Chess Auto" bot event and a Black Friday course sale were running: sales and events change what a visitor sees.
 
+
+## Learn path, full walk (9 Nov 2026) [V unless marked]
+Source: `https://www.chess.com/learn` in the built-in browser, read from the page markup (the visible panel is a narrow scrolling strip with an overlay of four buttons covering most of it, so I read the tile data from the DOM rather than from screenshots).
+
+**Page shape [V].** Left: an empty board. Right: the "Learn" panel, a coach speech bubble (offers another lesson), then four buttons: Next Lesson, Play Coach, Learn an Opening, Lesson Library. Below the buttons is the path itself: an isometric strip of hexagon tiles, 4,263 px tall, drawn bottom to top (the start is at the bottom; the strip opens scrolled to the bottom). Decorative chess-piece pictures (35) sit between tiles. Section banners read "NEXT SECTION" plus the level name: Beginner, Intermediate, Advanced. There are three levels and no other sections (no Mastery section, no deep openings section) [V]. No placement test, rating prompt or recommendation is shown on the page; the only personalisation is which tile is lit [V].
+
+**Counts [V].** 68 tiles in 10 groups: 12 lesson tiles in the starter group, 15 in Beginner, then 3 + 5 + 5 + 3 in Intermediate, then 3 + 4 + 4 + 4 in Advanced. Each group ends with a graduation-cap tile (a checkpoint, link ending `/graduation`) [V], so 10 caps and 58 lesson tiles. Every tile is a single lesson (not a whole course); there is no game tile, no video tile and no puzzle tile on the path itself [V; the glyphs are piece, tactic and tool icons].
+
+**State [V].** Tiles carry `data-status`: 1 = lit and open, 2 = dim. No "completed" state seen. Lit tiles (status 1): the first tile of the starter group (The King, tagged "Next"), and the first tile of Beginner, of the first Intermediate group and of the first Advanced group. So the first tile of each level is open without finishing the one before [V from markup; I did not click a dim tile to check whether it refuses to open]. The "Next" marker points at The King, lesson 1 of Learn To Play, although this account has played Learn To Play and many later courses; so the path does not read progress from the library, where "Complete" labels exist on cards but none on the path [V; the reason is I]. The "Next Lesson" bar on the library page is a different thing: it pointed at Learn the Queen's Gambit Exchange Variation: Thematic Tactics, the last course I played [V].
+
+### The path in order (lesson tiles; slug after `/lessons/`) [V]
+Starter group (course slug `learn-to-play`, 12 tiles + cap): the-king, the-queen, the-rook, the-bishop, the-knight, the-pawn, en-passant, capturing, check, getting-out-of-check, checkmate, castling, graduation.
+
+Beginner (`play-the-game-of-chess`, 15 + cap): capture-pieces, piece-values, retreating, free-pieces, defending-pieces, capturing-decisions, counting-captures, saving-the-correct-piece, promotion, how-to-en-passant, how-to-castle, the-check, get-out-of-check, the-checkmate, draws, graduation. En passant, castling, check and checkmate appear twice (starter group, then Beginner), once to show the move and once to use it [V].
+
+Intermediate:
+1. `chess-openings`: how-to-control-the-center, developing-your-pieces, castle-to-safety, graduation (3 + cap).
+2. `chess-tactics`: how-to-fork, how-to-pin, how-to-skewer, trapped-pieces, discoveries, graduation (5 + cap).
+3. `chess-strategy`: pawn-strategy, bishops, rooks, knights, queens, graduation (5 + cap).
+4. `chess-endgames`: the-passed-pawns, defending-promotion, checkmate-with-a-queen, graduation (3 + cap).
+
+Advanced:
+1. `advanced-openings`: strike-in-the-center, develop-with-tempo, prevent-castling, graduation (3 + cap).
+2. `advanced-chess-tactics`: remove-the-defender, in-between-moves, defense, brilliant-sacrifices, graduation (4 + cap).
+3. `advanced-strategy`: smart-trades, chess-tempo, chess-batteries, gaining-space, graduation (4 + cap).
+4. `advanced-chess-endgames`: king-and-pawn-endgames, trading-into-winning-endgames, active-pieces-in-the-endgame, checkmate-with-a-rook, graduation (4 + cap).
+
+Order logic [I]: rules, then the capture decision, then openings, tactics, strategy and endgames at each level, with the same four strands repeated at Advanced. Only passed pawns and queen mate are endgame content before Advanced. No Intermediate coverage of attacking, calculation, defence or time.
+
+### Relation to the library [V / I]
+- The path is built from its own short courses (slugs above) that are not in the library: `/lessons/play-the-game-of-chess` returns "404 Page not found", while `/lessons/play-the-game-of-chess/capture-pieces` opens a normal lesson (start card, one Start button) [V]. Library cards have different titles (Capturing Pieces, Playing the Game, ...). So the path is a separate curated spine of tiny lessons and the library is the bigger shelf [I].
+- Only one library course is on the path: Learn To Play (12 lessons, first card on the library's beginner list) [V].
+- Library, level filter Beginner (`all-lessons?level=beginner`, 2 pages, 37 courses) [V]. Page 1 (25): Learn To Play; PogChamps Tactics; Learn the Queen's Gambit Exchange Variation (33% complete); QGD; QG Cambridge Springs and Orthodox; Ruy Lopez Tricky Systems; Closed Sicilian; Sicilian 2...e6; Alapin; Dragon; Marshall Attack; Semi-Slav; Berlin; King's Indian Defense; Sveshnikov; Najdorf; Your First Tournament (Complete); Mastering the Endgame (20%); Games That Changed Chess History; Checkmate Patterns You Should Know (13%); Intro to Book Openings (Complete); Opening Principles (Complete); Finding Checkmate (Complete); Winning the Game (Complete); Winning with Tactics (Complete). Page 2 (12): Capturing Pieces (Complete); Playing the Game (86%); Learn To Play Chess (Complete); Exploiting Opening Errors 2; Exploiting Opening Errors 3; Exploiting Typical Opening Errors; Defeating "Pet Openings"; A Kaleidoscope of Openings (90 lessons); Pawn Endings: Beginner to Expert (1%); Basic Checkmates and More; Introduction to Tactics (2%); Essential Checkmate Patterns (2%); Exclusively Checkmates (1%).
+- Beginner-level library courses NOT on the path: the 36 other than Learn To Play, including the truly beginner ones (Capturing Pieces, Playing the Game, Learn To Play Chess, Intro to Book Openings, Opening Principles, Finding Checkmate, Winning the Game, Winning with Tactics, Your First Tournament) [V]. Many "beginner" items are level-mixed: 27 of 37 carry the "Mastery - Beginner" badge text (for example Learn the Sicilian Najdorf, Pawn Endings: Beginner to Expert), so the beginner filter is a weak signal of difficulty [V badge text, I conclusion]. A "Learning Rank: King 10" widget sits in the library footer [V].
+- Library cards show "N% Complete" or "Complete"; the Learn path tile markup shows no completion [V].
+
+### What to take [I]
+1. Adopt: one visible spine of tiny lessons with a named checkpoint ("graduation") at the end of every strand, so the learner always sees the next small win. 58 lessons across three levels is their whole map; ours has 204 skills, so a spine view over the graph (first ten lessons) is the equivalent.
+2. Adopt: show a basic rule once and use it once later (starter group, then Beginner).
+3. Avoid: a path that ignores what the learner already did (Next stays on The King). Ours must read evidence.
+4. Avoid: very thin Intermediate and Advanced strands (3 to 5 lessons each); that is where learners need depth.
+5. Gap on their side: no attacking, calculation, defence as a skill, time or planning strands on the main path.
+
+Not done: I did not play the path's own lessons beyond opening one start card; I did not test whether dim tiles open; I did not see a graduation tile's content.
+
+Correction to the section above (9 Nov, later in the same session) [V]: the "Next" marker is NOT stuck. After I finished the 12 starter lessons it moved to the first Beginner tile (Capture Pieces) and then to Piece Values, and the home page shows the same "Next Lesson". Tiles then carry `data-status` 3 when complete. The earlier "Next stays on The King" reading was only because this account had not done the path's own lessons (library "Complete" labels do not count). The play-through is in `research-chesscom-new-player-journey.md`.

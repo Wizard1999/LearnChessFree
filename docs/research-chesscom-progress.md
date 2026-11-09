@@ -320,7 +320,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |310|learn-to-play-chess|Learn To Play Chess|Misc|B|CT|13|65|18|y|played|
 |311|endgame-patterns|Endgame Patterns|Misc|A|CT|7|35|41||played-partly|
 |312|opposite-colored-bishops|Opposite-Colored Bishops|Endgames|AM|Dejan Bojkov|10||||listed|
-|313|advanced-tactics-1|Advanced Tactics|Tactics|IAM|Ben Finegold|2|10|34||listed|
+|313|advanced-tactics-1|Advanced Tactics|Tactics|IAM|Ben Finegold|2|10|34||played-L1-c1-3 (Expect the Unexpected; L2 not opened)|
 |314|sensing-the-danger-examples-from-my-games|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||||listed|
 |315|master-endgame|Master Endgames|Endgames|AM|CT|8||||listed|
 |316|en-prise-please|En Prise Please!|Tactics|M|CT|10||||listed|
@@ -415,3 +415,11 @@ Order actually followed (updated as it happens):
 
 ### Order actually followed after Forcing Moves (8 Nov 2026)
 Your First Tournament (all 4), How To Checkmate L1-2, Mastering the Endgame L1, Learn the Queen's Gambit Exchange Variation L1 (10 challenges) and most of L3 model game. Not updated: Scandinavian row. Count by level: B/BIAM 4 courses touched (about 8 lessons + QG partial); I-only: Forcing Moves L2-5 finished.
+
+
+## Log, 9 Nov 2026 (segment 3)
+- Learn path walked from page markup (68 tiles, 10 groups); full table in `research-chesscom-new-player-journey.md`, short form in `research-chesscom-trial-site-tour.md` ("Learn path, full walk").
+- Priority change from coordinator: the Learn path (new-player journey) comes before library courses. Played: all 12 starter lessons (path course learn-to-play) and Beginner tile 14 Capture Pieces (10 challenges). First screens (first prompt, challenge count) read for tiles 15 to 28 and all Intermediate and Advanced lessons (positions 30 to 67).
+- Side effects on Andrew's account from this research: the path shows tiles 1 to 12 and 14 as completed, the Next marker is on Piece Values, 2 Day Streak, plus library badges listed in section 5 of the journey file.
+- Library: Advanced Tactics (Ben Finegold, #313) lesson 1 challenges 1 to 3 played with engine checks (notes in `research-chesscom-trial-intermediate.md`).
+- Course order of the original brief (Intermediate, Advanced, Mastery library courses) not continued beyond this; remaining `listed` rows are unchanged.
