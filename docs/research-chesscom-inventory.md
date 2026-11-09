@@ -85,7 +85,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |347|Chess Traps and Miniatures Part 2 - Checkmates|Attacking|IAM|CT|20||sampled-L1-c1 (seg 9)|chess-traps-and-miniatures-part-2-checkmates|
 |348|Do or Die with Rook Endings|Endgames|IAM|CT|20||played-L1-c1|do-or-die-with-rook-endings|
 |349|Champion Tactics with GM Wolff - Back Rank|Tactics|IAM|CT|35||played-L1-c1|champion-tactics-with-gm-wolff-back-rank|
-|350|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||listed|champion-tactics-with-gm-wolff-clearance-sacrifice|
+|350|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||sampled-L1-c1 + L12 c1 (families-a)|champion-tactics-with-gm-wolff-clearance-sacrifice|
 |351|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||listed|champion-tactics-with-gm-wolff-deflecting-the-defender|
 |352|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||listed|champion-tactics-with-gm-wolff-discovered-check-double-check|
 |353|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||listed|champion-tactics-with-gm-wolff-double-attacks|
@@ -93,7 +93,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |355|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||listed|champion-tactics-with-gm-wolff-in-between-moves|
 |356|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||listed|champion-tactics-with-gm-wolff-interference|
 |357|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||listed|champion-tactics-with-gm-wolff-misplaced-pieces|
-|358|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||listed|champion-tactics-with-gm-wolff-pins-and-skewers|
+|358|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||sampled-L1-c1 (families-a)|champion-tactics-with-gm-wolff-pins-and-skewers|
 |359|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||listed|champion-tactics-with-gm-wolff-smother-tactics|
 |361|Understanding the Colle-Zukertort|Openings|IAM|CT|25||sampled-L1-c1 (seg 9)|understanding-the-colle-zukertort|
 |370|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||played-L1-c1|chess-traps-and-miniatures-part-1-quick-knockouts|
@@ -129,7 +129,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |246|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|skipped-near-duplicate of #240 (seg 11)|why-simon-loves-the-french|
 |256|Beating the Anti-Sicilians|Openings|AM|Ben Finegold|3|15|sampled-L1-c1 (seg 11; answer not found)|beating-the-anti-sicilians|
 |270|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||listed|the-amazing-combinations-of-mikhail-tal-2|
-|271|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||listed|the-amazing-combinations-of-mikhail-tal-1|
+|271|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||sampled-L1-c1 (families-a)|the-amazing-combinations-of-mikhail-tal-1|
 |272|Tactics from the Old Masters|Tactics|AM|CT|88||played-L1-c1|tactics-from-the-old-masters|
 |276|London System for the Busy Chess Player|Openings|AM|Simon Williams|7|35|sampled-L1-c1 (seg 11)|london-system-for-the-busy-chess-player|
 |279|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|sampled-L1-c1 (seg 10)|the-most-amazing-chess-moves|
@@ -221,8 +221,8 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |60|Learn The Trompowsky And Torre Attack|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-trompowsky-and-torre-attacks|
 |61|Learn The Budapest Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-budapest-defense|
 |62|Learn The Benko Gambit|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-benko-gambit|
-|63|Learn The Queen's Indian Defense|Openings|M|CC|3|21|listed|learn-the-queens-indian-defense|
-|64|Learn The Bogo Indian Defense|Openings|M|CC|3|21|listed|learn-the-bogo-indian-defense|
+|63|Learn The Queen's Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-queens-indian-defense|
+|64|Learn The Bogo Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-bogo-indian-defense|
 |65|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|listed|learn-the-nimzo-indian-defense|
 |66|Learn The Benoni Defense|Openings|M|CC|3|21|listed|learn-the-benoni-defense|
 |67|Learn The Grunfeld Defense|Openings|M|CC|3|21|listed|learn-the-grunfeld-defense|
@@ -255,7 +255,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-kasparov-vs-karpov|
 |105|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|played-L1-c1|every-opening-trap-to-crush-your-opponent|
 |106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly|every-chess-tactic-explained|
-|107|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||listed|oleg-pervakovs-studies|
+|107|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||sampled-L1-c1 (families-a)|oleg-pervakovs-studies|
 |108|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|mamedyarovs-opening-surprises|
 |109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9); deeper L24 (seg 15, families-b)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
 |110|Mating Nets|Attacking|M|T. Abrahamyan|5|25|played|king-hunts|
@@ -286,14 +286,14 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |142|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||listed|richard-retis-studies|
 |143|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|sampled-L1-c1 (seg 10; answer not found)|doubled-pawns-in-the-caro-kann-and-nimzo-indian|
 |144|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|sampled-L1-c1 (seg 10)|the-latvian-school-of-chess|
-|145|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|listed|learn-from-the-best-stockfish|
+|145|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|sampled-L1-c1 (families-a)|learn-from-the-best-stockfish|
 |146|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|sampled-L1-c1 (seg 12)|daniil-dubovs-amazing-opening-ideas|
 |147|Name Your Pawns|Strategy|M|Simon Williams|8|40|sampled-L1-c1 (seg 10)|name-your-pawns-the-queenside|
 |148|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-sicilian-nimzowitsch-variation|
 |149|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 11)|use-your-pieces-tactically|
 |151|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|sampled-L1-c1 (seg 8)|how-to-avoid-mistakes|
 |154|Learn From The Best: AlphaZero|Master Games|M|Daniel Rensch|5|6|sampled-L1-c1 (seg 9)|play-like-alphazero|
-|155|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|listed|learn-from-the-best-leela-chess-zero|
+|155|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|sampled-L1-c1 (families-a)|learn-from-the-best-leela-chess-zero|
 |157|Play Like Daniil Dubov|Master Games|M|Jeremy Kane|5||listed|play-like-daniil-dubov|
 |158|Play Like A World Champion: Kramnik And Controversy|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-choas-and-kramnik|
 |160|Play Like A World Champion: Capablanca, Alekhine and Euwe|Master Games|M|Jeremy Kane|6||listed|play-like-a-world-champion-capablanca-alekhine-and-euwe|

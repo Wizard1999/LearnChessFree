@@ -70,8 +70,8 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |60|learn-the-trompowsky-and-torre-attacks|Learn The Trompowsky And Torre Attack|Openings|M|CC|3|21|33||sampled-L1-c1 (families-a)|
 |61|learn-the-budapest-defense|Learn The Budapest Defense|Openings|M|CC|3|21|22||sampled-L1-c1 (families-a)|
 |62|learn-the-benko-gambit|Learn The Benko Gambit|Openings|M|CC|3|21|29||sampled-L1-c1 (families-a)|
-|63|learn-the-queens-indian-defense|Learn The Queen's Indian Defense|Openings|M|CC|3|21|17||listed|
-|64|learn-the-bogo-indian-defense|Learn The Bogo Indian Defense|Openings|M|CC|3|21|24||listed|
+|63|learn-the-queens-indian-defense|Learn The Queen's Indian Defense|Openings|M|CC|3|21|17||sampled-L1-c1 (families-a)|
+|64|learn-the-bogo-indian-defense|Learn The Bogo Indian Defense|Openings|M|CC|3|21|24||sampled-L1-c1 (families-a)|
 |65|learn-the-nimzo-indian-defense|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|20||listed|
 |66|learn-the-benoni-defense|Learn The Benoni Defense|Openings|M|CC|3|21|24||listed|
 |67|learn-the-grunfeld-defense|Learn The Grunfeld Defense|Openings|M|CC|3|21|23||listed|
@@ -114,7 +114,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |104|play-like-a-world-champion-kasparov-vs-karpov|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5|||y|listed|
 |105|every-opening-trap-to-crush-your-opponent|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|156||played-L1-c1|
 |106|every-chess-tactic-explained|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|163||played-partly|
-|107|oleg-pervakovs-studies|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||||listed|
+|107|oleg-pervakovs-studies|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||||sampled-L1-c1 (families-a)|
 |108|mamedyarovs-opening-surprises|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|78||sampled-L1-c1 (seg 13)|
 |109|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|294||sampled-L1-c1 (seg 9); deeper L24 (seg 15, families-b)|
 |110|king-hunts|Mating Nets|Attacking|M|T. Abrahamyan|5|25|57||played|
@@ -152,7 +152,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |142|richard-retis-studies|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||||listed|
 |143|doubled-pawns-in-the-caro-kann-and-nimzo-indian|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|57||sampled-L1-c1 (seg 10; answer not found)|
 |144|the-latvian-school-of-chess|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|72||sampled-L1-c1 (seg 10)|
-|145|learn-from-the-best-stockfish|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|51||listed|
+|145|learn-from-the-best-stockfish|Learn From The Best: Stockfish|Master Games|M|Sam Copeland|4|20|51||sampled-L1-c1 (families-a)|
 |146|daniil-dubovs-amazing-opening-ideas|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|55||sampled-L1-c1 (seg 12)|
 |147|name-your-pawns-the-queenside|Name Your Pawns|Strategy|M|Simon Williams|8|40|147||sampled-L1-c1 (seg 10)|
 |148|the-sicilian-nimzowitsch-variation|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|57||sampled-L1-c1 (seg 13)|
@@ -162,7 +162,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |152|checkmate-grandmaster-winning-in-the-opening-1|Checkmate Grandmaster! - Winning In The Opening|Master Games|AM|Jeremy Kane|5||||sampled-L1-c1 (seg 13)|
 |153|how-to-swindle-your-opponent|How To Swindle Your Opponent|Strategy|AM|Nemo Zhou|5|25|69||sampled-L1-c1 (seg 5)|
 |154|play-like-alphazero|Learn From The Best: AlphaZero|Master Games|M|Daniel Rensch|5|6|84||sampled-L1-c1 (seg 9)|
-|155|learn-from-the-best-leela-chess-zero|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|114||listed|
+|155|learn-from-the-best-leela-chess-zero|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|114||sampled-L1-c1 (families-a)|
 |156|pawn-structures-that-win|Pawn Structures That Win|Strategy|AM|Aman Hambleton|5|25|45||played-L1-c1|
 |157|play-like-daniil-dubov|Play Like Daniil Dubov|Master Games|M|Jeremy Kane|5||||listed|
 |158|play-like-a-world-champion-choas-and-kramnik|Play Like A World Champion: Kramnik And Controversy|Master Games|M|Jeremy Kane|5||||listed|
@@ -278,7 +278,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |268|winning-with-the-chigorin|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|51||sampled-L1-c1 (seg 11)|
 |269|how-to-make-a-comeback|How to Make a Comeback|Master Games|M|Mike Klein|3|15|49||sampled-L1-c1 (seg 9)|
 |270|the-amazing-combinations-of-mikhail-tal-2|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||||listed|
-|271|the-amazing-combinations-of-mikhail-tal-1|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||||listed|
+|271|the-amazing-combinations-of-mikhail-tal-1|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||||sampled-L1-c1 (families-a)|
 |272|tactics-from-the-old-masters|Tactics from the Old Masters|Tactics|AM|CT|88||||played-L1-c1|
 |273|attack-with-the-catalan|Attack with the Catalan!|Openings|M|Georg Meier|10|50|172||sampled-L1-c1 (seg 10)|
 |274|play-the-budapest|Play the Budapest Gambit!|Openings|M|Simon Williams|3|15|46||sampled-L1-c1 (seg 11)|
@@ -357,7 +357,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |347|chess-traps-and-miniatures-part-2-checkmates|Chess Traps and Miniatures Part 2 - Checkmates|Attacking|IAM|CT|20||||sampled-L1-c1 (seg 9)|
 |348|do-or-die-with-rook-endings|Do or Die with Rook Endings|Endgames|IAM|CT|20||||played-L1-c1|
 |349|champion-tactics-with-gm-wolff-back-rank|Champion Tactics with GM Wolff - Back Rank|Tactics|IAM|CT|35||||played-L1-c1|
-|350|champion-tactics-with-gm-wolff-clearance-sacrifice|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||||listed|
+|350|champion-tactics-with-gm-wolff-clearance-sacrifice|Champion Tactics with GM Wolff - Clearance Sacrifice|Tactics|IAM|CT|24||||sampled-L1-c1 + L12 c1 (families-a)|
 |351|champion-tactics-with-gm-wolff-deflecting-the-defender|Champion Tactics with GM Wolff - Deflecting the Defender|Tactics|IAM|CT|42||||listed|
 |352|champion-tactics-with-gm-wolff-discovered-check-double-check|Champion Tactics with GM Wolff - Discovered Check & Double Check|Tactics|IAM|CT|33||||listed|
 |353|champion-tactics-with-gm-wolff-double-attacks|Champion Tactics with GM Wolff - Double Attacks|Tactics|IAM|CT|29||||listed|
@@ -365,7 +365,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |355|champion-tactics-with-gm-wolff-in-between-moves|Champion Tactics with GM Wolff - In Between Moves|Tactics|IAM|CT|13||||listed|
 |356|champion-tactics-with-gm-wolff-interference|Champion Tactics with GM Wolff - Interference|Tactics|IAM|CT|21||||listed|
 |357|champion-tactics-with-gm-wolff-misplaced-pieces|Champion Tactics with GM Wolff - Misplaced Pieces|Tactics|IAM|CT|15||||listed|
-|358|champion-tactics-with-gm-wolff-pins-and-skewers|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||||listed|
+|358|champion-tactics-with-gm-wolff-pins-and-skewers|Champion Tactics with GM Wolff - Pins and Skewers|Tactics|IAM|CT|52||||sampled-L1-c1 (families-a)|
 |359|champion-tactics-with-gm-wolff-smother-tactics|Champion Tactics with GM Wolff - Smother Tactics|Tactics|IAM|CT|16||||listed|
 |360|play-against-bobby-fischer|Play Against Bobby Fischer|Strategy|M|CT|25||||sampled-L1-c1 (seg 8)|
 |361|understanding-the-colle-zukertort|Understanding the Colle-Zukertort|Openings|IAM|CT|25||||sampled-L1-c1 (seg 9)|
