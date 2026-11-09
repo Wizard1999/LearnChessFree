@@ -2,6 +2,14 @@
 
 Trigger: Andrew likes chess.com's Learn path tile design (raised tiles with one icon each on a zigzag, a lit "Next" tile, dimmed locked tiles, graduation-cap checkpoints, a section title between levels, chess pieces as scenery) and wants the Scholarmate map to look better and feel like pathways unlocking as prerequisites are completed, while keeping the direction of our radial map. Evidence labels: [V] seen in his screenshots and our code, [I] inference, [H] hypothesis. Nothing here is built.
 
+## 0. Fewer views, clearer homes (Andrew, 8 Nov 2026: three views for the core and courses as extras is overwhelming)
+Today the Curriculum page holds three views (All lessons, Courses, the radial Map) and the Path would make four. Decision: **the core curriculum gets two views, courses leave it.**
+- **Learn** (replaces "Curriculum"; core curriculum only, stages S0 to S7): **Path** is the default (what next, the guided route) and **Map** is one tap away ("See how it all fits"). Two views, one switch, and the same selected skill and progress in both. "All lessons" stops being a view: it becomes a search box and filter on Learn (and the skill list already in the map's dock and sheet), so nobody has to choose between lists.
+- **Courses** (its own top-level place, extras only): opening deep dives, famous games, history, playstyles and later courses and art covers. Nothing in it is required, which the page says in one line. Today's card can invite one course at a time, never a list.
+- The Path view never shows courses, deep dives or lessons outside the recommended route. The Map keeps showing the whole core graph (all 206 skill nodes) because it is the explorer.
+- Top bar after the change: Today, Learn, Courses, Practice, Progress, More. "More" holds Play, Analysis, Games review, Openings, Library, Contrast lab, My plan, Roadmap. If the bar is still crowded after this, the next merge is Games review and Analysis into one "Review" page (separate decision).
+- Why: fewer choices for a new learner (Hick's law) [H]; each place answers one question (Learn: what next and how it fits; Courses: what else is there); and it keeps the first-hour promise that the core path is the main road.
+
 ## What chess.com's path does well [V from screenshots]
 1. One obvious next step: a single glowing tile with a "Next" label.
 2. Tactile, readable tiles: a raised diamond with one icon; locked ones sink and dim, tinted by the section colour.
@@ -16,7 +24,7 @@ The radial map shows the real prerequisite graph (centre skill, rings by chain, 
 Do not replace the radial map. Add what chess.com has and we lack, and lift the map's look with the art direction.
 
 ### 1. A Path view (new, small, high value)
-A fourth view beside Map, Courses and All lessons: the recommended route (stages S0 to S7 from `content/path.json`) as a zigzag ladder of tiles, with a "Next" tile, a stage banner and a checkpoint tile per stage (our stage checks, shown never gating). It answers "what do I do next?" in one second, which is exactly the first-hour need (D55, D56). Data and progress already exist; this is layout and states. Tap a tile: the lesson. Tap "why": the radial map opens on that skill.
+The default way into the core curriculum (see section 0 for how the views fit together): the recommended route (stages S0 to S7 from `content/path.json`) as a zigzag ladder of tiles, with a "Next" tile, a stage banner and a checkpoint tile per stage (our stage checks, shown never gating). It answers "what do I do next?" in one second, which is exactly the first-hour need (D55, D56). Data and progress already exist; this is layout and states. Tap a tile: the lesson. Tap "why": the radial map opens on that skill.
 
 ### 2. Tiles with state, in our language
 Five states, never colour alone (a label or glyph always accompanies colour):
