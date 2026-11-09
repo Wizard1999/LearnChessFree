@@ -19,7 +19,7 @@ import { FirstGameInvite, useFirstGameInvite } from '../components/FirstGameInvi
 import { coreLessonsOf } from '../lib/coreLessons'
 import { PlayNudge } from '../components/PlayNudge'
 import { GuidedGame } from '../components/GuidedGame'
-import { anyLessonDone, firstGuided, GENTLE_PLAY_PATH } from '../lib/firstGame'
+import { firstGuided, GENTLE_PLAY_PATH, rulesDone } from '../lib/firstGame'
 import type { LessonMeta } from '../types'
 
 const NONE: never[] = []
@@ -171,7 +171,7 @@ export function Today() {
               <p className="eyebrow">Up next · about {upNext.minutes} min</p>
               <h2>{upNext.title}</h2>
               <p className="why"><strong>Why this:</strong> {inProgress(upNext) ? 'You started this lesson. It picks up where you left off.' : upNext.why}</p>
-              <div className="row">{action(upNext, true)}{anyLessonDone(P) && inviteUp === false && <Link className="button" to={GENTLE_PLAY_PATH}>Play now</Link>}</div>
+              <div className="row">{action(upNext, true)}{rulesDone(coreLessonsOf(content.lessons), P) && inviteUp === false && <Link className="button" to={GENTLE_PLAY_PATH}>Play now</Link>}</div>
             </section>
           ) : blocks.length > 0 ? (
             <section className="card hero">

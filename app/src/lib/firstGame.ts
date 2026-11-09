@@ -22,7 +22,7 @@ const stageIdsThrough = (stage: string): string[] => {
 
 export interface Done { lessonId: string; done: boolean }
 
-/** True when there are lessons in the rules stage and every lesson of it and of the stages before it is finished or skipped. (The stricter, older condition; the invitation now uses rulesStarted.) */
+/** True when there are lessons in the rules stage and every lesson of it and of the stages before it (Stages 1 and 2) is finished or skipped. The invitation and the Today "Play now" use it (D83, Andrew: a beginner should not see the offer until both are done). */
 export function rulesDone(lessons: readonly Pick<LessonMeta, 'id' | 'stage'>[], progress: readonly Done[], stage = RULES_STAGE_ID): boolean {
   const ids = new Set(stageIdsThrough(stage))
   const mine = lessons.filter(l => l.stage && ids.has(l.stage))
@@ -72,7 +72,7 @@ export interface InviteInput {
 export function showInvite(i: InviteInput): boolean {
   if (i.hasPlayed) return false
   if (i.dismissedUntil !== null && i.now < i.dismissedUntil) return false
-  return rulesStarted(i.lessons, i.progress, i.stage)
+  return rulesDone(i.lessons, i.progress, i.stage)
 }
 
 /** Where in a list of stage groups (sorted by stage) the invitation goes: before the first group that comes after the rules stage, else at the end. */

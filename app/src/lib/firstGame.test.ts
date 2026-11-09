@@ -61,7 +61,7 @@ describe('showInvite', () => {
     expect(showInvite({ ...base, dismissedUntil: 5000, now: 5000 })).toBe(true)
   })
   it('hides before the rules are started', () => { expect(showInvite({ ...base, progress: done('a') })).toBe(false) })
-  it('shows after one S1 lesson, before the whole stage is done', () => { expect(showInvite({ ...base, progress: done('c') })).toBe(true) })
+  it('waits until Stages 1 and 2 are both finished: one S1 lesson is not enough (D83)', () => { expect(showInvite({ ...base, progress: done('c') })).toBe(false); expect(showInvite({ ...base, progress: done('a', 'b') })).toBe(false) })
 })
 
 describe('inviteSlot', () => {

@@ -16,7 +16,7 @@ export function useFirstGameInvite(): boolean | undefined {
 }
 
 /**
- * A quiet, optional invitation shown once the learner has finished L-FND-CHECK-1 or any lesson of the rules stage (lib/firstGame.ts). "Not yet"
+ * A quiet, optional invitation shown once the learner has finished Stages 1 and 2 (lib/firstGame.ts rulesDone, D83). "Not yet"
  * hides it for a week. It is never a gate: no lesson, review or map position waits for it. It disappears for good after the learner has
  * finished a game against the practice opponent. The game it opens: Stockfish Beginner, the learner as White, hint button on (GENTLE_PLAY_PATH).
  */
