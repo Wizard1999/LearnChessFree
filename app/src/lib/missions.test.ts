@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest'
 import type { Attempt } from '../db'
 import type { Item, Skill } from '../types'
 import type { Mastery } from './mastery'
-import { buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpNext, summarize, type MissionContext } from './missions'
+import { CHALLENGE_MIN_AGE_MS, LEVEL_HELP, buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpNext, summarize, type MissionContext } from './missions'
 
 const skill = (id: string, strand = 'S3', tier = 2, depths: Record<string, string[]> = { D0: [], D1: [], D2: ['X.D1'], D3: ['X.D2'] }): Skill =>
   ({ id, title: id, strand, tier, depths: Object.fromEntries(Object.entries(depths).map(([d, p]) => [d, { outcome: 'does the thing well enough', prereqs: p.map(x => x.replace('X', id)) }])) } as Skill)
-const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, allMean: 0.5, pReliable: 0.5, unlabeledWeight: 5, cuedOnly: false, n: 5, ok: 4, guidedN: 0, lastTs, lastIndependentSuccess: lastTs, recentMiss: false, wasReliableOn: null, reliableNow: state === 'reliable', state })
+const m = (state: Mastery['state'], lastTs = 1000): Mastery => ({ a: 1, b: 1, mean: 0.5, allMean: 0.5, pReliable: 0.5, unlabeledWeight: 5, cuedOnly: false, n: 5, ok: 4, guidedN: 0, lastTs, lastIndependentSuccess: lastTs, successDays: 2, recentMiss: false, wasReliableOn: null, reliableNow: state === 'reliable', state })
 const ctxFor = (skills: Skill[], masteries: Record<string, Mastery>, itemDepths: Record<string, string[]>, lessonDone: string[] = []): MissionContext => ({
   masteries: new Map(Object.entries(masteries)), placement: { done: false, frontierTier: 0, ts: 0, byTier: {} },
   skillById: new Map(skills.map(s => [s.id, s])), itemDepths: new Map(Object.entries(itemDepths)), lessonDone: new Set(lessonDone), hasLesson: new Set(lessonDone),
@@ -87,6 +87,24 @@ describe('missions', () => {
   })
 })
 
+describe('spaced repetition (D77)', () => {
+  const A2 = skill('A2', 'S3', 2)
+  const reliable = (days: number) => ({ ...m('reliable', 5000), successDays: days })
+  const level = (days: number) => nodeProgress(A2, ctxFor([A2], { 'A2.D1': reliable(days), 'A2.D2': reliable(days) }, { A2: ['D1', 'D2'] })).level
+  it('success on one day cannot reach Mastered: the most it gives is Level two', () => {
+    expect(level(1)).toBe(3)
+  })
+  it('success again on another day reaches Mastered', () => {
+    expect(level(2)).toBe(4)
+  })
+  it('a skill with a single practised depth is held at Level one for the same reason', () => {
+    const one = skill('A3', 'S3', 2, { D0: [], D1: [] })
+    expect(nodeProgress(one, ctxFor([one], { 'A3.D1': reliable(1) }, { A3: ['D1'] })).level).toBe(2)
+    expect(nodeProgress(one, ctxFor([one], { 'A3.D1': reliable(2) }, { A3: ['D1'] })).level).toBe(4)
+  })
+  it('the level help says why', () => expect(LEVEL_HELP[4]).toMatch(/success again on another day/))
+})
+
 describe('mastery challenge', () => {
   const skills = ['P', 'Q', 'R', 'S'].map(id => skill(id))
   const ctx = ctxFor(skills, Object.fromEntries(skills.flatMap(s => [[`${s.id}.D1`, m('practising', 100)]])), Object.fromEntries(skills.map(s => [s.id, ['D1']])))
@@ -99,6 +117,26 @@ describe('mastery challenge', () => {
   it('stays locked for 12 hours after the last one and says why', () => {
     const p = planChallenge(nodes, items, [], 1e9 - 3600000, 1e9, 's')
     expect(p.unlocked).toBe(false); expect(p.reason).toMatch(/hour/)
+  })
+  it('leaves out skills learned or practised less than a day ago and says nothing is ready yet', () => {
+    const now = 1e9
+    const freshCtx = ctxFor(skills, Object.fromEntries(skills.map(k => [`${k.id}.D1`, m('practising', now - 3600000)])), Object.fromEntries(skills.map(k => [k.id, ['D1']])))
+    const justNow = buildMissions(skills, freshCtx)[0].nodes
+    const p = planChallenge(justNow, items, [], null, now, 's')
+    expect(p.unlocked).toBe(false)
+    expect(p.reason).toBe('Nothing is ready to review yet: skills become eligible a day after you learn them.')
+    expect(p.picks).toHaveLength(0)
+  })
+  it('lets a skill in once a day has passed, and counts only the ready ones', () => {
+    const now = 1e9
+    const mix = ctxFor(skills, { 'P.D1': m('practising', now - CHALLENGE_MIN_AGE_MS - 1), 'Q.D1': m('practising', now - 3600000), 'R.D1': m('practising', now - CHALLENGE_MIN_AGE_MS - 1), 'S.D1': m('practising', now - CHALLENGE_MIN_AGE_MS - 1) }, Object.fromEntries(skills.map(k => [k.id, ['D1']])))
+    const ns = buildMissions(skills, mix)[0].nodes
+    const p = planChallenge(ns, items, [], null, now, 's')
+    expect(p.unlocked).toBe(true)
+    expect(p.picks.map(k => k.node.id)).not.toContain('Q') // practised an hour ago
+    const two = planChallenge(ns.filter(n => n.id !== 'S'), items, [], null, now, 's')
+    expect(two.unlocked).toBe(false)
+    expect(two.reason).toMatch(/Only 2 skills are ready to review yet/)
   })
   it('picks three skills with two fresh questions each', () => {
     const p = planChallenge(nodes, items, [] as Attempt[], null, 1e9, 's')

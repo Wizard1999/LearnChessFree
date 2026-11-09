@@ -14,7 +14,7 @@ export const LEVEL_HELP = [
   'You have viewed the lesson or tried exercises, but the evidence is not yet reliable.',
   'The idea is reliable when it is named or cued (depth D1).',
   'The idea is reliable in unlabeled positions where nobody names it (depth D2).',
-  'Reliable in the exercises at the deepest depth, and not due for a refresher. This is mastery in training: it is not yet shown in your own games.',
+  'Reliable in the exercises at the deepest depth, shown on at least two separate days, and not due for a refresher. Mastered needs success again on another day: it cannot be reached in one sitting. This is mastery in training: it is not yet shown in your own games.',
 ] as const
 export const STRAND_NAMES: Record<string, string> = {
   S1: 'Rules and board vision', S2: 'Safety and the thinking loop', S3: 'Tactics', S4: 'Calculation', S5: 'Positional play and planning',
@@ -57,6 +57,9 @@ export interface NodeProgress {
   lastTs: number | null
 }
 
+/** Mastered needs reliable success on at least this many separate calendar days (D77). */
+export const MASTERED_MIN_DAYS = 2
+
 const depthNum = (d: string) => Number(d.slice(1))
 
 export function nodeProgress(skill: Skill, ctx: MissionContext): NodeProgress {
@@ -83,7 +86,8 @@ export function nodeProgress(skill: Skill, ctx: MissionContext): NodeProgress {
     if (depthNames.some(d => status(d) !== 'unseen') || lessonDone) level = 1
     if (hasD1 && met('D1')) level = 2
     if (hasD2 && met('D2')) level = 3
-    if (top && status(top) === 'reliable' && level >= (items.includes('D2') ? 3 : 2)) level = due ? 3 : 4 // mastered needs real evidence at the deepest practiced depth, and a refresher not overdue
+    // Mastered needs real evidence at the deepest practiced depth, a refresher not overdue, and success on two separate days (spacing, D77): one sitting reaches Level two at most.
+    if (top && status(top) === 'reliable' && level >= (items.includes('D2') ? 3 : 2) && (ctx.masteries.get(`${id}.${top}`)?.successDays ?? 0) >= MASTERED_MIN_DAYS) level = due ? 3 : 4
     if (!top) level = Math.min(level, 1) as Level // no exercises: only "Seen" can be earned, by finishing the lesson
     return level
   }
@@ -162,6 +166,11 @@ export function skillsUpNext(mission: Mission, ctx: MissionContext, dismissed: R
 }
 
 export const CHALLENGE_GAP_MS = 12 * 3600 * 1000
+/**
+ * Cooling-off before a skill can appear in a Mastery challenge (D77): 20 hours since it was last learned or practised, so "the next day" works at any hour
+ * but a lesson just finished or a skill just drilled never comes back at once. Spaced review needs the gap: the spacing effect [R].
+ */
+export const CHALLENGE_MIN_AGE_MS = 20 * 3600 * 1000
 /** One seed for the day, so the skills Today names are the ones the Course page offers. */
 export const challengeSeed = (strand: string, lastChallenge: number | null, day = new Date().toDateString()) => `${day}:${strand}:${lastChallenge ?? 0}`
 export interface ChallengePlan { unlocked: boolean; reason: string; picks: { node: NodeProgress; items: Item[] }[] }
@@ -185,12 +194,15 @@ export function planChallenge(nodes: NodeProgress[], items: Item[], attempts: At
   // evidence) and the challenge has something to ask about it.
   const started = nodes.filter(n => n.level >= 1 && !n.noExercises && n.lastTs !== null && usablePool(n).length > 0)
   if (started.length < 3) return { unlocked: false, reason: `Practice at least 3 skills first (${started.length} so far).`, picks: [] }
+  // Cooling-off (D77): only skills last learned or practised a day or more ago are ready, never ones just learned or drilled.
+  const ready = started.filter(n => now - (n.lastTs as number) >= CHALLENGE_MIN_AGE_MS)
+  if (ready.length < 3) return { unlocked: false, reason: ready.length === 0 ? 'Nothing is ready to review yet: skills become eligible a day after you learn them.' : `Only ${ready.length} skill${ready.length === 1 ? ' is' : 's are'} ready to review yet: skills become eligible a day after you learn them.`, picks: [] }
   if (lastChallengeTs !== null && now - lastChallengeTs < CHALLENGE_GAP_MS) {
     const h = Math.ceil((CHALLENGE_GAP_MS - (now - lastChallengeTs)) / 3600000)
     return { unlocked: false, reason: `Another challenge opens in about ${h} hour${h === 1 ? '' : 's'}. The gap is on purpose: spaced review works better than back-to-back review. Ordinary practice is open any time.`, picks: [] }
   }
   const rank = (n: NodeProgress) => (n.due ? 0 : 1) * 1e15 + (n.lastTs ?? 0) + (n.level < 4 ? 0 : 5e14) // due first, then stalest; mastered ones come last (a higher rank sorts later)
-  const ordered = [...started].sort((a, b) => rank(a) - rank(b))
+  const ordered = [...ready].sort((a, b) => rank(a) - rank(b))
   const picks: ChallengePlan['picks'] = []
   let mastered = 0
   for (const n of shuffled(ordered.slice(0, 12), seed).sort((a, b) => rank(a) - rank(b))) {

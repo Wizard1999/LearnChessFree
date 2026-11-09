@@ -89,6 +89,8 @@ export interface Mastery {
   lastTs: number | null // last attempt of any kind
   /** Last SUCCESSFUL independent attempt: the freshness clock. A failed attempt never refreshes it. */
   lastIndependentSuccess: number | null
+  /** How many separate calendar days (the learner's local days) have a counted independent success. Mastered needs two (D77): you cannot cram it in one sitting. */
+  successDays: number
   /** The most recent independent attempt was missed. */
   recentMiss: boolean
   /** Latest moment the independent record met the reliable bar, or null if it never has: what the learner once showed. */
@@ -108,6 +110,7 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
   let lastSuccess: number | null = null
   let wasReliableOn: number | null = null
   let recentMiss = false
+  const successOn = new Set<string>()
   const presented = new Map<string, number>()
   const families = new Set<string>()
   const ordered = [...attempts].sort((x, y) => x.ts - y.ts) // stable: equal timestamps keep their given order
@@ -131,7 +134,7 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
     else gb += t.correct ? 0.5 * w : w
     if (!independent) { guidedN++; continue }
     n++; unl += w
-    if (right) { ia += w; ok++; lastSuccess = lastSuccess === null ? t.ts : Math.max(lastSuccess, t.ts) }
+    if (right) { ia += w; ok++; successOn.add(fmtDay(t.ts)); lastSuccess = lastSuccess === null ? t.ts : Math.max(lastSuccess, t.ts) }
     else ib += t.correct ? 0.5 * w : w // right but with a hint counts as half a miss
     recentMiss = !right
     if (unl >= MIN_UNLABELED_WEIGHT && probAtLeast(ia, ib, RELIABLE_P) >= RELIABLE_CERTAINTY) wasReliableOn = t.ts
@@ -148,7 +151,7 @@ export function masteryOf(attempts: Attempt[], opts?: { now?: number; refreshAft
   const stale = lastSuccess === null || now - lastSuccess > refreshAfter
   if (wasReliableOn !== null && (stale || !reliableNow)) state = 'refresh'
   return { a: ia, b: ib, mean: ia / (ia + ib), allMean: ga / (ga + gb), pReliable, unlabeledWeight: unl, cuedOnly, n, ok, guidedN, lastTs: last,
-    lastIndependentSuccess: lastSuccess, recentMiss, wasReliableOn, reliableNow, state }
+    lastIndependentSuccess: lastSuccess, successDays: successOn.size, recentMiss, wasReliableOn, reliableNow, state }
 }
 
 /** The learner's local calendar day as YYYY-MM-DD. */

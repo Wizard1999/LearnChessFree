@@ -18,6 +18,15 @@ describe('beta function', () => {
 })
 
 describe('mastery', () => {
+  it('counts the separate calendar days of independent success (Mastered needs two, D77)', () => {
+    const sameDay = Array.from({ length: 12 }, (_, i) => att({ itemId: `i${i}`, ts: T0 + i * 60000 }))
+    const one = masteryOf(sameDay, { now: T0 + 1e6 })
+    expect(one.state).toBe('reliable')
+    expect(one.successDays).toBe(1) // reliable in one sitting, but one day of evidence
+    const spread = [...sameDay, ...Array.from({ length: 3 }, (_, i) => att({ itemId: `n${i}`, ts: T0 + 3 * DAY + i * 60000 }))]
+    expect(masteryOf(spread, { now: T0 + 3.5 * DAY }).successDays).toBe(2)
+    expect(masteryOf([att({ ts: T0, correct: false }), att({ itemId: 'b', ts: T0 + 2 * DAY })], { now: T0 + 3 * DAY }).successDays).toBe(1) // a miss is not a success day
+  })
   it('is unseen with no evidence', () => expect(masteryOf([]).state).toBe('unseen'))
   it('cued evidence alone never makes a skill reliable', () => {
     const at = Array.from({ length: 30 }, (_, i) => att({ itemId: `i${i}`, cue: 1, ts: T0 + i }))
