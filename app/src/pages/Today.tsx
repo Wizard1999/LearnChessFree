@@ -1,7 +1,7 @@
 import { GeoArt } from '../components/GeoArt'
 import { Crest } from '../components/Crest'
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useContent, useContentFull, useLesson } from '../lib/content'
 import { MapPreview } from '../components/MapPreview'
 import { BackupNudge } from '../components/BackupNudge'
@@ -95,6 +95,8 @@ export function Today() {
   const guided = useMemo(() => firstGuided(content.lessons), [content.lessons])
   if (!ready) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
 
+  // The app opens on the Curriculum (D61); this page is only the first-visit start flow now. Once the learner has begun it hands over.
+  if (!fresh && !active) return <Navigate to="/course" replace />
   const activeBlock = active
   const firstLesson = fresh ? blocks.find(b => b.kind === 'lesson') : undefined
   // the placement offer is a quiet link, never the main card; the main card is the next lesson or review

@@ -7,6 +7,8 @@ import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
 import { LessonIndex } from './LessonIndex'
 import { CoursesView } from './CoursesView'
+import { ProgressReport } from './Progress'
+import { ContinueStrip } from '../components/ContinueStrip'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
@@ -107,6 +109,15 @@ export function Course() {
   const narrowScreen = () => typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches === true
   const toggleWin = (k: keyof Wins) => saveWins(narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !wins[k] } : { ...wins, [k]: !wins[k] })
   const dockOpen = wins.progress || wins.challenge || wins.next
+  // #/course?win=progress|challenge opens that window (the old #/progress and the phone tabs land here); &report=1 also opens the Full report
+  const [reportOpen, setReportOpen] = useState(() => params.get('report') === '1')
+  const winParam = params.get('win')
+  useEffect(() => {
+    if (winParam !== 'progress' && winParam !== 'challenge') return
+    setWins({ progress: winParam === 'progress', challenge: winParam === 'challenge', next: false })
+    if (params.get('report') === '1') setReportOpen(true)
+    const p = new URLSearchParams(params); p.delete('win'); p.delete('report'); setParams(p, { replace: true })
+  }, [winParam]) // eslint-disable-line react-hooks/exhaustive-deps -- once per arrival
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -157,8 +168,8 @@ export function Course() {
   const tabs = (
     <div className="row filters viewtabs" role="group" aria-label="Curriculum views">
       <div className="tabsleft">
-        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>All lessons</button>
-        <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Courses</button>
+        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>Curriculum</button>
+        <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Electives</button>
         <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
       </div>
       <span className="tabsep" aria-hidden="true" />
@@ -312,11 +323,11 @@ export function Course() {
   )
   const leftPanel = (
         <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
-        <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the All lessons list</button>
-          {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See all lessons</button>}
+        <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the Curriculum list</button>
+          {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See the whole curriculum</button>}
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
-            <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is on the Progress page.</div>) : null })()}
+            <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is in the Full report below.</div>) : null })()}
           <p className="small muted">{isAll ? 'OVERALL PROGRESS' : 'SECTION PROGRESS'}</p>
           <div className="donutrow">
             <Donut percent={current.percent} assumed={current.percentWithAssumed} label={isAll ? 'overall' : 'progress'} />
@@ -341,6 +352,10 @@ export function Course() {
           ))}
           <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
+          <details className="fullreport" open={reportOpen} onToggle={e => setReportOpen(e.currentTarget.open)}>
+            <summary><strong>Full report</strong> <span className="muted small">· path, independence, confidence, per-skill evidence, badges</span></summary>
+            {reportOpen && <ProgressReport />}
+          </details>
         </section>
   )
   const rightPanel = (part: 'challenge' | 'next') => (
@@ -377,6 +392,7 @@ export function Course() {
                 <h2>Mastery challenge{isAll ? ' across every section' : ''}</h2>
                 <p>Strengthen skills you have already practiced: six unlabeled exercises on three skills, two each, chosen because they are the most overdue. It includes at most one skill you have mastered, as a check that you still have it.</p>
                 {plan?.unlocked ? <div className="row"><button type="button" className="primary" onClick={startChallenge}>Start</button><span className="muted small">{plan.picks.map(p => p.node.title).join(' · ')}</span></div> : <><p className="muted small">{plan?.reason}</p>{planNow?.unlocked && <div className="row"><button type="button" onClick={startChallenge}>Start anyway</button><span className="muted small">Nothing is locked; the wait is only advice.</span></div>}</>}
+                <p className="small"><Link to="/practice">Choose what to practise</Link> <span className="muted">· a skill, a theme or an area, with or without hints</span></p>
                 <details><summary className="small">How a challenge changes your levels</summary>
                   <p className="small">Both exercises right on a skill counts as evidence for it. Both wrong counts as evidence against it, and it comes back for review. One of each leaves it about where it was. A challenge has no hints, so every answer counts as it stands. Levels are read from all your evidence, so they can move more than one step when the evidence shifts. Misses in ordinary practice count too. Time away takes nothing off a level except one thing: a Mastered skill drops back when a refresher is due (after about three weeks), to Level two, or to Level one for a skill whose deepest exercises are the named or cued ones (D1), and it returns when you answer it again.</p></details>
               </section>
@@ -438,7 +454,7 @@ export function Course() {
     </div>
   )
 
-  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
+  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<ContinueStrip lesson={next[0]} progress={progress ?? []} reviewReady={!!(plan?.unlocked || planNow?.unlocked)} /><LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
   const sectionChips = <>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
@@ -451,8 +467,8 @@ export function Course() {
   // phones (docs/mobile-design.md): a thin bar with the three views as a segmented control; everything else is in one Filters sheet
   const phoneLead = (
     <div className="segmented" role="group" aria-label="Curriculum views">
-      <button type="button" onClick={() => setTab('lessons')}>Lessons</button>
-      <button type="button" onClick={() => setTab('courses')}>Courses</button>
+      <button type="button" onClick={() => setTab('lessons')}>Curriculum</button>
+      <button type="button" onClick={() => setTab('courses')}>Electives</button>
       <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
     </div>
   )
@@ -474,8 +490,8 @@ export function Course() {
 
         <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
       <ChipGroup label="View" menu current="Map">
-        <button type="button" className="chip" onClick={() => setTab('lessons')}>All lessons</button>
-        <button type="button" className="chip" onClick={() => setTab('courses')}>Courses</button>
+        <button type="button" className="chip" onClick={() => setTab('lessons')}>Curriculum</button>
+        <button type="button" className="chip" onClick={() => setTab('courses')}>Electives</button>
         <button type="button" className="chip on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
         <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress window</button>
         <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge window</button>

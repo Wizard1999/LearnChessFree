@@ -10,13 +10,15 @@ import { independenceSentence } from '../lib/labels'
 import { independence, masteryMap, MIN_BAND_SAMPLES, useAttempts, useLessonProgress } from '../lib/progress'
 import { stageProgress } from '../lib/stageProgress'
 import { Achievements } from './Achievements'
+import { AimCard } from '../components/AimCard'
 import { ResultMark } from '../components/ResultMark'
 import type { ResultKind } from '../lib/resultText'
 
 const DAY = 86400000
 const pct = (x: number | null) => (x === null ? '—' : `${Math.round(x * 100)}%`)
 
-export function Progress() {
+/** The Full report: everything the old Progress page held. It lives inside the Progress window of the Curriculum page (D62); #/progress opens it there. */
+export function ProgressReport() {
   const content = useContent()
   const attempts = useAttempts()
   const reflections = useLiveQuery(() => db.reflections.orderBy('ts').reverse().toArray(), [])
@@ -44,11 +46,11 @@ export function Progress() {
   const ind = independence(attempts ?? [])
   const rows = useMemo(() => [...masteries.entries()].sort((a, b) => b[1].n - a[1].n), [masteries])
 
-  if (!attempts) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
+  if (!attempts) return <p className="muted">Loading…</p>
   return (
-    <main className="page wide">
-      <h1>Your progress</h1>
-      <p className="lede">Evidence that you can do things on your own. Nothing here is a rating.</p>
+    <div className="progressreport">
+      <p className="small muted">Evidence that you can do things on your own. Nothing here is a rating.</p>
+      <AimCard />
       {stages.some(s => s.lessons > 0) && (
         <section className="card pathstages">
           <h2>Your path</h2>
@@ -62,7 +64,7 @@ export function Progress() {
           </ol>
         </section>
       )}
-      {firsts.length === 0 ?<section className="card"><ArtScene kind="attempts" /><p>No exercises answered yet. <Link to="/">Start with today's plan</Link>.</p></section> : (
+      {firsts.length === 0 ?<section className="card"><ArtScene kind="attempts" /><p>No exercises answered yet. <Link to="/course">Start with the next lesson</Link>.</p></section> : (
         <>
           <section className="card">
             <h2>Hints and independence</h2>
@@ -89,7 +91,7 @@ export function Progress() {
           </section>
           <section className="card">
             <h2>Why mistakes happen (your own diagnoses)</h2>
-            {diag.length === 0 ? <p className="muted small">Review a game on <Link to="/games">My games</Link> and say what was behind your biggest drops. A pattern across several games is stronger evidence than one.</p> : (
+            {diag.length === 0 ? <p className="muted small">Review a game on <Link to="/games">Games review</Link> and say what was behind your biggest drops. A pattern across several games is stronger evidence than one.</p> : (
               <ul className="plain">{diag.map(([k, n]) => <li key={k}>{k}: <strong>{n}</strong></li>)}</ul>
             )}
           </section>
@@ -102,6 +104,6 @@ export function Progress() {
         </>
       )}
       <Achievements />
-    </main>
+    </div>
   )
 }
