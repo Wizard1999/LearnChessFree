@@ -36,7 +36,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |306|Winning with Tactics|Misc|BI|CT|10|50|played-all-lessons|winning-with-tactics|
 |307|Capturing Pieces|Misc|B|CT|9|45|played-all (L1 in sweep-beginner.md)|capturing-pieces|
 |308|Playing the Game|Misc|B|CT|7|35|played-all-lessons|playing-the-game|
-|310|Learn To Play Chess|Misc|B|CT|13|65|played|learn-to-play-chess|
+|310|Learn To Play Chess|Misc|B|CT|13|65|played; seg 17: L2 Queen in full, L3-9 and L11 first screens, L11 mate (families-b)|learn-to-play-chess|
 |325|Exploiting Opening Errors 2|Openings|BIAM|CT|19||sampled-L1-c1 (seg 8)|exploiting-opening-errors-2|
 |329|Exploiting Opening Errors 3|Openings|BIAM|CT|9||played-partly|exploiting-opening-errors-3|
 |330|Exploiting Typical Opening Errors|Openings|BIAM|CT|20||sampled-L1-c1 (seg 14)|exploiting-typical-opening-errors|
@@ -57,8 +57,8 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |80|Learn The Queen's Gambit Declined: Bf4 Variation|Openings|IAM|CC|3|21|sampled-L1-c1 (seg 17, families-a)|learn-the-queens-gambit-declined-bf4-variation|
 |84|Play The Italian|Openings|IAM|Yuriy Krykun|6|30|played-L1-c1|play-the-italian|
 |118|Candidate Moves|Strategy|IAM|K. Kavutskiy|5|25|played-partly|candidate-moves|
-|150|My Best Game|Master Games|IAM|CT|20|100|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|my-best-game|
-|171|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|played-L1-c1|top-five-moves-legends-edition|
+|150|My Best Game|Master Games|IAM|CT|20|100|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13); L20 c1 (seg 17, families-b)|my-best-game|
+|171|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|played-L1-c1; L11 AlphaZero c1 (seg 17, families-b)|top-five-moves-legends-edition|
 |173|Top Five Moves: Candidates Edition|Master Games|IAM|Simon Williams|8|40|sampled-L1-c1 (seg 11)|top-five-moves-candidates-edition|
 |177|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|sampled-L1-c1 (seg 15, families-b)|2020-candidates-highlights|
 |180|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|sampled-L1-c1 (seg 12)|how-to-win-with-the-ruy-lopez-exchange-variation|
@@ -78,10 +78,10 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |305|Reading the Board|Misc|I|CT|7|38|played-partly (L1; L6 when-to-trade-pieces C1-4)|reading-the-board|
 |309|Understanding Endgames|Misc|I|CT|7|35|played-partly|understanding-endgames|
 |313|Advanced Tactics|Tactics|IAM|Ben Finegold|2|10|played-L1-c1-3 (Expect the Unexpected; L2 not opened)|advanced-tactics-1|
-|322|The Drawing Zone, Part 2|Endgames|IAM|CT|18||sampled-L1-c1 (seg 9)|the-drawing-zone-part-2|
+|322|The Drawing Zone, Part 2|Endgames|IAM|CT|18||sampled-L1-c1 (seg 9); L18 first screen (seg 17, families-b)|the-drawing-zone-part-2|
 |324|The Drawing Zone, Part 1|Endgames|IAM|CT|18||played-L1-c1|the-drawing-zone-part-1|
-|343|Understanding the Sicilian Dragon|Openings|IAM|CT|15||sampled-L1-c1-2 + finish (seg 9)|understanding-the-sicilian-dragon|
-|346|Strategic Errors|Strategy|IAM|Jeremy Silman|20||sampled-L1-c1 (seg 5)|strategic-errors|
+|343|Understanding the Sicilian Dragon|Openings|IAM|CT|15||sampled-L1-c1-2 + finish (seg 9); L15 c1 (seg 17, families-b)|understanding-the-sicilian-dragon|
+|346|Strategic Errors|Strategy|IAM|Jeremy Silman|20||sampled-L1-c1 (seg 5); L10, L20 c1 (seg 17, families-b)|strategic-errors|
 |347|Chess Traps and Miniatures Part 2 - Checkmates|Attacking|IAM|CT|20||sampled-L1-c1 (seg 9)|chess-traps-and-miniatures-part-2-checkmates|
 |348|Do or Die with Rook Endings|Endgames|IAM|CT|20||played-L1-c1|do-or-die-with-rook-endings|
 |349|Champion Tactics with GM Wolff - Back Rank|Tactics|IAM|CT|35||played-L1-c1|champion-tactics-with-gm-wolff-back-rank|
@@ -177,7 +177,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |14|How To Win With Zugzwang|Endgames|M|Dejan Bojkov|5|25|played-partly|how-to-win-with-zugzwang|
 |15|c3 Sicil For The Kill|Openings|M|James Canty|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|c3-sicil-for-the-kill|
 |16|Judit Polgar: From Child Star To Super-Grandmaster|Master Games|M|Judit Polgar|6|30|played-L1-c1|judit-polgar-from-child-star-to-super-gm|
-|18|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|played-L50-c1; seg 16: L13, L25, L33 FENs read only, not played (families-b)|hall-of-fame-the-50-greatest-chess-players-of-all-time|
+|18|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|played-L50-c1; seg 17: L13, L25, L33, L48, L22, L1 c1 played (families-b)|hall-of-fame-the-50-greatest-chess-players-of-all-time|
 |19|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|sampled-L1-c1 (seg 9)|the-stonewall|
 |20|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|played-L1-c1|hou-yifan-my-career-so-far|
 |21|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|sampled-L1-c1 (seg 10)|cuban-chess-dominguez-on-capablanca|
@@ -243,7 +243,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |91|World Championship Preparation|Openings|M|Romain Edouard|5|25|sampled-L1-c1 (seg 12)|world-championship-preparation|
 |92|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15) and L4, L9 c1 (seg 16, families-b)|the-top-10-games-of-the-1980s|
 |93|The Indian School Of Chess|Master Games|M|S. S. Ganguly|11|55|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-indian-school-of-chess|
-|94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly; deeper L3, L16, L30 (seg 15, families-b)|every-pawn-structure-explained|
+|94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly; deeper L3, L16, L30 (seg 15, families-b); L5, L10, L20, L30 c1 (seg 17, families-b)|every-pawn-structure-explained|
 |95|The Complete History Of Computer Chess|Master Games|M|James Coleman|15|75|played-L1-c1|the-complete-history-of-computer-chess|
 |96|World Championship Masterpieces|Master Games|M|Yuriy Krykun|5|25|sampled-L1-c1 (seg 14)|world-championship-masterpieces|
 |97|My Road To The World Championship|Master Games|M|F. Caruana|5|25|sampled-L1-c1 (seg 10)|my-road-to-the-world-championship|
@@ -254,7 +254,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |103|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||sampled-L1-c1 (seg 17, families-a)|genrikh-kasparyans-studies|
 |104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-kasparov-vs-karpov|
 |105|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|played-L1-c1|every-opening-trap-to-crush-your-opponent|
-|106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly; seg 16: L10 Zugzwang, L13 Clearance c1 (families-b)|every-chess-tactic-explained|
+|106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly; seg 16: L10 Zugzwang, L13 Clearance c1 (families-b); seg 17: Zugzwang c1 solved (Ra6)|every-chess-tactic-explained|
 |107|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||sampled-L1-c1 (families-a)|oleg-pervakovs-studies|
 |108|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|mamedyarovs-opening-surprises|
 |109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9); deeper L24 (seg 15, families-b)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
@@ -384,7 +384,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |316|En Prise Please!|Tactics|M|CT|10||sampled-L1-c1 (seg 8)|en-prise-please|
 |318|Master Tactics|Tactics|M|CT|9||sampled-L1-c1 (seg 8)|master-tactics|
 |334|Finding Tricky Tactics|Tactics|M|CT|15||sampled-L1-c1 (seg 8)|finding-tricky-tactics|
-|335|Play Against Capablanca|Master Games|M|I. Khmelnitsky|22||played-L1-c1|play-against-capablanca|
+|335|Play Against Capablanca|Master Games|M|I. Khmelnitsky|22||played-L1-c1; L22 c1 (seg 17, families-b)|play-against-capablanca|
 |336|Slaying the Sicilian: Kingside Storms|Openings|M|CT|12||sampled-L1-c1 (seg 8)|slaying-the-sicilian-kingside-storms|
 |337|The Essence of the Initiative|Attacking|M|CT|20||sampled-L1-c1 (seg 8)|the-essence-of-the-initiative|
 |338|Complete Scotch #1: The Mieses Endgames|Endgames|M|Daniel Rensch|10||sampled-L1-c1-2 (seg 9)|complete-scotch-1-the-mieses-endgames|
