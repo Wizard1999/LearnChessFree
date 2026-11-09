@@ -1154,3 +1154,50 @@ main.mappage.curriculum .mapbar { padding-top: 0.2rem; padding-bottom: 0.2rem; g
 .continuestrip a.chip { display: inline-flex; align-items: center; text-decoration: none; color: var(--text); border: 1px solid var(--control-boundary); }
 .fullreport { margin-top: 0.8rem; border-top: 1px solid var(--divider); padding-top: 0.5rem; }
 .fullreport .tablewrap { overflow-x: auto; }
+
+/* The Path view (D60, D61): stages of tiles in a zigzag ladder. Tokens only, so it follows every look in both modes. A state is always icon + word. */
+.pathview { margin-top: 0.4rem; }
+.pathhead { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 1rem; justify-content: space-between; margin-bottom: 0.6rem; }
+.pathhead p { margin: 0; }
+.pstage { margin: 0 0 1rem; }
+.pathbanner { margin: 0; font-size: 1.05rem; }
+.bannerbtn { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.8rem; width: 100%; text-align: left; min-height: 44px; padding: 0.55rem 0.9rem; border: 1px solid var(--control-boundary); border-left: 6px solid var(--info); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-weight: 700; cursor: pointer; }
+.pstage.current .bannerbtn { border-left-color: var(--accent); }
+.pstage.complete .bannerbtn { border-left-color: var(--success); }
+.bannerbtn .stagenum { font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); }
+.bannerbtn .stagecount { margin-left: auto; font-size: 0.85rem; font-weight: 400; color: var(--text-secondary); }
+.stagegoal { margin: 0.3rem 0.2rem 0.5rem; font-size: 0.92rem; color: var(--text-secondary); }
+.pathladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.rung { --step: 3.2rem; padding-inline-start: 0; }
+.rung.r1, .rung.r3 { padding-inline-start: var(--step); }
+.rung.r2 { padding-inline-start: calc(var(--step) * 2); }
+.pathtile { display: flex; align-items: center; gap: 0.7rem; box-sizing: border-box; width: min(100%, 26rem); min-height: 56px; padding: 0.55rem 0.85rem; border: 2px solid var(--control-boundary); border-radius: 14px; background: var(--surface); color: var(--text); text-decoration: none; }
+.pathtile:hover { border-color: var(--info); }
+.pathtile:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.pathtile .tileicon { flex: 0 0 auto; }
+.pathtile .tiletext { display: flex; flex-direction: column; min-width: 0; }
+.pathtile .tiletitle { font-weight: 600; overflow-wrap: anywhere; }
+.pathtile .tilemeta { font-size: 0.82rem; color: var(--text-secondary); }
+.pathtile .tileword { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+.pathtile[data-state='available'] { border-color: var(--info); }
+.pathtile[data-state='progress'] { border-color: var(--info); border-style: double; border-width: 4px; }
+.pathtile[data-state='done'] { background: var(--ok-bg); border-color: var(--success); }
+.pathtile[data-state='done'] .tileicon { color: var(--success); }
+.pathtile[data-state='done'][data-skipped='true'] { background: var(--chip); border-color: var(--control-boundary); }
+.pathtile[data-state='locked'] { background: var(--chip); border-style: dashed; border-left-style: solid; }
+.pathtile[data-state='locked'] .tiletitle { font-weight: 500; }
+.pathtile[data-state='next'] { border: 3px solid var(--accent); background: var(--surface); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
+.pathtile[data-state='next'] .tileicon { color: var(--accent); }
+.pathtile[data-state='next'] .tileword { color: var(--accent-ink, var(--accent)); }
+@media (prefers-reduced-motion: no-preference) {
+  .pathtile[data-state='next'] { animation: nextpulse 2.4s ease-in-out infinite; }
+  .pathtile { transition: border-color 0.12s, background-color 0.12s; }
+}
+:root[data-motion='reduce'] .pathtile[data-state='next'] { animation: none; }
+@keyframes nextpulse { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 10%, transparent); } }
+.stagegate { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; margin: 0.7rem 0 0; padding: 0.6rem 0.9rem; border: 2px dashed var(--control-boundary); border-radius: 12px; color: var(--text); }
+.stagegate.open { border-style: solid; border-color: var(--success); background: var(--ok-bg); }
+.stagegate .chip { text-decoration: none; color: var(--text); border: 1px solid var(--control-boundary); display: inline-flex; align-items: center; }
+.pathtile[data-hue]:not([data-state='next']) { border-left-width: 8px; border-left-color: var(--hue-line, var(--control-boundary)); } /* strand colour on the rim; the strand is also in the lesson itself */
+@media (max-width: 760px) { .rung { --step: 1.2rem; } }
+@media (max-width: 760px) { .viewtabs .tabsleft { width: 100%; } .viewtabs .tabsleft .chip { padding-inline: 0.3rem; font-size: 0.92rem; } }

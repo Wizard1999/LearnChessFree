@@ -19,7 +19,7 @@ function UpNextOrLi({ up, skillId, className, children }: { up: boolean; skillId
   return up ? <UpNextMark as="li" skillId={skillId} className={className}>{children}</UpNextMark> : <li className={className}>{children}</li>
 }
 
-type Filter = 'all' | 'todo' | 'done'
+type Filter = 'all' | 'todo' | 'started' | 'done'
 type View = 'path' | 'section'
 
 import { aboutMinutes, lessonMinutes } from '../lib/lessonTime'
@@ -32,6 +32,8 @@ export function LessonIndex() {
   const progress = useLessonProgress()
   const [q, setQ] = useState('')
   const [filter, setFilter] = useState<Filter>('all')
+  const [strandSel, setStrandSel] = useState('')
+  const [stageSel, setStageSel] = useState('')
   const [view, setView] = useState<View>('path') // the recommended path mixes the sections by stage; the section view is the reference library
   const byId = useMemo(() => new Map((progress ?? []).map(p => [p.lessonId, p])), [progress])
   const groups = useMemo(() => {
@@ -44,11 +46,14 @@ export function LessonIndex() {
       if (q && !text.includes(q.toLowerCase())) continue
       if (filter === 'done' && !done) continue
       if (filter === 'todo' && done) continue
+      if (filter === 'started' && (done || !((byId.get(l.id)?.step ?? 0) > 0))) continue
+      if (strandSel && sk?.strand !== strandSel) continue
+      if (stageSel && l.stage !== stageSel) continue
       const strand = view === 'path' ? l.stage ?? '?' : sk?.strand ?? '?'
       m.set(strand, [...(m.get(strand) ?? []), l])
     }
     return [...m.entries()].sort((a, b) => Number(a[0].slice(1)) - Number(b[0].slice(1)))
-  }, [content, byId, q, filter, view])
+  }, [content, byId, q, filter, strandSel, stageSel, view])
   // Up next: in the recommended path the first unfinished lesson in path order; by subject, the first unfinished lesson of each subject. Filters and search never move it.
   const upNextIds = useMemo(() => {
     const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
@@ -61,6 +66,7 @@ export function LessonIndex() {
     if (view === 'path') { const ks = [...first.keys()].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))); return new Set(ks.length ? [first.get(ks[0])!] : []) }
     return new Set(first.values())
   }, [content, byId, view])
+  const strandIds = useMemo(() => [...new Set(content.skills.map(k => k.strand))].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1))), [content.skills])
   const groupOf = (l: LessonMeta) => (view === 'path' ? l.stage : content.skillById.get(l.skill)?.strand)
   const doneCount = content.lessons.filter(l => byId.get(l.id)?.done).length
   const totalMin = content.lessons.reduce((t, l) => t + mins(l), 0)
@@ -77,9 +83,14 @@ export function LessonIndex() {
       </div>
       <div className="lede">Nothing is locked: open any lesson, in any order. <details className="inlinenote"><summary>How this list works</summary>The recommended path mixes the subjects so you can play a full game early and meet each idea when you need it; "By subject" groups the same lessons for looking things up. Marking a lesson finished or skipped only changes this list and the map; it is not evidence that you know the skill.</details></div>
       <div className="row filters">
-        {(['path', 'section'] as View[]).map(v => <button key={v} type="button" className={view === v ? 'chip on' : 'chip'} aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Recommended path' : 'By subject'}</button>)}
-        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons" />
-        {(['all', 'todo', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : 'Finished or skipped'}</button>)}
+        {(['path', 'section'] as View[]).map(v => <button key={v} type="button" className={view === v ? 'chip on' : 'chip'} aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Grouped by stage' : 'Grouped by subject'}</button>)}
+        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons by title" />
+        <select value={strandSel} onChange={e => setStrandSel(e.target.value)} aria-label="Filter by subject"><option value="">Every subject</option>{strandIds.map(id => <option key={id} value={id}>{STRAND_NAMES[id] ?? id}</option>)}</select>
+        <select value={stageSel} onChange={e => setStageSel(e.target.value)} aria-label="Filter by stage"><option value="">Every stage</option>{PATH_STAGES.map(st => <option key={st.id} value={st.id}>{stageLabel(st.id)}: {st.title}</option>)}</select>
+      </div>
+      <div className="row filters" role="group" aria-label="Filter by status">
+        {(['all', 'todo', 'started', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : f === 'started' ? 'In progress' : 'Finished or skipped'}</button>)}
+        {(q || strandSel || stageSel || filter !== 'all') && <button type="button" className="link" onClick={() => { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }}>Clear filters</button>}
       </div>
       {groups.length === 0 && <p className="muted">No lessons match.</p>}
       {groups.map(([strand, ls], gi) => (

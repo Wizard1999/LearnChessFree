@@ -6,6 +6,8 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
 import { LessonIndex } from './LessonIndex'
+import { PathView } from '../components/PathView'
+import { setActiveWindow } from '../lib/activeWindow'
 import { CoursesView } from './CoursesView'
 import { ProgressReport } from './Progress'
 import { ContinueStrip } from '../components/ContinueStrip'
@@ -112,12 +114,22 @@ export function Course() {
   // #/course?win=progress|challenge opens that window (the old #/progress and the phone tabs land here); &report=1 also opens the Full report
   const [reportOpen, setReportOpen] = useState(() => params.get('report') === '1')
   const winParam = params.get('win')
+  // A deep link opens its window while rendering (state adjusted from a changed input, not in an effect); the effect below only clears the address.
+  const [arrivedWin, setArrivedWin] = useState<string | null>(null)
+  if (winParam !== arrivedWin) {
+    setArrivedWin(winParam)
+    if (winParam === 'progress' || winParam === 'challenge') {
+      setWins({ progress: winParam === 'progress', challenge: winParam === 'challenge', next: false })
+      if (params.get('report') === '1') setReportOpen(true)
+    }
+  }
   useEffect(() => {
     if (winParam !== 'progress' && winParam !== 'challenge') return
-    setWins({ progress: winParam === 'progress', challenge: winParam === 'challenge', next: false })
-    if (params.get('report') === '1') setReportOpen(true)
     const p = new URLSearchParams(params); p.delete('win'); p.delete('report'); setParams(p, { replace: true })
   }, [winParam]) // eslint-disable-line react-hooks/exhaustive-deps -- once per arrival
+  // tell the phone tab bar which window is open, so its tab stays lit after the address is cleared
+  useEffect(() => { setActiveWindow(wins.progress ? 'progress' : wins.challenge ? 'challenge' : null) }, [wins.progress, wins.challenge])
+  useEffect(() => () => setActiveWindow(null), [])
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -151,6 +163,8 @@ export function Course() {
   const homeStages = useMemo(() => skillHomeStages(content.skills, content.lessons), [content.skills, content.lessons])
   const hereStage = useMemo(() => currentStageIndex(content.lessons, new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
+  // the Next tile and the Continue strip agree: the next lesson on the core route (courses are Electives, never offered here)
+  const nextCore = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 400).find(l => !l.course) : undefined), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
   const currentIds = useMemo(() => new Set(current.nodes.map(n => n.id)), [current])
   const dismissedHere = useMemo(() => dismissed.filter(id => currentIds.has(id)), [dismissed, currentIds])
@@ -163,12 +177,13 @@ export function Course() {
 
   const tab = params.get('view')
   const showCourses = tab === 'courses'
-  const showLessons = tab !== 'map' && !showCourses // the list of lessons is the default view; the map is the second
-  const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'lessons') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
+  const showLessons = tab !== 'map' && !showCourses // the Curriculum chip covers two views: the Path (default) and the All lessons list (?view=lessons)
+  const showList = tab === 'lessons'
+  const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'path') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
   const tabs = (
     <div className="row filters viewtabs" role="group" aria-label="Curriculum views">
       <div className="tabsleft">
-        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('lessons')}>Curriculum</button>
+        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('path')}>Curriculum</button>
         <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Electives</button>
         <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
       </div>
@@ -180,6 +195,13 @@ export function Course() {
     </div>
   )
 
+  const viewSwitch = showLessons ? (
+    <div className="row filters viewswitch" role="group" aria-label="Curriculum view">
+      <button type="button" className={!showList ? 'chip on' : 'chip'} aria-pressed={!showList} onClick={() => setTab('path')}>Path</button>
+      <button type="button" className={showList ? 'chip on' : 'chip'} aria-pressed={showList} onClick={() => setTab('lessons')}>All lessons</button>
+      <span className="muted small">{showList ? 'Search and filter every lesson.' : 'The route, in order: what to do next.'}</span>
+    </div>
+  ) : null
   const pick = (id: string) => { if (narrowScreen() && dockOpen) saveWins({ progress: false, challenge: false, next: false }); setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
   function startChallenge() {
@@ -454,7 +476,7 @@ export function Course() {
     </div>
   )
 
-  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<ContinueStrip lesson={next[0]} progress={progress ?? []} reviewReady={!!(plan?.unlocked || planNow?.unlocked)} /><LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
+  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<ContinueStrip lesson={nextCore} progress={progress ?? []} reviewReady={!!(plan?.unlocked || planNow?.unlocked)} />{viewSwitch}{showList ? <LessonIndex /> : <PathView content={content} masteries={ctx.masteries} placement={placement} progress={progress ?? []} nextId={nextCore?.id} />}</main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
   const sectionChips = <>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
