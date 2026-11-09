@@ -60,7 +60,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |150|My Best Game|Master Games|IAM|CT|20|100|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|my-best-game|
 |171|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|played-L1-c1|top-five-moves-legends-edition|
 |173|Top Five Moves: Candidates Edition|Master Games|IAM|Simon Williams|8|40|sampled-L1-c1 (seg 11)|top-five-moves-candidates-edition|
-|177|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|listed|2020-candidates-highlights|
+|177|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|sampled-L1-c1 (seg 15, families-b)|2020-candidates-highlights|
 |180|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|sampled-L1-c1 (seg 12)|how-to-win-with-the-ruy-lopez-exchange-variation|
 |181|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|sampled-L1-c1 (seg 12)|attack-in-the-ruy-lopez-with-5-d4|
 |194|How to Be Lucky In Chess|Strategy|IAM|D. Naroditsky|5|25|sampled-L1-c1 (seg 5)|how-to-be-lucky-in-chess|
@@ -109,11 +109,11 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 
 | # | Course | Topic | Lv | Instr | Les | Ch | Sampled | slug |
 |---|---|---|---|---|---|---|---|---|
-|83|The 10 Best Games Of The 1970s|Master Games|AM|Sam Copeland|10|50|listed|the-10-best-games-of-the-1970s|
+|83|The 10 Best Games Of The 1970s|Master Games|AM|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-10-best-games-of-the-1970s|
 |86|Advanced Piece Values|Strategy|AM|Larry Kaufman|5|25|sampled-L1-c1 (seg 5)|advanced-piece-values|
 |89|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|played-L1|pawns-vs-pieces|
 |90|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|sampled-L1-c1 (seg 12)|grind-like-magnus-carlsen|
-|140|Play Like Beth Harmon|Master Games|AM|Jeremy Kane|6||listed|play-like-beth-harmon|
+|140|Play Like Beth Harmon|Master Games|AM|Jeremy Kane|6||sampled-L1-c1 and L4 puzzle (seg 15, families-b)|play-like-beth-harmon|
 |152|Checkmate Grandmaster! - Winning In The Opening|Master Games|AM|Jeremy Kane|5||sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|checkmate-grandmaster-winning-in-the-opening-1|
 |153|How To Swindle Your Opponent|Strategy|AM|Nemo Zhou|5|25|sampled-L1-c1 (seg 5)|how-to-swindle-your-opponent|
 |156|Pawn Structures That Win|Strategy|AM|Aman Hambleton|5|25|played-L1-c1|pawn-structures-that-win|
@@ -181,14 +181,14 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |19|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|sampled-L1-c1 (seg 9)|the-stonewall|
 |20|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|played-L1-c1|hou-yifan-my-career-so-far|
 |21|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|sampled-L1-c1 (seg 10)|cuban-chess-dominguez-on-capablanca|
-|22|Learn The Evans Gambit|Openings|M|CC|3|21|listed|learn-the-evans-gambit|
+|22|Learn The Evans Gambit|Openings|M|CC|3|21|sampled-L1-c1 + L3 c1 (families-a)|learn-the-evans-gambit|
 |23|How To Attack Without Sacrificing|Attacking|M|Magnus Carlsen|4|20|sampled-L1-c1 (seg 9)|attacking-without-sacrificing|
 |24|Perfect Chess Games|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 10)|perfect-chess-games|
 |25|My Best Loss|Master Games|M|CC|4|20|sampled-L1-c1 (seg 10)|my-best-loss|
 |26|How I Became A Five Time World Champion|Master Games|M|V. Anand|10|50|played-partly|how-i-became-a-five-time-world-champion|
 |27|Refute The Sacrifice|Tactics|M|Jeremy Kane|16||played-L1|refute-the-sacrifice|
 |28|The Ten Most Beautiful Chess Moves|Tactics|M|Jeremy Kane|11||sampled-L1-c1 (seg 14)|the-ten-most-beautiful-chess-moves|
-|29|Play Like A Chess Streamer|Master Games|M|Jeremy Kane|5||listed|play-like-a-chess-streamer|
+|29|Play Like A Chess Streamer|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-a-chess-streamer|
 |30|SCC Tactics|Master Games|M|CC|15|58|played-L1-c1|scc-tactics|
 |31|Chess In The Movies|Tactics|M|Jeremy Kane|7||played-L1-c1|chess-in-the-movies|
 |32|Play Like Levy Rozman|Master Games|M|Jeremy Kane|5||played-L1|play-like-levy-rozman|
@@ -196,31 +196,31 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |34|Play Like Daniel Naroditsky|Master Games|M|Jeremy Kane|5||listed|play-like-daniel-naroditsky|
 |35|Play Like a World Champion: The Anand Years|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-anand|
 |37|Learn Every Chess Opening|Openings|M|CC|50||played-partly|learn-the-openings|
-|38|Learn The Catalan|Openings|M|CC|3|21|listed|learn-the-catalan-opening|
-|39|Learn The Indian Defenses And The Black Knights' Tango|Openings|M|CC|3|21|listed|learn-the-indian-defenses-and-the-black-knights-tango|
-|40|Learn The Flank Openings|Openings|M|CC|3|21|listed|learn-the-flank-openings|
-|41|Learn The Old Indian Defense|Openings|M|CC|3|21|listed|learn-the-old-indian-defense|
-|42|Learn The Dutch Defense|Openings|M|CC|3|21|listed|learn-the-dutch-defense|
-|43|Learn The King's Indian Attack And The Reti Opening|Openings|M|CC|3|21|listed|learn-the-kings-indian-attack-and-the-reti-opening|
-|44|Learn The Pirc Defense And The Modern Defense|Openings|M|CC|3|21|listed|learn-the-pirc-defense-and-the-modern-defense|
-|45|Learn The English Opening|Openings|M|CC|3|21|listed|learn-the-english-opening|
-|46|Learn The Alekhine's Defense|Openings|M|CC|3|21|listed|learn-the-alekhines-defense|
+|38|Learn The Catalan|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-catalan-opening|
+|39|Learn The Indian Defenses And The Black Knights' Tango|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-indian-defenses-and-the-black-knights-tango|
+|40|Learn The Flank Openings|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-flank-openings|
+|41|Learn The Old Indian Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-old-indian-defense|
+|42|Learn The Dutch Defense|Openings|M|CC|3|21|sampled-L1-c1 + L2 c1 (families-a)|learn-the-dutch-defense|
+|43|Learn The King's Indian Attack And The Reti Opening|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-kings-indian-attack-and-the-reti-opening|
+|44|Learn The Pirc Defense And The Modern Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-pirc-defense-and-the-modern-defense|
+|45|Learn The English Opening|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-english-opening|
+|46|Learn The Alekhine's Defense|Openings|M|CC|3|21|sampled-L1-c1 + L3 c1 (families-a)|learn-the-alekhines-defense|
 |47|Learn The Scandinavian Defense|Openings|M|CC|3|21|played-L1-c1-5|learn-the-scandinavian-defense|
 |48|Learn The Caro-Kann Defense|Openings|M|CC|3|21|played-partly|learn-the-caro-kann-defense|
-|49|Learn The French Defense: Tarrasch And Advance Variations|Openings|M|CC|3|21|listed|learn-the-french-defense-tarrasch-and-advance-variations|
-|50|Learn The French Defense With 3.Nc3|Openings|M|CC|3|21|listed|learn-the-french-defense-with-3-nc3|
-|51|Learn The Center Game And Danish Gambit|Openings|M|CC|3|21|listed|learn-the-center-game-and-danish-gambit|
-|52|Learn The Vienna Game And Bishop's Opening|Openings|M|CC|3|21|listed|learn-the-vienna-game-and-bishops-opening|
+|49|Learn The French Defense: Tarrasch And Advance Variations|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-french-defense-tarrasch-and-advance-variations|
+|50|Learn The French Defense With 3.Nc3|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-french-defense-with-3-nc3|
+|51|Learn The Center Game And Danish Gambit|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-center-game-and-danish-gambit|
+|52|Learn The Vienna Game And Bishop's Opening|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-vienna-game-and-bishops-opening|
 |53|Learn The Philidor Defense|Openings|M|CC|3|21|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|learn-the-philidor-defense|
 |54|Learn The King's Gambit|Openings|M|CC|3|21|sampled-L1-c1 (seg 8)|learn-the-kings-gambit|
-|55|Learn The Four Knights Game|Openings|M|CC|3|21|listed|learn-the-four-knights-game|
-|56|Learn The Two Knights Defense|Openings|M|CC|3|21|listed|learn-the-two-knights-defense|
-|57|Learn The Scotch Game|Openings|M|CC|3|21|listed|learn-the-scotch-game|
+|55|Learn The Four Knights Game|Openings|M|CC|3|21|sampled-L1-c1 + L2 c1 (families-a)|learn-the-four-knights-game|
+|56|Learn The Two Knights Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-two-knights-defense|
+|57|Learn The Scotch Game|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-scotch-game|
 |58|Learn The Italian Game|Openings|M|CC|3|21|played-partly|learn-the-italian-game|
-|59|Learn The Petroff Defense|Openings|M|CC|3|21|listed|learn-the-petroff-defense|
-|60|Learn The Trompowsky And Torre Attack|Openings|M|CC|3|21|listed|learn-the-trompowsky-and-torre-attacks|
-|61|Learn The Budapest Defense|Openings|M|CC|3|21|listed|learn-the-budapest-defense|
-|62|Learn The Benko Gambit|Openings|M|CC|3|21|listed|learn-the-benko-gambit|
+|59|Learn The Petroff Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-petroff-defense|
+|60|Learn The Trompowsky And Torre Attack|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-trompowsky-and-torre-attacks|
+|61|Learn The Budapest Defense|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-budapest-defense|
+|62|Learn The Benko Gambit|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-benko-gambit|
 |63|Learn The Queen's Indian Defense|Openings|M|CC|3|21|listed|learn-the-queens-indian-defense|
 |64|Learn The Bogo Indian Defense|Openings|M|CC|3|21|listed|learn-the-bogo-indian-defense|
 |65|Learn The Nimzo Indian Defense|Openings|M|CC|3|21|listed|learn-the-nimzo-indian-defense|
@@ -230,20 +230,20 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |69|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|listed|learn-the-queens-gambit-accepted|
 |71|The Top 10 Games Of The 1950s|Master Games|M|Sam Copeland|10|50|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|the-ten-best-games-of-the-1950s|
 |72|The Loud Italian|Openings|M|A. Kosteniuk|6|30|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-loud-italian|
-|73|The Top 10 Games Of The 1960s|Master Games|M|Sam Copeland|10|50|listed|the-top-10-games-of-the-1980s-1|
+|73|The Top 10 Games Of The 1960s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-top-10-games-of-the-1980s-1|
 |74|My Legendary Endgames|Endgames|M|Gata Kamsky|5|25|sampled-L1-c1 (seg 9)|my-legendary-endgames|
-|75|Play Like Richard Rapport|Master Games|M|Jeremy Kane|5||listed|play-like-richard-rapport|
-|76|Play Like Jan-Krzysztof Duda|Master Games|M|Jeremy Kane|5||listed|play-like-jan-krzysztof-duda|
-|77|Play Like Teimour Radjabov|Master Games|M|Jeremy Kane|5||listed|play-like-teimour-radjabov|
+|75|Play Like Richard Rapport|Master Games|M|Jeremy Kane|5||sampled-L1-c1 and L5-c1 (seg 15, families-b)|play-like-richard-rapport|
+|76|Play Like Jan-Krzysztof Duda|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-jan-krzysztof-duda|
+|77|Play Like Teimour Radjabov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-teimour-radjabov|
 |81|Absolutely Must Know Endgames|Endgames|M|A. Kosteniuk|12|60|played-partly|absolutely-must-know-endgames|
 |82|How To Defeat A Pawn Weakness|Strategy|M|Robert Ramirez|5|25|sampled-L1-c1 (seg 10)|how-to-defeat-a-pawn-weakness|
 |85|Mamedyarov Teaches Dynamic Pawn Play|Openings|M|S. Mamedyarov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|mamedyarovs-kingside-pawn-play|
 |87|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||played-L1-c1|leonid-kubbels-studies|
 |88|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|modern-chess-masterpieces|
 |91|World Championship Preparation|Openings|M|Romain Edouard|5|25|sampled-L1-c1 (seg 12)|world-championship-preparation|
-|92|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|listed|the-top-10-games-of-the-1980s|
+|92|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-top-10-games-of-the-1980s|
 |93|The Indian School Of Chess|Master Games|M|S. S. Ganguly|11|55|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-indian-school-of-chess|
-|94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly|every-pawn-structure-explained|
+|94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly; deeper L3, L16, L30 (seg 15, families-b)|every-pawn-structure-explained|
 |95|The Complete History Of Computer Chess|Master Games|M|James Coleman|15|75|played-L1-c1|the-complete-history-of-computer-chess|
 |96|World Championship Masterpieces|Master Games|M|Yuriy Krykun|5|25|sampled-L1-c1 (seg 14)|world-championship-masterpieces|
 |97|My Road To The World Championship|Master Games|M|F. Caruana|5|25|sampled-L1-c1 (seg 10)|my-road-to-the-world-championship|
@@ -257,32 +257,32 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly|every-chess-tactic-explained|
 |107|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||listed|oleg-pervakovs-studies|
 |108|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|mamedyarovs-opening-surprises|
-|109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
+|109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9); deeper L24 (seg 15, families-b)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
 |110|Mating Nets|Attacking|M|T. Abrahamyan|5|25|played|king-hunts|
 |111|Master Endgame Checkmates|Endgames|M|CC|5|25|played-partly|master-endgame-checkmates|
 |112|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|sampled-L1-c1 (seg 11)|grandmaster-opening-kitchen|
 |113|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|sampled-L1-c1 (seg 10)|how-to-play-the-kalashnikov|
-|114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|listed|the-10-best-games-of-the-1990s|
+|114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-10-best-games-of-the-1990s|
 |115|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|sampled-L1-c1 (seg 12)|how-levon-aronian-became-americas-newest-super-grandmaster|
 |116|How To Play The King's Indian Attack|Openings|M|Dejan Bojkov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|how-to-play-the-kings-indian-attack|
 |120|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-fischer-and-karpov|
 |121|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-petrosian-and-spassky|
 |122|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|sampled-L1-c1 (seg 10)|my-best-games-shakhriyar-mamedyarov|
 |123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||listed|pal-benkos-studies|
-|126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|listed|the-top-ten-games-of-the-2000s|
+|126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|sampled-L1-c1 (seg 15, families-b)|the-top-ten-games-of-the-2000s|
 |127|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|henri-rincks-studies|
 |128|Best Of The Best|Master Games|M|Simon Williams|4|20|sampled-L1-c1 (seg 11)|best-of-the-best|
 |129|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|sampled-L1-c1 (seg 8)|master-material-imbalances|
-|131|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|listed|the-10-best-games-of-the-2010s|
+|131|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|sampled-L1-c1 (seg 15, families-b)|the-10-best-games-of-the-2010s|
 |132|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|sampled-L1-c1 (seg 12)|mugzyyy|
-|133|Play Like Anish Giri|Master Games|M|Jeremy Kane|5||listed|play-like-anish-giri|
+|133|Play Like Anish Giri|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-anish-giri|
 |134|A Chess Coach's Favorite Problems|Strategy|M|S. S. Ganguly|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|a-chess-coachs-favorite-problems|
 |135|Vasily Smyslov: Master Of Attack|Master Games|M|A. Terekhov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|vasily-smyslov-master-of-attack|
 |136|Today's Top Juniors|Master Games|M|M. Khachiyan|5|25|sampled-L1-c1 (seg 10)|todays-top-juniors|
 |137|Breaking Down Closed Positions|Strategy|M|J. L. Hammer|4|20|sampled-L1-c1 (seg 10; answer not found)|breaking-down-closed-positions|
 |138|Learn From The Best: Komodo|Master Games|M|Sam Copeland|4|20|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|learn-from-the-best-komodo|
 |139|Alexey Troitsky's Studies|Tactics|M|Jeremy Kane|7||listed|alexey-troitskys-studies|
-|141|Play Like A Speed Chess Champion|Master Games|M|Jeremy Kane|20||listed|play-like-a-speed-chess-champion|
+|141|Play Like A Speed Chess Champion|Master Games|M|Jeremy Kane|20||sampled-L1-c1 and L20-c1 (seg 15, families-b)|play-like-a-speed-chess-champion|
 |142|Richard Reti's Studies|Tactics|M|Jeremy Kane|5||listed|richard-retis-studies|
 |143|Doubled Pawns: Pros And Cons|Strategy|M|F. Libiszewski|4|20|sampled-L1-c1 (seg 10; answer not found)|doubled-pawns-in-the-caro-kann-and-nimzo-indian|
 |144|The Latvian School Of Chess|Attacking|M|A. Neiksans|5|25|sampled-L1-c1 (seg 10)|the-latvian-school-of-chess|
@@ -298,7 +298,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |158|Play Like A World Champion: Kramnik And Controversy|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-choas-and-kramnik|
 |160|Play Like A World Champion: Capablanca, Alekhine and Euwe|Master Games|M|Jeremy Kane|6||listed|play-like-a-world-champion-capablanca-alekhine-and-euwe|
 |161|Play Like A World Champion: The Lasker Years|Master Games|M|Jeremy Kane|6||listed|play-like-a-world-champion-the-lasker-years|
-|162|Play Like A World Champion: The Steinitz Years|Master Games|M|Jeremy Kane|4||listed|play-like-a-world-champion-the-steinitz-years|
+|162|Play Like A World Champion: The Steinitz Years|Master Games|M|Jeremy Kane|4||sampled-L1-c1 (seg 15, families-b)|play-like-a-world-champion-the-steinitz-years|
 |163|Top Level Trickery|Strategy|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 9)|top-level-trickery-1|
 |164|Tatev's Favorite Studies|Tactics|M|T. Abrahamyan|5|25|sampled-L1-c1-5 + lesson ending (seg 12, 14)|tatevs-favorite-studies|
 |165|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|sampled-L1-c1 (seg 10)|online-nations-cup-highlights-1|
@@ -420,7 +420,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |70|Learn The London And Colle Systems|Openings|-|CC|3|21|played-partly|learn-the-london-and-colle-systems|
 |102|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|sampled-L1-c1 (seg 12)|how-to-beat-a-grandmaster|
 |117|King Activity In The Endgame|Endgames|-|Romain Edouard|5|25|played-L1-c1|king-activity-in-the-endgame|
-|119|Play Like Ian Nepomniachtchi|Master Games|-|Jeremy Kane|5||listed|play-like-ian-nepomniachtchi|
-|124|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|sampled-L1-c1 (seg 10)|every-gambit-refuted|
+|119|Play Like Ian Nepomniachtchi|Master Games|-|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-ian-nepomniachtchi|
+|124|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|sampled-L1-c1 (seg 10); deeper L15, L29 (seg 15, families-b)|every-gambit-refuted|
 |125|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|sampled-L1-c1 (seg 12)|positional-masterpieces|
 |159|Play Like A World Champion: Botvinnik, Smyslov And Tal|Master Games|-|Jeremy Kane|6||listed|play-like-a-world-champion-botvinnik-smyslov-and-tal|
