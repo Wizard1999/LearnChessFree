@@ -65,3 +65,91 @@ Intro bubble (about 28 words): a pawn with no opposing pawns that could ever blo
 | 5 | 8/p7/P3K3/1P6/4k3/7p/8/8 w | "How can White create a passed pawn in the race to promote?" (12) | b6 (...h2), bxa7 (...h1=Q), a8=Q+ (skewer), Qxh1 (engine: b6 +6.3, all else about -7) | Kd7: "does not force a passed pawn for White". b7 (draw, engine 0.0): "Black promotes first and will be ready to attack White's king first. White will have to fight for the draw." Accurate [V engine]. |
 
 Shape [V]: the first endgame lesson is five puzzles in a row, with pieces as the carriers (bishop vs pawns, knight vs pawn, pawn vs knight, rook endgame, pawn race) and no plain counting exercise; the wrong-answer text varies from a generic piece-type check to a precise evaluation ("easier way", "draw"). Note: the last move text shows "a8= +" with the promoted piece missing, a small display defect [V]. Seven to ten moves per challenge in the longest ones. About 25 minutes with probes.
+
+### Make the Most of Your Pieces, lesson 2 "Using Your Bishops" (5 challenges, listed 2 min) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | r2q1rk1/pp3pp1/1bn2np1/3p4/3P4/1QN2N2/PP3PPP/R1BR2K1 w | Bg5 (pin) | Engine +0.4, a2/Bb2 style moves are close; feedback says d5 "will soon fall" (a pin plus attack, plausible, not checked) [V engine for the score] |
+| 2 | 2k2B2/8/8/8/3Kp3/P2p4/2p5/8 w | Bh6 (challenge ends here) | Bh6 is the only move that holds (Bb4 is -6.2) [V engine d20]; the line then leads to bishop and a-pawn against a bare king with a dark-squared bishop, and the a-pawn queens on a light square, so the final ending is likely a draw; the feedback ("soon capture all of Black's pawns") is true but stops before that [V engine eval +0.3, I for the draw] |
+| 3 | r1b1r1k1/1pp2p1p/1n4p1/pN1p2b1/P2P4/BP3BPP/2P2P1K/3R1R2 b | Bd8 (defends c7) | Bd8 -0.7 vs Bf5 -3.7 [V engine] |
+| 4 | 1r4k1/7p/6pP/2B2p2/8/6P1/2r2PB1/6K1 w | Bd5+, then Bd4# | mate in 2 [V engine]; the second move is a mate and the banner reads "Checkmate / Winner" [V] |
+| 5 | rn1qk2r/p3bpp1/1p2pn1p/2p5/2P1P3/3B1N2/P1P1QPPP/R1B2RK1 w | e5, then Be4 (Black replies Na6), then Bxa8 | e5 +4.4 is the engine's top; "make the passive bishop active" is answered by a pawn push, then the bishop move wins the trapped rook [V engine] |
+
+Observations
+- Teaches the bishop in five roles (pin, stopping pawns from afar, defending a pawn, long-range mate, activating a passive piece), one per challenge. [V]
+- c2 shows that the chess.com position can be objectively drawn while the feedback is positive; I did not see the end of that line. [I]
+- Ends with Lesson Complete and Finish. [V]
+
+### Make the Most of Your Pieces, lesson 3 "Using Your Rooks" (5 challenges, listed 1 min) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | 1r5k/1pp2pp1/8/6P1/5P2/2P4P/1P4K1/4R3 w | Re7 (Black replies Rc8), then Rxf7 | Re7 +4.3 top [V engine]; second prompt "which pawn can you capture for free" |
+| 2 | 2r3k1/r1P3pp/5p2/8/8/7P/6P1/2RR2K1 w | Rd8+ (challenge ends) | +7.7 [V engine]; feedback names the double attack on king and rook [V] |
+| 3 | r1b1kb1r/ppppqppp/2n2n2/6B1/2BpP3/5N2/PPP2PPP/RN1QK2R w | O-O (Black takes e4), then Re1 | O-O is a deliberate bait; Re1 +7.3 [V engine]; feedback "Black falls into the trap" [V] |
+| 4 | 1R6/1R4pp/4qk2/8/4p3/7P/6P1/6K1 w | Rb6 | +7.5 [V engine]; feedback says the extra rook "should be enough to easily win", fine for a queen pinned to the king [V] |
+| 5 | 2R5/8/8/3k4/4pK2/8/8/3q4 w | Rd8+ (Black replies Kc4, scripted, not the engine's Ke6), then Rxd1 | +4.9 [V engine]; ends in rook against a pawn [V] |
+
+Observations
+- Five rook jobs: win loose pawns on the 7th, double attack, open file after a bait, pin, skewer. [V]
+- Opponent replies are scripted and not always the engine's (c5 Kc4, not Ke6). [V]
+- A challenge can end right after the first move (c2, c3 move 2 had no extra step) without a result screen beyond the message. [V]
+- Ends with Lesson Complete and Finish. [V]
+
+### Forcing Moves, lesson 2 "Combinations" (5 challenges, listed 2 min) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | r1r5/1b3Qpk/p2qp2n/2npN3/1p1P1P2/4P2R/PP4PP/2R3K1 w | Rxh6+ (Kxh6 auto), Qg6# | mate in 2 [V engine]; prompt gives the length of the mate |
+| 2 | 2r2rk1/pb3pp1/1p1bp2p/2p5/3P1q2/2P2N1P/PPQNBPPn/R3R1K1 w | g3 (Nxf3+ auto), Bxf3 | g3 +3.2 top [V engine]; the pawn move traps the queen and forces the knight capture |
+| 3 | r2q1rk1/1b2nppp/p4n2/1p6/8/P4N2/BP3PPP/R1BQR1K1 w | Qxd8 (Rxd8 auto), Rxe7 | +2.2 [V engine]; "White wins a piece" |
+| 4 | 2k2r2/2b5/8/2NK4/4P3/8/R7/8 w | Ra8+ (Bb8), Rxb8+ (Kxb8), Nd7+ | prompt "remove all of Black's pieces"; Ra8+ +8.8 [V engine]; the challenge ends after the fork move and the text says the rook falls next [V] |
+| 5 | r1b2r1k/pp4pp/3p4/4Npq1/2B5/8/PPP2PPP/R3R1K1 w | Nf7+ (Kg8), Nxg5+ | +8.2 [V engine]; feedback claims Black's rook cannot take the knight because of Re8 mate: verified, Rxf7 Re8+ is checkmate because the rook on f7 is pinned and Bc8 blocks Ra8 [V python-chess] |
+
+Observations
+- All five are the same shape: a forcing first move (check, threat, or pawn attack), then the win; difficulty rises from a mate in 2 (stated) to a position where the learner has to see a queen sacrifice already made. [V]
+- The final message after the lesson read "You took 100 Lessons!", a lifetime lesson-count milestone in the Lesson Complete screen. [V]
+- Ends with Lesson Complete and Finish. [V]
+
+### Forcing Moves, lesson 3 "Checkmate in 3 Moves" (5 challenges) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | k6r/p2RR3/2P2p2/7q/6p1/8/6PP/7K w | Rxa7+ (Kb8), Reb7+ (Kc8), Ra8# | mate in 3 [V engine]; prompt warns Black threatens mate in 1 (the race framing) |
+| 2 | 1k1r4/ppnr2pp/4p3/4Q3/1q6/6P1/PP3PBP/2RR2K1 w | Qxc7+ (Rxc7), Rxd8+ (Rc8), Rdxc8# | prompt says "only checks"; Rcxc8# is also mate but graded "an alternative" and the lesson makes you find Rdxc8# [V]; the explanation names a side line (Ka8 Qc8#) |
+| 3 | r2q1b1r/pppb1Bpp/2np1k2/5pN1/4P3/2N5/PPP2PPP/R1B1K2R w | Nd5+ (Ke5), Nf3+ (Kxe4), Nc3# | mate in 3 [V engine]; prompt hands over the idea (two knight checks into the centre) |
+| 4 | 1r4k1/5Npp/8/8/2Q5/8/1q5P/7K w | Nh6+ (Kh8), Qg8+ (Rxg8), Nf7# | double check then queen sacrifice (smothered mate) [V engine]; prompt names the double check |
+| 5 | 1k4r1/ppqR3p/2p1p3/P4n2/1Q6/5p1P/1PP4P/3R3K b | Qxh2+ (Kxh2), Rg2+ (Kh1), Ng3# | Black to move; queen sacrifice named in the prompt [V engine] |
+
+Observations
+- Difficulty climbs by how much the prompt hides: a stated race (c1), "only checks" (c2), the two knight checks (c3), the double check (c4), and finally a queen sacrifice with Black to move (c5). Ideas are named in the prompt each time, so it is guided pattern spotting, not blind calculation. [V]
+- Opponent replies are forced in every line, so the lesson never tests a choice by the defender. [V]
+- A strictly graded sequence: Rcxc8# vs Rdxc8# shows the lesson picks one of two mates as the answer and calls the other an alternative. [V]
+- Ends with Lesson Complete and Finish. [V]
+
+### Forcing Moves, lesson 4 "Queen Sacrifices" (5 challenges) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | r1b2rk1/pppp1ppp/8/2b1P3/2B3nq/5N2/PP3PPP/RNBQR1K1 b | Qxf2+ (Kh1), Qg1+ (Nxg1 or Rxg1), Nf2# | mate in 3 [V engine]; either recapture on g1 still mates, the opponent chose the rook [V] |
+| 2 | 2kr4/pp1rbppp/2n1p1q1/2p5/2PPQB2/2P2N2/P4PPP/1R1R2K1 w | Qxc6+ (bxc6), Rb8# | mate in 2 [V engine]; the text notes the other defence Rc7 loses to Qxc7# |
+| 3 | 4rk2/R4p2/1pp4p/2Pp1p1q/3P3P/1P2QPP1/P4K2/8 w | Qxe8+ (Kxe8), cxb6 | credited to GM Ivanchuk by the prompt; engine +6.7 [V engine]; a rare quiet follow-up that wins by a passed pawn, not mate |
+| 4 | 6R1/3Q3p/6bk/2p3p1/2P5/5q1P/r5PK/8 w | Qg7+ (Kh5), Qxg6+ (hxg6), Rh8# | mate in 3 [V engine] |
+| 5 | 2rq4/pb4pk/1p6/4R3/5R2/PB5P/1P1r2PK/8 w | Rh5+ (Kg6), Bf7# | prompt says the queen is already sacrificed; mate in 2 [V engine] |
+
+Observations: all mates but c3; c3 is the one "convert the sacrifice into a winning ending" example and it comes third, so the mate rhythm is broken once. Ends with Lesson Complete. [V]
+
+### Forcing Moves, lesson 5 "Saving Draws" (5 challenges) [played 8 Nov 2026]
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | k7/2Q5/1K6/8/8/8/8/4b3 b | Ba5+ (Kxa5 scripted) | skewer into stalemate [V]; engine's own first choice is the same check but it expects Kc5, so the lesson line is a trap, not a forced line [V engine] |
+| 2 | 8/Pb6/3K4/3p2k1/3Pp3/4P3/8/8 w | Kc7, Kb8, Kc7 | drive the bishop back and repeat; engine 0.00 on all [V engine]; the lesson ends on the idea of threefold repetition |
+| 3 | k4r2/bpp5/8/Q7/3p3p/7P/5qPK/4r3 w | Qxa7+ (Kxa7) | stalemate; engine 0.00 and the other tries lose [V engine] |
+| 4 | 8/2R3pk/5Qp1/1q3p2/4p3/6PP/5P1K/1r6 b | Rh1+ (Kxh1), Qf1+ (Kh2), Qxf2+ | perpetual check; engine 0.00 [V engine]; the text says Kg2 would lose to Qf1# so White must take |
+| 5 | 3B4/1r2p3/r2p1p2/bkp1P1p1/1p1P1PPp/p1P4P/PPBK4/8 w | Ba4+ (Kxa4), b3+ (Kb5), c4+ (Kc6), d5+ (Kd7), e6+ (Kxd8), f5 | a fortress: the text says Black cannot break through if White only moves the king and captures nothing. Engine says Black is much better (-6 to -7 for White from the start, +4.75 for Black after f5, depth 26). Fortress is neither confirmed nor refuted by the engine [V engine]; the real claim is a human-judgment one |
+
+Observations
+- The chain of checks in c5 is guided by hints that name only the idea ("what is White's only check") and the feedback just says "keep checking". [V]
+- Whole course ends here: lesson complete, no quiz or final game; the five lessons climb from a one-move tactic (Powerful Moves) to mate in 2 (Combinations), mate in 3, queen sacrifices, and finally defensive resources (draws), so the course ends by switching from attack to defence. [V]

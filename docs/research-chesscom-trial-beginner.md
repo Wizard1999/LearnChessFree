@@ -644,3 +644,146 @@ Observations
 - c2 hint and finish: the challenge ends after one learner move with a pawn push that sets up the capture, so the lesson rewards the setup move, not the win. [V]
 - Claims inside feedback ("a great trade for White" in c4, "White will win a piece" in c5) were not engine-checked beyond the first move. [I]
 - Ends with Lesson Complete. [V]
+
+## Capturing Pieces, lesson 7 (Skewers) [played 8 Nov 2026]
+
+Theme: attack the more valuable piece so it must move, then take the piece behind it. Every challenge is a two-move sequence (the skewer, then the capture); the opponent's step is auto-played.
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | 8/8/4k3/8/8/pq6/6QP/7K w | Qg8+, then Qxb3 | Qg8+ then Qxb3 is +14.7 [V engine]; feedback says the king "has moved, capture the queen" [V] |
+| 2 | 8/7p/p6B/2p1k3/P7/6P1/1r3P2/5RK1 w | Bg7+, then Bxb2 | +8.6 [V engine]; the bishop skewers king and rook along a diagonal [V] |
+| 3 | 2n5/1r4k1/p4p2/4b1p1/8/3B2P1/4NPK1/7R w | Rh7+, then Rxb7 | Prompt asks for the BEST skewer; Rh7+ is the only checking move and the engine's top (+6.1) [V engine]; feedback notes the rook is protected by the bishop, so the king cannot take it [V] |
+| 4 | 8/3r2p1/8/2p2k2/1pP5/1P5P/4B1P1/6K1 w | Bg4+, then Bxd7 | +4.3 [V engine]; the one quiet alternative Kf2 evaluates around -3.9 [V engine] |
+| 5 | 8/8/8/3p4/3k3B/6RP/6PK/q7 w | Bf6+, then Bxa1 | +7.8 [V engine]; the closing prompt is the open "How can White use a skewer", with the piece-grab only hinted by the on-board line [V] |
+
+Observations
+- All five challenges are the same two-move shape; difficulty rises only through board clutter (c1 is a bare endgame, c3 and c4 add defenders and extra pieces to look past). [V]
+- Only c3 has an explicit "best" framing, which teaches that a skewer needs a protected checking piece. [V]
+- Ends with Lesson Complete and Finish. [V]
+
+## Capturing Pieces, lesson 8 (Avoiding Bad Trades) [played 8 Nov 2026]
+
+Theme: choose which piece or pawn to trade with, and which recapture to use. Prompts are open ("find a good trade", "best way to capture"), and the feedback explains the reason in terms of value or structure.
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | r2r2k1/p5bp/1p2bppn/2p1p3/2N5/P2PB1P1/1P2PPBP/2R1R1K1 w | Bxa8 | +3.2 [V engine]; feedback counts rook 5 for bishop 3 [V] |
+| 2 | rnbq1rk1/ppp2ppp/4pn2/3p4/3P4/3BP1b1/PPPN1PPP/R2QK1NR w | hxg3 (recapture) | hxg3 +0.4, fxg3 -1.3 [V engine]; feedback: capture toward the centre, opens the h-file for the rook [V] |
+| 3 | 3rr1k1/1p3pp1/p4n1p/2b1p3/3nP2P/NP3P2/PBP2PB1/3RK2R b | Bxa3 (White recaptures, auto), then Nxc2+ | Bxa3 +5.4 [V engine]; the point is removing the c2 defender, then a knight fork of king and bishop [V] |
+| 4 | rnbqk1nr/ppp1bppp/4p3/3P4/3P4/2N5/PPP2PPP/R1BQKBNR b | exd5 | exd5 -0.4, the next best Nf6 -1.5 [V engine]; the lesson calls it the safe equalizing capture [V] |
+| 5 | r1b2rk1/ppq1npb1/2pp2pp/2n5/P2pP3/2N2N1P/1PP2PP1/R1BQRBK1 w | Nxd4 | +0.5 [V engine]; feedback: wins back the pawn and centralizes [V] |
+
+Observations
+- The lesson mixes colours (c3 to c4 are Black) and uses a mix of wins and quiet equalizing choices, so a "good trade" is not always a gain. [V]
+- A trade is judged by value, structure, open files and what the trade removes (c3: a defender). The lesson does not use the word "defender" in the prompt; the first hint wording was not triggered. [I]
+- c5 ends the lesson immediately after one move with Lesson Complete. [V]
+
+## Capturing Pieces, lesson 9 (Your Opponent's Move) [played 8 Nov 2026]
+
+Theme: before replying, ask what the opponent's last move threatens. Several challenges are multi-step, with scripted opponent replies. This is the last lesson of the course.
+
+| Ch | FEN (before the move) | Learner moves | Notes |
+|---|---|---|---|
+| 1 | 6K1/7P/6q1/8/8/8/6k1/8 w | Kh8 (only alternative Kf8) | Kh8 -0.7 vs Kf8 -6.8 [V engine]; feedback says the game "should soon end in a draw", which is looser than the engine's -0.7 [I] |
+| 2 | 8/6pk/8/5p2/PN3P2/6P1/3q1P1P/4R1K1 w | Rb1 | Rb1 0.0, next Re5 -0.7 [V engine]; feedback "good winning chances" overstates an equal position [I] |
+| 3 | 8/2Q2pkp/p2p2pq/4p3/4P3/1n1P4/P1P2PPP/6K1 w | cxb3 (Black replies Qc1+), then Qxc1 | cxb3 0.0, h3/h4/f4 all about -4.3 to -5.6 [V engine]; Qxc1 is the only legal move [V python-chess]; the "checkmate" Black announces is refuted by the queen on c7 covering the back rank [V] |
+| 4 | 3r2k1/4Rppp/p7/1p6/8/P7/1P3PPP/R2r2K1 w | Re1 (answer), Rxe1, Re8# | Wrong try Rxd1 got a red message naming the capture and the mate that follows; engine agrees (mate in 2) [V engine]; final move is mate, banner shows "Checkmate / Winner" [V] |
+| 5 | rn1qkb1r/ppp1pppp/5n2/1N1p1b2/3P1B2/8/PPP1PPPP/R2QKBNR b | Na6, then Nxc7, then Qxc7 | Na6 +0.1 (top); Qxc7 directly would lose to Bxc7 (-4.6) [V engine]; White's Nxc7+ and Bxc7 are auto-played; ends "defending against an unsound attack" [V] |
+
+Observations
+- Course ending: no quiz, game or recommendation; the last lesson ends with Lesson Complete and Finish like the rest. [V]
+- How the course climbs: L1 sets values, L2 to L6 add one tactic or counting skill each, L7 skewers, L8 weighs trades, L9 turns the board around (defend, then punish an unsound attack). Challenge length rises from one move to a 3-move sequence in the final challenge. [I]
+- c3 and c5 show the habit being trained: look at the opponent's reply first, including mate threats. [V]
+
+## How To Checkmate (BIAM, 15 lessons, 75 challenges listed; lessons are named mates) [played L1, 8 Nov 2026]
+Lesson order [V]: fools-mate, back-rank-mate, kiss-of-death-checkmate, damiano-mate, opera-mate, arabian-mate, morphy-mate, bodens-mate, epaulette-mate, dovetail-mate, smothered-mate-1, double-bishop-mate, legals-mate-1, anastasia-mate, forrest-gump-mate. Each lesson opens on a Start screen with an Explainer Video button.
+
+### L1 "Fool's Mate" (5 challenges) [V]
+| Ch | FEN (before the move) | Accepted line | Notes |
+|---|---|---|---|
+| 1 | rnbqkb1r/ppppp1pp/8/3n4/8/3B4/PPP2PPP/R1BQK1NR w | Qh5+ g6, Qxg6+ hxg6, Bxg6# | queen sacrifice mate in 3 [V engine]; the opening line is a made-up odd position |
+| 2 | rnbqkbnr/pppp1ppp/8/4p3/5P2/6P1/PPPPP2P/RNBQKBNR b | exf4 (gxf4 scripted), Qh4# | Qh4+ at once is graded incorrect because it is not mate yet (Kf2 escapes); the lesson wants the pawn capture that drags the g-pawn away [V] |
+| 3 | r1bqkb1r/pp1pp1pp/5n2/2p5/3n4/2NB3Q/PPP3PP/R1B1K1NR w | Qxh7 (Rxh7), Bg6# | Bg6+ at once is graded incorrect (hxg6); engine's top is the same queen sacrifice [V engine] |
+| 4 | r1bqkbnr/pppnppp1/7p/6N1/4p3/2N5/PPPP1PPP/R1BQKB1R w | Ne6 (fxe6), Qh5+ g6, Qxg6# | mate in 2 after the knight sacrifice [V engine] |
+| 5 | rn1qkbnr/pbppp1pp/1p6/5p2/3PP3/3B4/PPP2PPP/RNBQK1NR w | exf5 (Bxg2), Qh5+ g6, fxg6 (Nf6), gxh7+ (Nxh5), Bg6# | Qh5+ at once is graded incorrect; engine +2.5 for exf5 first [V engine]; ends with a discovered check and a bishop mate |
+
+Observations
+- The lesson title is a misnomer: only challenge 2 is the actual fool's-mate shape; the rest are early queen-and-bishop mates on f7/g6. [V]
+- Pattern teaching with wrong-but-natural moves graded incorrect: a check that works only after a preparatory capture is marked wrong, which makes the learner find the order of moves. [V]
+- Feedback texts are one line, often a question for the next move ("How can you checkmate?"). Lesson ends with Lesson Complete and Finish. [V]
+
+### How To Checkmate L2 "Back Rank Mate" (5 challenges) [V]
+| Ch | FEN (before the move) | Accepted line | Notes |
+|---|---|---|---|
+| 1 | 4rrk1/ppp2ppp/8/3p2q1/3P2b1/2PB1QP1/PP4P1/4RRK1 w | Qxf7+ Rxf7, Rxe8+ Rf8, Rexf8# | mate in 3 [V engine]; Rfxf8# is also mate but graded "an alternative", the lesson wants the e-rook to capture [V] |
+| 2 | 4rbk1/3Q1ppp/3p4/3P4/3q4/B7/P5PP/5R1K b | Qf2, Re1, Qxe1# | prompt names Fischer; mate in 3 after Qf2 [V engine] |
+| 3 | 4rrk1/2Q2Rpp/2p5/p7/3q4/8/2P3PP/5R1K w | Qe7, Rxf8# | queen sacrifice to remove the back-rank defender; engine +6.8 for Qe7 and mate next [V engine] |
+| 4 | 5rk1/QR4p1/4p2p/4N3/p3Pn2/q6r/5PP1/4R1K1 b | Ne2+ Kf1, Ng3+ Kg1, Rh1# | mate in 3 [V engine]; a back-rank mate where the black king is the mated piece's neighbour: it is a hidden-piece pattern, not the textbook rank mate |
+| 5 | 4k3/p3np2/1p2p3/3pP1QP/5P2/P2q4/2r3PR/4R1K1 b | Qd4+ Kh1, Qe3 (Qh4), Rc1 (Rxc1), Qxc1+ Qe1, Qxe1# | the first tries Qc3 ("an alternative") and Rxg2+ ("incorrect") are the natural ones; hint says "look for a good check" [V]; engine mate is not a forced mate from move 1 (+5.6 only) so the lesson teaches a plan, not a calculation [V engine] |
+
+Observations
+- Difficulty climbs by line length: the same mating idea (rook captures on the back rank, queen sacrifices) in 3, 3, 2+1, 3, 5 moves. The final challenge needs a five-move plan with a quiet move (Qe3) in the middle. [V]
+- The opponent's replies are scripted, sometimes not the engine's top move (c5: White plays Qh4 where the engine has other defences). [V]
+- Ends with Lesson Complete. [V]
+
+## Mastering the Endgame (BIAM, 5 lessons, 25 challenges listed) [played L1, 8 Nov 2026]
+Lesson order [V]: king-and-pawn-endgames-tips-and-tricks, king-and-pawn-endgames-airplanes-and-minefields, the-active-king-in-the-endgame, attacking-with-the-king, the-outside-passed-pawn.
+
+### L1 "King and Pawn Endgames: Tips and Tricks" (5 challenges) [V]
+| Ch | FEN | Moves played | Notes |
+|---|---|---|---|
+| 1 | 8/8/3k4/8/8/1KP5/8/8 w | Kb4 (Kc6), Kc4 (Kd6), Kb5 | prompt asks how to bring the king forward; engine: only Kb4 wins at once (+6.5), Ka3/Kc4/Kb2 are 0.00 [V engine]; the lesson ends after Kb5 without converting |
+| 2 | 3k4/8/2K5/1r6/P7/8/8/8 w | axb5 | "capture with the king or the pawn": pawn wins (mate in 12), Kxb5 draws (0.00) [V engine] |
+| 3 | 2k5/8/2K5/1P6/8/8/8/8 w | b6 (Kb8), b7 (Ka7), Kc7 | the tempting Kd6/Kc5 only draw; b6 wins [V engine]; the lesson stops once the pawn cannot be stopped |
+| 4 | 3Q1qk1/8/3P4/8/6K1/8/8/8 w | Qxf8+ (Kxf8), Kf5 (Kf7), Ke5 (Ke8), Ke6 (Kd8), d7 | queen trade into a won pawn ending (mate in 15) [V engine]; the other queen moves keep +2 to +3.7 only [V engine] |
+| 5 | 8/3k4/3P4/3K4/8/8/8/8 b | Kd8 (Ke6), Ke8 (d7+), Kd8 | the draw by opposition for the defender; only Kd8 draws, Kc8 and Ke8 lose [V engine]; closing claim "White will either lose the pawn or stalemate" is consistent with a 0.00 engine result [V engine] |
+
+Observations
+- Every challenge is a K+P ending where one specific move wins and the natural-looking alternative only draws. The prompt names the idea (opposition, king or pawn capture); the first 3 challenges are won positions, the 5th flips to defending. [V]
+- Opponent replies are scripted; lesson ends right after the point is made rather than playing out the win. [V]
+- Ends with Lesson Complete. [V]
+
+## Your First Tournament (BIAM, 4 lessons, 20 challenges listed; taught by GM Ben Finegold) [played L1, 8 Nov 2026]
+Lessons [V from the library listing]: illegal-chess-move, ..., how-to-handle-draw-claims (4 lessons; the middle two slugs were not recorded here).
+
+### L1 "Illegal Chess Move" (5 challenges, touch-move rule) [V]
+| Ch | FEN | Accepted move | Notes |
+|---|---|---|---|
+| 1 | 7k/5ppp/8/8/1Q2R3/8/6PP/q6K w | Qe1 (you have touched the queen) | White is in check, so only queen moves count; Qb1 loses (Qxb1+), Qe1 holds, engine +7.5 [V engine] |
+| 2 | rnb1kbnr/ppp1pppp/8/4q3/8/2N5/PPPP1PPP/R1BQKBNR w | Nce2 (touched the knight) | only knight moves allowed; Nce2 is the only one that is both legal and fine (+0.3), Ne4 loses [V engine] |
+| 3 | r3kbnr/ppp1pppp/2n5/4q3/6b1/2N2N2/PPPPBPPP/R1BQK2R w | Nxe5 | touched bishop is pinned and cannot move, so any move is allowed; the text says touch-move does not apply when the piece cannot move [V]; engine: Nxe5 +8.3 [V engine] |
+| 4 | r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R w | O-O | touched king; castling is accepted; other king moves not tried [V] |
+| 5 | r4rk1/p1p1qp2/bpn3pp/8/4P3/1BP1QN2/PPP2PPP/R3K2R w | O-O-O | touched king; legal king moves are only Kd2, Kd1, O-O-O [V python-chess]; Kd2 is graded incorrect ("not a good idea to move the king around in the opening"); the closing text says O-O is impossible because Bf1 is attacked: true [V python-chess] |
+
+Observations
+- The lesson teaches a rule with a position per case rule exception. The engine score is irrelevant for grading in c1-c2, c4-c5: the learner must find the best move inside the legal set. [V]
+- Ends with Lesson Complete and Finish. [V]
+
+### Your First Tournament L4 "How to Handle Draw Claims" (5 challenges, Ben Finegold) [V]
+| Ch | FEN | Accepted moves | Notes |
+|---|---|---|---|
+| 1 | 8/5k2/5P2/5K2/8/8/8/8 b | Kf8, Kg8, Kf8 | defender's draw (K+P vs K, pawn on the 6th): each move is the only drawing move [V engine]; ending text says White must stalemate or give up the pawn |
+| 2 | 5k2/8/5PK1/8/8/8/8/8 w | f7, Kg7 | same structure with White to move: now it wins (mate 13) [V engine]; the text contrasts the two |
+| 3 | r6k/2N4p/p1p1Q1p1/4pP2/2P2b2/7q/PP3P1P/R4RK1 w | Qf6+ Kg8, Qe6+ (Kg7), f6+ Kh8, Qxh3 | perpetual check draw; the opponent is scripted to blunder with Kg7 instead of repeating, and White then wins the queen (+25 engine) [V engine] |
+| 4 | 8/3R4/2p2Qpk/2P1p2p/4P2P/6r1/r7/2R4K b | Rh2+ Kxh2, Rg2+ | attributed to GM Larry Christiansen; engine 0.00 [V engine]; the text says the game will end in repetition or stalemate |
+| 5 | r1r4k/p3p2P/3ppn1Q/q5N1/1p2P3/1P1n1P2/P1P3P1/1K3B1R b | Qxa2+ Kxa2, Rxc2+ Ka1, Rc1+ Ka2, Rc2+ | perpetual check; engine 0.00 [V engine]; the lesson ends mid-repetition and says one more check pair gives a draw (three-fold counts the position, not the moves: unchecked claim [I]) |
+
+Observations: the lesson title is about claiming draws OTB, but all five challenges are about reaching a draw (stalemate, opposition, perpetual), not the claim procedure; no screen teaches how to stop the clock or notify the arbiter. [V]
+
+### Your First Tournament L3 "Chess Notation Issues" (5 challenges) [V]
+A "which move is notated as X" quiz: the learner makes the move on the board. Items: Bxc6 vs bxc6 in the same position (piece capture vs pawn capture), Nbd7 and N8d7 (disambiguation by file and by rank, in two positions), and 0-0-0 (written with zeros; the board shows it as O-O-O). All five were accepted at once with one-word feedback ("Well done"), no hints used. The prompt is a notation string and the answer is an on-board move: a reverse of the usual move-to-notation drill [V]. Order of difficulty: pieces, pawns, disambiguation by file, by rank, castling. Ends with Lesson Complete. [V]
+
+### Your First Tournament L1 "Reaching the Time Control" (5 challenges, Ben Finegold) [V]
+Start screen mentions the "orange juice game" of Nakamura and a Carlsen example (Explainer Video). Theme: positions where the player short of time should steer to a draw.
+| Ch | FEN | Accepted moves | Notes |
+|---|---|---|---|
+| 1 | (3rq2k/7p/R1pr1pp1/1p6/1P2P1bP/1Q3NP1/5P2/R5K1 w) | Qe3, Qf4, Qxf6+, Ra7 | counterplay for a draw; engine 0.00 to +0.05 along the line [V engine]; the lesson says "enough counterplay to draw", consistent |
+| 2 | 3rq1k1/R6p/2p2Qp1/1p6/1P2P2P/5bP1/5P2/R2r2K1 w | Kh2, Qe6+ | perpetual check plan; text says White can repeat checks on e6 and e5 [I]; engine ~0.00 [V engine] |
+| 3 | 1b6/1P3pk1/8/7p/3q4/5QPK/5P2/3B4 b | f5 | "trade a pawn": h4 is graded incorrect ("a free pawn for White", true); f5 accepted. Closing text: "good drawing chances"; engine gives White about +3.6 at depth 24, so the text is looser than the engine [V engine]. The real game was lost on time [V] |
+| 4 | 7k/3q4/6KP/5BP1/4R3/8/8/8 b | Qf7+ | forced stalemate: after Qf7+ White's only legal move is Kxf7 and Black is stalemated [V python-chess] |
+| 5 | (r3r1k1/1R3pp1/p1pN3p/2Q1Pn2/P4P2/2P3P1/5RKP/3q4 b) | Nh4+ gxh4, Qg4+ Kf1, Qd1+ | perpetual check; engine 0.00 [V engine]; text notes White would lose after Kh3 and h5 [I] |
+
+Observations
+- All five are "find the draw" tasks: perpetual check (c1, c2, c5), a pawn trade (c3), stalemate (c4), written for a player short on the clock. No lesson here teaches time management itself; the clock theme is the Start-screen video. [V]
+- Ends with Lesson Complete. Course ends there (4 lessons, no game, no quiz). [V]

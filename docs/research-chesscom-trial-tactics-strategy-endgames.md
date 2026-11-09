@@ -274,3 +274,94 @@ Observations
 - Challenge 2 replay (Black): Kg3, Kh3 (with White's king on h1 and Black's king on h3), then g3 was accepted, then g2, Kh2 and the pawn promotes. Section 3.1 recorded g3 as a stalemate when played one move earlier (king still on g3); I did not re-test that, so the two records are consistent only if the stalemate depends on the king's square [I, not re-verified].
 - Lesson shape: concept in the prompt (critical squares, opposition, rook-pawn draw), with 4-6 forced steps per challenge and a one-line follow-up question after each step. It is a drill of one skill, with the engine's only-move at nearly every step in challenges 1, 4 and 5 [V].
 - Two of five challenges are a stalemate trap (2) or a pure defence (5), so the learner meets "do not lose" in a minority of tasks but at the end of the lesson [V].
+
+## Introduction to Tactics (Chess Mentor format; Chess.com Team; 112 lessons listed; played 3 of them, 8 Nov 2026)
+
+Format [V]: the course page lists 112 lessons, each tagged "White to play" and "2 Challenges" (the checkmate lessons list more). The course page names four headline skills (forks, pins, discovered attacks, checkmates). The slugs are in `research-chesscom-progress-lessons.md`. The course is a flat list: no levels, no end-of-course test, no sequence signal beyond the order. Lesson titles are playful ("Salad Time", "Knightmare", "Houdini"), and the second half drifts into mates and endgame basics (lessons 108 to 112: queen mate, rook mate, opposition, square of a passed pawn, pawn structure). [V list, I for the shape]
+
+Differences from the 2018 Chess.com Team courses [V]:
+- Each lesson opens with a long expository paragraph (several hundred characters, a few lines on screen) before the board prompt, and the closing comment after a correct move is also long and written in notation ("1.Nf7+ creates a simultaneous attack...").
+- Challenges are consecutive moves of one line, not separate positions: the opponent's reply is auto-played and the next challenge starts from the resulting position (lesson 42 challenge 2 begins with the black king already moved, with no prompt text).
+- Wrong-answer text is short and nudging, there is no hint ladder in the lessons I tried beyond one Hint text (basic mate).
+
+### Lesson 1 "Win a Piece and Draw" (2 challenges)
+- c1 FEN 6k1/8/8/8/3bn3/8/4K3/8 w. Kd3 forks bishop and knight; engine says 0.0 (a draw is the objective), Kd3 top, Kd1 -2.2 [V engine]. Feedback names both black retreats and the capture that follows [V].
+- c2 (after Black's Bf6): Kxe4, which leaves king and bishop against king, "a draw is the immediate result" [V]. The lesson prompt says "ensure a draw", which the page states openly: the learner's goal is a draw, and tactics are used to defend. [V]
+
+### Lesson 42 "Royal Fork: The Knight's Two Handed Punch" (2 challenges)
+- c1 FEN 7k/pbp5/1p1q3p/4N3/8/P1P5/1P2Q1P1/6K1 w. Nf7+ is +8.6 [V engine]. A wrong try (Qe3) got "You want to use your knight to attack two pieces at once." and the board stayed in place; Retry resets it. [V]
+- c2: Nxd6 wins the queen. The closing text says it wins "a queen for a knight"; nothing is lost in this line (the knight stays on d6), so "for a knight" is loose wording. [V seen; I for the reading]
+
+### Lesson 108 "Basic Mate: King and Queen vs. King" (5 challenges, one move of one long line each)
+- c1 FEN 8/8/8/4k3/8/8/8/6KQ w. The accepted first move is the king approach Kf2. The engine's best move Qb7 (+9.6, mate in 5 or fewer in the other line) was marked incorrect with "Don't let your king get too far from the opposing monarch", as was Qf3 (same text). So the lesson grades a method, not the fastest or even a sound move. [V]
+- The single Hint text is general, not a move: a mate happens on the edge, so drive the king there. [V]
+- c2 (after Black's Kf4, scripted): Qd5, also the engine's first choice (mate in 5) [V engine]; the comment says the queen should give the king as little room as possible, not chase checks. [V]
+- I stopped here; challenges 3 to 5 not played.
+
+How difficulty climbs [I from the list and three lessons]: not visibly. Early lessons are one-motif single positions (fork, king walk); the last lessons are fundamentals. The course reads as a bank of examples, closer to a puzzle collection with commentary than to a graded curriculum.
+
+## Essential Checkmate Patterns (Chess Mentor format; FM Thomas Wolski; 130 lessons; played 2, 8 Nov 2026)
+
+Course page [V]: 130 positions from real games covering common and many uncommon mates; the page says the themes are "repeated from simple to more complex examples" and gives a ceiling of about 1600 rating. The listed order starts with named patterns (back rank, smothered, epaulettes, two rooks, Anastasia, bishop and knight, Legal, Greco, Blackburne, Mayet, Anderssen, Pillsbury, Damiano, Morphy, Arabian), then families of "finding X", "defending against X", "looking for X", "not X" (the same mate with a twist, or a refuted attempt), and ends with whole-game finales (the last lessons are named after the Evergreen game and variation and an Anderssen game). Slug list in `research-chesscom-progress-lessons.md` (pattern only). [V list]
+
+### Lesson 1 "The Classical Back Rank Mate" (1 challenge)
+- FEN 4r1k1/3p1pp1/2rP3p/p1P4B/P2p4/1Q6/5PPP/6K1 b (Black to move, board flipped). Re1# (rook e8 to e1) [V]. The prompt asks "Was this a wise sacrifice?" and gives the history (a queen was lured to b3). A wrong-answer test was not run.
+- Closing text explains the pattern in about 150 words: why the king is trapped by three pawns, the deflection that preceded it [V].
+- The lesson has one challenge, so the course is a bank of single mates, not a ladder. [V]
+
+### Lesson (late) "The Evergreen Game" (5 challenges; a full finish)
+- The page header names the game "Andersson-Dufresne, Berlin 1954"; as I recall, the well-known game is Anderssen against Dufresne, Berlin 1852, so the page text looks mistyped in both name and year [R, not looked up; flag for checking].
+- Sequence (one learner move per challenge, opponent replies auto-played): 1 Rxe7+ (the page says it is the only reasonable continuation), 2 Qxd7+ (queen sacrifice), 3 Bf5+ (double check), 4 Bd7+, 5 Bxe7#. Start FEN 1r2k1r1/pbppnp1p/1b3P2/8/Q7/B1PB1q2/P4PPP/3RR1K1 w. [V]
+- Engine checks [V engine]: at the start the engine prefers Rxe7+ Kd8 Be4... (its score is -1.0 at depth 14; the lesson line is the famous sacrifice, so this one is a human/historical line and the engine's first move agrees with the lesson's first move). At challenge 3 Bf5+ is mate in 3 and the "other" double check Bb5+ scores about -45 for White (the lesson says only that it "does not lead to anything tangible"; the real verdict is much worse for White). At the end fxe7+ is also mate, as the page says [V python-chess].
+- Hints by prompt: the prompt text is a nudge ("Don't even think about regaining some material", "The end is near") rather than a question. [V]
+- Course ending: finale lessons are full historical games shown as 5 consecutive challenges; no end-of-course screen seen (Lesson Complete and Finish only). [V]
+
+## Exclusively Checkmates and Pawn Endings: Beginner to Expert (Chess Mentor format; first and last lessons sampled, 8 Nov 2026)
+
+### Exclusively Checkmates (99 lessons; Chess.com Team)
+- Course page [V]: promises "every essential checkmate"; no level ladder. Order [V list]: opens with idea-vocabulary lessons ("A First Step", "A Common Denouement"), then named mates (Fool's, Scholar's, Legal's, Boden's), then 50-odd "king in trouble" titles, and ends with a "basic mating pattern" block (Damiano, back rank, Arabian, smothered, swallow's tail, two rooks on the seventh, epaulette).
+- Lesson 1 "A First Step" (1 challenge): FEN 6rk/6pp/8/4N3/8/6PP/6PK/8 w, Nf7# [V]. The long intro says strong players do not see far, they chain one- and two-move ideas from a vocabulary; the closing text names the smothered mate and says it is over a thousand years old [claim not checked, R]. Single mate-in-1, ends with Lesson Complete. [V]
+
+### Pawn Endings: Beginner to Expert (87 lessons; page credits IM Eric Tangborn and FM Thomas Wolski)
+- Order [V list]: starts with opposition (three lessons), the square of the pawn, king and pawn versus king (critical squares, rook pawn), then breakthroughs and related squares, then studies and master games (Reti 1922, Salvioli, Taimanov-Cuellar, Alekhine-Yates, Flohr-Capablanca, Pachman-Ilivitsky, Aronin-Smyslov), and ends with "just in time", "drawing resource" and "mutual confusion". Difficulty climbs by topic, then by the number of challenges per lesson (1 early, 13 in the last one). [V list, I for the climb]
+- Lesson 1 "King ending: the Opposition" (1 challenge): K vs K, Black to move; Ke6 takes the opposition and the lesson says the side to move loses ground. [V]
+- Lesson 87 "Mutual Confusion" (13 challenges, from a real game, Wolski against Peters, 1997): the intro cites a grandmaster's warning about trading into king-and-pawn endings. Challenge 1 FEN 8/2p5/1p1p3k/3P4/p1PpK3/5P2/1P6/8 b.
+  - Kg5 is marked correct ("activates the king and eyes the f3 pawn"); b5 is marked incorrect with "White could draw after 2.cxb5". [V seen]
+  - Engine check [V engine, Stockfish 19 lite single thread]: Kg5 +6.0 at depth 26 and +6.3 at depth 32; b5 is also winning (+5.7 at depth 26), and after 2.cxb5 the position (8/2p5/3p3k/1P1P4/p2pK3/5P2/1P6/8 b) is still about +6 for Black with Kg5. So the claim "White could draw after cxb5" is not supported by the engine. Candidate chess.com error, not confirmed by tablebase (too many pieces) and worth a second engine run before it is used anywhere. [V engine for the numbers, I for the verdict]
+
+## Pawns vs Pieces (free first lesson; NM Elijah Logozar; 5 lessons of about 7 min and 5 challenges each; lesson 1 played, 8 Nov 2026)
+Course page [V]: three questions (when pawns overpower pieces, how a GM sacrificed every piece for pawns, when a piece dominates pawns). Lessons: Pawns Overrun Carlsen's Position, Anand's Amazing Sacrifice, Pawns Assisting the Attack, Sacrificing Every Piece, The Pieces Win. The last lesson flips the theme (pieces beat pawns). [V list]
+
+Lesson 1 "Pawns Overrun Carlsen's Position" [V; engine-checked]
+| Ch | FEN | Learner moves | Notes |
+|---|---|---|---|
+| 1 | 4kb1r/1pB2ppp/rpn1pn2/3p4/bPpP4/N1P1P3/3N1PPP/R3KB1R b | Nxb4 (cxb4 auto), then Bxb4 | Nxb4 +3.1 top [V engine]; the sacrifice gives development for a piece |
+| 2 | r7/2kb3p/3bp3/1p1p1p2/2pP4/r1P2BPP/P1R1RP2/4N1K1 b | b4 (cxb4 auto), Bxb4; then Bxe1 (Kxe1 auto), Rxf3 | b4 +4.6 [V engine]; a Hint button text read "Remove the defender of the white bishop" [V]; ends "White resigned in GMjkiko - CoachJKane, 2021", which is a different game from the Nyback-Carlsen game named in the title, so the lesson mixes two games [V] |
+| 3 | r1r3k1/1q2bppp/2p1p3/ppPpN2n/1P1P4/P1NQP2P/5PP1/RR4K1 b | axb4 | axb4 -0.3 top [V engine]; "with the queenside pawns blocked, Black has a solid position" |
+| 4 | r1r3k1/2q1bppp/2p1p3/ppPpN2n/1P1P4/P1NQP2P/5PP1/RR4K1 w | a4 (axb4 auto), axb5 (bxc3 auto), Nxc6 | a4 +1.4 top [V engine]; "White's passed pawns are far more dangerous than Black's extra piece" |
+| 5 | 4rbk1/2q2ppp/4p3/1PnpN3/3P4/4P2P/1Q3PP1/R5K1 w | b6 (Qb7 auto), then Qb5 (Ra8 auto), Rxa8 (Qxa8 auto), dxc5 | engine's top is b6 then dxc5 (+4.8); dxc5 was graded "is an alternative" and Ra7 "is a strong move, but White preferred a strong fork", while Nc6 and Nd7 were "incorrect: Black has a safe position"; only Qb5 (fork of rook and knight) was accepted [V] |
+
+Observations [V]
+- New feedback category: a third verdict, "is an alternative" (neither green nor red): the engine's best move is accepted as reasonable but not credited, because the lesson wants the game move. This is the first time I saw it in the free first lesson of this course; the challenge does not advance. [V]
+- The hint ladder is a text line that names an idea ("Remove the defender of the white bishop"). [V]
+- Opponent replies are auto-played from the real game, as in the 2018 courses. [V]
+
+## King Activity in the Endgame (free first lesson; GM Romain Edouard; 5 lessons, listed 12 min and 5 challenges each; lesson 1 challenge 1 played, 8 Nov 2026)
+Course page [V]: five annotated endgames (Rubinstein, Kramnik, Meco-Benitez, Hammer, Topalov); the page quotes a member saying the summaries at the end of each example make the strategy clear. The slugs are `king-activity-in-the-endgame-<name>`. The course reads as a series of whole-game lessons, each ending with the author's summary. [V list, I for the format]
+
+Lesson 1 (Rubinstein) challenge 1: FEN 8/pp2kppp/4p3/8/1Pr5/P3PP2/3K1P1P/R7 w, "What move gives White the best chance to hold this difficult rook ending?" [V]
+- Rg1 (engine's first choice, -0.1) was marked "is an alternative: reasonable, but it's best to prevent the Black rook from reaching the h-file"; Rh1 and h4 were "incorrect: there's a better move"; the hint named the idea (block the rook with an f-pawn); f4 was accepted (engine -0.1, within 0.1 of Rg1) [V; V engine]. So the lesson accepts one move out of several that the engine rates equal, and it says so with the "alternative" verdict. The accepted-move feedback says Black has "a minute advantage" and White should hold with precise play, which matches the engine's near-zero score [V engine].
+- Not played: challenges 2 to 5, lessons 2 to 5.
+
+## Refute the Sacrifice (NM Jeremy Kane; 16 lessons, 1 challenge each on the page; lesson 1 played, 8 Nov 2026)
+Course page [V]: "How can you win after your opponent plays a dangerous sacrifice?" Three promises: defend against flawed sacrifices, give material back at the right moment, counter-attack like top players. Lesson list [V]: the-ultimate-blunder, anands-resourcefulness, the-best-known-2100-player-in-the-world, giving-back-material, a-world-championship-counterattack, carlsens-extra-queen, svidlers-calculation, larsens-greed-pays-off, hikarus-optimism-punished, refuting-the-moller-gambit, a-dragon-defends-itself, what-to-do-with-two-queens, a-missed-opportunity, opposite-side-castling, a-surprise-sacrifice, a-wild-finish. Format: each lesson is one multi-move challenge from a real game (single challenge counter, several learner moves). Difficulty: no visible ladder; the opening lessons ("keep the game going") are plain defences and the later ones are named after famous players. [V list, I for the format]
+
+Lesson 1 "The Ultimate Blunder" (1 challenge, 2 learner moves) [V; engine-checked]
+- FEN 1r6/6p1/2pR2Bk/2n1pPp1/p1P1P3/1qQ4K/r7/7R b. The prompt says Black resigned here but accurate defence would have won. Engine: Ra1 is +6.7 for Black at depth 22, so the claim holds [V engine]. Then (after White's Rh2, scripted) Rg1, accepted with "White has no way to avoid the trade of queens and then Black's material advantage will decide" [V seen; the no-way-to-avoid claim was not separately checked, I].
+- The comment ends with a short general rule (find the threat and prevent it) [V]. Lesson Complete and Finish follow. [V]
+
+## How To Analyze Your Games (NM Matt Jensen with streamer Lula Robs; 5 lessons, 89 min, 25 challenges; released 11/8/2022; lesson 1 challenge 1 played, 8 Nov 2026)
+Course page [V]: "You have played a chess game. What's next?" The idea is that the instructor and a student analyze the student's own recent games together and learn from mistakes. Lessons (13 to 24 min each, 5 challenges): Opposite Side Castling, Keeping Up the Pressure, Thunder From a Blue Sky, King Safety Comes First, Keeping Control. Related: Learn From Your Mistakes, What You Should Always Do, The Carlsbad Structure. [V list]
+- Format [V]: the lesson Start screen offers an Explainer Video button next to Start (not watched; most of the 13 to 24 listed minutes per lesson are video). The challenges are positions from the student's own games.
+- Lesson 1 challenge 1: FEN r2q1rk1/1p1nbppp/2p2n2/3p2B1/p2P1PP1/2NQP2P/PP2N3/2KR3R w, "What's the fastest way for White to kickstart the kingside attack?" [V]. Engine says White is worse (-1.6) here [V engine]. h4 was marked incorrect with "Black's attack is coming faster than White's" and a nudge toward "a strong forcing option"; Bxf6 was accepted (Black recaptures with the bishop, scripted) and then g5 was accepted ("White's attack comes with a threat and the position is highly imbalanced"; engine -1.1 both) [V]. So the lesson teaches analysis as a race: count whose attack is faster, prefer forcing moves.
+- Not played: challenges 2 to 5, lessons 2 to 5. How the course ends not seen. For the project: this is the only course I have seen that is about reviewing one's own games; its method is instructor commentary plus candidate-move challenges, with no learner-written notes. [I]

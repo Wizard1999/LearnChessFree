@@ -165,3 +165,62 @@ No chess.com claim here was found wrong, except the single overstatement in ch5 
 
 ### 13.5 Techniques the school does not use [I]
 - Guess-the-winner's-moves scoring inside one long challenge, and the question-ending coach comment that creates a next want every move. Worth testing against our explain-then-test lessons.
+
+## Learn the Scandinavian Defense (Learn-the-X opening course; 3 lessons: theory, a middle lesson, model game; lesson 1 challenges 1 and 2 played, 8 Nov 2026)
+Format [V]: the Start screen has an Explainer Video button beside Start; lesson 1 has 10 challenges, each a "what move here" position reached by auto-played opening moves. I played challenges 1 and 2 only; lessons 2 and 3 not played (the last lesson of every Learn-the-X course is named "model game", see the list file). [V]
+
+| Ch | Position | Learner move(s) | Notes |
+|---|---|---|---|
+| 1 | after 1.e4 d5 2.e5, Black to move (FEN rnbqkbnr/ppp1pppp/8/3pP3/8/8/PPPP1PPP/RNBQKBNR b) | c5 | The prompt says any second move by White besides exd5 gives Black an easy game (an opinion, not engine-checked). c5 +0.13, Bf5 +0.04, a6 +0.03, d4 -0.05 in White's favour terms are all within 0.2 [V engine]; the lesson accepts c5, feedback "White can't easily occupy the center with more than just the e-pawn" [V] |
+| 2 | after 1.e4 d5 2.exd5 Qxd5 3.d4, Black to move (rnb1kbnr/ppp1pppp/8/3q4/3P4/8/PPP2PPP/RNBQKBNR b) | e5, (White dxe5 auto), then Qxd1+ | e5 is the engine's top (about -0.3, i.e. slightly better for White) [V engine]. Capturing Qxe5+ got the verdict "is an alternative: OK but there's an even better capture"; Qxg2 got "incorrect"; the hint said "Trade queens to prevent White from castling"; Qxd1+ was accepted with the explanation that White's king is stuck in the center [V]. |
+
+Observations [V]
+- "Is an alternative" appears here too (second place after Pawns vs Pieces and King Activity): the opening course accepts a reasonable move but pushes to the lesson's main idea. [V]
+- The hint names a strategic idea (stop castling), the first wrong answer names no idea. [V]
+- The comment claim "Black is doing well" after 2.e5 c5 is mild optimism; the engine sees equal. [V engine, I]
+
+## Play Like Hikaru Nakamura, lesson 1 "Zherebukh vs Nakamura" (Master Games; 5 lessons, one game each; first 2 moves played, 8 Nov 2026)
+- Course page [V]: five lessons, each a Nakamura game; the slug pattern is play-like-hikaru-<white>-vs-<black>; the same pattern holds for the other "Play Like" courses (list file). The page frames the series as learning a player's habits (this one: winning quickly with Black).
+- Lesson format [V]: the lesson counter shows "Challenge 1/1", but inside it the learner plays the black moves of the real game one at a time, with the opponent's moves auto-played; the prompts are coaching nudges ("What piece should you develop next?", "How should you keep developing?") rather than puzzles. FEN at the start: rn1qkbnr/pp2pppp/2p3b1/8/3P4/6NN/PPP2PPP/R1BQKB1R b; the first two accepted moves were Nf6 and Nbd7, which are also the engine's two top choices (-0.2 for Black in White's favour terms; Nf6 -0.16, Nbd7 -0.21) [V engine].
+- Not played: the rest of the game (the number of moves, the final comment, and the lesson end were not seen).
+
+## Learn the Queen's Gambit Exchange Variation (BI, 3 lessons, 21 min) [played L1 c1-5, 8 Nov 2026]
+Lessons [V]: learn-the-queens-gambit-exchange-variation (10 challenges), ...-thematic-tactics, ...-model-game. Start screen text promises both sides' ideas plus the Tarrasch and Semi-Tarrasch (Explainer Video button).
+
+L1 is a 10-challenge mix of plans for both colours, tactics after typical mistakes, and the Tarrasch and Semi-Tarrasch structures; challenges 1-5 are:
+| Ch | FEN (before the move) | Accepted | Notes |
+|---|---|---|---|
+| 1 | rn1qkb1r/pp3ppp/2p2n2/3p1bB1/3P4/2N1P3/PP3PPP/R2QKBNR w | Qf3 (Bg6), Bxf6 (Qxf6), Qxf6 | the prompt "damage Black's pawn structure": the immediate Bxf6 is graded "incorrect" because Qxf6 recaptures and Black has a good position; Qf3 first makes gxf6-style recapture forced. Engine +0.27 for Qf3 [V engine] |
+| 2 | rn1qk1nr/pp3ppp/2p3b1/3p4/3P1BPb/2N1P3/PP3P2/R2QKBNR w | Qb3 (b6), Rxh4 (Qxh4), Nxd5 (cxd5), Bb5+ (Nd7), Bxd7+ (Kxd7), Qxd5+ (Kc8), Rc1+ (Bc2), Rxc2# | punishing "an unsound pawn grab" (Black's Bh4); Qxd5 at the tenth step is graded "an alternative" and the lesson wants Bb5+, but the engine prefers Qxd5 (+6.7 versus +4.9 for Bb5+ at depth 26, which is still winning) [V engine d26]: the lesson's "even better move" is not the engine's best. A candidate discrepancy; both win |
+| 3 | (r1bqkbnr/pp3ppp/2n5/2pp4/3P4/2N2N2/PP2PPPP/R1BQKB1R w) | g3, Bg2 | Tarrasch structure; the prompt says the bishop should go to take advantage of d5; engine puts dxc5 first (+0.46) and g3 at +0.07, so the plan is thematic not engine-best [V engine] |
+| 4 | rnbqkb1r/ppp2ppp/4p3/8/3PP3/2P5/P4PPP/R1BQKBNR b | c5, cxd4 (cxd4), Bb4+ (Bd2), Bxd2+ | Semi-Tarrasch-like plan: attack the centre, then trade the white-squared bishop; engine -0.64 for White after c5 [V engine] |
+| 5 | rnbqkb1r/ppp2ppp/5n2/3p4/3P1B2/2N5/PP2PPPP/R2QKBNR b | Bd6 | prompt: White's Bf4 instead of Bg5 is inaccurate; Bf5 is graded "an alternative" ("develops and attacks the f4-bishop" is the lesson's wording); engine rates c6, Bf5 -0.17 and Bd6 -0.24 so the choice is a teaching preference, not a strict best [V engine] |
+
+Observations
+- A long first lesson (10 challenges, listed course time 21 min for all 3 lessons) mixing both sides, tactics and structures; difficulty does not climb in a line. [V]
+- The "alternative" verdict appears twice in five challenges: the lesson keeps a single teaching move even when the engine has another equal or better. [V]
+- Unplayed: L1 challenges 6-10, L2 thematic tactics, L3 model game (the course ends with a model game, by the title). [V from the lesson list]
+
+### Learn the Queen's Gambit Exchange Variation L1, challenges 6-10 [played 8 Nov 2026, V]
+| Ch | FEN (before the move) | Accepted | Notes |
+|---|---|---|---|
+| 6 | rn1qkb1r/ppp2ppp/5n2/3p1bB1/3P4/2N5/PP2PPPP/R2QKBNR w | Bxf6 (Qxf6), Nxd5 | "Black's Bf5 was premature"; engine +1.19 for Bxf6 and +1.67 after Nxd5; the text says White wins a pawn [V engine] |
+| 7 | rnbqk2r/pp2bppp/2p2n2/3p2B1/3P4/2N1PN2/PP3PPP/R2QKB1R b | Bf5 | the learner develops the bishop that White's slow move order allowed; engine puts h6 first (0.00) and Bf5 at -0.21, so the lesson's choice is thematic [V engine]; text: White usually plays Qc2 or Bd3 early to prevent Bf5 |
+| 8 | r1bqr1k1/pp2bp1p/2p1nnp1/3p4/3P4/2NBPN1P/PPQ2PPB/R4RK1 b | Ng7, Bf5 | prepares Bf5 first; engine's top is also Ng7 (-0.17) [V engine] |
+| 9 | 4r1k1/1p3pnp/2pq1np1/3p4/1P1P4/r1N1PN1P/2Q2PP1/1R3RK1 w | b5, bxc6 | minority attack; engine top b5 (+0.21) [V engine]; text cites a real game (So - Hracek 2016) won a pawn but drew [R from the page, not checked] |
+| 10 | r2q2k1/pp2rppp/2p1b1n1/8/3PP1n1/2NB3P/PP1QN1P1/R4RK1 b | N4e5 (dxe5), Nxe5, Rd7, Bc4, Bxd3 | a knight sacrifice then a pin on the bishop; Bc4 at once is graded incorrect ("White is OK and can meet Rd7 with Nd5"), Nxd3 is "an alternative", Bxd3 is the accepted one; final text claims Black has an extra pawn and a good position, engine: Black ahead by about 2.6 at depth 22 [V engine] |
+
+Observations
+- The last challenge is a 5-move sequence led by one-line "how should you ..." prompts and ends on a sacrifice line from a game; the climb is toward longer guided sequences, not harder single choices. [V]
+- In L1 the lesson graded "alternative" three times (Qxd5 in c2, Bf5 in c5, Nxd3 in c10), twice where an engine considers the alternative equal or better (c2: engine prefers the alternative; c5: Bf5 at -0.17 is better than the lesson's Bd6 at -0.24). [V engine]
+- Ends with Lesson Complete and Finish. [V]
+
+### Learn the Queen's Gambit Exchange Variation L3 "Model Game" (listed as 1 challenge) [played the first 10 White moves, 8 Nov 2026, V]
+- Start screen: GM Boris Avrukh beats FM Merlijn Donk; the page says the game follows Polugaevsky - Tal for 21 moves ("it pays to study the classics"). The whole game is ONE challenge ("Challenge 1/1"): the learner plays every White move, Black's replies are scripted, and each White move gets a one-line verdict. [V]
+- Moves accepted so far (White): e4, bxc3, cxd4, Bd2, Qxd2, Bc4, O-O, Rad1 (position starts after 1.d4 d5 2.c4 e6 3.cxd5 exd5 4.Nc3 c5 5.Nf3 Nf6 6.Bg5-type Semi-Tarrasch transposition [I], FEN rnbqkb1r/pp3ppp/4p3/2pn4/3P4/2N2N2/PP2PPPP/R1BQKB1R w).
+- Verdicts: Bd3 graded "incorrect" (Nc6 hits d4; engine -0.14 versus 0.00 for h4), Rd1 and Rfe1 graded "an alternative" ("White moved another rook first"), Be2 "incorrect"; so the lesson insists on the actual game move order, and the engine's top choices (h4 in one position, Rfe1 at +0.48 in another) are marked less right. [V, engine d18-20]
+- The learner is told when a move is "OK" but not the game move, so the model game teaches game-move recall rather than the best move. [I]
+- Not finished: the remaining 12 or so White moves and the ending screen. [not played]
+
+### QG Exchange L3 model game, continued (8 Nov 2026, late session) [V seen]
+After Rfe1 the single challenge continued: d5 (centre break; "Good move", next prompt about keeping the bishop), Bd3 (accepted; Bf1 was the engine's first choice at d16, +0.8, Bd3 +0.5, both fine), e5 (accepted, prompt about the clever bishop-scope move), then "bring your queen to a safe square on the kingside". Qe2 was graded "an alternative" (engine about -0.1) and Qf4 accepted (engine first choice, +0.8, d16) [V engine]. Next prompt: the sacrifice to expose the king, Bxh7+, accepted; Black's scripted reply Kxh7; the final Ng5+ step was in progress (engine first choice, +1.7) when the tab was navigated away by something outside my actions (it landed on the local Scholarmate app), so the ending screen was NOT seen. Pattern: the model game is one long challenge with about 15 White moves, hints name the idea ("a safe square on the kingside"), and "alternative" verdicts again match engine-playable moves. Note: two clicks right after a scripted reply were ignored; wait a second after each reply.

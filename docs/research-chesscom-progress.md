@@ -34,7 +34,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |24|perfect-chess-games|Perfect Chess Games|Master Games|M|Jeremy Kane|5||||listed|
 |25|my-best-loss|My Best Loss|Master Games|M|CC|4|20|61||listed|
 |26|how-i-became-a-five-time-world-champion|How I Became A Five Time World Champion|Master Games|M|V. Anand|10|50|391|y|played-partly|
-|27|refute-the-sacrifice|Refute The Sacrifice|Tactics|M|Jeremy Kane|16||||listed|
+|27|refute-the-sacrifice|Refute The Sacrifice|Tactics|M|Jeremy Kane|16||||played-L1|
 |28|the-ten-most-beautiful-chess-moves|The Ten Most Beautiful Chess Moves|Tactics|M|Jeremy Kane|11||||listed|
 |29|play-like-a-chess-streamer|Play Like A Chess Streamer|Master Games|M|Jeremy Kane|5||||listed|
 |30|scc-tactics|SCC Tactics|Master Games|M|CC|15|58|173||listed|
@@ -43,7 +43,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |33|play-like-a-world-champion-the-carlsen-years|Play Like A World Champion: The Carlsen Years|Master Games|M|Jeremy Kane|5||||listed|
 |34|play-like-daniel-naroditsky|Play Like Daniel Naroditsky|Master Games|M|Jeremy Kane|5||||listed|
 |35|play-like-a-world-champion-anand|Play Like a World Champion: The Anand Years|Master Games|M|Jeremy Kane|3||||listed|
-|36|how-to-analyze-your-games|How To Analyze Your Games|Strategy|-|Matt Jensen|5|25|89||listed|
+|36|how-to-analyze-your-games|How To Analyze Your Games|Strategy|-|Matt Jensen|5|25|89||played-L1-c1|
 |37|learn-the-openings|Learn Every Chess Opening|Openings|M|CC|50|||y|played-partly|
 |38|learn-the-catalan-opening|Learn The Catalan|Openings|M|CC|3|21|21||listed|
 |39|learn-the-indian-defenses-and-the-black-knights-tango|Learn The Indian Defenses And The Black Knights' Tango|Openings|M|CC|3|21|20||listed|
@@ -96,7 +96,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |86|advanced-piece-values|Advanced Piece Values|Strategy|AM|Larry Kaufman|5|25|73||listed|
 |87|leonid-kubbels-studies|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||||listed|
 |88|modern-chess-masterpieces|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|91||listed|
-|89|pawns-vs-pieces|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|38|y|listed|
+|89|pawns-vs-pieces|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|38|y|played-L1|
 |90|grind-like-magnus-carlsen|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|98||listed|
 |91|world-championship-preparation|World Championship Preparation|Openings|M|Romain Edouard|5|25|87||listed|
 |92|the-top-10-games-of-the-1980s|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|146||listed|
@@ -124,7 +124,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |114|the-10-best-games-of-the-1990s|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|183||listed|
 |115|how-levon-aronian-became-americas-newest-super-grandmaster|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|51||listed|
 |116|how-to-play-the-kings-indian-attack|How To Play The King's Indian Attack|Openings|M|Dejan Bojkov|5|25|51|y|listed|
-|117|king-activity-in-the-endgame|King Activity In The Endgame|Endgames|-|Romain Edouard|5|25|76|y|listed|
+|117|king-activity-in-the-endgame|King Activity In The Endgame|Endgames|-|Romain Edouard|5|25|76|y|played-L1-c1|
 |118|candidate-moves|Candidate Moves|Strategy|IAM|K. Kavutskiy|5|25|59||played-partly|
 |119|play-like-ian-nepomniachtchi|Play Like Ian Nepomniachtchi|Master Games|-|Jeremy Kane|5||||listed|
 |120|play-like-a-world-champion-fischer-and-karpov|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||||listed|
@@ -175,7 +175,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |165|online-nations-cup-highlights-1|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|101||listed|
 |166|play-like-max-euwe-1|Play like Max Euwe|Master Games|M|Jeremy Kane|5||||listed|
 |167|play-like-emanual-lasker|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||||listed|
-|168|learn-the-queens-gambit-exchange-variation|Learn the Queen's Gambit Exchange Variation|Openings|BIAM|CC|3|21|28||listed|
+|168|learn-the-queens-gambit-exchange-variation|Learn the Queen's Gambit Exchange Variation|Openings|BIAM|CC|3|21|28||played-L1-all-10; L3-first-17-moves-ending-not-seen; L2-not-played|
 |169|learn-the-queens-gambit-declined|Learn the Queen's Gambit Declined|Openings|BIAM|CC|3|21|24||listed|
 |170|learn-the-queens-gambit-cambridge-springs-and-orthodox-defense|Learn the Queens Gambit: Cambridge Springs and Orthodox Defense|Openings|BIAM|CC|3|21|23||listed|
 |171|top-five-moves-legends-edition|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|112||listed|
@@ -229,7 +229,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |219|the-carlsbad-pawn-structure|The Carlsbad Pawn Structure|Strategy|M|Dejan Bojkov|6|30|109||listed|
 |220|play-like-mvl|Play Like Maxime Vachier-Lagrave|Master Games|M|Jeremy Kane|5||||listed|
 |221|play-like-vishy|Play Like Vishy Anand|Master Games|M|Jeremy Kane|5||||listed|
-|222|play-like-hikaru|Play Like Hikaru Nakamura|Master Games|M|Jeremy Kane|5||||listed|
+|222|play-like-hikaru|Play Like Hikaru Nakamura|Master Games|M|Jeremy Kane|5||||played-L1-first-2-moves|
 |223|play-like-fabiano|Play Like Fabiano Caruana|Master Games|M|Jeremy Kane|5||||listed|
 |224|play-like-magnus|Play Like Magnus Carlsen|Master Games|M|Jeremy Kane|5||||listed|
 |225|how-to-play-the-philidor-defense|How to Play the Philidor Defense|Openings|AM|Ben Finegold|10|50|81||listed|
@@ -290,19 +290,19 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |280|nakamuras-kings-indian-defense|Nakamura's King's Indian Defense|Openings|M|Simon Williams|5|25|77||listed|
 |281|basic-attacking-plans|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|89||listed|
 |282|knights-vs-bishops|Knights vs Bishops|Strategy|M|Dejan Bojkov|5|25|90||listed|
-|283|your-first-tournament|Your First Tournament|Strategy|BIAM|Ben Finegold|4|20|37||listed|
+|283|your-first-tournament|Your First Tournament|Strategy|BIAM|Ben Finegold|4|20|37||played-all-4-lessons (L1 reaching-the-time-control, L2 illegal-chess-move, L3 notation, L4 draw claims)|
 |284|get-better-at-bullet|Get Better at Bullet|Strategy|IAM|Aman Hambleton|5|25|48||listed|
 |285|spicy-openings-the-evans-gambit|Spicy Openings: The Evans Gambit|Openings|M|Simon Williams|5|25|86||listed|
 |286|chess-psychology|Chess Psychology|Strategy|M|Lawrence Trent|5|25|75||listed|
 |287|how-to-sacrifice-your-queen|How To Sacrifice Your Queen|Attacking|M|Mike Klein|6|30|102||listed|
 |288|the-funniest-chess-games-of-all-time|The Funniest Chess Games of All Time|Master Games|IAM|K. Kavutskiy|6|30|49||listed|
 |289|hikaru-plays-to-win|Hikaru Plays to Win|Master Games|M|Hikaru Nakamura|6|29|139||listed|
-|290|mastering-the-endgame|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|70||listed|
+|290|mastering-the-endgame|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|70||played-L1|
 |291|immortal-games|Immortal Games|Master Games|M|Simon Williams|5|25|53||listed|
 |292|games-that-changed-chess-history|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|150||listed|
-|293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||listed|
-|294|make-the-most-of-your-pieces|Make the Most of Your Pieces|Misc|I|CT|7|35|18||played-partly|
-|295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-partly|
+|293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||played-L1-2 (lesson list recorded)|
+|294|make-the-most-of-your-pieces|Make the Most of Your Pieces|Misc|I|CT|7|35|18||played-L1-3|
+|295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-L1-5-all (L2-5 fully)|
 |296|intro-to-book-openings|Intro to Book Openings|Misc|B|CT|5|25|21||played-all-lessons|
 |297|activating-your-pieces|Activating Your Pieces|Misc|A|CT|10|53|66||played-partly|
 |298|opening-principles|Opening Principles|Misc|B|CT|5|26|26||played-L1-2|
@@ -314,7 +314,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |304|winning-the-game|Winning the Game|Misc|B|CT|5|25|16||played-partly|
 |305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly|
 |306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-all-lessons|
-|307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-partly|
+|307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-L2-9|
 |308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons (L1 partly)|
 |309|understanding-endgames|Understanding Endgames|Misc|I|CT|7|35|21||played-partly|
 |310|learn-to-play-chess|Learn To Play Chess|Misc|B|CT|13|65|18|y|played|
@@ -380,12 +380,12 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |370|chess-traps-and-miniatures-part-1-quick-knockouts|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||||listed|
 |371|a-kaleidoscope-of-openings|A Kaleidoscope of Openings|Openings|BIAM|CT|90||||listed|
 |372|build-your-technique|Build Your Technique|Misc|M|Thomas Wolski|116||||listed|
-|373|pawn-endings-beginner-to-expert|Pawn Endings: Beginner to Expert|Endgames|BIAM|CT|87||||listed|
-|374|basic-checkmates-and-more|Basic Checkmates and More|Misc|BIAM|CT|77||||listed|
+|373|pawn-endings-beginner-to-expert|Pawn Endings: Beginner to Expert|Endgames|BIAM|CT|87||||lesson-list-only; played-L1,L87 (L87 c1 only)|
+|374|basic-checkmates-and-more|Basic Checkmates and More|Misc|BIAM|CT|77||||lesson-list-only|
 |375|rook-and-other-endgames|Rook and Other Endgames|Endgames|IAM|Jeremy Silman|39||||listed|
 |376|endings-openings-a-taste-of-the-middle|Endings, Openings, a Taste of the Middle|Misc|IAM|CT|84||||listed|
 |377|chess-potpourri|Chess Potpourri|Misc|AM|CT|102||||listed|
-|378|introduction-to-tactics|Introduction to Tactics|Tactics|BIAM|CT|112||||listed|
+|378|introduction-to-tactics|Introduction to Tactics|Tactics|BIAM|CT|112||||played-L1,42,108|
 |379|knight-versus-bishop-part-2|Knight versus Bishop (Part 2)|Endgames|M|Dejan Bojkov|14||||listed|
 |380|critical-challenges|Critical Challenges|Misc|M|CT|12||||listed|
 |381|silmans-lessons-in-strategy-2|Silman's Lessons in Strategy (2)|Strategy|M|Jeremy Silman|51||||listed|
@@ -398,11 +398,20 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |388|intermediate-tactics|Intermediate Tactics|Tactics|IAM|CT|76||||listed|
 |389|knight-endgames-pt-2-both-sides-have-knights|Knight Endgames (Pt 2) - Both Sides Have Knights|Endgames|IAM|Dejan Bojkov|10||||listed|
 |390|bent-the-great|Bent the Great|Master Games|M|Dejan Bojkov|9||||listed|
-|391|essential-checkmate-patterns|Essential Checkmate Patterns|Attacking|BIAM|Thomas Wolski|130||||listed|
-|392|exclusively-checkmates|Exclusively Checkmates|Attacking|BIAM|CT|99||||listed|
+|391|essential-checkmate-patterns|Essential Checkmate Patterns|Attacking|BIAM|Thomas Wolski|130||||played-L1,evergreen|
+|392|exclusively-checkmates|Exclusively Checkmates|Attacking|BIAM|CT|99||||lesson-list-only|
 |393|master-your-technique|Master Your Technique|Strategy|M|Thomas Wolski|52||||listed|
 |394|knight-endgames-part-1|Knight Endgames (Part 1)|Endgames|IAM|Dejan Bojkov|18||||listed|
 |395|step-up-in-tactics|Step Up in Tactics|Tactics|IAM|CT|63||||listed|
 
 ## Per-lesson played log (round 3, 8 Nov 2026) [V]
 Played to the end (notes in the files named): Playing the Game L3 (beginner), Intro to Book Openings L2 (beginner), Endgame Patterns L3 Lucena, Advanced Tactics L1, Attacking the King L1, Choosing the Best Move L1, Activating Your Pieces L1, Advanced Endgames L1 (all in research-chesscom-trial-advanced.md), Key Openings L2 (all 5 challenges), Candidate Moves L1 (c1 and c2 only). Earlier rounds are listed in the other research-chesscom-trial-*.md files. Free column "y" marks only first-lesson access; in this session no lesson showed a daily-limit wall.
+
+## Re-prioritised queue (coordinator, 8 Nov 2026, after Forcing Moves)
+Order requested: (1) B badge (mixed badges go with their lowest level), (2) I-only, (3) A-only, (4) M / Mastery; inside a level, strands we ship first (rules, tactics, endgames, openings basics, strategy). Counts of rows by badge string [V from the Lv column]: B 8, BI 1, BIAM 29, I 4, A 7, AM 41, IAM 48, M 248, none 9.
+Order actually followed (updated as it happens):
+1. Forcing Moves (I) finished first as instructed (L2-L5 played in full this segment).
+2. B level: winning-the-game gaps, then how-to-checkmate (BIAM, 15 lessons, rules/checkmate strand), mastering-the-endgame (BIAM), your-first-tournament (BIAM), then the 3-lesson "Learn the X" opening courses (BI/BIAM) first 2 lessons each.
+
+### Order actually followed after Forcing Moves (8 Nov 2026)
+Your First Tournament (all 4), How To Checkmate L1-2, Mastering the Endgame L1, Learn the Queen's Gambit Exchange Variation L1 (10 challenges) and most of L3 model game. Not updated: Scandinavian row. Count by level: B/BIAM 4 courses touched (about 8 lessons + QG partial); I-only: Forcing Moves L2-5 finished.
