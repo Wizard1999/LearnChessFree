@@ -15,7 +15,7 @@ function bundle(lessons: LessonMeta[], skills: Skill[], withItems: string[] = []
 
 describe('path view', () => {
   const skills = [skill('A'), skill('B', ['A.D1'])]
-  const ls = [lesson('a', 'A', 1, 'S0'), lesson('b', 'B', 2, 'S0'), lesson('c', 'A', 3, 'S1'), lesson('x', 'A', 4, 'S1', { course: 'extras' }), lesson('L-SC-S0-1', 'A', 5, 'S1', { course: 'stage-checks', role: 'assessment' })]
+  const ls = [lesson('a', 'A', 1, 'S0'), lesson('b', 'B', 2, 'S0'), lesson('c', 'A', 3, 'S1'), lesson('x', 'A', 4, 'S1', { course: 'extras' }), lesson('L-SC-S0-1', 'A', 5, 'S1', { role: 'assessment' })]
   const run = (progress: LessonProgress[], nextId?: string) => buildPath({ content: bundle(ls, skills, ['A.D1']), masteries: new Map(), placement: NO_PLACEMENT, progress, nextId })
 
   it('shows only the core route, never course lessons', () => {

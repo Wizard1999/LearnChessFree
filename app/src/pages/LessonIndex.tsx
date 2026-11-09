@@ -129,7 +129,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   // Mission progress (D76): the Khan-style view of the Map's old side panel, per section. A stage's skills are those of its lessons; a subject is a mission.
   const overallSum = summarize(md.overall.nodes)
   const mapOpen = open.isOpen('skillmap', false)
-  const explain = `Overall progress is the average level of all ${overallSum.n} skills, counting only what you have shown (Mastered counts 4 of 4, Level two 3, Level one 2, Seen 1). ${view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}`
+  const explain = `Overall progress is the average level of all ${overallSum.n} skills, counting only what you have shown: each skill sits at one of five stages (Not started, Seen, Guided, Independent, Mastered) and the ring is the average of them. ${view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}`
   const mission = md.ctx && md.overall.nodes.length > 0 ? (
     <div className="donutrow overallmission">
       <Donut size={150} percent={overallSum.percent} assumed={overallSum.percentWithAssumed} label="overall" />

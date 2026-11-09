@@ -45,6 +45,7 @@ export function LessonPage() {
       <LessonBody key={lesson.id} meta={lesson} />
       <ReviewPanel key={`rev-${lesson.id}`} lessonId={lesson.id} />
       {lesson.course && <RelevantSkills lesson={lesson} />}
+      {lesson.samePosition && lesson.samePosition.length > 0 && <p className="small muted" data-testid="same-position">This position also appears in the core lesson{lesson.samePosition.length > 1 ? 's' : ''} {lesson.samePosition.map((id, i) => <span key={id}>{i > 0 && ' · '}<Link to={`/lesson/${id}`}>{lessonById.get(id)?.title ?? id}</Link></span>)}.</p>}
       {(() => { const c = connectionsFor(lesson, lessons, skillById); const row = (label: string, ls: typeof lessons) => ls.length > 0 && <p className="small" key={label}><strong>{label}:</strong> {ls.map((l, i) => <span key={l.id}>{i > 0 && ' · '}<Link to={`/lesson/${l.id}`}>{l.title}</Link></span>)}</p>
         return (c.buildsOn.length + c.leadsTo.length + c.usedIn.length + c.uses.length > 0) && <section className="card connected" aria-label="Connected lessons"><h2>Connected lessons</h2><p className="small muted">Each idea is taught once; these lessons link to it or from it.</p>{row('Builds on', c.buildsOn)}{row('Uses', c.uses)}{row('Leads to', c.leadsTo)}{row('Seen in a course', c.usedIn)}</section> })()}
     </main>

@@ -8,7 +8,7 @@ const L = (id: string, skill: string, role: Lesson['role'], order: number, extra
   ({ id, skill, role, order, depth: 'D1', title: id, steps: [], stepCount: 0, stepRefs: [], review: { status: 'x' }, ...extra })
 
 describe('lesson roles', () => {
-  const ls = [L('cont', 'T.A', 'continuation', 5), L('check', 'T.A', 'assessment', 1, { course: 'stage-checks' }), L('intro', 'T.A', 'intro', 9), L('app', 'T.A', 'application', 2, { course: 'c' })]
+  const ls = [L('cont', 'T.A', 'continuation', 5), L('check', 'T.A', 'assessment', 1, {}), L('intro', 'T.A', 'intro', 9), L('app', 'T.A', 'application', 2, { course: 'c' })]
   it('offers the introduction first even when a check or application comes earlier on the path', () => {
     expect(primaryLesson(ls, 'T.A')?.id).toBe('intro')
   })

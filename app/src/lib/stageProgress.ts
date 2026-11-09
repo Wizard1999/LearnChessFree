@@ -1,5 +1,5 @@
 // Progress by stage of the recommended path. Two separate measures, never merged:
-// 'lessons finished' (completed a lesson, or marked it done) and 'shown in exercises' (evidence at Level one or better).
+// 'lessons finished' (completed a lesson, or marked it done) and 'shown in exercises' (evidence at Guided or better).
 import type { LessonMeta } from '../types'
 import type { Mastery } from './mastery'
 import { PATH_STAGES } from './pathStages'
@@ -15,7 +15,7 @@ export interface StageProgress {
   /** Of the finished ones, how many were marked done without doing them. */
   skipped: number
   skills: number
-  /** Skills of the stage with a depth shown reliable in exercises (Level one or better). */
+  /** Skills of the stage with a depth shown reliable in exercises (Guided or better). */
   shown: number
   /** The first stage with an unfinished lesson. */
   current: boolean

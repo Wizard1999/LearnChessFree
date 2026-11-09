@@ -13,11 +13,11 @@ export function connectionsFor(lesson: LessonMeta, lessons: LessonMeta[], skillB
   // prerequisite skills of this lesson's depth (and of any skill it teaches)
   const preNodes = new Set<string>()
   for (const n of teaches(lesson)) for (const p of skillById.get(n)?.depths?.[lesson.depth]?.prereqs ?? []) if (nodeOf(p) !== n) preNodes.add(nodeOf(p))
-  const buildsOn = uniq([...preNodes].flatMap(byNode)).filter(l => !l.course)
+  const buildsOn = uniq([...preNodes].flatMap(byNode)).filter(l => !l.course && l.role !== 'assessment')
   const mine = teaches(lesson)
   const needsMine = (l: LessonMeta) => [...teaches(l)].some(n => Object.values(skillById.get(n)?.depths ?? {}).some(d => (d.prereqs ?? []).some(p => mine.has(nodeOf(p)) && !teaches(l).has(nodeOf(p)))))
-  const leadsTo = uniq(lessons.filter(l => l.id !== lesson.id && !l.course && needsMine(l)))
+  const leadsTo = uniq(lessons.filter(l => l.id !== lesson.id && !l.course && l.role !== 'assessment' && needsMine(l)))
   const usedIn = uniq(lessons.filter(l => l.id !== lesson.id && l.course && (l.uses ?? []).some(u => mine.has(u))))
-  const uses = uniq((lesson.uses ?? []).flatMap(byNode)).filter(l => !l.course)
+  const uses = uniq((lesson.uses ?? []).flatMap(byNode)).filter(l => !l.course && l.role !== 'assessment')
   return { buildsOn, leadsTo, usedIn, uses }
 }

@@ -89,6 +89,9 @@ def build():
         return r
 
     explicit = {lid: (st, i) for i, (lid, st) in enumerate(EXPLICIT)}
+    # each stage ends with its stage check (D81): a core assessment, pinned to the last place of its stage
+    for l in lessons:
+        if l.get("role") == "assessment" and l["id"].startswith("L-SC-S"): OVERRIDE[l["id"]] = int(l["id"][6])
 
     def stage_of(l):
         if l["id"] in explicit: return explicit[l["id"]][0]
@@ -103,14 +106,14 @@ def build():
     for l in lessons:
         sk = skills[l["skill"]]
         info[l["id"]] = {"stage": stage_of(l),
-                         "key": (stage_of(l), explicit[l["id"]][1] if l["id"] in explicit else 999, sk.get("tier", 9), rank(f"{l['skill']}.{l['depth']}"), l["skill"], l["depth"], l["id"])}
+                         "key": (stage_of(l), explicit[l["id"]][1] if l["id"] in explicit else (99999 if l.get("role") == "assessment" else 999), sk.get("tier", 9), rank(f"{l['skill']}.{l['depth']}"), l["skill"], l["depth"], l["id"])}
     order0 = sorted(lessons, key=lambda l: info[l["id"]]["key"])
 
     # prerequisite lessons of each lesson: lessons that teach exactly a prerequisite skill depth
     pre_of = {}
     for l in lessons:
         sk = skills[l["skill"]]
-        keys = list(sk.get("depths", {}).get(l["depth"], {}).get("prereqs", []))   # hard prerequisites only; soft ones are a teaching hint, not a rule
+        keys = [] if l.get("role") == "assessment" else list(sk.get("depths", {}).get(l["depth"], {}).get("prereqs", []))   # hard prerequisites only; soft ones are a teaching hint, not a rule. A stage check tests many skills; its stage decides its place (D81)
         pre_of[l["id"]] = {x for k in keys for x in by_key.get(k, []) if x != l["id"]}
     # topological pass that keeps the intended order wherever it is already valid
     idx = {l["id"]: i for i, l in enumerate(order0)}
@@ -133,6 +136,12 @@ def build():
     top = 0
     for lid in out:
         top = max(top, info[lid]["stage"]); stages[top].append(lid)
+    # a stage check closes its own stage even when prerequisite pulls moved later lessons past it (D81)
+    for l in lessons:
+        if l.get("role") == "assessment" and l["id"].startswith("L-SC-S"):
+            for st in stages:
+                if l["id"] in st: st.remove(l["id"])
+            stages[int(l["id"][6])].append(l["id"])
     return {"version": 1, "built_from": "tools/build_path.py",
             "stages": [{"id": sid, "title": title, "milestone": ms, "lessons": stages[i]} for i, (sid, title, ms) in enumerate(STAGES)]}
 
@@ -149,6 +158,7 @@ def check(doc):
     lessons = {f.stem: load(f) for f in (C / "lessons").glob("*.json")}
     for l in lessons.values(): by_key.setdefault(f"{l['skill']}.{l['depth']}", []).append(l["id"])
     for lid, l in lessons.items():
+        if l.get("role") == "assessment": continue   # a stage check is placed by its stage, not by its label skill (D81)
         sk = skills[l["skill"]]
         keys = list(sk.get("depths", {}).get(l["depth"], {}).get("prereqs", []))
         for k in keys:

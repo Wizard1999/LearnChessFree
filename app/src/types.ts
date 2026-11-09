@@ -114,6 +114,8 @@ export interface LessonMeta {
   /** Opening series (several lessons on one opening). */
   series?: string
   uses?: string[]
+  /** Core lessons that show a position this elective also shows (derived by tools/build_content.py). A note, never a gate. */
+  samePosition?: string[]
   /** Other skill nodes this lesson also teaches (a lesson has one main skill; coverage of the rest is recorded here). */
   also?: string[]
   stepCount: number

@@ -29,7 +29,7 @@ describe('node levels come from evidence', () => {
     const c3 = ctxFor([F], { 'F.D1': m('reliable'), 'F.D2': m('practising') }, { F: ['D1', 'D2'] })
     expect(nodeProgress(F, c3).level).toBe(2)
   })
-  it('a refresher that is due caps Mastered at Level two and flags it', () => {
+  it('a refresher that is due caps Mastered at Independent and flags it', () => {
     const n = nodeProgress(F, ctxFor([F], { 'F.D1': m('reliable'), 'F.D2': m('refresh') }, { F: ['D1', 'D2'] }))
     expect(n.level).toBe(3); expect(n.due).toBe(true)
   })
@@ -91,13 +91,13 @@ describe('spaced repetition (D77)', () => {
   const A2 = skill('A2', 'S3', 2)
   const reliable = (days: number) => ({ ...m('reliable', 5000), successDays: days })
   const level = (days: number) => nodeProgress(A2, ctxFor([A2], { 'A2.D1': reliable(days), 'A2.D2': reliable(days) }, { A2: ['D1', 'D2'] })).level
-  it('success on one day cannot reach Mastered: the most it gives is Level two', () => {
+  it('success on one day cannot reach Mastered: the most it gives is Independent', () => {
     expect(level(1)).toBe(3)
   })
   it('success again on another day reaches Mastered', () => {
     expect(level(2)).toBe(4)
   })
-  it('a skill with a single practised depth is held at Level one for the same reason', () => {
+  it('a skill with a single practised depth is held at Guided for the same reason', () => {
     const one = skill('A3', 'S3', 2, { D0: [], D1: [] })
     expect(nodeProgress(one, ctxFor([one], { 'A3.D1': reliable(1) }, { A3: ['D1'] })).level).toBe(2)
     expect(nodeProgress(one, ctxFor([one], { 'A3.D1': reliable(2) }, { A3: ['D1'] })).level).toBe(4)

@@ -77,7 +77,7 @@ describe('top bar (D72)', () => {
     expect(btn.getAttribute('aria-expanded')).toBe('true')
     const panel = container.querySelector('#mission-panel')!
     expect(panel.querySelectorAll('.tierrow')).toHaveLength(11) // the original breakdown: one row of water-fill blocks per subject
-    expect(panel.querySelector('.tierrow .blocks .blk')?.getAttribute('aria-label')).toMatch(/: (Not started|Seen|Level one|Level two|Mastered)/)
+    expect(panel.querySelector('.tierrow .blocks .blk')?.getAttribute('aria-label')).toMatch(/: (Not started|Seen|Guided|Independent|Mastered)/)
     expect(panel.querySelector('.donutrow')).toBeNull() // the whole-curriculum ring is the one in the card, not drawn twice
     expect(container.querySelectorAll('.lessonindex .blk, .lessonindex .missionrow')).toHaveLength(0) // never inside the stage lists
     // choosing one section shows its ring, its tiers and the icon-only warm-up

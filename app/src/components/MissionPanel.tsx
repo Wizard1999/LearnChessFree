@@ -8,7 +8,7 @@ import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
 import { lessonsForSkill } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { LEVEL_HELP, LEVEL_NAMES, STRAND_NAMES, type Level, type Mission, type NodeProgress } from '../lib/missions'
-import { coreLessonsOf } from '../lib/coreLessons'
+import { teachingCoreOf } from '../lib/coreLessons'
 import { useMissionData } from '../lib/useMissions'
 
 export function Block({ n, selected, seen, onPick, onHover }: { n: NodeProgress; selected: boolean; seen: boolean; onPick: (id: string) => void; onHover: (n: NodeProgress | null, el?: HTMLElement) => void }) {
@@ -50,7 +50,7 @@ export function MissionPanel({ data, picked, onPick }: { data: ReturnType<typeof
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const mission: Mission | undefined = isAll ? undefined : missions.find(m => m.strand === view)
   const current: Mission = mission ?? overall
-  const core = coreLessonsOf(content.lessons) // the panel is the core's (D80)
+  const core = teachingCoreOf(content.lessons) // the panel is the core's (D80)
   const lessonSeen = (id: string) => core.some(l => (l.skill === id || l.also?.includes(id)) && progress?.some(p => p.lessonId === l.id)) // a lesson opened, even if not finished
   const lessonsFor = (id: string) => { const s = lessonsForSkill(core, id); return s.teaching.length ? s.teaching : s.alsoTeaching }
   const lessonIdsOf = (nodes: NodeProgress[]) => core.filter(l => nodes.some(n => n.id === l.skill || l.also?.includes(n.id)))
@@ -83,7 +83,7 @@ export function MissionPanel({ data, picked, onPick }: { data: ReturnType<typeof
           </ul>
         </div>
       </>}
-      <p className="small muted">{isAll ? 'Overall' : 'Section'} progress is the average level of {isAll ? 'all' : "the mission's"} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
+      <p className="small muted">{isAll ? 'Overall' : 'Section'} progress is the average level of {isAll ? 'all' : "the mission's"} {current.nodes.length} skills, counting only what you have shown: each skill sits at one of five stages (not started, seen, guided, independent, mastered) and the ring is the average of them.{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
       <Button variant="quiet" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</Button>
       {showBreakdown && isAll && missions.map(m => (
         <div key={m.strand} className="tierrow">

@@ -1,7 +1,7 @@
 import { RadialMap } from '../components/RadialMap'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
-import { coreLessonsOf } from '../lib/coreLessons'
+import { coreLessonsOf, teachingCoreOf } from '../lib/coreLessons'
 import { LessonIndex } from './LessonIndex'
 import { CoursesView } from './CoursesView'
 import { describeMastery } from '../lib/mastery'
@@ -30,7 +30,7 @@ function useNarrow(): boolean {
 
 /** Choice chips. A row (`menu` off) wraps inside the bar and never scrolls sideways; a menu is one button that opens the chips above the map and closes when a choice is made.
  * On a phone every group is a menu. */
-const MAP_HELP = 'Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. Every skill is a block. A block fills as your evidence grows: seen, level one (the idea when it is named), level two (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.'
+const MAP_HELP = 'Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. Every skill is a block. A block fills as your evidence grows: seen, guided (the idea when it is named), independent (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.'
 
 function ChipGroup({ label, current, menu = false, children }: { label: string; current: string; menu?: boolean; children: ReactNode }) {
   const narrow = useNarrow()
@@ -68,7 +68,7 @@ export function Course() {
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const [why, setWhy] = useState<string | null>(null)
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
-  const homeStages = useMemo(() => skillHomeStages(content.skills, coreLessonsOf(content.lessons)), [content.skills, content.lessons])
+  const homeStages = useMemo(() => skillHomeStages(content.skills, teachingCoreOf(content.lessons)), [content.skills, content.lessons])
   const hereStage = useMemo(() => currentStageIndex(coreLessonsOf(content.lessons), new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
   if (!ctx || !attempts) return <main className="page"><h1 className="sr-only">Loading</h1><p className="muted">Loading…</p></main>
@@ -167,7 +167,7 @@ export function Course() {
                 {more.checks.map(l => lessonRow(l))}
               </details>}
               <details><summary>Every depth in detail</summary>
-                {node.cuedTop && <p className="small muted">The deepest exercises for this skill name or cue the idea, so Level two or Mastered here means reliable when the idea is named or cued.</p>}
+                {node.cuedTop && <p className="small muted">The deepest exercises for this skill name or cue the idea, so Independent or Mastered here means reliable when the idea is named or cued.</p>}
                 <dl>{Object.keys(sk.depths).sort().map(d => { const m = ctx.masteries.get(`${node.id}.${d}`); const dep = sk.depths[d]; return (
                   <div key={d}><dt>{d} <span className="muted small">· {node.depths.find(x => x.depth === d)?.status ?? 'outline only'}</span></dt>
                     <dd>{dep.outcome}{m ? <span className="muted small"> {describeMastery(m)}</span> : null}</dd></div>) })}</dl>

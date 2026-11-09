@@ -38,7 +38,7 @@ export interface PathStageView {
 }
 
 /** The lessons the Path shows: the core route (courses are Electives and never appear on the Path). */
-export const isPathLesson = (l: LessonMeta): boolean => !l.course && l.order !== undefined && !!l.stage
+export const isPathLesson = (l: LessonMeta): boolean => !l.course && l.role !== 'assessment' && l.order !== undefined && !!l.stage
 
 export interface PathInput {
   content: ContentBundle
@@ -52,7 +52,7 @@ export interface PathInput {
 export function buildPath({ content, masteries, placement, progress, nextId }: PathInput): { stages: PathStageView[]; nextId?: string } {
   const byId = new Map(progress.map(p => [p.lessonId, p]))
   const doneSkills = new Set<string>(), lessonSkills = new Set<string>()
-  for (const l of content.lessons) for (const s of [l.skill, ...(l.also ?? [])]) { lessonSkills.add(s); if (byId.get(l.id)?.done) doneSkills.add(s) }
+  for (const l of content.lessons.filter(x => x.role !== 'assessment')) for (const s of [l.skill, ...(l.also ?? [])]) { lessonSkills.add(s); if (byId.get(l.id)?.done) doneSkills.add(s) }
   const core = content.lessons.filter(isPathLesson).sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
 
   const missingFor = (l: LessonMeta): PathTile['missing'] => {

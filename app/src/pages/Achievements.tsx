@@ -11,7 +11,7 @@ export function badgesFor(missions: Mission[], correctRun: number): Badge[] {
   for (const m of missions) {
     const live = m.nodes.filter(n => !n.noExercises)
     if (live.length === 0) continue
-    if (live.every(n => n.level >= 2)) out.push({ id: `${m.strand}:found`, title: `Foundations: ${m.name}`, detail: `All ${live.length} skills with exercises are at Level two or above.` })
+    if (live.every(n => n.level >= 2)) out.push({ id: `${m.strand}:found`, title: `Foundations: ${m.name}`, detail: `All ${live.length} skills with exercises are Independent or Mastered.` })
     if (live.every(n => n.level === 4 && !n.due)) out.push({ id: `${m.strand}:done`, title: `Section complete: ${m.name}`, detail: `All ${live.length} skills with exercises are Mastered and none is due for a refresher.` })
   }
   if (correctRun >= 20) out.push({ id: 'run20', title: '20 in a row', detail: 'Twenty unlabeled first attempts in a row, right and without hints.' })
@@ -46,7 +46,7 @@ export function Achievements() {
     <section className="card">
       <h2>Badges and certificate</h2>
       <p className="small muted">Badges record what you have shown, not how much you have clicked. There are no points.</p>
-      {badges.length === 0 ? <p className="muted">None yet. The first ones are Foundations (every skill in a section at Level two) and Section complete.</p> : (
+      {badges.length === 0 ? <p className="muted">None yet. The first ones are Foundations (every skill in a section Independent or better) and Section complete.</p> : (
         <ul className="plain">{badges.map(b => <li key={b.id}><strong>✓ {b.title}</strong> <span className="muted small">{b.detail}</span></li>)}</ul>
       )}
       <div className="row">

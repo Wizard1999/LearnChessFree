@@ -1,6 +1,6 @@
 // Which lines the radial map draws, and how brightly (Andrew, 9 Nov 2026; docs/map-visual-direction.md). Pure functions, no DOM.
 //
-// "Completed" = the lesson-level notion the map's readiness already uses: Level one or better (progress level >= 2). One notion for both the
+// "Completed" = the lesson-level notion the map's readiness already uses: Guided or better (progress level >= 2). One notion for both the
 // fill-in of a skill and the lines, so a skill you have finished is never shown as still needing its lines.
 //   - A line glows with the share of its TARGET skill's prerequisites that are completed: none done = a faint soft glow, all done = the strongest.
 //   - A line between two completed skills is not drawn: the line has done its job. A completed skill whose every neighbour is completed has no lines

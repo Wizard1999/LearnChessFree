@@ -22,7 +22,7 @@ def jload(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 
 
 # Keys of a lesson that go into the catalog (everything the lists, the map and the daily plan need); the rest travels with the steps in the lesson's body file.
-CATALOG_KEYS = ("id", "role", "revision", "title", "skill", "depth", "order", "stage", "review", "course", "series", "uses", "also")
+CATALOG_KEYS = ("id", "role", "revision", "title", "skill", "depth", "order", "stage", "review", "course", "series", "uses", "also", "samePosition")
 HASHED = ("skills", "items", "items-first", "verified", "courses", "lessons-catalog")
 
 
@@ -137,10 +137,21 @@ def main():
     # lesson roles: the introduction of a skill, a continuation, a course application or an assessment (explicit "role" in the source wins)
     first_of = {}
     for l in sorted(lessons, key=lambda x: (x["skill"], x["depth"], x.get("order", 9999))):
-        if not l.get("course") and l["skill"] not in first_of: first_of[l["skill"]] = l["id"]
+        if not l.get("course") and l.get("role") != "assessment" and l["skill"] not in first_of: first_of[l["skill"]] = l["id"]
     for l in lessons:
         if l.get("role"): continue
         l["role"] = ("assessment" if l.get("course") == "stage-checks" else "application") if l.get("course") else ("intro" if first_of.get(l["skill"]) == l["id"] else "continuation")
+    # a position of an elective shown in a core lesson too: the elective links to that core lesson (D81; no gate, check_overlap keeps its exemption for deep dives)
+    fen_of = {i["id"]: " ".join(i["fen"].split()[:4]) for i in items}
+    def shown(l): return {st[k] for st in l.get("steps", []) for k in ("item", "working", "failing", "irrelevant") if st.get(k) in fen_of for st in [st]}
+    core_by_fen = {}
+    for l in lessons:
+        if not l.get("course"):
+            for iid in shown(l): core_by_fen.setdefault(fen_of[iid], set()).add(l["id"])
+    for l in lessons:
+        if l.get("course"):
+            same = sorted({c for iid in shown(l) for c in core_by_fen.get(fen_of[iid], ())})
+            if same: l["samePosition"] = same
     verified = {}
     for it in items:
         recs = ev_by_item.get(it["id"], [])
@@ -153,6 +164,7 @@ def main():
         """Write stem.<hash of the bytes>.json and return its name."""
         b = dump(obj); name = f"{stem}.{hashlib.sha256(b).hexdigest()[:12]}.json"; (OUT / name).write_bytes(b); return name
     courses = [jload(f) for f in sorted((ROOT / "content" / "courses").glob("*.json"))] if (ROOT / "content" / "courses").exists() else []
+    for c in courses: c["summary"] = c.get("summary", "").replace("{count}", str(len(c.get("lessons", []))))   # a course says how many lessons it has by derivation, not by hand (D81)
     # remove the hashed files and lesson bodies of earlier builds, so the folder holds exactly one build
     import re
     for f in OUT.glob("*.json"):

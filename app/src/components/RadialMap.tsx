@@ -142,7 +142,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
   const listRef = useRef<HTMLDivElement>(null)
   // the list follows the map: when it opens, the picked skill is scrolled into view
   const level = (id: string) => Math.min(4, progress.get(id)?.level ?? 0)
-  /** How ready a skill is to be started: the share of its prerequisite skills that are at Level one or better. A skill with none is ready at once. */
+  /** How ready a skill is to be started: the share of its prerequisite skills that are Guided or better. A skill with none is ready at once. */
   const readiness = useMemo(() => {
     const parents = new Map<string, string[]>()
     for (const e of layout.edges) parents.set(e.to, [...(parents.get(e.to) ?? []), e.from])
@@ -150,7 +150,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
     for (const n of layout.nodes) { const ps = parents.get(n.id) ?? []; m.set(n.id, ps.length ? ps.filter(p => (progress.get(p)?.level ?? 0) >= 2).length / ps.length : 1) }
     return m
   }, [layout, progress])
-  /** Each prerequisite is worth an equal share of the way into a skill (3 prerequisites: a third each). A prerequisite counts fully at Level one and partly before that. */
+  /** Each prerequisite is worth an equal share of the way into a skill (3 prerequisites: a third each). A prerequisite counts fully when Guided and partly before that. */
   /** Completion as the average level reached, as a percentage (the same sum the Progress window uses), for the whole map, each section, region and stage. */
   const pct = useMemo(() => {
     const mean = (ids: string[]) => (ids.length ? Math.round((100 * ids.reduce((sum, id) => sum + Math.min(4, progress.get(id)?.level ?? 0), 0)) / (4 * ids.length)) : 0)

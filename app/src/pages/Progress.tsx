@@ -55,7 +55,7 @@ export function ProgressReport() {
       {stages.some(s => s.lessons > 0) && (
         <section className="card pathstages">
           <h2>Your path</h2>
-          <p className="small muted">Eight stages, in order. "Lessons finished" counts lessons you completed or marked done. "Shown in exercises" counts skills where your answers, without hints, reached Level one or better. A finished lesson is not proof that you can use the idea.</p>
+          <p className="small muted">Eight stages, in order. "Lessons finished" counts lessons you completed or marked done. "Shown in exercises" counts skills where your answers, without hints, reached Guided or better. A finished lesson is not proof that you can use the idea.</p>
           <ol className="pathlist">{stages.map(s => (
             <li key={s.id} data-hue={hueOfStage(s.index)} className={s.current ? 'pathstage current' : 'pathstage'} aria-current={s.current ? 'step' : undefined}>
               <h3><ArtEmblem seed={s.id} />Stage {s.index}: {s.title}{s.current && <span className="badge here">You are here</span>}</h3>

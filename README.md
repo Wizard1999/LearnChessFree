@@ -1,6 +1,6 @@
 # Chess learning system — project index
 
-Status (2026-11-09): Scholarmate is a live beta (app, content pipeline and review tooling built). The core curriculum is 396 lessons over 206 skills; elective course lessons (112) are separate bonus study after the core (D80). Open questions for Andrew: `QUESTIONS-AND-GATES.md`. My own calls: `DECISIONS-LOG.md`. The visible plan is `ROADMAP.md`.
+Status (2026-11-09): Scholarmate is a live beta (app, content pipeline and review tooling built). The core curriculum is 401 lessons over 206 skills (each stage ends with its stage check, D81); elective course lessons (107) are separate bonus study (D80). Open questions for Andrew: `QUESTIONS-AND-GATES.md`. My own calls: `DECISIONS-LOG.md`. The visible plan is `ROADMAP.md`.
 
 | File | What it is |
 |---|---|

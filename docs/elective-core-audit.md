@@ -1,5 +1,7 @@
 # Elective / core audit (D80, 9 Nov 2026)
 
+**Decisions (D81, Andrew):** (b) the five stage checks became core lessons, each closing its stage; the nine opening deep dives stay bonus and now note "This position also appears in the core lesson X"; (c) the 14 beyond-depth lessons stay bonus. The tables below are the audit as run before these changes (electives 112, core 396; now 107 and 401).
+
 Andrew: electives and the core should be different things, with no duplicate lessons. This audit classifies each of the 112 elective lessons against the 396 core lessons. Method [V]: `content/lessons/*.json` read by script; items and positions compared by id and by FEN (first four fields) with every core lesson; skill and depth compared with the core's. No lesson file was moved, edited or deleted.
 
 ## Counts

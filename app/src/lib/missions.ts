@@ -8,7 +8,7 @@ import { prereqMet, statusOf, type NodeStatus, type Placement } from './progress
 import { pickFresh, shuffled } from './select'
 
 export type Level = 0 | 1 | 2 | 3 | 4
-export const LEVEL_NAMES = ['Not started', 'Seen', 'Level one', 'Level two', 'Mastered'] as const
+export const LEVEL_NAMES = ['Not started', 'Seen', 'Guided', 'Independent', 'Mastered'] as const
 export const LEVEL_HELP = [
   'No lesson viewed and no exercise tried.',
   'You have viewed the lesson or tried exercises, but the evidence is not yet reliable.',
@@ -45,7 +45,7 @@ export interface NodeProgress {
   level: Level
   /** The level if the assumed depths were taken as met. Equal to `level` when nothing is assumed. */
   levelWithAssumed: Level
-  /** The deepest depth that has exercises has only cued ones (cue 1-2), so Level two or Mastered here means "reliable when named or cued". */
+  /** The deepest depth that has exercises has only cued ones (cue 1-2), so Independent or Mastered here means "reliable when named or cued". */
   cuedTop: boolean
   due: boolean
   assumed: boolean
@@ -86,7 +86,7 @@ export function nodeProgress(skill: Skill, ctx: MissionContext): NodeProgress {
     if (depthNames.some(d => status(d) !== 'unseen') || lessonDone) level = 1
     if (hasD1 && met('D1')) level = 2
     if (hasD2 && met('D2')) level = 3
-    // Mastered needs real evidence at the deepest practiced depth, a refresher not overdue, and success on two separate days (spacing, D77): one sitting reaches Level two at most.
+    // Mastered needs real evidence at the deepest practiced depth, a refresher not overdue, and success on two separate days (spacing, D77): one sitting reaches Independent at most.
     if (top && status(top) === 'reliable' && level >= (items.includes('D2') ? 3 : 2) && (ctx.masteries.get(`${id}.${top}`)?.successDays ?? 0) >= MASTERED_MIN_DAYS) level = due ? 3 : 4
     if (!top) level = Math.min(level, 1) as Level // no exercises: only "Seen" can be earned, by finishing the lesson
     return level

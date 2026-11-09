@@ -8,6 +8,10 @@ import type { LessonMeta } from '../types'
  * gives course lessons a stage so they sort; the app ignores that for counting.)
  */
 export const isCoreLesson = (l: LessonMeta): boolean => !l.course
+/** A stage check (D81): a core lesson that tests, not teaches. It counts in the core's lessons, minutes and stages, but never credits a skill as taught or learned. */
+export const isAssessment = (l: Pick<LessonMeta, 'role'>): boolean => l.role === 'assessment'
+/** Core lessons that teach (everything core except the stage checks): what skill credit and "lesson seen" are drawn from. */
+export const teachingCoreOf = (lessons: readonly LessonMeta[]): LessonMeta[] => lessons.filter(l => isCoreLesson(l) && !isAssessment(l))
 export const coreLessonsOf = (lessons: readonly LessonMeta[]): LessonMeta[] => lessons.filter(isCoreLesson)
 
 /** The core lessons of the loaded content, memoised. */
