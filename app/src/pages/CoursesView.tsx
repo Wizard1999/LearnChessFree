@@ -1,6 +1,6 @@
 import { hueOfStage } from '../lib/hue'
 import { useEffect, useState } from 'react'
-import { SectionHead, ToggleAllButton, useOpenSections } from '../components/Disclosure'
+import { SectionHead, useOpenSections } from '../components/Disclosure'
 import { aboutMinutes, lessonMinutes } from '../lib/lessonTime'
 import { courseFacts, plannedCourses, withoutTypedCount, type PlannedCourse } from '../lib/displayText'
 import { Link } from 'react-router-dom'
@@ -38,14 +38,12 @@ export function CoursesView() {
   useEffect(() => { if (needle) open.setMany(shownIds.split('|'), true) }, [needle, shownIds]) // eslint-disable-line react-hooks/exhaustive-deps -- open's setters are stable in effect
   const homeId = upCourse ?? content.courses[0]?.id
   const isOpen = (id: string) => open.isOpen(id, !!needle || id === homeId)
-  const allOpen = shown.length > 0 && shown.every(c => isOpen(c.id))
   return (
     <section aria-label="Courses">
       <p className="lede">Courses are optional paths on top of the core curriculum. They never re-teach a skill: each lesson says which core skills it uses.</p>
       {content.courses.length > 0 && (
         <div className="toolbar listbar" role="group" aria-label="Electives controls">
           <input className="listsearch" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search electives" aria-label="Search electives" />
-          <ToggleAllButton allOpen={allOpen} onClick={() => open.setMany(shown.map(c => c.id), !allOpen)} />
           {needle && <button type="button" className="btn btn-quiet" onClick={() => setQ('')}>Clear filters</button>}
         </div>
       )}

@@ -19,7 +19,7 @@ import { PATH_STAGES, stageLabel } from '../lib/pathStages'
 import { FirstGameInvite } from '../components/FirstGameInvite'
 import { inviteSlot } from '../lib/firstGame'
 import { Button } from '../components/Button'
-import { SectionHead, ToggleAllButton, useOpenSections } from '../components/Disclosure'
+import { SectionHead, useOpenSections } from '../components/Disclosure'
 import { useNextCoreLesson } from '../lib/useNextCoreLesson'
 import { UpNextMark } from '../components/UpNextMark'
 
@@ -123,9 +123,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
   // searching or filtering opens every section that has a match (an earlier Collapse all must not hide the answer)
   const matchKeys = groups.map(g => sk(g[0])).join('|')
   useEffect(() => { if (filtersActive) open.setMany(matchKeys.split('|'), true) }, [filtersActive, q, strandSel, stageSel, filter, matchKeys]) // eslint-disable-line react-hooks/exhaustive-deps
-  const allOpen = groups.length > 0 && groups.every(g => isOpen(g[0]))
   const setOpenKey = (strand: string, v: boolean) => open.setOpen(sk(strand), v)
-  const setAllOpen = (v: boolean) => open.setMany(groups.map(g => sk(g[0])), v)
   // Mission progress (D76): the Khan-style view of the Map's old side panel, per section. A stage's skills are those of its lessons; a subject is a mission.
   const overallSum = summarize(md.overall.nodes)
   const mapOpen = open.isOpen('skillmap', false)
@@ -169,7 +167,6 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
         <div className="seg" role="group" aria-label="Filter by status">
           {(['all', 'todo', 'started', 'done'] as Filter[]).map(f => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : f === 'started' ? 'In progress' : 'Finished or skipped'}</button>)}
         </div>
-        <ToggleAllButton allOpen={allOpen} onClick={() => setAllOpen(!allOpen)} />
         {filtersActive && <button type="button" className="btn btn-quiet" onClick={() => { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }}>Clear filters</button>}
       </div>
       {groups.length === 0 && <p className="muted">No lessons match.</p>}

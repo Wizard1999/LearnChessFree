@@ -1,6 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { ArtEmblem } from './art'
-import { Button } from './Button'
 import { Icon } from './Icon'
 
 /**
@@ -31,9 +30,4 @@ export function useOpenSections(storageKey: string) {
     setOpen: (key: string, v: boolean) => setState(o => ({ ...o, [key]: v })),
     setMany: (keys: string[], v: boolean) => setState(o => ({ ...o, ...Object.fromEntries(keys.map(k => [k, v])) })),
   }
-}
-
-/** One button that flips between opening and closing every section. */
-export function ToggleAllButton({ allOpen, onClick }: { allOpen: boolean; onClick: () => void }) {
-  return <Button variant="quiet" className="toggleall" tip={allOpen ? 'Close every section of the list' : 'Open every section of the list'} onClick={onClick}>{allOpen ? 'Collapse all' : 'Expand all'}</Button>
 }

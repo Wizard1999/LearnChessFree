@@ -121,20 +121,18 @@ describe('top bar (D72)', () => {
     expect(container.querySelector('.lessonrow.flash')?.id).toBe(byStage) // scrolled to and highlighted in the subject grouping too
     expect(labelled()).toBe(byStage)
   })
-  it('Electives use the same collapsible sections: only the course holding the learner place is open, Expand all opens the rest, a search opens matches', async () => {
+  it('Electives use the same collapsible sections: only the course holding the learner place is open and a search opens matches', async () => {
     const { container } = await open('/course?view=courses')
     await waitFor(() => expect(container.querySelectorAll('.disclose').length).toBeGreaterThan(1), { timeout: 15000 })
     const flags = () => [...container.querySelectorAll('.disclose')].map(b => b.getAttribute('aria-expanded'))
     expect(flags().filter(f => f === 'true')).toHaveLength(1)
     expect(container.querySelector('.disclose .discount')?.textContent).toMatch(/\d+ of \d+ done/)
-    await act(async () => { (container.querySelector('button.toggleall') as HTMLElement).click() })
-    expect(flags().every(f => f === 'true')).toBe(true)
-    await act(async () => { (container.querySelector('button.toggleall') as HTMLElement).click() })
-    expect(flags().every(f => f === 'false')).toBe(true)
+    expect(container.querySelector('button.toggleall')).toBeNull() // no Expand all / Collapse all: each section has its own dropdown
+    const closed = [...container.querySelectorAll('.disclose')].find(b => b.getAttribute('aria-expanded') === 'false')!
     const q = container.querySelector('input[type=search]') as HTMLInputElement
-    const title = container.querySelector('.disclose')!.textContent!.split(',')[0].slice(0, 8)
+    const title = closed.textContent!.split(',')[0].slice(0, 8)
     await act(async () => { fireEvent.change(q, { target: { value: title.toLowerCase() } }) })
-    expect(flags().length).toBeGreaterThan(0)
+    expect(closed.getAttribute('aria-expanded')).toBe('true') // a search opens the sections that match
     expect(flags().every(f => f === 'false')).toBe(false) // matches open while searching
   })
   it('the Map has no Progress or Mastery windows: the selected-skill dock is all that is left', async () => {
