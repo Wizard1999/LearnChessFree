@@ -38,55 +38,111 @@ export interface Note {
   release: number
   /** Noise only: band-pass Q (higher is more pitched). */
   q?: number
+  /** High-pass corner in Hz (keeps low mud out of taps). */
+  hp?: number
+  /** Low-pass corner in Hz (softens a note). */
+  lp?: number
+  /** How much of this note is sent to the small reverb (an absolute send gain, already scaled by the character). */
+  wet?: number
+  /** A wooden tap: humanisation spreads its pitch a little more. */
+  tap?: boolean
 }
 
-const note = (n: Partial<Note> & Pick<Note, 'freq' | 'start' | 'dur' | 'gain'>): Note => ({ wave: 'sine', env: 'decay', attack: 0.008, release: 0.04, ...n })
+// ---- sound character: named presets of the tunables, switchable in Settings so they can be compared by ear ----
+export type CharacterId = 'warm' | 'bright' | 'soft'
+export const CHARACTER_IDS: readonly CharacterId[] = ['warm', 'bright', 'soft']
+export interface Character {
+  label: string
+  /** Multiplies every bell pitch (2 = an octave up; melodies keep their intervals). */
+  oct: number
+  /** Multiplies note lengths: below 1 is tighter, less smear. */
+  decay: number
+  /** Multiplies the gaps between notes of a phrase, so they articulate. */
+  space: number
+  /** How much the upper (inharmonic) partials of a bell sound: more is more sparkle. */
+  shimmer: number
+  /** Reverb send for reward phrases, 0..~0.2 (taps get a quarter of it, answers about half). */
+  wet: number
+  /** Overall level of the set (before the learner's volume). */
+  level: number
+  /** High-pass corner for the wooden taps, Hz. */
+  tapHp: number
+  /** Low-pass corner of the wrong-answer note, Hz. */
+  wrongLp: number
+}
+export const CHARACTERS: Record<CharacterId, Character> = {
+  warm: { label: 'Warm', oct: 2, decay: 0.85, space: 1.2, shimmer: 1, wet: 0.16, level: 0.8, tapHp: 250, wrongLp: 1500 },
+  bright: { label: 'Bright', oct: 2, decay: 0.75, space: 1.15, shimmer: 1.6, wet: 0.12, level: 0.72, tapHp: 350, wrongLp: 2200 },
+  soft: { label: 'Soft', oct: 1.5, decay: 0.95, space: 1.15, shimmer: 0.6, wet: 0.2, level: 0.8, tapHp: 200, wrongLp: 1200 },
+}
+export const DEFAULT_CHARACTER: CharacterId = 'warm'
 
-/** A struck bell or glass chime: the pitch plus two quiet, shorter overtones. */
-export function bell(freq: number, start: number, dur: number, gain: number): Note[] {
+const note = (n: Partial<Note> & Pick<Note, 'freq' | 'start' | 'dur' | 'gain'>): Note => ({ wave: 'sine', env: 'decay', attack: 0.0025, release: 0.025, ...n })
+
+/** Partials of a struck bell: ratio, relative gain and relative length. The upper ones are inharmonic and die away faster, so the sound shimmers then settles. */
+export const BELL_PARTIALS: readonly (readonly [number, number, number])[] = [[1, 1, 1], [2.0, 0.3, 0.6], [2.76, 0.16, 0.38], [5.4, 0.06, 0.18]]
+const MAX_PARTIAL_HZ = 9000
+
+/** A struck bell or glass chime (pitch before the character's octave shift). Quiet overtones are skipped above 9 kHz. */
+export function bell(c: Character, freq: number, start: number, dur: number, gain: number, wet = 1): Note[] {
+  const f0 = freq * c.oct, t = start * c.space, d = dur * c.decay
+  const out: Note[] = []
+  BELL_PARTIALS.forEach(([ratio, g, len], k) => {
+    const f = f0 * ratio
+    if (f > MAX_PARTIAL_HZ) return
+    out.push(note({ freq: f, start: t, dur: d * len, gain: gain * c.level * (k === 0 ? 1 : g * c.shimmer), wet: wet * c.wet, attack: k === 0 ? 0.003 : 0.002 }))
+  })
+  return out
+}
+/** A soft wooden tap: a short noise burst and a brief, light thud, both high-passed so nothing booms. `depth` below 1 is a little deeper. */
+export function tap(c: Character, start: number, depth: number, gain: number): Note[] {
+  const hp = c.tapHp * depth
   return [
-    note({ freq, start, dur, gain }),
-    note({ freq: freq * 2, start, dur: dur * 0.6, gain: gain * 0.28 }),
-    note({ freq: freq * 2.76, start, dur: dur * 0.25, gain: gain * 0.1 }),
+    note({ wave: 'noise', freq: 1500 * depth, start, dur: 0.04, gain: gain * 0.9, q: 0.9, hp, release: 0.02, wet: 0.25 * c.wet, tap: true }),
+    note({ freq: 280 * depth, endFreq: 190 * depth, start, dur: 0.065, gain: gain * 0.5, hp, release: 0.03, wet: 0.25 * c.wet, tap: true }),
   ]
 }
-/** A soft wooden tap: a short filtered noise burst on top of a low thud. `depth` below 1 is deeper. */
-export function tap(start: number, depth: number, gain: number): Note[] {
-  return [
-    note({ wave: 'noise', freq: 1100 * depth, start, dur: 0.05, gain: gain * 0.9, q: 0.9, attack: 0.002, release: 0.03 }),
-    note({ freq: 190 * depth, endFreq: 110 * depth, start, dur: 0.11, gain, attack: 0.003, release: 0.05 }),
-  ]
-}
 
-// Pitches (equal temperament, A4 = 440), from a major pentatonic so any two can sound together.
+// Pitches before the octave shift (equal temperament, A4 = 440), from a major pentatonic so any two can sound together.
+// They are written an octave up (C5 and so on) and halved below, so the shift in the character decides where they finally sit.
 const G4 = 392, C5 = 523.25, D5 = 587.33, E5 = 659.25, G5 = 783.99, A5 = 880, C6 = 1046.5, E6 = 1318.5, G6 = 1568
 
-const DESCRIPTORS: Record<SoundId, () => Note[]> = {
-  move: () => tap(0, 1, 0.3),
-  capture: () => [...tap(0, 0.8, 0.3), ...tap(0.045, 0.7, 0.1)],
-  check: () => [...tap(0, 1, 0.22), ...bell(A5, 0.03, 0.55, 0.16)],
-  castle: () => [...tap(0, 1, 0.26), ...tap(0.11, 0.85, 0.3)],
-  promote: () => [...bell(G5, 0, 0.35, 0.16), ...bell(C6, 0.09, 0.35, 0.16), ...bell(E6, 0.18, 0.55, 0.15)],
-  right: () => [...bell(G5, 0, 0.3, 0.2), ...bell(C6, 0.11, 0.55, 0.2)],
-  // soft, neutral, low: a single quiet note, never a buzzer and never falling in a mocking way
-  wrong: () => [note({ wave: 'triangle', freq: 196, start: 0, dur: 0.38, gain: 0.2, attack: 0.02, release: 0.1 })],
-  lessonDone: () => [...bell(C5, 0, 0.6, 0.18), ...bell(E5, 0.17, 0.6, 0.18), ...bell(G5, 0.34, 0.8, 0.2)],
-  levelGuided: () => bell(G5, 0, 0.8, 0.22),
-  levelIndependent: () => [...bell(C6, 0, 0.9, 0.2), ...bell(G5, 0, 0.9, 0.1)],
-  levelMastered: () => [...bell(C5, 0, 0.7, 0.16), ...bell(E5, 0.1, 0.7, 0.16), ...bell(G5, 0.2, 0.8, 0.16), ...bell(C6, 0.3, 0.85, 0.18)],
-  challengePassed: () => [
-    ...bell(G4, 0, 0.3, 0.17), ...bell(C5, 0.12, 0.3, 0.17), ...bell(E5, 0.24, 0.3, 0.17),
-    ...bell(G5, 0.38, 0.8, 0.2), ...bell(C6, 0.38, 0.8, 0.12),
+const DESCRIPTORS: Record<SoundId, (c: Character) => Note[]> = {
+  move: c => tap(c, 0, 1, 0.3),
+  capture: c => [...tap(c, 0, 0.85, 0.3), ...tap(c, 0.04, 0.75, 0.1)],
+  check: c => [...tap(c, 0, 1, 0.2), ...bell(c, A5 / 2, 0.04, 0.5, 0.16, 0.3)],
+  castle: c => [...tap(c, 0, 1, 0.24), ...tap(c, 0.12, 0.9, 0.28)],
+  promote: c => [...bell(c, G5 / 2, 0, 0.32, 0.16, 0.6), ...bell(c, C6 / 2, 0.1, 0.32, 0.16, 0.6), ...bell(c, E6 / 2, 0.2, 0.5, 0.15, 0.8)],
+  right: c => [...bell(c, G5 / 2, 0, 0.28, 0.2, 0.5), ...bell(c, C6 / 2, 0.12, 0.5, 0.2, 0.5)],
+  // soft, neutral, low: a single quiet note with the edges taken off, never a buzzer and never falling in a mocking way
+  wrong: c => [note({ wave: 'triangle', freq: 247, start: 0, dur: 0.3, gain: 0.18 * c.level / 0.8, attack: 0.012, release: 0.1, lp: c.wrongLp })],
+  lessonDone: c => [...bell(c, C5 / 2, 0, 0.55, 0.18), ...bell(c, E5 / 2, 0.17, 0.55, 0.18), ...bell(c, G5 / 2, 0.34, 0.75, 0.2)],
+  levelGuided: c => bell(c, G5 / 2, 0, 0.75, 0.22),
+  levelIndependent: c => [...bell(c, C6 / 2, 0, 0.85, 0.2), ...bell(c, G5 / 2, 0, 0.85, 0.1)],
+  levelMastered: c => [...bell(c, C5 / 2, 0, 0.65, 0.16), ...bell(c, E5 / 2, 0.1, 0.65, 0.16), ...bell(c, G5 / 2, 0.2, 0.75, 0.16), ...bell(c, C6 / 2, 0.3, 0.85, 0.18)],
+  challengePassed: c => [
+    ...bell(c, G4 / 2, 0, 0.28, 0.17), ...bell(c, C5 / 2, 0.12, 0.28, 0.17), ...bell(c, E5 / 2, 0.24, 0.28, 0.17),
+    ...bell(c, G5 / 2, 0.38, 0.75, 0.2), ...bell(c, C6 / 2, 0.38, 0.75, 0.12),
   ],
-  firstGame: () => [
-    ...bell(C5, 0, 0.7, 0.16), ...bell(G5, 0.2, 0.7, 0.16), ...bell(E5, 0.4, 0.7, 0.16), ...bell(C6, 0.6, 0.9, 0.17),
-    ...bell(D5, 1.05, 0.6, 0.09), ...bell(G5, 1.05, 0.6, 0.09), ...bell(G6, 1.25, 1.2, 0.12),
-    ...bell(C5, 1.25, 1.2, 0.08), ...bell(E6, 1.25, 1.2, 0.08),
+  firstGame: c => [
+    ...bell(c, C5 / 2, 0, 0.65, 0.16), ...bell(c, G5 / 2, 0.2, 0.65, 0.16), ...bell(c, E5 / 2, 0.4, 0.65, 0.16), ...bell(c, C6 / 2, 0.6, 0.85, 0.17),
+    ...bell(c, D5 / 2, 1.0, 0.55, 0.09), ...bell(c, G5 / 2, 1.0, 0.55, 0.09), ...bell(c, G6 / 2, 1.2, 1.1, 0.12),
+    ...bell(c, C5 / 2, 1.2, 1.1, 0.08), ...bell(c, E6 / 2, 1.2, 1.1, 0.08),
   ],
 }
 
 /** The notes of a sound. */
-export function describeSound(id: SoundId): Note[] { return DESCRIPTORS[id]() }
+export function describeSound(id: SoundId, character: CharacterId = prefs.character): Note[] { return DESCRIPTORS[id](CHARACTERS[character] ?? CHARACTERS[DEFAULT_CHARACTER]) }
+
+/** A tiny per-play variation so repeated sounds are not mechanical: pitch within 5 cents (taps within 40), gain within 8%. The melody is untouched. */
+export function humanise(notes: readonly Note[], rand: () => number = Math.random): Note[] {
+  const pitch = rand() * 2 - 1, loud = 1 + (rand() * 2 - 1) * 0.08
+  return notes.map(n => {
+    const cents = n.tap ? (rand() * 2 - 1) * 40 : pitch * 5
+    const m = Math.pow(2, cents / 1200)
+    return { ...n, freq: n.freq * m, endFreq: n.endFreq ? n.endFreq * m : undefined, gain: n.gain * loud }
+  })
+}
 /** Total length in seconds, including each note's tail. */
 export function soundLength(notes: readonly Note[]): number { return notes.reduce((m, n) => Math.max(m, n.start + n.dur), 0) }
 /** The largest sum of note gains sounding at the same moment (a rough loudness ceiling; kept low so nothing is loud). */
@@ -101,8 +157,8 @@ export function peakOverlap(notes: readonly Note[]): number {
 }
 
 // ---- preferences, per device ----
-export interface SoundPrefs { on: boolean; volume: number; moves: boolean; rewards: boolean; feedback: boolean }
-export const DEFAULT_SOUND: SoundPrefs = { on: true, volume: 0.6, moves: true, rewards: true, feedback: true }
+export interface SoundPrefs { on: boolean; volume: number; moves: boolean; rewards: boolean; feedback: boolean; character: CharacterId }
+export const DEFAULT_SOUND: SoundPrefs = { on: true, volume: 0.6, moves: true, rewards: true, feedback: true, character: DEFAULT_CHARACTER }
 const KEY = 'cs-sound'
 export const clampVolume = (v: unknown): number => (typeof v === 'number' && Number.isFinite(v) ? Math.min(1, Math.max(0, v)) : DEFAULT_SOUND.volume)
 const bool = (v: unknown, d: boolean) => (typeof v === 'boolean' ? v : d)
@@ -111,7 +167,7 @@ export function loadSoundPrefs(): SoundPrefs {
   try {
     const r = JSON.parse(localStorage.getItem(KEY) ?? '{}') as Partial<Record<string, unknown>> | null
     const p = r && typeof r === 'object' ? r : {}
-    return { on: bool(p.on, true), volume: clampVolume(p.volume), moves: bool(p.moves, true), rewards: bool(p.rewards, true), feedback: bool(p.feedback, true) }
+    return { on: bool(p.on, true), volume: clampVolume(p.volume), moves: bool(p.moves, true), rewards: bool(p.rewards, true), feedback: bool(p.feedback, true), character: (CHARACTER_IDS as readonly unknown[]).includes(p.character) ? (p.character as CharacterId) : DEFAULT_CHARACTER }
   } catch { return { ...DEFAULT_SOUND } }
 }
 
@@ -155,6 +211,7 @@ export function createLimiter(rules: Record<SoundKind, LimitRule> = LIMITS) {
 const MASTER = 0.55 // every sound is quiet by design; the learner's volume scales this
 let ctx: AudioContext | null = null
 let master: GainNode | null = null
+let reverb: AudioNode | null = null
 let noise: AudioBuffer | null = null
 let limiter = createLimiter()
 
@@ -174,7 +231,12 @@ export function unlockAudio(): AudioContext | null {
       if (!ctx) return null
       master = ctx.createGain()
       master.gain.value = prefs.volume * MASTER
-      master.connect(ctx.destination)
+      // a gentle compressor so overlapping sounds do not build up into mud; skipped where the browser has none
+      try {
+        const comp = ctx.createDynamicsCompressor()
+        comp.threshold.value = -20; comp.knee.value = 12; comp.ratio.value = 4; comp.attack.value = 0.003; comp.release.value = 0.2
+        master.connect(comp); comp.connect(ctx.destination)
+      } catch { master.connect(ctx.destination) }
     }
     if (ctx.state === 'suspended') void Promise.resolve(ctx.resume()).catch(() => undefined)
     return ctx
@@ -204,8 +266,26 @@ function noiseBuffer(c: AudioContext): AudioBuffer {
   return b
 }
 
-/** Schedules notes on a context starting at `t0` into `dest`. Returns how many sources were started. Exported so a test can pass a stand-in context. */
-export function scheduleNotes(c: AudioContext, dest: AudioNode, notes: readonly Note[], t0: number): number {
+/** A small room: about 0.55 s of decaying noise, generated here (no file). Made once, only when a reverb is first wanted; null where ConvolverNode is unavailable. */
+function reverbBus(c: AudioContext, dest: AudioNode): AudioNode | null {
+  if (reverb) return reverb
+  try {
+    const len = Math.floor(c.sampleRate * 0.55)
+    const ir = c.createBuffer(2, len, c.sampleRate)
+    for (let ch = 0; ch < 2; ch++) {
+      const d = ir.getChannelData(ch)
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3)
+    }
+    const conv = c.createConvolver()
+    conv.buffer = ir
+    conv.connect(dest)
+    reverb = conv
+    return conv
+  } catch { return null }
+}
+
+/** Schedules notes on a context starting at `t0` into `dest` (a note's `wet` goes to the reverb when `wetDest` is given). Returns how many sources were started. Exported so a test can pass a stand-in context. */
+export function scheduleNotes(c: AudioContext, dest: AudioNode, notes: readonly Note[], t0: number, wetDest: AudioNode | null = null): number {
   let started = 0
   for (const n of notes) {
     const t = t0 + n.start, end = t + n.dur
@@ -216,6 +296,7 @@ export function scheduleNotes(c: AudioContext, dest: AudioNode, notes: readonly 
     if (n.env === 'decay') g.gain.exponentialRampToValueAtTime(0.0001, end)
     else { g.gain.setValueAtTime(peak, Math.max(t + n.attack, end - n.release)); g.gain.linearRampToValueAtTime(0, end) }
     g.gain.setValueAtTime(0, end + 0.01)
+    let tail: AudioNode = g
     let src: AudioScheduledSourceNode
     if (n.wave === 'noise') {
       const s = c.createBufferSource()
@@ -232,7 +313,11 @@ export function scheduleNotes(c: AudioContext, dest: AudioNode, notes: readonly 
       o.connect(g)
       src = o
     }
-    g.connect(dest)
+    // optional filters after the envelope: a high-pass against low mud, a low-pass to soften
+    if (n.hp) { const f = c.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = n.hp; tail.connect(f); tail = f }
+    if (n.lp) { const f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = n.lp; tail.connect(f); tail = f }
+    tail.connect(dest)
+    if (wetDest && n.wet && n.wet > 0.001) { const w = c.createGain(); w.gain.value = n.wet; tail.connect(w); w.connect(wetDest) }
     src.onended = () => { try { src.disconnect(); g.disconnect() } catch { /* already gone */ } }
     src.start(t)
     src.stop(end + 0.05)
@@ -250,7 +335,7 @@ function start(id: SoundId): boolean {
   const c = unlockAudio()
   if (!c || !master || c.state !== 'running') return false
   master.gain.setTargetAtTime(prefs.volume * MASTER, c.currentTime, 0.01)
-  return scheduleNotes(c, master, describeSound(id), c.currentTime + 0.01) > 0
+  return scheduleNotes(c, master, humanise(describeSound(id)), c.currentTime + 0.01, reverbBus(c, master)) > 0
 }
 
 /** Plays a sound if the learner's settings, the rate limit and the page allow it. Never throws. Returns whether anything was scheduled. */
@@ -269,4 +354,4 @@ export function playTestSound(): boolean {
 }
 
 /** Test hook: forget the context so a stand-in can be used. */
-export function resetSoundEngine() { ctx = null; master = null; noise = null; wired = false; limiter = createLimiter() }
+export function resetSoundEngine() { ctx = null; master = null; noise = null; reverb = null; wired = false; limiter = createLimiter() }

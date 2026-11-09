@@ -29,6 +29,7 @@ import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
 import { PhoneTabBar } from './components/PhoneTabBar'
 import { SoundToggle } from './components/SoundToggle'
+import { SettingsLink } from './components/SettingsLink'
 import { SoundEvents } from './components/SoundEvents'
 import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
@@ -49,7 +50,7 @@ export default function App() {
         <nav aria-label="Main">
           {!phone && <HeaderNavItems />}
           <div className="topright">
-          {!phone && <SoundToggle />}
+          {!phone && <><SoundToggle /><SettingsLink /></>}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a, button.morebtn')) moreRef.current?.removeAttribute('open') }}>
             <summary className={more.some(([to]) => loc.pathname.startsWith(to)) ? 'on' : ''}>More</summary>
             <div className="morelist">

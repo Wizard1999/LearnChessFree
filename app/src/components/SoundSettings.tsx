@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from './Button'
-import { playTestSound, saveSoundPrefs, unlockAudio, useSoundPrefs } from '../lib/sound'
+import { CHARACTERS, CHARACTER_IDS, playTestSound, saveSoundPrefs, unlockAudio, useSoundPrefs } from '../lib/sound'
 
 /** The Sound section of Settings. Saved on this device only. */
 export function SoundSettings() {
@@ -21,6 +21,11 @@ export function SoundSettings() {
         <label className="field"><span className="small muted">Volume: {Math.round(p.volume * 100)}%</span>
           <input type="range" min={0} max={1} step={0.05} value={p.volume} disabled={!p.on} aria-label="Volume" onChange={e => saveSoundPrefs({ volume: Number(e.target.value) })} /></label>
       </div>
+      <label className="field"><span className="small muted">Sound character</span>
+        <select value={p.character} disabled={!p.on} onChange={e => { saveSoundPrefs({ character: e.target.value as typeof p.character }); window.setTimeout(test, 0) }}>
+          {CHARACTER_IDS.map(id => <option key={id} value={id}>{CHARACTERS[id].label}</option>)}
+        </select></label>
+      <p className="small muted">Warm is the default; Bright is crisper with more sparkle; Soft is lower and rounder. Choosing one plays a sample so you can compare.</p>
       <fieldset className="appearance">
         <legend className="small muted">Which sounds</legend>
         <div className="soundrow">

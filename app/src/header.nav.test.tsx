@@ -27,6 +27,26 @@ async function open(route: string) {
 }
 
 describe('top bar (D72)', () => {
+  it('has an icon-only Settings gear and the sound switch beside More, lit on the Settings page, with Settings still under More', async () => {
+    const { container } = await open('/roadmap')
+    const right = container.querySelector('header.top .topright')!
+    expect([...right.children].map(c => (c.querySelector('.soundbtn, .gearbtn') ?? c).className.split(' ').find(k => ['soundbtn', 'gearbtn', 'morenav'].includes(k)))).toEqual(['soundbtn', 'gearbtn', 'morenav'])
+    const gear = right.querySelector('a.gearbtn') as HTMLAnchorElement
+    expect(gear.getAttribute('aria-label')).toBe('Settings')
+    expect(gear.getAttribute('href')).toBe('/settings')
+    expect(gear.textContent).toBe('')
+    expect(gear.getAttribute('aria-current')).toBeNull()
+    expect(right.querySelector('.morelist button')?.textContent).toBe('Settings')
+    const snd = right.querySelector('button.soundbtn')!
+    act(() => { (snd as HTMLElement).focus() })
+    await waitFor(() => expect(document.querySelector('.tip')?.textContent).toContain('Sound settings are in Settings'))
+  })
+  it('lights the gear while the Settings page is open', async () => {
+    const { container } = await open('/settings')
+    const gear = container.querySelector('header.top a.gearbtn')!
+    expect(gear.getAttribute('aria-current')).toBe('page')
+    expect(gear.className).toContain('is-on')
+  })
   it('keeps the credit, centres the three Curriculum views, and has no Progress or Mastery challenge items, Back bar, Continue strip or Next button', async () => {
     const { container } = await open('/roadmap')
     expect(container.querySelector('header.top .byline')?.textContent).toBe(BRAND.byline)

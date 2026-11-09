@@ -1,35 +1,75 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { DEFAULT_SOUND, KIND_OF, LIMITS, SOUND_IDS, clampVolume, createLimiter, describeSound, getSoundPrefs, initSound, loadSoundPrefs, peakOverlap, playSound, playTestSound, resetSoundEngine, saveSoundPrefs, scheduleNotes, soundLength, type SoundId } from './sound'
+import { BELL_PARTIALS, CHARACTERS, CHARACTER_IDS, DEFAULT_SOUND, humanise, KIND_OF, LIMITS, SOUND_IDS, clampVolume, createLimiter, describeSound, getSoundPrefs, initSound, loadSoundPrefs, peakOverlap, playSound, playTestSound, resetSoundEngine, saveSoundPrefs, scheduleNotes, soundLength, type SoundId } from './sound'
 import { moveSoundFor } from './moveSound'
 import { levelUpSound } from '../components/SoundEvents'
 
 const RARE = new Set<SoundId>(['firstGame'])
 
 describe('sound descriptors', () => {
-  it('every sound has valid notes: finite numbers, sensible gains, no clipping, short', () => {
-    for (const id of SOUND_IDS) {
-      const notes = describeSound(id)
+  it('every sound in every character has valid notes: finite numbers, sensible gains, no clipping, short', () => {
+    for (const ch of CHARACTER_IDS) for (const id of SOUND_IDS) {
+      const notes = describeSound(id, ch)
       expect(notes.length, id).toBeGreaterThan(0)
       for (const n of notes) {
-        for (const v of [n.freq, n.start, n.dur, n.gain, n.attack, n.release]) expect(Number.isFinite(v), `${id} has NaN`).toBe(true)
-        expect(n.freq).toBeGreaterThan(20); expect(n.freq).toBeLessThan(6000)
+        for (const v of [n.freq, n.start, n.dur, n.gain, n.attack, n.release, n.wet ?? 0, n.hp ?? 0, n.lp ?? 0]) expect(Number.isFinite(v), `${ch} ${id} has NaN`).toBe(true)
+        expect(n.freq).toBeGreaterThan(20); expect(n.freq).toBeLessThanOrEqual(9000)
         expect(n.start).toBeGreaterThanOrEqual(0); expect(n.dur).toBeGreaterThan(0)
-        expect(n.gain).toBeGreaterThan(0); expect(n.gain).toBeLessThanOrEqual(0.4)
-        expect(n.attack).toBeGreaterThan(0); expect(n.attack).toBeLessThan(n.dur)
+        expect(n.gain).toBeGreaterThan(0); expect(n.gain).toBeLessThanOrEqual(0.3)
+        expect(n.attack).toBeGreaterThan(0); expect(n.attack).toBeLessThanOrEqual(0.012); expect(n.attack).toBeLessThan(n.dur)
+        expect(n.wet ?? 0).toBeGreaterThanOrEqual(0); expect(n.wet ?? 0).toBeLessThanOrEqual(0.2)
       }
-      expect(peakOverlap(notes), `${id} too loud`).toBeLessThanOrEqual(0.9) // a conservative straight sum; the master gain brings it far lower
-      expect(soundLength(notes), `${id} too long`).toBeLessThanOrEqual(RARE.has(id) ? 2.5 : 1.2)
+      expect(peakOverlap(notes), `${ch} ${id} too loud`).toBeLessThanOrEqual(0.75) // a conservative straight sum; the master gain and compressor bring it lower
+      expect(soundLength(notes), `${ch} ${id} too long`).toBeLessThanOrEqual(RARE.has(id) ? 2.5 : 1.2)
     }
+  })
+  it('bells are built from several inharmonic partials that fade faster the higher they are', () => {
+    const notes = describeSound('levelGuided', 'warm')
+    expect(notes.length).toBeGreaterThanOrEqual(3)
+    const f0 = notes[0].freq
+    for (let k = 1; k < notes.length; k++) {
+      expect(notes[k].freq / f0).toBeCloseTo(BELL_PARTIALS[k][0], 5)
+      expect(notes[k].dur).toBeLessThan(notes[k - 1].dur)
+      expect(notes[k].gain).toBeLessThan(notes[0].gain)
+    }
+    expect(BELL_PARTIALS.some(([r]) => Math.abs(r - Math.round(r)) > 0.2)).toBe(true) // inharmonic
+  })
+  it('keeps the same melody in every character (only the register changes)', () => {
+    const ratio = (ch: 'warm' | 'bright' | 'soft') => { const n = describeSound('lessonDone', ch).filter((_, k) => k % 4 === 0); return [n[1].freq / n[0].freq, n[2].freq / n[0].freq] }
+    expect(ratio('bright')[0]).toBeCloseTo(ratio('warm')[0], 5); expect(ratio('soft')[1]).toBeCloseTo(ratio('warm')[1], 5)
+  })
+  it('wooden taps are high-passed and light; the wrong note is low-passed, soft and a little higher than before', () => {
+    for (const ch of CHARACTER_IDS) {
+      for (const n of describeSound('move', ch)) { expect(n.hp).toBeGreaterThanOrEqual(CHARACTERS[ch].tapHp * 0.99); expect(n.wet ?? 0).toBeLessThan(0.06) }
+      const thud = describeSound('move', ch).find(n => n.wave === 'sine')!
+      expect(thud.freq).toBeGreaterThan(190); expect(thud.dur).toBeLessThan(0.1)
+      const w = describeSound('wrong', ch)[0]
+      expect(w.lp).toBe(CHARACTERS[ch].wrongLp); expect(w.freq).toBeGreaterThan(196); expect(w.gain).toBeLessThanOrEqual(0.2)
+    }
+  })
+  it('rewards use the reverb more than taps do', () => {
+    const wet = (id: SoundId) => Math.max(...describeSound(id, 'warm').map(n => n.wet ?? 0))
+    expect(wet('lessonDone')).toBeGreaterThan(wet('move') * 3)
+  })
+  it('humanise moves pitch by at most 5 cents (40 for taps) and gain by at most 8 percent, and leaves timing alone', () => {
+    const cents = (a: number, b: number) => Math.abs(1200 * Math.log2(a / b))
+    for (const r of [0, 0.5, 1]) {
+      const rand = () => r
+      const bellN = describeSound('right', 'warm'), h = humanise(bellN, rand)
+      h.forEach((n, k) => { expect(cents(n.freq, bellN[k].freq)).toBeLessThanOrEqual(5.001); expect(n.gain / bellN[k].gain).toBeGreaterThanOrEqual(0.919); expect(n.gain / bellN[k].gain).toBeLessThanOrEqual(1.081); expect(n.start).toBe(bellN[k].start) })
+      const tapN = describeSound('move', 'warm'), t = humanise(tapN, rand)
+      t.forEach((n, k) => expect(cents(n.freq, tapN[k].freq)).toBeLessThanOrEqual(40.001))
+    }
+    for (const n of humanise(describeSound('firstGame'))) expect(Number.isFinite(n.freq)).toBe(true)
   })
   it('keeps the tiers in order: the first game is the longest, and the wrong-answer note is one quiet low note', () => {
     const len = (id: SoundId) => soundLength(describeSound(id))
     expect(len('firstGame')).toBeGreaterThan(len('challengePassed'))
-    expect(len('levelMastered')).toBeGreaterThan(len('levelGuided') - 0.2)
+    expect(len('levelMastered')).toBeGreaterThan(len('levelGuided') - 0.3)
     expect(len('move')).toBeLessThan(0.3)
     const wrong = describeSound('wrong')
     expect(wrong).toHaveLength(1)
-    expect(wrong[0].freq).toBeLessThan(300)
+    expect(wrong[0].freq).toBeLessThan(400)
     expect(wrong[0].endFreq).toBeUndefined() // no falling "failure" slide
   })
   it('every sound belongs to a kind the learner can switch', () => {
@@ -41,7 +81,9 @@ describe('settings', () => {
   beforeEach(() => localStorage.clear())
   it('default to on, volume 0.6, every kind on', () => {
     expect(loadSoundPrefs()).toEqual(DEFAULT_SOUND)
-    expect(DEFAULT_SOUND).toMatchObject({ on: true, volume: 0.6, moves: true, rewards: true, feedback: true })
+    expect(DEFAULT_SOUND).toMatchObject({ on: true, volume: 0.6, moves: true, rewards: true, feedback: true, character: 'warm' })
+    localStorage.setItem('cs-sound', JSON.stringify({ character: 'bright' })); expect(loadSoundPrefs().character).toBe('bright')
+    localStorage.setItem('cs-sound', JSON.stringify({ character: 'loud' })); expect(loadSoundPrefs().character).toBe('warm')
   })
   it('fall back on bad data, keeping what is valid', () => {
     localStorage.setItem('cs-sound', '{not json')
