@@ -1,5 +1,6 @@
+import { FoldedNav, HeaderNavItems } from './components/HeaderNav'
 import { useRef, useState } from 'react'
-import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import { ContentProvider, RequireFullContent } from './lib/content'
 import { Today } from './pages/Today'
 import { Course } from './pages/Course'
@@ -25,10 +26,10 @@ import { BuildStamp } from './components/BuildStamp'
 import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
 import { PhoneTabBar } from './components/PhoneTabBar'
-import { MORE_LINKS, backBarShown } from './lib/phoneNav'
+import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
 
-// The top bar has no tabs (D63, D65): the masthead and one More button. Every place but the Curriculum is under it.
+// The top bar (D72): the masthead, the Curriculum's places split by a divider at the exact centre (Curriculum, Electives, Map | Progress, Mastery challenge), then More. Every other place is under More.
 const more = MORE_LINKS // shared with the phone tab bar's More sheet
 
 export default function App() {
@@ -42,9 +43,11 @@ export default function App() {
       <header className="top">
         <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline}</span></div>
         <nav aria-label="Main">
+          {!phone && <HeaderNavItems />}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a, button.morebtn')) moreRef.current?.removeAttribute('open') }}>
             <summary className={more.some(([to]) => loc.pathname.startsWith(to)) ? 'on' : ''}>More</summary>
             <div className="morelist">
+              {!phone && <FoldedNav />}
               {more.map(([to, label]) => <NavLink key={to} to={to} className={({ isActive }) => (isActive ? 'on' : '')}>{label}</NavLink>)}
               <button type="button" className="morebtn" aria-haspopup="dialog" onClick={() => setSettingsOpen(true)}>Settings</button>
             </div>
@@ -54,7 +57,6 @@ export default function App() {
       </header>
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <SaveNotice />
-      {backBarShown(loc.pathname) && <nav className="backbar" aria-label="Back"><Link to="/course">‹ Back to Curriculum</Link></nav>}
       <ErrorBoundary resetKey={loc.pathname}>
       <Routes>
         <Route path="/" element={<Today />} />

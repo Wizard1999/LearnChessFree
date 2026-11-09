@@ -25,12 +25,6 @@ export function phoneTabFor(pathname: string, search = '', openWindow: 'progress
   return 'more'
 }
 
-/** Every page but the Curriculum itself (and a lesson, which has its own exit) carries a Back to Curriculum link (D63). */
-export function backBarShown(pathname: string): boolean {
-  const p = pathname.replace(/\/+$/, '') || '/'
-  return p !== '/' && p !== '/today' && !p.startsWith('/course') && !p.startsWith('/lesson')
-}
-
 /** Focus mode: the tab bar steps aside so the board and the lesson's action bar have the screen. */
 export function isFocusRoute(pathname: string): boolean {
   return pathname.startsWith('/lesson/')

@@ -6,11 +6,9 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
 import { LessonIndex } from './LessonIndex'
-import { PathView } from '../components/PathView'
-import { setActiveWindow } from '../lib/activeWindow'
+import { onToggleRequest, setOpenWindows } from '../lib/activeWindow'
 import { CoursesView } from './CoursesView'
 import { ProgressReport } from './Progress'
-import { ContinueStrip } from '../components/ContinueStrip'
 import type { ItemResult } from '../components/ItemPlayer'
 import { WarmupRun } from '../components/WarmupRun'
 import { describeMastery } from '../lib/mastery'
@@ -128,8 +126,10 @@ export function Course() {
     const p = new URLSearchParams(params); p.delete('win'); p.delete('report'); setParams(p, { replace: true })
   }, [winParam]) // eslint-disable-line react-hooks/exhaustive-deps -- once per arrival
   // tell the phone tab bar which window is open, so its tab stays lit after the address is cleared
-  useEffect(() => { setActiveWindow(wins.progress ? 'progress' : wins.challenge ? 'challenge' : null) }, [wins.progress, wins.challenge])
-  useEffect(() => () => setActiveWindow(null), [])
+  useEffect(() => { setOpenWindows({ progress: wins.progress, challenge: wins.challenge }) }, [wins.progress, wins.challenge])
+  useEffect(() => () => setOpenWindows({ progress: false, challenge: false }), [])
+  // the header's Progress and Mastery challenge items toggle the windows when this page is showing
+  useEffect(() => onToggleRequest(k => setWins(w => { const n = narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !w[k] } : { ...w, [k]: !w[k] }; try { localStorage.setItem('map:wins', JSON.stringify(n)) } catch { /* optional */ } return n })), []) // eslint-disable-line react-hooks/exhaustive-deps -- narrowScreen is stable
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -163,8 +163,6 @@ export function Course() {
   const homeStages = useMemo(() => skillHomeStages(content.skills, content.lessons), [content.skills, content.lessons])
   const hereStage = useMemo(() => currentStageIndex(content.lessons, new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
   const next = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 3) : []), [ctx, progress, content, placement])
-  // the Next tile and the Continue strip agree: the next lesson on the core route (courses are Electives, never offered here)
-  const nextCore = useMemo(() => (ctx && progress ? nextLessons(content, ctx.masteries, placement, progress, 400).find(l => !l.course) : undefined), [ctx, progress, content, placement])
   const dismissedSet = useMemo(() => new Set(dismissed), [dismissed])
   const currentIds = useMemo(() => new Set(current.nodes.map(n => n.id)), [current])
   const dismissedHere = useMemo(() => dismissed.filter(id => currentIds.has(id)), [dismissed, currentIds])
@@ -178,30 +176,7 @@ export function Course() {
   const tab = params.get('view')
   const showCourses = tab === 'courses'
   const showLessons = tab !== 'map' && !showCourses // the Curriculum chip covers two views: the Path (default) and the All lessons list (?view=lessons)
-  const showList = tab === 'lessons'
   const setTab = (v: string) => { const p = new URLSearchParams(params); if (v === 'path') p.delete('view'); else p.set('view', v); setParams(p, { replace: true }) }
-  const tabs = (
-    <div className="row filters viewtabs" role="group" aria-label="Curriculum views">
-      <div className="tabsleft">
-        <button type="button" className={showLessons ? 'chip on' : 'chip'} aria-pressed={showLessons} onClick={() => setTab('path')}>Curriculum</button>
-        <button type="button" className={showCourses ? 'chip on' : 'chip'} aria-pressed={showCourses} onClick={() => setTab('courses')}>Electives</button>
-        <button type="button" className={tab === 'map' ? 'chip on' : 'chip'} aria-pressed={tab === 'map'} onClick={() => setTab('map')}>Map</button>
-      </div>
-      <span className="tabsep" aria-hidden="true" />
-      <div className="tabsright">
-        <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress</button>
-        <button type="button" className={wins.challenge ? 'chip on' : 'chip'} aria-pressed={wins.challenge} onClick={() => toggleWin('challenge')}>Mastery challenge</button>
-      </div>
-    </div>
-  )
-
-  const viewSwitch = showLessons ? (
-    <div className="row filters viewswitch" role="group" aria-label="Curriculum view">
-      <button type="button" className={!showList ? 'chip on' : 'chip'} aria-pressed={!showList} onClick={() => setTab('path')}>Path</button>
-      <button type="button" className={showList ? 'chip on' : 'chip'} aria-pressed={showList} onClick={() => setTab('lessons')}>All lessons</button>
-      <span className="muted small">{showList ? 'Search and filter every lesson.' : 'The route, in order: what to do next.'}</span>
-    </div>
-  ) : null
   const pick = (id: string) => { if (narrowScreen() && dockOpen) saveWins({ progress: false, challenge: false, next: false }); setPicked(id); const m = missions.find(x => x.nodes.some(n => n.id === id)); if (m && isAll) { /* stay on the overview: the detail opens beside it */ } }
 
   function startChallenge() {
@@ -287,8 +262,8 @@ export function Course() {
       ]
       const lessonRow = (l: LessonMeta) => { const pr = lp(l.id); return (
         <p key={l.id} className="small"><Link to={`/lesson/${l.id}`}>{l.title}</Link>: {pr?.done ? (pr.skipped ? 'skipped' : 'finished') : pr && pr.step > 0 ? 'in progress' : 'not started'}{' '}
-          {!pr?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void markLesson(l, false)}>Mark finished</button> · <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void markLesson(l, true)}>Skip</button></>}
-          {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) }
+          {!pr?.done && <><button type="button" className="btn btn-quiet" aria-label={`Mark finished: ${l.title}`} onClick={() => void markLesson(l, false)}>Mark finished</button> · <button type="button" className="btn btn-quiet" aria-label={`Skip: ${l.title}`} onClick={() => void markLesson(l, true)}>Skip</button></>}
+          {(pr?.done || (pr && pr.step > 0)) && <button type="button" className="btn btn-quiet btn-danger" aria-label={`Reset progress: ${l.title}`} onClick={() => void resetLesson(l.id)}>Reset</button>}</p>) }
       return (
             <section className={`card skilldetail detaildrawer`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
@@ -345,8 +320,8 @@ export function Course() {
   )
   const leftPanel = (
         <section className="card missionpanel sidedrawer left" aria-label={`${current.name} progress`}>
-        <button type="button" className="link" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the Curriculum list</button>
-          {!isAll && <button type="button" className="link" onClick={() => setView('all')}>‹ See the whole curriculum</button>}
+        <button type="button" className="btn btn-quiet" onClick={() => setParams(p => { const n = new URLSearchParams(p); n.set('view', 'lessons'); return n })}>Open the Curriculum list</button>
+          {!isAll && <button type="button" className="btn btn-quiet" onClick={() => setView('all')}>‹ See the whole curriculum</button>}
           <h2>{current.name}</h2>
           {(() => { const live = current.nodes.filter(n => !n.noExercises); return live.length > 0 && live.every(n => n.level === 4 && !n.due) ? (
             <div className="completebanner" role="status"><strong>✓ {isAll ? 'Curriculum' : 'Section'} complete.</strong> All {live.length} skills with exercises are Mastered and none is due for a refresher. Your certificate is in the Full report below.</div>) : null })()}
@@ -359,7 +334,7 @@ export function Course() {
             </ul>
           </div>
           <p className="small muted">{isAll ? 'Overall' : 'Section'} progress is the average level of {isAll ? 'all' : 'the mission\'s'} {current.nodes.length} skills, counting only what you have shown (mastered counts 4 of 4, level two 3, level one 2, seen 1, not started 0).{current.percentWithAssumed > current.percent && ` The lighter part of the ring is what it would be if the ${current.assumedCount} skills assumed from your placement or warm-up were confirmed.`}{current.nodes.some(n => n.noExercises) && ` ${current.nodes.filter(n => n.noExercises).length} skills have no exercises yet and can reach Seen at most, so the ring cannot fill completely.`}</p>
-          <button type="button" className="link" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</button>
+          <button type="button" className="btn btn-quiet" onClick={() => setShowBreakdown(s => !s)} aria-expanded={showBreakdown}>{showBreakdown ? 'Hide skill breakdown' : 'Show skill breakdown'}</button>
           {showBreakdown && isAll && missions.map(m => (
             <div key={m.strand} className="tierrow">
               <div className="small"><button type="button" className="link" onClick={() => setView(m.strand)}><strong>{m.strand} · {m.name}</strong></button> <span className="muted">{m.percent}% · {m.counts[4]} mastered of {m.nodes.length}</span></div>
@@ -372,7 +347,7 @@ export function Course() {
               <div className="blocks">{t.nodes.map(n => <Block key={n.id} n={n} selected={picked === n.id} seen={lessonSeen(n.id)} onPick={pick} onHover={hoverNode} />)}</div>
             </div>
           ))}
-          <p className="small"><button type="button" className="link" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="link" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="link" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
+          <p className="small"><button type="button" className="btn btn-quiet" onClick={() => void markAll(current.nodes, false, `Mark every lesson in ${current.name} as finished:`)}>Mark all lessons here finished</button> · <button type="button" className="btn btn-quiet" onClick={() => void markAll(current.nodes, true, `Skip every lesson in ${current.name}:`)}>Skip all lessons here</button>{bulk && bulk.length > 0 && <> · <button type="button" className="btn btn-quiet" onClick={() => void undoBulk()}>Undo: reset the {bulk.length} lessons just changed</button></>}</p>
           <Legend />
           <details className="fullreport" open={reportOpen} onToggle={e => setReportOpen(e.currentTarget.open)}>
             <summary><strong>Full report</strong> <span className="muted small">· path, independence, confidence, per-skill evidence, badges</span></summary>
@@ -446,13 +421,13 @@ export function Course() {
                       <div className="row">
                         {(n.lessonDone ? [] : [primaryLesson(content.lessons, n.id, id => !!progress?.find(p => p.lessonId === id)?.done)].filter((l): l is LessonMeta => !!l)).map(l => <Link key={l.id} className="button" to={`/lesson/${l.id}`} aria-label={`Lesson: ${n.title}`}>Lesson</Link>)}
                         {n.workingDepth && <Link className="button primary" to={`/practice?skill=${n.id}.${n.workingDepth}&go=1&n=6`} aria-label={`Practice: ${n.title}`}>Practice</Link>}
-                        <button type="button" className="link" aria-label={`Remove ${n.title} from suggestions`} onClick={() => void dismiss(n.id)}>Remove</button>
+                        <button type="button" className="btn btn-quiet" aria-label={`Remove ${n.title} from suggestions`} onClick={() => void dismiss(n.id)}>Remove</button>
                       </div>
                     </UpNextMark>
                   )
                 })}</ul>
               )}
-              {dismissedHere.length > 0 && <button type="button" className="link small" onClick={async () => { const keep = dismissed.filter(id => !currentIds.has(id)); setDismissed(keep); await kvSet('upnext:dismissed', keep) }}>Show removed suggestions again ({dismissedHere.length})</button>}
+              {dismissedHere.length > 0 && <button type="button" className="btn btn-quiet" onClick={async () => { const keep = dismissed.filter(id => !currentIds.has(id)); setDismissed(keep); await kvSet('upnext:dismissed', keep) }}>Show removed suggestions again ({dismissedHere.length})</button>}
             </section>
           )}
 
@@ -476,7 +451,7 @@ export function Course() {
     </div>
   )
 
-  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1>{tabs}<ContinueStrip lesson={nextCore} progress={progress ?? []} reviewReady={!!(plan?.unlocked || planNow?.unlocked)} />{viewSwitch}{showList ? <LessonIndex /> : <PathView content={content} masteries={ctx.masteries} placement={placement} progress={progress ?? []} nextId={nextCore?.id} />}</main> : null // built after sk and busy exist; returned after every hook has run
+  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1><CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1><LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
   const sectionChips = <>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>
@@ -489,7 +464,7 @@ export function Course() {
   // phones (docs/mobile-design.md): a thin bar with the three views as a segmented control; everything else is in one Filters sheet
   const phoneLead = (
     <div className="segmented" role="group" aria-label="Curriculum views">
-      <button type="button" onClick={() => setTab('lessons')}>Curriculum</button>
+      <button type="button" onClick={() => setTab('path')}>Curriculum</button>
       <button type="button" onClick={() => setTab('courses')}>Electives</button>
       <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
     </div>
@@ -512,7 +487,7 @@ export function Course() {
 
         <div className="mapcenter"><RadialMap phoneLead={phoneLead} phoneFilters={phoneFilters} toolbarLead={<div className="sectionbar inbar" role="group" aria-label="View, sections and stages">
       <ChipGroup label="View" menu current="Map">
-        <button type="button" className="chip" onClick={() => setTab('lessons')}>Curriculum</button>
+        <button type="button" className="chip" onClick={() => setTab('path')}>Curriculum</button>
         <button type="button" className="chip" onClick={() => setTab('courses')}>Electives</button>
         <button type="button" className="chip on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
         <button type="button" className={wins.progress ? 'chip on' : 'chip'} aria-pressed={wins.progress} onClick={() => toggleWin('progress')}>Progress window</button>

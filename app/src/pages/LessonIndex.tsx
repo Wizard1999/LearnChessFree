@@ -1,6 +1,6 @@
 import { hueOfStage, hueOfStrand } from '../lib/hue'
 import { ArtEmblem } from '../components/art'
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
@@ -12,11 +12,14 @@ import { STRAND_NAMES } from '../lib/missions'
 import { PATH_STAGES, stageLabel } from '../lib/pathStages'
 import { FirstGameInvite } from '../components/FirstGameInvite'
 import { inviteSlot } from '../lib/firstGame'
+import { Button } from '../components/Button'
+import { Icon } from '../components/Icon'
+import { useNextCoreLesson } from '../lib/useNextCoreLesson'
 import { UpNextMark } from '../components/UpNextMark'
 
 /** A list row; the up next row carries the shared persimmon mark (UpNextMark). */
-function UpNextOrLi({ up, skillId, className, children }: { up: boolean; skillId: string; className: string; children: React.ReactNode }) {
-  return up ? <UpNextMark as="li" skillId={skillId} className={className}>{children}</UpNextMark> : <li className={className}>{children}</li>
+function UpNextOrLi({ up, skillId, className, id, children }: { up: boolean; skillId: string; className: string; id: string; children: React.ReactNode }) {
+  return up ? <UpNextMark as="li" skillId={skillId} className={className} id={id} tabIndex={-1}>{children}</UpNextMark> : <li className={className} id={id} tabIndex={-1}>{children}</li>
 }
 
 type Filter = 'all' | 'todo' | 'started' | 'done'
@@ -35,6 +38,33 @@ export function LessonIndex() {
   const [strandSel, setStrandSel] = useState('')
   const [stageSel, setStageSel] = useState('')
   const [view, setView] = useState<View>('path') // the recommended path mixes the sections by stage; the section view is the reference library
+  const nextCore = useNextCoreLesson()
+  const [userOpen, setUserOpen] = useState<Record<string, boolean>>(() => { try { return JSON.parse(sessionStorage.getItem('lessonlist:open') ?? '{}') } catch { return {} } })
+  useEffect(() => { try { sessionStorage.setItem('lessonlist:open', JSON.stringify(userOpen)) } catch { /* optional */ } }, [userOpen])
+  const [flash, setFlash] = useState<string | null>(null)
+  const [target, setTarget] = useState<{ id: string; n: number } | null>(null)
+  const handled = useRef(0)
+  /** Scrolls to the next lesson's row (clearing any filter that hides it), highlights it, and moves keyboard focus there so Enter opens it. */
+  const goNext = () => {
+    if (!nextCore) return
+    if (q || strandSel || stageSel || filter !== 'all') { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }
+    const g = view === 'path' ? nextCore.stage : content.skillById.get(nextCore.skill)?.strand
+    if (g) setUserOpen(o => ({ ...o, [`${view}:${g}`]: true }))
+    setTarget({ id: nextCore.id, n: Date.now() })
+  }
+  useEffect(() => {
+    if (!target || handled.current === target.n) return
+    const el = document.getElementById(`lessonrow-${target.id}`)
+    if (!el) return // the filters are being cleared; this runs again once the row exists
+    handled.current = target.n
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true
+    el.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' })
+    el.focus({ preventScroll: true })
+    setFlash(target.id)
+    if (reduce) return // reduced motion: the highlight stays until the learner moves on
+    const t = window.setTimeout(() => setFlash(null), 4000)
+    return () => window.clearTimeout(t)
+  }, [target, q, strandSel, stageSel, filter, view])
   const byId = useMemo(() => new Map((progress ?? []).map(p => [p.lessonId, p])), [progress])
   const groups = useMemo(() => {
     const sorted = [...content.lessons].sort((a, b) => lessonSort(a, b, content.skillById))
@@ -74,52 +104,68 @@ export function LessonIndex() {
   const mark = (l: LessonMeta, skipped: boolean) => saveFinished(db.lessonProgress, l, skipped)
   const reset = (id: string) => resetProgress(db.lessonProgress, id)
 
+  const filtersActive = !!(q || strandSel || stageSel || filter !== 'all')
+  // the section holding the learner's current place: the Next lesson's, else the lesson last worked on, else the first
+  const lastWorked = useMemo(() => [...(progress ?? [])].sort((a, b) => (b.ts ?? 0) - (a.ts ?? 0))[0], [progress])
+  const homeLesson = nextCore ?? (lastWorked ? content.lessonById.get(lastWorked.lessonId) : undefined)
+  const homeKey = (homeLesson ? groupOf(homeLesson) : undefined) ?? groups[0]?.[0]
+  const sk = (strand: string) => `${view}:${strand}`
+  const isOpen = (strand: string) => userOpen[sk(strand)] ?? (filtersActive || strand === homeKey)
+  const allOpen = groups.length > 0 && groups.every(g => isOpen(g[0]))
+  const setOpenKey = (strand: string, v: boolean) => setUserOpen(o => ({ ...o, [sk(strand)]: v }))
+  const setAllOpen = (v: boolean) => setUserOpen(o => ({ ...o, ...Object.fromEntries(groups.map(g => [sk(g[0]), v])) }))
   return (
     <section aria-label="Lesson index">
       <div className="card overallbar">
+        <div className="overalltext">
         <div className="sectionhead"><strong>Whole curriculum</strong><span className="muted small">{fmt(totalMin)} of lessons in all · {fmt(Math.max(0, totalMin - doneMin))} left</span></div>
         <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
         <p className="small muted">{view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}</p>
+        </div>
+        {nextCore && <div className="nextcta"><Button variant="primary" icon="next" className="nextbtn" tip="Scroll to the next lesson on your route" onClick={goNext}>Next lesson</Button><span className="small muted nextcta-sub">{nextCore.title}, {aboutMinutes(lessonMinutes(nextCore))}</span></div>}
       </div>
       <div className="lede">Nothing is locked: open any lesson, in any order. <details className="inlinenote"><summary>How this list works</summary>The recommended path mixes the subjects so you can play a full game early and meet each idea when you need it; "By subject" groups the same lessons for looking things up. Marking a lesson finished or skipped only changes this list and the map; it is not evidence that you know the skill.</details></div>
-      <div className="row filters">
-        {(['path', 'section'] as View[]).map(v => <button key={v} type="button" className={view === v ? 'chip on' : 'chip'} aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Grouped by stage' : 'Grouped by subject'}</button>)}
-        <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons by title" />
-        <select value={strandSel} onChange={e => setStrandSel(e.target.value)} aria-label="Filter by subject"><option value="">Every subject</option>{strandIds.map(id => <option key={id} value={id}>{STRAND_NAMES[id] ?? id}</option>)}</select>
-        <select value={stageSel} onChange={e => setStageSel(e.target.value)} aria-label="Filter by stage"><option value="">Every stage</option>{PATH_STAGES.map(st => <option key={st.id} value={st.id}>{stageLabel(st.id)}: {st.title}</option>)}</select>
-      </div>
-      <div className="row filters" role="group" aria-label="Filter by status">
-        {(['all', 'todo', 'started', 'done'] as Filter[]).map(f => <button key={f} type="button" className={filter === f ? 'chip on' : 'chip'} aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : f === 'started' ? 'In progress' : 'Finished or skipped'}</button>)}
-        {(q || strandSel || stageSel || filter !== 'all') && <button type="button" className="link" onClick={() => { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }}>Clear filters</button>}
+      <div className="toolbar listbar" role="group" aria-label="List controls">
+        <div className="seg" role="group" aria-label="Group lessons by">
+          {(['path', 'section'] as View[]).map(v => <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)}>{v === 'path' ? 'Grouped by stage' : 'Grouped by subject'}</button>)}
+        </div>
+        <input className="listsearch" type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search lessons" aria-label="Search lessons by title" />
+        <select className="listselect" value={strandSel} onChange={e => setStrandSel(e.target.value)} aria-label="Filter by subject"><option value="">Every subject</option>{strandIds.map(id => <option key={id} value={id}>{STRAND_NAMES[id] ?? id}</option>)}</select>
+        <select className="listselect stagesel" value={stageSel} onChange={e => setStageSel(e.target.value)} aria-label="Filter by stage"><option value="">Every stage</option>{PATH_STAGES.map(st => <option key={st.id} value={st.id}>{stageLabel(st.id)}: {st.title}</option>)}</select>
+        <div className="seg" role="group" aria-label="Filter by status">
+          {(['all', 'todo', 'started', 'done'] as Filter[]).map(f => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : f === 'started' ? 'In progress' : 'Finished or skipped'}</button>)}
+        </div>
+        <Button variant="quiet" className="toggleall" tip={allOpen ? 'Close every section of the list' : 'Open every section of the list'} onClick={() => setAllOpen(!allOpen)}>{allOpen ? 'Collapse all' : 'Expand all'}</Button>
+        {filtersActive && <button type="button" className="btn btn-quiet" onClick={() => { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }}>Clear filters</button>}
       </div>
       {groups.length === 0 && <p className="muted">No lessons match.</p>}
       {groups.map(([strand, ls], gi) => (
         <Fragment key={strand}>
         {view === 'path' && gi === inviteSlot(groups.map(g => g[0])) && <FirstGameInvite />}
         <div className="card" data-hue={view === 'path' ? hueOfStage(Math.max(1, PATH_STAGES.findIndex(x => x.id === strand) + 1)) : hueOfStrand(strand)}>
-          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); return (
-            <div className="sectionhead"><h2><ArtEmblem seed={strand} />{view === 'path' ? `${stageLabel(strand)} · ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand)}</h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
+          {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); const d = all.filter(l => byId.get(l.id)?.done).length; const open = isOpen(strand); const name = view === 'path' ? `${stageLabel(strand)}: ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand); return (
+            <div className="sectionhead"><h2><ArtEmblem seed={strand} /><button type="button" className="disclose" aria-expanded={open} aria-controls={`sec-${view}-${strand}`} onClick={() => setOpenKey(strand, !open)}><Icon name="chevron" size={18} className="chev" />{name}<span className="muted small discount">, {d} of {all.length} done</span></button></h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
           {view === 'path' && PATH_STAGES.find(x => x.id === strand)?.milestone && <p className="stagesub">{PATH_STAGES.find(x => x.id === strand)?.milestone}</p>}
           {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
             <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
-          <ul className="plain lessonindex">
+          {isOpen(strand) && <ul className="plain lessonindex" id={`sec-${view}-${strand}`}>
             {ls.map(l => {
               const p = byId.get(l.id)
               const earlier = finishedEarlierVersion(p, l)
               const status = p?.done ? (p.skipped ? 'Skipped' : earlier ? 'Finished (earlier version)' : 'Finished') : p && p.step > 0 ? `In progress (step ${p.step + 1} of ${l.stepCount})` : 'Not started'
               return (
-                <UpNextOrLi key={l.id} up={upNextIds.has(l.id)} skillId={l.skill} className={`row lessonrow ${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
+                <UpNextOrLi key={l.id} id={`lessonrow-${l.id}`} up={upNextIds.has(l.id)} skillId={l.skill} className={`row lessonrow ${flash === l.id ? 'flash ' : ''}${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
                   <span className="statusmark" aria-hidden="true">{p?.done ? (p.skipped ? '»' : '✓') : p && p.step > 0 ? '◐' : '○'}</span>
                   <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{earlier ? 'Review the new version' : p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
-                  <span><strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {aboutMinutes(lessonMinutes(l))} · {status}</span></span>
+                  <span>{nextCore?.id === l.id && <span className="nextlabel">Next</span>}<strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {aboutMinutes(lessonMinutes(l))} · {status}</span></span>
                   <span className="actions">
-                    {!p?.done && <><button type="button" className="link" aria-label={`Mark finished: ${l.title}`} onClick={() => void mark(l, false)}>Mark finished</button> <button type="button" className="link" aria-label={`Skip: ${l.title}`} onClick={() => void mark(l, true)}>Skip</button></>}
-                    {(p?.done || (p && p.step > 0)) && <button type="button" className="link" aria-label={`Reset progress: ${l.title}`} onClick={() => void reset(l.id)}>Reset</button>}
+                    {!p?.done && <><button type="button" className="btn btn-quiet" aria-label={`Mark finished: ${l.title}`} onClick={() => void mark(l, false)}>Mark finished</button> <button type="button" className="btn btn-quiet" aria-label={`Skip: ${l.title}`} onClick={() => void mark(l, true)}>Skip</button></>}
+                    {(p?.done || (p && p.step > 0)) && <button type="button" className="btn btn-quiet btn-danger" aria-label={`Reset progress: ${l.title}`} onClick={() => void reset(l.id)}>Reset</button>}
                   </span>
                 </UpNextOrLi>
               )
             })}
-          </ul>
+          </ul>}
         </div>
         </Fragment>
       ))}

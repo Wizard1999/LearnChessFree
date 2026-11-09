@@ -1,0 +1,129 @@
+/* Controls system (docs/design-controls.md): Button, IconButton, Tooltip. Tokens only, no raw colours. Works in every look and in dark mode
+   because it reads only --surface, --text, --canvas, --control-boundary, --accent, --focus, --error, --chip, --primary and friends.
+   `:root:root` outranks the older element rules in index.css and the looks without !important. */
+:root {
+  --btn-min: 40px;
+  --tip-bg: var(--text);
+  --tip-fg: var(--canvas);
+  --tip-radius: 6px;
+}
+@media (pointer: coarse) { :root { --btn-min: 44px; } }
+
+:root:root .btn {
+  box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; cursor: pointer; vertical-align: middle;
+  min-height: var(--btn-min); padding: 0 1rem; border: 1px solid var(--control-boundary); border-radius: var(--radius-control);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 0.92rem; font-weight: 600; line-height: 1.1; text-decoration: none; white-space: nowrap;
+  box-shadow: 0 2px 0 var(--control-boundary); transition: transform 80ms ease, box-shadow 80ms ease, border-color 120ms ease, background-color 120ms ease;
+  -webkit-tap-highlight-color: transparent; user-select: none;
+}
+:root:root .btn .icon { flex: none; }
+:root:root .btn:hover:not(:disabled):not([aria-disabled=true]) { border-color: var(--accent); color: var(--accent-hover); }
+:root:root .btn:active:not(:disabled) { transform: translateY(2px); box-shadow: 0 0 0 var(--control-boundary); }
+:root:root .btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-control); }
+:root:root .btn:disabled, :root:root .btn[aria-disabled=true] { opacity: 0.5; cursor: default; box-shadow: none; }
+
+/* primary: words, filled */
+:root:root .btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); box-shadow: 0 2px 0 var(--accent-hover); }
+:root:root .btn-primary:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--on-accent); }
+/* secondary: words, outlined (the default look above). quiet: smaller outlined words for tidy side actions */
+:root:root .btn-quiet { min-height: 36px; padding: 0 0.8rem; font-size: 0.85rem; font-weight: 600; }
+@media (pointer: coarse) { :root:root .btn-quiet { min-height: var(--btn-min); } }
+/* danger: words, outlined in the error colour; never filled so it is never the loudest thing on the page */
+:root:root .btn-danger { color: var(--error); border-color: var(--error); box-shadow: 0 2px 0 var(--error); }
+:root:root .btn-danger:hover:not(:disabled) { background: var(--error); border-color: var(--error); color: var(--surface); }
+/* icon-only: square, the symbol carries the meaning, the tooltip and aria-label carry the name */
+:root:root .btn-icon { width: var(--btn-min); padding: 0; }
+:root:root .btn-icon.btn-lg { width: 48px; min-height: 48px; }
+/* toggled (aria-pressed=true) */
+:root:root .btn.is-on { background: var(--chip); border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent), 0 2px 0 var(--accent); }
+:root:root .btn.is-on:active:not(:disabled) { box-shadow: inset 0 0 0 1px var(--accent); }
+
+/* a toolbar groups icon buttons with no gap noise and wraps on narrow screens */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0.6rem 0; }
+.toolbar .sep { width: 1px; align-self: stretch; margin: 4px 0.2rem; background: var(--divider, var(--control-boundary)); }
+
+/* tooltip */
+.tipwrap { position: relative; display: inline-flex; }
+.tip {
+  position: absolute; z-index: 60; left: 50%; bottom: calc(100% + 8px); transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(2px);
+  width: max-content; max-width: min(18rem, calc(100vw - 16px)); padding: 0.35rem 0.6rem; border-radius: var(--tip-radius);
+  background: var(--tip-bg); color: var(--tip-fg); font-size: 0.82rem; font-weight: 600; line-height: 1.25; text-align: center; white-space: normal;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.25); pointer-events: none; display: none; /* hidden tips take no room, so they can never cause sideways scrolling */
+}
+@keyframes tipin { from { opacity: 0; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(2px); } to { opacity: 1; transform: translateX(calc(-50% + var(--tip-dx, 0px))); } }
+.tip.tip-below { bottom: auto; top: calc(100% + 8px); }
+.tip.tip-on { display: block; animation: tipin 120ms ease both; }
+.tip::after { content: ''; position: absolute; left: calc(50% - var(--tip-dx, 0px)); top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--tip-bg); }
+.tip.tip-below::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--tip-bg); }
+.tipkey { margin-left: 0.5rem; padding: 0 0.35rem; border: 1px solid currentColor; border-radius: 4px; font: inherit; font-size: 0.75rem; font-weight: 700; opacity: 0.85; }
+.tipwrap, .tipwrap .btn { -webkit-touch-callout: none; }
+@media (prefers-reduced-motion: reduce) {
+  :root:root .btn { transition: none; }
+  .tip.tip-on { animation: none; }
+  :root:root .btn:active:not(:disabled) { transform: none; }
+}
+@media (forced-colors: active) { .tip { border: 1px solid CanvasText; } .btn.is-on { outline: 2px solid Highlight; } }
+
+/* header: the Next lesson button sits among the nav items on the bar, so it needs the bar's own colours beaten */
+:root:root:root .top nav a.btn { color: var(--on-accent); background: var(--accent); border: 1px solid var(--accent); padding: 0 0.9rem; min-height: 36px; box-shadow: none; }
+:root:root:root .top nav a.btn:hover { background: var(--accent-hover); color: var(--on-accent); }
+:root:root:root .top nav a.btn.on { border-bottom-color: var(--accent); }
+
+/* segmented control: one outlined group of word buttons, one pressed */
+.seg { display: inline-flex; border: 1px solid var(--control-boundary); border-radius: var(--radius-control); overflow: hidden; background: var(--surface); }
+:root:root .seg > button { border: 0; border-radius: 0; box-shadow: none; min-height: calc(var(--btn-min) - 2px); padding: 0 0.8rem; background: transparent; color: var(--text); font-size: 0.88rem; font-weight: 600; white-space: nowrap; }
+:root:root .seg > button + button { border-left: 1px solid var(--control-boundary); }
+:root:root .seg > button:hover:not(:disabled) { background: var(--chip); color: var(--text); }
+:root:root .seg > button[aria-pressed=true] { background: var(--accent); color: var(--on-accent); }
+:root:root .seg > button:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; }
+.listbar { gap: 0.5rem 0.6rem; margin: 0.8rem 0; }
+.listbar .listsearch { flex: 1 1 7.5rem; width: auto; min-width: 7.5rem; min-height: var(--btn-min); box-sizing: border-box; }
+.listbar .listselect { width: 9.3rem; text-overflow: ellipsis; padding-left: 0.6rem; min-height: var(--btn-min); box-sizing: border-box; }
+.listbar .seg > button { padding: 0 0.55rem; font-size: 0.82rem; }
+.listbar .stagesel { width: 9.3rem; }
+:root:root .listbar > .btn-quiet { padding: 0 0.6rem; font-size: 0.82rem; }
+.listbar { column-gap: 0.4rem; }
+@media (max-width: 640px) { .listbar .seg { max-width: 100%; overflow-x: auto; } .listbar .listsearch { flex: 1 1 100%; width: auto; } .listbar .listselect { flex: 1 1 45%; max-width: none; } }
+
+/* header (D72): a divider at the exact centre of the bar; Curriculum, Electives, Map hang to its left (right-aligned against it), Progress and
+   Mastery challenge to its right; the masthead sits far left and More far right. Phones hide the nav (tab bar); below 1000px it folds into More. */
+@media (min-width: 641px) {
+  :root:root .top { grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr); grid-template-areas: "left sep right"; column-gap: 0; }
+  :root:root .top nav { display: contents; }
+  :root:root .top .brandblock { grid-area: left; justify-self: start; }
+  :root:root .top .navleft { grid-area: left; justify-self: end; padding-right: 1.1rem; }
+  :root:root .top .navsep { grid-area: sep; align-self: stretch; height: auto; margin: 0.15rem 0; }
+  :root:root .top .navright { grid-area: right; justify-self: start; padding-left: 1.1rem; }
+  :root:root .top nav .morenav { grid-area: right; justify-self: end; }
+  :root:root .top .navleft, :root:root .top .navright { display: flex; align-items: center; gap: 0.2rem 1.1rem; white-space: nowrap; }
+  .foldednav { display: none; }
+}
+@media (min-width: 641px) and (max-width: 999px) {
+  :root:root .top .navleft, :root:root .top .navright, :root:root .top .navsep { display: none; }
+  :root:root .top { grid-template-columns: 1fr auto; grid-template-areas: "left right"; }
+  .foldednav { display: flex; flex-direction: column; border-bottom: 1px solid var(--divider, var(--control-boundary)); margin-bottom: 0.3rem; padding-bottom: 0.3rem; }
+}
+.top .navsep { width: 1px; background: var(--on-bar-soft, var(--control-boundary)); opacity: 0.6; }
+.lessonrow.flash { outline: 3px solid var(--focus); outline-offset: 2px; background: var(--chip); border-radius: var(--radius-control); }
+.lessonrow { transition: background-color 600ms ease; }
+.nextlabel { display: inline-block; margin-right: 0.4rem; padding: 0 0.45rem; border-radius: 4px; background: var(--accent); color: var(--on-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; vertical-align: 0.1em; }
+@media (prefers-reduced-motion: reduce) { .lessonrow { transition: none; } }
+
+/* collapsible list sections: a disclosure button in the heading */
+.disclose { all: unset; box-sizing: border-box; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; min-height: var(--btn-min); color: inherit; font: inherit; border-radius: var(--radius-control); }
+.disclose:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.disclose .chev { transition: transform 160ms ease; transform: rotate(-90deg); flex: none; }
+.disclose[aria-expanded=true] .chev { transform: none; }
+.disclose .discount { font-weight: 400; }
+@media (prefers-reduced-motion: reduce) { .disclose .chev { transition: none; } }
+
+/* the Whole curriculum card: text left, the Next lesson call to action in the empty space on the right */
+.overallbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.6rem 1.5rem; }
+.overallbar .nextcta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; max-width: 18rem; text-align: right; }
+.overallbar .nextcta .btn { min-height: 52px; padding: 0 1.6rem; font-size: 1.05rem; }
+@media (max-width: 1099px) { .overallbar { grid-template-columns: 1fr; } .overallbar .nextcta { align-items: stretch; max-width: none; text-align: left; } .overallbar .nextcta .btn { width: 100%; } }
+.sectionhead { flex-wrap: wrap; }
+@media (max-width: 640px) { .boardmorelist { left: auto; right: 0; max-width: calc(100vw - 1.5rem); } }
+/* on a phone the action bar keeps words only: the one-row bar is tight and the words are the meaning */
+@media (max-width: 640px) { .actionbar .btn:not(.btn-icon) .icon { display: none; } }
+@media (max-width: 640px) { .listbar .seg { width: 100%; } .listbar .seg > button { flex: 1 1 auto; white-space: normal; line-height: 1.15; padding: 0.3rem 0.4rem; } }

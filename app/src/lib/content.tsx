@@ -20,6 +20,8 @@ interface Loaded { bundle: ContentBundle; full: boolean; ready: ReadonlySet<stri
 interface FirstVisit { items: Item[]; ready: string[] }
 export const tagKey = (tags: string[]) => [...tags].sort().join('|')
 const Ctx = createContext<(Loaded & { retryCourses: () => Promise<void> }) | null>(null)
+/** The loaded content, or null when there is no provider yet (the shell can render before content). */
+export const useContentMaybe = () => useContext(Ctx)
 export const useContent = () => {
   const c = useContext(Ctx)
   if (!c) throw new Error('useContent outside ContentProvider')
