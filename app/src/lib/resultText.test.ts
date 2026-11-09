@@ -10,10 +10,10 @@ describe('result vocabulary', () => {
     expect(RESULT_LABEL['sound-alternative']).toBe('sound alternative')
   })
   it('words the headline', () => {
-    expect(resultHeadline('correct', 0)).toBe('Correct for this task.')
-    expect(resultHeadline('correct', 2)).toMatch(/second look/)
+    expect(resultHeadline('correct', 0)).toMatch(/^Right\./)
+    expect(resultHeadline('correct', 2)).toMatch(/kept at it/)
     expect(resultHeadline('sound-alternative', 0)).toMatch(/sound alternative/i)
-    expect(resultHeadline('unsuccessful', 1)).toMatch(/Unsuccessful/)
+    expect(resultHeadline('unsuccessful', 1)).toMatch(/Not this time/)
   })
 })
 

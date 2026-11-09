@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { playSound } from '../lib/sound'
+import { lessonDoneLead, LESSON_SEEN_CAPTION } from '../lib/encourage'
+import { GlassFill } from './Celebrate'
 import { ArtScene } from './art'
 import { Link } from 'react-router-dom'
 import { ChessBoard } from './ChessBoard'
@@ -215,7 +217,8 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       <section className="card">
         <ArtScene kind="done" />
         <h2>Lesson complete</h2>
-        <p>You finished <strong>{lesson.title}</strong>.</p>
+        <p>{lessonDoneLead(lesson.title)}</p>
+        <div className="donecelebrate"><GlassFill from={0} to={1} /><p className="doneword">The glass fills: this skill is now at least <strong>{LESSON_SEEN_CAPTION}</strong>. Practice is what fills it further.</p></div>
         {lesson.outcomes && <><p className="small muted">What you should now be able to do:</p><ul>{lesson.outcomes.map(o => <li key={o}>{o}</li>)}</ul></>}
         <p className="muted small">Finishing a lesson only means you have <em>seen</em> the idea. It counts as <strong>reliable</strong> only after you solve fresh positions where nobody names it. Those come back as mixed practice{sk ? ` (skill: ${sk.title})` : ''}.</p>
         <div className="row"><Link className="button primary" to="/course" onClick={onExit}>Back to Curriculum</Link><Link className="button" to="/practice">Practice mixed positions</Link></div>

@@ -1,4 +1,5 @@
 import type { Claim } from '../types'
+import { answerHeadline } from './encourage'
 
 /** The three outcomes stored with each attempt, in plain words. */
 export type ResultKind = 'correct' | 'sound-alternative' | 'unsuccessful'
@@ -14,11 +15,7 @@ export function resultKind(correct: boolean, alternative: boolean): ResultKind {
 }
 
 /** The first line of the feedback: the result in words. */
-export function resultHeadline(kind: ResultKind, wrongsBefore: number): string {
-  if (kind === 'sound-alternative') return 'A sound alternative.'
-  if (kind === 'unsuccessful') return 'Unsuccessful this time.'
-  return wrongsBefore === 0 ? 'Correct for this task.' : 'Correct for this task, after a second look.'
-}
+export function resultHeadline(kind: ResultKind, wrongsBefore: number): string { return answerHeadline(kind, wrongsBefore) }
 
 const words = (s: string) => s.toLowerCase().replace(/[^a-z0-9+\-# ]/g, ' ').split(/\s+/).filter(w => w.length > 2)
 const ENGINE_TALK = /\b(depth\s*\d+|centipawns?|cp|stockfish|syzygy|tablebase|engine|eval(?:uation)?|[+-]\d+\.\d+)\b/gi

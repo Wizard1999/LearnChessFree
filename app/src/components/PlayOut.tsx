@@ -1,5 +1,6 @@
 import { Button } from './Button'
 import { playSound } from '../lib/sound'
+import { goalLine } from '../lib/encourage'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
@@ -181,7 +182,7 @@ export function PlayOut({ item, source, onDone, nextLabel = 'Next' }: { item: It
       {res && (
         <div className={res.ok ? 'result ok' : 'result no'} role="status">
           <ResultMark kind={res.ok ? 'correct' : 'unsuccessful'} />
-          <p><strong>{res.ok ? 'Goal reached.' : 'Goal not reached.'}</strong> {res.reason}</p>
+          <p><strong>{goalLine(res.ok)}</strong> {res.reason}</p>
           {item.explain && <p>{item.explain}</p>}
           {onDone && <div className="nextbar actionbar"><button type="button" className="primary" onClick={() => onDone(result.current)}>{nextLabel}</button></div>}
         </div>

@@ -1,4 +1,5 @@
 import { GeoArt } from '../components/GeoArt'
+import { useTodaySummary } from '../lib/celebrate'
 import { Crest } from '../components/Crest'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
@@ -25,6 +26,7 @@ import type { LessonMeta } from '../types'
 const NONE: never[] = []
 
 export function Today() {
+  const todayLine = useTodaySummary()
   const content = useContent()
   const full = useContentFull()
   const attempts = useAttempts()
@@ -161,6 +163,7 @@ export function Today() {
   return (
     <main className="page">
       <h1>Today</h1>
+      {todayLine && <p className="todaysummary">{todayLine}</p>}
       {!activeBlock && (
         <>
           {!planReady ? (

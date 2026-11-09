@@ -31,6 +31,7 @@ import { PhoneTabBar } from './components/PhoneTabBar'
 import { SoundToggle } from './components/SoundToggle'
 import { SettingsLink } from './components/SettingsLink'
 import { SoundEvents } from './components/SoundEvents'
+import { CelebrationLayer } from './components/CelebrationLayer'
 import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
 
@@ -64,6 +65,7 @@ export default function App() {
         {phone && <div className="topright"><SoundToggle /><button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button></div>}
       </header>
       <SoundEvents />
+      <CelebrationLayer />
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <SaveNotice />
       <ErrorBoundary resetKey={loc.pathname}>

@@ -1,0 +1,47 @@
+/* Celebrations and encouragement (D86). Our own motifs: a glass that fills, a gold star that lights and settles, a crest that shimmers, a bloom on a right
+   square. Tokens only. Every animation is short, eases out, moves nothing in the layout (transform, opacity, shadow) and ends in its resting state, so
+   the global reduced-motion rules (index.css) leave the same picture without the movement. */
+
+.celebrations { position: fixed; left: 0; right: 0; bottom: calc(1rem + env(safe-area-inset-bottom)); z-index: 130; display: flex; justify-content: center; padding: 0 0.75rem; pointer-events: none; }
+@media (max-width: 640px) { .celebrations { bottom: calc(4.6rem + env(safe-area-inset-bottom)); } }
+.celebration { pointer-events: auto; display: grid; grid-template-columns: auto 1fr auto; gap: 0.2rem 0.9rem; align-items: center; width: min(30rem, 100%); padding: 0.7rem 0.9rem; border: 2px solid var(--gold, var(--accent)); border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22); animation: celeb-in 0.35s ease-out both; }
+.celebration.sticky { border-width: 3px; }
+.celebration h2 { margin: 0; font-size: 1.05rem; line-height: 1.25; }
+.celebration p { margin: 0.15rem 0 0; font-size: 0.92rem; line-height: 1.4; color: var(--text-secondary); }
+.celebration .celebnext { color: var(--text); }
+.celebration .celebnext a { color: var(--accent-ink, var(--accent)); font-weight: 600; }
+.celebart { width: 44px; height: 54px; display: grid; place-items: center; color: var(--text); }
+@media (max-width: 480px) { .celebration { grid-template-columns: auto 1fr; } .celebration .celebclose { grid-column: 1 / -1; justify-self: end; } }
+@keyframes celeb-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* the glass: the water rests at its final level; the animation rises to it from the old level */
+.glassfill .water { fill: var(--lv3, var(--accent)); transform: translateY(var(--to)); animation: glass-rise 1.1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s both; }
+.glassfill .glassline { color: inherit; }
+@keyframes glass-rise { from { transform: translateY(var(--from)); } to { transform: translateY(var(--to)); } }
+.glassfill.inlineglass { display: block; }
+
+/* the Mastered star: it lights, glows once, and settles */
+.stargold .starshape { fill: var(--gold, var(--accent)); stroke: var(--gold, var(--accent)); stroke-width: 1.5; transform-origin: 50% 50%; transform-box: fill-box; animation: star-light 1.3s ease-out 0.2s both; }
+@keyframes star-light { 0% { opacity: 0.15; transform: scale(0.7); filter: none; } 45% { opacity: 1; transform: scale(1.08); filter: drop-shadow(0 0 7px var(--gold, var(--accent))); } 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 2px var(--gold, var(--accent))); } }
+
+/* the crest: one slow shimmer of gold around it, 2.2 s, then still */
+.crestglow { display: inline-block; line-height: 0; color: var(--text); animation: crest-shimmer 2.2s ease-out 0.2s both; }
+.crestglow .crest { width: 34px; height: 41px; }
+@keyframes crest-shimmer { 0% { filter: none; } 40% { filter: drop-shadow(0 0 9px var(--gold, var(--accent))); } 100% { filter: drop-shadow(0 0 1px var(--gold, var(--accent))); } }
+
+/* a gentle bloom on the square of a right answer */
+.board cg-board square.mark-right { animation: square-bloom 0.9s ease-out backwards; }
+@keyframes square-bloom { 0% { box-shadow: inset 0 0 0 0 var(--gold, var(--accent)); } 40% { box-shadow: inset 0 0 0 6px var(--gold, var(--accent)); } 100% { box-shadow: inset 0 0 0 2px var(--gold, var(--accent)); } }
+
+/* the lesson-complete and post-game cards */
+.donecelebrate { display: flex; align-items: center; gap: 0.8rem; margin: 0.4rem 0 0.8rem; }
+.donecelebrate .doneword { margin: 0; color: var(--text-secondary); font-size: 0.92rem; }
+
+/* the Today line */
+.todaysummary { margin: 0.2rem 0 0.8rem; color: var(--text-secondary); font-size: 0.95rem; }
+
+/* the progress ring: a brief ring of light for a rise shown without movement, and the closed ring at 100 percent */
+.donut.bumped { animation: ring-bump 1s ease-out; }
+@keyframes ring-bump { 0% { filter: drop-shadow(0 0 0 var(--gold, var(--accent))); } 30% { filter: drop-shadow(0 0 6px var(--gold, var(--accent))); } 100% { filter: none; } }
+.donut.full { filter: drop-shadow(0 0 4px var(--gold, var(--accent))); }
+.donut .donutstar { fill: var(--gold, var(--accent)); }

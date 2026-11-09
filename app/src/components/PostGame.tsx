@@ -12,6 +12,8 @@ import { useLessonProgress } from '../lib/progress'
 import { findStrength, followUpLesson, pickCritical, type Side } from '../lib/postGame'
 import { safeWrite } from '../lib/saveStatus'
 import { playSound } from '../lib/sound'
+import { postGameTitle, POST_GAME_FIRST_LINE, MILESTONES } from '../lib/encourage'
+import { celebrate, claimMilestone } from '../lib/celebrate'
 
 type Status = 'running' | 'done' | 'unavailable'
 
@@ -39,7 +41,7 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
   const firstEver = useLiveQuery(() => db.games.filter(g => g.source === 'practice').count().then(n => n === 1).catch(() => false), [gameId])
   // the first game the learner finishes: the rarest, longest sound (once per mount; a revisit of the page does not mount this card)
   const firstHeard = useRef(false)
-  useEffect(() => { if (firstEver === true && !firstHeard.current) { firstHeard.current = true; playSound('firstGame') } }, [firstEver])
+  useEffect(() => { if (firstEver === true && !firstHeard.current) { firstHeard.current = true; playSound('firstGame'); void claimMilestone('firstGame').then(first => { if (first) celebrate({ art: 'crest', fromLevel: 0, toLevel: 4, ...MILESTONES.firstGame, sticky: true }) }) } }, [firstEver])
   const strength = useMemo(() => findStrength(plies, color), [plies, color])
   const critical = useMemo(() => pickCritical(plies, analysis, color), [plies, analysis, color])
   const doneIds = useMemo(() => new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId)), [progress])
@@ -49,7 +51,8 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
   return (
     <section className="card postgame" aria-label="After the game">
       <ArtScene kind="postgame" />
-      <h2>The game is over</h2>
+      <h2>{postGameTitle(firstEver === true)}</h2>
+      {firstEver === true && <p>{POST_GAME_FIRST_LINE}</p>}
       <p>{reason} It is saved in <Link to="/games">My games</Link>.</p>
       <p><Link className="button primary" to={`/analysis?game=${gameId}`}>Review this game</Link></p>
       {strength && <p><strong>Something you did well.</strong> {strength.text}</p>}

@@ -21,6 +21,7 @@ import { destsFor, flipTurn, hidePieces, isUci, sideToMove, tryMove, uciFor } fr
 import { leadText, resultHeadline, resultKind, RESULT_LABEL, type ResultKind } from '../lib/resultText'
 import type { Item } from '../types'
 import { playSound } from '../lib/sound'
+import { wrongTry } from '../lib/encourage'
 import { usePhone } from '../lib/usePhone'
 import { PhoneFold, Sheet } from './Sheet'
 
@@ -197,7 +198,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
         if (!r) return
         if (lineIdx + 1 >= (item.answer.plies ?? 0)) finish(true, r.fen)
         else { setLineFen(r.fen); setLineIdx(lineIdx + 1); setMessage(null); setBoardKey(k => k + 1) }
-      } else wrong(lineIdx === 0 ? (item.feedback_by_move?.[uci] ?? 'That is not the first move of the best line. Look again, or use a hint.') : 'That is not the best reply here. Think about what the opponent would really play.')
+      } else wrong(lineIdx === 0 ? (item.feedback_by_move?.[uci] ?? wrongTry(wrongs + 1)) : `${wrongTry(wrongs + 1)} Think about what the opponent would really play.`)
       return
     }
     if (accepted.includes(uci)) {
@@ -208,10 +209,10 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       void soundAlternative(uci).then(alt => {
         setChecking(false)
         if (alt) { setAltNote(alt); finish(true, tryMove(askFen, uci)?.fen, true) }
-        else wrong(item.feedback_by_move?.[uci] ?? 'That is not the move this position is asking for. Look again, or use a hint.')
+        else wrong(item.feedback_by_move?.[uci] ?? wrongTry(wrongs + 1))
       })
     } else {
-      wrong(item.feedback_by_move?.[uci] ?? 'That is not the move this position is asking for. Look again, or use a hint.')
+      wrong(item.feedback_by_move?.[uci] ?? wrongTry(wrongs + 1))
     }
   }
   function checkSquares() {

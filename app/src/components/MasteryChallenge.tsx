@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { playSound } from '../lib/sound'
+import { challengeSummary, challengeToast } from '../lib/encourage'
+import { celebrate } from '../lib/celebrate'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from './LessonPlayer'
 import { Button } from './Button'
@@ -40,7 +42,10 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
     setRun(null)
     // passed: nothing went down and at least one skill had both exercises right
     const verdicts = run.plan.picks.map(p => challengeVerdict(run.items.reduce((s, it, k) => s + (splitSkillKey(it.skill).skill === p.node.id && results[k]?.correct ? 1 : 0), 0)))
-    if (verdicts.includes('up') && !verdicts.includes('down')) playSound('challengePassed')
+    if (verdicts.includes('up') && !verdicts.includes('down')) {
+      playSound('challengePassed')
+      celebrate({ art: 'star', fromLevel: 0, toLevel: 4, ...challengeToast(verdicts.filter(v => v === 'up').length), sticky: false })
+    }
   }
 
   /** Closing is always allowed. Answers already given in a run are saved as they are made (they count as evidence), so closing mid-run only drops the exercises not yet answered; the learner is told first. */
@@ -67,6 +72,7 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
   ) : result ? (
     <section className="card result ok" id="mastery-challenge" role="status" aria-live="polite">
       <h3>Challenge finished</h3>
+      <p>{challengeSummary(result.map(r => challengeVerdict(r.rights)))}</p>
       <table className="table small"><thead><tr><th>Skill</th><th>Right</th><th>What it means</th><th>Level</th></tr></thead>
         <tbody>{result.map(r => { const v = challengeVerdict(r.rights); return (
           <tr key={r.node.id}><td>{r.node.title}</td><td>{r.rights} of 2</td>
