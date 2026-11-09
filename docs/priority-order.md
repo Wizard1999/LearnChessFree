@@ -18,6 +18,7 @@ Rule behind the order (D54-D57): do what changes a new learner's first hour firs
 9. **Complete core figure to 100 percent**: lessons meeting the depth standard (the largest share), then the checklist.
 10. **S5 to S7 lesson rebuilds** (377 lessons) in path order, batched waves with a verdict for every lesson.
 11. **Re-review the lessons fixed this week** (Foundation and 45 openings): fixes were applied but not re-reviewed.
+11b. **Art for courses** (decision D59, `docs/art-direction.md`, ROADMAP Phase 3h): frame kit and empty-slot fallback, first batch of 14 images, provenance register and `check_art.py`. Direction accepted; start only when items 9 to 11 are mostly or fully done, and before the advanced extras below.
 12. **Remaining openings series and the history, meta and playstyle courses** (breadth after depth).
 
 ## Tier 4: polish and reach
