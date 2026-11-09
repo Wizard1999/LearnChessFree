@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { Attempt } from '../db'
 import type { Item, Skill } from '../types'
 import type { Mastery } from './mastery'
-import { buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpNext, type MissionContext } from './missions'
+import { buildMissions, challengeVerdict, nodeProgress, planChallenge, skillsUpNext, summarize, type MissionContext } from './missions'
 
 const skill = (id: string, strand = 'S3', tier = 2, depths: Record<string, string[]> = { D0: [], D1: [], D2: ['X.D1'], D3: ['X.D2'] }): Skill =>
   ({ id, title: id, strand, tier, depths: Object.fromEntries(Object.entries(depths).map(([d, p]) => [d, { outcome: 'does the thing well enough', prereqs: p.map(x => x.replace('X', id)) }])) } as Skill)
@@ -67,6 +67,17 @@ describe('missions', () => {
     expect(ms[0].tiers.map(t => t.tier)).toEqual([2, 3])
     expect(ms[0].percent).toBe(50) // A is Mastered (4), B is Not started (0): (4+0)/(4*2)
     expect(ms[0].counts).toEqual([1, 0, 0, 0, 1])
+  })
+  it('summarizes any set of skills the way a section header shows it, and flags a complete section only when every skill is Mastered', () => {
+    const ctx = ctxFor([A, B], { 'A.D1': m('reliable'), 'A.D2': m('reliable') }, { A: ['D1', 'D2'], B: ['D1', 'D2'] })
+    const nodes = buildMissions([A, B], ctx)[0].nodes
+    const s = summarize(nodes)
+    expect(s.percent).toBe(50)
+    expect(s.counts).toEqual([1, 0, 0, 0, 1])
+    expect(s.complete).toBe(false)
+    expect(summarize([nodes[0]]).complete).toBe(true)
+    expect(summarize([]).complete).toBe(false)
+    expect(summarize([]).percent).toBe(0)
   })
   it('suggests started skills first and only where the prerequisites are met', () => {
     const ctx = ctxFor([A, B], {}, { A: ['D1', 'D2'], B: ['D1', 'D2'] })

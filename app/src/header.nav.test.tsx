@@ -35,13 +35,13 @@ describe('top bar (D72)', () => {
     expect([...nav.querySelectorAll('.navmain > a')].map(a => a.textContent)).toEqual(['Curriculum', 'Electives', 'Map'])
     expect(nav.querySelector('.navsep')).toBeNull() // three views need no divider
     expect(nav.querySelectorAll('.navmain > a.on')).toHaveLength(0) // none is lit on another page
-    expect([...nav.querySelectorAll('.morelist a:not(.folded)')].map(a => a.textContent)).toEqual(['Play', 'Review', 'Library', 'Contrast lab', 'My plan', 'Roadmap'])
+    expect([...nav.querySelectorAll('.morelist a:not(.folded)')].map(a => a.textContent)).toEqual(['Play', 'Review', 'Library', 'Contrast lab', 'My plan', 'Learning record', 'Roadmap'])
     expect(nav.querySelector('.morelist button')?.textContent).toBe('Settings')
     expect(nav.querySelector('summary')?.textContent).toContain('More')
-    expect(nav.textContent).not.toMatch(/Progress|Mastery/)
+    expect(nav.textContent).not.toMatch(/Progress|Mastery/) // the old Progress page is the Learning record under More (D76)
     for (const sel of ['.backbar', '.continuestrip', 'header a.btn-primary']) expect(container.querySelector(sel)).toBeNull()
   })
-  it('lights Curriculum on the Curriculum page and shows the lesson list directly with Next lesson and Mastery challenge buttons in the card and folded Progress details', async () => {
+  it('lights Curriculum on the Curriculum page and shows the lesson list directly with Next lesson and Mastery challenge buttons in the card and the mission progress (no folded Progress report)', async () => {
     const { container } = await open('/course?view=path')
     expect(container.querySelector('header .navmain > a.on')?.textContent).toBe('Curriculum')
     expect(container.querySelector('.viewtabs, .viewswitch')).toBeNull()
@@ -52,19 +52,61 @@ describe('top bar (D72)', () => {
     ;(Element.prototype as unknown as { scrollIntoView: () => void }).scrollIntoView = () => undefined
     const mc = container.querySelector('.overallbar button.masterybtn')
     expect(mc?.textContent).toBe('Mastery challenge')
-    const det = container.querySelector('.progressdetails button.detailsbtn') as HTMLElement
-    expect(det.getAttribute('aria-expanded')).toBe('false')
-    expect(container.querySelector('#progress-details')).toBeNull()
+    expect(container.querySelector('.progressdetails, #progress-details, .progressreport')).toBeNull()
     await act(async () => { (btn as HTMLElement).click() })
     const row = container.querySelector('.lessonrow.flash')
     expect(row).not.toBeNull()
     expect(row!.querySelector('.nextlabel')?.textContent).toBe('Next')
     expect(document.activeElement).toBe(row)
   })
-  it('opens Progress details from the old links (?win=progress and the #/progress redirect)', async () => {
-    const { container } = await open('/course?win=progress&report=1')
-    await waitFor(() => expect(container.querySelector('#progress-details .progressreport')).not.toBeNull(), { timeout: 15000 })
-    expect(container.querySelector('.progressdetails button.detailsbtn')?.getAttribute('aria-expanded')).toBe('true')
+  it('one card holds the lesson bar, the ring with its one-column legend and the two buttons; the original mission view folds below it, collapsed by default', async () => {
+    const { container } = await open('/course')
+    await waitFor(() => expect(container.querySelector('.overallmission .donut')).not.toBeNull(), { timeout: 15000 })
+    const card = container.querySelector('.overallbar')!
+    expect(card.querySelector('.overallinfo .overallmeta progress')).not.toBeNull()
+    expect(card.querySelectorAll('.overallmission ul.legendlist li').length).toBeGreaterThanOrEqual(5)
+    expect(container.querySelector('.upnextsection, .pips, .skillblock, .blockmap')).toBeNull() // no Skills up next, no invented grids
+    const shown = card.cloneNode(true) as HTMLElement; shown.querySelectorAll('.tip').forEach(t => t.remove())
+    expect(shown.textContent).not.toMatch(/average level of all/) // the long sentence lives only in the ? tooltip
+    expect(card.querySelector('.infobtn')?.getAttribute('aria-label')).toMatch(/average level of all \d+ skills/)
+    expect(container.querySelector('#mission-panel')).toBeNull()
+    const btn = card.querySelector('button.mapbtn') as HTMLElement
+    expect(btn.getAttribute('aria-expanded')).toBe('false')
+    await act(async () => { btn.click() })
+    expect(btn.getAttribute('aria-expanded')).toBe('true')
+    const panel = container.querySelector('#mission-panel')!
+    expect(panel.querySelectorAll('.tierrow')).toHaveLength(11) // the original breakdown: one row of water-fill blocks per subject
+    expect(panel.querySelector('.tierrow .blocks .blk')?.getAttribute('aria-label')).toMatch(/: (Not started|Seen|Level one|Level two|Mastered)/)
+    expect(panel.querySelector('.donutrow')).toBeNull() // the whole-curriculum ring is the one in the card, not drawn twice
+    expect(container.querySelectorAll('.lessonindex .blk, .lessonindex .missionrow')).toHaveLength(0) // never inside the stage lists
+    // choosing one section shows its ring, its tiers and the icon-only warm-up
+    await act(async () => { (panel.querySelector('.options .chip:nth-of-type(2)') as HTMLElement).click() })
+    expect(container.querySelector('#mission-panel .donutrow .donut')).not.toBeNull()
+    expect(container.querySelector('#mission-panel .tierrow .small strong')?.textContent).toMatch(/^Tier /)
+    const warm = container.querySelector('#mission-panel button[aria-label^="Warm-up: test out S1"]')
+    expect(warm).not.toBeNull()
+    expect(warm!.textContent).toBe('') // icon only
+  })
+  it('the Mastery challenge button toggles: it opens the run, becomes Close challenge, and Escape or Close puts it away', async () => {
+    const { container } = await open('/course')
+    await waitFor(() => expect(container.querySelector('.overallbar button.masterybtn')).not.toBeNull(), { timeout: 15000 })
+    const btn = () => container.querySelector('.overallbar button.masterybtn') as HTMLButtonElement
+    if (btn().disabled) return // a brand-new learner has nothing to review yet: the button is disabled with the reason as its tooltip
+    expect(btn().getAttribute('aria-expanded')).toBe('false')
+    await act(async () => { btn().click() })
+    expect(btn().getAttribute('aria-expanded')).toBe('true')
+    expect(btn().textContent).toBe('Close challenge')
+    expect(container.querySelector('#mastery-challenge')).not.toBeNull()
+    vi.stubGlobal('confirm', () => true)
+    await act(async () => { fireEvent.keyDown(window, { key: 'Escape' }) })
+    expect(container.querySelector('#mastery-challenge')).toBeNull()
+    expect(btn().textContent).toBe('Mastery challenge')
+  })
+  it('the old Progress links reach the standalone Learning record: #/progress redirects, and the page has the evidence report', async () => {
+    const { container } = await open('/progress')
+    await waitFor(() => expect(container.querySelector('main h1')?.textContent).toBe('Learning record'), { timeout: 15000 })
+    await waitFor(() => expect(container.querySelector('.progressreport')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('header .morenav summary')?.className).toBe('on') // lit under More
   })
   it('Next lesson points at the same lesson whether the list is grouped by stage or by subject', async () => {
     const { container } = await open('/course')
@@ -93,6 +135,11 @@ describe('top bar (D72)', () => {
     await act(async () => { fireEvent.change(q, { target: { value: title.toLowerCase() } }) })
     expect(flags().length).toBeGreaterThan(0)
     expect(flags().every(f => f === 'false')).toBe(false) // matches open while searching
+  })
+  it('the Map has no Progress or Mastery windows: the selected-skill dock is all that is left', async () => {
+    const { container } = await open('/course?view=map&win=progress')
+    await waitFor(() => expect(container.querySelector('.sectionbar')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('.dock.left, .missionpanel, .dockwin')).toBeNull()
   })
   it('the map toolbar has no View menu (the header and the phone tab bar switch views)', async () => {
     const { container } = await open('/course?view=map')

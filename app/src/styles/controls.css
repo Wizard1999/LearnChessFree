@@ -45,15 +45,13 @@
 /* tooltip */
 .tipwrap { position: relative; display: inline-flex; }
 .tip {
-  position: absolute; z-index: 60; left: 50%; bottom: calc(100% + 8px); transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(2px);
-  width: max-content; max-width: min(18rem, calc(100vw - 16px)); padding: 0.35rem 0.6rem; border-radius: var(--tip-radius);
-  background: var(--tip-bg); color: var(--tip-fg); font-size: 0.82rem; font-weight: 600; line-height: 1.25; text-align: center; white-space: normal;
-  box-shadow: 0 4px 14px rgb(0 0 0 / 0.25); pointer-events: none; display: none; /* hidden tips take no room, so they can never cause sideways scrolling */
+  position: fixed; z-index: 1000; width: max-content; max-width: min(22rem, calc(100vw - 16px)); padding: 0.4rem 0.65rem; border-radius: var(--tip-radius);
+  background: var(--tip-bg); color: var(--tip-fg); font-size: 0.82rem; font-weight: 600; line-height: 1.3; text-align: left; white-space: normal;
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.25); pointer-events: none;
 }
-@keyframes tipin { from { opacity: 0; transform: translateX(calc(-50% + var(--tip-dx, 0px))) translateY(2px); } to { opacity: 1; transform: translateX(calc(-50% + var(--tip-dx, 0px))); } }
-.tip.tip-below { bottom: auto; top: calc(100% + 8px); }
-.tip.tip-on { display: block; animation: tipin 120ms ease both; }
-.tip::after { content: ''; position: absolute; left: calc(50% - var(--tip-dx, 0px)); top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--tip-bg); }
+@keyframes tipin { from { opacity: 0; } to { opacity: 1; } }
+.tip.tip-on { animation: tipin 120ms ease both; }
+.tip::after { content: ''; position: absolute; left: var(--tip-arrow, 50%); top: 100%; margin-left: -5px; border: 5px solid transparent; border-top-color: var(--tip-bg); }
 .tip.tip-below::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--tip-bg); }
 .tipkey { margin-left: 0.5rem; padding: 0 0.35rem; border: 1px solid currentColor; border-radius: 4px; font: inherit; font-size: 0.75rem; font-weight: 700; opacity: 0.85; }
 .tipwrap, .tipwrap .btn { -webkit-touch-callout: none; }
@@ -114,10 +112,6 @@
 @media (prefers-reduced-motion: reduce) { .disclose .chev { transition: none; } }
 
 /* the Whole curriculum card: text left, the Next lesson call to action in the empty space on the right */
-.overallbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 0.6rem 1.5rem; }
-.overallbar .nextcta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; max-width: 18rem; text-align: right; }
-.overallbar .nextcta .btn { min-height: 52px; padding: 0 1.6rem; font-size: 1.05rem; }
-@media (max-width: 1099px) { .overallbar { grid-template-columns: 1fr; } .overallbar .nextcta { align-items: stretch; max-width: none; text-align: left; } .overallbar .nextcta .btn { width: 100%; } }
 .sectionhead { flex-wrap: wrap; }
 @media (max-width: 640px) { .boardmorelist { left: auto; right: 0; max-width: calc(100vw - 1.5rem); } }
 /* on a phone the action bar keeps words only: the one-row bar is tight and the words are the meaning */
@@ -125,18 +119,27 @@
 @media (max-width: 640px) { .listbar .seg { width: 100%; } .listbar .seg > button { flex: 1 1 auto; white-space: normal; line-height: 1.15; padding: 0.3rem 0.4rem; } }
 
 /* D74: Next lesson (forward) and Mastery challenge (back) side by side in the Whole curriculum card; Progress details folds under it */
-.overallbar { align-items: start; grid-template-columns: minmax(0, 1fr) auto; }
-.overallbar .overalltitle { margin: 0 0 0.4rem; font-size: 1.1rem; }
-.overallbar .overallmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; margin: 0 0 0.5rem; }
-.overallbar .overallmeta progress { flex: none; }
-.overallbar .metatime { flex-basis: 100%; }
-.overallbar .nextcta { display: grid; grid-template-columns: repeat(2, minmax(0, 10rem)); gap: 0.4rem 0.8rem; align-items: start; }
-.overallbar .cta { display: flex; flex-direction: column; align-items: stretch; gap: 0.4rem; min-width: 0; }
-.overallbar .cta .btn { width: 100%; min-height: 52px; padding: 0 0.8rem; font-size: 1rem; }
-.overallbar .ctasub { text-align: center; min-height: 2.6em; line-height: 1.3; }
-.progressdetails { margin: 0.6rem 0; }
-.progressdetails .detailsbtn[aria-expanded=true] .icon { transform: rotate(180deg); }
-@media (max-width: 1099px) { .overallbar { grid-template-columns: 1fr; } .overallbar .nextcta { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 420px) { .overallbar .nextcta { grid-template-columns: 1fr; } .overallbar .ctasub { min-height: 0; } }
+
+/* The Whole curriculum card (D74, D76): left the title and the lesson bar, then the ring with its one-column legend, then the two buttons; the original mission view folds below */
+.overallbar { display: grid; grid-template-columns: minmax(0, 1fr) 15rem; grid-template-areas: "info ctas" "mission ctas" "more more"; gap: 0.4rem 1.8rem; align-items: start; }
+.overallinfo { grid-area: info; min-width: 0; }
+.overallbar > .overallmission { grid-area: mission; margin: 0; flex-wrap: nowrap; }
+.overallbar > .nextcta { grid-area: ctas; }
+.overallmore { grid-area: more; }
+.overallbar .overalltitle { margin: 0 0 0.4rem; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+.overallbar .infobtn { width: 1.5rem; height: 1.5rem; min-height: 0; padding: 0; border-radius: 50%; border: 1px solid var(--control-boundary); background: transparent; color: var(--text-secondary); font-size: 0.85rem; font-weight: 700; line-height: 1; cursor: help; }
+.overallbar .nextcta { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.7rem; align-items: start; }
+.overallbar .cta { display: flex; flex-direction: column; align-items: stretch; gap: 0.3rem; min-width: 0; }
+.overallbar .cta .btn { width: 100%; min-height: 48px; padding: 0 0.8rem; font-size: 1rem; }
+.overallbar .ctasub { text-align: center; line-height: 1.3; }
 :root:root .overallbar .cta .btn { white-space: normal; text-align: center; line-height: 1.15; }
 .overallbar .cta .btn .icon { display: none; }
+.overallbar .overallmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.2rem 0.6rem; margin: 0; }
+.overallbar .overallmeta progress { flex: none; }
+.overallbar .mapbtn[aria-expanded=true] .icon { transform: rotate(180deg); }
+.overallmore .missionpanel { border-top: 1px solid var(--line); margin-top: 0.4rem; padding-top: 0.6rem; }
+.overallmore .missionpanel .options { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.4rem; }
+.challengehead { justify-content: space-between; align-items: center; }
+.challengehead h2 { margin: 0; }
+@media (max-width: 620px) { .overallbar { grid-template-columns: minmax(0, 1fr); grid-template-areas: "info" "ctas" "mission" "more"; } .overallbar .nextcta { grid-template-columns: repeat(2, minmax(0, 1fr)); } .overallbar > .overallmission { flex-wrap: wrap; } }
+@media (max-width: 420px) { .overallbar .nextcta { grid-template-columns: 1fr; } }

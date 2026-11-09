@@ -38,22 +38,35 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
     setRun(null)
   }
 
+  /** Closing is always allowed. Answers already given in a run are saved as they are made (they count as evidence), so closing mid-run only drops the exercises not yet answered; the learner is told first. */
+  function close() {
+    if (run && !window.confirm('Close the challenge? Answers you have already given are kept as practice; the exercises you have not reached are dropped, and no result is shown.')) return
+    setRun(null); setResult(null)
+  }
+  const isOpen = !!run || !!result
+  useEffect(() => {
+    if (!isOpen) return
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    window.addEventListener('keydown', k)
+    return () => window.removeEventListener('keydown', k)
+  }) // eslint-disable-line react-hooks/exhaustive-deps -- close() reads the current run
+
   const hint = plan?.unlocked ? `Review: six exercises, no hints, on skills you have seen before (${plan.picks.map(p => p.node.title).join(', ')})` : (plan?.reason ?? 'Review older material once you have answered some exercises')
-  const button = <Button variant="secondary" icon="reset" className="masterybtn" disabled={!plan?.unlocked || !!run} tip={hint} onClick={start}>Mastery challenge</Button>
+  const button = <Button variant="secondary" icon="reset" className="masterybtn" aria-expanded={isOpen} aria-controls="mastery-challenge" disabled={!isOpen && !plan?.unlocked} tip={isOpen ? 'Close the challenge (Escape)' : hint} onClick={isOpen ? close : start}>{isOpen ? 'Close challenge' : 'Mastery challenge'}</Button>
   const panel = run ? (
-    <section className="card challenge" aria-label="Mastery challenge">
-      <h2>Mastery challenge</h2>
+    <section className="card challenge" id="mastery-challenge" aria-label="Mastery challenge">
+      <div className="row challengehead"><h2>Mastery challenge</h2><Button variant="quiet" onClick={close}>Close</Button></div>
       <ItemSequence items={run.items} source="challenge" silent intro="Six exercises on three skills, no hints" onComplete={r => void finish(r)} />
     </section>
   ) : result ? (
-    <section className="card result ok" role="status" aria-live="polite">
+    <section className="card result ok" id="mastery-challenge" role="status" aria-live="polite">
       <h3>Challenge finished</h3>
       <table className="table small"><thead><tr><th>Skill</th><th>Right</th><th>What it means</th><th>Level</th></tr></thead>
         <tbody>{result.map(r => { const v = challengeVerdict(r.rights); return (
           <tr key={r.node.id}><td>{r.node.title}</td><td>{r.rights} of 2</td>
             <td>{v === 'up' ? 'Both right: evidence for this skill.' : v === 'down' ? 'Both missed: evidence against it. It will come back for review.' : 'One right, one missed: about where it was.'}</td>
             <td>{LEVEL_NAMES[r.before]}{r.after !== r.before ? ` → ${LEVEL_NAMES[r.after]}` : ' (unchanged)'}</td></tr>) })}</tbody></table>
-      <Button onClick={() => setResult(null)}>Close</Button>
+      <Button onClick={close}>Close</Button>
     </section>
   ) : null
   return { button, panel, hint }

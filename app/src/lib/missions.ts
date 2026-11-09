@@ -106,7 +106,7 @@ export interface Mission {
   counts: number[]; tiers: { tier: number; gloss: string; nodes: NodeProgress[] }[]
 }
 
-const meanPercent = (nodes: NodeProgress[], pick: (n: NodeProgress) => number) => (nodes.length ? Math.round((100 * nodes.reduce((s, n) => s + pick(n), 0)) / (4 * nodes.length)) : 0)
+export const meanPercent = (nodes: NodeProgress[], pick: (n: NodeProgress) => number) => (nodes.length ? Math.round((100 * nodes.reduce((s, n) => s + pick(n), 0)) / (4 * nodes.length)) : 0)
 
 /** Teaching order inside a tier: how long the chain of hard prerequisites beneath the node is, then title. */
 export function chainLevels(skills: Skill[]): Map<string, number> {
@@ -211,4 +211,17 @@ export function challengeVerdict(rights: number, questions = 2): 'up' | 'same' |
   if (rights >= questions) return 'up'
   if (rights === 0) return 'down'
   return 'same'
+}
+
+/** The numbers a section header shows for any set of skills (a stage, a subject, an elective): average level, counts per level, assumed credit. */
+export function summarize(nodes: NodeProgress[]) {
+  const counts = [0, 0, 0, 0, 0]
+  for (const n of nodes) counts[n.level]++
+  const live = nodes.filter(n => !n.noExercises)
+  return {
+    n: nodes.length, counts, percent: meanPercent(nodes, n => n.level), percentWithAssumed: meanPercent(nodes, n => n.levelWithAssumed),
+    assumedCount: nodes.filter(n => n.levelWithAssumed > n.level).length,
+    /** Every skill that has exercises is Mastered and none is due for a refresher. */
+    complete: live.length > 0 && live.every(n => n.level === 4 && !n.due), liveCount: live.length,
+  }
 }

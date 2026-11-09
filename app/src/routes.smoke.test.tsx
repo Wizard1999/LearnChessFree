@@ -30,7 +30,7 @@ beforeAll(() => {
 afterAll(() => { cleanup(); vi.unstubAllGlobals() })
 
 const ROUTES = [
-  '/', '/course', '/course?view=lessons', '/course?view=courses', '/course?view=map', '/course?win=progress&report=1', '/course?win=challenge', '/practice', '/progress', '/review', '/analysis', '/library',
+  '/', '/course', '/course?view=lessons', '/course?view=courses', '/course?view=map', '/record', '/practice', '/progress', '/review', '/analysis', '/library',
   '/games', '/lab', '/plan', '/play', '/openings', '/roadmap', '/settings', '/placement', '/drill',
   '/lesson/L-FND-BOARD-1', '/lesson/L-POS-CONTROL-MAP-1', '/lesson/L-FG-OPERA-1',
 ]

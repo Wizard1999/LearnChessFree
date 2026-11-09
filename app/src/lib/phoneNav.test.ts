@@ -11,13 +11,12 @@ describe('phone navigation', () => {
     expect(phoneTabFor('/course')).toBe('curriculum')
     expect(phoneTabFor('/course', '?view=courses')).toBe('electives')
     expect(phoneTabFor('/course', '?view=map')).toBe('map')
-    expect(phoneTabFor('/course', '?win=progress')).toBe('curriculum') // old links land on the Curriculum page with Progress details open
     expect(phoneTabFor('/play')).toBe('more')
     expect(phoneTabFor('/lesson/L-FND-BOARD-1')).toBe('curriculum')
     expect(phoneTabFor('/practice')).toBe('curriculum')
     expect(phoneTabFor('/placement')).toBe('curriculum')
     expect(phoneTabFor('/drill')).toBe('curriculum')
-    expect(phoneTabFor('/progress/')).toBe('curriculum')
+    expect(phoneTabFor('/record')).toBe('more') // the Learning record is under More (D76)
     for (const [to] of MORE_LINKS) expect(phoneTabFor(to)).toBe('more')
     expect(phoneTabFor('/settings')).toBe('more')
   })
@@ -29,6 +28,6 @@ describe('phone navigation', () => {
   })
   it('keeps every place reachable: the tabs, More and the Curriculum chips cover the old navigation', () => {
     const places = [...PHONE_TABS.filter(t => t.to).map(t => t.to), ...MORE_LINKS.map(([to]) => to)]
-    for (const p of ['/course', '/course?view=courses', '/course?view=map', '/review', '/play', '/library', '/lab', '/plan', '/roadmap']) expect(places).toContain(p)
+    for (const p of ['/course', '/course?view=courses', '/course?view=map', '/review', '/play', '/library', '/lab', '/plan', '/record', '/roadmap']) expect(places).toContain(p)
   })
 })

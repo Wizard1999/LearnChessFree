@@ -1,6 +1,6 @@
 import { hueOfStage, hueOfStrand } from '../lib/hue'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { db } from '../db'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { finishedEarlierVersion } from '../lib/resume'
@@ -8,9 +8,12 @@ import { useContent } from '../lib/content'
 import type { LessonMeta } from '../types'
 import { lessonSort, masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
 import { stageProgress } from '../lib/stageProgress'
-import { ProgressReport } from './Progress'
+import { Donut, Swatch } from '../components/MissionParts'
+import { MissionPanel } from '../components/MissionPanel'
+import { Tooltip } from '../components/Tooltip'
+import { useMissionData } from '../lib/useMissions'
 import { useMasteryChallenge } from '../components/MasteryChallenge'
-import { STRAND_NAMES } from '../lib/missions'
+import { LEVEL_NAMES, STRAND_NAMES, summarize, type Level } from '../lib/missions'
 import { PATH_STAGES, stageLabel } from '../lib/pathStages'
 import { FirstGameInvite } from '../components/FirstGameInvite'
 import { inviteSlot } from '../lib/firstGame'
@@ -32,7 +35,7 @@ const mins = (l: LessonMeta) => lessonMinutes(l)
 const fmt = aboutMinutes
 
 /** Every lesson on one page: find it, open it, or mark it finished, skipped or unstarted. Nothing is locked. */
-export function LessonIndex() {
+export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick?: (id: string) => void } = {}) {
   const content = useContent()
   const progress = useLessonProgress()
   const [q, setQ] = useState('')
@@ -43,9 +46,7 @@ export function LessonIndex() {
   const nextCore = useNextCoreLesson()
   const challenge = useMasteryChallenge()
   const attempts = useAttempts()
-  const [sp] = useSearchParams()
-  // Progress details: one folded section under the card (D74). Old links (?win=progress, ?report=1, #/progress) land here with it open.
-  const [detailsOpen, setDetailsOpen] = useState(() => sp.get('win') === 'progress' || sp.get('report') === '1' || sp.get('details') === '1')
+  const md = useMissionData()
   const stages = useMemo(() => stageProgress(content.lessons, progress ?? [], masteryMap(attempts ?? [], Date.now(), content.cuedOnly)), [content.lessons, content.cuedOnly, progress, attempts])
   const open = useOpenSections('lessonlist:open')
   const [flash, setFlash] = useState<string | null>(null)
@@ -124,22 +125,35 @@ export function LessonIndex() {
   const allOpen = groups.length > 0 && groups.every(g => isOpen(g[0]))
   const setOpenKey = (strand: string, v: boolean) => open.setOpen(sk(strand), v)
   const setAllOpen = (v: boolean) => open.setMany(groups.map(g => sk(g[0])), v)
+  // Mission progress (D76): the Khan-style view of the Map's old side panel, per section. A stage's skills are those of its lessons; a subject is a mission.
+  const overallSum = summarize(md.overall.nodes)
+  const mapOpen = open.isOpen('skillmap', false)
+  const explain = `Overall progress is the average level of all ${overallSum.n} skills, counting only what you have shown (Mastered counts 4 of 4, Level two 3, Level one 2, Seen 1). ${view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}`
+  const mission = md.ctx && md.overall.nodes.length > 0 ? (
+    <div className="donutrow overallmission">
+      <Donut size={150} percent={overallSum.percent} assumed={overallSum.percentWithAssumed} label="overall" />
+      <ul className="plain legendlist" aria-label="Skills by level">
+        {([4, 3, 2, 1, 0] as Level[]).map(l => <li key={l}><Swatch level={l} /> <strong>{overallSum.counts[l]}</strong> {l === 4 ? 'mastered' : l === 0 ? 'not started' : LEVEL_NAMES[l].toLowerCase()}</li>)}
+        {overallSum.assumedCount > 0 && <li title="Credited from a placement or warm-up, not yet shown in practice"><span className="blk swatch assumed" style={{ ['--fill' as string]: '50%' }} aria-hidden="true" /> of these, <strong>{overallSum.assumedCount}</strong> are only assumed (hatched)</li>}
+      </ul>
+    </div>
+  ) : null
   return (
     <section aria-label="Lesson index">
       <div className="card overallbar">
-        <div className="overalltext">
-        <h2 className="overalltitle">Whole curriculum</h2>
-        <p className="small muted overallmeta"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /><span>{doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</span><span className="metatime">{fmt(totalMin)} of lessons in all, {fmt(Math.max(0, totalMin - doneMin))} left</span></p>
-        <p className="small muted">{view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}</p>
+        <div className="overallinfo">
+          <h2 className="overalltitle">Whole curriculum <Tooltip label={explain}><button type="button" className="infobtn" aria-label={explain}>?</button></Tooltip></h2>
+          <p className="small muted overallmeta"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /><span>{doneCount} of {content.lessons.length} lessons ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%) · {fmt(Math.max(0, totalMin - doneMin))} left</span></p>
         </div>
+        {mission}
         <div className="nextcta">
           {nextCore && <div className="cta"><Button variant="primary" icon="next" className="nextbtn" tip="Forward: scroll to the next lesson on your route" onClick={goNext}>Next lesson</Button><span className="small muted ctasub">{nextCore.title}, {aboutMinutes(lessonMinutes(nextCore))}</span></div>}
           <div className="cta">{challenge.button}<span className="small muted ctasub">Back: review what you have seen</span></div>
         </div>
-      </div>
-      <div className="progressdetails">
-        <Button variant="quiet" icon="chevron" className="detailsbtn" aria-expanded={detailsOpen} aria-controls="progress-details" tip="Your path, hints, confidence and the evidence behind your levels" onClick={() => setDetailsOpen(o => !o)}>Progress details</Button>
-        {detailsOpen && <div id="progress-details"><ProgressReport /></div>}
+        <div className="overallmore">
+          <Button variant="quiet" icon="chevron" className="mapbtn" aria-expanded={mapOpen} aria-controls="mission-panel" tip="Every skill as a small block that fills as you learn it, by subject, with warm-ups to test out" onClick={() => open.setOpen('skillmap', !mapOpen)}>{mapOpen ? 'Hide skills by section' : 'Show skills by section'}</Button>
+          {mapOpen && md.ctx && <MissionPanel data={md} picked={picked} onPick={onPick} />}
+        </div>
       </div>
       {challenge.panel}
       <div className="lede">Nothing is locked: open any lesson, in any order. <details className="inlinenote"><summary>How this list works</summary>The recommended path mixes the subjects so you can play a full game early and meet each idea when you need it; "By subject" groups the same lessons for looking things up. Marking a lesson finished or skipped only changes this list and the map; it is not evidence that you know the skill.</details></div>

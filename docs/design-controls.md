@@ -23,7 +23,7 @@ Counted from the source before the change [V, grep]: 274 `<button>` elements, 43
 | Board | Control map toggle | words | icon + words toggle |
 | Play / guided game | Hint, Show me, Play it again | words | icon + words; Stop is danger |
 | Lesson page | Skip / Mark finished / Start over, Curriculum list | underlined links | quiet buttons; Start over is danger; all with tooltips |
-| Header | Curriculum, Electives, Map, Progress, Mastery challenge | chip row on one page | words, in the bar on every page (D72) |
+| Header | Curriculum, Electives, Map (the Learning record is under More, D76) | chip row on one page | words, in the bar on every page (D72) |
 | Curriculum list | Grouped by / status filters | chips | segmented controls; Next lesson is one primary button; Expand/Collapse all |
 | Many pages | Mark finished, Reset, Remove, Not now, Review this lesson, Open lesson, Clear filters, Download a copy... | underlined `link` | quiet buttons (Reset is danger) |
 | Left as text links | links inside a sentence (Set one now, retry, Change), move lists, "Builds on / Leads to", table links | `link` | unchanged: navigation inside prose stays text |

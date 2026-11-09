@@ -13,6 +13,7 @@ import { Openings } from './pages/Openings'
 import { Games } from './pages/Games'
 import { Library } from './pages/Library'
 import { Settings } from './pages/Settings'
+import { LearningRecord } from './pages/Progress'
 import { PlanPage } from './pages/Plan'
 import { Lab } from './pages/Lab'
 import { Drill } from './pages/Drill'
@@ -29,7 +30,7 @@ import { PhoneTabBar } from './components/PhoneTabBar'
 import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
 
-// The top bar (D72): the masthead, the Curriculum's places split by a divider at the exact centre (Curriculum, Electives, Map | Progress, Mastery challenge), then More. Every other place is under More.
+// The top bar (D72): the masthead, the Curriculum's three places (Curriculum, Electives, Map) centred, then More at the far right. Every other place is under More.
 const more = MORE_LINKS // shared with the phone tab bar's More sheet
 
 export default function App() {
@@ -68,7 +69,8 @@ export default function App() {
         <Route path="/placement" element={<RequireFullContent><Placement /></RequireFullContent>} />
         <Route path="/plan" element={<RequireFullContent><PlanPage /></RequireFullContent>} />
         <Route path="/lab" element={<RequireFullContent><Lab /></RequireFullContent>} />
-        <Route path="/progress" element={<Navigate to="/course?win=progress&report=1" replace />} />
+        <Route path="/record" element={<RequireFullContent><LearningRecord /></RequireFullContent>} />
+        <Route path="/progress" element={<Navigate to="/record" replace />} />
         <Route path="/play" element={<PlayPage />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/engine" element={<Navigate to="/analysis" replace />} />

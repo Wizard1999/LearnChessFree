@@ -7,7 +7,8 @@ import { Button, IconButton, LinkButton } from './Button'
 import { ICONS, Icon } from './Icon'
 
 afterEach(cleanup)
-const tip = (c: HTMLElement) => c.querySelector('.tip') as HTMLElement
+// the tip is drawn in a portal on the body, only while shown, so no card or header can clip it
+const tip = () => document.querySelector('.tip') as HTMLElement | null
 
 describe('IconButton', () => {
   it('has an accessible name, a decorative icon and a hidden tooltip with the shortcut', () => {
@@ -15,25 +16,28 @@ describe('IconButton', () => {
     const b = screen.getByRole('button', { name: 'Flip the board' })
     expect(b.getAttribute('aria-keyshortcuts')).toBe('F')
     expect(b.querySelector('svg')?.getAttribute('aria-hidden')).toBe('true')
-    expect(tip(container).textContent).toContain('Flip the board')
-    expect(tip(container).textContent).toContain('F')
-    expect(tip(container).classList.contains('tip-on')).toBe(false)
+    expect(container.querySelector('.tip')).toBeNull() // nothing is rendered until the tip is shown
+    act(() => { b.focus() })
+    expect(tip()!.textContent).toContain('Flip the board')
+    expect(tip()!.textContent).toContain('F')
+    expect(tip()!.getAttribute('aria-hidden')).toBe('true')
+    expect(container.contains(tip()!)).toBe(false) // drawn in a portal on the body: no card or sticky header can clip or cover it
   })
   it('shows the tooltip on keyboard focus and closes it on Escape', () => {
-    const { container } = render(<IconButton icon="next" label="Next move" />)
+    render(<IconButton icon="next" label="Next move" />)
     act(() => { screen.getByRole('button', { name: 'Next move' }).focus() })
-    expect(tip(container).classList.contains('tip-on')).toBe(true)
+    expect(tip()!.classList.contains('tip-on')).toBe(true)
     fireEvent.keyDown(document, { key: 'Escape' })
-    expect(tip(container).classList.contains('tip-on')).toBe(false)
+    expect(tip()).toBeNull()
   })
   it('shows the tooltip after a hover delay, not at once', async () => {
     const { container } = render(<IconButton icon="close" label="Close" />)
     fireEvent.mouseEnter(container.querySelector('.tipwrap')!)
-    expect(tip(container).classList.contains('tip-on')).toBe(false)
+    expect(tip()).toBeNull()
     await act(async () => { await new Promise(r => setTimeout(r, 450)) })
-    expect(tip(container).classList.contains('tip-on')).toBe(true)
+    expect(tip()!.classList.contains('tip-on')).toBe(true)
     fireEvent.mouseLeave(container.querySelector('.tipwrap')!)
-    expect(tip(container).classList.contains('tip-on')).toBe(false)
+    expect(tip()).toBeNull()
   })
   it('reports the pressed state', () => {
     render(<IconButton icon="engine" label="Engine" pressed />)
@@ -45,7 +49,7 @@ describe('Button and LinkButton', () => {
   it('keeps words as the name, adds a tooltip only when asked, and marks danger and pressed', () => {
     const { container } = render(<MemoryRouter><Button variant="danger" tip="Erase it">Start over</Button><Button aria-pressed>Engine</Button><LinkButton to="/course">Curriculum</LinkButton></MemoryRouter>)
     expect(screen.getByRole('button', { name: 'Start over' }).classList.contains('btn-danger')).toBe(true)
-    expect(container.querySelectorAll('.tip')).toHaveLength(1)
+    expect(container.querySelectorAll('.tipwrap')).toHaveLength(1)
     expect(screen.getByRole('button', { name: 'Engine' }).classList.contains('is-on')).toBe(true)
     expect(screen.getByRole('link', { name: 'Curriculum' }).getAttribute('href')).toBe('/course')
   })
