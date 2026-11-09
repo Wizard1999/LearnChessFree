@@ -10,6 +10,7 @@ import { lessonSort, masteryMap, useAttempts, useLessonProgress } from '../lib/p
 import { stageProgress } from '../lib/stageProgress'
 import { Donut, Swatch } from '../components/MissionParts'
 import { MissionPanel } from '../components/MissionPanel'
+import { PlayNudge } from '../components/PlayNudge'
 import { Tooltip } from '../components/Tooltip'
 import { useMissionData } from '../lib/useMissions'
 import { useMasteryChallenge } from '../components/MasteryChallenge'
@@ -150,6 +151,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
           {nextCore && <div className="cta"><Button variant="primary" icon="next" className="nextbtn" tip="Forward: scroll to the next lesson on your route" onClick={goNext}>Next lesson</Button><span className="small muted ctasub">{nextCore.title}, {aboutMinutes(lessonMinutes(nextCore))}</span></div>}
           <div className="cta">{challenge.button}<span className="small muted ctasub">Back: review what you have seen</span></div>
         </div>
+        <PlayNudge compact />
         <div className="overallmore">
           <Button variant="quiet" icon="chevron" className="mapbtn" aria-expanded={mapOpen} aria-controls="mission-panel" tip="Every skill as a small block that fills as you learn it, by subject, with warm-ups to test out" onClick={() => open.setOpen('skillmap', !mapOpen)}>{mapOpen ? 'Hide skills by section' : 'Show skills by section'}</Button>
           {mapOpen && md.ctx && <MissionPanel data={md} picked={picked} onPick={onPick} />}

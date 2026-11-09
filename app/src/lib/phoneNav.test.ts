@@ -28,6 +28,6 @@ describe('phone navigation', () => {
   })
   it('keeps every place reachable: the tabs, More and the Curriculum chips cover the old navigation', () => {
     const places = [...PHONE_TABS.filter(t => t.to).map(t => t.to), ...MORE_LINKS.map(([to]) => to)]
-    for (const p of ['/course', '/course?view=courses', '/course?view=map', '/review', '/play', '/library', '/lab', '/plan', '/record', '/roadmap']) expect(places).toContain(p)
+    for (const p of ['/course', '/course?view=courses', '/course?view=map', '/review', '/play', '/library', '/lab', '/plan', '/record', '/people', '/roadmap']) expect(places).toContain(p)
   })
 })

@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { GameLessonPrompt } from './GameLessonPrompt'
 import { ArtScene } from './art'
 import { Link } from 'react-router-dom'
 import { db } from '../db'
@@ -33,6 +35,7 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
     return () => { live = false }
   }, [plies, gameId])
 
+  const firstEver = useLiveQuery(() => db.games.filter(g => g.source === 'practice').count().then(n => n === 1).catch(() => false), [gameId])
   const strength = useMemo(() => findStrength(plies, color), [plies, color])
   const critical = useMemo(() => pickCritical(plies, analysis, color), [plies, analysis, color])
   const doneIds = useMemo(() => new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId)), [progress])
@@ -63,6 +66,14 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
       {follow && (
         <p>{follow.reason === 'skill' ? 'A lesson on this pattern:' : 'A good next lesson:'} <Link to={`/lesson/${follow.lesson.id}`}>{follow.lesson.title}</Link></p>
       )}
+      <GameLessonPrompt gameId={gameId} />
+      <div className="keepplaying" role="note">
+        <h3>Keep playing</h3>
+        {firstEver
+          ? <p>That was your first game. Playing lots of games is how skills stick, and every game you look back at teaches more than the last. Play the practice opponent here as often as you like. When you feel ready, you can play real people on trusted sites: free, on an account that is yours, and nothing is sent from here.</p>
+          : <p>Another game played. Bring one idea from a recent lesson into the next one, here or against real people.</p>}
+        <p className="small"><Link to="/people">Play real people</Link> · <Link to="/games#import">Review a game you played elsewhere</Link></p>
+      </div>
       <div className="row">
         <button type="button" className="primary" onClick={onAgain}>Play again</button>
         <button type="button" onClick={onSettings}>Change settings</button>

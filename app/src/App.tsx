@@ -14,6 +14,7 @@ import { Games } from './pages/Games'
 import { Library } from './pages/Library'
 import { Settings } from './pages/Settings'
 import { LearningRecord } from './pages/Progress'
+import { PlayPeople } from './pages/PlayPeople'
 import { PlanPage } from './pages/Plan'
 import { Lab } from './pages/Lab'
 import { Drill } from './pages/Drill'
@@ -72,6 +73,7 @@ export default function App() {
         <Route path="/record" element={<RequireFullContent><LearningRecord /></RequireFullContent>} />
         <Route path="/progress" element={<Navigate to="/record" replace />} />
         <Route path="/play" element={<PlayPage />} />
+        <Route path="/people" element={<PlayPeople />} />
         <Route path="/analysis" element={<Analysis />} />
         <Route path="/engine" element={<Navigate to="/analysis" replace />} />
         <Route path="/openings" element={<Openings />} />

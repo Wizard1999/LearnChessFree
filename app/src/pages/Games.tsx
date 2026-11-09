@@ -7,7 +7,7 @@ import { getEngine } from '../engine'
 import { fetchChessCom, fetchLichess, parseGame, plyList, splitPgn, type Ply } from '../lib/pgn'
 import { CONCEPT_LABEL, CONCEPT_SKILL, momentFor, type Moment } from '../lib/opportunities'
 import { useContent } from '../lib/content'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { analysePlies, type Analysis } from '../lib/gameAnalysis'
 import type { ConceptName } from '../chess/detectors'
 
@@ -22,6 +22,8 @@ export function Games() {
   const [site, setSite] = useState<'lichess' | 'chesscom'>('lichess')
   const [status, setStatus] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const loc = useLocation()
+  useEffect(() => { if (loc.hash === '#import') document.getElementById('import')?.scrollIntoView?.({ block: 'start' }) }, [loc.hash, games])
 
   async function saveMany(pgns: string[], source: string, handle?: string) {
     let n = 0
@@ -48,8 +50,9 @@ export function Games() {
       {!selected && (
         <>
           <p className="lede">Bring in games you played anywhere. The review flow asks <strong>you</strong> to mark your own critical moments first; the engine comes second, so you can see what you noticed and what you missed.</p>
-          <section className="card">
-            <h2>Import</h2>
+          <section className="card importcard" id="import" aria-labelledby="import-h">
+            <h2 id="import-h">Review a game you played elsewhere</h2>
+            <p className="small">Games you play on other sites are the best material for learning. Paste a PGN, or fetch your latest public games by username, and review them here: you mark your own critical moments first. Looking for places to play? See <Link to="/people">Play real people</Link>.</p>
             <label className="field"><span className="small muted">Paste PGN (one game or many)</span><textarea rows={4} value={paste} onChange={e => setPaste(e.target.value)} placeholder='[Event "..."] 1. e4 e5 ...' /></label>
             <div className="row"><button type="button" onClick={async () => { await saveMany(splitPgn(paste), 'pasted'); setPaste('') }} disabled={!paste.trim()}>Import pasted games</button></div>
             <hr />

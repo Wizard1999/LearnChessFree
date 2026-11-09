@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Chess } from 'chess.js'
 import { PlayGame, type GameEnd } from '../components/PlayOut'
 import { BOTS } from '../engine'
@@ -51,6 +51,7 @@ export function PlayPage() {
       <h1>Play the practice opponent</h1>
       {fromInvite && !running && <p className="small invitenote" role="note">A gentle game: Stockfish on its Beginner setting, you play White, and a hint button is on. Change anything below if you like.</p>}
       <p className="lede">A game against the computer. Strength labels describe how the engine is limited; they are <strong>not human ratings</strong>, and beating a bot does not prove you would beat people. Finished games are saved so you can review them before looking at engine analysis.</p>
+      <p className="small muted">Want real opponents? <Link to="/people">Play real people</Link> on trusted sites, then <Link to="/games#import">review those games here</Link>.</p>
       {!running ? (
         <section className="card">
           <div className="grid2">

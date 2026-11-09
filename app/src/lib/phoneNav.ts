@@ -12,7 +12,7 @@ export const PHONE_TABS: { id: PhoneTab; to: string; label: string }[] = [
 ]
 
 /** The places under More (desktop menu and phone sheet), in order. Review gathers games review, analysis and openings; Settings is added by the desktop menu. */
-export const MORE_LINKS: [string, string][] = [['/play', 'Play'], ['/review', 'Review'], ['/library', 'Library'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/record', 'Learning record'], ['/roadmap', 'Roadmap']]
+export const MORE_LINKS: [string, string][] = [['/play', 'Play'], ['/people', 'Play real people'], ['/review', 'Review'], ['/library', 'Library'], ['/lab', 'Contrast lab'], ['/plan', 'My plan'], ['/record', 'Learning record'], ['/roadmap', 'Roadmap']]
 
 /** Which tab is lit for a path and query. The Mastery challenge lives on the Curriculum page (D74); the Learning record is a page under More (D76). */
 export function phoneTabFor(pathname: string, search = ''): PhoneTab {

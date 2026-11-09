@@ -16,6 +16,7 @@ import { buildCards, dueCards, type DrillState, type RepLine } from '../lib/dril
 import { useStorageStatus } from '../lib/persist'
 import { stageLine, stageProgress } from '../lib/stageProgress'
 import { FirstGameInvite, useFirstGameInvite } from '../components/FirstGameInvite'
+import { PlayNudge } from '../components/PlayNudge'
 import { GuidedGame } from '../components/GuidedGame'
 import { anyLessonDone, firstGuided, GENTLE_PLAY_PATH } from '../lib/firstGame'
 import type { LessonMeta } from '../types'
@@ -184,6 +185,7 @@ export function Today() {
             </section>
           )}
           {planReady && <FirstGameInvite />}
+          {planReady && <PlayNudge />}
           {planReady && stageText && <p className="small muted stageline"><Link to="/course?view=lessons">{stageText}</Link></p>}
           {planReady && missionData.ctx && <MapPreview skills={content.skills} lessons={content.lessons} levels={mapLevels} nextId={mapNext?.id ?? null} nextTitle={mapNext?.title ?? null} />}
           {startBlock && upNext !== startBlock && <div className="small startlinks"><span>Already play?</span><Link to="/placement">Find your starting point <span className="muted">(optional, about {startBlock.minutes} minutes)</span></Link></div>}

@@ -8,6 +8,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import { MemoryRouter } from 'react-router-dom'
 import App from './App'
 import { BRAND } from './brand'
+import { db } from './db'
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals() })
 
@@ -35,7 +36,7 @@ describe('top bar (D72)', () => {
     expect([...nav.querySelectorAll('.navmain > a')].map(a => a.textContent)).toEqual(['Curriculum', 'Electives', 'Map'])
     expect(nav.querySelector('.navsep')).toBeNull() // three views need no divider
     expect(nav.querySelectorAll('.navmain > a.on')).toHaveLength(0) // none is lit on another page
-    expect([...nav.querySelectorAll('.morelist a:not(.folded)')].map(a => a.textContent)).toEqual(['Play', 'Review', 'Library', 'Contrast lab', 'My plan', 'Learning record', 'Roadmap'])
+    expect([...nav.querySelectorAll('.morelist a:not(.folded)')].map(a => a.textContent)).toEqual(['Play', 'Play real people', 'Review', 'Library', 'Contrast lab', 'My plan', 'Learning record', 'Roadmap'])
     expect(nav.querySelector('.morelist button')?.textContent).toBe('Settings')
     expect(nav.querySelector('summary')?.textContent).toContain('More')
     expect(nav.textContent).not.toMatch(/Progress|Mastery/) // the old Progress page is the Learning record under More (D76)
@@ -146,6 +147,37 @@ describe('top bar (D72)', () => {
     await waitFor(() => expect(container.querySelector('.sectionbar')).not.toBeNull(), { timeout: 15000 })
     expect(container.querySelector('.sectionbar')?.textContent).not.toMatch(/View:|Progress window|Mastery challenge window/)
     expect(container.querySelector('header .navmain > a.on')?.textContent).toBe('Map')
+  })
+  it('Play real people lists lichess and chess.com as plain new-tab links with labelled claims, and links on to the game review', async () => {
+    const { container } = await open('/people')
+    await waitFor(() => expect(container.querySelector('main h1')?.textContent).toBe('Play real people'), { timeout: 15000 })
+    const links = [...container.querySelectorAll('main a[target=_blank]')] as HTMLAnchorElement[]
+    expect(links.map(a => a.getAttribute('href'))).toEqual(['https://lichess.org/', 'https://www.chess.com/play/online'])
+    for (const a of links) { expect(a.getAttribute('rel')).toBe('noopener noreferrer'); expect(a.getAttribute('href')).not.toMatch(/\?|ref=|utm/) }
+    expect(container.textContent).toMatch(/Not checked:/)
+    expect(container.textContent).toMatch(/15\+10/)
+    expect(container.textContent).toMatch(/\[V\]/)
+    expect(container.querySelector('a[href$="/games#import"]')?.textContent).toBe('Review a game you played elsewhere')
+  })
+  it('the game review leads with Review a game you played elsewhere', async () => {
+    const { container } = await open('/games')
+    await waitFor(() => expect(container.querySelector('#import h2')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('#import h2')?.textContent).toBe('Review a game you played elsewhere')
+  })
+  it('after a first game the Curriculum card carries the Play a game today nudge with a line from the latest lesson, and not before', async () => {
+    await db.games.clear(); await db.lessonProgress.clear()
+    const before = await open('/course')
+    await waitFor(() => expect(before.container.querySelector('.overallbar')).not.toBeNull(), { timeout: 15000 })
+    expect(before.container.querySelector('.playnudge')).toBeNull()
+    before.unmount()
+    await db.games.add({ source: 'practice', white: 'You', black: 'Bot', result: '1-0', pgn: '1. e4 e5', ts: Date.now(), me: 'white' })
+    await db.lessonProgress.put({ lessonId: 'L-FND-BOARD-1', step: 5, done: true, ts: Date.now() })
+    const { container } = await open('/course')
+    await waitFor(() => expect(container.querySelector('.playnudge')).not.toBeNull(), { timeout: 15000 })
+    expect(container.querySelector('.playnudge')?.textContent).toMatch(/Play a game today/)
+    expect(container.querySelector('.playnudge')?.textContent).toMatch(/What to try this game: Last lesson: /)
+    expect(container.querySelector('.playnudge a[href$="/people"]')).not.toBeNull()
+    await db.games.clear(); await db.lessonProgress.clear()
   })
 })
 
