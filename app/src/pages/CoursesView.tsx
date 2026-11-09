@@ -2,9 +2,11 @@ import { hueOfStage } from '../lib/hue'
 import { useEffect, useState } from 'react'
 import { SectionHead, useOpenSections } from '../components/Disclosure'
 import { aboutMinutes, lessonMinutes } from '../lib/lessonTime'
+import { RelevantSkillsView, levelsOf } from '../components/RelevantSkills'
 import { courseFacts, plannedCourses, withoutTypedCount, type PlannedCourse } from '../lib/displayText'
 import { Link } from 'react-router-dom'
 import { useContent, useCoursesStatus } from '../lib/content'
+import { useMissionData } from '../lib/useMissions'
 import { useLessonProgress } from '../lib/progress'
 import { UpNextMark } from '../components/UpNextMark'
 
@@ -21,6 +23,7 @@ const PROMISED: PlannedCourse[] = [
 export function CoursesView() {
   const content = useContent()
   const courses = useCoursesStatus()
+  const levels = levelsOf(useMissionData().missions)
   const progress = useLessonProgress()
   const planned = plannedCourses(PROMISED, content.courses)
   const done = new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))
@@ -60,7 +63,7 @@ export function CoursesView() {
             <p className="small muted"><progress value={d} max={ls.length || 1} aria-label={`${d} of ${ls.length} lessons finished`} /> {d} of {ls.length} finished or skipped · {c.family} · {courseFacts(c, content.lessonById)}</p>
             <p>{withoutTypedCount(c.summary)}</p>
             {c.uses && c.uses.length > 0 && <p className="small muted">Uses: {c.uses.map(u => content.skillById.get(u)?.title ?? u).join(', ')}</p>}
-            <ol className="plain">{ls.map(l => { const row = (<><span aria-hidden="true">{done.has(l.id) ? '✓' : '○'}</span><Link className={done.has(l.id) ? 'button' : 'button primary'} to={`/lesson/${l.id}`}>{done.has(l.id) ? 'Review' : 'Open'}</Link> <span><strong>{l.title}</strong> <span className="muted small">· {aboutMinutes(lessonMinutes(l))}</span></span></>); return l.id === nextLesson ? <UpNextMark as="li" key={l.id} skillId={l.skill} className="row">{row}</UpNextMark> : <li key={l.id} className="row">{row}</li> })}</ol>
+            <ol className="plain">{ls.map(l => { const row = (<><span aria-hidden="true">{done.has(l.id) ? '✓' : '○'}</span><Link className={done.has(l.id) ? 'button' : 'button primary'} to={`/lesson/${l.id}`}>{done.has(l.id) ? 'Review' : 'Open'}</Link> <span><strong>{l.title}</strong> <span className="muted small">· {aboutMinutes(lessonMinutes(l))}</span><RelevantSkillsView lesson={l} levels={levels} compact /></span></>); return l.id === nextLesson ? <UpNextMark as="li" key={l.id} skillId={l.skill} className="row">{row}</UpNextMark> : <li key={l.id} className="row">{row}</li> })}</ol>
             </div>}
           </>
         )

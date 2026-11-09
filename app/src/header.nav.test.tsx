@@ -195,6 +195,14 @@ describe('top bar (D72)', () => {
     expect(container.querySelector('.corenote')?.textContent).not.toMatch(/after the core/i)
     expect(container.querySelector('.overallbar')?.textContent).not.toMatch(/of 508 lessons/)
   })
+  it('an elective row and lesson page show Relevant skills to know first, linked to core lessons and never locking', async () => {
+    const { container } = await open('/course?view=courses')
+    await waitFor(() => expect(container.querySelectorAll('.disclose').length).toBeGreaterThan(1), { timeout: 15000 })
+    await waitFor(() => expect(container.querySelector('[data-testid="relevant-skills"]')).toBeTruthy(), { timeout: 15000 })
+    const line = container.querySelector('[data-testid="relevant-skills"]')!
+    expect(line.textContent).toMatch(/^Relevant skills to know first:/)
+    expect(line.querySelector('a[href*="/lesson/L-"]')).toBeTruthy()
+  })
   it('the Electives page keeps its own totals and says it is bonus chess outside the core', async () => {
     const { container } = await open('/course?view=courses')
     await waitFor(() => expect(container.querySelectorAll('.disclose').length).toBeGreaterThan(1), { timeout: 15000 })
