@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { playSound } from '../lib/sound'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from './LessonPlayer'
 import { Button } from './Button'
@@ -37,6 +38,9 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
       return { node: p.node, rights, before: run.before[p.node.id] as Level, after: nodeProgress(content.skillById.get(p.node.id) as Skill, ctx2).level }
     }))
     setRun(null)
+    // passed: nothing went down and at least one skill had both exercises right
+    const verdicts = run.plan.picks.map(p => challengeVerdict(run.items.reduce((s, it, k) => s + (splitSkillKey(it.skill).skill === p.node.id && results[k]?.correct ? 1 : 0), 0)))
+    if (verdicts.includes('up') && !verdicts.includes('down')) playSound('challengePassed')
   }
 
   /** Closing is always allowed. Answers already given in a run are saved as they are made (they count as evidence), so closing mid-run only drops the exercises not yet answered; the learner is told first. */

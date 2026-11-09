@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { playSound } from '../lib/sound'
 import { ArtScene } from './art'
 import { Link } from 'react-router-dom'
 import { ChessBoard } from './ChessBoard'
@@ -116,6 +117,8 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
   const steps = lesson.steps
   const step = steps[i]
   const done = i >= steps.length
+  const wasDone = useRef(false) // the lesson-finished sound: only when this visit really reaches the end
+  useEffect(() => { if (done && !wasDone.current) playSound('lessonDone'); wasDone.current = done }, [done])
 
   // Pick up where the learner left off in an unfinished lesson. Nothing is written until the saved place has been read. The place is
   // found by the step's stable id and the lesson revision (lib/resume.ts); a rewritten lesson whose old place cannot be found asks.

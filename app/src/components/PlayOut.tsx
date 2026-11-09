@@ -1,4 +1,5 @@
 import { Button } from './Button'
+import { playSound } from '../lib/sound'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
@@ -167,6 +168,7 @@ export function PlayOut({ item, source, onDone, nextLabel = 'Next' }: { item: It
   async function ended(e: GameEnd, hints: number) {
     const ok = goal === 'win' ? e.outcome === 'win' : e.outcome === 'draw' || e.outcome === 'limit' || e.outcome === 'win'
     setRes({ ok, reason: e.reason })
+    playSound(ok ? 'right' : 'wrong')
     result.current = { correct: ok && hints === 0, hints, wrongs: ok ? 0 : 1, timeMs: Date.now() - start.current }
     await safeWrite(() => db.attempts.add({ itemId: item.id, skillKey: item.skill, cue: item.cue, family: item.family, correct: ok, firstAttempt: true, hints, timeMs: Date.now() - start.current, source, ts: Date.now(), unprompted: hints === 0, result: ok ? 'correct' : 'unsuccessful' }))
   }

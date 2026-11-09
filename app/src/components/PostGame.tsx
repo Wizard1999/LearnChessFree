@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { GameLessonPrompt } from './GameLessonPrompt'
 import { ArtScene } from './art'
@@ -11,6 +11,7 @@ import { plyList, type Ply } from '../lib/pgn'
 import { useLessonProgress } from '../lib/progress'
 import { findStrength, followUpLesson, pickCritical, type Side } from '../lib/postGame'
 import { safeWrite } from '../lib/saveStatus'
+import { playSound } from '../lib/sound'
 
 type Status = 'running' | 'done' | 'unavailable'
 
@@ -36,6 +37,9 @@ export function PostGame({ gameId, pgn, color, reason, onAgain, onSettings }: { 
   }, [plies, gameId])
 
   const firstEver = useLiveQuery(() => db.games.filter(g => g.source === 'practice').count().then(n => n === 1).catch(() => false), [gameId])
+  // the first game the learner finishes: the rarest, longest sound (once per mount; a revisit of the page does not mount this card)
+  const firstHeard = useRef(false)
+  useEffect(() => { if (firstEver === true && !firstHeard.current) { firstHeard.current = true; playSound('firstGame') } }, [firstEver])
   const strength = useMemo(() => findStrength(plies, color), [plies, color])
   const critical = useMemo(() => pickCritical(plies, analysis, color), [plies, analysis, color])
   const doneIds = useMemo(() => new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId)), [progress])

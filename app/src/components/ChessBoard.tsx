@@ -18,6 +18,8 @@ import { askAboutSquare, formatVerdict, SQUARE_ASK_CAUTION } from '../lib/square
 import 'chessground/assets/chessground.cburnett.css'
 import { usePhone } from '../lib/usePhone'
 import { Sheet } from './Sheet'
+import { moveSoundFor } from '../lib/moveSound'
+import { playSound } from '../lib/sound'
 
 export interface BoardShape { from: string; to?: string; brush?: 'green' | 'red' | 'blue' | 'yellow'; /** Arrow thickness, 2 (thin) to 14 (thick); default 10. */ width?: number }
 export interface EditMode {
@@ -73,6 +75,16 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   cb.current = { movable, picker, edit }
   const lastPlacement = useRef(fen.split(' ')[0])
 
+  // Sound (lib/sound.ts): the learner's own move sounds at once; a move that arrives with a new position (the opponent, a replayed line) sounds when the position
+  // changes, but only if it is a legal move from the previous position, so jumping about a game or loading a new exercise stays silent.
+  const fenRef = useRef(fen)
+  fenRef.current = fen
+  const heardAt = useRef(0)
+  const moveHeard = (from: string, to: string, promotion?: 'q' | 'r' | 'b' | 'n') => {
+    const id = moveSoundFor(fenRef.current, from, to, promotion)
+    if (id) { heardAt.current = Date.now(); playSound(id) }
+  }
+
   const report = () => {
     const a = api.current
     if (!a || !cb.current.edit) return
@@ -101,7 +113,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       movable: edit
         ? { free: true, color: 'both', showDests: false, events: { after: () => report() } }
         : movable
-        ? { free: false, color: movable.color, dests: movable.dests, showDests: true, events: { after: (o, d) => cb.current.movable?.onMove(o, d) } }
+        ? { free: false, color: movable.color, dests: movable.dests, showDests: true, events: { after: (o, d) => { moveHeard(o, d); cb.current.movable?.onMove(o, d) } } }
         : { free: false, color: undefined, dests: new Map() },
       events: { select: k => { cb.current.picker?.onToggle(k); cb.current.edit?.onSquare?.(k) }, change: () => { if (cb.current.edit) report() } },
       drawable: { enabled: false, visible: true, ...(brushes ? { brushes: brushes as DrawBrushes } : {}) },
@@ -150,7 +162,9 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   const prevFen = useRef(fen)
   useEffect(() => {
     if (prevFen.current === fen) return
+    const before = prevFen.current
     prevFen.current = fen
+    if (lastMove && !edit && Date.now() - heardAt.current > 1200) { const id = moveSoundFor(before, lastMove[0], lastMove[1]); if (id) playSound(id) }
     setKbSel(null); setPromo(null)
     const st = positionStatus(fen)
     let t = pending.current
@@ -177,6 +191,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
     say(pending.current)
     api.current?.cancelMove()
     setKbSel(null); setPromo(null); setCursor(to)
+    moveHeard(from, to, promotion)
     m.onMove(from as Key, to as Key, promotion)
     gridRef.current?.focus()
   }

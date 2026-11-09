@@ -1,5 +1,6 @@
 import { isOnline, rankedVoices } from '../lib/voices'
 import { useEffect, useState } from 'react'
+import { SoundSettings } from '../components/SoundSettings'
 import { exportAll, resetAll } from '../db'
 import { describeMerge, describeScope, planMerge, validateExport, type ExportFile, type Scope } from '../lib/backup'
 import { downloadBackup, downloadBlob, mergeWithSafetyCopy, replaceWithSafetyCopy } from '../lib/backupIO'
@@ -94,6 +95,7 @@ export function SettingsContent() {
           </fieldset>
         ))}
       </section>
+      <SoundSettings />
       {speech.available && (
         <section className="card">
           <h2>Read aloud</h2>

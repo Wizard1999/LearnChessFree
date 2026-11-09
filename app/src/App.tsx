@@ -28,6 +28,8 @@ import { BuildStamp } from './components/BuildStamp'
 import { SaveNotice } from './components/SaveNotice'
 import { useLocation } from 'react-router-dom'
 import { PhoneTabBar } from './components/PhoneTabBar'
+import { SoundToggle } from './components/SoundToggle'
+import { SoundEvents } from './components/SoundEvents'
 import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
 
@@ -46,6 +48,8 @@ export default function App() {
         <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline.replace(BRAND.author, '')}<a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">{BRAND.author}</a></span></div>
         <nav aria-label="Main">
           {!phone && <HeaderNavItems />}
+          <div className="topright">
+          {!phone && <SoundToggle />}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a, button.morebtn')) moreRef.current?.removeAttribute('open') }}>
             <summary className={more.some(([to]) => loc.pathname.startsWith(to)) ? 'on' : ''}>More</summary>
             <div className="morelist">
@@ -54,9 +58,11 @@ export default function App() {
               <button type="button" className="morebtn" aria-haspopup="dialog" onClick={() => setSettingsOpen(true)}>Settings</button>
             </div>
           </details>
+          </div>
         </nav>
-        {phone && <button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button>}
+        {phone && <div className="topright"><SoundToggle /><button type="button" className="settingsbtn" aria-haspopup="dialog" aria-expanded={settingsOpen} onClick={() => setSettingsOpen(true)}>Settings</button></div>}
       </header>
+      <SoundEvents />
       <SettingsDrawer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <SaveNotice />
       <ErrorBoundary resetKey={loc.pathname}>

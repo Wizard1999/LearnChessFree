@@ -81,6 +81,11 @@ export function stopSpeech() {
   if (state.playing !== 'idle' || state.source) set({ playing: 'idle', source: null })
 }
 
+/** True while the read-aloud voice (recording or browser voice) is speaking; other sounds stay quiet then (lib/sound.ts). */
+export function speechIsActive(): boolean {
+  try { return state.playing === 'speaking' || !!(typeof window !== 'undefined' && window.speechSynthesis?.speaking) } catch { return false }
+}
+
 export function pauseSpeech() { if (state.playing !== 'speaking') return; if (queue) queue.pause(); else synth()?.pause(); set({ playing: 'paused' }) }
 export function resumeSpeech() { if (state.playing !== 'paused') return; if (queue) queue.resume(); else synth()?.resume(); set({ playing: 'speaking' }) }
 

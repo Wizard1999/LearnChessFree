@@ -27,3 +27,9 @@ Psychology claims below are [R] (recalled, not checked in this project) or [H] (
 
 ## Tasks (see ROADMAP Phase 9)
 Sound engine with settings and mute, event hooks, first sound set, reduced-motion variants, the celebration set, caption/visual parity, a settings page section, documentation of licences, and a feedback check after release.
+
+## What exists (9 Nov 2026, decision D85)
+- **Sound is built and on by default** (this replaces the earlier idea of asking at first run). Engine `app/src/lib/sound.ts`; move classification `lib/moveSound.ts`; level watcher `components/SoundEvents.tsx`; header toggle `components/SoundToggle.tsx`; Settings section `components/SoundSettings.tsx`. Settings are per device in localStorage (`cs-sound`).
+- **Implemented from the event map:** move, capture, check, castle, promotion; right and wrong answer; lesson finished; Guided, Independent and Mastered; Mastery challenge passed; first game finished. All synthesised (wooden noise-plus-thud taps, bell chimes from a sine and two quiet overtones, a single soft triangle note for a wrong answer). Ceilings: 1.2 s, and up to 2.5 s for the first game.
+- **Rules built in:** nothing on page load; a hidden tab and the read-aloud voice both silence it; rate limits per kind; every sound has an on-screen equivalent (the app already shows right and wrong text, the lesson-complete card, the level names and the post-game card).
+- **Still to do:** the celebration animations with reduced-motion versions, the Core complete sound, ambience (not planned), and tuning after Andrew has listened. The sounds are unheard by their builder: [H] until judged by ear.

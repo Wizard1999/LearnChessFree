@@ -20,6 +20,7 @@ import { useLessonProgress } from '../lib/progress'
 import { destsFor, flipTurn, hidePieces, isUci, sideToMove, tryMove, uciFor } from '../lib/play'
 import { leadText, resultHeadline, resultKind, RESULT_LABEL, type ResultKind } from '../lib/resultText'
 import type { Item } from '../types'
+import { playSound } from '../lib/sound'
 import { usePhone } from '../lib/usePhone'
 import { PhoneFold, Sheet } from './Sheet'
 
@@ -148,12 +149,14 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
   const result = useRef<ItemResult>({ correct: false, hints: 0, wrongs: 0, timeMs: 0 })
   function finish(ok: boolean, shown?: string, alt = false) {
     void record(ok, wrongs === 0, alt)
+    playSound(ok ? 'right' : 'wrong')
     setCorrect(ok); setPhase('done')
     if (shown) setShownFen(shown)
     result.current = { correct: ok && wrongs === 0, hints: hintsShown + (controlUsed ? 1 : 0), wrongs, timeMs: Date.now() - start.current }
   }
   const wrong = (msg: string) => {
     if (wrongs === 0) void record(false, true)
+    playSound('wrong')
     setWrongs(w => w + 1); setMessage(msg); setBoardKey(k => k + 1)
   }
 

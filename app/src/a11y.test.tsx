@@ -10,6 +10,7 @@ import App from './App'
 
 // The shell is what is under test, not the content download: let the provider pass its children straight through.
 vi.mock('./lib/content', async orig => ({ ...(await orig<object>()), ContentProvider: ({ children }: { children: React.ReactNode }) => children, RequireFullContent: ({ children }: { children: React.ReactNode }) => children }))
+vi.mock('./components/SoundEvents', () => ({ SoundEvents: () => null })) // the level watcher needs real content; its own logic is tested in lib/sound.test.ts
 
 const src = (f: string) => readFileSync(join(__dirname, f), 'utf8')
 
