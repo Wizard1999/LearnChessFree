@@ -71,4 +71,4 @@ Commit and push only to Wizard1999/LearnChessFree, never rewrite history, run `t
 
 ## Open items needing Andrew or people
 
-Human review of the lessons (G3); baseline measurement (G1) and testing with real beginners; a lawyer's look at LICENSES.md (G18); purging withdrawn books from git history (G19); `desktop/ChessSchool.exe` not rebuilt; a stray `git stash` entry in the repository (drop it with `git stash drop`).
+Human review of the lessons (G3); baseline measurement (G1) and testing with real beginners; a lawyer's look at LICENSES.md (G18); purging withdrawn books from git history (G19); `desktop/Scholarmate.exe` (renamed from ChessSchool.exe) not rebuilt; a stray `git stash` entry in the repository (drop it with `git stash drop`).

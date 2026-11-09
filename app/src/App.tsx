@@ -42,7 +42,7 @@ export default function App() {
     <ContentProvider>
       <a href="#main" className="skiplink" onClick={e => { e.preventDefault(); const m = document.querySelector('main'); if (m) { m.setAttribute('tabindex', '-1'); m.focus({ preventScroll: false }) } }}>Skip to main content</a>
       <header className="top">
-        <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline}</span></div>
+        <div className="brandblock"><NavLink to="/" className="brand"><Crest /><span>{BRAND.name.replace(/mate$/i, '')}<span className="mate">{BRAND.name.match(/mate$/i)?.[0]}</span></span><span className="motto">{BRAND.motto}</span></NavLink><span className="byline">{BRAND.byline.replace(BRAND.author, '')}<a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">{BRAND.author}</a></span></div>
         <nav aria-label="Main">
           {!phone && <HeaderNavItems />}
           <details className="morenav" ref={moreRef} onClick={e => { if ((e.target as HTMLElement).closest('a, button.morebtn')) moreRef.current?.removeAttribute('open') }}>
@@ -84,7 +84,7 @@ export default function App() {
       </Routes>
       </ErrorBoundary>
       <PhoneTabBar />
-      <footer className="sitefooter">{BRAND.name} · Since {BRAND.since} · created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
+      <footer className="sitefooter">{BRAND.name} · Since {BRAND.since} · created by <a href={BRAND.authorUrl} target="_blank" rel="noopener noreferrer">{BRAND.author}</a>. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
     </ContentProvider>
   )
 }
