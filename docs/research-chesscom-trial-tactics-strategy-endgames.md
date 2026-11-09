@@ -117,3 +117,145 @@ Challenge 1 position [V]: r1b1r1k1/6pp/4p3/1pqp1p2/p2P4/4PN2/PP3PPP/2R2RK1, Whit
 
 ### 6.3 Mating Nets lesson 3 (Alekhine), progress on resume
 Challenge 1 [V]: Rxc5, then Rfc1 ("How did Alekhine improve his f1-rook?"), then Ne5 were all accepted; the first bubble after Rxc5 says White has the better minor pieces and the only open file (26 words). Challenge 2 starts at rr4k1/6p1/b3p2p/2RpNp2/p2P4/Pp2PP2/1P4PP/2R3K1, White to move; engine [V, depth 16] top choices Rc7 (+2.8), Nd7, Kf2 within 0.35 pawns of each other, so the position is a slow squeeze, not a tactic. The prompt did not render (pane hidden again). Stopped here.
+
+### 6.4 Mating Nets lesson 3, Alekhine's Endgame Attack (12 min listed): played in full
+Game: Alekhine - Yates, 1922 (named in the praise text at the end). Opening position r1b1r1k1/6pp/4p3/1pqp1p2/p2P4/4PN2/PP3PPP/2R2RK1, White to move. All five challenges follow the game; **challenge 1 and 2 have no tactic at all**: plans in a slow rook endgame (Rxc5, Rfc1, Ne5; then Kf2, h4, Kg3). The prompts name the plan ("How did Alekhine improve his f1-rook?", "How did Alekhine continue to activate his king?", "How did Alekhine grab space with a pawn on the kingside?"). [V]
+- g4 (instead of h4) in challenge 2: **"is an alternative. This is reasonable, but Alekhine grabbed space with another pawn."** The label is about the game line. Engine [V, depth 16] puts the position's top moves within 0.35 pawns, so the alternatives are genuinely close.
+- Challenge 4 (rr4k1... after Rcc7 and Nd7): Nc5, the engine's first choice (+5.35), was labelled "an alternative: there's an even better square for the knight. Try to make a strong threat." The accepted move was Nf6 (attacks the defender of g7), after which Rxg7 is mate in 8 by engine [V]. So the "even better" claim holds for the line, and the engine's depth-18 top move missed the stronger idea until Rxg7 was on the board [I: engine horizon]; I did not check Nf6's own evaluation separately.
+- Challenge 5: Ke5 (mate in 7), and the closing sub-question "If Black defended the rook then White could checkmate. How?" Rh7+ Kg8 Rcg7# (mate in 2, verified).
+Feedback pattern [V]: every wrong or alternative move triggers the same retry flow; praise sentences point at the next goal in the game's story ("The king soon landed on f4 and eventually ended up on e5").
+
+### 6.5 Mating Nets lesson 4, Judit Polgar Goes Catches a King (12 min listed): played in full
+Game: Polgar - Dominguez, 2011 (named at the end). Opening position r2b3k/... with **Black to move**: "White has a dangerous attack, but precise defense can still win for Black. Try to find it." (18 words). So a mating-nets course starts with the defender's task: Kg8, Bxf6 (engine [V, depth 18]: Kg8 +2.2 for Black, Bxf6 +2.0, others lose). Challenge 2 is a hypothetical branch ("Black could have tried Bg7... what cunning idea did Polgar prepare?") Ne7, Rxh6+, Qxh6# (mate in 2 verified). Challenge 3 continues the real game (Rxh7+, Qh6: "the key move of the attack"), challenge 4 a second hypothetical (Rh8+ Bxh8 Ne7#, mate in 2 verified), challenge 5 the game finish (e5, Kxg1, Kf1; praise says no defence to mate on h8 or g7). Pattern of lessons 1-4: odd challenges follow the game, even ones show the mate that would have happened in a side line [V]. Engine (depth 18) agreed with the first move of each challenge, except that it gave e5 in challenge 5 as mate in 6.
+
+### 6.6 Mating Nets lesson 5, An Amazing Study (Kasparyan) (10 min listed): played in full
+A composed study, not a game; White Kg8, Bc8, Nf5 against two rooks. Challenge 1 starts with Black to move: "White's tried the tempting Nf5 on the first move, but Black can escape. How?" Engine [V]: Kg4 is the only move that holds (0.00; Kg6 loses to a forced mate), and chess.com accepts Kg4 then Kf3.
+- **Checkmate labelled "an alternative" [V, python-chess]:** in challenge 2 (4N1K1/8/7p/5Bpk/5r1P/6P1/7r/8 w, after Bxf5 Rxf4) both Nf6# and Ng7# are legal mates. chess.com accepted only Ng7#; the mate Nf6# got "This is a great checkmate! Can you find another one?" So the lesson asks the learner to find both mates, and shows the second as the solution. A learner who finds the first mate is told it is not what the author wanted, though it ends the game. [V]
+- Challenges 3-5: "checkmate in two moves" prompts, with a quiet knight move (Ng7) before the mate at the end; engine confirms mate in 2 each time. The final praise, "What an amazing study!".
+
+### 6.7 The complete Mating Nets course: what the five lessons show [V unless marked]
+- 25 challenges, 57 listed minutes. My play took about 15-20 minutes per lesson including engine checks.
+- Course arc: three famous games, one modern game, one composed study; each lesson 5 challenges; the same device (question that ends in "how did X..."; a hypothetical side line before the real finish).
+- Difficulty: lesson 1 starts with a positional choice (h6/g5/h5), lesson 3 opens with two plan questions in a slow endgame; the mating tactic only arrives in the last two challenges. Lesson 5 is a study where each answer is a single move. Challenge count per lesson is constant, but number of plies the learner plays per challenge varies from 1 to 5.
+- The "alternative" label appears in 5 places over the course (Qh6+ in lesson 2; Qxe6+ lesson 2; g4 lesson 3; Nc5 lesson 3; Nf6# lesson 5), always for a move that is good but not the author's line; once for a legal checkmate. Engine checks: supported once (Qh6+: Nxe6+ leads to mate in 11), not supported in three (Qxe6+ and g4 are tied with the author's move; Nc5 is the engine's own first choice at depth 18, ahead of the author's Nf6), and Nf6# is a legal mate.
+- Ending: Lesson Complete modal with one Finish button (as in section 0), then the Learn path. No summary of the course, no review, no certificate.
+
+## 7. Calculation With Dvoretsky, lesson 1 "Counter Chances Part 1" (played, 5 of 5 challenges)
+
+Course page [V]: 6 lessons, 231 min, 30 challenges (5 each): Counter Chances 1-2, Candidate Moves 1-2, Prophylaxis 1-2. Lessons are listed at 32-44 min, so they almost certainly include long video parts that I did not watch [I]. Built on a 2016 interview with Dvoretsky [V, course blurb].
+
+Format [V]: interactive board, 5 challenges, coach bubble. The intro bubble says the opponent is not passive and you must find their ideas too. No examples before the first task (the first challenge comes straight away) [V].
+
+| # | FEN (side) | Prompt (paraphrase, words) | Accepted and checked |
+|---|---|---|---|
+| 1 | 3r1k2/ppr2pp1/q2Np2p/4n2P/6Q1/P5P1/5P2/3RR1K1 w | "What shocking tactic wins material" (7) | Nf5 queen offer, then Rxd8#; mate in 1 engine-checked [V] |
+| 2 | 3r1k2/ppr2pp1/q1nNp2p/4P2P/6Q1/P5P1/5P2/3RR1K1 b | "What calm move keeps a decisive advantage" (8) | Rcd7 (+1.78 at depth 18, next best Kg8 +1.23) [V]; feedback names the two threats (Nxe5, Qxa3) |
+| 3 | 8/8/6p1/4R2p/7P/6Pk/3r4/6K1 w | "What fantastic resource allows White to hold a draw" (9) | Re6, Rg2+ Kh1 Rxg3, then Rxg6 stalemate trap. Engine: Re6 -0.26, other tries lose. Rxg6 is the only move (0.00) and Rxg6 Rxg6 is stalemate [V] |
+| 4 | 8/8/6p1/6Rp/7P/6Pk/3r4/6K1 b | "How can Black refute White's Rg5 defense" (7) | Rg2+ Kh1 Rf2 Kg1 Rf6, a waiting-move zugzwang. Engine +5.06. After Rf6 every white move loses: Kh1 allows a mate in 1, rook moves about -5 [V] |
+| 5 | 6k1/R4pp1/5q1p/8/4B3/1rr1P1Pb/1Q3P1P/2R3K1 b | "What surprising move allows Black to win" (7) | Qxf2+ Kxf2 Rxb2+ Kf3 Rxc1; engine +7.08, other tries about 0.00 [V] |
+
+Observations
+- Prompts are the shortest seen so far (7-9 words) and never name the idea; each asks for a "surprising", "calm" or "fantastic" move, which only hints at the category [V].
+- Multi-move challenges: the lesson auto-plays the opponent, praises each step with a one-line "what now" ("How should you attack after Kxf2?"), so the learner calculates a line move by move rather than being given a single answer [V].
+- Challenge 4 is a mirror of challenge 3: it shows the line the author's side would have to refute (the tempting alternative Rg5), a "prove the other side's idea fails" pattern. Worth copying for the contrast lab [I].
+- Feedback on correct moves explains the consequence, e.g. in challenge 3: the bubble said that if Black takes the rook it is stalemate, and otherwise a simple draw. Engine agrees on the draw [V].
+- Difficulty ramp: 1 forcing tactic, 2 quiet move, 3 drawing resource, 4 zugzwang, 5 deep combination. Not a smooth ramp; it alternates idea types [I].
+- No wrong move was entered in this lesson, so wrong-answer feedback was not seen here.
+
+## 8. Calculation With Dvoretsky, lesson 3 "Candidate Moves Part 1" (played, 5 of 5)
+
+Format [V]: after Start the lesson went straight to challenge 1 (no video seen in the pane; the page showed an "Explainer Video" label before Start, not opened). Ends with a "Lesson Complete" screen.
+
+| # | FEN (side) | Prompt (paraphrase, words) | Result |
+|---|---|---|---|
+| 1 | 4k3/2p2r1p/1p1p2rP/pPqN2P1/2P1pP2/8/PQ4RK/8 w | White is an exchange down for an attack: "how should you continue" (16) | f5 (decoy), then Qh8+ Rf8 Qxh7. Engine top (+1.57); Qh8+ at once only +0.44. After f5 Rxf5, Qh8+ is +8.25 [V] |
+| 2 | 7Q/2pk1r1p/1p1p2rP/pPqN1PP1/2P1p3/8/P5RK/8 b | "How can Black hold on in this difficult position" (9) | Rxg5 Rxg5 Qf2+ Kh3 Qf3+, perpetual check. Engine 0.00; next best -4.25 [V]. Feedback says White cannot escape the checks (consistent with 0.00) |
+| 3 | QR2rq1k/2p3p1/3p1pPp/4p3/4P3/8/2r3PP/1R4K1 b | "How should Black defend this difficult position" (8) | Ra2, White Rxe8, Rxa8 wins material (+1.83). Ra2 and Rc1+ both 0.00 for the engine; Ra2 was accepted [V]. Challenge ends after Rxa8 with a claim of an easy endgame win; engine +1.83, not "decisive" [V] |
+| 4 | 1R2rq1k/2p3p1/Q2p1pPp/4p3/4P3/8/2r3PP/1R4K1 w | "How should White take advantage of Black's vulnerable back rank" (11) | Qb5 Rxb8 Qxb8 Rc1+ Kf2; feedback says Black's only way to stop mate loses a whole rook. Engine Qb5 +6.63, Kf2 +6.63 [V] |
+| 5 | 4q2k/2p3p1/Q2p1pPp/4p3/4P3/8/2r3PP/1R4K1 w | "How should White continue the attack" (6) | Qa4 Qxa4 Rb8+ Qe8 Rxe8#. Engine Qa4 +3.57, then mate in 2 [V] |
+
+Observations
+- All five challenges come from one Dvoretsky game and run backward: 3, 4 and 5 are earlier and earlier moments of the same combination, challenge 5 ends in mate. So the learner replays the same position family at increasing depth [V from FENs: same pawns g6/g2/h2/e4/e5 throughout].
+- The lesson's title is "Candidate Moves", but no prompt mentions candidates. The skill is shown, not named: the bubble comment after a correct move often lists a rejected try ("Black would have been better off with Rxg2+", challenge 5) [V].
+- Defensive prompts ("hold on", "defend") are half of the tasks (2 and 3), unusual for tactics courses [V].
+- In challenge 3 the author's answer Ra2 was accepted while the engine rated Rc1+ equal; no "alternative" label appeared since I only tried the engine's pick. The claim "convert into victory" rests on +1.8 [V].
+- Wrong-answer feedback was again not seen: engine-first play means I never entered a wrong move here.
+
+## 9. Prophylactic Thinking (Yusupov), lesson 1 "Prophylactic Thinking" (played, 5 of 5)
+
+Course page [V]: 7 lessons, 236 min, 35 challenges, Yusupov with Gustafsson, released 3/6/2024. Lesson 1 is listed at 51 min, the longest in the course; lessons 2-4 are 22-25 min. Format [V]: an intro screen shows the stem game's position (Yusupov-Gavrikov, Zurich 1994) with a blurb and a Start button next to an "Explainer Video" button (not opened); then 5 interactive challenges. A pure-text board lesson here would have to replace the video, so the 51 minutes are mostly not the challenges [I].
+
+| # | FEN (side) | Prompt (paraphrase, words) | Result |
+|---|---|---|---|
+| 1 | r2r2k1/1p1n1pb1/1qp1p1pp/p7/2BP1B2/4PP2/PPQ2P1P/2RR3K w | "How can White launch a powerful attack" (7) | Bxe6 fxe6 Qxg6; engine +2.34 then +2.84 [V]. Ends after two white moves |
+| 2 | r4rk1/pp3p2/1qp3pp/4b3/2B5/4PP2/PP1Q1P1P/2RR2K1 w | "How should White fight for the initiative" (7) | Qc2 (+0.92, engine top), then Rd7 Qxb2, then Qxb2 (accepted) |
+| 3 | r4r2/pp1R1pk1/2p3pp/8/2B5/4PP2/Pb3P1P/2R3K1 w | "What's the best way for White to save the c1-rook" (11) | Rc2, then Bb3, then Rxc6 (all engine top, +1.08/+0.99) |
+| 4 | 2rr1nk1/1p2bp2/1qp1p1p1/p1R4p/P2P3P/1B2PPB1/1PQ2P2/2R4K w | "White's rook is in danger, but Black is the one in trouble... launch a winning attack" (about 20) | Rxh5 gxh5 Rg1+ (engine +1.04, then +6.83) [V] |
+| 5 | 2rr2k1/1p2bp2/1qp1p1n1/p6p/P2P3P/1B2PPB1/1PQ2P2/6RK w | "What powerful sacrifice gives White a winning attack" (8) | Bxe6 Kh7 Qf5 Rg8 Be5. Engine +8.22 and then mate in 8, mate in 6 [V] |
+
+"Alternative" feedback seen (first wrong-answer-flow data in these courses) [V]
+- Challenge 2, second move: f4 was rated "an alternative: strong attacking idea, but there's a capture that's even more precise, try to find it". The author's Qxb2 (+1.15) was the expected move; the engine prefers f4 (+1.47) at depth 20. So the label contradicts the engine on this one: the claim "even more precise" is not supported [V]. (Position: r4r2/pp1R1pk1/2p3pp/4b3/2B5/4PP2/PqQ2P1P/2R3K1 w; f4 Qxc2 Rxc2 Bf6 Rxb7 +1.47.)
+- Mechanism: the move stays on the board with the green retry button lit; the learner must press retry to take it back. The hint is given in words ("a capture"), narrowing the search to a piece type, not a square [V].
+
+Observations
+- The title concept (prophylaxis) is never named in the prompts. Five tasks are attacking and sacrificial; the lesson teaches prophylaxis by showing its result (Yusupov's moves 'prevent' counterplay) in the video, not in the challenges [V on prompts, I on the video].
+- Challenge chain: bubble text "You can continue the game in the next challenge" appears, so 2-3 and 4-5 form continuous runs from one game; the learner plays the same side to the end [V].
+- Praise strings vary ("A brilliant move!", "A beautiful move!"), and the follow-up is always a question ("How can you justify the sacrifice?"), then the next move [V].
+
+## 10. Master Endgame Checkmates, lesson 1 "Checkmate With Two Bishops" (played, 5 of 5)
+
+Course page [V]: 5 lessons, 63 min, 25 challenges, released 6/17/2021. Lesson times: 4, 7, 13, 21, 18 min (two bishops 4 min; bishop and knight 7 min; three queen-vs-rook lessons by GM Friedel 13-21 min). Lesson 1 is by NM Sam Copeland. This is the shortest lesson format seen in the trial, and it matches the lengths our own early lessons target [I]. Format [V]: intro screen with a one-paragraph blurb ("the defending side may sacrifice a piece to eliminate the last pawn") and the starting position, then Start; 5 interactive challenges; a "Lesson Complete" screen.
+
+| # | FEN (side) | Prompt (paraphrase, words) | Result |
+|---|---|---|---|
+| 1 | 8/8/5k2/8/5KB1/8/5B2/8 w | "What's the one move that White can play to force Black's king to immediately retreat toward the seventh rank?" (about 20) | Bf5 (g4-f5). Python: after Bf5 the black king's only moves are e7, f7, g7, and no other bishop move gives that [V]. No coach text appeared, only a green check; the learner presses next [V] |
+| 2 | 8/8/8/2KBB3/k7/8/8/8 w | "Now that Black's king is caught on the edge... how can you make the black king advance to a5" (about 28) | Bb2 (e5-b2) is the only move that leaves Ka5 as Black's only legal move [V by python]; then Bb3 (engine mate in 9 line) |
+| 3 | 6k1/8/6K1/2B5/B7/8/8/8 w | "How should White force the black king toward the corner" (9) | Bb3+ Kh8 Bd4#; engine mate in 2 [V] |
+| 4 | 2B4k/8/1B4K1/8/8/8/8/8 w | "How can White checkmate in just three moves" (8) | Bc5 Kg8 Be6+ Kh8 Bd4#; engine mate in 3, next best mate in 4 [V] |
+| 5 | 8/8/8/8/5B2/6KB/8/7k w | "How can White checkmate in two moves" (7) | Bg2+ Kg1 Be3#; engine mate in 2 [V] |
+
+Observations
+- Prompts state the mate depth ("in two moves", "in just three moves") from challenge 4, a pure find-the-mate design with a uniquely solvable target; the answer is checkable by search, which would fit our validator [V on prompts, I on fit].
+- Challenges 1-2 ask for a restricting move, not a mate: the instruction says what the move must do ("force the king to retreat to the seventh rank"), so the learner tests candidate moves against a stated effect. This is checkable by counting the black king's legal replies (done above) [V].
+- Difficulty ramp is clean and short: shape of the net (1-2), then forced sequence from the edge (3), then two mates with the bishops already placed (4-5) [V].
+- Feedback is minimal here: "Good start!", "Well played!", "Where's the mate?" Often just praise and the next question. In challenge 1 there was no text at all [V].
+- Wrong-answer feedback not seen (engine and rule-first play).
+
+## 11. How To Win With Zugzwang (Bojkov), lesson 1 (played, 5 of 5)
+
+Course page [V]: 5 lessons, 59 min, 25 challenges, released 9/13/2023. Lesson times 13, 8, 10, 12, 16 min. Lesson 1 listed at 13 min (blurb: use zugzwang to win common endgame positions). Format [V]: intro screen with the starting position and blurb, then Start, 5 interactive challenges. All five are pawn or minor-piece endgames, the whole course is about one idea.
+
+| # | FEN (side) | Prompt (paraphrase, words) | Result |
+|---|---|---|---|
+| 1 | 8/8/8/2p5/2P5/k2K4/P7/8 w | "How can White win the pawn ending" (7) | Ke4 (only winning move: +6.35; Kd2, Kc3 are 0.00), Ka4 Kd5. Kd5 accepted; Ke5 and Ke3 are also +6.3 for the engine and were not tried [V] |
+| 2 | 8/8/8/2pK4/1kP5/8/P7/8 w | "How can White win the ending" (7) | a3+ Kxa3 Kxc5, bubble: "the pawn cannot be stopped". Engine: a3+ and a4 both winning (+16), Kd6 0.00 [V] |
+| 3 | 8/8/4k1P1/4p1p1/4K3/3P4/8/8 w | "What precise move allows White to win the pawn ending" (10) | g7 (+5.71; d4 and Ke3 0.00), then Kf5, Kg4, Kxg5, then Kh6 ("the only way to win"), dxe4 [V] |
+| 4 | 6k1/6P1/8/4p1K1/8/3P4/8/8 b | "What clever defense allows Black to save the game" (9) | e4! dxe4 Kxg7 Kf5 Kf7 (engine 0.00; the other tries -7) [V]. Coach: "White has no way to make progress" |
+| 5 | 8/5bk1/4p1p1/3pP1K1/1p1P4/1P1B1P2/8/8 w | "How should White use a series of zugzwangs to win material" (about 13) | Bb5, then Be8, then f4; Black's four legal replies all lose the g6 pawn, engine +6.0 to +7.6 [V]. Barca-Videman 1958 (game source named by the coach) |
+
+Observations
+- A concept-named lesson ("zugzwang") in which the prompts never say the word, except challenge 5 ("a series of zugzwangs") [V].
+- Challenge 3 is a long forcing line (6 white moves). Only the move g7 is clearly best at move 1 and Kh6 at move 4, with no hints. The bubble gave a verdict on the move already played and a question ("How should White keep control?") for the next [V].
+- Both defender tasks (challenge 4) and attacker tasks (1-3, 5) mix in one lesson, one defender task in five: unlike the tactics lessons, losing sides get a move to find too [V].
+- Where more than one move wins (1: three winning kings moves; 2: a3+ and a4), the lesson accepted the move I tried, but the "only move" claims in challenges 3 and 4 match the engine: Kh6 is the only win (+5.95), dxe4 only draws (0.00), Kf7 is the only draw [V]. This matters: the lesson text says "only" and it is true.
+- Difficulty: 1-2 shortest wins, 3 and 5 long ones. The ending of 5 comes from a real game, not a study [V on the coach text].
+
+## 12. Every Pawn Structure Explained, lesson 1 "The Isolated d-Pawn" (finished, 5 of 5; completes section 4)
+
+Format [V]: intro screen with the blurb ("the most famous structural imbalance in chess; GM Johan Hellsten explains the key ideas for both sides") and a position from challenge 1, then Start and 5 challenges. The 5 challenges come from 5 different games, each named in the praise bubble after the last move (Rapport-Yu 2020, Fier-Moina 2020, Karpov-Spassky 1979, Lukacs-Klundt 1994). The concept (the isolated d-pawn) shows up in the prompts only as "keep d4 under control", "pressure against d5", "attack for the side with the isolated pawn". Challenge 1, the Nxf7 sacrifice, is described in section 4; its full line is Nxf7 Kxf7 Ng5+ Kg8 Bxg6 (engine +6.36) [V].
+
+| # | FEN (side) | Prompt (paraphrase, words) | Result |
+|---|---|---|---|
+| 2 | 2rqr1k1/pb3ppp/1pn1p3/8/3P1b2/P1NQ1N2/BP3PPP/3RR1K1 w | "White has more active pieces and can advantageously open the position. How should you do it?" (16) | d5! (+2.26; best), exd5 Qf5 (a counter-intuitive delay of the recapture), Rxe1+ Rxe1 Bh6 Nxd5. Rapport-Yu 2020. Engine +2.24 at the end [V] |
+| 3 | r2q1rk1/1p3ppp/p1n2n2/2bp4/7N/1PN1P2P/PB2bPP1/R2Q1RK1 w | "How did GM Fier recapture on e2?" (7) | Nxe2 (+0.45) accepted at once; Qxe2 is +0.19 [V]. Then "How should White further control d4?" Nf4 was marked incorrect; Nf5 accepted (+0.84, Fier-Moina 2020) |
+| 4 | 3r2k1/pp2bpp1/1qr1b2p/3p4/8/P1B1PB2/1P2QPPP/3R1RK1 w | "How did world champion Karpov prepare to form a battery against the d5-pawn?" (14) | Rd3 (+0.45), Rfd1 (+0.69), R1d2 (+0.77), Qd1 (+0.76); each praised, with a "how do you add the fourth attacker" follow-up. Karpov-Spassky 1979 [V] |
+| 5 | 2rqr1k1/1p2bp1p/p1b1pnpB/3nN3/3P4/2N3R1/PP3PPP/1BRQ2K1 w | "How should White break open the black kingside?" (9) | Bxg6 fxg6 Nxg6 hxg6 Qd3 Kh8 Qxg6 Rg8 Bg7+ Rxg7 Qxg7#; engine +4.79 at the start, +8.15, mate in 4, mate in 2. Lukacs-Klundt 1994 [V] |
+
+Wrong-answer flow seen [V]
+- Challenge 3, second move: Nf4 got the label "incorrect" and the sentence "there's a stronger option... look for a way to increase your control of d4". I checked it: after Nf4 White still stands about +0.46, compared with +0.84 for Nf5 (depth 22). So "incorrect" was applied to a move that keeps a half-pawn edge and loses only 0.38 [V]. The earlier "alternative" label (Prophylactic Thinking section 9) is for a move that was better than the author's. Neither label follows the engine's gap; both follow the author's line [I].
+- Retry: the red/green retry arrow beside the hint button lets the learner take it back. The hint is in words and gives the goal ("increase control of d4") without a square [V].
+
+Observations
+- "How did GM X play" prompts (challenges 3 and 4) are recall-flavoured ("How did GM Fier recapture", "how did Karpov prepare...") yet the engine's top move was accepted each time; they are really "find the master's move" tasks. A learner who recalls the game would shortcut the thinking; one who does not must reason from the structure [I].
+- The praise bubble often ends with a named game and the result ("soon won in..."). That is a motivation device, not an engine claim. Where it states a strategic claim, I checked it: "eventually White can play e3-e4 to win the pawn" (Karpov-Spassky, challenge 4) is not engine-supported as a forced win: the position after Qd1 is only +0.76 [V].
+- The structure lesson is attack-heavy: 3 of 5 challenges end in a kingside attack on the d-pawn side's own king, and the "ideas for both sides" (blocking and the isolated pawn's defence) are not tested at all. All five challenges are played from the side with the isolated pawn; Black never gets a task [V]. This differs from Dvoretsky's mirror pairs.
