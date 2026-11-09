@@ -10,8 +10,8 @@ export interface Appearance { theme: 'system' | 'light' | 'dark'; board: 'warm' 
 export const DEFAULT_APPEARANCE: Appearance = { theme: 'system', board: 'warm', text: 'standard', motion: 'system', style: 'friendly' }
 const KEY = 'cs-appearance'
 const NEUTRAL = new Set(['system', 'standard', 'friendly'])
-/** Browser chrome colours (the tab bar on a phone) while the Scholarmate look is active: warm ivory and midnight ink. Keep in step with palette.css. */
-export const THEME_COLOR = { light: '#f7f5ee', dark: '#172238' } as const
+/** Browser chrome colours (the tab bar on a phone) while the Scholarmate look is active: the deep jade of the header band in both modes. Keep in step with palette.css (--bar). */
+export const THEME_COLOR = { light: '#123f42', dark: '#123f42' } as const
 
 /** What the learner's choice of look does to the board: the Scholarmate look brings its own board (ivory and jade) unless a board was chosen on purpose,
  * and leaving the look takes that board away again. Nothing else about the saved choices changes, and nobody is moved to the look. */

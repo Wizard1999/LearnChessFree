@@ -32,7 +32,7 @@ TEXT = [
     ("on-success", "success", "label on a jade fill"),
     ("text", "ok-bg", "text on a correct answer"), ("text", "no-bg", "text on a wrong answer"),
     ("on-gold", "gold", "ink on the gold highlight"),
-    ("on-bar", "bar", "header text on the cobalt band"), ("on-bar-soft", "bar", "header nav text on the cobalt band"), ("bar-gold", "bar", "gold wordmark accent on the band"),
+    ("on-bar", "bar", "header text on the header band"), ("on-bar-soft", "bar", "header nav text on the header band"), ("bar-gold", "bar", "wordmark accent on the band"),
     *[(fg, f"field-{h}", f"{what} on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon") for fg, what in
       (("on-field", "text"), ("on-field-soft", "muted text"), ("field-link", "link"))],
     ("on-accent", "accent", "ink on the Up next field"),
