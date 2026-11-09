@@ -249,12 +249,13 @@
 /* ---- nodes: outline only until started, then a fill by level with pips (one, two, three, or a star), so colour is never the only cue ---- */
 :root:is([data-style='scholarmate'], [data-style='atlas']) .mapnode .nodecircle { stroke: var(--node-outline); stroke-opacity: 1; stroke-width: 4; }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .mapnode .nodebase { fill: var(--surface); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .oldfill { display: none; }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill, :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips { display: inline; pointer-events: none; }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .oldfill { display: inline; pointer-events: none; fill: var(--lv3); } :root:is([data-style='scholarmate'], [data-style='atlas']) .oldfill.lv4 { fill: var(--lv4); } /* a node fills from the bottom like water in a glass: a quarter at Seen, full at Mastered */
+:root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill { display: none; }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips { display: inline; pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 2px; }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill.lv1 { fill: var(--lv1); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill.lv2 { fill: var(--lv2); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill.lv3 { fill: var(--lv3); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodefill.lv4 { fill: var(--lv4); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv1 { fill: var(--on-lv1); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv2 { fill: var(--on-lv2); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv3 { fill: var(--on-lv3); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv4 { fill: var(--on-lv4); }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv1 { fill: var(--text); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv2 { fill: var(--text); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv3 { fill: var(--text); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodepips.lv4 { fill: var(--on-lv4); }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark { font-size: 15px; transform: translateY(5px); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv1 { fill: var(--on-lv1); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv2 { fill: var(--on-lv2); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv3 { fill: var(--on-lv3); } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv4 { fill: var(--on-lv4); }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv1 { fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 2.5px; } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv2 { fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 2.5px; } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv3 { fill: var(--text); paint-order: stroke; stroke: var(--surface); stroke-width: 2.5px; } :root:is([data-style='scholarmate'], [data-style='atlas']) .nodemark.lv4 { fill: var(--on-lv4); }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .mapnode.next .nodecircle { stroke: var(--node-outline); stroke-width: 6; }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .mapnode .nodeglow { fill: var(--accent); }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .mapnode.prereq .nodecircle { stroke: var(--primary); stroke-width: 9; }
@@ -270,10 +271,10 @@
 :root:is([data-style='scholarmate'], [data-style='atlas']) .levellegend { display: inline-flex; flex-wrap: wrap; gap: 0.1rem 0.8rem; align-items: center; }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .lvkey { display: inline-flex; align-items: center; gap: 0.3rem; white-space: nowrap; }
 :root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--node-outline); background: var(--surface); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv1 { background: conic-gradient(var(--lv4) 0 25%, var(--surface) 0); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv2 { background: conic-gradient(var(--lv4) 0 50%, var(--surface) 0); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv3 { background: conic-gradient(var(--lv4) 0 75%, var(--surface) 0); }
-:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv4 { background: var(--lv4); } /* the legend dots fill like a pie: a quarter, half, three quarters, full */
+:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv1 { background: linear-gradient(to top, var(--lv4) 25%, var(--surface) 25%); }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv2 { background: linear-gradient(to top, var(--lv4) 50%, var(--surface) 50%); }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv3 { background: linear-gradient(to top, var(--lv4) 75%, var(--surface) 75%); }
+:root:is([data-style='scholarmate'], [data-style='atlas']) .lvdot.lv4 { background: var(--lv4); } /* the legend dots fill from the bottom like water in a glass: a quarter, half, three quarters, full */
 
 /* ---- the recommended next step: a persimmon ring on a surface halo, and the Up next pill ---- */
 :root:is([data-style='scholarmate'], [data-style='atlas']) .maprec .recring { stroke: var(--accent-line); stroke-width: 10; stroke-dasharray: 14 8; }

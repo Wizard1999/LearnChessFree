@@ -480,7 +480,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
               {!next && lvl > 0 && <circle r={31} className={`nodeglow soft lv${lvl}`} />}
               <clipPath id={cid}><rect x={-22} y={22 - 44 * (lvl / 4)} width={44} height={44} /></clipPath>
               <circle r={22} fill="var(--canvas)" className="nodebase" />
-              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} className="oldfill" />}
+              {lvl > 0 && <circle r={22} fill={lvl === 4 ? 'var(--success)' : 'var(--info)'} clipPath={`url(#${cid})`} className={`oldfill lv${lvl}`} />}
               {lvl > 0 && <circle r={22} className={`nodefill lv${lvl}`} />}
               <circle r={22} fill="none" className="nodecircle" />
               {p?.hasLesson && p.lessonDone && <text className={`nodemark lv${lvl}`} textAnchor="middle" dy="5">✓</text>}
@@ -548,8 +548,8 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
             <p className="small">{ls.length === 0 ? 'No lesson for this skill yet.' : `${ls.filter(l => doneBy.get(l.id)?.done).length} of ${ls.length} lesson${ls.length === 1 ? '' : 's'} finished`}</p>
             <div className="row">
               {ls.length > 0 && !allDone && <button type="button" onClick={() => void mark(ls.map(l => l.id), true)}>Mark as already done</button>}
-              {ls.some(l => doneBy.get(l.id)) && <button type="button" className="link" onClick={() => void mark(ls.map(l => l.id), false)}>Reset</button>}
-              {first && <button type="button" className="link" onClick={() => navigate(`/lesson/${first.id}`)}>Open lesson</button>}<button type="button" className="link" onClick={() => onPick(tip.id)}>Details</button>
+              {ls.some(l => doneBy.get(l.id)) && <button type="button" className="btn btn-quiet btn-danger" onClick={() => void mark(ls.map(l => l.id), false)}>Reset</button>}
+              {first && <button type="button" className="btn btn-quiet" onClick={() => navigate(`/lesson/${first.id}`)}>Open lesson</button>}<button type="button" className="btn btn-quiet" onClick={() => onPick(tip.id)}>Details</button>
             </div>
           </div>
         )
