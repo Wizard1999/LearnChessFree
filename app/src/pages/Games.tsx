@@ -43,7 +43,7 @@ export function Games() {
   const selected = games?.find(g => g.id === selectedId) ?? null
 
   return (
-    <main className="page wide">
+    <main className="page wide stage">
       <h1>My games</h1>
       {!selected && (
         <>

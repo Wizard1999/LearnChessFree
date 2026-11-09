@@ -74,7 +74,7 @@ export function Lab() {
   const reset = () => { setPlacement(null); setPred(null); setResult(null); setError(null); setResetKey(k => k + 1) }
 
   return (
-    <main className="page wide">
+    <main className="page wide stage">
       <h1>Contrast lab</h1>
       <p className="lede">Take a position where an idea works, change <strong>one thing</strong>, and predict whether the idea still works. Then the engine checks. This is how you find out what an idea actually depends on, rather than memorising when it applies.</p>
       <div className="labgrid">
