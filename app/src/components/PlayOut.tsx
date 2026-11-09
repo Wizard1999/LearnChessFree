@@ -1,3 +1,4 @@
+import { Button } from './Button'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
@@ -148,8 +149,8 @@ export function PlayGame({ startFen, humanColor, botId, opponent, maxMoves, allo
       {useMaia && maiaFailed && <p className="warn small" role="status">Maia could not load here ({maiaFailed}). This usually means you are offline for the first time, or this browser lacks WebAssembly. The game goes on against the Stockfish level closest to Maia {maiaRating} ({bot.label}); nothing is lost.</p>}
       {moveText && <p className="moves small">{moveText}</p>}
       <div className="row actionbar">
-        {!end && allowHint && humanTurn && !thinking && <button type="button" onClick={hint}><span className="longlabel">Ask the engine for a move ({hintsUsed} used)</span><span className="shortlabel" aria-hidden="true">Hint ({hintsUsed} used)</span></button>}
-        {!end && <button type="button" onClick={() => finish({ outcome: 'resigned', reason: 'You stopped this game.', moves: chess.current.history(), pgn: chess.current.pgn() })}>Stop</button>}
+        {!end && allowHint && humanTurn && !thinking && <Button icon="hint" tip="The engine suggests a move for you" onClick={hint}><span className="longlabel">Ask the engine for a move ({hintsUsed} used)</span><span className="shortlabel" aria-hidden="true">Hint ({hintsUsed} used)</span></Button>}
+        {!end && <Button variant="danger" icon="flag" tip="End this game now" onClick={() => finish({ outcome: 'resigned', reason: 'You stopped this game.', moves: chess.current.history(), pgn: chess.current.pgn() })}>Stop</Button>}
       </div>
     </div>
   )

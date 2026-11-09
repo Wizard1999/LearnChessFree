@@ -1,3 +1,5 @@
+import { Button, IconButton } from '../components/Button'
+import { Icon } from '../components/Icon'
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { Chess, type Square } from 'chess.js'
@@ -490,21 +492,22 @@ export function Analysis() {
             </div>
           ) : (
             <>
-              {promo && <div className="row" role="group" aria-label="Promote to"><span className="small">Promote to:</span>{(['q', 'r', 'b', 'n'] as const).map(p => <button key={p} type="button" onClick={() => { play(promo.from, promo.to, p); setPromo(null) }}>{({ q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight' })[p]}</button>)}<button type="button" className="link" onClick={() => setPromo(null)}>Cancel</button></div>}
-              <div className="row filters analysisbar">
-                <button type="button" onClick={() => go('start')} aria-label="Go to start" disabled={cur === 0}>⏮</button>
-                <button type="button" onClick={() => go('back')} aria-label="Previous move" disabled={cur === 0}>◀</button>
-                <button type="button" onClick={() => go('fwd')} aria-label="Next move" disabled={!node.kids.length}>▶</button>
-                <button type="button" onClick={() => go('end')} aria-label="Go to end" disabled={!node.kids.length}>⏭</button>
-                <button type="button" onClick={() => setFlip(f => !f)}>Flip</button>
-                <button type="button" onClick={openEditor}>Edit board</button>
-                <button type="button" onClick={deleteFromHere} disabled={cur === 0} title="Delete this move and everything after it">Delete from here</button>
-                <button type="button" onClick={promoteVariation} disabled={node.parent === null || tree.nodes[node.parent].kids[0] === cur} title="Make this line the main line">Make main line</button>
+              {promo && <div className="row" role="group" aria-label="Promote to"><span className="small">Promote to:</span>{(['q', 'r', 'b', 'n'] as const).map(p => <button key={p} type="button" onClick={() => { play(promo.from, promo.to, p); setPromo(null) }}>{({ q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight' })[p]}</button>)}<button type="button" className="btn btn-quiet" onClick={() => setPromo(null)}>Cancel</button></div>}
+              <div className="toolbar analysisbar" role="toolbar" aria-label="Board and game controls">
+                <IconButton icon="first" label="Go to start" shortcut="Home" onClick={() => go('start')} disabled={cur === 0} />
+                <IconButton icon="prev" label="Previous move" shortcut="←" onClick={() => go('back')} disabled={cur === 0} />
+                <IconButton icon="next" label="Next move" shortcut="→" onClick={() => go('fwd')} disabled={!node.kids.length} />
+                <IconButton icon="last" label="Go to end" shortcut="End" onClick={() => go('end')} disabled={!node.kids.length} />
+                <span className="sep" aria-hidden="true" />
+                <IconButton icon="flip" label="Flip the board" shortcut="F" onClick={() => setFlip(f => !f)} />
+                <Button icon="edit" onClick={openEditor} tip="Set up any position by placing pieces">Edit board</Button>
+                <Button icon="branch" onClick={promoteVariation} disabled={node.parent === null || tree.nodes[node.parent].kids[0] === cur} tip="Make this line the main line">Make main line</Button>
+                <Button variant="danger" icon="trash" onClick={deleteFromHere} disabled={cur === 0} tip="Delete this move and everything after it">Delete from here</Button>
                 <details className="boardmore" ref={moreRef}>
-                  <summary>More</summary>
+                  <summary className="btn btn-secondary"><Icon name="dots" size={18} /><span className="btn-label">More</span></summary>
                   <div className="boardmorelist">
-                    <button type="button" onClick={() => { setHelpOpen(true); if (moreRef.current) moreRef.current.open = false }}>Keyboard shortcuts</button>
-                    <button type="button" onClick={() => { if (moreRef.current) moreRef.current.open = false; void saveImage() }}>Save board as image</button>
+                    <Button variant="quiet" icon="keyboard" shortcut="?" onClick={() => { setHelpOpen(true); if (moreRef.current) moreRef.current.open = false }}>Keyboard shortcuts</Button>
+                    <Button variant="quiet" icon="image" onClick={() => { if (moreRef.current) moreRef.current.open = false; void saveImage() }}>Save board as image</Button>
                   </div>
                 </details>
               </div>
@@ -516,7 +519,7 @@ export function Analysis() {
         <div className="stack">
           <section className="card" aria-label="Engine">
             <div className="sectionhead"><h2>{over ? status : `${whiteToMove ? 'White' : 'Black'} to move`}</h2>
-              <button type="button" onClick={() => setOn(o => !o)} aria-pressed={on}>{on ? 'Engine on' : 'Engine off'}</button></div>
+              <Button icon="engine" onClick={() => setOn(o => !o)} aria-pressed={on} tip="Turn the chess engine on or off">{on ? 'Engine on' : 'Engine off'}</Button></div>
             {status && !over && <p className="small muted">{status}</p>}
             {on && !over && !editing && (
               <>
@@ -624,7 +627,7 @@ export function Analysis() {
                 {(['!', '?', '!!', '??', '!?', '?!'] as const).map(s => <button key={s} type="button" className={node.nag === SYMBOL_NAG[s] ? 'chip on' : 'chip'} aria-pressed={node.nag === SYMBOL_NAG[s]} onClick={() => annotate({ nag: node.nag === SYMBOL_NAG[s] ? undefined : SYMBOL_NAG[s] })}>{s}</button>)}
               </div>
               <textarea rows={2} value={node.comment ?? ''} onChange={e => annotate({ comment: e.target.value })} placeholder="Your comment on this move" aria-label="Comment on this move" />
-              {better && (marks.m.get(cur) ?? '') !== '' && <p className="small">The engine preferred <strong>{better.san}</strong>. <button type="button" className="link" onClick={() => { if (node.parent !== null) playSan(better.san, node.parent) }}>Play it as a variation</button></p>}
+              {better && (marks.m.get(cur) ?? '') !== '' && <p className="small">The engine preferred <strong>{better.san}</strong>. <button type="button" className="btn btn-quiet" onClick={() => { if (node.parent !== null) playSan(better.san, node.parent) }}>Play it as a variation</button></p>}
               <p className="small muted">Marks and comments travel with the PGN you copy or download.</p>
             </section>
           )}

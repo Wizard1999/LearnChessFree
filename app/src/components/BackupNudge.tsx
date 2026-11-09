@@ -21,7 +21,7 @@ export function BackupNudge() {
   return (
     <p className="small backupnudge">
       <Link to="/settings" onClick={acted}>Back up your progress</Link> <span className="muted">(a file you keep; it is saved only on this device now).</span>{' '}
-      <button type="button" className="link" onClick={acted}>Not now</button>
+      <button type="button" className="btn btn-quiet" onClick={acted}>Not now</button>
     </p>
   )
 }

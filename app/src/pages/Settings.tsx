@@ -137,7 +137,7 @@ export function SettingsContent() {
             </div>
           </div>
         )}
-        {previous && <p className="small"><button type="button" className="link" onClick={() => downloadBlob(previous, `chess-school-before-import-${new Date().toISOString().slice(0, 10)}.json`)}>Download a copy of what was on this device before the import</button> (it is held in this tab only, so download it now if you might want it).</p>}
+        {previous && <p className="small"><button type="button" className="btn btn-quiet" onClick={() => downloadBlob(previous, `chess-school-before-import-${new Date().toISOString().slice(0, 10)}.json`)}>Download a copy of what was on this device before the import</button> (it is held in this tab only, so download it now if you might want it).</p>}
         {msg && <p role="status">{msg}</p>}
       </section>
       <section className="card">
@@ -154,14 +154,14 @@ export function SettingsContent() {
       <section className="card">
         <h2>Skills left out of practice</h2>
         <p className="small muted">Skills you marked "too easy", or answered quickly and correctly five times in a row, are left out of mixed practice. Put any of them back; you can mark it too easy again later.</p>
-        {trivial.length === 0 ? <p className="muted small">None.</p> : <ul className="plain small">{trivial.map(k => <li key={k}>{k} <button type="button" className="link" onClick={() => void showAgain(k).then(refreshTrivial)}>Show it again</button></li>)}</ul>}
+        {trivial.length === 0 ? <p className="muted small">None.</p> : <ul className="plain small">{trivial.map(k => <li key={k}>{k} <button type="button" className="btn btn-quiet" onClick={() => void showAgain(k).then(refreshTrivial)}>Show it again</button></li>)}</ul>}
       </section>
       <section className="card">
         <h2>Thinking prompts</h2>
         <p className="small">After you finish a Thinking Loop lesson, its prompt is offered during mixed practice. It goes away once you solve {RETIRE_AFTER} mixed exercises in a row without opening it (that number is a first guess). You can bring any of them back here.</p>
         <ul className="plain small">{LOOP_LEVELS.map(l => (
           <li key={l}>{LOOP_INFO[l].title}: {loop.retired[l] ? 'retired' : `${loop.streak[l] ?? 0} of ${RETIRE_AFTER} in a row`}
-            {loop.retired[l] && <> <button type="button" className="link" onClick={async () => { const n = { retired: { ...loop.retired, [l]: false }, streak: { ...loop.streak, [l]: 0 } }; setLoop(n); await saveLoop(n) }}>Show it again</button></>}</li>
+            {loop.retired[l] && <> <button type="button" className="btn btn-quiet" onClick={async () => { const n = { retired: { ...loop.retired, [l]: false }, streak: { ...loop.streak, [l]: 0 } }; setLoop(n); await saveLoop(n) }}>Show it again</button></>}</li>
         ))}</ul>
       </section>
       <section className="card">

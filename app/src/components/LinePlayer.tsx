@@ -1,3 +1,4 @@
+import { IconButton } from './Button'
 import { useMemo, useState } from 'react'
 import { ChessBoard, type BoardShape } from './ChessBoard'
 import { lineFens, sideToMove } from '../lib/play'
@@ -30,9 +31,9 @@ export function LinePlayer({ fen, line, caption, arrows = [], highlight = [], or
       <ChessBoard fen={data.fens[i]} orientation={orientation ?? sideToMove(fen)} shapes={shapes} highlight={i === 0 ? highlight : []} lastMove={data.lastMoves[i]} label={caption} controlMap />
       {/* the controls come first and never change size, so they stay where the pointer is while the sentence below changes length */}
       <div className="row linecontrols">
-        <button type="button" onClick={() => setI(0)} disabled={i === 0} aria-label="Back to start">⏮</button>
-        <button type="button" onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} aria-label="Previous move">◀</button>
-        <button type="button" className="primary" onClick={() => setI(Math.min(n, i + 1))} disabled={i >= n} aria-label="Next move">▶</button>
+        <IconButton icon="first" label="Back to start" onClick={() => setI(0)} disabled={i === 0} />
+        <IconButton icon="prev" label="Previous move" onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} />
+        <IconButton icon="next" label="Next move" variant="primary" onClick={() => setI(Math.min(n, i + 1))} disabled={i >= n} />
         <span className="muted small linecount" aria-live="polite">{i} / {n}</span>
       </div>
       {caption && i === 0 && <p className="caption">{caption}</p>}

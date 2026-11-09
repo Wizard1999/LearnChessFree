@@ -1,3 +1,4 @@
+import { Button } from './Button'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ResultMark } from './ResultMark'
 import { Chess } from 'chess.js'
@@ -304,11 +305,11 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
       {phase === 'answer' && !studying && (
         <div className="row actionbar">
           {!silent && hints.length > 0 && hintsShown < hints.length && (
-            <button type="button" onClick={() => { setHintsShown(h => h + 1); if (phone) setHintSheet(true) }}>Hint ({hintsShown}/{hints.length})</button>
+            <Button icon="hint" tip="Show a small clue without giving the answer away" onClick={() => { setHintsShown(h => h + 1); if (phone) setHintSheet(true) }}>Hint ({hintsShown}/{hints.length})</Button>
           )}
-          {phone && hintsShown > 0 && hintsShown >= hints.length && <button type="button" onClick={() => setHintSheet(true)}>Hints</button>}
-          <button type="button" onClick={() => { setBoardKey(k => k + 1); setMessage(null) }}><span className="longlabel">Reset the board</span><span className="shortlabel" aria-hidden="true">Reset</span></button>
-          <button type="button" onClick={() => finish(false)}><span className="longlabel">Show me the answer</span><span className="shortlabel" aria-hidden="true">Answer</span></button>
+          {phone && hintsShown > 0 && hintsShown >= hints.length && <Button icon="hint" onClick={() => setHintSheet(true)}>Hints</Button>}
+          <Button icon="reset" tip="Put the pieces back where they started" onClick={() => { setBoardKey(k => k + 1); setMessage(null) }}><span className="longlabel">Reset the board</span><span className="shortlabel" aria-hidden="true">Reset</span></Button>
+          <Button icon="eye" tip="Reveal the answer and move on" onClick={() => finish(false)}><span className="longlabel">Show me the answer</span><span className="shortlabel" aria-hidden="true">Answer</span></Button>
         </div>
       )}
       {hintsShown > 0 && phase === 'answer' && !phone && (
@@ -332,14 +333,14 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
           <p className={lead.written ? undefined : 'muted'}>{lead.text}</p>
           {altNote && <p className="small muted">Why {altNote.san} is sound: {altNote.why}</p>}
           <div className="small">
-            {reported ? <span role="status">Thank you: your report is saved on this device (send it from Settings → Reviews).</span> : !reporting ? <button type="button" className="link" onClick={() => setReporting(true)}>Report a problem with this exercise</button> : (
+            {reported ? <span role="status">Thank you: your report is saved on this device (send it from Settings → Reviews).</span> : !reporting ? <button type="button" className="btn btn-quiet" onClick={() => setReporting(true)}>Report a problem with this exercise</button> : (
               <div className="reportbox">
                 <select aria-label="What is wrong" value={reportKind} onChange={e => setReportKind(e.target.value)}><option value="">What is wrong?</option>{ITEM_KINDS.map(k => <option key={k} value={k}>{k}</option>)}</select>
                 <textarea aria-label="Details" rows={2} value={reportText} onChange={e => setReportText(e.target.value)} placeholder="What did you see? What should it say?" />
                 <button type="button" disabled={!reportKind} onClick={() => { void addFeedback({ targetType: 'item', targetId: item.id, checks: {}, kind: reportKind, text: reportText }, 'item-report').then(() => setReported(true)) }}>Save report</button>
               </div>)}
           </div>
-          {item.cue >= 3 && correct && <p className="small"><button type="button" className="link" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
+          {item.cue >= 3 && correct && <p className="small"><button type="button" className="btn btn-quiet" disabled={trivialMarked} onClick={() => { void addTrivial(item.skill); setTrivialMarked(true) }}>{trivialMarked ? 'Noted: you will see less of this' : 'Too easy for me: show me less of this'}</button></p>}
           <PhoneFold className="howchecked" summary="How this was checked" open={checkedSheet} onToggle={setCheckedSheet}>
             <p className="small muted">Result recorded: {RESULT_LABEL[resultKind(!!correct, !!altNote)]}.</p>
             {altNote && <p className="small">{altNote.san}: engine, depth 14, so evidence rather than proof.</p>}

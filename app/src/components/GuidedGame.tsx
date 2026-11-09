@@ -1,3 +1,4 @@
+import { Button } from './Button'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Chess } from 'chess.js'
 import type { Key } from 'chessground/types'
@@ -81,7 +82,7 @@ export function GuidedGame({ fen, moves, title, end, onDone, doneLabel = 'Contin
       <section className="card guided">
         {title && <h3>{title}</h3>}
         <p>You have played this game already on this device.</p>
-        <div className="row actionbar"><button type="button" onClick={restart}>Play it again</button><button type="button" className="primary" onClick={onDone}>{doneLabel}</button></div>
+        <div className="row actionbar"><Button icon="reset" onClick={restart}>Play it again</Button><button type="button" className="primary" onClick={onDone}>{doneLabel}</button></div>
       </section>
     )
   }
@@ -107,11 +108,11 @@ export function GuidedGame({ fen, moves, title, end, onDone, doneLabel = 'Contin
       {finished ? (
         <div className="guided-end">
           {end && <p className="caption say"><strong>{end}</strong></p>}
-          <div className="row actionbar"><button type="button" onClick={restart}>Play it again</button><button type="button" className="primary" onClick={onDone}>{doneLabel}</button></div>
+          <div className="row actionbar"><Button icon="reset" onClick={restart}>Play it again</Button><button type="button" className="primary" onClick={onDone}>{doneLabel}</button></div>
         </div>
       ) : (
         <div className="row actionbar">
-          {learnerTurn && <button type="button" onClick={advance}>Show me</button>}
+          {learnerTurn && <Button icon="eye" tip="Show the next move" onClick={advance}>Show me</Button>}
           {plan.error && <button type="button" className="primary" onClick={onDone}>{doneLabel}</button>}
         </div>
       )}

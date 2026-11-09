@@ -122,7 +122,7 @@ export function Today() {
       <main className="page startpage hookpage">
         <h1 className="sr-only">Your first moves</h1>
         <HookGame meta={guidedMeta} sid={guided.sid} nextLabel={`Next: ${firstLesson.title}`} onNext={() => { setHook(false); setActive(firstLesson) }} />
-        <p className="small"><button type="button" className="link" onClick={() => setHook(false)}>← Back</button></p>
+        <p className="small"><button type="button" className="btn btn-quiet" onClick={() => setHook(false)}>← Back</button></p>
       </main>
     )
   }

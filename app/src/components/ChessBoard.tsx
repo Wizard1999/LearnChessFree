@@ -1,3 +1,4 @@
+import { Button } from './Button'
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { announce, isPromotionMove, moveCursor, piecesFromFen, positionStatus, PROMOTION_PIECES, screenPos, squareLabel, squaresInOrder } from '../lib/boardKeys'
@@ -311,7 +312,7 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
       )}
       {controlMapOn && (
         <div className="controlbar" ref={barRef}>
-          <button type="button" className="controltoggle" aria-pressed={showControl} onClick={() => { if (!showControl && !usedOnce.current) { usedOnce.current = true; onControlUse?.() } setShowControl(v => !v); setPicked(null); setHoverSq(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</button>
+          <Button icon="grid" className="controltoggle" aria-pressed={showControl} tip="Shade each square by who controls it" onClick={() => { if (!showControl && !usedOnce.current) { usedOnce.current = true; onControlUse?.() } setShowControl(v => !v); setPicked(null); setHoverSq(null) }}>{showControl ? 'Hide control map' : 'Show control map'}</Button>
           {map && <button type="button" className="controltoggle" aria-pressed={inspect} onClick={() => { setInspect(v => !v); setPicked(null) }} title="For touch screens: tap squares to read them. Turn off to move pieces.">{inspect ? 'Moving is off: tap squares' : 'Tap squares to inspect'}</button>}
           {map && (picked ?? hoverSq) && <span className="controldetail" role="status">{describeControl(map.get((picked ?? hoverSq)!)!)}</span>}
           {map && canAsk && picked && (
