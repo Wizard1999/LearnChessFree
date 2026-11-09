@@ -11,7 +11,7 @@ import { onMapJump } from '../lib/mapJump'
 import { ringLabelPlan, zoomZone } from '../lib/mapZoom'
 import { planLabels, type LabelNode } from '../lib/mapLabels'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
-import { ancestorEdges, edgesToDraw, starNodes } from '../lib/mapEdges'
+import { ancestorEdges, edgeStrength, edgesToDraw, starNodes } from '../lib/mapEdges'
 import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
@@ -439,7 +439,8 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         {(() => {
           const readySet = new Set(layout.nodes.filter(n => level(n.id) < 4 && (readiness.get(n.id) ?? 0) >= 1 && !progress.get(n.id)?.noExercises).map(n => n.id))
           const trail = ancestorEdges(layout.edges, picked).flatMap(e => { const a = byId.get(e.from), b = byId.get(e.to); return a && b ? [{ e, a, b }] : [] })
-          const draw = edgesToDraw(layout.edges, level, picked ?? hov).flatMap(d => {
+          const strength = edgeStrength(layout.edges, level)
+          const draw = edgesToDraw(layout.edges, level, picked ?? hov).map(d => (d.kind === 'quiet' ? { ...d, power: strength(d.from, d.to) } : d)).flatMap(d => {
             const a = byId.get(d.from), b = byId.get(d.to); if (!a || !b) return []
             const open = d.kind === 'quiet' && readySet.has(d.to) // the open frontier: a line into a skill that is ready to start
             const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = d.kind !== 'quiet' ? 24 : open ? 20 : 0 // a chosen skill's links and the frontier stop short of the nodes so the heads show

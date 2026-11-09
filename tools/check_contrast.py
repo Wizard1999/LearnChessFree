@@ -191,6 +191,15 @@ def check(look, css_path):
                     r = ratio(fg, bg); ok = r >= need
                     rows.append((mode, kind, f"s{n} {k}", bgname, fg, bg, r, need, ok, f"{what} of subject {n} on the {bgname}"))
                     if not ok: problems.append(f"{look} {mode} {kind}: {what} of subject {n} {fg} on the {bgname} {bg} is {r:.2f}:1, needs {need}:1")
+    # The faintest constellation line (D88d): the line colour at the floor opacity of --sky-edge-floor over the sky must still be a 3:1 graphic.
+    for mode, toks in modes.items():
+        try:
+            sky, star, floor = resolve("--sky", toks), resolve("--sky-star", toks), float(resolve("--sky-edge-floor", toks))
+        except (KeyError, ValueError) as e:
+            problems.append(f"{look} {mode}: cannot resolve {e} for the faintest line"); continue
+        eff = mix(star, sky, floor); r = ratio(eff, sky); ok = r >= GRAPHIC_MIN
+        rows.append((mode, "graphic", "faintest line", "sky", eff, sky, r, GRAPHIC_MIN, ok, "the faintest constellation line on the sky"))
+        if not ok: problems.append(f"{look} {mode} graphic: the faintest line {eff} on the sky {sky} is {r:.2f}:1, needs {GRAPHIC_MIN}:1 (raise --sky-edge-floor)")
     print(f"== {look} ({css_path.name})")
     print(f"{'mode':5} {'kind':7} {'foreground':17} {'background':14} {'fg':8} {'bg':8} {'ratio':>6}  need  result")
     for mode, kind, fg, bg, f, b, r, need, ok, what in rows:

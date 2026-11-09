@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ancestorEdges, edgesToDraw, prereqShare, starNodes } from './mapEdges'
+import { ancestorEdges, edgeStrength, edgesToDraw, prereqShare, starNodes } from './mapEdges'
 
 // A -> C, B -> C, C -> D, D -> E
 const edges = [{ from: 'A', to: 'C' }, { from: 'B', to: 'C' }, { from: 'C', to: 'D' }, { from: 'D', to: 'E' }]
@@ -55,4 +55,24 @@ describe('the trail into a skill', () => {
     expect(ancestorEdges(edges, null)).toEqual([])
   })
   it('does not loop on a cycle', () => { expect(ancestorEdges([{ from: 'X', to: 'Y' }, { from: 'Y', to: 'X' }], 'X')).toHaveLength(2) })
+})
+
+describe('line strength (constellations forming)', () => {
+  const strength = (m: Record<string, number>) => edgeStrength(edges, lv(m))
+  it('is 0 with nothing done and 1 when the source and every prerequisite are Guided', () => {
+    expect(strength({})('A', 'C')).toBe(0)
+    expect(strength({ A: 2, B: 2 })('A', 'C')).toBe(1)
+  })
+  it('only ever rises as the source or the other prerequisites progress', () => {
+    let last = -1
+    for (const [a, b] of [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2]]) { const v = strength({ A: a, B: b })('A', 'C'); expect(v).toBeGreaterThanOrEqual(last); last = v }
+    expect(strength({ A: 1 })('A', 'C')).toBeGreaterThan(strength({})('A', 'C'))
+    expect(strength({ A: 1, B: 1 })('A', 'C')).toBeGreaterThan(strength({ A: 1 })('A', 'C'))
+  })
+  it('has many distinct levels, not a handful', () => {
+    const seen = new Set<number>()
+    for (const a of [0, 1, 2, 3]) for (const b of [0, 1, 2, 3]) seen.add(+strength({ A: a, B: b })('A', 'C').toFixed(4))
+    expect(seen.size).toBeGreaterThanOrEqual(5)
+  })
+  it('stays within 0 and 1', () => { for (const a of [0, 4, 9]) { const v = strength({ A: a, B: 9 })('A', 'C'); expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1) } })
 })

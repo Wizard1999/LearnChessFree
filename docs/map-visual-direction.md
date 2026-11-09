@@ -97,3 +97,5 @@ The Map is named **Constellations** in the header and tabs (address and code nam
 Second pass (D88b): a near-black sky in dark mode, almost no background dust, the open frontier bright and the rest dim, a soft highlight along the chosen skill's whole way in, and an optional "Slice colours" toggle (off by default, stored per device) that tints each subject's slice in its own hue.
 
 D88c: with Slice colours off each slice still has a thin band in its subject hue along its outer edge and its constellation name in that hue (mixed toward the ink so the text stays readable); the wedge tint is the toggle.
+
+D88d: line brightness is graded again (many small steps from how far the source skill and the target's prerequisites have come), with a floor that keeps the faintest line at 3:1; the frontier keeps small arrowheads, a chosen skill keeps its gold trail.

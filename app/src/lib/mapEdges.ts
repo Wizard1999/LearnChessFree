@@ -57,3 +57,16 @@ export function ancestorEdges(edges: MapEdge[], focus: string | null): MapEdge[]
   }
   return out
 }
+
+/** How strongly one line glows (0..1), so that constellations seem to be drawn as stars light up (Andrew, 9 Nov 2026): half from how far the line's source skill has
+ *  come (Seen counts a little, Guided or better fully), half from the average of ALL the target's prerequisites the same way. It rises in small steps with every bit of
+ *  progress, unlike `prereqShare`, which only counts completed prerequisites and so has very few values. */
+export function edgeStrength(edges: MapEdge[], level: (id: string) => number): (from: string, to: string) => number {
+  const credit = (id: string) => Math.max(0, Math.min(1, level(id) / DONE_LEVEL))
+  const into = new Map<string, string[]>()
+  for (const e of edges) into.set(e.to, [...(into.get(e.to) ?? []), e.from])
+  return (from, to) => {
+    const ps = into.get(to) ?? [from]
+    return 0.5 * credit(from) + 0.5 * (ps.reduce((t, p) => t + credit(p), 0) / ps.length)
+  }
+}

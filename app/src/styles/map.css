@@ -74,11 +74,8 @@
 
 /* constellation lines: fine strokes; the D74 strength and fade (--edge-power) are untouched, only thinner. The chosen skill's links stay the brightest */
 :root:not(#_) .mapsvg.chart .mapglow { vector-effect: non-scaling-stroke; } /* hairlines that stay fine at every zoom */
-:root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.6px + 0.6px * var(--edge-power)); opacity: calc(0.1 + 0.3 * var(--edge-power)); } /* far lines, not reachable yet: dim and thin */
-:root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 2px * var(--edge-power)); opacity: calc(0.03 + 0.1 * var(--edge-power)); }
-/* the open frontier (lines into skills that are ready to start): thicker, brighter, with a head; the D74 strength rule still scales them */
-:root:not(#_) .mapsvg.chart .edgecore .mapglow.open { stroke-width: calc(1.3px + 0.8px * var(--edge-power)); opacity: calc(0.7 + 0.3 * var(--edge-power)); }
-:root:not(#_) .mapsvg.chart .edgehalo .mapglow.open { stroke-width: calc(5px + 3px * var(--edge-power)); opacity: calc(0.25 + 0.3 * var(--edge-power)); }
+:root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.7px + 1.5px * var(--edge-power)); opacity: calc(var(--sky-edge-floor) + (1 - var(--sky-edge-floor)) * var(--edge-power)); } /* graded: faint (never below the 3:1 floor) to strong, in many small steps (lib/mapEdges.ts edgeStrength) */
+:root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 5px * var(--edge-power)); opacity: calc(0.02 + 0.32 * var(--edge-power)); }
 /* the soft highlight along the whole way into the chosen skill */
 .chart .edgetrail line { stroke: var(--sky-gold); stroke-width: 7px; stroke-linecap: round; opacity: 0.22; vector-effect: non-scaling-stroke; }
 .chart .starready { fill: none; stroke: var(--sky-gold); stroke-width: 1.6px; pointer-events: none; }
