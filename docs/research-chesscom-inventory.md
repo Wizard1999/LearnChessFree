@@ -57,12 +57,12 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |118|Candidate Moves|Strategy|IAM|K. Kavutskiy|5|25|played-partly|candidate-moves|
 |150|My Best Game|Master Games|IAM|CT|20|100|listed|my-best-game|
 |171|Top Five Moves: Legends Edition|Master Games|IAM|Simon Williams|11|55|played-L1-c1|top-five-moves-legends-edition|
-|173|Top Five Moves: Candidates Edition|Master Games|IAM|Simon Williams|8|40|listed|top-five-moves-candidates-edition|
+|173|Top Five Moves: Candidates Edition|Master Games|IAM|Simon Williams|8|40|sampled-L1-c1 (seg 11)|top-five-moves-candidates-edition|
 |177|2020 - 2021 Candidates Highlights|Master Games|IAM|Jeremy Kane|14|75|listed|2020-candidates-highlights|
 |180|How To Win With The Ruy Lopez Exchange Variation|Openings|IAM|Keaton Kiewra|3|15|listed|how-to-win-with-the-ruy-lopez-exchange-variation|
 |181|How To Win With The Ruy Lopez 5.d4|Openings|IAM|Keaton Kiewra|3|15|listed|attack-in-the-ruy-lopez-with-5-d4|
 |194|How to Be Lucky In Chess|Strategy|IAM|D. Naroditsky|5|25|sampled-L1-c1 (seg 5)|how-to-be-lucky-in-chess|
-|200|When the Amateur Wins|Master Games|IAM|Simon Williams|4|20|listed|when-the-amateur-wins|
+|200|When the Amateur Wins|Master Games|IAM|Simon Williams|4|20|sampled-L1-c1 (seg 11)|when-the-amateur-wins|
 |234|Spicy Gambits!|Openings|IAM|Simon Williams|6|30|sampled-L1-c1 (seg 10)|spicy-gambits|
 |245|Improve Your Puzzle Rush|Tactics|IAM|Simon Williams|7|35|sampled-L1-c1 (seg 5)|improve-your-puzzle-rush|
 |249|Learning From Our Mistakes|Strategy|IAM|Max Illingworth|5|25|sampled-L1-c1-2 (seg 5)|learning-from-our-mistakes|
@@ -119,17 +119,17 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |195|Guide to the Alekhine's Defense|Openings|AM|Sam Copeland|6|30|listed|guide-to-the-alekhines-defense|
 |212|Play the Tarrasch Defense|Openings|AM|Mateusz Bobula|10|50|listed|learn-to-play-the-tarrasch-defense|
 |213|Play the Scotch Game|Openings|AM|Alex Delchev|9|45|listed|learn-to-play-the-scotch-game|
-|218|The Fighting Dragon|Openings|AM|Keaton Kiewra|10|50|listed|the-fighting-dragon|
-|225|How to Play the Philidor Defense|Openings|AM|Ben Finegold|10|50|listed|how-to-play-the-philidor-defense|
+|218|The Fighting Dragon|Openings|AM|Keaton Kiewra|10|50|sampled-L1-c1 (seg 11)|the-fighting-dragon|
+|225|How to Play the Philidor Defense|Openings|AM|Ben Finegold|10|50|sampled-L1-c1 (seg 11)|how-to-play-the-philidor-defense|
 |238|Tactical Ideas in the Endgame|Tactics|AM|Simon Williams|5|25|played-L1-c1|tactical-ideas-in-the-endgame|
 |239|Winning With Opposite Colored Bishops|Endgames|AM|Ben Finegold|3|15|played-L1-c1|winning-with-opposite-colored-bishops|
-|240|Why Simon Loves the Sicilian Dragandorf|Openings|AM|Simon Williams|7|35|listed|why-simon-loves-the-sicilian|
-|246|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|listed|why-simon-loves-the-french|
-|256|Beating the Anti-Sicilians|Openings|AM|Ben Finegold|3|15|listed|beating-the-anti-sicilians|
+|240|Why Simon Loves the Sicilian Dragandorf|Openings|AM|Simon Williams|7|35|sampled-L1-c1 (seg 11)|why-simon-loves-the-sicilian|
+|246|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|skipped-near-duplicate of #240 (seg 11)|why-simon-loves-the-french|
+|256|Beating the Anti-Sicilians|Openings|AM|Ben Finegold|3|15|sampled-L1-c1 (seg 11; answer not found)|beating-the-anti-sicilians|
 |270|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||listed|the-amazing-combinations-of-mikhail-tal-2|
 |271|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||listed|the-amazing-combinations-of-mikhail-tal-1|
 |272|Tactics from the Old Masters|Tactics|AM|CT|88||played-L1-c1|tactics-from-the-old-masters|
-|276|London System for the Busy Chess Player|Openings|AM|Simon Williams|7|35|listed|london-system-for-the-busy-chess-player|
+|276|London System for the Busy Chess Player|Openings|AM|Simon Williams|7|35|sampled-L1-c1 (seg 11)|london-system-for-the-busy-chess-player|
 |279|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|sampled-L1-c1 (seg 10)|the-most-amazing-chess-moves|
 |281|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|played-L1-c1|basic-attacking-plans|
 |297|Activating Your Pieces|Misc|A|CT|10|53|played-partly|activating-your-pieces|
@@ -258,7 +258,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
 |110|Mating Nets|Attacking|M|T. Abrahamyan|5|25|played|king-hunts|
 |111|Master Endgame Checkmates|Endgames|M|CC|5|25|played-partly|master-endgame-checkmates|
-|112|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|listed|grandmaster-opening-kitchen|
+|112|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|sampled-L1-c1 (seg 11)|grandmaster-opening-kitchen|
 |113|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|sampled-L1-c1 (seg 10)|how-to-play-the-kalashnikov|
 |114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|listed|the-10-best-games-of-the-1990s|
 |115|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|listed|how-levon-aronian-became-americas-newest-super-grandmaster|
@@ -269,7 +269,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||listed|pal-benkos-studies|
 |126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|listed|the-top-ten-games-of-the-2000s|
 |127|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||listed|henri-rincks-studies|
-|128|Best Of The Best|Master Games|M|Simon Williams|4|20|listed|best-of-the-best|
+|128|Best Of The Best|Master Games|M|Simon Williams|4|20|sampled-L1-c1 (seg 11)|best-of-the-best|
 |129|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|listed|master-material-imbalances|
 |131|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|listed|the-10-best-games-of-the-2010s|
 |132|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|listed|mugzyyy|
@@ -288,7 +288,7 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |146|Daniil Dubov's Brilliant Opening Ideas|Openings|M|Romain Edouard|4|20|listed|daniil-dubovs-amazing-opening-ideas|
 |147|Name Your Pawns|Strategy|M|Simon Williams|8|40|sampled-L1-c1 (seg 10)|name-your-pawns-the-queenside|
 |148|The Sicilian Nimzowitsch Variation|Openings|M|Tuan Minh Le|4|20|listed|the-sicilian-nimzowitsch-variation|
-|149|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|listed|use-your-pieces-tactically|
+|149|Use Your Pieces Tactically|Tactics|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 11)|use-your-pieces-tactically|
 |151|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|listed|how-to-avoid-mistakes|
 |154|Learn From The Best: AlphaZero|Master Games|M|Daniel Rensch|5|6|sampled-L1-c1 (seg 9)|play-like-alphazero|
 |155|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|listed|learn-from-the-best-leela-chess-zero|
@@ -336,48 +336,48 @@ Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17`
 |226|Pirc Defense for Black|Openings|M|M. Molner|8|40|sampled-L1-c1 (seg 10)|pirc-defense-for-black|
 |227|Pirc Defense for White|Openings|M|R. Dzindzichashvili|2|10|sampled-L1-c1 (seg 9)|pirc-defense-for-white|
 |228|Secrets of the English Attack|Openings|M|T. Abrahamyan|5|25|listed|secrets-of-the-english-attack|
-|229|The Complete English Defense|Openings|M|Simon Williams|5|25|listed|the-complete-english-defense|
+|229|The Complete English Defense|Openings|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|the-complete-english-defense|
 |230|The Belgrade Gambit|Openings|M|Simon Williams|2|10|sampled-L1-c1 (seg 9)|the-belgrade-gambit|
 |231|How to Play the Trompowsky Attack|Openings|M|Keaton Kiewra|8|40|listed|how-to-play-the-trompowsky|
 |232|Playing with Material Imbalances|Master Games|M|Ben Finegold|2|10|sampled-L1-c1 (seg 9)|playing-with-material-imbalances|
 |233|The Complete Queen's Gambit Declined|Openings|M|G. Kaidanov|10|50|sampled-L1-c1 (seg 10)|the-complete-queens-gambit-declined|
 |235|Rook and Knight vs. Rook|Endgames|M|Ivan Sokolov|3|15|played-L1-c1|rook-and-knight-vs-rook|
-|236|Old School Cool|Master Games|M|Simon Williams|5|25|listed|old-school-cool|
+|236|Old School Cool|Master Games|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|old-school-cool|
 |237|The Complete Caro|Openings|M|Sam Shankland|9|45|sampled-L1-c1 (seg 10)|the-complete-caro|
 |241|Mikhail Tal's Brilliancies|Attacking|M|A. Melekhina|3|15|sampled-L1-c1 (seg 10)|mikhail-tals-brilliancies|
-|242|How to Develop the Initiative|Master Games|M|V. Mikhalevski|3|15|listed|how-to-develop-the-initiative|
+|242|How to Develop the Initiative|Master Games|M|V. Mikhalevski|3|15|sampled-L1-c1 (seg 11)|how-to-develop-the-initiative|
 |243|Think Like a Master|Master Games|M|Keaton Kiewra|4|20|played-L1-c1|think-like-a-master|
-|244|Secrets of the Carlsbad|Strategy|M|M. Khachiyan|3|15|listed|secrets-of-the-carlsbad|
+|244|Secrets of the Carlsbad|Strategy|M|M. Khachiyan|3|15|sampled-L1-c1 (seg 11)|secrets-of-the-carlsbad|
 |247|Key Ruy Lopez Lessons|Openings|M|Dejan Bojkov|2|10|listed|ruy-lopez-lessons|
 |248|Mikhail Tal's Best Endgames|Endgames|M|A. Yermolinsky|3|15|listed|mikhail-tals-best-endgames|
-|250|Spicy Openings: The Max Lange Attack|Openings|M|Simon Williams|3|15|listed|spicy-openings-the-max-lange-attack|
+|250|Spicy Openings: The Max Lange Attack|Openings|M|Simon Williams|3|15|sampled-L1-c1 (seg 11)|spicy-openings-the-max-lange-attack|
 |251|Restrict and Win|Strategy|M|M. Khachiyan|6|30|listed|restrict-and-win|
 |252|Positional Sacrifices|Master Games|M|V. Mikhalevski|3|15|listed|positional-sacrifices|
 |253|Play in the Center|Strategy|M|Dejan Bojkov|4|20|listed|play-in-the-center|
 |254|Using Time in Chess|Attacking|M|Simon Williams|4|20|sampled-L1-c1 (seg 9)|using-time-in-chess|
 |255|Storming the Castle|Attacking|M|Keaton Kiewra|3|15|sampled-L1-c1 (seg 9)|storming-the-castle|
 |257|Using the Initiative|Attacking|M|M. Molner|3|15|listed|using-the-initiative|
-|258|Attacking King Hunts|Attacking|M|Simon Williams|5|25|listed|attacking-king-hunts|
+|258|Attacking King Hunts|Attacking|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|attacking-king-hunts|
 |259|Bishop Battles|Master Games|M|J. L. Hammer|5|25|listed|bishop-battles|
-|260|The Scotch Mieses Theory and Middlegame|Openings|M|Daniel Rensch|8||listed|complete-scotch-2-mieses-theory-middlegame|
+|260|The Scotch Mieses Theory and Middlegame|Openings|M|Daniel Rensch|8||sampled-L1-c1 (seg 11)|complete-scotch-2-mieses-theory-middlegame|
 |261|Deep Concepts Explained|Strategy|M|J. L. Hammer|2|10|sampled-L1-c1 (seg 9)|deep-concepts-explained|
 |263|The Classical Dutch|Openings|M|Simon Williams|5|25|sampled-L1-c1 (seg 10)|the-classical-dutch|
 |264|Kasparov's Greatest Combinations|Attacking|M|Dejan Bojkov|3|15|sampled-L1-c1 (seg 9)|kasparovs-greatest-combinations|
 |266|Expect the Unexpected|Master Games|M|M. Khachiyan|3|15|listed|expect-the-unexpected|
-|267|Crush with the King's Gambit|Openings|M|Simon Williams|5|25|listed|crush-with-the-kings-gambit|
-|268|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|listed|winning-with-the-chigorin|
+|267|Crush with the King's Gambit|Openings|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|crush-with-the-kings-gambit|
+|268|Winning with the Chigorin Defense|Openings|M|Ben Finegold|3|15|sampled-L1-c1 (seg 11)|winning-with-the-chigorin|
 |269|How to Make a Comeback|Master Games|M|Mike Klein|3|15|sampled-L1-c1 (seg 9)|how-to-make-a-comeback|
 |273|Attack with the Catalan!|Openings|M|Georg Meier|10|50|sampled-L1-c1 (seg 10)|attack-with-the-catalan|
-|274|Play the Budapest Gambit!|Openings|M|Simon Williams|3|15|listed|play-the-budapest|
-|277|Sacrifice on h6|Attacking|M|Simon Williams|5|25|listed|sacrifice-on-h6|
-|278|Super GM Rook Endings|Endgames|M|A. Yermolinsky|3|15|listed|super-gm-rook-endings|
-|280|Nakamura's King's Indian Defense|Openings|M|Simon Williams|5|25|listed|nakamuras-kings-indian-defense|
+|274|Play the Budapest Gambit!|Openings|M|Simon Williams|3|15|sampled-L1-c1 (seg 11)|play-the-budapest|
+|277|Sacrifice on h6|Attacking|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|sacrifice-on-h6|
+|278|Super GM Rook Endings|Endgames|M|A. Yermolinsky|3|15|sampled-L1-c1 (seg 11)|super-gm-rook-endings|
+|280|Nakamura's King's Indian Defense|Openings|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|nakamuras-kings-indian-defense|
 |282|Knights vs Bishops|Strategy|M|Dejan Bojkov|5|25|listed|knights-vs-bishops|
 |285|Spicy Openings: The Evans Gambit|Openings|M|Simon Williams|5|25|listed|spicy-openings-the-evans-gambit|
 |286|Chess Psychology|Strategy|M|Lawrence Trent|5|25|sampled-L1-c1 (seg 5)|chess-psychology|
 |287|How To Sacrifice Your Queen|Attacking|M|Mike Klein|6|30|sampled-L1-c1 (seg 9)|how-to-sacrifice-your-queen|
 |289|Hikaru Plays to Win|Master Games|M|Hikaru Nakamura|6|29|played-L1-c1|hikaru-plays-to-win|
-|291|Immortal Games|Master Games|M|Simon Williams|5|25|listed|immortal-games|
+|291|Immortal Games|Master Games|M|Simon Williams|5|25|sampled-L1-c1 (seg 11)|immortal-games|
 |314|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||sampled-L1-c1 + finish (seg 10)|sensing-the-danger-examples-from-my-games|
 |316|En Prise Please!|Tactics|M|CT|10||listed|en-prise-please|
 |318|Master Tactics|Tactics|M|CT|9||listed|master-tactics|
