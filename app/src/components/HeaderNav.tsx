@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 export const NAV_ITEMS = [
   { id: 'curriculum', label: 'Curriculum', to: '/course' },
   { id: 'electives', label: 'Electives', to: '/course?view=courses' },
-  { id: 'map', label: 'Map', to: '/course?view=map' },
+  { id: 'map', label: 'Constellations', to: '/course?view=map' },
 ] as const
 
 /** Which header item is lit for an address. On a lesson or any other page none is. */

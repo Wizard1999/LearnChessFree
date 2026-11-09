@@ -30,7 +30,7 @@ function useNarrow(): boolean {
 
 /** Choice chips. A row (`menu` off) wraps inside the bar and never scrolls sideways; a menu is one button that opens the chips above the map and closes when a choice is made.
  * On a phone every group is a menu. */
-const MAP_HELP = 'Rings are the stages of the recommended path, slices are the subjects. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. Every skill is a block. A block fills as your evidence grows: seen, guided (the idea when it is named), independent (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A dot in the corner means you have finished its lesson. Nothing is locked.'
+const MAP_HELP = 'Rings are the stages of the recommended path, and each slice is a constellation, one subject. Every skill is a star. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. A star brightens and grows as your evidence grows: seen, guided (the idea when it is named), independent (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A mastered star gets rays. The gold-ringed star is your next step. Nothing is locked.'
 
 function ChipGroup({ label, current, menu = false, children }: { label: string; current: string; menu?: boolean; children: ReactNode }) {
   const narrow = useNarrow()
@@ -145,9 +145,9 @@ export function Course() {
               </div>
               {returns.length > 0 && <>
                 <h3 className="sdh">Where this skill returns</h3>
-                <p className="small muted">It starts at {stageSentence(homeStages.get(node.id) ?? 0)} and comes back later. Each button shows that stage on the map.</p>
+                <p className="small muted">It starts at {stageSentence(homeStages.get(node.id) ?? 0)} and comes back later. Each button shows that stage on your constellation.</p>
                 <ul className="plain returns">{returns.map(g => (
-                  <li key={g.stageId}><button type="button" className="link" aria-label={`Show ${stageSentence(g.stageIndex)} on the map`} onClick={() => requestMapJump({ skill: node.id, stage: g.stageIndex })}>{stageSentence(g.stageIndex)}</button>
+                  <li key={g.stageId}><button type="button" className="link" aria-label={`Show ${stageSentence(g.stageIndex)} on your constellation`} onClick={() => requestMapJump({ skill: node.id, stage: g.stageIndex })}>{stageSentence(g.stageIndex)}</button>
                     <span className="small muted"> adds {g.items.map(i => i.adds).filter((a, k, all) => all.indexOf(a) === k).join(', ')}</span></li>))}</ul>
               </>}
               <h3 className="sdh">What it connects to</h3>
@@ -206,13 +206,13 @@ export function Course() {
     <div className="segmented" role="group" aria-label="Curriculum views">
       <button type="button" onClick={() => setTab('path')}>Curriculum</button>
       <button type="button" onClick={() => setTab('courses')}>Electives</button>
-      <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Map</button>
+      <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Constellations</button>
     </div>
   )
   const phoneFilters = <>
     <h3>Sections</h3><div className="options">{sectionChips}</div>
     <h3>Stages</h3><div className="options">{stageChips}</div>
-    <details className="maphelptext"><summary>How the map fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
+    <details className="maphelptext"><summary>How your constellation fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
   </>
   return (
     <>
@@ -227,7 +227,7 @@ export function Course() {
       <ChipGroup label="Stages" menu current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
         {stageChips}
       </ChipGroup>
-      <button type="button" className="chip maphelp" aria-label="How the map fills in" title={MAP_HELP}>?</button>
+      <button type="button" className="chip maphelp" aria-label="How your constellation fills in" title={MAP_HELP}>?</button>
       </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={coreLessonsOf(content.lessons)} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
       </div>

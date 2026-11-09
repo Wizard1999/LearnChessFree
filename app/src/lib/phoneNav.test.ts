@@ -3,7 +3,7 @@ import { MORE_LINKS, PHONE_TABS, isFocusRoute, phoneTabFor } from './phoneNav'
 
 describe('phone navigation', () => {
   it('has the four tabs: Today, Practice and Progress now live on the Curriculum page', () => {
-    expect(PHONE_TABS.map(t => t.label)).toEqual(['Curriculum', 'Electives', 'Map', 'More'])
+    expect(PHONE_TABS.map(t => t.label)).toEqual(['Curriculum', 'Electives', 'Constellations', 'More'])
   })
   it('lights the tab a page belongs to', () => {
     expect(phoneTabFor('/')).toBe('curriculum')

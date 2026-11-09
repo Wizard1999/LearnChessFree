@@ -23,7 +23,7 @@ describe('phone tab bar', () => {
     render(<MemoryRouter initialEntries={['/course?view=map']}><PhoneTabBar /></MemoryRouter>)
     const nav = screen.getByRole('navigation', { name: 'Main' })
     expect(nav.querySelectorAll('.tab')).toHaveLength(4)
-    expect(nav.querySelector('.tab.on')?.textContent).toBe('Map')
+    expect(nav.querySelector('.tab.on')?.textContent).toBe('Constellations')
     fireEvent.click(screen.getByRole('button', { name: 'More' }))
     const dlg = screen.getByRole('dialog', { name: 'More' })
     expect(dlg.textContent).toContain('Library')
