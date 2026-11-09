@@ -18,6 +18,7 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
   const [last, setLast] = useState<number | null>(null)
   const [run, setRun] = useState<{ plan: ChallengePlan; items: ChallengePlan['picks'][number]['items']; before: Record<string, Level> } | null>(null)
   const [result, setResult] = useState<{ node: NodeProgress; rights: number; before: Level; after: Level }[] | null>(null)
+  const [confirming, setConfirming] = useState(false)
   useEffect(() => { void kvGet<number | null>('challenge:last', null).then(setLast) }, [])
   const plan = useMemo<ChallengePlan | null>(() => (ctx && attempts ? planChallenge(overall.nodes, content.items, attempts, null, Date.now(), challengeSeed(overall.strand, last)) : null), [ctx, attempts, overall, content.items, last])
 
@@ -39,23 +40,24 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
   }
 
   /** Closing is always allowed. Answers already given in a run are saved as they are made (they count as evidence), so closing mid-run only drops the exercises not yet answered; the learner is told first. */
-  function close() {
-    if (run && !window.confirm('Close the challenge? Answers you have already given are kept as practice; the exercises you have not reached are dropped, and no result is shown.')) return
-    setRun(null); setResult(null)
+  function close(force = false) {
+    if (run && !force) { setConfirming(c => !c); return } // asked in the page: a browser confirm box can be blocked inside an app window, which left the challenge impossible to close
+    setConfirming(false); setRun(null); setResult(null)
   }
   const isOpen = !!run || !!result
   useEffect(() => {
     if (!isOpen) return
-    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') close() }
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') close(confirming) }
     window.addEventListener('keydown', k)
     return () => window.removeEventListener('keydown', k)
   }) // eslint-disable-line react-hooks/exhaustive-deps -- close() reads the current run
 
   const hint = plan?.unlocked ? `Review: six exercises, no hints, on skills you have seen before (${plan.picks.map(p => p.node.title).join(', ')})` : (plan?.reason ?? 'Review older material once you have answered some exercises')
-  const button = <Button variant="secondary" icon="reset" className="masterybtn" aria-expanded={isOpen} aria-controls="mastery-challenge" disabled={!isOpen && !plan?.unlocked} tip={isOpen ? 'Close the challenge (Escape)' : hint} onClick={isOpen ? close : start}>{isOpen ? 'Close challenge' : 'Mastery challenge'}</Button>
+  const button = <Button variant="secondary" icon="reset" className="masterybtn" aria-expanded={isOpen} aria-controls="mastery-challenge" disabled={!isOpen && !plan?.unlocked} tip={isOpen ? 'Close the challenge (Escape)' : hint} onClick={isOpen ? () => close() : start}>{isOpen ? 'Close challenge' : 'Mastery challenge'}</Button>
   const panel = run ? (
     <section className="card challenge" id="mastery-challenge" aria-label="Mastery challenge">
-      <div className="row challengehead"><h2>Mastery challenge</h2><Button variant="quiet" onClick={close}>Close</Button></div>
+      <div className="row challengehead"><h2>Mastery challenge</h2><Button variant="quiet" onClick={() => close()}>Close</Button></div>
+      {confirming && <p className="notice" role="alert">Close the challenge? Answers you have already given are kept as practice; the exercises you have not reached are dropped, and no result is shown. <Button variant="quiet" onClick={() => close(true)}>Close anyway</Button> <Button variant="quiet" onClick={() => setConfirming(false)}>Keep going</Button></p>}
       <ItemSequence items={run.items} source="challenge" silent intro="Six exercises on three skills, no hints" onComplete={r => void finish(r)} />
     </section>
   ) : result ? (
@@ -66,7 +68,7 @@ export function useMasteryChallenge(): { button: ReactNode; panel: ReactNode; hi
           <tr key={r.node.id}><td>{r.node.title}</td><td>{r.rights} of 2</td>
             <td>{v === 'up' ? 'Both right: evidence for this skill.' : v === 'down' ? 'Both missed: evidence against it. It will come back for review.' : 'One right, one missed: about where it was.'}</td>
             <td>{LEVEL_NAMES[r.before]}{r.after !== r.before ? ` → ${LEVEL_NAMES[r.after]}` : ' (unchanged)'}</td></tr>) })}</tbody></table>
-      <Button onClick={close}>Close</Button>
+      <Button onClick={() => close(true)}>Close</Button>
     </section>
   ) : null
   return { button, panel, hint }
