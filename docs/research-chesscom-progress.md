@@ -137,7 +137,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |127|henri-rincks-studies|Henri Rinck's Studies|Tactics|M|Jeremy Kane|6||||listed|
 |128|best-of-the-best|Best Of The Best|Master Games|M|Simon Williams|4|20|53||listed|
 |129|master-material-imbalances|Master Material Imbalances|Strategy|M|T. Abrahamyan|5|25|55||listed|
-|130|pogchamps-tactics|PogChamps Tactics|Tactics|BIAM|Jeremy Kane|4|20|32||listed|
+|130|pogchamps-tactics|PogChamps Tactics|Tactics|BIAM|Jeremy Kane|4|20|32||played-partly (C1 of each lesson; fork C1 played)|
 |131|the-10-best-games-of-the-2010s|The 10 Best Chess Games Of The 2010s|Master Games|M|Sam Copeland|10|13|158||listed|
 |132|mugzyyy|How To Dominate Your Opponent's Pieces|Strategy|M|Romain Edouard|4|20|50||listed|
 |133|play-like-anish-giri|Play Like Anish Giri|Master Games|M|Jeremy Kane|5||||listed|
@@ -297,10 +297,10 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |287|how-to-sacrifice-your-queen|How To Sacrifice Your Queen|Attacking|M|Mike Klein|6|30|102||listed|
 |288|the-funniest-chess-games-of-all-time|The Funniest Chess Games of All Time|Master Games|IAM|K. Kavutskiy|6|30|49||listed|
 |289|hikaru-plays-to-win|Hikaru Plays to Win|Master Games|M|Hikaru Nakamura|6|29|139||listed|
-|290|mastering-the-endgame|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|70||played-L1|
+|290|mastering-the-endgame|Mastering the Endgame|Endgames|BIAM|Anna Rudolf|5|25|70||played-L1; L2-5 first challenges|
 |291|immortal-games|Immortal Games|Master Games|M|Simon Williams|5|25|53||listed|
-|292|games-that-changed-chess-history|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|150||listed|
-|293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||played-L1-2 (lesson list recorded)|
+|292|games-that-changed-chess-history|Games That Changed Chess History|Master Games|BIAM|Anna Rudolf|10|50|150||listed-first-screens L1-2|
+|293|how-to-checkmate|Checkmate Patterns You Should Know|Tactics|BIAM|Simon Williams|15|75|123||played-L1-2; L3-15 first challenge each|
 |294|make-the-most-of-your-pieces|Make the Most of Your Pieces|Misc|I|CT|7|35|18||played-L1-3|
 |295|forcing-moves|Forcing Moves|Misc|I|CT|5|25|18||played-L1-5-all (L2-5 fully)|
 |296|intro-to-book-openings|Intro to Book Openings|Misc|B|CT|5|25|21||played-all-lessons|
@@ -315,7 +315,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |305|reading-the-board|Reading the Board|Misc|I|CT|7|38|40||played-partly|
 |306|winning-with-tactics|Winning with Tactics|Misc|BI|CT|10|50|29||played-all-lessons|
 |307|capturing-pieces|Capturing Pieces|Misc|B|CT|9|45|34||played-all (L1 in sweep-beginner.md)|
-|308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons (L1 partly)|
+|308|playing-the-game|Playing the Game|Misc|B|CT|7|35|43||played-all-lessons|
 |309|understanding-endgames|Understanding Endgames|Misc|I|CT|7|35|21||played-partly|
 |310|learn-to-play-chess|Learn To Play Chess|Misc|B|CT|13|65|18|y|played|
 |311|endgame-patterns|Endgame Patterns|Misc|A|CT|7|35|41||played-partly|
@@ -418,7 +418,7 @@ Your First Tournament (all 4), How To Checkmate L1-2, Mastering the Endgame L1, 
 
 
 ## Log, 9 Nov 2026 (segment 3)
-RESUME HERE: library sweep, Beginner: Opening Principles and Winning the Game done. Capturing Pieces L1 and Playing the Game L1 done. Next: Playing the Game L2 onward (check the course page for lesson slugs) (https://www.chess.com/lessons/playing-the-game/the-value-of-the-pieces-2), then the BIAM courses on the Beginner filter (all-lessons?level=beginner): start with Your First Tournament (done earlier), Mastering the Endgame L2-5, How to Checkmate L3-15, PogChamps Tactics, Games That Changed Chess History, then the 14 three-lesson opening courses and the Exploiting/Defeating series. Layout for old 2018 courses: Start (694,678); after a right move Next is the right-edge arrow (748,744), Retry (734,744), green Retry after an 'alternative' (748,744). Learn-path/new lessons: Start (694,166), Next bar (694,744), Retry (734,744), Finish (400,540). Board a1 (170,420), 54.4px squares; flipped board: file x = 172+54.4*(7-fileIndex), rank y = 40+54.4*(rank-1). JS helpers __g/__fen/__xy must be re-injected after each navigation (see the sweep notes). Learn path COMPLETE (59 tiles).
+RESUME HERE (segment 4): Playing the Game DONE (all 7 lessons, notes in research-chesscom-sweep-beginner.md). Mastering the Endgame L2-5 first challenges done (tab note: use tab-11, tab-12 was hijacked to localhost; frame 800x825, board a1 via JS __xy helper, hint ladder in sweep-beginner.md). How to Checkmate L3-15 first challenges done (tab-21 is a new background tab created this run; tab-11 and tab-12 were hijacked to localhost twice, possibly by the coordinating session; use JS helpers; one nav+Start+read per lesson fits in one browser_batch). PogChamps Tactics first challenges done. Games That Changed Chess History: lesson list and first screens of L1-L2 only (not played). Next: play Games That Changed Chess History L1 fully (the-first-modern-chess-game-ever-recorded), then the BIAM courses on the Beginner filter (all-lessons?level=beginner): start with Your First Tournament (done earlier), Mastering the Endgame L2-5, How to Checkmate L3-15, PogChamps Tactics, Games That Changed Chess History, then the 14 three-lesson opening courses and the Exploiting/Defeating series. Layout for old 2018 courses: Start (694,678); after a right move Next is the right-edge arrow (748,744), Retry (734,744), green Retry after an 'alternative' (748,744). Learn-path/new lessons: Start (694,166), Next bar (694,744), Retry (734,744), Finish (400,540). Board a1 (170,420), 54.4px squares; flipped board: file x = 172+54.4*(7-fileIndex), rank y = 40+54.4*(rank-1). JS helpers __g/__fen/__xy must be re-injected after each navigation (see the sweep notes). Learn path COMPLETE (59 tiles).
 - Learn path walked from page markup (68 tiles, 10 groups); full table in `research-chesscom-new-player-journey.md`, short form in `research-chesscom-trial-site-tour.md` ("Learn path, full walk").
 - Priority change from coordinator: the Learn path (new-player journey) comes before library courses. Played: all 12 starter lessons (path course learn-to-play) and Beginner tile 14 Capture Pieces (10 challenges). First screens (first prompt, challenge count) read for tiles 15 to 28 and all Intermediate and Advanced lessons (positions 30 to 67).
 - Side effects on Andrew's account from this research: the path shows tiles 1 to 12 and 14 as completed, the Next marker is on Piece Values, 2 Day Streak, plus library badges listed in section 5 of the journey file.
