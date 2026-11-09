@@ -20,10 +20,10 @@ describe('phone tab bar', () => {
   })
   it('shows four tabs on a phone, lights the current one, and opens More as a sheet', () => {
     phone(true)
-    render(<MemoryRouter initialEntries={['/course?win=progress']}><PhoneTabBar /></MemoryRouter>)
+    render(<MemoryRouter initialEntries={['/course?view=map']}><PhoneTabBar /></MemoryRouter>)
     const nav = screen.getByRole('navigation', { name: 'Main' })
     expect(nav.querySelectorAll('.tab')).toHaveLength(4)
-    expect(nav.querySelector('.tab.on')?.textContent).toBe('Progress')
+    expect(nav.querySelector('.tab.on')?.textContent).toBe('Map')
     fireEvent.click(screen.getByRole('button', { name: 'More' }))
     const dlg = screen.getByRole('dialog', { name: 'More' })
     expect(dlg.textContent).toContain('Library')

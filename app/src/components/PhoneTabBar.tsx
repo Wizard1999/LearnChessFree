@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { MORE_LINKS, PHONE_TABS, isFocusRoute, phoneTabFor, type PhoneTab } from '../lib/phoneNav'
 import { usePhone } from '../lib/usePhone'
-import { useActiveWindow } from '../lib/activeWindow'
 import { Sheet } from './Sheet'
 
 /** Simple line icons drawn in the text colour (no raw colours). */
@@ -10,9 +9,9 @@ function Icon({ tab }: { tab: PhoneTab }) {
   const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const }
   return (
     <svg className="tabicon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
-      {tab === 'curriculum' && <><circle cx="12" cy="12" r="2.2" {...p} /><circle cx="12" cy="12" r="6" {...p} /><circle cx="12" cy="12" r="9.5" {...p} /><path d="M12 3.5v6.3M17.2 15.4l-3.3-2.2" {...p} /></>}
-      {tab === 'mastery' && <><rect x="3.5" y="3.5" width="17" height="17" rx="2" {...p} /><path d="M3.5 12h17M12 3.5v17" {...p} /><path d="M7.7 7.7h0M16.3 16.3h0" {...p} strokeWidth={3.4} /></>}
-      {tab === 'progress' && <><path d="M4 20V13M10 20V8M16 20v-5M21 20H3" {...p} /><path d="M4 9l6-4 6 5 4-3" {...p} /></>}
+      {tab === 'map' && <><circle cx="12" cy="12" r="2.2" {...p} /><circle cx="12" cy="12" r="6" {...p} /><circle cx="12" cy="12" r="9.5" {...p} /><path d="M12 3.5v6.3M17.2 15.4l-3.3-2.2" {...p} /></>}
+      {tab === 'electives' && <><rect x="3.5" y="3.5" width="17" height="17" rx="2" {...p} /><path d="M3.5 12h17M12 3.5v17" {...p} /><path d="M7.7 7.7h0M16.3 16.3h0" {...p} strokeWidth={3.4} /></>}
+      {tab === 'curriculum' && <><path d="M4 6h16M4 12h16M4 18h10" {...p} /></>}
       {tab === 'more' && <><circle cx="5.5" cy="12" r="1.4" {...p} /><circle cx="12" cy="12" r="1.4" {...p} /><circle cx="18.5" cy="12" r="1.4" {...p} /></>}
     </svg>
   )
@@ -23,9 +22,8 @@ export function PhoneTabBar() {
   const phone = usePhone()
   const loc = useLocation()
   const [moreOpen, setMoreOpen] = useState(false)
-  const openWindow = useActiveWindow()
   if (!phone || isFocusRoute(loc.pathname)) return null
-  const active = phoneTabFor(loc.pathname, loc.search, openWindow)
+  const active = phoneTabFor(loc.pathname, loc.search)
   return (
     <>
       <nav className="tabbar" aria-label="Main">

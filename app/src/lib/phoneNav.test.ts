@@ -3,22 +3,21 @@ import { MORE_LINKS, PHONE_TABS, isFocusRoute, phoneTabFor } from './phoneNav'
 
 describe('phone navigation', () => {
   it('has the four tabs: Today, Practice and Progress now live on the Curriculum page', () => {
-    expect(PHONE_TABS.map(t => t.label)).toEqual(['Curriculum', 'Mastery', 'Progress', 'More'])
+    expect(PHONE_TABS.map(t => t.label)).toEqual(['Curriculum', 'Electives', 'Map', 'More'])
   })
   it('lights the tab a page belongs to', () => {
     expect(phoneTabFor('/')).toBe('curriculum')
     expect(phoneTabFor('/today')).toBe('curriculum')
     expect(phoneTabFor('/course')).toBe('curriculum')
-    expect(phoneTabFor('/course', '?win=progress')).toBe('progress')
-    expect(phoneTabFor('/course', '?win=challenge')).toBe('mastery')
-    expect(phoneTabFor('/course', '', 'progress')).toBe('progress') // the address is cleared after the page reads it; the open window keeps the tab lit
-    expect(phoneTabFor('/course', '', 'challenge')).toBe('mastery')
-    expect(phoneTabFor('/play', '', 'challenge')).toBe('more')
+    expect(phoneTabFor('/course', '?view=courses')).toBe('electives')
+    expect(phoneTabFor('/course', '?view=map')).toBe('map')
+    expect(phoneTabFor('/course', '?win=progress')).toBe('curriculum') // old links land on the Curriculum page with Progress details open
+    expect(phoneTabFor('/play')).toBe('more')
     expect(phoneTabFor('/lesson/L-FND-BOARD-1')).toBe('curriculum')
-    expect(phoneTabFor('/practice')).toBe('mastery')
-    expect(phoneTabFor('/placement')).toBe('mastery')
-    expect(phoneTabFor('/drill')).toBe('mastery')
-    expect(phoneTabFor('/progress/')).toBe('progress')
+    expect(phoneTabFor('/practice')).toBe('curriculum')
+    expect(phoneTabFor('/placement')).toBe('curriculum')
+    expect(phoneTabFor('/drill')).toBe('curriculum')
+    expect(phoneTabFor('/progress/')).toBe('curriculum')
     for (const [to] of MORE_LINKS) expect(phoneTabFor(to)).toBe('more')
     expect(phoneTabFor('/settings')).toBe('more')
   })
@@ -30,6 +29,6 @@ describe('phone navigation', () => {
   })
   it('keeps every place reachable: the tabs, More and the Curriculum chips cover the old navigation', () => {
     const places = [...PHONE_TABS.filter(t => t.to).map(t => t.to), ...MORE_LINKS.map(([to]) => to)]
-    for (const p of ['/course', '/course?win=challenge', '/course?win=progress', '/review', '/play', '/library', '/lab', '/plan', '/roadmap']) expect(places).toContain(p)
+    for (const p of ['/course', '/course?view=courses', '/course?view=map', '/review', '/play', '/library', '/lab', '/plan', '/roadmap']) expect(places).toContain(p)
   })
 })

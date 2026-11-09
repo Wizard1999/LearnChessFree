@@ -1,5 +1,4 @@
-import { hueOfStage } from '../lib/hue'
-import { ArtEmblem, ArtScene } from '../components/art'
+import { ArtScene } from '../components/art'
 import { useMemo } from 'react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { Link } from 'react-router-dom'
@@ -7,8 +6,7 @@ import { db } from '../db'
 import { useContent } from '../lib/content'
 import { describeMastery } from '../lib/mastery'
 import { independenceSentence } from '../lib/labels'
-import { independence, masteryMap, MIN_BAND_SAMPLES, useAttempts, useLessonProgress } from '../lib/progress'
-import { stageProgress } from '../lib/stageProgress'
+import { independence, masteryMap, MIN_BAND_SAMPLES, useAttempts } from '../lib/progress'
 import { Achievements } from './Achievements'
 import { AimCard } from '../components/AimCard'
 import { ResultMark } from '../components/ResultMark'
@@ -17,7 +15,7 @@ import type { ResultKind } from '../lib/resultText'
 const DAY = 86400000
 const pct = (x: number | null) => (x === null ? '—' : `${Math.round(x * 100)}%`)
 
-/** The Full report: everything the old Progress page held. It lives inside the Progress window of the Curriculum page (D62); #/progress opens it there. */
+/** The Full report: everything the old Progress page held. It is the folded Progress details section under the Whole curriculum card (D74); #/progress opens it there. */
 export function ProgressReport() {
   const content = useContent()
   const attempts = useAttempts()
@@ -37,8 +35,6 @@ export function ProgressReport() {
     return [...m.entries()].sort((a, b) => b[0] - a[0]).slice(0, 8)
   }, [firsts])
 
-  const lessonProg = useLessonProgress()
-  const stages = useMemo(() => stageProgress(content.lessons, lessonProg ?? [], masteries), [content.lessons, lessonProg, masteries])
 
   const diag = useMemo(() => { const m = new Map<string, number>(); for (const r of reflections ?? []) if (r.kind === 'diagnosis') m.set(r.data.cause, (m.get(r.data.cause) ?? 0) + 1); return [...m.entries()].sort((a, b) => b[1] - a[1]) }, [reflections])
   // First answers by outcome: the same three marks as in the exercises (correct, sound alternative, unsuccessful).
@@ -51,19 +47,7 @@ export function ProgressReport() {
     <div className="progressreport">
       <p className="small muted">Evidence that you can do things on your own. Nothing here is a rating.</p>
       <AimCard />
-      {stages.some(s => s.lessons > 0) && (
-        <section className="card pathstages">
-          <h2>Your path</h2>
-          <p className="small muted">Eight stages, in order. "Lessons finished" counts lessons you completed or marked done. "Shown in exercises" counts skills where your answers, without hints, reached Level one or better. A finished lesson is not proof that you can use the idea.</p>
-          <ol className="pathlist">{stages.map(s => (
-            <li key={s.id} data-hue={hueOfStage(s.index)} className={s.current ? 'pathstage current' : 'pathstage'} aria-current={s.current ? 'step' : undefined}>
-              <h3><ArtEmblem seed={s.id} />Stage {s.index}: {s.title}{s.current && <span className="badge here">You are here</span>}</h3>
-              <p className="small">{s.milestone}</p>
-              <p className="small muted">Lessons finished: <strong>{s.finished} of {s.lessons}</strong>{s.skipped > 0 && ` (${s.skipped} marked done without doing)`} · Shown in exercises: <strong>{s.shown} of {s.skills}</strong> skills</p>
-            </li>))}
-          </ol>
-        </section>
-      )}
+      <p className="small muted">Your path, stage by stage, is in the list headers: lessons finished, "Shown in exercises" (skills where your answers, without hints, reached Level one or better) and where you are. A finished lesson is not proof that you can use the idea.</p>
       {firsts.length === 0 ?<section className="card"><ArtScene kind="attempts" /><p>No exercises answered yet. <Link to="/course">Start with the next lesson</Link>.</p></section> : (
         <>
           <section className="card">

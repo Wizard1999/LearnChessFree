@@ -1,19 +1,21 @@
 import { hueOfStage, hueOfStrand } from '../lib/hue'
-import { ArtEmblem } from '../components/art'
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { db } from '../db'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { finishedEarlierVersion } from '../lib/resume'
 import { useContent } from '../lib/content'
 import type { LessonMeta } from '../types'
-import { lessonSort, useLessonProgress } from '../lib/progress'
+import { lessonSort, masteryMap, useAttempts, useLessonProgress } from '../lib/progress'
+import { stageProgress } from '../lib/stageProgress'
+import { ProgressReport } from './Progress'
+import { useMasteryChallenge } from '../components/MasteryChallenge'
 import { STRAND_NAMES } from '../lib/missions'
 import { PATH_STAGES, stageLabel } from '../lib/pathStages'
 import { FirstGameInvite } from '../components/FirstGameInvite'
 import { inviteSlot } from '../lib/firstGame'
 import { Button } from '../components/Button'
-import { Icon } from '../components/Icon'
+import { SectionHead, ToggleAllButton, useOpenSections } from '../components/Disclosure'
 import { useNextCoreLesson } from '../lib/useNextCoreLesson'
 import { UpNextMark } from '../components/UpNextMark'
 
@@ -39,8 +41,13 @@ export function LessonIndex() {
   const [stageSel, setStageSel] = useState('')
   const [view, setView] = useState<View>('path') // the recommended path mixes the sections by stage; the section view is the reference library
   const nextCore = useNextCoreLesson()
-  const [userOpen, setUserOpen] = useState<Record<string, boolean>>(() => { try { return JSON.parse(sessionStorage.getItem('lessonlist:open') ?? '{}') } catch { return {} } })
-  useEffect(() => { try { sessionStorage.setItem('lessonlist:open', JSON.stringify(userOpen)) } catch { /* optional */ } }, [userOpen])
+  const challenge = useMasteryChallenge()
+  const attempts = useAttempts()
+  const [sp] = useSearchParams()
+  // Progress details: one folded section under the card (D74). Old links (?win=progress, ?report=1, #/progress) land here with it open.
+  const [detailsOpen, setDetailsOpen] = useState(() => sp.get('win') === 'progress' || sp.get('report') === '1' || sp.get('details') === '1')
+  const stages = useMemo(() => stageProgress(content.lessons, progress ?? [], masteryMap(attempts ?? [], Date.now(), content.cuedOnly)), [content.lessons, content.cuedOnly, progress, attempts])
+  const open = useOpenSections('lessonlist:open')
   const [flash, setFlash] = useState<string | null>(null)
   const [target, setTarget] = useState<{ id: string; n: number } | null>(null)
   const handled = useRef(0)
@@ -49,7 +56,7 @@ export function LessonIndex() {
     if (!nextCore) return
     if (q || strandSel || stageSel || filter !== 'all') { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }
     const g = view === 'path' ? nextCore.stage : content.skillById.get(nextCore.skill)?.strand
-    if (g) setUserOpen(o => ({ ...o, [`${view}:${g}`]: true }))
+    if (g) open.setOpen(`${view}:${g}`, true)
     setTarget({ id: nextCore.id, n: Date.now() })
   }
   useEffect(() => {
@@ -110,20 +117,31 @@ export function LessonIndex() {
   const homeLesson = nextCore ?? (lastWorked ? content.lessonById.get(lastWorked.lessonId) : undefined)
   const homeKey = (homeLesson ? groupOf(homeLesson) : undefined) ?? groups[0]?.[0]
   const sk = (strand: string) => `${view}:${strand}`
-  const isOpen = (strand: string) => userOpen[sk(strand)] ?? (filtersActive || strand === homeKey)
+  const isOpen = (strand: string) => open.isOpen(sk(strand), filtersActive || strand === homeKey)
+  // searching or filtering opens every section that has a match (an earlier Collapse all must not hide the answer)
+  const matchKeys = groups.map(g => sk(g[0])).join('|')
+  useEffect(() => { if (filtersActive) open.setMany(matchKeys.split('|'), true) }, [filtersActive, q, strandSel, stageSel, filter, matchKeys]) // eslint-disable-line react-hooks/exhaustive-deps
   const allOpen = groups.length > 0 && groups.every(g => isOpen(g[0]))
-  const setOpenKey = (strand: string, v: boolean) => setUserOpen(o => ({ ...o, [sk(strand)]: v }))
-  const setAllOpen = (v: boolean) => setUserOpen(o => ({ ...o, ...Object.fromEntries(groups.map(g => [sk(g[0]), v])) }))
+  const setOpenKey = (strand: string, v: boolean) => open.setOpen(sk(strand), v)
+  const setAllOpen = (v: boolean) => open.setMany(groups.map(g => sk(g[0])), v)
   return (
     <section aria-label="Lesson index">
       <div className="card overallbar">
         <div className="overalltext">
-        <div className="sectionhead"><strong>Whole curriculum</strong><span className="muted small">{fmt(totalMin)} of lessons in all · {fmt(Math.max(0, totalMin - doneMin))} left</span></div>
-        <p className="small muted"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /> {doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</p>
+        <h2 className="overalltitle">Whole curriculum</h2>
+        <p className="small muted overallmeta"><progress value={doneCount} max={content.lessons.length || 1} aria-label={`${doneCount} of ${content.lessons.length} lessons finished`} /><span>{doneCount} of {content.lessons.length} lessons finished or skipped ({Math.round((100 * doneCount) / (content.lessons.length || 1))}%)</span><span className="metatime">{fmt(totalMin)} of lessons in all, {fmt(Math.max(0, totalMin - doneMin))} left</span></p>
         <p className="small muted">{view === 'path' ? 'Stages mix the subjects: each stage ends with something you can do in a real game.' : 'The subject sections are a reference library. Take the recommended path (Stage 1 to Stage 8) to learn in order.'}</p>
         </div>
-        {nextCore && <div className="nextcta"><Button variant="primary" icon="next" className="nextbtn" tip="Scroll to the next lesson on your route" onClick={goNext}>Next lesson</Button><span className="small muted nextcta-sub">{nextCore.title}, {aboutMinutes(lessonMinutes(nextCore))}</span></div>}
+        <div className="nextcta">
+          {nextCore && <div className="cta"><Button variant="primary" icon="next" className="nextbtn" tip="Forward: scroll to the next lesson on your route" onClick={goNext}>Next lesson</Button><span className="small muted ctasub">{nextCore.title}, {aboutMinutes(lessonMinutes(nextCore))}</span></div>}
+          <div className="cta">{challenge.button}<span className="small muted ctasub">Back: review what you have seen</span></div>
+        </div>
       </div>
+      <div className="progressdetails">
+        <Button variant="quiet" icon="chevron" className="detailsbtn" aria-expanded={detailsOpen} aria-controls="progress-details" tip="Your path, hints, confidence and the evidence behind your levels" onClick={() => setDetailsOpen(o => !o)}>Progress details</Button>
+        {detailsOpen && <div id="progress-details"><ProgressReport /></div>}
+      </div>
+      {challenge.panel}
       <div className="lede">Nothing is locked: open any lesson, in any order. <details className="inlinenote"><summary>How this list works</summary>The recommended path mixes the subjects so you can play a full game early and meet each idea when you need it; "By subject" groups the same lessons for looking things up. Marking a lesson finished or skipped only changes this list and the map; it is not evidence that you know the skill.</details></div>
       <div className="toolbar listbar" role="group" aria-label="List controls">
         <div className="seg" role="group" aria-label="Group lessons by">
@@ -135,7 +153,7 @@ export function LessonIndex() {
         <div className="seg" role="group" aria-label="Filter by status">
           {(['all', 'todo', 'started', 'done'] as Filter[]).map(f => <button key={f} type="button" aria-pressed={filter === f} onClick={() => setFilter(f)}>{f === 'all' ? 'All' : f === 'todo' ? 'To do' : f === 'started' ? 'In progress' : 'Finished or skipped'}</button>)}
         </div>
-        <Button variant="quiet" className="toggleall" tip={allOpen ? 'Close every section of the list' : 'Open every section of the list'} onClick={() => setAllOpen(!allOpen)}>{allOpen ? 'Collapse all' : 'Expand all'}</Button>
+        <ToggleAllButton allOpen={allOpen} onClick={() => setAllOpen(!allOpen)} />
         {filtersActive && <button type="button" className="btn btn-quiet" onClick={() => { setQ(''); setStrandSel(''); setStageSel(''); setFilter('all') }}>Clear filters</button>}
       </div>
       {groups.length === 0 && <p className="muted">No lessons match.</p>}
@@ -144,10 +162,12 @@ export function LessonIndex() {
         {view === 'path' && gi === inviteSlot(groups.map(g => g[0])) && <FirstGameInvite />}
         <div className="card" data-hue={view === 'path' ? hueOfStage(Math.max(1, PATH_STAGES.findIndex(x => x.id === strand) + 1)) : hueOfStrand(strand)}>
           {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const t = all.reduce((x, l) => x + mins(l), 0); const d = all.filter(l => byId.get(l.id)?.done).length; const open = isOpen(strand); const name = view === 'path' ? `${stageLabel(strand)}: ${PATH_STAGES.find(x => x.id === strand)?.title ?? strand}` : (STRAND_NAMES[strand] ?? strand); return (
-            <div className="sectionhead"><h2><ArtEmblem seed={strand} /><button type="button" className="disclose" aria-expanded={open} aria-controls={`sec-${view}-${strand}`} onClick={() => setOpenKey(strand, !open)}><Icon name="chevron" size={18} className="chev" />{name}<span className="muted small discount">, {d} of {all.length} done</span></button></h2><span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span></div>) })()}
+            <SectionHead id={`sec-${view}-${strand}`} open={open} onToggle={() => setOpenKey(strand, !open)} name={name} done={d} total={all.length} emblem={strand}
+              badge={view === 'path' && stages.find(x => x.id === strand)?.current ? <span className="badge here">You are here</span> : undefined}
+              right={<span className="muted small" title="Total length of every lesson in this section">{all.length} lessons · {fmt(t)}</span>} />) })()}
           {view === 'path' && PATH_STAGES.find(x => x.id === strand)?.milestone && <p className="stagesub">{PATH_STAGES.find(x => x.id === strand)?.milestone}</p>}
           {(() => { const all = content.lessons.filter(l => groupOf(l) === strand); const d = all.filter(l => byId.get(l.id)?.done).length; return (
-            <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped</p>) })()}
+            <p className="small muted"><progress value={d} max={all.length || 1} aria-label={`${d} of ${all.length} lessons finished`} /> {d} of {all.length} finished or skipped{view === 'path' && (() => { const st = stages.find(x => x.id === strand); return st ? <> · Shown in exercises: <strong>{st.shown} of {st.skills}</strong> skills</> : null })()}</p>) })()}
           {isOpen(strand) && <ul className="plain lessonindex" id={`sec-${view}-${strand}`}>
             {ls.map(l => {
               const p = byId.get(l.id)

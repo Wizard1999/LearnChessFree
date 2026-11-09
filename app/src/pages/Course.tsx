@@ -6,7 +6,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { db, kvGet, kvSet } from '../db'
 import { ItemSequence } from '../components/LessonPlayer'
 import { LessonIndex } from './LessonIndex'
-import { onToggleRequest, setOpenWindows } from '../lib/activeWindow'
+import { setOpenWindows } from '../lib/activeWindow'
 import { CoursesView } from './CoursesView'
 import { ProgressReport } from './Progress'
 import type { ItemResult } from '../components/ItemPlayer'
@@ -116,20 +116,18 @@ export function Course() {
   const [arrivedWin, setArrivedWin] = useState<string | null>(null)
   if (winParam !== arrivedWin) {
     setArrivedWin(winParam)
-    if (winParam === 'progress' || winParam === 'challenge') {
+    if ((winParam === 'progress' || winParam === 'challenge') && params.get('view') === 'map') {
       setWins({ progress: winParam === 'progress', challenge: winParam === 'challenge', next: false })
       if (params.get('report') === '1') setReportOpen(true)
     }
   }
   useEffect(() => {
-    if (winParam !== 'progress' && winParam !== 'challenge') return
+    if ((winParam !== 'progress' && winParam !== 'challenge') || params.get('view') !== 'map') return // on the list page ?win=progress opens Progress details and stays in the address
     const p = new URLSearchParams(params); p.delete('win'); p.delete('report'); setParams(p, { replace: true })
   }, [winParam]) // eslint-disable-line react-hooks/exhaustive-deps -- once per arrival
   // tell the phone tab bar which window is open, so its tab stays lit after the address is cleared
   useEffect(() => { setOpenWindows({ progress: wins.progress, challenge: wins.challenge }) }, [wins.progress, wins.challenge])
   useEffect(() => () => setOpenWindows({ progress: false, challenge: false }), [])
-  // the header's Progress and Mastery challenge items toggle the windows when this page is showing
-  useEffect(() => onToggleRequest(k => setWins(w => { const n = narrowScreen() ? { progress: false, challenge: false, next: false, [k]: !w[k] } : { ...w, [k]: !w[k] }; try { localStorage.setItem('map:wins', JSON.stringify(n)) } catch { /* optional */ } return n })), []) // eslint-disable-line react-hooks/exhaustive-deps -- narrowScreen is stable
   // the map page is exactly as tall as the window under the header: measure the header so nothing needs scrolling
   useEffect(() => {
     const el = document.querySelector('.top'), foot = document.querySelector('.sitefooter'); if (!el) return
@@ -437,7 +435,7 @@ export function Course() {
   const skillOpen = !!(node && sk && !busy)
   const chrome = (
     <div className="sidechrome" onKeyDown={e => { if (e.key === 'Escape') { setDock(false); setPicked(null) } }}>
-      {dockOpen && (
+      {dockOpen && tab === 'map' && (
         <aside className="dock left" aria-label="Progress, challenge and up next">
           {wins.progress && <div className="dockwin"><div className="dockwinhead"><strong>Progress</strong><button type="button" className="dockclose" aria-label="Close progress" onClick={() => toggleWin('progress')}>✕</button></div><div className="dockbody">{leftPanel}</div></div>}
           {wins.challenge && <div className="dockwin"><div className="dockwinhead"><strong>Mastery challenge</strong><button type="button" className="dockclose" aria-label="Close mastery challenge" onClick={() => toggleWin('challenge')}>✕</button></div><div className="dockbody">{rightPanel('challenge')}</div></div>}
@@ -451,7 +449,7 @@ export function Course() {
     </div>
   )
 
-  const otherView = showCourses ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}`}><h1 className="sr-only">Curriculum</h1><CoursesView /></main> : showLessons ? <main className={`page wide curriculum${dockOpen ? ' dockopen' : ''}${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1><LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
+  const otherView = showCourses ? <main className="page wide curriculum"><h1 className="sr-only">Curriculum</h1><CoursesView /></main> : showLessons ? <main className={`page wide curriculum${node && sk && !busy ? ' skillopen' : ''}`}><h1 className="sr-only">Curriculum</h1><LessonIndex /></main> : null // built after sk and busy exist; returned after every hook has run
   if (otherView) return <>{otherView}{chrome}</>
   const sectionChips = <>
         <button type="button" className={isAll ? 'chip on' : 'chip'} aria-pressed={isAll} onClick={() => setView('all')}><strong>Whole curriculum</strong> · {overall.percent}%</button>

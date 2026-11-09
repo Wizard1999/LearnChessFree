@@ -82,7 +82,7 @@ export default function App() {
       </Routes>
       </ErrorBoundary>
       <PhoneTabBar />
-      <footer className="sitefooter">{BRAND.name} was created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
+      <footer className="sitefooter">{BRAND.name} · Since {BRAND.since} · created by {BRAND.author}. Free software (GPL-3.0-or-later); the lessons are original work.<BuildStamp /></footer>
     </ContentProvider>
   )
 }
