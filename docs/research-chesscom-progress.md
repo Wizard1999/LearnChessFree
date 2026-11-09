@@ -11,23 +11,23 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |1|learn-to-play|Learn To Play|Misc|B|CT|12|||y|played|
 |2|play-like-gukesh-dommaraju|Play Like Gukesh Dommaraju|Master Games|M|Jeremy Kane|5|||y|played-partly|
 |3|jans-four-knights|Jan's Four Knights|Openings|M|Jan Gustafsson|4|20|111|y|listed|
-|4|gambit-buffet|Gambit Buffet|Openings|M|Simon Williams|16|80|187||listed|
+|4|gambit-buffet|Gambit Buffet|Openings|M|Simon Williams|16|80|187||played-L1-c1|
 |5|yusupov-on-aronian-fighting-for-the-initiative-with-black|Yusupov On Aronian: Fighting For The Initiative With Black|Strategy|M|Artur Yusupov|3|15|166||played-L1-c1|
 |6|a-personal-look-at-mikhail-tals-games|A Personal Look At Mikhail Tal's Games|Master Games|M|Peter Svidler|6|30|160||listed|
-|7|prophylactic-thinking|Prophylactic Thinking|Strategy|M|Artur Yusupov|7|35|236||played-partly|
+|7|prophylactic-thinking|Prophylactic Thinking|Strategy|M|Artur Yusupov|7|35|236||played-partly; L2-c1|
 |8|calculation-with-dvoretsky|Calculation With Dvoretsky|Tactics|M|Mark Dvoretsky|6|30|231||played-partly|
 |9|loeks-endgame-strategy|Loek's Endgame Strategy|Endgames|M|Loek van Wely|8|40|297||listed|
 |10|how-a-prodigy-plays-chess|How A Prodigy Plays Chess|Master Games|M|Praggnanandhaa|8|40|106||listed|
-|11|strategies-for-rapid-chess|Strategies For Rapid Chess|Strategy|M|Liem Le|4|20|64||listed|
+|11|strategies-for-rapid-chess|Strategies For Rapid Chess|Strategy|M|Liem Le|4|20|64||played-L1-c1|
 |12|on-magnus-carlsen|Artur Yusupov: On Magnus Carlsen|Master Games|M|Artur Yusupov|5|25|217||listed|
 |13|the-most-amazing-chess-moves-of-all-time|The Most Amazing Chess Moves Ever Played|Tactics|M|S. S. Ganguly|7|35|116||listed|
 |14|how-to-win-with-zugzwang|How To Win With Zugzwang|Endgames|M|Dejan Bojkov|5|25|59||played-partly|
 |15|c3-sicil-for-the-kill|c3 Sicil For The Kill|Openings|M|James Canty|5|25|60||listed|
-|16|judit-polgar-from-child-star-to-super-gm|Judit Polgar: From Child Star To Super-Grandmaster|Master Games|M|Judit Polgar|6|30|234|y|listed|
+|16|judit-polgar-from-child-star-to-super-gm|Judit Polgar: From Child Star To Super-Grandmaster|Master Games|M|Judit Polgar|6|30|234|y|played-L1-c1|
 |17|the-ultimate-blunder|The Ultimate Blunder|Master Games|-|Ben Finegold|4|20|35||listed|
 |18|hall-of-fame-the-50-greatest-chess-players-of-all-time|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|623||played-L50-c1|
 |19|the-stonewall|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|75||listed|
-|20|hou-yifan-my-career-so-far|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|109||listed|
+|20|hou-yifan-my-career-so-far|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|109||played-L1-c1|
 |21|cuban-chess-dominguez-on-capablanca|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|78||listed|
 |22|learn-the-evans-gambit|Learn The Evans Gambit|Openings|M|CC|3|21|30||listed|
 |23|attacking-without-sacrificing|How To Attack Without Sacrificing|Attacking|M|Magnus Carlsen|4|20|69||listed|
@@ -37,8 +37,8 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |27|refute-the-sacrifice|Refute The Sacrifice|Tactics|M|Jeremy Kane|16||||played-L1|
 |28|the-ten-most-beautiful-chess-moves|The Ten Most Beautiful Chess Moves|Tactics|M|Jeremy Kane|11||||listed|
 |29|play-like-a-chess-streamer|Play Like A Chess Streamer|Master Games|M|Jeremy Kane|5||||listed|
-|30|scc-tactics|SCC Tactics|Master Games|M|CC|15|58|173||listed|
-|31|chess-in-the-movies|Chess In The Movies|Tactics|M|Jeremy Kane|7||||listed|
+|30|scc-tactics|SCC Tactics|Master Games|M|CC|15|58|173||played-L1-c1|
+|31|chess-in-the-movies|Chess In The Movies|Tactics|M|Jeremy Kane|7||||played-L1-c1|
 |32|play-like-levy-rozman|Play Like Levy Rozman|Master Games|M|Jeremy Kane|5||||played-L1|
 |33|play-like-a-world-champion-the-carlsen-years|Play Like A World Champion: The Carlsen Years|Master Games|M|Jeremy Kane|5||||listed|
 |34|play-like-daniel-naroditsky|Play Like Daniel Naroditsky|Master Games|M|Jeremy Kane|5||||listed|
@@ -94,7 +94,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |84|play-the-italian|Play The Italian|Openings|IAM|Yuriy Krykun|6|30|84|y|played-L1-c1|
 |85|mamedyarovs-kingside-pawn-play|Mamedyarov Teaches Dynamic Pawn Play|Openings|M|S. Mamedyarov|5|25|78|y|listed|
 |86|advanced-piece-values|Advanced Piece Values|Strategy|AM|Larry Kaufman|5|25|73||listed|
-|87|leonid-kubbels-studies|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||||listed|
+|87|leonid-kubbels-studies|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||||played-L1-c1|
 |88|modern-chess-masterpieces|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|91||listed|
 |89|pawns-vs-pieces|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|38|y|played-L1|
 |90|grind-like-magnus-carlsen|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|98||listed|
@@ -112,7 +112,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |102|how-to-beat-a-grandmaster|How To Beat A Grandmaster|Master Games|-|Romain Edouard|4|20|63||listed|
 |103|genrikh-kasparyans-studies|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||||listed|
 |104|play-like-a-world-champion-kasparov-vs-karpov|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5|||y|listed|
-|105|every-opening-trap-to-crush-your-opponent|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|156||listed|
+|105|every-opening-trap-to-crush-your-opponent|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|156||played-L1-c1|
 |106|every-chess-tactic-explained|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|163||played-partly|
 |107|oleg-pervakovs-studies|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||||listed|
 |108|mamedyarovs-opening-surprises|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|78||listed|
@@ -242,15 +242,15 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |232|playing-with-material-imbalances|Playing with Material Imbalances|Master Games|M|Ben Finegold|2|10|45||listed|
 |233|the-complete-queens-gambit-declined|The Complete Queen's Gambit Declined|Openings|M|G. Kaidanov|10|50|227||listed|
 |234|spicy-gambits|Spicy Gambits!|Openings|IAM|Simon Williams|6|30|128||listed|
-|235|rook-and-knight-vs-rook|Rook and Knight vs. Rook|Endgames|M|Ivan Sokolov|3|15|47||listed|
+|235|rook-and-knight-vs-rook|Rook and Knight vs. Rook|Endgames|M|Ivan Sokolov|3|15|47||played-L1-c1|
 |236|old-school-cool|Old School Cool|Master Games|M|Simon Williams|5|25|73||listed|
 |237|the-complete-caro|The Complete Caro|Openings|M|Sam Shankland|9|45|192||listed|
-|238|tactical-ideas-in-the-endgame|Tactical Ideas in the Endgame|Tactics|AM|Simon Williams|5|25|78||listed|
-|239|winning-with-opposite-colored-bishops|Winning With Opposite Colored Bishops|Endgames|AM|Ben Finegold|3|15|50||listed|
+|238|tactical-ideas-in-the-endgame|Tactical Ideas in the Endgame|Tactics|AM|Simon Williams|5|25|78||played-L1-c1|
+|239|winning-with-opposite-colored-bishops|Winning With Opposite Colored Bishops|Endgames|AM|Ben Finegold|3|15|50||played-L1-c1|
 |240|why-simon-loves-the-sicilian|Why Simon Loves the Sicilian Dragandorf|Openings|AM|Simon Williams|7|35|153||listed|
 |241|mikhail-tals-brilliancies|Mikhail Tal's Brilliancies|Attacking|M|A. Melekhina|3|15|70||listed|
 |242|how-to-develop-the-initiative|How to Develop the Initiative|Master Games|M|V. Mikhalevski|3|15|78||listed|
-|243|think-like-a-master|Think Like a Master|Master Games|M|Keaton Kiewra|4|20|74||listed|
+|243|think-like-a-master|Think Like a Master|Master Games|M|Keaton Kiewra|4|20|74||played-L1-c1|
 |244|secrets-of-the-carlsbad|Secrets of the Carlsbad|Strategy|M|M. Khachiyan|3|15|47||listed|
 |245|improve-your-puzzle-rush|Improve Your Puzzle Rush|Tactics|IAM|Simon Williams|7|35|79||listed|
 |246|why-simon-loves-the-french|Why Simon Loves the French Defense|Openings|AM|Simon Williams|9|45|188||listed|
@@ -279,7 +279,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |269|how-to-make-a-comeback|How to Make a Comeback|Master Games|M|Mike Klein|3|15|49||listed|
 |270|the-amazing-combinations-of-mikhail-tal-2|Combinations of Mikhail Tal Part 3|Tactics|AM|CT|10||||listed|
 |271|the-amazing-combinations-of-mikhail-tal-1|Combinations of Mikhail Tal Part 2|Tactics|AM|CT|9||||listed|
-|272|tactics-from-the-old-masters|Tactics from the Old Masters|Tactics|AM|CT|88||||listed|
+|272|tactics-from-the-old-masters|Tactics from the Old Masters|Tactics|AM|CT|88||||played-L1-c1|
 |273|attack-with-the-catalan|Attack with the Catalan!|Openings|M|Georg Meier|10|50|172||listed|
 |274|play-the-budapest|Play the Budapest Gambit!|Openings|M|Simon Williams|3|15|46||listed|
 |275|when-computers-go-wrong|When Computers Go Wrong|Strategy|IAM|Simon Williams|5|25|68||played-L1-c1|
@@ -288,7 +288,7 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |278|super-gm-rook-endings|Super GM Rook Endings|Endgames|M|A. Yermolinsky|3|15|59||listed|
 |279|the-most-amazing-chess-moves|The Most Amazing Chess Moves|Master Games|AM|Simon Williams|5|25|54||listed|
 |280|nakamuras-kings-indian-defense|Nakamura's King's Indian Defense|Openings|M|Simon Williams|5|25|77||listed|
-|281|basic-attacking-plans|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|89||listed|
+|281|basic-attacking-plans|Essential Attacking Plans|Attacking|AM|Dejan Bojkov|5|25|89||played-L1-c1|
 |282|knights-vs-bishops|Knights vs Bishops|Strategy|M|Dejan Bojkov|5|25|90||listed|
 |283|your-first-tournament|Your First Tournament|Strategy|BIAM|Ben Finegold|4|20|37||played-all-4-lessons (L1 reaching-the-time-control, L2 illegal-chess-move, L3 notation, L4 draw claims)|
 |284|get-better-at-bullet|Get Better at Bullet|Strategy|IAM|Aman Hambleton|5|25|48||played-L1-c1|
@@ -322,11 +322,11 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |312|opposite-colored-bishops|Opposite-Colored Bishops|Endgames|AM|Dejan Bojkov|10||||played-L1-c1|
 |313|advanced-tactics-1|Advanced Tactics|Tactics|IAM|Ben Finegold|2|10|34||played-L1-c1-3 (Expect the Unexpected; L2 not opened)|
 |314|sensing-the-danger-examples-from-my-games|Sensing the Danger - Examples from My Games|Master Games|M|A. Lenderman|8||||listed|
-|315|master-endgame|Master Endgames|Endgames|AM|CT|8||||listed|
+|315|master-endgame|Master Endgames|Endgames|AM|CT|8||||played-L1-c1|
 |316|en-prise-please|En Prise Please!|Tactics|M|CT|10||||listed|
 |317|master-attack-and-defense|Master Attack and Defense|Attacking|AM|CT|9||||played-L1-c1|
 |318|master-tactics|Master Tactics|Tactics|M|CT|9||||listed|
-|319|master-strategy|Master Strategy|Strategy|AM|CT|9||||listed|
+|319|master-strategy|Master Strategy|Strategy|AM|CT|9||||played-L1-c1|
 |320|capablancas-endgame-masterpieces|Capablanca's Endgame Masterpieces|Endgames|AM|Dejan Bojkov|10||||listed|
 |321|the-technique-of-calculation|The Technique of Calculation|Tactics|AM|CT|10||||played-L1-c1|
 |322|the-drawing-zone-part-2|The Drawing Zone, Part 2|Endgames|IAM|CT|18||||listed|
@@ -338,20 +338,20 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |328|premature-attacks-on-the-king|Premature Attacks on the King|Attacking|AM|CT|15||||played-L1-c1|
 |329|exploiting-opening-errors-3|Exploiting Opening Errors 3|Openings|BIAM|CT|9|||y|played-partly|
 |330|exploiting-typical-opening-errors|Exploiting Typical Opening Errors|Openings|BIAM|CT|20||||listed|
-|331|clever-escapes-from-common-mating-attacks|Clever Escapes from Common Mating Attacks|Tactics|AM|CT|15||||listed|
-|332|pawn-play-in-the-endgame|Pawn Play in the Endgame|Endgames|AM|CT|20||||listed|
+|331|clever-escapes-from-common-mating-attacks|Clever Escapes from Common Mating Attacks|Tactics|AM|CT|15||||played-L1-c1|
+|332|pawn-play-in-the-endgame|Pawn Play in the Endgame|Endgames|AM|CT|20||||played-L1-c1|
 |333|pawn-play|Pawn Play|Strategy|AM|CT|18||||played-L1-c1|
 |334|finding-tricky-tactics|Finding Tricky Tactics|Tactics|M|CT|15||||listed|
-|335|play-against-capablanca|Play Against Capablanca|Master Games|M|I. Khmelnitsky|22||||listed|
+|335|play-against-capablanca|Play Against Capablanca|Master Games|M|I. Khmelnitsky|22||||played-L1-c1|
 |336|slaying-the-sicilian-kingside-storms|Slaying the Sicilian: Kingside Storms|Openings|M|CT|12||||listed|
 |337|the-essence-of-the-initiative|The Essence of the Initiative|Attacking|M|CT|20||||listed|
 |338|complete-scotch-1-the-mieses-endgames|Complete Scotch #1: The Mieses Endgames|Endgames|M|Daniel Rensch|10||||listed|
-|339|improve-your-chess|Improve your Chess|Strategy|M|Sam Shankland|19||||listed|
+|339|improve-your-chess|Improve your Chess|Strategy|M|Sam Shankland|19||||played-L1-c1|
 |340|play-against-lasker|Play Against Lasker|Misc|M|CT|19||||listed|
-|341|combinations-of-mikhail-tal|Combinations of Mikhail Tal|Tactics|AM|CT|24||||listed|
-|342|the-power-of-the-capture-check|The Power of the Capture-Check|Tactics|M|CT|21||||listed|
+|341|combinations-of-mikhail-tal|Combinations of Mikhail Tal|Tactics|AM|CT|24||||played-L1-c1|
+|342|the-power-of-the-capture-check|The Power of the Capture-Check|Tactics|M|CT|21||||played-L1-c1|
 |343|understanding-the-sicilian-dragon|Understanding the Sicilian Dragon|Openings|IAM|CT|15|||y|listed|
-|344|defeating-pet-openings|Defeating "Pet Openings"|Openings|BIAM|CT|16||||listed|
+|344|defeating-pet-openings|Defeating "Pet Openings"|Openings|BIAM|CT|16||||played-L1-c1|
 |345|now-what|Now What?|Openings|M|Jeremy Silman|20||||listed|
 |346|strategic-errors|Strategic Errors|Strategy|IAM|Jeremy Silman|20||||listed|
 |347|chess-traps-and-miniatures-part-2-checkmates|Chess Traps and Miniatures Part 2 - Checkmates|Attacking|IAM|CT|20||||listed|
@@ -370,16 +370,16 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |360|play-against-bobby-fischer|Play Against Bobby Fischer|Strategy|M|CT|25||||listed|
 |361|understanding-the-colle-zukertort|Understanding the Colle-Zukertort|Openings|IAM|CT|25||||listed|
 |362|combinations-of-alexander-alekhine|Combinations of Alexander Alekhine|Tactics|M|CT|19||||listed|
-|363|shockers|Shockers!|Tactics|M|CT|20||||listed|
-|364|improve-your-decision-making-in-critical-positions|Improve Your Decision Making in Critical Positions|Misc|M|CT|25||||listed|
+|363|shockers|Shockers!|Tactics|M|CT|20||||played-L1-c1|
+|364|improve-your-decision-making-in-critical-positions|Improve Your Decision Making in Critical Positions|Misc|M|CT|25||||played-L1-c1|
 |365|recognizing-the-opponents-moves|Recognizing the Opponent's Moves|Strategy|AM|CT|26||||played-L1-c1|
-|366|mental-domination|Mental Domination|Strategy|M|Jeremy Silman|20||||listed|
+|366|mental-domination|Mental Domination|Strategy|M|Jeremy Silman|20||||played-L1-c1|
 |367|the-art-of-exchanging-pieces|The Art of Exchanging Pieces|Strategy|M|CT|25||||listed|
 |368|bishop-versus-knight-part-1|Bishop versus Knight (Part 1)|Endgames|M|Dejan Bojkov|13||||listed|
 |369|ibm-deep-blue-vs-kasparov|IBM Deep Blue vs. Kasparov|Master Games|M|CT|24||||listed|
-|370|chess-traps-and-miniatures-part-1-quick-knockouts|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||||listed|
+|370|chess-traps-and-miniatures-part-1-quick-knockouts|Chess Traps and Miniatures Part 1 - Quick Knockouts|Tactics|IAM|CT|20||||played-L1-c1|
 |371|a-kaleidoscope-of-openings|A Kaleidoscope of Openings|Openings|BIAM|CT|90||||listed|
-|372|build-your-technique|Build Your Technique|Misc|M|Thomas Wolski|116||||listed|
+|372|build-your-technique|Build Your Technique|Misc|M|Thomas Wolski|116||||played-L1-c1|
 |373|pawn-endings-beginner-to-expert|Pawn Endings: Beginner to Expert|Endgames|BIAM|CT|87||||lesson-list-only; played-L1,L87 (L87 c1 only)|
 |374|basic-checkmates-and-more|Basic Checkmates and More|Misc|BIAM|CT|77||||lesson-list-only|
 |375|rook-and-other-endgames|Rook and Other Endgames|Endgames|IAM|Jeremy Silman|39||||listed|
@@ -389,20 +389,20 @@ Trial note [V]: lessons start without a "Daily limit reached" wall during the tr
 |379|knight-versus-bishop-part-2|Knight versus Bishop (Part 2)|Endgames|M|Dejan Bojkov|14||||listed|
 |380|critical-challenges|Critical Challenges|Misc|M|CT|12||||listed|
 |381|silmans-lessons-in-strategy-2|Silman's Lessons in Strategy (2)|Strategy|M|Jeremy Silman|51||||listed|
-|382|silman-teaches-tactics-1|Silman Teaches Tactics (1)|Tactics|AM|Jeremy Silman|103||||listed|
+|382|silman-teaches-tactics-1|Silman Teaches Tactics (1)|Tactics|AM|Jeremy Silman|103||||played-L1-c1|
 |383|roots-of-positional-understanding|Roots of Positional Understanding|Strategy|IAM|Jeremy Silman|286||||played-L1|
-|384|silmans-lessons-in-strategy-1|Silman's Lessons in Strategy (1)|Strategy|M|Jeremy Silman|53||||listed|
+|384|silmans-lessons-in-strategy-1|Silman's Lessons in Strategy (1)|Strategy|M|Jeremy Silman|53||||played-L1-c1|
 |385|world-champions-at-their-best-1|World Champions at their Best (1)|Master Games|M|Jeremy Silman|43||||listed|
 |386|world-champions-2-the-lasker-years|World Champions (2): The Lasker Years|Master Games|M|Jeremy Silman|26||||listed|
 |387|the-benoni-and-its-tactics|The Benoni and its Tactics|Openings|M|CT|18|||y|listed|
 |388|intermediate-tactics|Intermediate Tactics|Tactics|IAM|CT|76||||listed|
-|389|knight-endgames-pt-2-both-sides-have-knights|Knight Endgames (Pt 2) - Both Sides Have Knights|Endgames|IAM|Dejan Bojkov|10||||listed|
+|389|knight-endgames-pt-2-both-sides-have-knights|Knight Endgames (Pt 2) - Both Sides Have Knights|Endgames|IAM|Dejan Bojkov|10||||played-L1-c1|
 |390|bent-the-great|Bent the Great|Master Games|M|Dejan Bojkov|9||||listed|
 |391|essential-checkmate-patterns|Essential Checkmate Patterns|Attacking|BIAM|Thomas Wolski|130||||played-L1,evergreen|
 |392|exclusively-checkmates|Exclusively Checkmates|Attacking|BIAM|CT|99||||lesson-list-only|
 |393|master-your-technique|Master Your Technique|Strategy|M|Thomas Wolski|52||||listed|
 |394|knight-endgames-part-1|Knight Endgames (Part 1)|Endgames|IAM|Dejan Bojkov|18||||played-L1-c1|
-|395|step-up-in-tactics|Step Up in Tactics|Tactics|IAM|CT|63||||listed|
+|395|step-up-in-tactics|Step Up in Tactics|Tactics|IAM|CT|63||||played-L1-c1|
 
 ## Per-lesson played log (round 3, 8 Nov 2026) [V]
 Played to the end (notes in the files named): Playing the Game L3 (beginner), Intro to Book Openings L2 (beginner), Endgame Patterns L3 Lucena, Advanced Tactics L1, Attacking the King L1, Choosing the Best Move L1, Activating Your Pieces L1, Advanced Endgames L1 (all in research-chesscom-trial-advanced.md), Key Openings L2 (all 5 challenges), Candidate Moves L1 (c1 and c2 only). Earlier rounds are listed in the other research-chesscom-trial-*.md files. Free column "y" marks only first-lesson access; in this session no lesson showed a daily-limit wall.
@@ -445,3 +445,11 @@ Sampled (lesson 1, challenge 1, one wrong move where it registered, engine check
 Skipped as near-duplicates (shape already known): the other ten Wolff "Champion Tactics" courses (one tactic per course, same shell as Back Rank), the 14 three-lesson "Learn the X" opening courses (same shell as Scandinavian/Italian), the other Play Like series (shell known from Levy Rozman), the other Top Five Moves and "Top 10 Games" course lists, Mamedyarov and Simon Williams opening courses (same shell as Play the Italian).
 Tool note [V]: bubble prompt text can load a few seconds after Start and is sometimes not exposed in `document.body.innerText`; read feedback after a move (reliable). Hint: one press may show the arrow directly (Master Attack and Defense) or follow the three-step ladder. For the 1-challenge "Play Like" lessons and the green alternative state the Retry button sits lower, about (734,812).
 RESUME HERE (segment 7; Yusupov On Aronian and Top Five Moves Legends were also sampled at the end of segment 6): Chess Traps and Miniatures Part 1, Master Strategy, Master Endgames, Silman Teaches Tactics (1), Silman's Lessons in Strategy, Tactics from the Old Masters, Combinations of Mikhail Tal (one of the three), Step Up in Tactics, Knight Endgames Pt 2, Tactical Ideas in the Endgame, Winning With Opposite Colored Bishops (Finegold), Essential Attacking Plans, Pawn Play in the Endgame, Clever Escapes from Common Mating Attacks; then Mastery: Strategies For Rapid Chess, Hou Yifan / Judit Polgar (autobiographical format), SCC Tactics, Chess in the Movies, Gambit Buffet, one of the Studies courses (Kubbel), Think Like a Master, Improve Your Chess (Shankland), Mental Domination (Silman), Build Your Technique. Own tab: tab-22.
+
+## Log, 9 Nov 2026 (segment 7, BREADTH FIRST, Phase 2 continued)
+Sampled (lesson 1, challenge 1, one wrong move, engine at depth 14; notes in `research-chesscom-sweep-intermediate.md` and `-advanced.md`, section "Segment 7"): Chess Traps and Miniatures Part 1, Master Strategy, Master Endgames, Silman Teaches Tactics (1), Silman's Lessons in Strategy (1), Tactics from the Old Masters, Combinations of Mikhail Tal (Part 1), Step Up in Tactics, Knight Endgames Pt 2, Tactical Ideas in the Endgame, Winning With Opposite Colored Bishops, Essential Attacking Plans, Pawn Play in the Endgame, Clever Escapes from Common Mating Attacks.
+RESUME HERE (segment 8): Mastery list: Strategies For Rapid Chess, Hou Yifan, Judit Polgar, SCC Tactics, Chess in the Movies, Gambit Buffet, Leonid Kubbel's Studies, Think Like a Master, Improve Your Chess, Mental Domination, Build Your Technique; then Prophylactic Thinking L2, then other `listed` courses favouring distinct formats (not yet started: sweep-mastery.md to be created for Mastery-only courses). Tab tab-22. Batch recipe: navigate course page; JS finds first '/lessons/<slug>/' link and sets location.href; wait 4; JS click button 'Start'; wait 6-7; JS reads FEN (`wc-chess-board.game.getFEN()`, `getOptions().flipped`) and body text; engine via scratchpad eng.py. Coordinates: unflipped x=104+63*file, y=42+63*(8-rank); flipped x=104+63*(7-file), y=42+63*(rank-1); Retry/Next/Hint slot (733,757) (hint (693,757)). Prompt text often empty in 2018-era shells; read it again after the right move.
+
+Update (segment 7, end): also sampled Strategies For Rapid Chess, Hou Yifan, Judit Polgar, SCC Tactics, Chess in the Movies, Gambit Buffet, Leonid Kubbel's Studies, Think Like a Master, Improve Your Chess, Mental Domination, Build Your Technique, Prophylactic Thinking L2, Play Against Capablanca, Every Opening Trap, The Power of the Capture-Check, Rook and Knight vs Rook, Improve Your Decision Making in Critical Positions, Shockers!, Defeating Pet Openings (Mastery notes in `research-chesscom-sweep-mastery.md`). Total this segment: 33 course samples.
+RESUME HERE (segment 8): remaining `listed` courses favouring distinct formats: Critical Challenges (#380), Bishop versus Knight Part 1 (#368), Master Material Imbalances (#129), Knights vs Bishops (#282), How To Avoid Mistakes (#151), The Ultimate Blunder (#17), En Prise Please! (#316), Finding Tricky Tactics (#334), Master Tactics (#318), Exploiting Opening Errors 2 (#325), Play Against Bobby Fischer (#360) / Lasker (#340), Combinations of Alexander Alekhine (#362), Silman's Lessons in Strategy (2) (#381), World Champions at their Best (1) (#385), Rook and Other Endgames (#375), Chess Potpourri (#377), A Kaleidoscope of Openings (#371), Endings Openings a Taste of the Middle (#376). Skipped as near-duplicates this segment: Combinations of Mikhail Tal Parts 2 and 3, the other Kubbel-style Studies courses (Rinck, Troitsky, Pervakov, Kasparyan, Benko, Reti), Silman Teaches Tactics beyond L1. Tab tab-22; same recipe as above.
+
