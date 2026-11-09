@@ -1,0 +1,252 @@
+/* Atlas: the default look (decision D67, 8 Nov 2026). Imported after palette.css and scholarmate.css; it sets <html data-style="atlas">.
+   Six colours chosen by Andrew and checked here: living moss #456B46 (primary action, growth, correct), banner crimson #B3343B (challenge,
+   Up next, emphasis), sunlit gold #C9A04B (mastery and ornament: a fill, a hairline on the dark band or a star, never text or a line on ivory,
+   where it is 2.1:1), wolf umber #705344 (secondary text), academy navy #233B59 (text and navigation), warm ivory #F4F0E5 (the page).
+   Structure (type, big colour fields, strand bands, the map, the header) is shared with the Scholarmate look: scholarmate.css, mobile.css and
+   index.css name both looks in their selectors. Only the tokens below and the board at the end are Atlas's own. Atlas draws no abstract
+   shapes (the .art rules stay Scholarmate-only; Andrew, 8 Nov 2026).
+   Rules kept from the analysis: moss and crimson have almost the same lightness (0.12), so right and wrong are never told apart by colour alone
+   (a tick or a cross and a word always come with them); gold is ornament; a button is a solid moss fill while a correct answer is a pale moss
+   panel with a tick. Contrast (WCAG 2.2): text 4.5:1, graphics 3:1, in BOTH modes, checked by tools/check_contrast.py. The two dark blocks must stay
+   identical. The header band is deep moss with a gold hairline (--bar); navy with gold read as a faction banner in the cobalt trial, so it is the
+   fallback, not the default. */
+
+:root {
+  --atlas-moss-50: #edf1e6; --atlas-moss-100: #dfe8d6; --atlas-moss-300: #94c194; --atlas-moss-400: #aed1ad; --atlas-moss-500: #456b46; --atlas-moss-700: #365637; --atlas-moss-900: #223b26;
+  --atlas-crimson-100: #f6e0dc; --atlas-crimson-300: #f0959a; --atlas-crimson-500: #b3343b; --atlas-crimson-600: #c24a50; --atlas-crimson-700: #8f262d;
+  --atlas-gold-100: #f4eacb; --atlas-gold-300: #e3c77e; --atlas-gold-500: #c9a04b; --atlas-gold-700: #7a5a12;
+  --atlas-umber-300: #d6bfae; --atlas-umber-500: #705344;
+  --atlas-navy-100: #dfe6ee; --atlas-navy-300: #8fb0d6; --atlas-navy-500: #3d6a9c; --atlas-navy-700: #2d4a6e; --atlas-navy-900: #233b59; --atlas-navy-950: #131f30;
+  --atlas-ivory-50: #fbf9f3; --atlas-ivory-100: #f4f0e5; --atlas-ivory-200: #e8e2d0; --atlas-ivory-300: #d3cab0;
+  --atlas-night-900: #14202f; --atlas-night-800: #1c2b40; --atlas-night-700: #283b53; --atlas-night-200: #36495f;
+}
+
+:root[data-style='atlas'] {
+  color-scheme: light;
+  --canvas: var(--atlas-ivory-100);
+  --surface: var(--atlas-ivory-50);
+  --chip: var(--atlas-ivory-200);
+  --text: var(--atlas-navy-900);
+  --text-secondary: var(--atlas-umber-500);
+  --divider: var(--atlas-ivory-300);
+  --control-boundary: #86705f;
+
+  --primary: var(--atlas-moss-500);
+  --on-primary: #ffffff;
+  --primary-hover: var(--atlas-moss-700);
+  --link: var(--atlas-moss-700);
+  --focus: var(--atlas-navy-900);
+
+  --accent: var(--atlas-crimson-500);
+  --on-accent: #ffffff;
+  --accent-hover: var(--atlas-crimson-700);
+  --accent-ink: var(--atlas-crimson-700);
+  --accent-line: var(--atlas-crimson-500);
+
+  --success: var(--atlas-moss-700);
+  --on-success: #ffffff;
+  --gold: var(--atlas-gold-500);
+  --on-gold: var(--atlas-navy-900);
+  --warning: var(--atlas-gold-700);
+  --error: var(--atlas-crimson-700);
+
+  --ok-bg: var(--atlas-moss-100);
+  --no-bg: var(--atlas-crimson-100);
+
+  --bar: var(--atlas-moss-900); --on-bar: #ffffff; --on-bar-soft: var(--atlas-moss-100); --bar-gold: var(--atlas-gold-500);
+  --field-cobalt: #dfe6ee; --field-jade: #e1ead8; --field-gold: #f4eacb; --field-persimmon: #f4e1da;
+  --on-field: var(--atlas-navy-900); --on-field-soft: var(--atlas-umber-500); --field-link: var(--atlas-moss-700);
+
+  --board-last: rgba(201, 160, 75, 0.72);
+  --board-selected: rgba(35, 59, 89, 0.34);
+  --board-dest: rgba(35, 59, 89, 0.6);
+  --board-hint: rgba(201, 160, 75, 0.5);
+  --board-pick: rgba(35, 59, 89, 0.42);
+  --board-coord: var(--atlas-navy-900);
+  --paper-shade: rgba(35, 59, 89, 0.045);
+  --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+  --s1: #c9a04b; --on-s1: var(--atlas-navy-900); --s1-line: #8a6d24;
+  --s2: #456b46; --on-s2: #ffffff; --s2-line: #456b46;
+  --s3: #b3343b; --on-s3: #ffffff; --s3-line: #b3343b;
+  --s4: #3d6a9c; --on-s4: #ffffff; --s4-line: #3d6a9c;
+  --s5: #2f7773; --on-s5: #ffffff; --s5-line: #2f7773;
+  --s6: #7b4b7a; --on-s6: #ffffff; --s6-line: #7b4b7a;
+  --s7: #b2b146; --on-s7: var(--atlas-navy-900); --s7-line: #7b7a26;
+  --s8: #b05a3c; --on-s8: #ffffff; --s8-line: #b05a3c;
+  --s9: #d99a4a; --on-s9: var(--atlas-navy-900); --s9-line: #9a6726;
+  --s10: #98bd94; --on-s10: var(--atlas-navy-900); --s10-line: #5d8460;
+  --s11: #90b2d8; --on-s11: var(--atlas-navy-900); --s11-line: #5a80ac;
+  --r1: #456b46; --r1-line: #456b46; --r1-text: var(--atlas-moss-700);
+  --r2: #3d6a9c; --r2-line: #3d6a9c; --r2-text: var(--atlas-navy-700);
+  --r3: #c9a04b; --r3-line: #8a6d24; --r3-text: var(--atlas-gold-700);
+  --r4: #b3343b; --r4-line: var(--atlas-crimson-500); --r4-text: var(--atlas-crimson-700);
+  --r5: #8a7a6a; --r5-line: #8a7a6a; --r5-text: var(--atlas-umber-500);
+  --lv1: #dccfae; --on-lv1: var(--atlas-navy-900); --lv2: var(--atlas-moss-400); --on-lv2: var(--atlas-navy-900);
+  --lv3: var(--atlas-moss-500); --on-lv3: #ffffff; --lv4: var(--atlas-gold-500); --on-lv4: var(--atlas-navy-900);
+  --node-outline: var(--atlas-umber-500);
+  --board-sq-light: #eee9d6; --board-sq-dark: #7c9d74; --board-frame: var(--atlas-navy-900);
+  --coord-on-light: var(--atlas-navy-900); --coord-on-dark: var(--atlas-navy-950);
+  --board-shape-edge: var(--atlas-navy-950);
+  --board-dot: var(--atlas-navy-700); --board-halo: var(--atlas-ivory-50);
+  --tint-a: 15%; --tint-b: 24%; --tint-hi: 24%;
+  --board-check: rgba(179, 52, 59, 0.9);
+  --brush-green: #5f9a63; --brush-red: var(--atlas-crimson-500); --brush-blue: var(--atlas-navy-500); --brush-yellow: var(--atlas-gold-500);
+  --ctl-white: 35, 59, 89; --ctl-black: 179, 52, 59;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-style='atlas']:not([data-theme='light']) {
+    color-scheme: dark;
+    --canvas: var(--atlas-night-900);
+    --surface: var(--atlas-night-800);
+    --chip: var(--atlas-night-700);
+    --text: var(--atlas-ivory-100);
+    --text-secondary: var(--atlas-umber-300);
+    --divider: var(--atlas-night-200);
+    --control-boundary: #8794a6;
+
+    --primary: var(--atlas-moss-300);
+    --on-primary: var(--atlas-navy-950);
+    --primary-hover: var(--atlas-moss-400);
+    --link: var(--atlas-moss-400);
+    --focus: var(--atlas-gold-300);
+
+    --accent: var(--atlas-crimson-500);
+    --on-accent: #ffffff;
+    --accent-hover: var(--atlas-crimson-600);
+    --accent-ink: var(--atlas-crimson-300);
+    --accent-line: var(--atlas-crimson-300);
+
+    --success: var(--atlas-moss-300);
+    --on-success: var(--atlas-navy-950);
+    --gold: var(--atlas-gold-500);
+    --on-gold: var(--atlas-navy-900);
+    --warning: var(--atlas-gold-300);
+    --error: var(--atlas-crimson-300);
+
+    --ok-bg: #223b26;
+    --no-bg: #4a2a2e;
+
+    --bar: var(--atlas-moss-900); --on-bar: #ffffff; --on-bar-soft: var(--atlas-moss-100); --bar-gold: var(--atlas-gold-500);
+    --field-cobalt: #1f3350; --field-jade: #223a2a; --field-gold: #3f3822; --field-persimmon: #43282b;
+    --on-field: var(--atlas-ivory-100); --on-field-soft: var(--atlas-umber-300); --field-link: var(--atlas-moss-400);
+
+    --board-coord: var(--atlas-navy-950);
+    --paper-shade: rgba(244, 240, 229, 0.04);
+    --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+    --s1: #c9a04b; --on-s1: var(--atlas-navy-900); --s1-line: #c9a04b;
+    --s2: #7fb07f; --on-s2: var(--atlas-navy-950); --s2-line: #7fb07f;
+    --s3: #e0777c; --on-s3: var(--atlas-navy-950); --s3-line: #e0777c;
+    --s4: #7aa5d6; --on-s4: var(--atlas-navy-950); --s4-line: #7aa5d6;
+    --s5: #5fb3ad; --on-s5: var(--atlas-navy-950); --s5-line: #5fb3ad;
+    --s6: #c093bf; --on-s6: var(--atlas-navy-950); --s6-line: #c093bf;
+    --s7: #b9b852; --on-s7: var(--atlas-navy-950); --s7-line: #b9b852;
+    --s8: #d98a6b; --on-s8: var(--atlas-navy-950); --s8-line: #d98a6b;
+    --s9: #e0a95f; --on-s9: var(--atlas-navy-950); --s9-line: #e0a95f;
+    --s10: #a9cba5; --on-s10: var(--atlas-navy-950); --s10-line: #a9cba5;
+    --s11: #9dbde0; --on-s11: var(--atlas-navy-950); --s11-line: #9dbde0;
+    --r1: #7fb07f; --r1-line: #7fb07f; --r1-text: var(--atlas-moss-300);
+    --r2: #7aa5d6; --r2-line: #7aa5d6; --r2-text: var(--atlas-navy-300);
+    --r3: #c9a04b; --r3-line: #c9a04b; --r3-text: var(--atlas-gold-300);
+    --r4: #e0777c; --r4-line: #e0777c; --r4-text: var(--atlas-crimson-300);
+    --r5: #9a9488; --r5-line: #9a9488; --r5-text: var(--atlas-umber-300);
+    --lv1: #8c8366; --on-lv1: var(--atlas-navy-950); --lv2: var(--atlas-moss-400); --on-lv2: var(--atlas-navy-950);
+    --lv3: var(--atlas-moss-300); --on-lv3: var(--atlas-navy-950); --lv4: var(--atlas-gold-500); --on-lv4: var(--atlas-navy-950);
+    --node-outline: var(--atlas-umber-300);
+    --board-sq-light: #cfcab5; --board-sq-dark: #4e6f4f; --board-frame: var(--atlas-umber-300);
+    --coord-on-light: var(--atlas-navy-950); --coord-on-dark: var(--atlas-ivory-100);
+    --board-shape-edge: var(--atlas-navy-950);
+    --board-dot: var(--atlas-gold-300); --board-halo: var(--atlas-navy-950);
+    --tint-a: 6%; --tint-b: 10%; --tint-hi: 12%;
+    --board-last: rgba(201, 160, 75, 0.62); --board-selected: rgba(143, 176, 214, 0.5);
+    --board-check: rgba(224, 119, 124, 0.9);
+    --brush-green: #7fb07f; --brush-red: #e0777c; --brush-blue: #7aa5d6; --brush-yellow: var(--atlas-gold-500);
+    --ctl-white: 143, 176, 214; --ctl-black: 224, 119, 124;
+  }
+}
+:root[data-style='atlas'][data-theme='dark'] {
+  color-scheme: dark;
+  --canvas: var(--atlas-night-900);
+  --surface: var(--atlas-night-800);
+  --chip: var(--atlas-night-700);
+  --text: var(--atlas-ivory-100);
+  --text-secondary: var(--atlas-umber-300);
+  --divider: var(--atlas-night-200);
+  --control-boundary: #8794a6;
+
+  --primary: var(--atlas-moss-300);
+  --on-primary: var(--atlas-navy-950);
+  --primary-hover: var(--atlas-moss-400);
+  --link: var(--atlas-moss-400);
+  --focus: var(--atlas-gold-300);
+
+  --accent: var(--atlas-crimson-500);
+  --on-accent: #ffffff;
+  --accent-hover: var(--atlas-crimson-600);
+  --accent-ink: var(--atlas-crimson-300);
+  --accent-line: var(--atlas-crimson-300);
+
+  --success: var(--atlas-moss-300);
+  --on-success: var(--atlas-navy-950);
+  --gold: var(--atlas-gold-500);
+  --on-gold: var(--atlas-navy-900);
+  --warning: var(--atlas-gold-300);
+  --error: var(--atlas-crimson-300);
+
+  --ok-bg: #223b26;
+  --no-bg: #4a2a2e;
+
+  --bar: var(--atlas-moss-900); --on-bar: #ffffff; --on-bar-soft: var(--atlas-moss-100); --bar-gold: var(--atlas-gold-500);
+  --field-cobalt: #1f3350; --field-jade: #223a2a; --field-gold: #3f3822; --field-persimmon: #43282b;
+  --on-field: var(--atlas-ivory-100); --on-field-soft: var(--atlas-umber-300); --field-link: var(--atlas-moss-400);
+
+  --board-coord: var(--atlas-navy-950);
+  --paper-shade: rgba(244, 240, 229, 0.04);
+  --info: var(--primary); --on-info: var(--on-primary); --info-hover: var(--primary-hover);
+  --s1: #c9a04b; --on-s1: var(--atlas-navy-900); --s1-line: #c9a04b;
+  --s2: #7fb07f; --on-s2: var(--atlas-navy-950); --s2-line: #7fb07f;
+  --s3: #e0777c; --on-s3: var(--atlas-navy-950); --s3-line: #e0777c;
+  --s4: #7aa5d6; --on-s4: var(--atlas-navy-950); --s4-line: #7aa5d6;
+  --s5: #5fb3ad; --on-s5: var(--atlas-navy-950); --s5-line: #5fb3ad;
+  --s6: #c093bf; --on-s6: var(--atlas-navy-950); --s6-line: #c093bf;
+  --s7: #b9b852; --on-s7: var(--atlas-navy-950); --s7-line: #b9b852;
+  --s8: #d98a6b; --on-s8: var(--atlas-navy-950); --s8-line: #d98a6b;
+  --s9: #e0a95f; --on-s9: var(--atlas-navy-950); --s9-line: #e0a95f;
+  --s10: #a9cba5; --on-s10: var(--atlas-navy-950); --s10-line: #a9cba5;
+  --s11: #9dbde0; --on-s11: var(--atlas-navy-950); --s11-line: #9dbde0;
+  --r1: #7fb07f; --r1-line: #7fb07f; --r1-text: var(--atlas-moss-300);
+  --r2: #7aa5d6; --r2-line: #7aa5d6; --r2-text: var(--atlas-navy-300);
+  --r3: #c9a04b; --r3-line: #c9a04b; --r3-text: var(--atlas-gold-300);
+  --r4: #e0777c; --r4-line: #e0777c; --r4-text: var(--atlas-crimson-300);
+  --r5: #9a9488; --r5-line: #9a9488; --r5-text: var(--atlas-umber-300);
+  --lv1: #8c8366; --on-lv1: var(--atlas-navy-950); --lv2: var(--atlas-moss-400); --on-lv2: var(--atlas-navy-950);
+  --lv3: var(--atlas-moss-300); --on-lv3: var(--atlas-navy-950); --lv4: var(--atlas-gold-500); --on-lv4: var(--atlas-navy-950);
+  --node-outline: var(--atlas-umber-300);
+  --board-sq-light: #cfcab5; --board-sq-dark: #4e6f4f; --board-frame: var(--atlas-umber-300);
+  --coord-on-light: var(--atlas-navy-950); --coord-on-dark: var(--atlas-ivory-100);
+  --board-shape-edge: var(--atlas-navy-950);
+  --board-dot: var(--atlas-gold-300); --board-halo: var(--atlas-navy-950);
+  --tint-a: 6%; --tint-b: 10%; --tint-hi: 12%;
+  --board-last: rgba(201, 160, 75, 0.62); --board-selected: rgba(143, 176, 214, 0.5);
+  --board-check: rgba(224, 119, 124, 0.9);
+  --brush-green: #7fb07f; --brush-red: #e0777c; --brush-blue: #7aa5d6; --brush-yellow: var(--atlas-gold-500);
+  --ctl-white: 143, 176, 214; --ctl-black: 224, 119, 124;
+}
+
+/* Atlas board: ivory and sage squares (crisp 8x8 SVG; the colours inside equal --board-sq-light / --board-sq-dark above, a test checks it). A frame is the only edge. */
+:root[data-style='atlas'][data-board='atlas'] .board-wrap cg-board { background-color: var(--board-sq-light); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23eee9d6'/%3E%3Cg fill='%237c9d74'%3E%3Crect x='1' y='0' width='1' height='1'/%3E%3Crect x='3' y='0' width='1' height='1'/%3E%3Crect x='5' y='0' width='1' height='1'/%3E%3Crect x='7' y='0' width='1' height='1'/%3E%3Crect x='0' y='1' width='1' height='1'/%3E%3Crect x='2' y='1' width='1' height='1'/%3E%3Crect x='4' y='1' width='1' height='1'/%3E%3Crect x='6' y='1' width='1' height='1'/%3E%3Crect x='1' y='2' width='1' height='1'/%3E%3Crect x='3' y='2' width='1' height='1'/%3E%3Crect x='5' y='2' width='1' height='1'/%3E%3Crect x='7' y='2' width='1' height='1'/%3E%3Crect x='0' y='3' width='1' height='1'/%3E%3Crect x='2' y='3' width='1' height='1'/%3E%3Crect x='4' y='3' width='1' height='1'/%3E%3Crect x='6' y='3' width='1' height='1'/%3E%3Crect x='1' y='4' width='1' height='1'/%3E%3Crect x='3' y='4' width='1' height='1'/%3E%3Crect x='5' y='4' width='1' height='1'/%3E%3Crect x='7' y='4' width='1' height='1'/%3E%3Crect x='0' y='5' width='1' height='1'/%3E%3Crect x='2' y='5' width='1' height='1'/%3E%3Crect x='4' y='5' width='1' height='1'/%3E%3Crect x='6' y='5' width='1' height='1'/%3E%3Crect x='1' y='6' width='1' height='1'/%3E%3Crect x='3' y='6' width='1' height='1'/%3E%3Crect x='5' y='6' width='1' height='1'/%3E%3Crect x='7' y='6' width='1' height='1'/%3E%3Crect x='0' y='7' width='1' height='1'/%3E%3Crect x='2' y='7' width='1' height='1'/%3E%3Crect x='4' y='7' width='1' height='1'/%3E%3Crect x='6' y='7' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E"); outline: 2px solid var(--board-frame); outline-offset: 0; }
+@media (prefers-color-scheme: dark) {
+  :root[data-style='atlas'][data-board='atlas']:not([data-theme='light']) .board-wrap cg-board { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23cfcab5'/%3E%3Cg fill='%234e6f4f'%3E%3Crect x='1' y='0' width='1' height='1'/%3E%3Crect x='3' y='0' width='1' height='1'/%3E%3Crect x='5' y='0' width='1' height='1'/%3E%3Crect x='7' y='0' width='1' height='1'/%3E%3Crect x='0' y='1' width='1' height='1'/%3E%3Crect x='2' y='1' width='1' height='1'/%3E%3Crect x='4' y='1' width='1' height='1'/%3E%3Crect x='6' y='1' width='1' height='1'/%3E%3Crect x='1' y='2' width='1' height='1'/%3E%3Crect x='3' y='2' width='1' height='1'/%3E%3Crect x='5' y='2' width='1' height='1'/%3E%3Crect x='7' y='2' width='1' height='1'/%3E%3Crect x='0' y='3' width='1' height='1'/%3E%3Crect x='2' y='3' width='1' height='1'/%3E%3Crect x='4' y='3' width='1' height='1'/%3E%3Crect x='6' y='3' width='1' height='1'/%3E%3Crect x='1' y='4' width='1' height='1'/%3E%3Crect x='3' y='4' width='1' height='1'/%3E%3Crect x='5' y='4' width='1' height='1'/%3E%3Crect x='7' y='4' width='1' height='1'/%3E%3Crect x='0' y='5' width='1' height='1'/%3E%3Crect x='2' y='5' width='1' height='1'/%3E%3Crect x='4' y='5' width='1' height='1'/%3E%3Crect x='6' y='5' width='1' height='1'/%3E%3Crect x='1' y='6' width='1' height='1'/%3E%3Crect x='3' y='6' width='1' height='1'/%3E%3Crect x='5' y='6' width='1' height='1'/%3E%3Crect x='7' y='6' width='1' height='1'/%3E%3Crect x='0' y='7' width='1' height='1'/%3E%3Crect x='2' y='7' width='1' height='1'/%3E%3Crect x='4' y='7' width='1' height='1'/%3E%3Crect x='6' y='7' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E"); }
+}
+:root[data-style='atlas'][data-board='atlas'][data-theme='dark'] .board-wrap cg-board { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Crect width='8' height='8' fill='%23cfcab5'/%3E%3Cg fill='%234e6f4f'%3E%3Crect x='1' y='0' width='1' height='1'/%3E%3Crect x='3' y='0' width='1' height='1'/%3E%3Crect x='5' y='0' width='1' height='1'/%3E%3Crect x='7' y='0' width='1' height='1'/%3E%3Crect x='0' y='1' width='1' height='1'/%3E%3Crect x='2' y='1' width='1' height='1'/%3E%3Crect x='4' y='1' width='1' height='1'/%3E%3Crect x='6' y='1' width='1' height='1'/%3E%3Crect x='1' y='2' width='1' height='1'/%3E%3Crect x='3' y='2' width='1' height='1'/%3E%3Crect x='5' y='2' width='1' height='1'/%3E%3Crect x='7' y='2' width='1' height='1'/%3E%3Crect x='0' y='3' width='1' height='1'/%3E%3Crect x='2' y='3' width='1' height='1'/%3E%3Crect x='4' y='3' width='1' height='1'/%3E%3Crect x='6' y='3' width='1' height='1'/%3E%3Crect x='1' y='4' width='1' height='1'/%3E%3Crect x='3' y='4' width='1' height='1'/%3E%3Crect x='5' y='4' width='1' height='1'/%3E%3Crect x='7' y='4' width='1' height='1'/%3E%3Crect x='0' y='5' width='1' height='1'/%3E%3Crect x='2' y='5' width='1' height='1'/%3E%3Crect x='4' y='5' width='1' height='1'/%3E%3Crect x='6' y='5' width='1' height='1'/%3E%3Crect x='1' y='6' width='1' height='1'/%3E%3Crect x='3' y='6' width='1' height='1'/%3E%3Crect x='5' y='6' width='1' height='1'/%3E%3Crect x='7' y='6' width='1' height='1'/%3E%3Crect x='0' y='7' width='1' height='1'/%3E%3Crect x='2' y='7' width='1' height='1'/%3E%3Crect x='4' y='7' width='1' height='1'/%3E%3Crect x='6' y='7' width='1' height='1'/%3E%3C/g%3E%3C/svg%3E"); }
+/* coordinates take the colour that reads on their own square. The rank numbers sit on the left edge: with White below that is the a-file (a1 is dark, so rank 1 is odd = dark square), with Black below it is the h-file (h1 is light). Files sit along the bottom edge. */
+:root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-white .ranks :nth-child(even), :root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-white .files :nth-child(even),
+:root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-black .ranks :nth-child(odd), :root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-black .files :nth-child(odd),
+:root[data-style='atlas'][data-board='atlas'] .board-wrap coords.squares:nth-of-type(odd) :nth-child(even), :root[data-style='atlas'][data-board='atlas'] .board-wrap coords.squares:nth-of-type(even) :nth-child(odd) { color: var(--coord-on-light); }
+:root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-white .ranks :nth-child(odd), :root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-white .files :nth-child(odd),
+:root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-black .ranks :nth-child(even), :root[data-style='atlas'][data-board='atlas'] .board-wrap .orientation-black .files :nth-child(even),
+:root[data-style='atlas'][data-board='atlas'] .board-wrap coords.squares:nth-of-type(odd) :nth-child(odd), :root[data-style='atlas'][data-board='atlas'] .board-wrap coords.squares:nth-of-type(even) :nth-child(even) { color: var(--coord-on-dark); }
+
+
+/* No abstract shapes in Atlas (Andrew, 8 Nov 2026): the Scholarmate look draws them, Atlas never does. Real illustration comes with the art phase (docs/art-direction.md). */
+:root[data-style='atlas'] .art, :root[data-style='atlas'] .geoart { display: none; }

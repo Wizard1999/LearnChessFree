@@ -5,7 +5,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
 const SRC = __dirname
-const ALLOWED = [/^styles\/palette\.css$/, /^theme\.css$/, /^assets\//, /^lib\/boardImage\.ts$/, /\.test\.tsx?$/] // palettes of the looks, board image colours, images, tests
+const ALLOWED = [/^styles\/(palette|atlas)\.css$/, /^theme\.css$/, /^assets\//, /^lib\/boardImage\.ts$/, /\.test\.tsx?$/] // palettes of the looks, board image colours, images, tests
 const LEGACY_CEILING: Record<string, number> = { 'index.css': 51, 'lib/appearance.ts': 2, 'pages/Achievements.tsx': 1, 'pages/Games.tsx': 1 } // old look + browser-bar colour; lower, never raise
 
 function walk(dir: string): string[] {

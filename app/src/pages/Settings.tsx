@@ -78,11 +78,11 @@ export function SettingsContent() {
     <>
       <section className="card">
         <h2>Appearance</h2>
-        <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches. Scholarmate is the new look, with big colour fields for each subject; Friendly and Collegiate are the looks you know, and Friendly stays the default.</p>
+        <p className="small muted">Saved on this device only. These change how the app looks, never what it teaches. Atlas is the default look (moss, crimson, gold, navy and ivory), with big colour fields for each subject. Every look we have made stays here to choose: Scholarmate (jade and cobalt), Friendly and Collegiate.</p>
         {([
-          ['style', 'Look', [['friendly', 'Friendly'], ['collegiate', 'Collegiate'], ['scholarmate', 'Scholarmate (new)']]],
+          ['style', 'Look', [['atlas', 'Atlas'], ['scholarmate', 'Scholarmate (jade and cobalt)'], ['friendly', 'Friendly'], ['collegiate', 'Collegiate']]],
           ['theme', 'Light or dark', [['system', 'System (same as my device)'], ['light', 'Light'], ['dark', 'Dark']]],
-          ['board', 'Board colors', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast'], ...(look.style === 'scholarmate' ? [['scholarmate', 'Scholarmate (ivory and jade)']] : [])]],
+          ['board', 'Board colors', [['warm', 'Warm'], ['sage', 'Sage'], ['contrast', 'High contrast'], ...(look.style === 'atlas' ? [['atlas', 'Atlas (ivory and sage)']] : []), ...(look.style === 'scholarmate' ? [['scholarmate', 'Scholarmate (ivory and jade)']] : [])]],
           ['text', 'Text size', [['standard', 'Standard'], ['large', 'Large'], ['larger', 'Larger']]],
           ['motion', 'Motion', [['system', 'Same as my device'], ['reduce', 'Reduce motion']]],
         ] as [keyof Appearance, string, [string, string][]][]).map(([key, label, opts]) => (

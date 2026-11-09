@@ -55,9 +55,9 @@ export interface Props {
 }
 export interface StarMark { sq: string; n?: number; dim?: boolean; gone?: boolean }
 
-/** Arrow colours of the Scholarmate look, read from its tokens (jade, persimmon, cobalt, gold) so they follow light and dark; undefined in the other looks, which keep Chessground's own. */
+/** Arrow colours of the Atlas and Scholarmate looks, read from their tokens (--brush-*) so they follow light and dark; undefined in the other looks, which keep Chessground's own. */
 function lookBrushes(): Partial<DrawBrushes> | undefined {
-  if (typeof document === 'undefined' || document.documentElement.getAttribute('data-style') !== 'scholarmate') return undefined
+  if (typeof document === 'undefined' || !['atlas', 'scholarmate'].includes(document.documentElement.getAttribute('data-style') ?? '')) return undefined
   const cs = getComputedStyle(document.documentElement), get = (n: string) => cs.getPropertyValue(n).trim()
   const c = { green: get('--brush-green'), red: get('--brush-red'), blue: get('--brush-blue'), yellow: get('--brush-yellow') }
   if (!c.green || !c.red || !c.blue || !c.yellow) return undefined

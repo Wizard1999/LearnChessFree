@@ -2,8 +2,8 @@
 
     ./tools/.venv/Scripts/python.exe -I tools/check_contrast.py
 
-Parses app/src/styles/palette.css (the single source of the six brand colours and the semantic tokens of the opt-in Scholarmate look),
-resolves var() chains for the light mode (:root[data-style='scholarmate']) and the dark mode (the prefers-color-scheme block and the
+Parses app/src/styles/palette.css (the Scholarmate look) and app/src/styles/atlas.css (Atlas, the default look); each file is its own look and
+is checked on its own. It resolves var() chains for the light mode (:root[data-style='<look>']) and the dark mode (the prefers-color-scheme block and the
 explicit data-theme='dark' block, which must be identical),
 computes the contrast ratio of every meaningful pair, prints a table and exits 1 when
   - a text pair is under 4.5:1,
@@ -16,7 +16,8 @@ import re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CSS = ROOT / "app" / "src" / "styles" / "palette.css"
+STYLES = ROOT / "app" / "src" / "styles"
+LOOKS = (("scholarmate", STYLES / "palette.css"), ("atlas", STYLES / "atlas.css"))
 
 TEXT_MIN, GRAPHIC_MIN = 4.5, 3.0
 
@@ -86,10 +87,10 @@ def ratio(a, b):
     return (x + 0.05) / (y + 0.05)
 
 
-def main():
-    bl = blocks(CSS.read_text(encoding="utf-8"))
+def check(look, css_path):
+    bl = blocks(css_path.read_text(encoding="utf-8"))
     raw, light, dark_media, dark_attr = {}, {}, {}, {}
-    SC = ":root[data-style='scholarmate']"
+    SC = f":root[data-style='{look}']"
     for sel, d in bl:
         if sel == ":root": raw.update(d)
         elif sel == SC: light.update(d)
@@ -110,19 +111,27 @@ def main():
                     f, b = resolve("--" + fg, toks), resolve("--" + bg, toks)
                     r = ratio(f, b)
                 except (KeyError, ValueError) as e:
-                    problems.append(f"{mode}: cannot resolve {e} for {fg} on {bg}"); continue
+                    problems.append(f"{look} {mode}: cannot resolve {e} for {fg} on {bg}"); continue
                 ok = r >= need
                 rows.append((mode, kind, fg, bg, f, b, r, need, ok, what))
-                if not ok: problems.append(f"{mode} {kind}: {fg} {f} on {bg} {b} is {r:.2f}:1, needs {need}:1 ({what})")
+                if not ok: problems.append(f"{look} {mode} {kind}: {fg} {f} on {bg} {b} is {r:.2f}:1, needs {need}:1 ({what})")
+    print(f"== {look} ({css_path.name})")
     print(f"{'mode':5} {'kind':7} {'foreground':17} {'background':14} {'fg':8} {'bg':8} {'ratio':>6}  need  result")
     for mode, kind, fg, bg, f, b, r, need, ok, what in rows:
         print(f"{mode:5} {kind:7} {fg:17} {bg:14} {f:8} {b:8} {r:6.2f}  {need:>4}  {'ok' if ok else 'FAIL'}  {what}")
     print()
+    return problems, len(rows)
+
+
+def main():
+    problems, total = [], 0
+    for look, path in LOOKS:
+        pr, n = check(look, path); problems += pr; total += n
     if problems:
         print(f"CONTRAST FAILED ({len(problems)} problems)")
         for p in problems: print("  - " + p)
         return 1
-    print(f"CONTRAST OK: {len(rows)} pairs across light and dark; text at least {TEXT_MIN}:1, graphics at least {GRAPHIC_MIN}:1")
+    print(f"CONTRAST OK: {total} pairs across {len(LOOKS)} looks in light and dark; text at least {TEXT_MIN}:1, graphics at least {GRAPHIC_MIN}:1")
     return 0
 
 
