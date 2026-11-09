@@ -79,3 +79,6 @@ Where we are equal or better:
 - Real screen-reader and touch-device testing of long press (browser emulation only) [H].
 - Remaining plain buttons (see inventory) still use the old default; convert page by page.
 - The header `More` summary and the phone Settings button keep the bar's own colours (`on-bar` tokens) and are not yet drawn as controls-system buttons.
+
+## Exercise step layout check (manual, after any change to bigboard.css, controls.css, ChessBoard or the item layout)
+Open an early lesson exercise (for example `#/lesson/L-FND-ATTACK-1`, a select-squares step) and Practice, at 1440x900, 1100x700, 800x900 and 375x812, light and dark; scroll until the bottom of the board is in view. Check: the file letters are fully visible; the control-map button and the action rows (Hint, Reset, Show me the answer) never sit on the letters or on each other; nothing overlaps the rank labels; the next element below the board starts below the control-map button. `lint.layout.test.ts` guards the CSS and the room reserved under the board.

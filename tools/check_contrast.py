@@ -40,6 +40,9 @@ TEXT = [
     ("on-accent", "accent", "ink on the Up next field"),
     *[(f"on-s{n}", f"s{n}", f"label on the strand {n} colour") for n in range(1, 12)],
     ("warning", "canvas", "gold-dark text on the page"), ("warning", "surface", "gold-dark text on a card"),
+    # buttons and chips that sit ON a coloured field card inherit --text = on-field there, over their own surface fill (the "Back to Curriculum" bug class)
+    ("on-field", "surface", "plain button or chip label inside a field card (fill: surface)"), ("on-field", "chip", "label on a chip inside a field card"),
+    ("on-primary", "primary", "primary button label wherever it sits (fill: primary)"),
     ("error", "canvas", "error text on the page"), ("error", "surface", "error text on a card"), ("error", "no-bg", "error text on a wrong answer"),
 ]
 GRAPHIC = [
@@ -51,8 +54,31 @@ GRAPHIC = [
     ("text-secondary", "surface", "grey line or icon on a card"), ("error", "surface", "danger button outline and label on a card"), ("text", "surface", "icon-only button symbol on a card"), ("text", "chip", "icon on a pressed toggle"),
     *[("control-boundary", f"field-{h}", f"control border on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon")],
     ("gold", "bar", "gold underline or fill on the band"),
+    ("on-bar", "bar", "icon on the header band (sound, settings)"), ("on-bar-soft", "bar", "outline of a header icon button on the band"),
+    *[("primary", f"field-{h}", f"primary button fill against the {h} field it sits on") for h in ("cobalt", "jade", "gold", "persimmon")],
+    ("primary", "chip", "primary fill against a chip"),
     *[(f"s{n}-line", bg, f"strand {n} ring or line on the {bg}") for n in range(1, 12) for bg in ("canvas", "surface", "chip")],
 ]
+
+
+# Disabled controls are drawn at DISABLED_OPACITY (index.css, controls.css): the label and the fill both blend into whatever is behind them.
+# (label token, fill token, behind token, what). The blended label must still read against the blended fill at 3:1 (legible, though plainly not active).
+DISABLED = [
+    ("text", "surface", "canvas", "disabled plain button on the page"), ("text", "surface", "surface", "disabled plain button on a card"),
+    ("on-primary", "primary", "canvas", "disabled primary button on the page"), ("on-primary", "primary", "surface", "disabled primary button on a card"),
+    ("error", "surface", "surface", "disabled danger button on a card"),
+    *[("on-field", "surface", f"field-{h}", f"disabled plain button on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon")],
+    *[("on-primary", "primary", f"field-{h}", f"disabled primary button on the {h} field") for h in ("cobalt", "jade", "gold", "persimmon")],
+]
+DISABLED_MIN = 3.0
+DISABLED_OPACITY = 0.7  # must equal the opacity of `button:disabled` and `.btn:disabled` in index.css and controls.css (a test keeps them equal)
+
+
+def mix(a, b, t=0.5):
+    """The colour t of the way from b to a (opacity t of a over b), as hex."""
+    x, y = a.lstrip("#"), b.lstrip("#")
+    x, y = (("".join(c * 2 for c in v) if len(v) == 3 else v) for v in (x, y))
+    return "#" + "".join(f"{round(int(x[i:i+2], 16) * t + int(y[i:i+2], 16) * (1 - t)):02x}" for i in (0, 2, 4))
 
 
 def strip_comments(s): return re.sub(r"/\*.*?\*/", "", s, flags=re.S)
@@ -116,6 +142,17 @@ def check(look, css_path):
                 ok = r >= need
                 rows.append((mode, kind, fg, bg, f, b, r, need, ok, what))
                 if not ok: problems.append(f"{look} {mode} {kind}: {fg} {f} on {bg} {b} is {r:.2f}:1, needs {need}:1 ({what})")
+    for mode, toks in modes.items():
+        for fg, fill, behind, what in DISABLED:
+            try:
+                f, fl, bh = (resolve("--" + t, toks) for t in (fg, fill, behind))
+            except (KeyError, ValueError) as e:
+                problems.append(f"{look} {mode}: cannot resolve {e} for disabled {what}"); continue
+            ef, efl = mix(f, bh, DISABLED_OPACITY), mix(fl, bh, DISABLED_OPACITY)
+            r = ratio(ef, efl)
+            ok = r >= DISABLED_MIN
+            rows.append((mode, "disabled", fg, fill, ef, efl, r, DISABLED_MIN, ok, what))
+            if not ok: problems.append(f"{look} {mode} disabled: {fg} on {fill} over {behind} blends to {ef} on {efl}, {r:.2f}:1, needs {DISABLED_MIN}:1 ({what})")
     print(f"== {look} ({css_path.name})")
     print(f"{'mode':5} {'kind':7} {'foreground':17} {'background':14} {'fg':8} {'bg':8} {'ratio':>6}  need  result")
     for mode, kind, fg, bg, f, b, r, need, ok, what in rows:

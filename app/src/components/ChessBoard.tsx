@@ -139,9 +139,12 @@ export function ChessBoard({ fen, orientation = 'white', movable = null, picker 
   useLayoutEffect(() => {
     const el = barRef.current
     if (!el || typeof ResizeObserver === 'undefined') return
-    const ro = new ResizeObserver(() => setBarH(el.offsetHeight))
-    ro.observe(el); setBarH(el.offsetHeight)
-    return () => ro.disconnect()
+    // the bar hangs below the board by its own top margin (larger when the file letters sit outside the board, 721px and up), so that gap is part of the room it needs
+    const measure = () => setBarH(el.offsetHeight + (parseFloat(getComputedStyle(el).marginTop) || 0))
+    const ro = new ResizeObserver(measure)
+    ro.observe(el); measure()
+    window.addEventListener('resize', measure)
+    return () => { ro.disconnect(); window.removeEventListener('resize', measure) }
   }, [controlMapOn])
   // ---- keyboard and screen-reader layer: one tab stop (the grid), a square cursor moved by arrow keys (aria-activedescendant), Enter/Space to select and place ----
   const uid = useId()
