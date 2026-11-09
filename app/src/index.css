@@ -13,7 +13,7 @@ h1 { font-family: var(--font-editorial); font-weight: 600; font-size: clamp(1.75
   .top nav { overflow-x: auto; flex-wrap: nowrap; white-space: nowrap; justify-content: safe center; scrollbar-width: none; min-width: 0; }
   .top nav::-webkit-scrollbar { display: none; }
 }
-.page { max-width: 760px; margin: 0 auto; padding: 1rem 1rem 4rem; } .page.wide { max-width: 1040px; }
+.page { max-width: 980px; margin: 0 auto; padding: 1rem 1rem 4rem; } .page.wide { max-width: 1280px; }  /* wider centred column (Andrew, 8 Nov 2026): the words beside a board need about 40 characters a line */
 .lede { color: var(--muted); max-width: 62ch; }
 .muted { color: var(--muted); } .small { font-size: 0.85rem; } .warn { color: var(--warn); }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-panel); padding: 1rem 1.1rem; margin: 0.8rem 0; }
@@ -184,10 +184,10 @@ button.primary:hover:not(:disabled), .button.primary:hover { background: var(--i
 
 /* Wide screens: the board stays beside the words (a lesson step or an exercise), so it never scrolls out of sight */
 @media (min-width: 1000px) {
-  .item { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 520px); column-gap: 1.5rem; align-items: start; }
+  .item { display: grid; grid-template-columns: minmax(18rem, 1fr) minmax(320px, 480px); column-gap: 1.75rem; align-items: start; }
   .item > .board-wrap { grid-column: 2; grid-row: 1 / span 30; position: sticky; top: 4.5rem; }
   .item > *:not(.board-wrap) { grid-column: 1; }
-  .lesson .card:has(> .board-wrap) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 520px); column-gap: 1.5rem; align-items: start; }
+  .lesson .card:has(> .board-wrap) { display: grid; grid-template-columns: minmax(18rem, 1fr) minmax(320px, 480px); column-gap: 1.75rem; align-items: start; }
   .lesson .card:has(> .board-wrap) > .board-wrap { grid-column: 2; grid-row: 1 / span 10; }
   .lesson .card:has(> .board-wrap) > *:not(.board-wrap) { grid-column: 1; }
 }
@@ -197,7 +197,7 @@ progress { accent-color: var(--success); vertical-align: middle; width: 8rem; }
 
 /* Move-by-move steps use the same arrangement as exercises: words and controls left, board right */
 @media (min-width: 1000px) {
-  .lineplayer { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 520px); column-gap: 1.5rem; align-items: start; }
+  .lineplayer { display: grid; grid-template-columns: minmax(18rem, 1fr) minmax(320px, 480px); column-gap: 1.5rem; align-items: start; }
   .lineplayer > .board-wrap { grid-column: 2; grid-row: 1 / span 6; }
   .lineplayer > *:not(.board-wrap) { grid-column: 1; }
 }
@@ -795,11 +795,11 @@ main.page > p.small.muted > a { display: inline-flex; align-items: center; min-h
 .readaloud button.small { padding: 0.2rem 0.7rem; }
 
 /* Line player: static controls (back to start, previous, next) that never move while the sentence below them changes */
-.lineplayer .linecontrols { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.4rem 0 0.6rem; max-width: 100%; padding-right: 0.5rem; }
+.lineplayer .linecontrols { display: flex; flex-wrap: nowrap; /* Back and Forward always share one row (Andrew, 8 Nov 2026) */ align-items: center; gap: 0.5rem; margin: 0.4rem 0 0.6rem; max-width: 100%; padding-right: 0.5rem; }
 .lineplayer { column-gap: 2rem; }
 .lineplayer > *:not(.board-wrap) { min-width: 0; } /* the controls and text may never run under the board */
 .lineplayer .linecontrols button { flex: 0 0 auto; width: 2.9rem; min-height: 2.6rem; padding: 0; font-size: 1.1rem; }
-.lineplayer .linecount { min-width: 4rem; margin-left: 0.3rem; }
+.lineplayer .linecount { min-width: 3rem; margin-left: 0.2rem; white-space: nowrap; }
 
 /* A chosen section must look chosen whatever its place in the light/dark alternation: it takes the accent colour and a clear edge, the others recede */
 .mapsvg.hasHi .mapwedge .wedgebg { opacity: 0.1; }
