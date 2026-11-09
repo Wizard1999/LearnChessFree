@@ -38,7 +38,7 @@
    D74 line rules and the keyboard model are unchanged; only the drawing changed. To go back to the circles-and-lines map:
    `git checkout map-before-constellations -- app/src/components/RadialMap.tsx app/src/styles/map.css` (the tag is commit 52167ae; see D88).
    Nothing moves unless motion is allowed: the twinkle is wrapped in prefers-reduced-motion: no-preference and the app's Motion setting. */
-:root { --chart-serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; }
+:root { --chart-serif: var(--font-editorial, Georgia, serif); --chart-sans: var(--font-ui, system-ui, sans-serif); } /* D88e: upright and readable: the app's heading serif for subject names, its sans for small chart text */
 :root:not(#_) .mapsvg.chart { background: var(--sky); border: 1px solid var(--sky-line); border-radius: 0.6rem; --edge-glow: var(--sky-star); --edge-glow-under: var(--sky-line); }
 .chart .dust { fill: var(--sky-ink); }
 
@@ -50,12 +50,12 @@
 :root:not(#_) .mapsvg.chart .stageband.hi { fill: var(--sky-gold) !important; fill-opacity: 0.12 !important; stroke: none !important; }
 
 /* names: constellations in an italic classical serif at the outer edge of each slice, regions in spaced small capitals, stages in small capitals on their rings */
-:root:not(#_) .chart .arclabel { font-family: var(--chart-serif); font-weight: 400; fill: var(--sky-ink); stroke: var(--sky); stroke-width: 10px; paint-order: stroke; letter-spacing: 0.02em; }
-:root:not(#_) .chart .arclabel.strand { font-style: italic; fill: color-mix(in srgb, var(--hue, var(--sky-ink)) var(--sky-hue-label), var(--sky-ink)); text-decoration: none; } /* the subject's own hue, kept readable by the share in --sky-hue-label (checked) */
+:root:not(#_) .chart .arclabel { font-family: var(--chart-sans); font-weight: 600; fill: var(--sky-ink); stroke: var(--sky); stroke-width: 10px; paint-order: stroke; letter-spacing: 0.02em; }
+:root:not(#_) .chart .arclabel.strand { font-family: var(--chart-serif); font-style: normal; font-weight: 700; fill: color-mix(in srgb, var(--hue, var(--sky-ink)) var(--sky-hue-label), var(--sky-ink)); text-decoration: none; } /* the subject's own hue, kept readable by the share in --sky-hue-label (checked) */
 :root:not(#_) .chart .arclabel.strand.hi { fill: var(--sky-gold); font-weight: 700; text-decoration: none; }
-:root:not(#_) .chart .arclabel.region { font-style: normal; font-weight: 600; font-variant: small-caps; letter-spacing: 0.14em; fill: var(--sky-ink-soft); }
+:root:not(#_) .chart .arclabel.region { font-style: normal; font-weight: 700; font-variant: normal; letter-spacing: 0.08em; fill: var(--sky-ink-soft); }
 :root:not(#_) .chart .regionarc { stroke: var(--sky-line); stroke-width: 2px; opacity: 0.9; vector-effect: non-scaling-stroke; }
-:root:not(#_) .chart .arclabel.stagename { font-weight: 600; font-variant: small-caps; letter-spacing: 0.08em; fill: var(--sky-ink-soft); stroke-width: 8px; }
+:root:not(#_) .chart .arclabel.stagename { font-weight: 600; font-variant: normal; letter-spacing: 0.03em; fill: var(--sky-ink-soft); stroke-width: 8px; }
 :root:not(#_) .chart .arclabel.stagename.here, :root:not(#_) .chart .arclabel.stagename.hi { fill: var(--sky-gold); }
 
 /* the astrolabe rings: a hairline circle per stage, fine ticks every 5 degrees (longer every 15), the Roman numeral at east and west */
@@ -65,7 +65,7 @@
 .chart .astrotick.major { stroke-width: 12px; opacity: 0.8; }
 .chart .astro.here .astroring, .chart .astro.hi .astroring { stroke: var(--sky-gold); stroke-width: 2px; opacity: 1; }
 .chart .astro.here .astrotick, .chart .astro.hi .astrotick { stroke: var(--sky-gold); }
-.chart .ringnumeral { font-family: var(--chart-serif); fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 9px; paint-order: stroke; letter-spacing: 0.04em; }
+.chart .ringnumeral { font-family: var(--chart-sans); font-weight: 700; fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 9px; paint-order: stroke; letter-spacing: 0.04em; }
 .chart .astro.here .ringnumeral, .chart .astro.hi .ringnumeral { fill: var(--sky-gold); }
 
 /* the gold compass rose behind the first skill */
@@ -75,6 +75,7 @@
 /* constellation lines: fine strokes; the D74 strength and fade (--edge-power) are untouched, only thinner. The chosen skill's links stay the brightest */
 :root:not(#_) .mapsvg.chart .mapglow { vector-effect: non-scaling-stroke; } /* hairlines that stay fine at every zoom */
 :root:not(#_) .mapsvg.chart .edgecore .mapglow { stroke: var(--edge-glow); stroke-width: calc(0.7px + 1.5px * var(--edge-power)); opacity: calc(var(--sky-edge-floor) + (1 - var(--sky-edge-floor)) * var(--edge-power)); } /* graded: faint (never below the 3:1 floor) to strong, in many small steps (lib/mapEdges.ts edgeStrength) */
+:root:not(#_) .mapsvg.chart .edgecore .mapglow.old { stroke-width: 0.7px; opacity: var(--sky-edge-floor); } /* old territory: the thinnest hairline at the dimmest allowed brightness, no glow, no head */
 :root:not(#_) .mapsvg.chart .edgehalo .mapglow { stroke: var(--edge-glow-under); stroke-width: calc(2px + 5px * var(--edge-power)); opacity: calc(0.02 + 0.32 * var(--edge-power)); }
 /* the soft highlight along the whole way into the chosen skill */
 .chart .edgetrail line { stroke: var(--sky-gold); stroke-width: 7px; stroke-linecap: round; opacity: 0.22; vector-effect: non-scaling-stroke; }
@@ -100,7 +101,7 @@
 .chart .starfocus { fill: none; stroke: var(--sky-gold); stroke-width: 2.4px; opacity: 0; pointer-events: none; }
 .chart .mapnode:focus-visible .starfocus { opacity: 1; }
 .chart .mapnode:focus-visible .starbase { stroke: var(--sky-gold); stroke-width: 1.5px; }
-.chart .nodestatus { font-family: var(--chart-serif); font-size: 15px; fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 5px; paint-order: stroke; }
+.chart .nodestatus { font-family: var(--chart-sans); font-size: 15px; fill: var(--sky-ink-soft); stroke: var(--sky); stroke-width: 5px; paint-order: stroke; }
 
 /* the chosen skill: a navigator's pointer ring (ring, four ticks, a pointer at north); a skill being pointed at gets a thin ring */
 :root:not(#_) .chart .maptop .topring { stroke: var(--sky-star); stroke-width: 1.6px; opacity: 0.9; }
@@ -115,7 +116,7 @@
 :root:not(#_) .chart .maprec .rectext { fill: var(--sky); }
 :root:not(#_) .chart .ghostline { stroke: var(--sky-gold); stroke-width: 1.6px; opacity: 0.8; }
 :root:not(#_) .chart .ghostring { fill: var(--sky); fill-opacity: 1; stroke: var(--sky-gold); stroke-width: 2.4px; }
-:root:not(#_) .chart .ghostnum { fill: var(--sky-ink); font-family: var(--chart-serif); }
+:root:not(#_) .chart .ghostnum { fill: var(--sky-ink); font-family: var(--chart-sans); font-weight: 700; }
 
 /* the gentle twinkle, only where motion is allowed (reduced motion shows the same picture, still) */
 @keyframes startwinkle { 0%, 100% { opacity: 0.5; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }

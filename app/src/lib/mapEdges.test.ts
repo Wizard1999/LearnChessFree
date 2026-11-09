@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ancestorEdges, edgeStrength, edgesToDraw, prereqShare, starNodes } from './mapEdges'
+import { ancestorEdges, edgeStrength, FRONTIER_MIN, lineLook, edgesToDraw, prereqShare, starNodes } from './mapEdges'
 
 // A -> C, B -> C, C -> D, D -> E
 const edges = [{ from: 'A', to: 'C' }, { from: 'B', to: 'C' }, { from: 'C', to: 'D' }, { from: 'D', to: 'E' }]
@@ -75,4 +75,26 @@ describe('line strength (constellations forming)', () => {
     expect(seen.size).toBeGreaterThanOrEqual(5)
   })
   it('stays within 0 and 1', () => { for (const a of [0, 4, 9]) { const v = strength({ A: a, B: 9 })('A', 'C'); expect(v).toBeGreaterThanOrEqual(0); expect(v).toBeLessThanOrEqual(1) } })
+})
+
+describe('old territory and the live frontier', () => {
+  const look = (m: Record<string, number>) => lineLook(edges, lv(m))
+  it('lines into completed skills are the thinnest hairline: old, power 0 (between two completed stars and out of a completed star)', () => {
+    const l = look({ A: 3, B: 4, C: 2, D: 2, E: 4 })
+    expect(l('A', 'C')).toEqual({ old: true, power: 0 }); expect(l('C', 'D')).toEqual({ old: true, power: 0 }); expect(l('D', 'E')).toEqual({ old: true, power: 0 })
+  })
+  it('lines into skills not yet completed are live and always above the hairline', () => {
+    const l = look({ A: 4, B: 0, C: 0 })
+    expect(l('A', 'C').old).toBe(false); expect(l('A', 'C').power).toBeGreaterThanOrEqual(FRONTIER_MIN); expect(l('B', 'C').power).toBeGreaterThan(0)
+  })
+  it('frontier lines rise with the share of the target prerequisites completed, in at least 5 distinct steps', () => {
+    // target C has prerequisites A and B; D has only C. Raise things one by one and the line into the unfinished target must never dim.
+    const steps = [{} as Record<string, number>, { A: 1 }, { A: 2 }, { A: 2, B: 1 }, { A: 2, B: 2 }].map(m => look({ ...m, C: 1 })('A', 'C').power)
+    for (let i = 1; i < steps.length; i++) expect(steps[i]).toBeGreaterThanOrEqual(steps[i - 1])
+    expect(new Set(steps.map(v => +v.toFixed(4))).size).toBeGreaterThanOrEqual(5)
+  })
+  it('every old line is dimmer than every live line', () => {
+    const old = look({ A: 2, C: 2 })('A', 'C').power, live = look({})('A', 'C').power
+    expect(old).toBeLessThan(live)
+  })
 })

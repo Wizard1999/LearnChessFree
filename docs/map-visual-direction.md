@@ -99,3 +99,5 @@ Second pass (D88b): a near-black sky in dark mode, almost no background dust, th
 D88c: with Slice colours off each slice still has a thin band in its subject hue along its outer edge and its constellation name in that hue (mixed toward the ink so the text stays readable); the wedge tint is the toggle.
 
 D88d: line brightness is graded again (many small steps from how far the source skill and the target's prerequisites have come), with a floor that keeps the faintest line at 3:1; the frontier keeps small arrowheads, a chosen skill keeps its gold trail.
+
+D88e: chart labels are upright and larger (heading serif for subject names, UI sans for the rest); lines into completed skills are the thinnest hairline at the dimmest allowed brightness, lines into unfinished skills are graded.

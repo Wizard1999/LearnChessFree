@@ -11,7 +11,7 @@ import { onMapJump } from '../lib/mapJump'
 import { ringLabelPlan, zoomZone } from '../lib/mapZoom'
 import { planLabels, type LabelNode } from '../lib/mapLabels'
 import { setLinkedHover, useLinkedHover } from '../lib/linkedHover'
-import { ancestorEdges, edgeStrength, edgesToDraw, starNodes } from '../lib/mapEdges'
+import { ancestorEdges, edgesToDraw, lineLook, starNodes } from '../lib/mapEdges'
 import { lessonsForSkill, primaryLesson } from '../lib/lessonRoles'
 import { saveFinished, resetProgress } from '../lib/lessonSave'
 import { TAP_SLOP, isDoubleTap, pinchGeometry, viewForPinch, zoomAt, type Cam, type Pinch } from '../lib/mapGesture'
@@ -380,7 +380,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         {layout.wedges.map(w => {
           const text = constellationLabel(w.strand, strandNames[w.strand], pct.strand(w.strand))
           const rS = layout.radius + 70
-          const size = fitSize((w.to - w.from) * rS, text.length, 0.6, 40, 92)
+          const size = fitSize((w.to - w.from) * rS, text.length, 0.62, 48, 100)
           return <ArcLabel key={`sl-${w.strand}`} id={`arc-${w.strand}`} mid={(w.from + w.to) / 2} radius={rS} text={text} size={size} region={regionOfStrand(w.strand)} hue={hueOfStrand(w.strand)} className={`arclabel strand${highlightStrand === w.strand ? ' hi' : ''}`} />
         })}
         {/* stage rings: one band per stage of the recommended path; the learner's current stage is emphasised, a chosen stage is lit */}
@@ -439,20 +439,24 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         {(() => {
           const readySet = new Set(layout.nodes.filter(n => level(n.id) < 4 && (readiness.get(n.id) ?? 0) >= 1 && !progress.get(n.id)?.noExercises).map(n => n.id))
           const trail = ancestorEdges(layout.edges, picked).flatMap(e => { const a = byId.get(e.from), b = byId.get(e.to); return a && b ? [{ e, a, b }] : [] })
-          const strength = edgeStrength(layout.edges, level)
-          const draw = edgesToDraw(layout.edges, level, picked ?? hov).map(d => (d.kind === 'quiet' ? { ...d, power: strength(d.from, d.to) } : d)).flatMap(d => {
+          const looks = lineLook(layout.edges, level)
+          const base = edgesToDraw(layout.edges, level, picked ?? hov)
+          const seen = new Set(base.map(d => `${d.from}>${d.to}`))
+          // lines between two completed skills are drawn too, as the thinnest hairline (old territory), unless they are the chosen skill's own links
+          const all = [...base, ...layout.edges.filter(e => !seen.has(`${e.from}>${e.to}`)).map(e => ({ ...e, power: 0, kind: 'quiet' as const }))]
+          const draw = all.map(d => { if (d.kind !== 'quiet') return { ...d, old: false }; const l = looks(d.from, d.to); return { ...d, power: l.power, old: l.old } }).flatMap(d => {
             const a = byId.get(d.from), b = byId.get(d.to); if (!a || !b) return []
-            const open = d.kind === 'quiet' && readySet.has(d.to) // the open frontier: a line into a skill that is ready to start
+            const open = d.kind === 'quiet' && !d.old && readySet.has(d.to) // the open frontier: a live line into a skill that is ready to start
             const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, r = d.kind !== 'quiet' ? 24 : open ? 20 : 0 // a chosen skill's links and the frontier stop short of the nodes so the heads show
-            return [{ d, open, x1: a.x + (dx / len) * r, y1: a.y + (dy / len) * r, x2: b.x - (dx / len) * r, y2: b.y - (dy / len) * r }]
+            return [{ d, open, old: d.old, x1: a.x + (dx / len) * r, y1: a.y + (dy / len) * r, x2: b.x - (dx / len) * r, y2: b.y - (dy / len) * r }]
           })
           const props = (x: (typeof draw)[number]) => ({ x1: x.x1, y1: x.y1, x2: x.x2, y2: x.y2, style: { '--edge-power': x.d.power } as CSSProperties })
           return (
             <>
               {/* the soft highlight along the whole way into the chosen skill */}
               <g className="edgetrail" pointerEvents="none">{trail.map(t => <line key={`t${t.e.from}>${t.e.to}`} x1={t.a.x} y1={t.a.y} x2={t.b.x} y2={t.b.y} />)}</g>
-              <g className="edgehalo" filter="url(#edge-blur)" pointerEvents="none">{draw.map(x => <line key={`h${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}`} />)}</g>
-              <g className="edgecore" pointerEvents="none">{draw.map(x => <line key={`${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}`} markerEnd={x.d.kind === 'pre' ? 'url(#arrow-pre)' : x.d.kind === 'next' ? 'url(#arrow-next-open)' : x.open ? 'url(#arrow-open)' : undefined} />)}</g>
+              <g className="edgehalo" filter="url(#edge-blur)" pointerEvents="none">{draw.filter(x => !x.old).map(x => <line key={`h${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}`} />)}</g>
+              <g className="edgecore" pointerEvents="none">{draw.map(x => <line key={`${x.d.from}>${x.d.to}`} {...props(x)} className={`mapglow ${x.d.kind}${x.open ? ' open' : ''}${x.old ? ' old' : ''}`} markerEnd={x.d.kind === 'pre' ? 'url(#arrow-pre)' : x.d.kind === 'next' ? 'url(#arrow-next-open)' : x.open ? 'url(#arrow-open)' : undefined} />)}</g>
             </>
           )
         })()}

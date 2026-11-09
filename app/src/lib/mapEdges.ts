@@ -70,3 +70,14 @@ export function edgeStrength(edges: MapEdge[], level: (id: string) => number): (
     return 0.5 * credit(from) + 0.5 * (ps.reduce((t, p) => t + credit(p), 0) / ps.length)
   }
 }
+
+/** The lowest strength of a live line: a frontier line is always a little above the hairline of old territory. */
+export const FRONTIER_MIN = 0.1
+
+/** How one line looks when nothing is chosen (Andrew, 9 Nov 2026). A line into a skill that is NOT yet completed is a live frontier line: graded by `edgeStrength`
+ *  (0.1 to 1). A line into a completed skill leads nowhere new: it is old territory and gets the thinnest hairline at the dimmest allowed brightness (power 0, `old`),
+ *  with no glow and no head. This covers lines between two completed skills and lines out of a completed skill into completed ones. */
+export function lineLook(edges: MapEdge[], level: (id: string) => number): (from: string, to: string) => { old: boolean; power: number } {
+  const strength = edgeStrength(edges, level)
+  return (from, to) => isDone(level(to)) ? { old: true, power: 0 } : { old: false, power: FRONTIER_MIN + (1 - FRONTIER_MIN) * strength(from, to) }
+}
