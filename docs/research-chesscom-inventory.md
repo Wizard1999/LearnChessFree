@@ -109,7 +109,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 
 | # | Course | Topic | Lv | Instr | Les | Ch | Sampled | slug |
 |---|---|---|---|---|---|---|---|---|
-|83|The 10 Best Games Of The 1970s|Master Games|AM|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-10-best-games-of-the-1970s|
+|83|The 10 Best Games Of The 1970s|Master Games|AM|Sam Copeland|10|50|sampled-L1-c1 (seg 15) and L5, L8 c1 (seg 16, families-b)|the-10-best-games-of-the-1970s|
 |86|Advanced Piece Values|Strategy|AM|Larry Kaufman|5|25|sampled-L1-c1 (seg 5)|advanced-piece-values|
 |89|Pawns vs Pieces|Strategy|AM|Elijah Logozar|5|25|played-L1|pawns-vs-pieces|
 |90|Grind Like Magnus Carlsen|Endgames|AM|Dejan Bojkov|6|30|sampled-L1-c1 (seg 12)|grind-like-magnus-carlsen|
@@ -147,7 +147,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |320|Capablanca's Endgame Masterpieces|Endgames|AM|Dejan Bojkov|10||sampled-L1-c1 (seg 8)|capablancas-endgame-masterpieces|
 |321|The Technique of Calculation|Tactics|AM|CT|10||played-L1-c1|the-technique-of-calculation|
 |323|Same Side Pawn Storms|Attacking|AM|CT|20||played-L1-c1|same-side-pawn-storms|
-|326|Weak Color Complexes Explained|Strategy|AM|David Pruess|22||sampled-L1-c1 (seg 5)|weak-color-complexes-explained|
+|326|Weak Color Complexes Explained|Strategy|AM|David Pruess|22||sampled-L1-c1 (seg 5) and L12, L22 c1 (seg 16, families-b)|weak-color-complexes-explained|
 |327|Advanced Tactics|Misc|A|CT|5|24|played-partly|advanced-tactics|
 |328|Premature Attacks on the King|Attacking|AM|CT|15||played-L1-c1|premature-attacks-on-the-king|
 |331|Clever Escapes from Common Mating Attacks|Tactics|AM|CT|15||played-L1-c1|clever-escapes-from-common-mating-attacks|
@@ -177,7 +177,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |14|How To Win With Zugzwang|Endgames|M|Dejan Bojkov|5|25|played-partly|how-to-win-with-zugzwang|
 |15|c3 Sicil For The Kill|Openings|M|James Canty|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|c3-sicil-for-the-kill|
 |16|Judit Polgar: From Child Star To Super-Grandmaster|Master Games|M|Judit Polgar|6|30|played-L1-c1|judit-polgar-from-child-star-to-super-gm|
-|18|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|played-L50-c1|hall-of-fame-the-50-greatest-chess-players-of-all-time|
+|18|Hall of Fame: The 50 Greatest Chess Players of All Time|Master Games|M|Jan Gustafsson|50|114|played-L50-c1; seg 16: L13, L25, L33 FENs read only, not played (families-b)|hall-of-fame-the-50-greatest-chess-players-of-all-time|
 |19|Magnus Carlsen's Stonewall|Openings|M|Magnus Carlsen|5|22|sampled-L1-c1 (seg 9)|the-stonewall|
 |20|Hou Yifan: My Career So Far|Master Games|M|Hou Yifan|7|35|played-L1-c1|hou-yifan-my-career-so-far|
 |21|Cuban Chess: Dominguez On Capablanca|Master Games|M|L. Dominguez|5|25|sampled-L1-c1 (seg 10)|cuban-chess-dominguez-on-capablanca|
@@ -192,9 +192,9 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |30|SCC Tactics|Master Games|M|CC|15|58|played-L1-c1|scc-tactics|
 |31|Chess In The Movies|Tactics|M|Jeremy Kane|7||played-L1-c1|chess-in-the-movies|
 |32|Play Like Levy Rozman|Master Games|M|Jeremy Kane|5||played-L1|play-like-levy-rozman|
-|33|Play Like A World Champion: The Carlsen Years|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-the-carlsen-years|
-|34|Play Like Daniel Naroditsky|Master Games|M|Jeremy Kane|5||listed|play-like-daniel-naroditsky|
-|35|Play Like a World Champion: The Anand Years|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-anand|
+|33|Play Like A World Champion: The Carlsen Years|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-the-carlsen-years|
+|34|Play Like Daniel Naroditsky|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-daniel-naroditsky|
+|35|Play Like a World Champion: The Anand Years|Master Games|M|Jeremy Kane|3||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-anand|
 |37|Learn Every Chess Opening|Openings|M|CC|50||played-partly|learn-the-openings|
 |38|Learn The Catalan|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-catalan-opening|
 |39|Learn The Indian Defenses And The Black Knights' Tango|Openings|M|CC|3|21|sampled-L1-c1 (families-a)|learn-the-indian-defenses-and-the-black-knights-tango|
@@ -228,7 +228,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |67|Learn The Grunfeld Defense|Openings|M|CC|3|21|listed|learn-the-grunfeld-defense|
 |68|Learn The Slav Defense|Openings|M|CC|3|21|listed|learn-the-slav-defense|
 |69|Learn The Queen's Gambit Accepted|Openings|M|CC|3|21|listed|learn-the-queens-gambit-accepted|
-|71|The Top 10 Games Of The 1950s|Master Games|M|Sam Copeland|10|50|family spot check L1-c1 (seg 14); rest skipped as near-duplicates|the-ten-best-games-of-the-1950s|
+|71|The Top 10 Games Of The 1950s|Master Games|M|Sam Copeland|10|50|family spot check L1-c1 (seg 14) and L4, L10 c1 (seg 16, families-b)|the-ten-best-games-of-the-1950s|
 |72|The Loud Italian|Openings|M|A. Kosteniuk|6|30|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-loud-italian|
 |73|The Top 10 Games Of The 1960s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-top-10-games-of-the-1980s-1|
 |74|My Legendary Endgames|Endgames|M|Gata Kamsky|5|25|sampled-L1-c1 (seg 9)|my-legendary-endgames|
@@ -241,7 +241,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |87|Leonid Kubbel's Studies|Tactics|M|Jeremy Kane|8||played-L1-c1|leonid-kubbels-studies|
 |88|Modern Chess Masterpieces|Master Games|M|S. S. Ganguly|6|30|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|modern-chess-masterpieces|
 |91|World Championship Preparation|Openings|M|Romain Edouard|5|25|sampled-L1-c1 (seg 12)|world-championship-preparation|
-|92|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-top-10-games-of-the-1980s|
+|92|The Top 10 Games Of The 1980s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15) and L4, L9 c1 (seg 16, families-b)|the-top-10-games-of-the-1980s|
 |93|The Indian School Of Chess|Master Games|M|S. S. Ganguly|11|55|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|the-indian-school-of-chess|
 |94|Every Pawn Structure Explained|Strategy|M|Johan Hellsten|30|150|played-partly; deeper L3, L16, L30 (seg 15, families-b)|every-pawn-structure-explained|
 |95|The Complete History Of Computer Chess|Master Games|M|James Coleman|15|75|played-L1-c1|the-complete-history-of-computer-chess|
@@ -252,9 +252,9 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |100|My Games With The World Chess Champions|Master Games|M|S. Mamedyarov|6|30|sampled-L1-c1 (seg 10)|shakh-vs-the-world-champions|
 |101|Carlsen vs. Nepomniachtchi: Their Greatest Games Analyzed|Master Games|M|S. S. Ganguly|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|carlsen-vs-nepomniachtchi|
 |103|Genrikh Kasparyan's Studies|Tactics|M|Jeremy Kane|6||listed|genrikh-kasparyans-studies|
-|104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-kasparov-vs-karpov|
+|104|Play Like A World Champion: Kasparov vs Karpov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-kasparov-vs-karpov|
 |105|Every Opening Trap To Crush Your Opponent|Openings|M|Ben Finegold|16|80|played-L1-c1|every-opening-trap-to-crush-your-opponent|
-|106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly|every-chess-tactic-explained|
+|106|Every Chess Tactic Explained|Tactics|M|F. Steil-Antoni|13|65|played-partly; seg 16: L10 Zugzwang, L13 Clearance c1 (families-b)|every-chess-tactic-explained|
 |107|Oleg Pervakov's Studies|Tactics|M|Jeremy Kane|9||sampled-L1-c1 (families-a)|oleg-pervakovs-studies|
 |108|Mamedyarov's Opening Surprises|Openings|M|S. Mamedyarov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|mamedyarovs-opening-surprises|
 |109|Every Sacrifice To Destroy Your Opponent|Tactics|M|K. Tsatsalashvili|24|120|sampled-L1-c1 (seg 9); deeper L24 (seg 15, families-b)|every-sacrifice-to-destroy-your-opponent-attacking-the-castled-king|
@@ -262,11 +262,11 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |111|Master Endgame Checkmates|Endgames|M|CC|5|25|played-partly|master-endgame-checkmates|
 |112|Grandmaster Opening Kitchen|Openings|M|Romain Edouard|4|20|sampled-L1-c1 (seg 11)|grandmaster-opening-kitchen|
 |113|How To Play The Sicilian Kalashnikov|Openings|M|F. Libiszewski|11|55|sampled-L1-c1 (seg 10)|how-to-play-the-kalashnikov|
-|114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15, families-b)|the-10-best-games-of-the-1990s|
+|114|The 10 Best Games Of The 1990s|Master Games|M|Sam Copeland|10|50|sampled-L1-c1 (seg 15) and L4, L8 c1 (seg 16, families-b)|the-10-best-games-of-the-1990s|
 |115|How Levon Aronian Became America's Newest Super Grandmaster|Master Games|M|M. Khachiyan|5|25|sampled-L1-c1 (seg 12)|how-levon-aronian-became-americas-newest-super-grandmaster|
 |116|How To Play The King's Indian Attack|Openings|M|Dejan Bojkov|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|how-to-play-the-kings-indian-attack|
-|120|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-fischer-and-karpov|
-|121|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||listed|play-like-a-world-champion-petrosian-and-spassky|
+|120|Play Like A World Champion: Fischer and Karpov|Master Games|M|Jeremy Kane|3||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-fischer-and-karpov|
+|121|Play Like A World Champion: Petrosian and Spassky|Master Games|M|Jeremy Kane|3||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-petrosian-and-spassky|
 |122|My Best Games - Shakhriyar Mamedyarov|Master Games|M|S. Mamedyarov|5|25|sampled-L1-c1 (seg 10)|my-best-games-shakhriyar-mamedyarov|
 |123|Pal Benko's Studies|Tactics|M|Jeremy Kane|7||listed|pal-benkos-studies|
 |126|The Top Ten Games Of The 2000s|Master Games|M|Sam Copeland|10|38|sampled-L1-c1 (seg 15, families-b)|the-top-ten-games-of-the-2000s|
@@ -294,47 +294,47 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |151|How To Avoid Mistakes|Strategy|M|Romain Edouard|4|20|sampled-L1-c1 (seg 8)|how-to-avoid-mistakes|
 |154|Learn From The Best: AlphaZero|Master Games|M|Daniel Rensch|5|6|sampled-L1-c1 (seg 9)|play-like-alphazero|
 |155|Learn From The Best: Leela Chess Zero|Master Games|M|CT|5|25|sampled-L1-c1 (families-a)|learn-from-the-best-leela-chess-zero|
-|157|Play Like Daniil Dubov|Master Games|M|Jeremy Kane|5||listed|play-like-daniil-dubov|
-|158|Play Like A World Champion: Kramnik And Controversy|Master Games|M|Jeremy Kane|5||listed|play-like-a-world-champion-choas-and-kramnik|
-|160|Play Like A World Champion: Capablanca, Alekhine and Euwe|Master Games|M|Jeremy Kane|6||listed|play-like-a-world-champion-capablanca-alekhine-and-euwe|
-|161|Play Like A World Champion: The Lasker Years|Master Games|M|Jeremy Kane|6||listed|play-like-a-world-champion-the-lasker-years|
+|157|Play Like Daniil Dubov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-daniil-dubov|
+|158|Play Like A World Champion: Kramnik And Controversy|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-choas-and-kramnik|
+|160|Play Like A World Champion: Capablanca, Alekhine and Euwe|Master Games|M|Jeremy Kane|6||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-capablanca-alekhine-and-euwe|
+|161|Play Like A World Champion: The Lasker Years|Master Games|M|Jeremy Kane|6||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-the-lasker-years|
 |162|Play Like A World Champion: The Steinitz Years|Master Games|M|Jeremy Kane|4||sampled-L1-c1 (seg 15, families-b)|play-like-a-world-champion-the-steinitz-years|
 |163|Top Level Trickery|Strategy|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 9)|top-level-trickery-1|
 |164|Tatev's Favorite Studies|Tactics|M|T. Abrahamyan|5|25|sampled-L1-c1-5 + lesson ending (seg 12, 14)|tatevs-favorite-studies|
 |165|Online Nations Cup Highlights|Master Games|M|Jeremy Kane|8|37|sampled-L1-c1 (seg 10)|online-nations-cup-highlights-1|
-|166|Play like Max Euwe|Master Games|M|Jeremy Kane|5||listed|play-like-max-euwe-1|
-|167|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||listed|play-like-emanual-lasker|
+|166|Play like Max Euwe|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-max-euwe-1|
+|167|Play Like Emanuel Lasker|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-emanual-lasker|
 |172|Tips And Tricks Of The London System|Openings|M|Aman Hambleton|5|25|sampled-seg13 (L1 C1, sweep-mastery.md Segment 13)|tips-and-tricks-of-the-london-system|
-|174|Play Like Alexander Alekhine|Master Games|M|Jeremy Kane|5||listed|play-like-alexander-alekhine|
+|174|Play Like Alexander Alekhine|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-alexander-alekhine|
 |176|How to Defend|Strategy|M|Dejan Bojkov|5|25|sampled-L1-c1 (seg 9)|how-to-defend|
 |185|Don't Let Them Castle|Strategy|M|Levy Rozman|4|20|played-L1-c1|dont-let-them-castle|
-|188|Play Like Alireza Firouzja|Master Games|M|Jeremy Kane|5||listed|play-like-alireza-firouzja|
+|188|Play Like Alireza Firouzja|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-alireza-firouzja|
 |191|The Best Chess Games of 2019|Master Games|M|Daniel Rensch|5|25|listed|the-five-best-chess-games-of-2019|
 |193|Hammertime Strategy|Strategy|M|J. L. Hammer|5|25|sampled-L1-c1 (seg 9)|hammertime-strategy|
-|196|Play Like Danny Rensch|Master Games|M|Jeremy Kane|5||listed|play-like-danny-rensch|
-|198|Play Like Wilhelm Steinitz|Master Games|M|Jeremy Kane|5||listed|play-like-wilhelm-steinitz|
+|196|Play Like Danny Rensch|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-danny-rensch|
+|198|Play Like Wilhelm Steinitz|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-wilhelm-steinitz|
 |199|The Greatest Games You've Never Seen|Master Games|M|T. Abrahamyan|9|45|sampled-L1-c1 (seg 12)|the-greatest-games-youve-never-seen|
-|201|Play Like Mikhail Botvinnik|Master Games|M|Jeremy Kane|5||listed|play-like-mikhail-botvinnik|
-|202|Play Like Vasily Smyslov|Master Games|M|Jeremy Kane|5||listed|play-like-vasily-smyslov|
-|203|Play Like Tigran Petrosian|Master Games|M|Jeremy Kane|5||listed|play-like-tigran-petrosian|
-|204|Play Like Boris Spassky|Master Games|M|Jeremy Kane|5||listed|play-like-boris-spassky|
-|205|Play Like Levon Aronian|Master Games|M|Jeremy Kane|5||listed|play-like-levon|
-|206|Play Like Anatoly Karpov|Master Games|M|Jeremy Kane|5||listed|play-like-anatoly-karpov|
-|207|Play Like Ding Liren|Master Games|M|Jeremy Kane|5||listed|play-like-ding|
+|201|Play Like Mikhail Botvinnik|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-mikhail-botvinnik|
+|202|Play Like Vasily Smyslov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-vasily-smyslov|
+|203|Play Like Tigran Petrosian|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-tigran-petrosian|
+|204|Play Like Boris Spassky|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-boris-spassky|
+|205|Play Like Levon Aronian|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-levon|
+|206|Play Like Anatoly Karpov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-anatoly-karpov|
+|207|Play Like Ding Liren|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-ding|
 |208|Play Like Paul Morphy|Master Games|M|Jeremy Kane|5||family spot check L1-c1 (seg 14); rest skipped as near-duplicates|play-like-paul-morphy|
-|209|Play Like Jose Raul Capablanca|Master Games|M|Jeremy Kane|5||listed|play-like-jose-raul-capablanca|
-|210|Play Like Vladimir Kramnik|Master Games|M|Jeremy Kane|5||listed|play-like-vladimir-kramnik|
-|211|What You Should Always Do|Strategy|M|T. Abrahamyan|12|60|sampled-L1-c1 (seg 12)|what-you-should-always-do|
-|214|Play Like Judit Polgar|Master Games|M|Jeremy Kane|5||listed|play-like-judit-polgar|
-|215|Play Like Mikhail Tal|Master Games|M|Jeremy Kane|5||listed|play-like-mikhail-tal|
-|216|Play Like Garry Kasparov|Master Games|M|Jeremy Kane|5||listed|play-like-garry-kasparov|
-|217|Play Like Bobby Fischer|Master Games|M|Jeremy Kane|5||listed|play-like-bobby-fischer|
+|209|Play Like Jose Raul Capablanca|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-jose-raul-capablanca|
+|210|Play Like Vladimir Kramnik|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-vladimir-kramnik|
+|211|What You Should Always Do|Strategy|M|T. Abrahamyan|12|60|sampled-L1-c1 (seg 12) and L8, L12 c1 (seg 16, families-b)|what-you-should-always-do|
+|214|Play Like Judit Polgar|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-judit-polgar|
+|215|Play Like Mikhail Tal|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-mikhail-tal|
+|216|Play Like Garry Kasparov|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-garry-kasparov|
+|217|Play Like Bobby Fischer|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-bobby-fischer|
 |219|The Carlsbad Pawn Structure|Strategy|M|Dejan Bojkov|6|30|sampled-L1-c1 (seg 12)|the-carlsbad-pawn-structure|
-|220|Play Like Maxime Vachier-Lagrave|Master Games|M|Jeremy Kane|5||listed|play-like-mvl|
-|221|Play Like Vishy Anand|Master Games|M|Jeremy Kane|5||listed|play-like-vishy|
+|220|Play Like Maxime Vachier-Lagrave|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-mvl|
+|221|Play Like Vishy Anand|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-vishy|
 |222|Play Like Hikaru Nakamura|Master Games|M|Jeremy Kane|5||played-L1-first-2-moves|play-like-hikaru|
-|223|Play Like Fabiano Caruana|Master Games|M|Jeremy Kane|5||listed|play-like-fabiano|
-|224|Play Like Magnus Carlsen|Master Games|M|Jeremy Kane|5||listed|play-like-magnus|
+|223|Play Like Fabiano Caruana|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-fabiano|
+|224|Play Like Magnus Carlsen|Master Games|M|Jeremy Kane|5||sampled-L1-c1 (seg 16, families-b)|play-like-magnus|
 |226|Pirc Defense for Black|Openings|M|M. Molner|8|40|sampled-L1-c1 (seg 10)|pirc-defense-for-black|
 |227|Pirc Defense for White|Openings|M|R. Dzindzichashvili|2|10|sampled-L1-c1 (seg 9)|pirc-defense-for-white|
 |228|Secrets of the English Attack|Openings|M|T. Abrahamyan|5|25|sampled-L1-c1 (seg 12)|secrets-of-the-english-attack|
@@ -388,7 +388,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |336|Slaying the Sicilian: Kingside Storms|Openings|M|CT|12||sampled-L1-c1 (seg 8)|slaying-the-sicilian-kingside-storms|
 |337|The Essence of the Initiative|Attacking|M|CT|20||sampled-L1-c1 (seg 8)|the-essence-of-the-initiative|
 |338|Complete Scotch #1: The Mieses Endgames|Endgames|M|Daniel Rensch|10||sampled-L1-c1-2 (seg 9)|complete-scotch-1-the-mieses-endgames|
-|339|Improve your Chess|Strategy|M|Sam Shankland|19||played-L1-c1|improve-your-chess|
+|339|Improve your Chess|Strategy|M|Sam Shankland|19||played-L1-c1; seg 16: L10, L19 c1 (families-b)|improve-your-chess|
 |340|Play Against Lasker|Misc|M|CT|19||sampled-L1-c1 (seg 8)|play-against-lasker|
 |342|The Power of the Capture-Check|Tactics|M|CT|21||played-L1-c1|the-power-of-the-capture-check|
 |345|Now What?|Openings|M|Jeremy Silman|20||sampled-L1-c1 (seg 9)|now-what|
@@ -423,4 +423,4 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |119|Play Like Ian Nepomniachtchi|Master Games|-|Jeremy Kane|5||sampled-L1-c1 (seg 15, families-b)|play-like-ian-nepomniachtchi|
 |124|Every Gambit Refuted|Openings|-|E. Perelshteyn|29|145|sampled-L1-c1 (seg 10); deeper L15, L29 (seg 15, families-b)|every-gambit-refuted|
 |125|Positional Masterpieces|Strategy|-|Romain Edouard|4|20|sampled-L1-c1 (seg 12)|positional-masterpieces|
-|159|Play Like A World Champion: Botvinnik, Smyslov And Tal|Master Games|-|Jeremy Kane|6||listed|play-like-a-world-champion-botvinnik-smyslov-and-tal|
+|159|Play Like A World Champion: Botvinnik, Smyslov And Tal|Master Games|-|Jeremy Kane|6||sampled-L1-c1 (seg 16, families-b)|play-like-a-world-champion-botvinnik-smyslov-and-tal|
