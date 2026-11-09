@@ -35,8 +35,23 @@ describe('sound descriptors', () => {
     expect(BELL_PARTIALS.some(([r]) => Math.abs(r - Math.round(r)) > 0.2)).toBe(true) // inharmonic
   })
   it('keeps the same melody in every character (only the register changes)', () => {
-    const ratio = (ch: 'warm' | 'bright' | 'soft') => { const n = describeSound('lessonDone', ch).filter((_, k) => k % 4 === 0); return [n[1].freq / n[0].freq, n[2].freq / n[0].freq] }
-    expect(ratio('bright')[0]).toBeCloseTo(ratio('warm')[0], 5); expect(ratio('soft')[1]).toBeCloseTo(ratio('warm')[1], 5)
+    const fundamentals = (ch: 'warm' | 'bright') => {
+      const by = new Map<number, number>()
+      for (const n of describeSound('lessonDone', ch)) by.set(n.start, Math.min(by.get(n.start) ?? Infinity, n.freq))
+      return [...by.entries()].sort((x, y) => x[0] - y[0]).map(e => e[1])
+    }
+    const w = fundamentals('warm'), b = fundamentals('bright')
+    expect(w).toHaveLength(3); expect(b).toHaveLength(3)
+    expect(b[1] / b[0]).toBeCloseTo(w[1] / w[0], 5); expect(b[2] / b[0]).toBeCloseTo(w[2] / w[0], 5)
+  })
+  it('Warm and Bright really differ: Bright is an octave higher, sparklier, drier, sharper and has a click; Warm is rounder and roomier', () => {
+    const W = CHARACTERS.warm, B = CHARACTERS.bright
+    expect(B.oct / W.oct).toBe(2)
+    expect(B.shimmer).toBeGreaterThan(W.shimmer * 2); expect(B.partials).toBeGreaterThan(W.partials); expect(B.upperLen).toBeLessThan(W.upperLen)
+    expect(W.wet).toBeGreaterThanOrEqual(B.wet * 4)
+    expect(B.tapHp).toBeGreaterThan(W.tapHp * 2); expect(B.click).toBe(true); expect(W.click).toBe(false)
+    expect(describeSound('move', 'bright').length).toBeGreaterThan(describeSound('move', 'warm').length)
+    expect(describeSound('levelGuided', 'warm').length).toBeLessThan(describeSound('levelGuided', 'bright').length)
   })
   it('wooden taps are high-passed and light; the wrong note is low-passed, soft and a little higher than before', () => {
     for (const ch of CHARACTER_IDS) {
@@ -84,6 +99,7 @@ describe('settings', () => {
     expect(DEFAULT_SOUND).toMatchObject({ on: true, volume: 0.6, moves: true, rewards: true, feedback: true, character: 'warm' })
     localStorage.setItem('cs-sound', JSON.stringify({ character: 'bright' })); expect(loadSoundPrefs().character).toBe('bright')
     localStorage.setItem('cs-sound', JSON.stringify({ character: 'loud' })); expect(loadSoundPrefs().character).toBe('warm')
+    localStorage.setItem('cs-sound', JSON.stringify({ character: 'soft', moves: false })); expect(loadSoundPrefs()).toMatchObject({ character: 'warm', moves: false }) // the removed Soft character migrates to the default
   })
   it('fall back on bad data, keeping what is valid', () => {
     localStorage.setItem('cs-sound', '{not json')

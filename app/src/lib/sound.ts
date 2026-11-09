@@ -49,8 +49,8 @@ export interface Note {
 }
 
 // ---- sound character: named presets of the tunables, switchable in Settings so they can be compared by ear ----
-export type CharacterId = 'warm' | 'bright' | 'soft'
-export const CHARACTER_IDS: readonly CharacterId[] = ['warm', 'bright', 'soft']
+export type CharacterId = 'warm' | 'bright'
+export const CHARACTER_IDS: readonly CharacterId[] = ['warm', 'bright']
 export interface Character {
   label: string
   /** Multiplies every bell pitch (2 = an octave up; melodies keep their intervals). */
@@ -61,6 +61,14 @@ export interface Character {
   space: number
   /** How much the upper (inharmonic) partials of a bell sound: more is more sparkle. */
   shimmer: number
+  /** How many bell partials sound (fewer is rounder). */
+  partials: number
+  /** Multiplies the length of the upper partials: below 1 they die faster (a crisper sparkle). */
+  upperLen: number
+  /** Multiplies the loudness of the wooden taps. */
+  tapGain: number
+  /** Adds a very short high click at the start of a tap (a sharper attack). */
+  click: boolean
   /** Reverb send for reward phrases, 0..~0.2 (taps get a quarter of it, answers about half). */
   wet: number
   /** Overall level of the set (before the learner's volume). */
@@ -71,9 +79,10 @@ export interface Character {
   wrongLp: number
 }
 export const CHARACTERS: Record<CharacterId, Character> = {
-  warm: { label: 'Warm', oct: 2, decay: 0.85, space: 1.2, shimmer: 1, wet: 0.16, level: 0.8, tapHp: 250, wrongLp: 1500 },
-  bright: { label: 'Bright', oct: 2, decay: 0.75, space: 1.15, shimmer: 1.6, wet: 0.12, level: 0.72, tapHp: 350, wrongLp: 2200 },
-  soft: { label: 'Soft', oct: 1.5, decay: 0.95, space: 1.15, shimmer: 0.6, wet: 0.2, level: 0.8, tapHp: 200, wrongLp: 1200 },
+  // mellow and round: the lower register, three quiet partials, a little more room, softer taps with a lower high-pass
+  warm: { label: 'Warm', oct: 2, decay: 0.9, space: 1.2, shimmer: 0.6, partials: 3, upperLen: 1, tapGain: 0.85, click: false, wet: 0.2, level: 0.8, tapHp: 180, wrongLp: 1500 },
+  // crisp and sparkly: one more octave up, stronger upper partials that die faster, nearly dry, sharper taps with a click
+  bright: { label: 'Bright', oct: 4, decay: 0.75, space: 1.15, shimmer: 1.8, partials: 4, upperLen: 0.7, tapGain: 1, click: true, wet: 0.04, level: 0.6, tapHp: 450, wrongLp: 2200 },
 }
 export const DEFAULT_CHARACTER: CharacterId = 'warm'
 
@@ -87,17 +96,19 @@ const MAX_PARTIAL_HZ = 9000
 export function bell(c: Character, freq: number, start: number, dur: number, gain: number, wet = 1): Note[] {
   const f0 = freq * c.oct, t = start * c.space, d = dur * c.decay
   const out: Note[] = []
-  BELL_PARTIALS.forEach(([ratio, g, len], k) => {
+  BELL_PARTIALS.slice(0, c.partials).forEach(([ratio, g, len], k) => {
     const f = f0 * ratio
     if (f > MAX_PARTIAL_HZ) return
-    out.push(note({ freq: f, start: t, dur: d * len, gain: gain * c.level * (k === 0 ? 1 : g * c.shimmer), wet: wet * c.wet, attack: k === 0 ? 0.003 : 0.002 }))
+    out.push(note({ freq: f, start: t, dur: d * len * (k === 0 ? 1 : c.upperLen), gain: gain * c.level * (k === 0 ? 1 : g * c.shimmer), wet: wet * c.wet, attack: k === 0 ? 0.003 : 0.002 }))
   })
   return out
 }
 /** A soft wooden tap: a short noise burst and a brief, light thud, both high-passed so nothing booms. `depth` below 1 is a little deeper. */
 export function tap(c: Character, start: number, depth: number, gain: number): Note[] {
   const hp = c.tapHp * depth
+  gain *= c.tapGain
   return [
+    ...(c.click ? [note({ wave: 'noise' as const, freq: 4500, start, dur: 0.012, gain: gain * 0.6, q: 0.7, hp: hp * 2, attack: 0.001, release: 0.008, tap: true })] : []),
     note({ wave: 'noise', freq: 1500 * depth, start, dur: 0.04, gain: gain * 0.9, q: 0.9, hp, release: 0.02, wet: 0.25 * c.wet, tap: true }),
     note({ freq: 280 * depth, endFreq: 190 * depth, start, dur: 0.065, gain: gain * 0.5, hp, release: 0.03, wet: 0.25 * c.wet, tap: true }),
   ]

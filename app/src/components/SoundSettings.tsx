@@ -25,7 +25,7 @@ export function SoundSettings() {
         <select value={p.character} disabled={!p.on} onChange={e => { saveSoundPrefs({ character: e.target.value as typeof p.character }); window.setTimeout(test, 0) }}>
           {CHARACTER_IDS.map(id => <option key={id} value={id}>{CHARACTERS[id].label}</option>)}
         </select></label>
-      <p className="small muted">Warm is the default; Bright is crisper with more sparkle; Soft is lower and rounder. Choosing one plays a sample so you can compare.</p>
+      <p className="small muted">Warm is the default: mellow and round. Bright is crisp and sparkly, an octave higher. Choosing one plays a sample so you can compare.</p>
       <fieldset className="appearance">
         <legend className="small muted">Which sounds</legend>
         <div className="soundrow">
