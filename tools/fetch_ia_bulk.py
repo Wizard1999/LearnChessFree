@@ -18,7 +18,7 @@ FILES = ROOT / "library" / "files"; CATALOG = ROOT / "library" / "catalog.json";
 _spec = importlib.util.spec_from_file_location("fs", Path(__file__).resolve().parent / "fetch_sources.py")
 FS = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(FS)
 UA = {"User-Agent": "scholarmate-library-fetch/1.0 (rights-checked; github.com/Wizard1999/LearnChessFree)"}
-SKIP = re.compile(r"(?i)magazine|chronicle|register|annual|journal|newspaper|poem|poetry|novel|story|stories|play in|drama|fiction|checkers|draughts|romance|iceland|catalogue|bibliograph|magic|automaton|turk|sermon|\bverse\b")
+SKIP = re.compile(r"(?i)magazine|chronicle|register|annual|journal|newspaper|poem|poetry|novel|story|stories|play in|drama|fiction|checkers|draughts|romance|iceland|catalogue|bibliograph|magic|automaton|turk|sermon|shogi|shōg|japanese|chinese|go|\bverse\b")
 MAX_BYTES = 2_500_000
 
 

@@ -234,7 +234,7 @@ export function LessonPlayer({ lesson, onExit }: { lesson: Lesson; onExit?: () =
       {resumedAt !== null && i === resumedAt.step && <p className="small muted">{resumedAt.mapped ? 'This lesson was updated; picked up at the same step. ' : 'Picked up where you left off. '}<button type="button" className="link" onClick={() => { setI(0); setResumedAt(null) }}>Start from the beginning</button></p>}
       <ChapterBar steps={steps} i={i} onJump={k => { setI(k); setResumedAt(null) }} />
       <div className="progress" aria-label={`Step ${i + 1} of ${steps.length}`}>
-        {steps.map((_, k) => <span key={k} className={k < i ? 'dot done' : k === i ? 'dot now' : 'dot'} />)}
+        {steps.map((_, k) => <button type="button" key={k} className={k < i ? 'dot done' : k === i ? 'dot now' : 'dot'} aria-label={`Go to step ${k + 1} of ${steps.length}`} aria-current={k === i ? 'step' : undefined} onClick={() => { setI(k); setResumedAt(null) }} />)}
       </div>
       {step.type === 'card' && (
         <section className="card">{step.title && <h3>{step.title}</h3>}<RichText text={step.text} />

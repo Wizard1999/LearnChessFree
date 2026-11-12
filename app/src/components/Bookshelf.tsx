@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface Book {
   id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string | null; size: number
-  cover?: string; rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
+  cover?: string; coverBlank?: boolean; rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
 }
 type Sort = 'title' | 'author' | 'year' | 'level' | 'subject' | 'size'
 const LEVELS = ['Beginner', 'Improver', 'Club', 'Advanced', 'Reference']
@@ -61,7 +61,7 @@ export function Bookshelf() {
               const hue = hueOf(b)
               return (
                 <li key={b.id} className={`cover${open ? ' open' : ''}${flip ? ' flip' : ''}${pinned === b.id ? ' pinned' : ''}`} style={{ ['--h' as string]: hue }} onMouseEnter={e => enter(b.id, e.currentTarget)} onMouseLeave={leave} onFocus={e => enter(b.id, e.currentTarget)}>
-                  <button type="button" className={`coverface${b.cover ? ' haspic' : ''}`} aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
+                  <button type="button" className={`coverface${b.cover ? ' haspic' : ''}${b.cover && b.coverBlank ? ' blank' : ''}`} aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
                     {b.cover && <img className="coverpic" src={`${base()}${b.cover}`} alt="" loading="lazy" decoding="async" />}
                     <span className="coverlevel">{b.level}</span>
                     <span className="covertitle">{b.title}</span>
@@ -95,6 +95,17 @@ export function Bookshelf() {
   )
 }
 
+/** The scans keep the printed line breaks, which leaves a narrow column; prose blocks are rejoined so the words fill the width, and drawings (diagrams, tables) stay as printed. */
+function blocks(page: string): { prose: boolean; text: string }[] {
+  return page.split(/\n{2,}/).filter(b => b.trim()).map(b => {
+    const lines = b.split('\n')
+    const lens = lines.map(l => l.trim().length).sort((x, y) => x - y)
+    const drawing = /[|_+=]{2,}|\s{4,}\S/.test(b) || (lines.length > 1 && lens[Math.floor(lens.length / 2)] < 30)
+    if (drawing || lines.length < 2) return { prose: !drawing, text: drawing ? b : b.trim() }
+    return { prose: true, text: lines.map(l => l.trim()).join('\n').replace(/([a-z])-\n([a-z])/g, '$1$2').replace(/\n/g, ' ') }
+  })
+}
+
 function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   const [text, setText] = useState<string | null>(null)
   const [page, setPage] = useState(() => { try { return +(localStorage.getItem(`book:${book.id}`) ?? 0) || 0 } catch { return 0 } })
@@ -117,7 +128,7 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   return (
     <section className="card reader" aria-label={`Reading ${book.title}`}>
       <div className="sectionhead"><h2>{book.title}</h2><button type="button" onClick={onClose}>Back to the shelf</button></div>
-      <p className="small muted">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.rights.label}. Diagrams in these texts are plain-text drawings.</p>
+      <p className="small muted">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.rights.label}. Diagrams in these texts are plain-text drawings.{book.source_url.includes('archive.org') && <> <a href={book.source_url} target="_blank" rel="noreferrer">See the original page scans on the Internet Archive</a> (opens their site; the text here is machine-read from those scans).</>}</p>
       {text === null ? <p className="muted">Loading…</p> : (
         <>
           <div className="row filters">
@@ -127,7 +138,7 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
             <input type="search" value={find} onChange={e => setFind(e.target.value)} placeholder="Find in this book" aria-label="Find in this book" />
             {find.trim().length >= 3 && <span className="small muted">{hits.length} page{hits.length === 1 ? '' : 's'}: {hits.slice(0, 8).map(h => <button key={h} type="button" className="link" onClick={() => go(h)}>{h + 1}</button>)}{hits.length > 8 ? ' …' : ''}</span>}
           </div>
-          <pre className="booktext">{pages[page]}</pre>
+          <div className="booktext">{blocks(pages[page] ?? '').map((b, i) => (b.prose ? <p key={i}>{b.text}</p> : <pre key={i} className="bookdiagram">{b.text}</pre>))}</div>
           <div className="row"><button type="button" onClick={() => go(page - 1)} disabled={page === 0}>◀ Previous</button><button type="button" onClick={() => go(page + 1)} disabled={page >= pages.length - 1}>Next ▶</button></div>
         </>
       )}

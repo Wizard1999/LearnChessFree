@@ -36,6 +36,11 @@ PAGE = {"acollectiontwoh00healgoog": 7, "americanchessnu01gilbgoog": 8, "artches
 PG_REAL = {"pg55278", "pg5614", "pg78804"}
 
 
+# Covers that are a plain binding with no lettering and no picture, so our typographic title goes over them. Judged by eye on a montage of every
+# dark cover (12 Nov 2026); a brightness test wrongly caught covers with a stamped board or emblem, which keep their own picture.
+BLANK = {"ia_artofchess00maso", "ia_grandtacticsofch00younrich", "ia_majortacticsofch00younrich", "ia_memorablechessga00moffiala", "ia_modernchessinstr00steirich"}
+
+
 def candidates(b):
     i = b["id"]
     if i.startswith("ia_"):
@@ -65,6 +70,8 @@ def main():
             im.thumbnail((300, 450))
             im.save(OUT / f"{b['id']}.webp", "WEBP", quality=80)
             b["cover"] = f"covers/{b['id']}.webp"; b["coverSource"] = url; got += 1
+            if b["id"] in BLANK: b["coverBlank"] = True
+            else: b.pop("coverBlank", None)
             print("ok  ", b["id"], im.size, url); break
         else:
             print("none", b["id"])
