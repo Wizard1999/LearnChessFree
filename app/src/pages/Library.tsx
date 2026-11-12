@@ -9,7 +9,7 @@ export function Library() {
   const byKind = useMemo(() => { const m = new Map<string, number>(); for (const i of items) { const k = (i.tags ?? []).find(t => t.startsWith('kind.')) ?? 'kind.authored'; m.set(k, (m.get(k) ?? 0) + 1) } return [...m.entries()].sort((a, b) => b[1] - a[1]) }, [items])
   const engines = useMemo(() => { const m = new Map<string, number>(); for (const v of Object.values(verified)) { const k = `${v.engine ?? 'rules only'}${v.depth ? ` @ depth ${v.depth}` : ''}`; m.set(k, (m.get(k) ?? 0) + 1) } return [...m.entries()] }, [verified])
   return (
-    <main className="page">
+    <main className="page libpage">
       <h1>Library</h1>
       <Bookshelf />
       <section className="card">

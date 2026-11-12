@@ -1217,3 +1217,10 @@ main.mappage.curriculum .mapbar { padding-top: 0.2rem; padding-bottom: 0.2rem; g
 .skillicon.shared { opacity: 0.92; }
 h1.skilltitle, h2.skilltitle { display: flex; align-items: center; gap: 0.6rem; }
 h1.skilltitle .skillicon, h2.skilltitle .skillicon { margin-right: 0; }
+/* One width for the row's main button (Open, Continue, Review) so the icons and titles start in the same column. */
+.lessonrow > a.button { flex: 0 0 8.5rem; box-sizing: border-box; text-align: center; justify-content: center; padding-left: 0.5rem; padding-right: 0.5rem; }
+@media (max-width: 720px) { .lessonrow > a.button { flex-basis: 7rem; } }
+/* The list and course views have no side docks, so they use the wide column; only the Map keeps the gutters. */
+main.curriculum.page:not(.mappage), main.curriculum.dockopen:not(.mappage) { width: min(1180px, calc(100vw - 2rem)); }
+.lessonrow .lessonwords .nextlabel { align-self: flex-start; margin: 0.15rem 0; }
+.libpage { overflow-x: clip; }   /* the hidden hover cards of covers on the right edge must not widen the page */
