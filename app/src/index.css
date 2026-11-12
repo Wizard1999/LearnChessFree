@@ -161,7 +161,13 @@ button.big, .button.big { font-size: 1.1rem; min-height: 48px; padding: 0.65rem 
 .lessonrow.inprogress { border-left-color: var(--accent); }
 .lessonrow.inprogress .statusmark { color: var(--accent); }
 .lessonrow.skipped { border-left-color: var(--control-boundary); opacity: 0.8; }
-.lessonrow .actions { margin-left: auto; }
+.lessonrow .actions { margin-left: auto; flex: none; white-space: nowrap; }
+/* Long titles wrap inside their own column: icon fixed on the left, title over one meta line, buttons never pushed down (Andrew, 12 Nov 2026). */
+.lessonrow .lessontext { display: flex; align-items: center; gap: 0.6rem; flex: 1 1 0; min-width: 0; }
+.lessonrow { flex-wrap: nowrap; } .lessonrow .lessontext > .skillicon { flex: none; }
+.lessonrow .lessonwords { display: flex; flex-direction: column; min-width: 0; }
+.lessonrow .lessonwords strong { overflow-wrap: anywhere; }
+@media (max-width: 720px) { .lessonrow { flex-wrap: wrap; } .lessonrow .lessontext { flex-basis: 100%; order: 3; } .lessonrow .actions { margin-left: 0; } }
 
 /* Colour has jobs. Orange (--accent) = the one thing to do next. Blue (--info) = actions and progress in between. Green (--success) = done or solid. Grey = optional. */
 button.primary, .button.primary { background: var(--info); color: var(--on-info); border-color: var(--info); }
