@@ -1,3 +1,4 @@
+import { AppIcon } from './AppIcon'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { subscribeCelebrations, type Celebration } from '../lib/celebrate'
@@ -41,7 +42,7 @@ export function CelebrationLayer() {
           {c.art === 'crest' ? <CrestGlow /> : c.art === 'star' ? <StarGlow /> : <GlassFill from={c.fromLevel} to={c.toLevel} />}
         </div>
         <div className="celebtext">
-          <h2>{c.title}</h2>
+          <h2 className="skilltitle">{c.sticky && c.art !== 'glass' && <AppIcon name={c.art === 'star' ? 'mastery' : 'reward'} size={44} />}{c.title}</h2>
           <p>{c.body}</p>
           {c.next && <p className="celebnext">Next up: <Link to={c.next.to} onClick={dismiss}>{c.next.label}</Link></p>}
         </div>
