@@ -17,5 +17,5 @@ export function useSkillIcons(): Table | null {
   useEffect(() => { let live = true; void loadSkillIcons().then(v => { if (live) setT(v) }); return () => { live = false } }, [])
   return t
 }
-/** Lists show icons from Stage 3 on (stage ids S2 and later): the first two stages and the first game stay free of art (D55, D56, D89). */
-export const stageShowsIcons = (stage?: string) => !!stage && Number(stage.slice(1)) >= 2
+/** Lists show icons in every stage (Andrew, 11 Nov 2026, over the first D89 default); lesson boards, the first game and unanswered exercises stay free of art. */
+export const stageShowsIcons = (_stage?: string) => true
