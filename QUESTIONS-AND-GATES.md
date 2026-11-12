@@ -1,5 +1,9 @@
 # Questions for Andrew and gates only he can open
 
+## Autopilot log
+
+- 2026-11-12 (scheduled run): shipped nothing (no commits). `tools/fetch_scans.py` was running (two python processes) and `git status` showed uncommitted edits I did not make (`tools/fetch_ia_bulk.py`, `app/public/readiness.json`, `app/public/roadmap.json`), so per the playbook I stopped rather than touch them or run `update_roadmap.py`. Nothing waits on Andrew.
+
 I keep working without stopping and log here anything I need from you. **Answer any time by editing this file or telling me; I'll read it at the start of each work session.** Nothing here blocks the rest of the work unless marked **BLOCKS**.
 
 Legend: **Q** question · **G** gate (an action or permission only you can give) · status: OPEN / ANSWERED / DONE.
