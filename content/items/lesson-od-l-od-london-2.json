@@ -1,0 +1,580 @@
+{
+  "positions": [
+    {
+      "id": "P-LODLONDON2-1",
+      "family": "FAM-LODLONDON2",
+      "fen": "rnbq1rk1/pp3ppp/3bpn2/2pp4/3P4/4PNB1/PPPN1PPP/R2QKB1R w KQ - 0 7",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-2",
+      "family": "FAM-LODLONDON2",
+      "fen": "rnbqk2r/ppp2ppp/4pn2/3p4/3P4/4PNb1/PPP2PPP/RN1QKB1R w KQkq - 0 6",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-3",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bq1rk1/p4ppp/1pnbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 0 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-4",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bq1rk1/p4ppp/1pnbpn2/2pp4/3P4/2PBPNB1/PP3PPP/RN1QK2R w KQ - 0 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-5",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1b2rk1/pp2qppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 3 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-6",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bqr1k1/pp3ppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 3 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-7",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bq1rk1/5ppp/ppnbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 0 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-8",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bq1rk1/p4ppp/1pnbpn2/2pp4/3PP3/2PB1NB1/PP1N1PPP/R2QK2R b KQ - 0 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "P-LODLONDON2-9",
+      "family": "FAM-LODLONDON2",
+      "fen": "r1bq1rk1/pp3ppp/2nbpn2/3p4/2pP4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 0 9",
+      "provenance": {
+        "kind": "authored",
+        "ref": "built by replaying a move line with python-chess (see lesson)",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IOD-LODLONDON2-1",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "P-LODLONDON2-1",
+      "prompt": "White to move. Black has attacked d4 with ...c5. Which pawn move completes the triangle behind d4?",
+      "answer": {
+        "moves": [
+          "c2c3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "At depth 16 the pawn move to c3 is the engine's best move or within a few hundredths of it.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c2c3",
+              "d4c5",
+              "a2a4",
+              "f1e2"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "After the pawn move, the pawn on d4 is protected by a pawn.",
+          "type": "pawn_set",
+          "params": {
+            "kind": "protected",
+            "color": "white",
+            "includes": [
+              "d4"
+            ],
+            "after_moves": [
+              "c2c3"
+            ]
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.pyramid",
+        "side.white"
+      ],
+      "hints": [
+        "d4 is attacked once and guarded by the e3 pawn. Which pawn can add a second guard?",
+        "A pawn on c3 guards d4 from the side.",
+        "Play the c-pawn one square."
+      ],
+      "explain": "The pawn on c3 guards d4 together with the pawn on e3, so a capture on d4 can be answered by a pawn recapture. At depth 16 the engine rates c3 and dxc5 within two hundredths of a pawn of each other.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d4c5": "This is also playable, but it gives up the front pawn of the triangle and the pieces then have no fixed squares."
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-2",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "P-LODLONDON2-2",
+      "prompt": "White to move. Black has traded on g3. Which pawn should recapture?",
+      "answer": {
+        "moves": [
+          "h2g3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "At depth 16 the recapture with the h-pawn is the engine's best move or within a few hundredths of it.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "h2g3"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "The move is at least 0.6 pawns worse than the best move at depth 16.",
+          "type": "move_loses",
+          "params": {
+            "move": "f2g3",
+            "cp": 60
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.bishop-trade",
+        "side.white"
+      ],
+      "hints": [
+        "Both the f-pawn and the h-pawn can take. Which one leaves the pawn chain on e3 and f2 intact?",
+        "If the f-pawn takes, what happens to the pawn on e3?",
+        "Recapture with the h-pawn."
+      ],
+      "explain": "The h-pawn takes and leaves the pawns on e3 and f2 where they are, so the triangle in the centre is not weakened. The f-pawn recapture breaks that chain and doubles pawns on g2 and g3.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "f2g3": "This leaves the pawn on e3 without its guard and doubles the g-pawns. The h-pawn takes back and keeps the centre whole."
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-3",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "P-LODLONDON2-3",
+      "prompt": "White to move. Is 9.e4 a sound plan? Count first. Predict, then check.",
+      "answer": {
+        "outcome": "yes",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "At depth 16 the pawn push is the engine's best move or within a few hundredths of it.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e3e4",
+              "d1e2",
+              "e1g1"
+            ],
+            "within_cp": 40
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.e4"
+      ],
+      "hints": [
+        "Count the guards of e4 and the attackers of e4.",
+        "Are all your pieces developed?",
+        "After the exchanges, is any of your pieces left undefended?"
+      ],
+      "explain": "The knight and the bishop guard e4 twice against the pawn on d5 and the knight on f6, and nothing is undefended, so the exchanges end level or better for White.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-4",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "P-LODLONDON2-4",
+      "prompt": "White to move. Only one thing is different: the queen's knight is still on b1 instead of d2. Is 9.e4 a sound plan? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The move is at least 2.8 pawns worse than the best move at depth 16.",
+          "type": "move_loses",
+          "params": {
+            "move": "e3e4",
+            "cp": 280
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.e4"
+      ],
+      "hints": [
+        "Who guards e4 now?",
+        "If Black takes on e4, which white pieces are attacked by the black pawn?",
+        "The pawn would attack the knight and the bishop at once."
+      ],
+      "explain": "Only the bishop guards e4, so after the capture the pawn on e4 attacks both the bishop on d3 and the knight on f3 and White cannot save both. The condition that fails is the first one, the count of guards.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-5",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "P-LODLONDON2-5",
+      "prompt": "White to move. Black has played the queen to e7. Which move uses the pawn on d4 as a support?",
+      "answer": {
+        "moves": [
+          "f3e5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "At depth 16 the knight jump is the engine's best move or within a few hundredths of it.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "f3e5"
+            ],
+            "within_cp": 40
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.knight-e5",
+        "side.white"
+      ],
+      "hints": [
+        "Which square in front of the d4 pawn can a knight reach?",
+        "A knight on e5 would be guarded by the d4 pawn and attack c6.",
+        "Play the f3 knight to e5."
+      ],
+      "explain": "The knight on f3 can jump to e5, where the d4 pawn guards it and it attacks the knight on c6 and the pawn on f7. In our masters data White played it in all 35 games, and the engine rates it best at depth 16.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "e3e4": "Also playable (only about 0.1 pawns lower). The jump uses the d4 pawn, which is what this question asks for."
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-6",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 2,
+      "task": "predict_outcome",
+      "position": "P-LODLONDON2-6",
+      "prompt": "White to move. Black has put a rook on e8. Is 9.h4 safe? Predict, then check.",
+      "answer": {
+        "outcome": "no",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The move is at least 3.7 pawns worse than the best move at depth 16.",
+          "type": "move_loses",
+          "params": {
+            "move": "h2h4",
+            "cp": 370
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.2",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.h4",
+        "side.white"
+      ],
+      "hints": [
+        "Which pawn recaptures if Black trades bishops on g3?",
+        "Once the f-pawn takes, what is left of the pawn chain e3 and f2?",
+        "Black gets a strong break in the centre."
+      ],
+      "explain": "After the trade on g3 the f-pawn must recapture, and e3 is weak; Black can break in the centre with ...e5. The h-pawn would have been the right recapture, but it has left h2.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-7",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LODLONDON2-7",
+      "prompt": "White to move. Black has kept the queen at home. Pick a sound move.",
+      "answer": {
+        "moves": [
+          "e3e4",
+          "d1e2",
+          "f3e5",
+          "e1g1"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "The pawn push, the queen move, the knight jump and castling are each within 0.4 pawns of the engine's first choice (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e3e4",
+              "d1e2",
+              "f3e5",
+              "e1g1"
+            ],
+            "within_cp": 40
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.3",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "side.white",
+        "setup.plan"
+      ],
+      "hints": [
+        "Count the guards of e4, and look at which pieces are still undeveloped.",
+        "Several plans work here: a pawn break, a knight jump, a queen move or castling.",
+        "Pick any one of them."
+      ],
+      "explain": "With the queen at home and the pawn chain solid, White has several sound plans: the push on e4 (two guards against two attackers), the queen to e2, the knight jump to e5 (supported by d4) and castling. At depth 16 all four are close to the engine's first choice.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-8",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LODLONDON2-8",
+      "prompt": "Black to move. White has pushed e4. Find a sound reply.",
+      "answer": {
+        "moves": [
+          "d6e7",
+          "f6h5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "...Be7 and ...Nh5 are within 0.4 pawns of the engine's first choice (depth 16).",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d6e7",
+              "f6h5"
+            ],
+            "within_cp": 40
+          }
+        },
+        {
+          "id": "C2",
+          "statement": "The move is at least 3.1 pawns worse than the best move at depth 16.",
+          "type": "move_loses",
+          "params": {
+            "move": "c8b7",
+            "cp": 310
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.3",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.e4",
+        "side.black"
+      ],
+      "hints": [
+        "White threatens to push the pawn to e5 and attack the knight.",
+        "The bishop on d6 or the knight on f6 can move first.",
+        "Step the bishop back or the knight to h5."
+      ],
+      "explain": "Black can avoid the push to e5 by moving the bishop out of the way or the knight to the rim. ...Bc7 and the capture on e4 are playable but about half a pawn worse (depth 16). The developing move ...Bb7 ignores the threat on e5 and the knight on f6.",
+      "orientation": "black",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "feedback_by_move": {
+        "d5e4": "Playable, but about half a pawn worse than ...Be7 (depth 16): the exchanges open lines for White's pieces.",
+        "d6c7": "Playable, but about half a pawn worse than ...Be7 (depth 16)."
+      }
+    },
+    {
+      "id": "IOD-LODLONDON2-9",
+      "skill": "OPN.TRAPS.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "P-LODLONDON2-9",
+      "prompt": "White to move. The pawn on c4 attacks the bishop on d3. Find a retreat that keeps the set-up.",
+      "answer": {
+        "moves": [
+          "d3c2",
+          "d3b1"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "statement": "At depth 16 the two bishop retreats are within a few hundredths of a pawn.",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "d3c2",
+              "d3b1"
+            ],
+            "within_cp": 40
+          }
+        }
+      ],
+      "tags": [
+        "lang.en",
+        "kind.authored",
+        "cue.3",
+        "node.OPN.TRAPS",
+        "lesson.od-london-2",
+        "od.london",
+        "setup.bishop-retreat",
+        "side.white"
+      ],
+      "hints": [
+        "The bishop is attacked by a pawn. It must move, and it should keep its diagonal.",
+        "The squares c2 and b1 stay on the same diagonal.",
+        "Retreat to c2 or b1."
+      ],
+      "explain": "The bishop steps back along the same diagonal, so it still aims at the kingside and keeps e4 covered together with the knight.",
+      "orientation": "white",
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      }
+    }
+  ]
+}

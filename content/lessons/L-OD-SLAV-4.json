@@ -1,0 +1,947 @@
+{
+ "id": "L-OD-SLAV-4",
+ "course": "opening-deep-dives",
+ "series": "slav",
+ "title": "Slav Defense: tactics and traps",
+ "skill": "OPN.TRAPS",
+ "depth": "D2",
+ "uses": [
+  "OPN.TRAPS",
+  "SAF.THREAT",
+  "SAF.COUNT",
+  "OPN.PRINCIPLES"
+ ],
+ "minutes": 18,
+ "outcomes": [
+  "Before a quiet move in the Slav, names the opponent's best check, capture and threat, and checks which of her own pieces are attacked",
+  "Finds the refutation of four Slav traps: the knight fork on f7 and the check on the long diagonal, bxc3 against Bxc4, Bxb4+ against Nxb4, exf5 against castling; and meets the fifth, the loose pawn on b7, by attacking the queen with ...Na5",
+  "Decides whether a knight sacrifice on f7 works by checking where the bishop and rook stand and whether the diagonal from f3 is empty",
+  "Reads opening statistics as game results with a stated sample size (masters data, 329,379 games), not as proof that a move is good"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**A trap is a natural move that loses to one forcing reply.** The move looks sensible; the reply is a check, a capture or a threat the mover did not look for. Five Slav Defense traps follow: two catch White, three catch Black. Each is checked move by move and teaches one habit: before a quiet move, list the opponent's best check, capture and threat.",
+   "chapter": "Where traps live"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pp2pppp/2p5/3p4/2PP4/5N2/PP2PPPP/RNBQKB1R b KQkq - 1 3",
+   "caption": "Four of the five traps start from here, each after a different fifth move; the fifth is in the Exchange Slav. Step through three moves, then count: how many white pieces are developed, how many black, and who is a pawn up?",
+   "line": [
+    {
+     "move": "g8f6",
+     "say": "...Nf6 develops and also guards d5."
+    },
+    {
+     "move": "b1c3",
+     "say": "Nc3 develops and puts a second white piece on d5."
+    },
+    {
+     "move": "d5c4",
+     "say": "...dxc4 takes the pawn: Black is a pawn up for now, with one piece out against White's two."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "d5",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "After ...c6 exactly one black pawn (c6) guards d5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c4",
+      "piece": "p",
+      "after_moves": [
+       "g8f6",
+       "b1c3",
+       "d5c4"
+      ]
+     },
+     "statement": "After ...dxc4 the black pawn stands on c4."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What strong players do** [V]. Our masters data has 329,379 games (both players 2500 or more). Here White pushed the e-pawn to e4 in 185 games (78 White wins, 56 draws, 51 Black wins), and Black answered ...b5 in 179. Only 17 games reach the next section. These are game results, not evaluations; each trap below is proved by an engine check at depth 16."
+  },
+  {
+   "type": "card",
+   "text": "**Trap 1: the fork on f7 (Black falls).** In the line ahead White trades knights and gets a clear diagonal for the queen. Watch what White's pieces aim at: a knight heading for g5 and a queen that can reach h5 or f3. Black's king stands on e8 and the rook on a8. The board shows how the pieces arrive.",
+   "chapter": "Trap 1: the fork on f7"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/p4ppp/2p1p3/1p1nP3/P1pP4/2N2N2/1P3PPP/R1BQKB1R w KQkq - 0 8",
+   "caption": "White to move after 7...e6. Step through the three exchanges: axb5, ...Nxc3, bxc3.",
+   "line": [
+    {
+     "move": "a4b5",
+     "say": "axb5 takes the pawn on b5 and attacks the pawn on c6."
+    },
+    {
+     "move": "d5c3",
+     "say": "...Nxc3 trades off the knight that was attacking d5 and c3."
+    },
+    {
+     "move": "b2c3",
+     "say": "bxc3 retakes with the b-pawn."
+    }
+   ],
+   "arrows": [],
+   "highlight": [
+    "a4",
+    "b5",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b5",
+      "includes": [
+       "c6"
+      ],
+      "after_moves": [
+       "a4b5"
+      ]
+     },
+     "statement": "After axb5 the pawn on b5 attacks c6."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/p4ppp/2p1p3/1P2P3/2pP4/2P2N2/5PPP/R1BQKB1R b KQkq - 0 9",
+   "caption": "Black to move. ...cxb5 wins the pawn back, then Ng5. Stop on the last position: Black to move, the knight on g5 attacking f7.",
+   "line": [
+    {
+     "move": "c6b5",
+     "say": "...cxb5 wins back the pawn."
+    },
+    {
+     "move": "f3g5",
+     "say": "Ng5 attacks f7, which only the king defends."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g5",
+     "to": "f7"
+    },
+    {
+     "from": "d1",
+     "to": "h5"
+    }
+   ],
+   "highlight": [
+    "f7",
+    "g5",
+    "d1"
+   ],
+   "claims": [
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "g5",
+      "includes": [
+       "f7"
+      ],
+      "after_moves": [
+       "c6b5",
+       "f3g5"
+      ]
+     },
+     "statement": "After Ng5 the knight attacks f7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c6b5",
+       "f3g5"
+      ]
+     },
+     "statement": "After Ng5 exactly one black piece (the king) defends f7."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d1",
+      "includes": [
+       "h5",
+       "f3"
+      ],
+      "after_moves": [
+       "c6b5",
+       "f3g5"
+      ]
+     },
+     "statement": "After Ng5 the queen on d1 attacks h5 and f3."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Count before you panic.** The knight attacks f7 once and the king defends it once, so Nxf7 gives up a knight for a pawn unless the next move is very forcing. Look at the long diagonal from f3 to a8: nothing stands on it. The next board shows what happens if Black plays a quiet pawn move. With best play (...Bb7) the engine prefers Black here: the trap only catches a player who misses the threat."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/5ppp/p3p3/1p2P1N1/2pP4/2P5/5PPP/R1BQKB1R w KQkq - 0 11",
+   "caption": "White to move after 10...a6, a quiet pawn move by Black that ignores f7. Step through the punishment: Nxf7, ...Kxf7, Qf3+.",
+   "line": [
+    {
+     "move": "g5f7",
+     "say": "Nxf7 gives up the knight for a pawn, which pays only if what follows is forcing."
+    },
+    {
+     "move": "e8f7",
+     "say": "...Kxf7 wins the knight."
+    },
+    {
+     "move": "d1f3",
+     "say": "Qf3+ checks the king and, on the same diagonal, attacks the rook on a8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "a8"
+    }
+   ],
+   "highlight": [
+    "f7",
+    "a8",
+    "f3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "g5f7",
+      "min": 2
+     },
+     "statement": "Nxf7 wins at least two pawns of material along the engine's best line."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "includes": [
+       "f7"
+      ],
+      "after_moves": [
+       "g5f7",
+       "e8f7",
+       "d1f3"
+      ]
+     },
+     "statement": "After Nxf7 Kxf7 Qf3+ the queen on f3 attacks f7, where the king stands."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1b1r/5kpp/p3p3/1p2P3/2pP4/2P2Q2/5PPP/R1B1KB1R b KQ - 1 12",
+   "caption": "Black to move, in check from the queen on f3. ...Ke8 is forced; then the queen takes the rook.",
+   "line": [
+    {
+     "move": "f7e8",
+     "say": "...Ke8 leaves check, and the rook on a8 is still attacked."
+    },
+    {
+     "move": "f3a8",
+     "say": "Qxa8 takes the rook: White has won a rook and a pawn for a knight."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "a8"
+    }
+   ],
+   "highlight": [
+    "f7",
+    "a8",
+    "f3"
+   ],
+   "claims": [
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "includes": [
+       "a8"
+      ],
+      "after_moves": [
+       "f7e8"
+      ]
+     },
+     "statement": "After Nxf7 Kxf7 Qf3+ Ke8 the queen on f3 attacks the rook on a8."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-1"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/p4ppp/4p3/1p2P1N1/2pP4/2P5/5PPP/R1BQKB1R b KQkq - 1 10",
+   "caption": "Back to the position with the knight on g5 and Black to move. Step through the main defence and stop after the queen arrives on h5.",
+   "line": [
+    {
+     "move": "c8b7",
+     "say": "...Bb7 develops and stands on the long diagonal, so a queen on f3 would meet the bishop."
+    },
+    {
+     "move": "d1h5",
+     "say": "Qh5 adds a second attacker on f7 and brings the queen into play."
+    },
+    {
+     "move": "g7g6",
+     "say": "...g6 blocks the queen's line to f7 and attacks the queen."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b7",
+     "to": "f3"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "g5",
+    "h5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b7",
+      "includes": [
+       "c6",
+       "d5",
+       "e4",
+       "f3",
+       "g2"
+      ],
+      "after_moves": [
+       "c8b7"
+      ]
+     },
+     "statement": "After ...Bb7 the bishop attacks c6, d5, e4, f3 and g2."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "c8b7",
+       "d1h5"
+      ]
+     },
+     "statement": "After Qh5 two white pieces (knight and queen) attack f7."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "h5",
+      "excludes": [
+       "f7"
+      ],
+      "after_moves": [
+       "c8b7",
+       "d1h5",
+       "g7g6"
+      ]
+     },
+     "statement": "After ...g6 the queen on h5 no longer attacks f7."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "h5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "c8b7",
+       "d1h5",
+       "g7g6"
+      ]
+     },
+     "statement": "After ...g6 exactly one black pawn (g6) attacks h5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-2"
+  },
+  {
+   "type": "contrast",
+   "title": "One piece moves, the fork stops working",
+   "prompt": "White to move after Black's quiet ...a6. In all three positions White considers Nxf7. Predict for each whether it wins material, then check. Each of the second and third differs from the first by one small feature: find it in the reveal.",
+   "working": "IODslav4-3",
+   "failing": "IODslav4-4",
+   "irrelevant": "IODslav4-5"
+  },
+  {
+   "type": "card",
+   "text": "**Condition, not rule.** The fork needs all of these: the bishop still on c8, the rook still on a8, the diagonal from f3 empty, and a king that must recapture on f7. Remove one (play ...Bb7 first) and the same sacrifice just loses a knight. Evidence [V]: engine depth 16. Our masters tree has 11 games reaching ...e6 here and none beyond, so this trap is proved by the engine, not by played games."
+  },
+  {
+   "type": "card",
+   "text": "**Traps 2 and 3: the pawn on b4 (White falls).** A pawn that attacks a knight is a threat that costs the attacker nothing. After ...b5 and ...b4 the knight on c3 must be dealt with at once. White's natural wish is to win the c4 pawn back, and two natural ways of doing it lose a piece. Both grow from the same attacked knight. First the set-up.",
+   "chapter": "Traps 2 and 3: the pawn on b4"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pppp/2p2n2/8/2pP4/2N1PN2/PP3PPP/R1BQKB1R b KQkq - 0 5",
+   "caption": "Black to move after 5.e3. Black defends the extra pawn with a pawn chain. Step through to the position White must now meet.",
+   "line": [
+    {
+     "move": "b7b5",
+     "say": "...b5 defends the pawn on c4, so White cannot win it back at once."
+    },
+    {
+     "move": "a2a4",
+     "say": "a4 attacks the pawn on b5 to undermine its support."
+    },
+    {
+     "move": "b5b4",
+     "say": "...b4 attacks the knight on c3 with a pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "c3",
+    "c4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7b5"
+      ]
+     },
+     "statement": "After ...b5 exactly one black pawn (b5) defends c4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b7b5",
+       "a2a4"
+      ]
+     },
+     "statement": "After a4 exactly one white pawn (a4) attacks b5."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7b5",
+       "a2a4",
+       "b5b4"
+      ]
+     },
+     "statement": "After ...b4 exactly one black pawn (b4) attacks c3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-6"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/p3pppp/2p2n2/8/PppP4/2N1PN2/1P3PPP/R1BQKB1R w KQkq - 0 7",
+   "caption": "White to move. Step through the move that wins the pawn back, and watch what the pawn on b4 does.",
+   "line": [
+    {
+     "move": "f1c4",
+     "say": "Bxc4 wins the pawn back but leaves the knight attacked."
+    },
+    {
+     "move": "b4c3",
+     "say": "...bxc3 takes the knight with the pawn."
+    },
+    {
+     "move": "b2c3",
+     "say": "bxc3 retakes the pawn, but White has paid a knight for it."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "c3",
+    "c4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f1c4"
+      ]
+     },
+     "statement": "After Bxc4 exactly one black pawn (b4) still attacks c3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "p",
+      "after_moves": [
+       "f1c4",
+       "b4c3"
+      ]
+     },
+     "statement": "After ...bxc3 a black pawn stands on c3."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "f1c4",
+      "cp": 200
+     },
+     "statement": "At depth 16 Bxc4 is rated at least two pawns worse than the best move."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-7"
+  },
+  {
+   "type": "card",
+   "text": "**What masters do** [V]. In our masters data 22 games played 5.e3, and 18 of them went on with the pawn moves you stepped through. In the 8 games that continue past the attacked knight, White retreated it to b1 every time (no White wins, 7 draws, 1 Black win). Tiny samples. The second trap needs a different retreat: the knight goes to a2 and Black plays ...e6."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/p4ppp/2p1pn2/8/PppP4/4PN2/NP3PPP/R1BQKB1R w KQkq - 0 8",
+   "caption": "White to move. The pawn on b4 is the pawn that chased the knight. Is it really free? Step through what happens if White takes it.",
+   "line": [
+    {
+     "move": "a2b4",
+     "say": "Nxb4 grabs the pawn that had chased the knight."
+    },
+    {
+     "move": "f8b4",
+     "say": "...Bxb4+ takes the knight with check: ...e6 had opened this diagonal."
+    },
+    {
+     "move": "c1d2",
+     "say": "Bd2 blocks the check and offers a bishop trade."
+    },
+    {
+     "move": "b4d2",
+     "say": "...Bxd2+ trades bishops, and Black has won a knight for a pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "f8",
+     "to": "b4"
+    }
+   ],
+   "highlight": [
+    "b4",
+    "a2",
+    "f8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f8",
+      "includes": [
+       "b4"
+      ]
+     },
+     "statement": "The bishop on f8 attacks b4 (the diagonal through e7, d6 and c5 is open)."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "a2b4",
+      "max": -2
+     },
+     "statement": "Nxb4 loses at least two pawns of material for White along the engine's best line."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-8"
+  },
+  {
+   "type": "card",
+   "text": "**Sure material can be the trap.** Both White mistakes took something: the pawn on c4, the pawn on b4. A free pawn is only free if the capture does not leave a piece attacked. Before a capture, ask what the opponent's best capture wins afterwards. Evidence [V]: both claims are depth-16 engine checks; in our masters data the 8 games that continue all retreat the knight to b1."
+  },
+  {
+   "type": "card",
+   "text": "**Trap 4: castling while a bishop hangs (Black falls).** Castling is a good habit, which is why it is a trap. In this line the bishop has gone out to f5 before ...e6, and White's last pawn move attacks it. A habit move ignores the attack. Ask first: is any of my pieces attacked? The board shows how the position arises.",
+   "chapter": "Trap 4: castling while a bishop hangs"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pppp/2p2n2/8/P1pP4/2N2N2/1P2PPPP/R1BQKB1R b KQkq - 0 5",
+   "caption": "Black to move after 5.a4. Step through ...Bf5, Ne5 and ...e6: the bishop goes out before the e-pawn closes it in.",
+   "line": [
+    {
+     "move": "c8f5",
+     "say": "...Bf5 develops the bishop outside the pawn chain before ...e6 closes it in."
+    },
+    {
+     "move": "f3e5",
+     "say": "Ne5 centralises the knight and attacks the pawn on c4."
+    },
+    {
+     "move": "e7e6",
+     "say": "...e6 supports the centre and opens the diagonal of the f8 bishop."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "f5",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e5",
+      "includes": [
+       "c4",
+       "c6"
+      ],
+      "after_moves": [
+       "c8f5",
+       "f3e5"
+      ]
+     },
+     "statement": "After Ne5 the knight attacks c4 and c6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f8",
+      "includes": [
+       "b4"
+      ],
+      "after_moves": [
+       "c8f5",
+       "f3e5",
+       "e7e6"
+      ]
+     },
+     "statement": "After ...e6 the bishop on f8 attacks b4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/pp3ppp/2p1pn2/4Nb2/P1pP4/2N5/1P2PPPP/R1BQKB1R w KQkq - 0 7",
+   "caption": "White to move. f3 prepares e4, ...Bb4 hits the knight, and e4 attacks the bishop on f5. Stop on the last position.",
+   "line": [
+    {
+     "move": "f2f3",
+     "say": "f3 prepares e4 by guarding that square with a pawn."
+    },
+    {
+     "move": "f8b4",
+     "say": "...Bb4 attacks the knight on c3."
+    },
+    {
+     "move": "e2e4",
+     "say": "e4 attacks the bishop on f5 with a pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e4",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "f5",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C3",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f2f3"
+      ]
+     },
+     "statement": "After f3 exactly one white pawn (f3) guards e4."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b4",
+      "includes": [
+       "c3"
+      ],
+      "after_moves": [
+       "f2f3",
+       "f8b4"
+      ]
+     },
+     "statement": "After ...Bb4 the bishop attacks c3."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f2f3",
+       "f8b4",
+       "e2e4"
+      ]
+     },
+     "statement": "After e4 exactly one white pawn (e4) attacks f5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-9"
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-10"
+  },
+  {
+   "type": "card",
+   "text": "**What masters do** [V]. In our masters data 27 games reached this position, and in all 27 Black took the pawn on e4 (3 White wins, 18 draws, 6 Black wins). Nobody castled. The lesson of the trap is the question, not the position: a quiet, sensible move is wrong whenever one of your pieces is attacked and the move does not help it."
+  },
+  {
+   "type": "card",
+   "text": "**Trap 5: the loose pawn on b7 (Black can fall).** In the Exchange Slav the c-pawns disappear and the b-file opens. After ...Bf5 nothing guards b7, and Qb3 attacks it. ...Bf5 is not the mistake. The mistake is answering the threat with an unrelated counter-attack. A pawn is a target when something attacks it and nothing defends it: count before you reply.",
+   "chapter": "Trap 5: the loose pawn on b7"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/1p2pppp/p1n2n2/3p4/3P1B2/2N1PN2/PP3PPP/R2QKB1R b KQkq - 0 7",
+   "caption": "The Exchange Slav after 3.cxd5 cxd5 4.Nc3 Nf6 5.Nf3 Nc6 6.Bf4 a6 7.e3: natural development. Black to move. Step through ...Bf5 and Qb3; the last position has Black to move.",
+   "line": [
+    {
+     "move": "c8f5",
+     "say": "...Bf5 develops outside the chain as well, which leaves b7 with no defender."
+    },
+    {
+     "move": "d1b3",
+     "say": "Qb3 attacks b7 along the b-file and d5 along the diagonal."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "b7"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "b3",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c6",
+      "includes": [
+       "d4"
+      ]
+     },
+     "statement": "The knight on c6 attacks d4."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Exactly one black pawn (a6) attacks b5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "b7",
+      "color": "black",
+      "count": 0,
+      "after_moves": [
+       "c8f5"
+      ]
+     },
+     "statement": "After ...Bf5 no black piece defends b7."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b3",
+      "includes": [
+       "b7",
+       "d5"
+      ],
+      "after_moves": [
+       "c8f5",
+       "d1b3"
+      ]
+     },
+     "statement": "After Qb3 the queen attacks b7 and d5."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-11"
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-12"
+  },
+  {
+   "type": "card",
+   "text": "**What masters do** [V]. In our masters data 125 games reach the position after 7.e3, and 27 continue with ...Bf5 (1 White win, 22 draws, 4 Black wins). Qb3 is not among the replies listed afterwards, so this trap is engine-proved but rare among masters. ...Bf5 is fine for Black if the reply to Qb3 is ...Na5, which attacks the queen (the engine rates it about equal). Only an unrelated reply loses the pawn."
+  },
+  {
+   "type": "card",
+   "text": "**The test to take with you.** Before a quiet move, name the opponent's best check, best capture and best threat, and ask whether your move allows it. Each trap here was one of them: a queen check, a pawn taking a piece, a queen taking a pawn. Note: every \"loses\" here is an engine number at depth 16, not a proof of best play.",
+   "chapter": "The test to take with you"
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-13",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODslav4-14",
+   "silent": true
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Take any position from this lesson. Before the quiet move, write the opponent's best check, best capture and best threat. Then say which of your own pieces was attacked.",
+   "fields": [
+    {
+     "id": "check",
+     "label": "The opponent's best check:"
+    },
+    {
+     "id": "capture",
+     "label": "The opponent's best capture:"
+    },
+    {
+     "id": "threat",
+     "label": "The opponent's best threat:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Move orders and names: Slav Defense (ECO D10-D19), checked against app/public/openings [V]",
+  "Masters statistics: app/public/masters/stats.json (329,379 games, both players 2500 or more, built 2026-10-29); counts quoted exactly from the tree rows [V]",
+  "Engine claims: Stockfish 19 lite, single thread, depth 16, in content/items/lesson-od-slav-4.json and this lesson's board claims [V]",
+  "Positions: replayed from move sequences with python-chess; two are stated one-feature edits (provenance in the item file)",
+  "Core skill used: content/skills/OPN.TRAPS.json; docs/course-families.md"
+ ]
+}

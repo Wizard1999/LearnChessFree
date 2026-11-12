@@ -1,0 +1,450 @@
+{
+  "positions": [
+    {
+      "id": "PODF5-1",
+      "fen": "rnbqk2r/pp2nppp/4p3/2ppP3/3P4/P1P5/2P2PPP/R1BQKBNR w KQkq - 0 7",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "Anand-Xiong, Tata Steel Masters 2020 (record in the Lichess broadcast database, CC0): position after 6...c5, replayed with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PODF5-2",
+      "fen": "rnb2k1r/p1q1npp1/1p2p3/2ppP1Bp/3P3P/P1P5/2P2PP1/R2QKBNR w KQ - 2 11",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "same game, after 10...Qc7, replayed with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PODF5-3",
+      "fen": "rnb2k1r/p1q1npp1/1p2p3/2ppP1Bp/3P3P/P1P4R/2P2PP1/R2QKBN1 b Q - 3 11",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "same game, after 11.Rh3, replayed with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PODF5-4",
+      "fen": "r4k1r/p1qn1p2/1p2p1p1/3pPnB1/3P1NQP/P1P4R/5P2/R3K3 w Q - 1 19",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "same game, after 18...Nd7, replayed with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PODF5-5",
+      "fen": "4k1r1/p4p2/1p2n3/3pPR2/2PP2r1/P3B3/2RKQP2/1q6 w - - 1 32",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "same game, after 31...Rg4, replayed with python-chess",
+        "licence": "project"
+      }
+    },
+    {
+      "id": "PODF5-6",
+      "fen": "rnb2k1r/p1q1npp1/1p2p3/3pP1Bp/3P3P/P6R/2P2PP1/R2QKBN1 b Q - 0 12",
+      "family": "FAM-ODF5",
+      "provenance": {
+        "kind": "game",
+        "ref": "same game, after 12.cxd4, replayed with python-chess",
+        "licence": "project"
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "IODF5-1",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 1,
+      "task": "select_squares",
+      "position": "PODF5-1",
+      "prompt": "Tap the white pawns that are doubled.",
+      "answer": {
+        "squares": [
+          "c2",
+          "c3"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_set",
+          "params": {
+            "kind": "doubled",
+            "color": "white",
+            "squares": [
+              "c2",
+              "c3"
+            ]
+          },
+          "statement": "White's doubled pawns are on c2 and c3."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "task.select_squares",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Doubled pawns stand on the same file.",
+        "Look at the c-file, where Black's bishop captured.",
+        "The pawns on c2 and c3."
+      ],
+      "explain": "The black bishop took the knight on c3 and the b-pawn recaptured, so White has two pawns on the c-file. Doubled pawns cannot guard each other and often become targets. Here they come with the bishop pair as compensation.",
+      "orientation": "white"
+    },
+    {
+      "id": "IODF5-2",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 1,
+      "task": "classify_position",
+      "position": "PODF5-1",
+      "prompt": "Who owns the bishop pair here?",
+      "answer": {
+        "class": "white",
+        "options": [
+          "white",
+          "black",
+          "both",
+          "neither"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "bishop_pair",
+          "params": {
+            "holders": [
+              "white"
+            ]
+          },
+          "statement": "Only White owns two bishops (one on each colour of square)."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.1",
+        "kind.authored",
+        "lang.en",
+        "task.classify_position",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Count the bishops each side still has.",
+        "Black traded its dark-squared bishop for the knight.",
+        "White has both bishops."
+      ],
+      "explain": "Black gave up the dark-squared bishop for the knight on c3, so Black has one bishop left and White still has two. The bishop pair is White's long-term asset in the structure.",
+      "orientation": "white"
+    },
+    {
+      "id": "IODF5-3",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PODF5-2",
+      "prompt": "White to move. White's rook on h1 has no open file. Find a good way to bring a piece into play.",
+      "answer": {
+        "moves": [
+          "g1f3",
+          "h1h3",
+          "a1c1",
+          "g5e7",
+          "d1d2",
+          "f1e2"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "g1f3",
+              "h1h3",
+              "a1c1",
+              "g5e7",
+              "d1d2",
+              "f1e2"
+            ],
+            "within_cp": 30
+          },
+          "statement": "Nf3, Rh3, Rc1, Bxe7+, Qd2 and Be2 are all within 0.3 pawns of the engine's best (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "piece_attacks",
+          "params": {
+            "square": "h3",
+            "squares": [
+              "c3",
+              "d3",
+              "e3",
+              "f3",
+              "g3",
+              "h1",
+              "h2",
+              "h4"
+            ],
+            "after_move": "h1h3"
+          },
+          "statement": "From h3 the rook attacks along the third rank as far as the pawn on c3."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "task.find_move",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Count the white pieces still on their starting squares.",
+        "A rook can leave the corner by changing rank instead of file.",
+        "Develop a piece, or lift the rook to the third rank."
+      ],
+      "explain": "White has several good ideas here: finish development with the knight, lift the rook to the third rank, trade on e7, or bring the queen or the other bishop out. All are within 0.3 pawns of the engine's best at depth 16. The game continued with the rook lift.",
+      "orientation": "white"
+    },
+    {
+      "id": "IODF5-4",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PODF5-3",
+      "prompt": "Black to move. White's pawns on c2 and c3 are doubled, and the pawn on c5 can capture on d4. Find a sound move. Be careful with that capture.",
+      "answer": {
+        "moves": [
+          "e7f5",
+          "c8a6"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "e7f5",
+              "c8a6"
+            ],
+            "within_cp": 30
+          },
+          "statement": "...Nf5 and ...Ba6 are within 0.3 pawns of the engine's best (depth 16)."
+        },
+        {
+          "id": "C2",
+          "type": "move_loses",
+          "params": {
+            "move": "c5d4",
+            "cp": 70
+          },
+          "statement": "...cxd4 is at least 70 cp worse than the best move (depth 16)."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "task.find_move",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Before you capture, ask what the capture changes in the opponent's pawns.",
+        "After ...cxd4 cxd4, which white pawn is left on the c-file?",
+        "...cxd4 repairs White's doubled pawns."
+      ],
+      "explain": "After ...cxd4 cxd4 White's doubled c-pawns are gone: one pawn became a healthy pawn on d4. Black has traded White's weakness away. The quiet developing moves keep the tension. At depth 16 the capture is at least 0.7 pawns worse than the best move.",
+      "orientation": "black",
+      "feedback_by_move": {
+        "c5d4": "The capture repairs White's doubled pawns and gives White a d4-e5 chain; the engine rates it at least 0.7 pawns worse than the best quiet move (depth 16)."
+      }
+    },
+    {
+      "id": "IODF5-5",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PODF5-4",
+      "prompt": "White to move. The queen has captured on g4 and the black king is on f8. Find a good move; several are close.",
+      "answer": {
+        "moves": [
+          "a1c1",
+          "h4h5",
+          "e1f1",
+          "e1d2"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "a1c1",
+              "h4h5",
+              "e1f1",
+              "e1d2"
+            ],
+            "within_cp": 30
+          },
+          "statement": "Rc1, h5, Kf1 and Kd2 are within 0.3 pawns of the engine's best (depth 16)."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "task.find_move",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Which pawn lever could open a file for a rook?",
+        "A rook on c1 stands behind the c3 pawn and supports c3-c4; the h-pawn can also advance.",
+        "Put the rook on c1, or push the h-pawn."
+      ],
+      "explain": "The rook goes to c1 behind the c3 pawn: the file is closed now, but c3-c4 will open it later. The h-pawn push is the other plan, and the king moves keep everything protected; the engine rates all four within 0.3 pawns at depth 16. The game played Rc1.",
+      "orientation": "white",
+      "feedback_by_move": {
+        "h4h5": "A good plan: the pawn gains space against the king. The game chose the rook first.",
+        "e1f1": "Safe and close to the engine's best, but it does not yet start a plan.",
+        "e1d2": "Safe and close to the engine's best, but it does not yet start a plan."
+      }
+    },
+    {
+      "id": "IODF5-6",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 2,
+      "task": "find_move",
+      "position": "PODF5-5",
+      "prompt": "White to move. Black's rook has just gone to g4. Find White's best move.",
+      "answer": {
+        "moves": [
+          "c4d5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c4d5"
+            ],
+            "within_cp": 40
+          },
+          "statement": "cxd5 is the engine's best move (depth 16)."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.2",
+        "kind.authored",
+        "lang.en",
+        "task.find_move",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Which white pawn can capture something?",
+        "The capture also frees the c-file for the rook.",
+        "The pawn takes on d5."
+      ],
+      "explain": "The pawn on c4 takes on d5, wins a pawn and opens the c-file for the rook on c2 and the d-file for the bishop. At depth 16 it is the engine's best move.",
+      "orientation": "white"
+    },
+    {
+      "id": "IODF5-7",
+      "skill": "OPN.STRUCT.D2",
+      "cue": 3,
+      "task": "find_move",
+      "position": "PODF5-6",
+      "prompt": "Black to move. Find a sound move.",
+      "answer": {
+        "moves": [
+          "c8a6",
+          "e7f5"
+        ]
+      },
+      "claims": [
+        {
+          "id": "C1",
+          "type": "best_move_in",
+          "params": {
+            "moves": [
+              "c8a6",
+              "e7f5"
+            ],
+            "within_cp": 30
+          },
+          "statement": "...Ba6 and ...Nf5 are within 0.3 pawns of the engine's best (depth 16)."
+        }
+      ],
+      "review": {
+        "status": "needs-human",
+        "reviewer": null
+      },
+      "tags": [
+        "opening.french",
+        "course.opening-deep-dives",
+        "cue.3",
+        "kind.authored",
+        "lang.en",
+        "task.find_move",
+        "game.anand-xiong-2020"
+      ],
+      "hints": [
+        "Count which black pieces are still at home.",
+        "The bishop on c8 is Black's problem piece.",
+        "The bishop can trade itself off on a6, or a knight can go to f5."
+      ],
+      "explain": "Both moves develop a piece and keep the tension; they are the engine's top two at depth 16. The pawn capture on d4 is no longer available, so the choice is about development.",
+      "orientation": "black"
+    }
+  ]
+}

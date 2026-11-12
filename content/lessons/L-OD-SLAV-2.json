@@ -1,0 +1,860 @@
+{
+ "id": "L-OD-SLAV-2",
+ "course": "opening-deep-dives",
+ "title": "Slav Defense: the structure and the pawn breaks",
+ "skill": "OPN.STRUCT",
+ "depth": "D2",
+ "series": "slav",
+ "uses": [
+  "OPN.STRUCT",
+  "POS.STRUCTURE.CHAIN",
+  "OPN.PRINCIPLES"
+ ],
+ "minutes": 16,
+ "outcomes": [
+  "Reads the c6-d5 pawn chain: which pawn protects which, where the base is, and why the head pawn is the one both sides aim at",
+  "Names Black's pawn breaks (c-pawn and e-pawn against d4, and b5 after the c4 pawn is taken) and White's (e4 and the exchange on d5), each with the condition that makes it playable",
+  "Decides whether the c-pawn may leave c6 by asking whether the d5 pawn still needs it",
+  "Explains why Black usually develops the c8 bishop outside the chain, what that leaves loose on b7, and how Black answers a queen on b3"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pppp/2p2n2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R b KQkq - 3 4",
+   "caption": "Black to move after 4.Nc3. Look at the pawns on b7, c6 and d5. Which pawn protects which? Which one of the three has no pawn behind it?",
+   "arrows": [
+    {
+     "from": "b7",
+     "to": "c6"
+    },
+    {
+     "from": "c6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "c6",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "black",
+      "squares": [
+       "c6",
+       "d5"
+      ]
+     },
+     "statement": "The black pawns on c6 and d5 are protected by a pawn (b7 protects c6, c6 protects d5)."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "chain_base",
+      "color": "black",
+      "squares": [
+       "b7"
+      ]
+     },
+     "statement": "The base of the chain is the pawn on b7: it protects another pawn and no pawn protects it."
+    }
+   ],
+   "chapter": "The chain"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before reading on: if you wanted to break this chain up, which pawn would you attack, and with what? Guess first.",
+   "fields": [
+    {
+     "id": "guess",
+     "label": "My guess:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The question of this lesson.** The Slav rests on a chain of three pawns, b7, c6 and d5. What does the chain give Black? How does each side try to change it with a pawn move (a *break*)? And where does the c8 bishop go while all this happens? By the end you can answer in your own words. Marks: [V] checked here, [I] inference, [H] hypothesis."
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-1"
+  },
+  {
+   "type": "card",
+   "text": "**The chain.** Each pawn protects the next one diagonally: b7 protects c6, c6 protects d5. The front pawn is the *head*, the back one the *base*. A protected head frees the pieces. [I] The price: c6 has a job, and the base b7 has no pawn behind it. Attack the base and the chain falls: once the c8 bishop leaves, b7 is the target, which is why a queen on b3 matters. c4xd5 and e4 hit the head, only to trade it."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pppp/2p2n2/3p4/2PP4/5N2/PP2PPPP/RNBQKB1R w KQkq - 2 4",
+   "caption": "The exchange. In masters' games (329,379 games, both players 2500 or more) White played 4.cxd5 in 476 games after 3...Nf6: White won 97, 295 were drawn, Black won 84. A small sample, and the players matter.",
+   "line": [
+    {
+     "move": "c4d5",
+     "say": "White takes the head of the chain with a pawn and offers an exchange."
+    },
+    {
+     "move": "c6d5",
+     "say": "Black recaptures with the c-pawn. The chain is gone and the c-file is open."
+    },
+    {
+     "move": "b1c3",
+     "say": "White develops and attacks the d5 pawn a second time. Black will answer ...Nc6, adding pressure on d4; the position is nearly symmetrical."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "d5",
+    "c6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "after_moves": [
+       "c4d5",
+       "c6d5"
+      ]
+     },
+     "statement": "After the exchange the c-file holds no pawn of either colour."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "protected",
+      "color": "black",
+      "squares": [],
+      "after_moves": [
+       "c4d5",
+       "c6d5"
+      ]
+     },
+     "statement": "After the exchange no black pawn is protected by another pawn: the chain is gone."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 60,
+      "after_moves": [
+       "c4d5",
+       "c6d5",
+       "b1c3"
+      ]
+     },
+     "statement": "At depth 16 the position after 5.Nc3 is rated between -0.20 and +0.60 for White: close to level."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-2"
+  },
+  {
+   "type": "card",
+   "text": "**A break** is a pawn move that attacks an enemy pawn to change the structure. Black's c-pawn and e-pawn can each hit d4 in one move. A third break, ...b5, comes after Black has taken the c4 pawn. [I] A break needs pieces ready to use the lines it opens, and a pawn that is not busy guarding. The c6 pawn guards d5, so it usually waits until d5 is gone or another pawn (e6) guards it too.",
+   "chapter": "Black's breaks"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp1n1ppp/2pbpn2/3p4/2PP4/2NBPN2/PPQ2PPP/R1B2RK1 b - - 6 8",
+   "caption": "Black to move after 8.O-O. In masters' games from here Black played ...dxc4 in 342 games (White won 93, 190 drawn, Black won 59) and ...e5 at once in 85 (14, 67, 4). Samples are small; they lead to different structures, both fine.",
+   "line": [
+    {
+     "move": "d5c4",
+     "say": "Black takes the pawn. The d5 pawn leaves the centre."
+    },
+    {
+     "move": "d3c4",
+     "say": "White takes back and the bishop eyes the e6 pawn."
+    },
+    {
+     "move": "e6e5",
+     "say": "The e-pawn break: it attacks d4 and claims the e5 square. White will put a rook on the d-file and Black will support the pawn with ...Qe7."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e6",
+     "to": "e5"
+    },
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "e6e5"
+      ]
+     },
+     "statement": "After ...e5 one black pawn attacks d4."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "p",
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "e6e5"
+      ]
+     },
+     "statement": "The pawn stands on e5."
+    },
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e7",
+      "includes": [
+       "e5"
+      ],
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "e6e5",
+       "f1d1",
+       "d8e7"
+      ]
+     },
+     "statement": "After ...Qe7 the queen defends the e5 pawn."
+    },
+    {
+     "id": "C4",
+     "type": "piece_attacks",
+     "params": {
+      "square": "c4",
+      "includes": [
+       "e6"
+      ],
+      "after_moves": [
+       "d5c4",
+       "d3c4"
+      ]
+     },
+     "statement": "After Bxc4 the bishop attacks e6."
+    },
+    {
+     "id": "C5",
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 80,
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "e6e5",
+       "f1d1",
+       "d8e7"
+      ]
+     },
+     "statement": "At depth 16 the position after ...Rd1 ...Qe7 is rated between -0.20 and +0.80 for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-3"
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/pp1n1ppp/2p1pn2/3p4/2PP4/2NBPN2/PP3PPP/R1BQK2R b KQkq - 2 6",
+   "caption": "Black to move after 6.Bd3. Step through ...dxc4 and the third break, ...b5.",
+   "line": [
+    {
+     "move": "d5c4",
+     "say": "Black takes. Now d5 is empty, so the c6 pawn has no pawn left to guard."
+    },
+    {
+     "move": "d3c4",
+     "say": "White regains the pawn."
+    },
+    {
+     "move": "b7b5",
+     "say": "The third break: it gains queenside space and hits the bishop. The bishop will retreat to d3."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b5",
+     "to": "c4"
+    }
+   ],
+   "highlight": [
+    "b5",
+    "c4",
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "empty",
+      "after_moves": [
+       "d5c4"
+      ]
+     },
+     "statement": "After ...dxc4 the d5 square is empty."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "c4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d5c4",
+       "d3c4",
+       "b7b5"
+      ]
+     },
+     "statement": "After ...b5 a black pawn attacks the bishop on c4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkb1r/p2n1ppp/2p1pn2/1p6/3P4/2NBPN2/PP3PPP/R1BQK2R b KQkq - 1 8",
+   "caption": "Black to move after 8.Bd3. Step through ...a6, White's e4 and the c-pawn's move.",
+   "line": [
+    {
+     "move": "a7a6",
+     "say": "a6 adds a second pawn protecting b5."
+    },
+    {
+     "move": "e3e4",
+     "say": "White opens the centre with a break of his own."
+    },
+    {
+     "move": "c6c5",
+     "say": "Now the c-pawn may leave: it hits d4, the pawn that anchors White's centre."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "c5"
+    },
+    {
+     "from": "c5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "c5",
+    "d4",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C3",
+     "type": "piece_attacks",
+     "params": {
+      "square": "d3",
+      "includes": [
+       "h7"
+      ]
+     },
+     "statement": "The bishop on d3 attacks h7."
+    },
+    {
+     "id": "C4",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "a7a6"
+      ]
+     },
+     "statement": "After ...a6 two black pawns (a6 and c6) protect b5."
+    },
+    {
+     "id": "C5",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a7a6",
+       "e3e4",
+       "c6c5"
+      ]
+     },
+     "statement": "After ...c5 one black pawn attacks d4."
+    },
+    {
+     "id": "C6",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 90,
+      "after_moves": [
+       "a7a6",
+       "e3e4",
+       "c6c5"
+      ]
+     },
+     "statement": "At depth 16 the position after ...c5 is rated between -0.10 and +0.90 for White."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What the masters did.** From the position after 8...a6, masters played 9.e4 in 41 games (White won 21, 7 drawn, Black won 13). The position after 9.e4 occurs in 43 games (some by other move orders) and ...c5 was played in all of them [V]. Small samples. [I] The c-pawn left only after ...a6 and ...b5 were in and d5 had gone."
+  },
+  {
+   "type": "contrast",
+   "title": "Ask who guards d5 before the c-pawn leaves",
+   "prompt": "In all three positions Black considers ...c5. Predict for each whether it is reasonable, then check. In the first the d5 pawn is already taken. In the second the d5 pawn still stands, and Black is also far less developed, so read the result as a rule of thumb, not proof. The third differs from the first only in where White's h-pawn stands.",
+   "working": "IODslav2-4",
+   "failing": "IODslav2-5",
+   "irrelevant": "IODslav2-6"
+  },
+  {
+   "type": "card",
+   "text": "**White's side.** White has breaks too. The e-pawn can advance to hit d5 from the side. The c-pawn can take on d5 and dissolve the chain, as you saw. [I] The e-pawn break is playable when the knight, bishop and queen can recapture on e4. Next: Black has played ...e5 and White decides.",
+   "chapter": "White's breaks"
+  },
+  {
+   "type": "board",
+   "fen": "r1bq1rk1/pp1n1ppp/2pbpn2/3p4/2PP4/2NBPN2/PPQ2PPP/R1B2RK1 b - - 6 8",
+   "caption": "Black to move after 8.O-O. Step through ...e5 and the exchange on d5. Then it is White's turn to find a break.",
+   "line": [
+    {
+     "move": "e6e5",
+     "say": "Black breaks first, attacking d4."
+    },
+    {
+     "move": "c4d5",
+     "say": "White trades off the head of the chain. Black recaptures with the c-pawn."
+    },
+    {
+     "move": "c6d5",
+     "say": "The c-file is open and Black has pawns on d5 and e5. White's own break comes next."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "d4"
+    },
+    {
+     "from": "d5",
+     "to": "e4"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "d5",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "after_moves": [
+       "e6e5",
+       "c4d5",
+       "c6d5"
+      ]
+     },
+     "statement": "After the exchange the c-file holds no pawn of either colour."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e6e5",
+       "c4d5",
+       "c6d5",
+       "e3e4"
+      ]
+     },
+     "statement": "After White's e4 one white pawn attacks d5."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -20,
+      "max": 80,
+      "after_moves": [
+       "e6e5",
+       "c4d5",
+       "c6d5",
+       "e3e4",
+       "e5d4"
+      ]
+     },
+     "statement": "At depth 16 the position after e4 exd4 is rated between -0.20 and +0.80 for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-7"
+  },
+  {
+   "type": "card",
+   "text": "**White's e4.** After 9.cxd5 cxd5 masters played 10.e4 in 69 games (White won 12, 53 drawn, Black won 4) [V]. Mostly drawn, so this structure is solid for both sides; it says little about who is better. [I] The break is playable because the knight, the bishop and the queen can all recapture on e4."
+  },
+  {
+   "type": "card",
+   "text": "**The c8 bishop.** With only c6 played, the bishop sees the whole diagonal to h3. After ...e6 it is shut in behind its own pawns. So Black often develops it first, outside the chain. In masters' games after the knights and e3, Black put the bishop on f5 in 1,432, on g4 in 679, and played e6 in 359. [I] The price of leaving c8: nothing protects b7.",
+   "chapter": "The bishop outside"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/pp2pppp/2p2n2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R b KQkq - 3 4",
+   "caption": "Black to move after 4.Nc3. This is the Semi-Slav setup, a sound opening that masters play often [R]. The bishop is its price: count the bishop's moves in each position.",
+   "line": [
+    {
+     "move": "e7e6",
+     "say": "Black closes the centre. The c8 bishop's diagonal is blocked by its own pawn."
+    },
+    {
+     "move": "e2e3",
+     "say": "White supports d4 and opens the f1 bishop."
+    },
+    {
+     "move": "b8d7",
+     "say": "Black develops, and now the c8 bishop has no square at all."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c8",
+     "to": "h3"
+    }
+   ],
+   "highlight": [
+    "c8",
+    "d7",
+    "e6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 5
+     },
+     "statement": "Before ...e6 the c8 bishop can move to 5 squares: d7, e6, f5, g4 and h3."
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 1,
+      "after_moves": [
+       "e7e6"
+      ]
+     },
+     "statement": "After ...e6 the c8 bishop can move only to d7."
+    },
+    {
+     "id": "C3",
+     "type": "mobility",
+     "params": {
+      "square": "c8",
+      "mode": "legal",
+      "count": 0,
+      "after_moves": [
+       "e7e6",
+       "e2e3",
+       "b8d7"
+      ]
+     },
+     "statement": "After ...Nbd7 the c8 bishop has no legal move."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/pp2pppp/2p2n2/3p1b2/2PP4/4PN2/PP3PPP/RNBQKB1R w KQkq - 1 5",
+   "caption": "White to move after 4...Bf5. The bishop left c8, so b7 has no defender. One of White's ideas is the queen's attack on it. Black has several good answers; one is shown.",
+   "line": [
+    {
+     "move": "d1b3",
+     "say": "The queen attacks b7, which the bishop left behind."
+    },
+    {
+     "move": "d8b6",
+     "say": "Black offers a queen trade and protects b7."
+    },
+    {
+     "move": "c4d5",
+     "say": "White takes the head of the chain. Black will trade queens and retake with the knight; the pawn count stays level."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "b7"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "b3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "b7"
+      ],
+      "after_moves": [
+       "d1b3"
+      ]
+     },
+     "statement": "After Qb3 the only loose black unit is b7 (attacked, undefended)."
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [],
+      "after_moves": [
+       "d1b3",
+       "d8b6"
+      ]
+     },
+     "statement": "After ...Qb6 no black piece or pawn is loose."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 60,
+      "after_moves": [
+       "d1b3",
+       "d8b6",
+       "c4d5"
+      ]
+     },
+     "statement": "At depth 16 the position after 7.cxd5 is rated between -0.10 and +0.60 for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-8"
+  },
+  {
+   "type": "board",
+   "fen": "rn1qkb1r/pp3ppp/2p1pn2/3p1b2/2PP4/2N1PN2/PP3PPP/R1BQKB1R w KQkq - 0 6",
+   "caption": "White to move after 5...e6. Here the bishop is outside and the chain is c6-d5-e6. In masters' games White played 6.Nh4 in 1,177 games (White won 381, 501 drawn, Black won 295). Black's two retreats on the same diagonal: ...Be4 in 635 games, ...Bg6 in 522; the line shows Bg6.",
+   "line": [
+    {
+     "move": "f3h4",
+     "say": "The knight attacks the bishop and wants to trade it."
+    },
+    {
+     "move": "f5g6",
+     "say": "The bishop keeps its diagonal and stays outside the chain."
+    },
+    {
+     "move": "h4g6",
+     "say": "White trades knight for bishop. Black will retake with the h-pawn: the h-file opens for the rook, but g7 and g6 are now doubled, a cost Black accepts."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "h4",
+     "to": "f5"
+    }
+   ],
+   "highlight": [
+    "h4",
+    "f5",
+    "g6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "h4",
+      "includes": [
+       "f5",
+       "g6"
+      ],
+      "after_moves": [
+       "f3h4"
+      ]
+     },
+     "statement": "The knight on h4 attacks f5 and g6."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "black",
+      "squares": [
+       "g6",
+       "g7"
+      ],
+      "after_moves": [
+       "f3h4",
+       "f5g6",
+       "h4g6",
+       "h7g6"
+      ]
+     },
+     "statement": "After ...hxg6 the pawns on g6 and g7 are doubled."
+    },
+    {
+     "id": "C3",
+     "type": "open_files",
+     "params": {
+      "half_open_black": [
+       "h"
+      ],
+      "after_moves": [
+       "f3h4",
+       "f5g6",
+       "h4g6",
+       "h7g6"
+      ]
+     },
+     "statement": "After ...hxg6 the h-file is half-open for Black."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 70,
+      "after_moves": [
+       "f3h4",
+       "f5g6",
+       "h4g6",
+       "h7g6"
+      ]
+     },
+     "statement": "At depth 16 the final position is rated between -0.10 and +0.70 for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-9"
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-10",
+   "silent": true,
+   "chapter": "Test and teach back"
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IODslav2-13",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "**Recap.**\nThe c6-d5 chain protects the head pawn, so pieces stay free; c6 has a job while d5 stands.\nBlack breaks with c5 or e5 against d4, or b5 after taking on c4.\nWhite breaks with e4 or by exchanging on d5.\nThe c-pawn may leave when d5 no longer needs it.\nThe c8 bishop goes out before e6; the price is b7."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it back. Imagine a beginner asks, 'What is the Slav pawn chain for?' Write your answer, then check it: did you say when the idea works, when it fails, give an example a beginner could set up on a board, and name one mistake?",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea:"
+    },
+    {
+     "id": "works",
+     "label": "When it works:"
+    },
+    {
+     "id": "example",
+     "label": "One example:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning:"
+    }
+   ]
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Move orders and ECO codes: app/public/openings (core.json) [V]",
+  "Masters statistics: app/public/masters/stats.json (329,379 games, both players rated 2500 or more, built 2026-10-29); counts quoted exactly from the tree rows; they are results of games, not evaluations [V]",
+  "Engine claims: Stockfish 19 lite, single thread, depth 16, in this lesson's board claims and in content/items/lesson-od-slav-2.json [V]",
+  "Positions: replayed from the move sequences with python-chess; edited positions are named as edits in their provenance",
+  "Core skills used: content/skills/OPN.STRUCT.json, POS.STRUCTURE.CHAIN.json, OPN.PRINCIPLES.json"
+ ]
+}

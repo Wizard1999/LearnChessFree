@@ -1,0 +1,666 @@
+{
+  "id": "L-OD-SCANDINAVIAN-2",
+  "course": "opening-deep-dives",
+  "series": "scandinavian",
+  "title": "Scandinavian: the structure and the plan",
+  "skill": "OPN.STRUCT",
+  "depth": "D2",
+  "uses": [
+    "OPN.STRUCT",
+    "OPN.TEMPO",
+    "OPN.PRINCIPLES",
+    "TAC.PIN"
+  ],
+  "minutes": 18,
+  "outcomes": [
+    "Names the queen retreats after the knight attack, and says why the two checks give White a free developing move",
+    "Explains the pin of the knight on c3 by a queen on a5 and the block with Bd2 (castling and attacking the queen are named as other ways out)",
+    "Says why the c8 bishop should come out before ...e6, and when that idea fails",
+    "Describes each side's plan: Black's three jobs and White's use of the half-open e-file, and says which file is half-open for each side"
+  ],
+  "steps": [
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3",
+      "caption": "Black to move. The white knight on c3 attacks the queen on d5, so the queen must go. Before reading on, choose a square for it and decide what you want from that square.",
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d5",
+            "color": "white",
+            "count": 1
+          },
+          "statement": "One white piece, the knight on c3, attacks the queen on d5."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c3",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "d5",
+        "c3"
+      ],
+      "chapter": "After the knight attack: where does the queen go?"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Where would you put the queen, and what do you want from that square?",
+      "fields": [
+        {
+          "id": "guess",
+          "label": "My square and my reason:"
+        }
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The question of this lesson.** After the knight attack the queen must leave d5. By the end you can say where it can go, what each retreat is for, which file is half-open for each side, and what White aims at in return. Marks: [V] checked here, [I] inference, [H] hypothesis."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-1"
+    },
+    {
+      "type": "card",
+      "text": "**What players chose.** Masters (both players 2,500 or more, our data): queen to a5 598 games, d6 379, d8 207, e5 with check 87 (1,271 games in all). Online (101,222 games reached this position in our September 2026 sample of 4.75 million Lichess games): a5 35,176, d8 33,957, e6 with check 12,969, e5 with check 10,643, d6 5,435. [V] These count games, not quality. Online, about one game in four gives a check at once; among masters it is about one in fifteen."
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3",
+      "caption": "Why the check does not help. Black checks with the queen; watch what White does with the move.",
+      "line": [
+        {
+          "move": "d5e5",
+          "say": "Black checks along the e-file."
+        },
+        {
+          "move": "f1e2",
+          "say": "White blocks with a developing move, so the check cost White nothing."
+        },
+        {
+          "move": "g8f6",
+          "say": "Black develops a knight; the queen still stands in the middle of the board."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre and attacks the queen again."
+        },
+        {
+          "move": "e5a5",
+          "say": "The queen runs to a5. Black has moved it three times; White has developed three pieces."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "e5",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "d5e5",
+              "f1e2",
+              "g8f6",
+              "d2d4"
+            ]
+          },
+          "statement": "After 5.d4 one white piece, the pawn on d4, attacks the queen on e5."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 40,
+            "max": 160,
+            "after_moves": [
+              "d5e5",
+              "f1e2",
+              "g8f6",
+              "d2d4",
+              "e5a5"
+            ]
+          },
+          "statement": "At the end the engine (depth 16) rates the position between 0.4 and 1.6 pawns for White."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "e5",
+        "e2"
+      ]
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kbnr/ppp1pppp/8/3q4/8/2N5/PPPP1PPP/R1BQKBNR b KQkq - 1 3",
+      "caption": "Step through the two moves and watch the diagonal from a5 to e1. What happens to the knight on c3 once the pawn on d2 has moved?",
+      "line": [
+        {
+          "move": "d5a5",
+          "say": "The queen goes to a5. From there it eyes the knight on c3 and, behind it on the same diagonal, the white king on e1."
+        },
+        {
+          "move": "d2d4",
+          "say": "White takes the centre. But the d2 pawn has left the diagonal, so the knight now stands alone between queen and king."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "c3",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "d5a5",
+              "d2d4"
+            ]
+          },
+          "statement": "After 4.d4 one black piece, the queen on a5, attacks the knight on c3."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 0,
+            "after_moves": [
+              "d5a5",
+              "d2d4"
+            ]
+          },
+          "statement": "The knight on c3 has no legal move: it is pinned to the king."
+        },
+        {
+          "id": "C3",
+          "type": "loose_pieces",
+          "params": {
+            "color": "white",
+            "squares": [],
+            "after_moves": [
+              "d5a5",
+              "d2d4"
+            ]
+          },
+          "statement": "No white piece is loose: the pawn on b2 defends the knight, so nothing is lost."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "a5",
+          "to": "e1"
+        }
+      ],
+      "highlight": [
+        "a5",
+        "c3",
+        "d2",
+        "e1"
+      ],
+      "chapter": "The queen on a5 and the pin on c3"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-2"
+    },
+    {
+      "type": "card",
+      "text": "**Answering a pin.** This pin wins no material, but it freezes a developed knight. White has three ways out: put a piece in the way, castle once the bishop and knight have moved so the king leaves the diagonal, or attack the queen so it must leave. Which one suits White depends on what else needs developing. Only the first is shown on a board here; it is the quickest."
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/ppp1pppp/5n2/q7/3P4/2N5/PPP2PPP/R1BQKBNR w KQkq - 1 5",
+      "caption": "White to move, knight pinned. Step through the block and then check how many moves the knight has afterwards.",
+      "line": [
+        {
+          "move": "c1d2",
+          "say": "The bishop blocks the diagonal and is developed in the same move. The knight can move again."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c3",
+            "mode": "legal",
+            "count": 6,
+            "after_moves": [
+              "c1d2"
+            ]
+          },
+          "statement": "After Bd2 the knight on c3 has 6 legal moves."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c1",
+          "to": "d2"
+        }
+      ],
+      "highlight": [
+        "d2",
+        "c3"
+      ]
+    },
+    {
+      "type": "contrast",
+      "title": "Same queen, three positions",
+      "prompt": "Is the white knight on c3 pinned to the king? Predict each one, then check.",
+      "working": "IOD-LODSCANDINAVIAN2-3",
+      "failing": "IOD-LODSCANDINAVIAN2-4",
+      "irrelevant": "IOD-LODSCANDINAVIAN2-5"
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/ppp1pppp/3q1n2/8/3P4/2N5/PPP2PPP/R1BQKBNR w KQkq - 1 5",
+      "caption": "Black has chosen the queen retreat to d6 and developed a knight. White to move. Step through a try that hits the queen again.",
+      "line": [
+        {
+          "move": "c3b5",
+          "say": "The knight attacks the queen on d6, so the queen has to move again."
+        },
+        {
+          "move": "d6d8",
+          "say": "The queen retreats. Black has now moved the queen three times, though White's knight has also moved twice."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "attackers",
+          "params": {
+            "square": "d6",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "c3b5"
+            ]
+          },
+          "statement": "After Nb5 one white piece, the knight, attacks the queen on d6."
+        },
+        {
+          "id": "C2",
+          "type": "eval_range",
+          "params": {
+            "min": 0,
+            "max": 90,
+            "after_moves": [
+              "c3b5"
+            ]
+          },
+          "statement": "After Nb5 the engine (depth 16) rates the position between level and 0.9 pawns for White."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "b5",
+          "to": "d6"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "d6"
+      ],
+      "chapter": "The queens on d6 and d8"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-6"
+    },
+    {
+      "type": "card",
+      "text": "**Taking the sting out of that knight move.** Black needs to control the b5 square. A pawn on a6 does it, and so does a pawn on c6. [I] The c6 pawn is the more useful of the two: it also covers d5, so a White knight cannot come to d5 either, and it frees the c7 square for the queen to retreat to."
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/ppp1pppp/3q1n2/8/3P4/2N5/PPP2PPP/R1BQKBNR w KQkq - 1 5",
+      "caption": "White to move. Step through a quiet developing move and Black's pawn answer, then read the claims.",
+      "line": [
+        {
+          "move": "g1f3",
+          "say": "White develops the second knight and guards d4."
+        },
+        {
+          "move": "c7c6",
+          "say": "The pawn covers b5 and d5, and the square c7 is free for the queen if White ever attacks it again."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "b5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g1f3",
+              "c7c6"
+            ]
+          },
+          "statement": "After ...c6 one black pawn attacks b5."
+        },
+        {
+          "id": "C2",
+          "type": "pawn_attackers",
+          "params": {
+            "square": "d5",
+            "color": "black",
+            "count": 1,
+            "after_moves": [
+              "g1f3",
+              "c7c6"
+            ]
+          },
+          "statement": "After ...c6 one black pawn attacks d5."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 20,
+            "max": 120,
+            "after_moves": [
+              "g1f3",
+              "c7c6"
+            ]
+          },
+          "statement": "The engine (depth 16) rates the position after ...c6 between 0.2 and 1.2 pawns for White."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c6",
+          "to": "b5"
+        },
+        {
+          "from": "c6",
+          "to": "d5"
+        }
+      ],
+      "highlight": [
+        "b5",
+        "d5",
+        "c7"
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The retreat home.** Queen to d8 means the queen has moved twice (out and back) while White has moved one knight, but nothing hangs and the queen stays out of reach of every White piece for now. Masters chose it in 207 games, online players in 33,957. [I] White's best use of the extra time is to take the centre and develop the bishop. The next position asks you to find that."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-7"
+    },
+    {
+      "type": "card",
+      "text": "**Black's aims.** [I] Three jobs after the queen retreat: get the pieces out (a knight to f6, the c-pawn to c6, a bishop), get the c8 bishop outside the pawn chain before the e-pawn moves, and castle. The second is the one that decides the structure, so look at what ...e6 does to that bishop.",
+      "chapter": "What Black is aiming at"
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/ppp1pppp/5n2/q7/3P4/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+      "caption": "Black to move. Black plays the natural-looking pawn move. Watch the bishop on c8.",
+      "line": [
+        {
+          "move": "e7e6",
+          "say": "The pawn opens the f8 bishop, but it closes the c8 bishop's diagonal."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "c8",
+            "mode": "legal",
+            "count": 1,
+            "after_moves": [
+              "e7e6"
+            ]
+          },
+          "statement": "After ...e6 the bishop on c8 has only one legal move."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "c8",
+          "to": "d7"
+        }
+      ],
+      "highlight": [
+        "c8",
+        "e6"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-8"
+    },
+    {
+      "type": "board",
+      "fen": "rnb1kb1r/ppp1pppp/5n2/q7/3P4/2N2N2/PPP2PPP/R1BQKB1R b KQkq - 2 5",
+      "caption": "Now the same position with the bishop first. Step through it, then compare with the last board.",
+      "line": [
+        {
+          "move": "c8f5",
+          "say": "The bishop comes out on the open diagonal before any pawn blocks it."
+        },
+        {
+          "move": "c1d2",
+          "say": "White develops the bishop and unpins the knight."
+        },
+        {
+          "move": "e7e6",
+          "say": "Now the pawn move costs nothing: the bishop is already outside the chain and has room."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "mobility",
+          "params": {
+            "square": "f5",
+            "mode": "legal",
+            "count": 6,
+            "after_moves": [
+              "c8f5",
+              "c1d2",
+              "e7e6"
+            ]
+          },
+          "statement": "At the end the bishop on f5 has 6 legal moves."
+        },
+        {
+          "id": "C2",
+          "type": "mobility",
+          "params": {
+            "square": "f8",
+            "mode": "legal",
+            "count": 5,
+            "after_moves": [
+              "c8f5",
+              "c1d2",
+              "e7e6"
+            ]
+          },
+          "statement": "At the end the bishop on f8 has 5 legal moves: ...e6 also opened its diagonal."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "f5",
+          "to": "c2"
+        }
+      ],
+      "highlight": [
+        "f5",
+        "e6",
+        "f8"
+      ]
+    },
+    {
+      "type": "card",
+      "text": "**The idea in words.** Bring the bishop out first, then play the pawn move that would have blocked it. It works here because the bishop's diagonal is open: Black has no pawn in front of it. [H] In the French the pawn on e6 already stands in front of that bishop; here the e-pawn is still at home. The idea fails if the bishop is attacked at once: a knight on h4 or a pawn on g4 hits f5."
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-9",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**White's aims.** [I] White leads in development, so the plan is to keep developing with tempo and then use the half-open e-file: no white e-pawn stands on it, so a rook or queen on the e-file faces the pawn on e7. The bishop move that unpins the knight and the queen move to e2 do both jobs, as the board shows.",
+      "chapter": "What White is aiming at"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-13"
+    },
+    {
+      "type": "board",
+      "fen": "rn2kb1r/pp2pppp/2p2n2/q4b2/2BP4/2N2N2/PPP2PPP/R1BQK2R w KQkq - 2 7",
+      "caption": "White to move. Step through the model plan: unpin, develop, use the file.",
+      "line": [
+        {
+          "move": "c1d2",
+          "say": "The bishop unpins the knight on c3 and develops."
+        },
+        {
+          "move": "b8d7",
+          "say": "Black develops the second knight."
+        },
+        {
+          "move": "d1e2",
+          "say": "The queen leaves d1 and looks up the half-open e-file at the pawn on e7."
+        },
+        {
+          "move": "a5c7",
+          "say": "Black's queen leaves the pinned diagonal for a safer post."
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "type": "open_files",
+          "params": {
+            "half_open_white": [
+              "e"
+            ],
+            "half_open_black": [
+              "d"
+            ]
+          },
+          "statement": "At the start the e-file is half-open for White (no white e-pawn) and the d-file half-open for Black."
+        },
+        {
+          "id": "C2",
+          "type": "attackers",
+          "params": {
+            "square": "e7",
+            "color": "white",
+            "count": 1,
+            "after_moves": [
+              "c1d2",
+              "b8d7",
+              "d1e2"
+            ]
+          },
+          "statement": "After 8.Qe2 one white piece, the queen, attacks the pawn on e7."
+        },
+        {
+          "id": "C3",
+          "type": "eval_range",
+          "params": {
+            "min": 20,
+            "max": 110,
+            "after_moves": [
+              "c1d2",
+              "b8d7",
+              "d1e2",
+              "a5c7"
+            ]
+          },
+          "statement": "At the end the engine (depth 16) rates the position between 0.2 and 1.1 pawns for White."
+        }
+      ],
+      "arrows": [
+        {
+          "from": "e2",
+          "to": "e7"
+        }
+      ],
+      "highlight": [
+        "e2",
+        "e7",
+        "d2"
+      ]
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-10"
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-11",
+      "silent": true
+    },
+    {
+      "type": "item",
+      "item": "IOD-LODSCANDINAVIAN2-12",
+      "silent": true
+    },
+    {
+      "type": "card",
+      "text": "**What to remember.** After a retreat the queen has moved twice and White's knight once; the checks give White a free developing move. A queen on a5 pins a knight on c3 once the d-pawn has moved, and a bishop on d2 answers it. A pawn on c6 takes b5 and d5 away and frees c7. The c8 bishop comes out before ...e6. White uses the lead and the half-open e-file. Counts are games, not verdicts.",
+      "chapter": "Check yourself and teach it"
+    },
+    {
+      "type": "reflect",
+      "kind": "expect",
+      "prompt": "Teach it back. Write a few lines for a beginner: where does the queen go after the knight attack and why; why the c8 bishop comes out before ...e6; what White does with the half-open e-file; one thing that could go wrong. Self-check: did you say where the queen can go and which retreats are weaker? Did you say why the bishop comes out first, and when that fails? Did you say what White aims at with the e-file? Did you name one mistake, such as ...e6 too early?",
+      "fields": [
+        {
+          "id": "idea",
+          "label": "The idea:"
+        },
+        {
+          "id": "when",
+          "label": "When it works:"
+        },
+        {
+          "id": "example",
+          "label": "One example a beginner could set up on a board:"
+        },
+        {
+          "id": "warning",
+          "label": "One warning:"
+        }
+      ]
+    }
+  ],
+  "review": {
+    "status": "needs-human",
+    "reviewer": null
+  },
+  "sources": [
+    "app/public/masters/stats.json (329,379 games, both players 2500+; counts quoted from the tree) [V]",
+    "app/public/openings/core.json (Lichess standard rated games, CC0, September 2026, 4,752,291 games; node after the knight move to c3, 101,222 games) [V]",
+    "content/items/lesson-od-l-od-scandinavian-2.json (positions replayed with python-chess; engine claims at depth 16) [V]",
+    "docs/lesson-depth-standard.md (series structure)"
+  ]
+}

@@ -35,9 +35,9 @@ describe('stage checks are core (D81)', () => {
       expect(Math.max(...inStage.map(l => l.order ?? 0))).toBe(c.order)
     }
   })
-  it('exactly the nine deep dives with a shared position link to their core lessons; famous games states its real count', () => {
+  it('exactly the sixteen deep dives with a shared position link to their core lessons; famous games states its real count', () => {
     const shared = lessons.filter(l => l.samePosition?.length)
-    expect(shared.length).toBe(9)
+    expect(shared.length).toBe(16)
     for (const l of shared) { expect(l.course).toBe('opening-deep-dives'); for (const id of l.samePosition!) expect(isCoreLesson(lessons.find(x => x.id === id)!)).toBe(true) }
   })
 })
