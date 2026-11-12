@@ -1,0 +1,296 @@
+{
+ "positions": [
+  {
+   "id": "PW2-FNDNOTATION-1",
+   "fen": "3k4/3r4/8/1B6/8/8/3R4/K7 w - - 0 1",
+   "family": "FAM-W2-FNDNOTATION-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand, then checked with python-chess (legal move and SAN) and tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-FNDNOTATION-2",
+   "fen": "4k3/8/8/7R/8/8/8/4K2R w - - 0 1",
+   "family": "FAM-W2-FNDNOTATION-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand, then checked with python-chess (legal move and SAN) and tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-FNDNOTATION-3",
+   "fen": "4k3/8/8/2pP4/8/8/8/4K3 w - c6 0 1",
+   "family": "FAM-W2-FNDNOTATION-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand, then checked with python-chess (legal move and SAN) and tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-FNDNOTATION-4",
+   "fen": "7r/6P1/6k1/8/8/8/8/K7 w - - 0 1",
+   "family": "FAM-W2-FNDNOTATION-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand, then checked with python-chess (legal move and SAN) and tools/validate.py.",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IW2-FNDNOTATION-1",
+   "skill": "FND.NOTATION.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PW2-FNDNOTATION-1",
+   "prompt": "The score says Rxd7+. The x marks a capture and the + marks a check. Play that move.",
+   "answer": {
+    "moves": [
+     "d2d7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d7",
+      "piece": "r"
+     },
+     "statement": "A black rook stands on d7."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d2",
+      "piece": "R"
+     },
+     "statement": "A white rook stands on d2."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "tier.1",
+    "cue.1",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "mode.notation",
+    "family.FAM-W2-FNDNOTATION-1"
+   ],
+   "hints": [
+    "R is the rook, x says a piece is captured on d7, and + says the move gives check.",
+    "R is the rook, x says a piece is captured on d7, and + says the move gives check.",
+    "Read the record piece by piece: letter, extra characters, landing square, symbols."
+   ],
+   "explain": "Rxd7+ is the rook capturing on d7. It gives check to the king on d8, and the bishop on b5 guards the rook.",
+   "feedback_by_move": {},
+   "contrast_group": "CG-W2-FNDNOTATION-1",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-FNDNOTATION-2",
+   "skill": "FND.NOTATION.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PW2-FNDNOTATION-2",
+   "prompt": "White to move. Both white rooks can reach h3. The score says R1h3. Play that move.",
+   "answer": {
+    "moves": [
+     "h1h3"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "h1h3"
+     },
+     "statement": "Rh1-h3 is legal."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "h5h3"
+     },
+     "statement": "Rh5-h3 is also legal."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "h1",
+      "piece": "R"
+     },
+     "statement": "A white rook stands on h1."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "mode.notation",
+    "family.FAM-W2-FNDNOTATION-2"
+   ],
+   "hints": [
+    "Both rooks stand on the h-file, so the file letter cannot tell them apart",
+    "Both rooks stand on the h-file, so the file letter cannot tell them apart. The number after R is the starting rank.",
+    "Read the record piece by piece: letter, extra characters, landing square, symbols."
+   ],
+   "explain": "The two rooks share a file, so the extra character is the starting rank. R1h3 is the rook from h1; R5h3 would be the one from h5.",
+   "feedback_by_move": {
+    "h5h3": "That is R5h3, the other rook. The 1 in R1h3 names the starting rank."
+   },
+   "contrast_group": "CG-W2-FNDNOTATION-2",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-FNDNOTATION-3",
+   "skill": "FND.NOTATION.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PW2-FNDNOTATION-3",
+   "prompt": "White to move. Black has just played ...c5. The score says dxc6. Play that move.",
+   "answer": {
+    "moves": [
+     "d5c6"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d5c6"
+     },
+     "statement": "dxc6 en passant is legal."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "c6",
+      "piece": "empty"
+     },
+     "statement": "c6 is empty."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c5",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on c5."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "tier.1",
+    "cue.2",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "mode.notation",
+    "family.FAM-W2-FNDNOTATION-3"
+   ],
+   "hints": [
+    "The d means the pawn starts on the d-file, and it lands on c6, an empty square.",
+    "The d means the pawn starts on the d-file, and it lands on c6, an empty square.",
+    "Read the record piece by piece: letter, extra characters, landing square, symbols."
+   ],
+   "explain": "dxc6 is the en passant capture: the pawn lands on c6, an empty square, and the black pawn on c5 is removed.",
+   "feedback_by_move": {},
+   "contrast_group": "CG-W2-FNDNOTATION-3",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-FNDNOTATION-4",
+   "skill": "FND.NOTATION.D3",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PW2-FNDNOTATION-4",
+   "prompt": "White to move. The score says gxh8=N+. Play it.",
+   "answer": {
+    "moves": [
+     "g7h8n"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "g7h8n"
+     },
+     "statement": "gxh8=N is legal."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "g7h8q"
+     },
+     "statement": "gxh8=Q is also legal."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "h8",
+      "piece": "r"
+     },
+     "statement": "A black rook stands on h8."
+    }
+   ],
+   "tags": [
+    "node.FND.NOTATION",
+    "tier.1",
+    "cue.3",
+    "kind.authored",
+    "lang.en",
+    "task.find_move",
+    "mode.notation",
+    "family.FAM-W2-FNDNOTATION-4"
+   ],
+   "hints": [
+    "=N says the pawn becomes a knight on arrival, and + says the move gives check.",
+    "=N says the pawn becomes a knight on arrival, and + says the move gives check.",
+    "Read the record piece by piece: letter, extra characters, landing square, symbols."
+   ],
+   "explain": "gxh8=N+ captures the rook and the pawn becomes a knight. From h8 the knight gives check to the king on g6. The same capture as =Q would be a different move.",
+   "feedback_by_move": {
+    "g7h8q": "That is gxh8=Q. The record says =N, so the pawn must become a knight."
+   },
+   "contrast_group": "CG-W2-FNDNOTATION-4",
+   "orientation": "auto",
+   "review": {
+    "status": "machine-only",
+    "reviewer": null
+   }
+  }
+ ]
+}

@@ -1,0 +1,387 @@
+{
+ "positions": [
+  {
+   "id": "PW2-LOOPV2-1",
+   "fen": "6k1/5ppp/1n6/8/8/8/5PPP/3R2K1 b - - 0 1",
+   "family": "FAM-W2-LOOPV2-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand, checked by validator: White threatens Rd8 mate on the back rank.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-LOOPV2-2",
+   "fen": "r3k3/ppp2ppp/8/3n4/8/8/PPPR1PPP/4K3 w - - 0 1",
+   "family": "FAM-W2-LOOPV2-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand; loose knight on d5 attacked by the rook on d2, pawns kept so the win is not a dead draw.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-LOOPV2-3",
+   "fen": "r3k3/pp3ppp/8/3N4/8/8/PPP2PPP/4K3 w - - 0 1",
+   "family": "FAM-W2-LOOPV2-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand; knight check from c7 forks king and rook.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-LOOPV2-4",
+   "fen": "3q2k1/5ppp/8/3p4/8/8/5PPP/3Q2K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV2-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand; pawn on d5 attacked once and defended once by the queens.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-LOOPV2-5",
+   "fen": "r1bq1rk1/pp1nbppp/2p1pn2/3p2B1/2PP4/2N1PN2/PP3PPP/2RQKB1R w K - 0 8",
+   "family": "FAM-W2-LOOPV2-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Reached by playing the Queen's Gambit Declined main line from the start position with python-chess.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-LOOPV2-6",
+   "fen": "4r1k1/5ppp/8/3p4/8/8/5PPP/3RR1K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV2-6",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Built by hand; Rxd5 allows the in-between check Rxe1 mate.",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IW2-LOOPV2-1",
+   "skill": "LOOP.V2.D1",
+   "cue": 1,
+   "task": "threat_detection",
+   "position": "PW2-LOOPV2-1",
+   "prompt": "Black to move. Before you play, list White's checks and threats. What is White threatening? (Name the move.)",
+   "answer": {
+    "threat_move": "d1d8"
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "d1d8",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If Black passes, Rd8 is checkmate."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.1",
+    "tier.2",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "Start with White's checks. The rook is the only piece that can give one.",
+    "Which square on the back rank would the rook check from?",
+    "The rook goes to the far end of the d-file."
+   ],
+   "explain": "Black's king has no flight square behind the pawns and nothing can block or take on d8, so Rd8 would be checkmate if Black passed.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-LOOPV2-2",
+   "skill": "LOOP.V2.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PW2-LOOPV2-2",
+   "prompt": "White to move. List the captures first. Which capture wins a piece?",
+   "answer": {
+    "moves": [
+     "d2d5"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d2d5",
+      "min": 2
+     },
+     "statement": "Rxd5 wins the knight and keeps the material."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d2d5"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Rxd5 is the engine's best move."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.1",
+    "tier.2",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "Count what White can capture. There is one capture.",
+    "Is the target defended by anything?",
+    "The rook takes on d5."
+   ],
+   "explain": "The knight on d5 is attacked by the rook and no black piece defends it, so the capture wins it.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "feedback_by_move": {
+    "d2d7": "Rd7 gives up the rook's grip on the knight and wins nothing."
+   }
+  },
+  {
+   "id": "IW2-LOOPV2-3",
+   "skill": "LOOP.V2.D2",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PW2-LOOPV2-3",
+   "prompt": "White to move. Look at the checks. Which check also wins material?",
+   "answer": {
+    "moves": [
+     "d5c7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "d5c7",
+      "min": 2
+     },
+     "statement": "Nc7+ wins the rook for the cost of at most the knight."
+    },
+    {
+     "id": "C2",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d5c7"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Nc7+ is the engine's best move."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.2",
+    "tier.2",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "List every check White has. Which one lands on a square that attacks something else?",
+    "The checking piece should attack the king and another piece at once.",
+    "The knight jumps to the c-file."
+   ],
+   "explain": "The knight on c7 checks the king and attacks the rook on a8, so the king must move and the rook falls.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-LOOPV2-4",
+   "skill": "LOOP.V2.D2",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PW2-LOOPV2-4",
+   "prompt": "White to move. Qxd5 captures a pawn. Predict, then check: does it win material?",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "White attacks d5 once."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Black defends d5 once."
+    },
+    {
+     "id": "C3",
+     "type": "move_loses",
+     "params": {
+      "move": "d1d5",
+      "cp": 400
+     },
+     "statement": "Qxd5 loses at least four pawns of value compared with the best move."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.3",
+    "tier.2",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "Count the attackers on d5 and the defenders of d5.",
+    "One attacker against one defender: who ends up capturing last?",
+    "After Qxd5, can Black take the queen?"
+   ],
+   "explain": "White attacks d5 once and Black defends it once, so the queen is lost for a pawn after Qxd5 Qxd5.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-LOOPV2-5",
+   "skill": "LOOP.V2.D2",
+   "cue": 3,
+   "task": "classify_position",
+   "position": "PW2-LOOPV2-5",
+   "prompt": "White to move, nothing labeled. List the checks and captures for both sides. Does a forcing move help?",
+   "answer": {
+    "class": "no forcing move helps",
+    "options": [
+     "a forcing move wins material",
+     "no forcing move helps"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "quiet_position",
+     "params": {
+      "max": 1
+     },
+     "statement": "No line wins more than a pawn for White."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -80,
+      "max": 80,
+      "depth": 14
+     },
+     "statement": "The engine sees the position as roughly level."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.3",
+    "tier.2",
+    "lang.en",
+    "kind.authored",
+    "kind.quiet"
+   ],
+   "hints": [
+    "Write down every check White has, then every capture.",
+    "Do any of those captures win something after the recapture?",
+    "Both sides are fully developed; the tension is only in the centre."
+   ],
+   "explain": "Every capture is answered by a recapture of equal value and there are no useful checks, so the right plan is a quiet move.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-LOOPV2-6",
+   "skill": "LOOP.V2.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PW2-LOOPV2-6",
+   "prompt": "White to move. Rxd5 takes a pawn. Predict, then check: what can Black answer with first?",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "d1d5",
+      "cp": 1000
+     },
+     "statement": "Rxd5 is far worse than the best move."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "e1e8",
+      "n": 1
+     },
+     "statement": "Rxe8 is checkmate instead."
+    }
+   ],
+   "tags": [
+    "node.LOOP.V2",
+    "cue.3",
+    "tier.2",
+    "lang.en",
+    "kind.authored"
+   ],
+   "hints": [
+    "Look at Black's checks after Rxd5, not only at White's gain.",
+    "Which white piece is left without a defender?",
+    "The black rook can take on e1 with check."
+   ],
+   "explain": "After Rxd5 the rook on e1 loses its defender, and Black's capture on e1 is check and mate; the rook capture on e8 was mate for White.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}

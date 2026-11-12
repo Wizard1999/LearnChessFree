@@ -1,0 +1,438 @@
+{
+ "positions": [
+  {
+   "id": "PW2LV1-1",
+   "fen": "r5k1/5ppp/8/8/1b6/2N5/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse middlegame built by hand: black bishop b4 attacks the white knight on c3, nothing defends it. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2LV1-2",
+   "fen": "6k1/5ppp/8/8/1b6/2N5/5PPP/6K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse position built by hand: bishop b4 against an unprotected knight on c3. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2LV1-3",
+   "fen": "r5k1/5ppp/8/8/1b6/2N5/1P3PPP/3R2K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse position built by hand: the bishop on b4 attacks Nc3, but the b2 pawn defends it. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2LV1-4",
+   "fen": "3r2k1/5ppp/8/4b3/8/2N5/5PPP/3R2K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse position built by hand: Be5 attacks the loose Nc3, but the Black king has no flight square. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2LV1-5",
+   "fen": "3r2k1/5ppp/8/4N3/8/8/1B3PPP/6K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-5",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse position built by hand: the black rook on d8 threatens Rd1 mate; the White knight and bishop cannot cover d1 or interpose. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2LV1-6",
+   "fen": "3r2k1/p4ppp/8/4N3/8/8/PB3PPP/6K1 w - - 0 1",
+   "family": "FAM-W2-LOOPV1-6",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Sparse position built by hand: Nxf7 wins a pawn and attacks the rook, but Black has Rd1 mate. Checked with python-chess and the engine, then tools/validate.py.",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IW2-LOOPV1-1",
+   "skill": "LOOP.V1.D1",
+   "cue": 1,
+   "task": "select_squares",
+   "position": "PW2LV1-1",
+   "prompt": "White to move. Tap the white piece that is attacked and has no defender.",
+   "answer": {
+    "squares": [
+     "c3"
+    ]
+   },
+   "claims": [
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c3"
+      ]
+     },
+     "statement": "The knight on c3 is the only loose White piece.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One Black piece attacks the knight on c3.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "No White piece defends the knight on c3.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.1",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.select_squares",
+    "theme.hangingPiece"
+   ],
+   "hints": [
+    "Start with the black bishop. Which white piece sits on its diagonal?",
+    "Ask of that piece: does anything of White's protect it?",
+    "Look at the third row, on the left of the board."
+   ],
+   "explain": "The bishop on b4 attacks the knight on c3, and no White piece protects that square. The rook on d1 is not attacked at all. A piece that is attacked and unprotected is the first thing the scan looks for.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-1"
+  },
+  {
+   "id": "IW2-LOOPV1-2",
+   "skill": "LOOP.V1.D1",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PW2LV1-2",
+   "prompt": "White to move. If White did nothing useful and Black moved next, what would Black play to win material or checkmate? Name that move, or choose 'No threat'.",
+   "answer": {
+    "threat_move": "b4c3"
+   },
+   "claims": [
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "b4c3",
+      "min": 3,
+      "null_move_first": true
+     },
+     "statement": "If White passes, the bishop takes the knight and Black wins a whole piece.",
+     "id": "C1"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c3"
+      ]
+     },
+     "statement": "The knight on c3 is loose.",
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.2",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.threat_detection",
+    "theme.hangingPiece"
+   ],
+   "hints": [
+    "Which black piece looks at a white piece?",
+    "Is that white piece protected?",
+    "The bishop on b4 and the knight on c3."
+   ],
+   "explain": "The bishop attacks the knight and nothing protects it. If White ignores this, the bishop captures for free. Naming the threat comes before choosing a move.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-2"
+  },
+  {
+   "id": "IW2-LOOPV1-3",
+   "skill": "LOOP.V1.D2",
+   "cue": 3,
+   "task": "threat_detection",
+   "position": "PW2LV1-3",
+   "prompt": "White to move. If White did nothing useful and Black moved next, what would Black play to win material or checkmate? Name that move, or choose 'No threat'.",
+   "answer": {
+    "threat_move": "none"
+   },
+   "claims": [
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No White piece is loose.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "c3",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The b2 pawn defends the knight on c3.",
+     "id": "C2"
+    },
+    {
+     "type": "quiet_position",
+     "params": {
+      "max": 1,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Black has no line that wins more than a pawn.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.3",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.threat_detection",
+    "theme.hangingPiece",
+    "threat.none"
+   ],
+   "hints": [
+    "The bishop attacks the knight. Is the knight alone?",
+    "If the bishop took the knight, what could White take back with?",
+    "A pawn guards the knight, and a bishop for a knight is an even trade."
+   ],
+   "explain": "The knight is attacked once and defended once by the pawn on b2, so Bxc3 bxc3 is an even trade. Nothing is hanging and a pass costs nothing, so there is nothing to answer. Spending a move on a non-threat is also a mistake.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-3"
+  },
+  {
+   "id": "IW2-LOOPV1-4",
+   "skill": "LOOP.V1.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PW2LV1-4",
+   "prompt": "White to move. Black's bishop attacks the knight. Find White's best move.",
+   "answer": {
+    "moves": [
+     "d1d8"
+    ]
+   },
+   "claims": [
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "d1d8",
+      "n": 1
+     },
+     "statement": "Rxd8 is checkmate.",
+     "id": "C1"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [
+       "c3"
+      ]
+     },
+     "statement": "The knight on c3 is loose.",
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "c3d5",
+      "cp": 300
+     },
+     "statement": "Saving the knight with Nd5 is far worse than mating.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.3",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.find_move",
+    "theme.mate"
+   ],
+   "hints": [
+    "Run both scan questions. Is a White piece attacked, and is a Black piece attacked?",
+    "The rook on d8 has no protector. What is the black king doing?",
+    "Rook takes rook on the back rank."
+   ],
+   "explain": "The knight on c3 is loose, but the Black rook on d8 is loose as well and the king is boxed in by its own pawns. Rxd8 is checkmate, so there is no need to save the knight. The scan finds your own chances as well as your dangers.",
+   "feedback_by_move": {
+    "c3d5": "Nd5 saves the knight, but Rxd8 was checkmate. Look at Black's pieces as well as your own."
+   },
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-4"
+  },
+  {
+   "id": "IW2-LOOPV1-5",
+   "skill": "LOOP.V1.D2",
+   "cue": 2,
+   "task": "threat_detection",
+   "position": "PW2LV1-5",
+   "prompt": "White to move. If White did nothing useful and Black moved next, what would Black play to win material or checkmate? Name that move, or choose 'No threat'.",
+   "answer": {
+    "threat_move": "d8d1"
+   },
+   "claims": [
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "d8d1",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Rd1 is checkmate.",
+     "id": "C1"
+    },
+    {
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": []
+     },
+     "statement": "No White piece is loose.",
+     "id": "C2"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.2",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.threat_detection",
+    "theme.backRank",
+    "theme.mate"
+   ],
+   "hints": [
+    "No white piece is hanging. Look at the white king instead.",
+    "Where can the black rook go on the first row?",
+    "The king has no flight square and nothing can block."
+   ],
+   "explain": "No piece is loose, yet Black threatens Rd1, checkmate on the back rank, because the pawns box the king in and nothing covers d1 or can block. A threat does not have to be about winning a piece.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-5"
+  },
+  {
+   "id": "IW2-LOOPV1-6",
+   "skill": "LOOP.V1.D3",
+   "cue": 3,
+   "task": "predict_outcome",
+   "position": "PW2LV1-6",
+   "prompt": "White to move. Nxf7 wins a pawn and attacks the rook on d8. Does White come out ahead if the game goes on?",
+   "answer": {
+    "outcome": "no",
+    "options": [
+     "yes",
+     "no"
+    ]
+   },
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e5f7"
+     },
+     "statement": "Nxf7 is legal.",
+     "id": "C1"
+    },
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "d8d1",
+      "n": 1,
+      "null_move_first": true
+     },
+     "statement": "If White passes, Rd1 is checkmate.",
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "e5f7",
+      "cp": 500
+     },
+     "statement": "Nxf7 is far worse than the best move.",
+     "id": "C3"
+    }
+   ],
+   "tags": [
+    "node.LOOP.V1",
+    "cue.3",
+    "tier.1",
+    "lang.en",
+    "kind.authored",
+    "task.predict_outcome",
+    "theme.backRank"
+   ],
+   "hints": [
+    "The knight move wins a pawn and attacks a rook. Before playing it, ask what Black threatens now.",
+    "Black's last move left a threat on the first row. Does Nxf7 stop it?",
+    "Rd1 is still checkmate after Nxf7."
+   ],
+   "explain": "Nxf7 is attractive, but it ignores the threat on d1: Black replies Rd1, checkmate, and the attack on the rook does not matter. A tempting attacking move still needs the scan first.",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   },
+   "family": "FAM-W2-LOOPV1-6"
+  }
+ ]
+}

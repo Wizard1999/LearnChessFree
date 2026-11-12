@@ -1,0 +1,262 @@
+{
+ "positions": [
+  {
+   "id": "PW2-OS-1",
+   "fen": "rnbqk2r/ppp1bppp/4pn2/3p4/8/3P1NP1/PPP1PPBP/RNBQ1RK1 b kq - 0 5",
+   "family": "FAM-PW2-OS-1",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Black to move after a quiet setup; checked by python-chess and tools/validate.py.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-OS-2",
+   "fen": "rnbqk2r/ppp1bppp/4pn2/3p4/3P1B2/4PN2/PPP2PPP/RN1QKB1R w KQkq - 1 5",
+   "family": "FAM-PW2-OS-2",
+   "provenance": {
+    "kind": "authored",
+    "ref": "London-style setup after 1.d4 d5 2.Nf3 Nf6 3.Bf4 e6 4.e3 Be7; checked by validator.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-OS-3",
+   "fen": "rnbq1rk1/ppp1ppbp/3p1np1/8/3P4/5NP1/PPP1PPBP/RNBQ1RK1 w - - 0 6",
+   "family": "FAM-PW2-OS-3",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Both sides fianchettoed and castled; checked by validator.",
+    "licence": "project"
+   }
+  },
+  {
+   "id": "PW2-OS-4",
+   "fen": "rnbqkb1r/ppp2ppp/4pn2/3p4/3P1B2/4PN2/PPP2PPP/RN1QKB1R b KQkq - 0 4",
+   "family": "FAM-PW2-OS-4",
+   "provenance": {
+    "kind": "authored",
+    "ref": "Black to move after 1.d4 d5 2.Nf3 Nf6 3.Bf4 e6 4.e3; checked by validator.",
+    "licence": "project"
+   }
+  }
+ ],
+ "items": [
+  {
+   "id": "IW2-OPNSETUP-1",
+   "skill": "OPN.SETUP.D1",
+   "cue": 1,
+   "task": "find_move",
+   "position": "PW2-OS-1",
+   "prompt": "Black to move. Your knight and bishop are out and the centre is held. The next setup job: king to safety and a rook toward the middle. Play it.",
+   "answer": {
+    "moves": [
+     "e8g8"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "e8g8"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Each accepted move is within 40 centipawns of the engine's first choice (depth 16)."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_move": "e8g8"
+     },
+     "statement": "After castling the black king stands on the kingside."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "f8",
+      "piece": "r",
+      "after_move": "e8g8"
+     },
+     "statement": "After castling the rook stands on f8."
+    }
+   ],
+   "tags": [
+    "node.OPN.SETUP",
+    "cue.1",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en"
+   ],
+   "hints": [
+    "Which pieces have not moved yet? Look at the corners and the e8 square.",
+    "One move places two pieces at once.",
+    "Castle on the kingside."
+   ],
+   "explain": "Castling puts the king on g8 and the rook on f8 in one move (both checked), and the engine rates it within 40 centipawns of its first choice.",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-OPNSETUP-2",
+   "skill": "OPN.SETUP.D1",
+   "cue": 2,
+   "task": "find_move",
+   "position": "PW2-OS-2",
+   "prompt": "White to move. The bishops are placed and the centre is solid. Choose a sound move that continues the setup: a knight or bishop development, or a pawn to gain space.",
+   "answer": {
+    "moves": [
+     "b1d2",
+     "f1d3",
+     "f1e2",
+     "c2c4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b1d2",
+       "f1d3",
+       "f1e2",
+       "c2c4"
+      ],
+      "within_cp": 40
+     },
+     "statement": "Each accepted move is within 40 centipawns of the engine's first choice (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.OPN.SETUP",
+    "cue.2",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en"
+   ],
+   "hints": [
+    "Count the white pieces still on their start squares.",
+    "The knight on b1 and the bishop on f1 are not yet developed.",
+    "Nbd2, Bd3, Be2 or c4."
+   ],
+   "explain": "Nbd2 brings out the last knight, Bd3 and Be2 develop the last bishop and clear the way to castle, and c4 adds central space. Each is within 40 centipawns of the engine's first choice (checked).",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-OPNSETUP-3",
+   "skill": "OPN.SETUP.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PW2-OS-3",
+   "prompt": "White to move. Choose a good move.",
+   "answer": {
+    "moves": [
+     "b1c3",
+     "c2c4"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "b1c3",
+       "c2c4"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Each accepted move is within 30 centipawns of the engine's first choice (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.OPN.SETUP",
+    "cue.3",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en",
+    "mode.silent"
+   ],
+   "hints": [
+    "Which of your pieces have not yet reached a useful square?",
+    "Is anything attacked right now?",
+    "Nc3 and c4 both work with the long-diagonal bishop."
+   ],
+   "explain": "White is castled with the king bishop on the long diagonal; the remaining job is the queenside knight and a pawn break. These moves are within 30 centipawns of each other (depth 16).",
+   "orientation": "white",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  },
+  {
+   "id": "IW2-OPNSETUP-4",
+   "skill": "OPN.SETUP.D2",
+   "cue": 3,
+   "task": "find_move",
+   "position": "PW2-OS-4",
+   "prompt": "Black to move. Choose a good move.",
+   "answer": {
+    "moves": [
+     "f8e7",
+     "f8d6",
+     "c7c5",
+     "b8d7"
+    ]
+   },
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f8e7",
+       "f8d6",
+       "c7c5",
+       "b8d7"
+      ],
+      "within_cp": 30
+     },
+     "statement": "Each accepted move is within 30 centipawns of the engine's first choice (depth 16)."
+    }
+   ],
+   "tags": [
+    "node.OPN.SETUP",
+    "cue.3",
+    "tier.2",
+    "kind.authored",
+    "theme.opening",
+    "lang.en",
+    "mode.silent"
+   ],
+   "hints": [
+    "Which of your pieces have not yet moved?",
+    "Is anything of yours attacked?",
+    "Develop a piece or challenge the centre."
+   ],
+   "explain": "Black can finish the setup by developing the bishop or knight, or challenge the centre with c5. These moves are within 30 centipawns of each other (depth 16).",
+   "orientation": "black",
+   "review": {
+    "status": "needs-human",
+    "reviewer": null
+   }
+  }
+ ]
+}
