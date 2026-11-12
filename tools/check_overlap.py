@@ -13,7 +13,7 @@ lessons = [json.loads(f.read_text(encoding="utf-8")) for f in sorted((ROOT / "co
 problems = []
 by_sd = {}
 for l in lessons:
-    if not l.get("course") and l.get("role") != "assessment": by_sd.setdefault((l["skill"], l["depth"]), []).append(l["id"])   # a course lesson or a stage check uses a core skill, it does not replace its lesson (D81)
+    if not l.get("course") and l.get("role") != "assessment" and (l.get("part") or {}).get("n", 1) == 1: by_sd.setdefault((l["skill"], l["depth"]), []).append(l["id"])   # a course lesson or a stage check uses a core skill, it does not replace its lesson (D81)
 for k, ids in by_sd.items():
     if len(ids) > 1: problems.append(f"same skill and depth {k[0]}.{k[1]}: {', '.join(ids)}")
 
@@ -25,7 +25,7 @@ def used(l):
         if st.get("type") == "practice": s.add("tags:" + "|".join(sorted(st.get("tags", []))))
     return s
 sets = {l["id"]: used(l) for l in lessons}
-series = {l["id"]: l.get("series") for l in lessons}   # lessons of one deep series (for example the Dragon course) may revisit their own key positions
+series = {l["id"]: l.get("series") or (l.get("part") or {}).get("of") for l in lessons}   # the parts of one split lesson (D91) count as one lesson   # lessons of one deep series (for example the Dragon course) may revisit their own key positions
 for a, b in itertools.combinations(lessons, 2):
     if series[a["id"]] and series[a["id"]] == series[b["id"]]: continue
     x, y = sets[a["id"]], sets[b["id"]]

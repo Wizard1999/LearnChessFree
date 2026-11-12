@@ -1,0 +1,568 @@
+{
+ "id": "L-FND-PIECE-KNIGHT-2C",
+ "title": "The knight in a busy position, on the edge and in the corner (part 3 of 4)",
+ "skill": "FND.PIECE.KNIGHT",
+ "depth": "D2",
+ "minutes": 9,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.PIECE.KNIGHT.json (D2 outcome)",
+  "content/lessons/L-FND-KNIGHT-1.json",
+  "content/items/lesson-ds12.json",
+  "rules of chess (python-chess legal move generation, via tools/validate.py)",
+  "app/public/masters/stats.json (top-level master games, both players 2500+; first-move and reply counts)",
+  "Capablanca, Chess Fundamentals (1921), opening advice; E. Lasker, Common Sense in Chess (1896/1910): develop knights before bishops (docs/citable-views.md 1.2, 1.5; paraphrased)",
+  "positions constructed with python-chess and replayed from real move sequences (see item file provenance)"
+ ],
+ "part": {
+  "of": "L-FND-PIECE-KNIGHT-2",
+  "n": 3,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 3 of 4: The knight in a busy position, on the edge and in the corner. This part covers What the jump can do; When it does not apply. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKNIGHT2-5"
+  },
+  {
+   "type": "card",
+   "text": "A jump has nothing in between, and that gives the knight two special powers. A check from a knight cannot be blocked. And a knight can attack a piece that cannot attack it back. Watch the first power next to an ordinary check, with the same king and bishop.",
+   "chapter": "What the jump can do"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKNIGHT2-6"
+  },
+  {
+   "type": "board",
+   "fen": "4k3/pp1b4/8/8/8/8/5PPP/4R1K1 b - - 0 1",
+   "caption": "White's rook on e1 gives check along the e-file. Black has an answer besides moving the king: the bishop can stand in between.",
+   "line": [
+    {
+     "move": "d7e6",
+     "say": "The bishop steps between the rook and the king and blocks the check."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "e6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "Black is in check."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d7e6"
+     },
+     "statement": "The bishop can legally step to e6."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/p2b4/3N4/2P5/8/8/5PPP/6K1 b - - 0 1",
+   "caption": "Now a knight on d6 gives check. A jump has no squares in between, so nothing can be put in the way. Black's bishop has moves, but none of them is legal now. Only the king may move. The pawn on c5 guards the knight.",
+   "line": [
+    {
+     "move": "e8f8",
+     "say": "The king has to move. A knight check can only be answered by moving the king or taking the knight."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d6",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "Black is in check."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "d7e6"
+     },
+     "statement": "The bishop cannot legally go to e6."
+    },
+    {
+     "id": "C3",
+     "type": "illegal_move",
+     "params": {
+      "move": "d7c6"
+     },
+     "statement": "The bishop cannot legally go to c6."
+    },
+    {
+     "id": "C4",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "e8d8",
+       "e8e7",
+       "e8f8"
+      ]
+     },
+     "statement": "The only legal moves are king moves."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "6k1/5ppp/3q4/8/8/2N5/5PPP/5RK1 w - - 0 1",
+   "caption": "The queen on d6 is worth far more than a knight. White's rook guards the back rank, so Black has no mate threat. The knight can jump to a square an L away from the queen, and no queen attacks along an L.",
+   "line": [
+    {
+     "move": "c3e4",
+     "say": "The knight attacks the queen, and the queen cannot take it."
+    },
+    {
+     "move": "d6d8",
+     "say": "The queen has to run away."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "e4"
+    },
+    {
+     "from": "e4",
+     "to": "d6"
+    }
+   ],
+   "highlight": [
+    "e4",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1,
+      "after_move": "c3e4"
+     },
+     "statement": "After the jump the knight attacks the queen."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 0,
+      "after_move": "c3e4"
+     },
+     "statement": "After the jump no black piece attacks the knight."
+    },
+    {
+     "id": "C3",
+     "type": "move_is_not_mate",
+     "params": {
+      "move": "d6d1",
+      "null_move_first": true
+     },
+     "statement": "If White passed, Black's queen move to d1 would give check but not mate, because the rook takes it."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2q3k1/6pp/2N5/1P6/8/8/P4PPP/6K1 w - - 0 1",
+   "caption": "A double attack means one piece attacks two targets at once. Here a knight jump will give check and attack the queen on c8 in the same move.",
+   "line": [
+    {
+     "move": "c6e7",
+     "say": "Check, and the queen is attacked too."
+    },
+    {
+     "move": "g8h8",
+     "say": "The king steps aside."
+    },
+    {
+     "move": "e7c8",
+     "say": "The knight takes the queen."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "e7"
+    },
+    {
+     "from": "e7",
+     "to": "g8"
+    },
+    {
+     "from": "e7",
+     "to": "c8"
+    }
+   ],
+   "highlight": [
+    "e7",
+    "g8",
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c6e7"
+     },
+     "statement": "The knight can jump to e7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 1,
+      "after_move": "c6e7"
+     },
+     "statement": "After the jump the knight attacks the king."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "c8",
+      "color": "white",
+      "count": 1,
+      "after_move": "c6e7"
+     },
+     "statement": "After the jump the knight attacks the queen."
+    },
+    {
+     "id": "C4",
+     "type": "material_after_move",
+     "params": {
+      "move": "c6e7",
+      "min": 8
+     },
+     "statement": "The jump wins the queen."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2",
+   "caption": "Both sides bring a knight out early. On g1 the knight has three exits. One jump later it attacks the pawn on e5, and Black answers with a knight of its own that defends the pawn.",
+   "line": [
+    {
+     "move": "g1f3",
+     "say": "The knight comes out and attacks the pawn on e5."
+    },
+    {
+     "move": "b8c6",
+     "say": "Black's knight comes out too and defends that pawn."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g1",
+     "to": "e2"
+    },
+    {
+     "from": "g1",
+     "to": "f3"
+    },
+    {
+     "from": "g1",
+     "to": "h3"
+    }
+   ],
+   "highlight": [
+    "f3",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "g1",
+      "to": [
+       "e2",
+       "f3",
+       "h3"
+      ]
+     },
+     "statement": "The knight on g1 has exactly three jumps."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_move": "g1f3"
+     },
+     "statement": "After the jump the knight attacks the pawn on e5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "g1f3",
+       "b8c6"
+      ]
+     },
+     "statement": "After the reply a black knight defends the pawn."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
+   "caption": "On g1 the knight attacks 3 squares; on f3 it attacks 8, including the centre squares d4 and e5 (it also defends its own pieces on d2, e1 and h2). From g1 it did none of this.",
+   "arrows": [
+    {
+     "from": "f3",
+     "to": "d2"
+    },
+    {
+     "from": "f3",
+     "to": "d4"
+    },
+    {
+     "from": "f3",
+     "to": "e1"
+    },
+    {
+     "from": "f3",
+     "to": "e5"
+    },
+    {
+     "from": "f3",
+     "to": "g1"
+    },
+    {
+     "from": "f3",
+     "to": "g5"
+    },
+    {
+     "from": "f3",
+     "to": "h2"
+    },
+    {
+     "from": "f3",
+     "to": "h4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e5",
+    "g5",
+    "h4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "f3",
+      "squares": [
+       "d2",
+       "d4",
+       "e1",
+       "e5",
+       "g1",
+       "g5",
+       "h2",
+       "h4"
+      ]
+     },
+     "statement": "The knight on f3 attacks exactly these eight squares."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "Our own data [V]: of 329,008 first moves in our master games (both players rated 2500 or higher), 38,956 were Nf3. After 1.e4 e5, White played Nf3 in 53,390 of 56,809 games."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKNIGHT2-11"
+  },
+  {
+   "type": "card",
+   "text": "Views [S]: Capablanca (*Chess Fundamentals*) and Emanuel Lasker (*Common Sense in Chess*) both treated knights before bishops as a default, not a law.\n\n[H] A guess: a knight has few useful squares, so its best square is decided sooner than a bishop's, which depends on the pawns."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKNIGHT2-7"
+  },
+  {
+   "type": "board",
+   "fen": "6k1/pp3ppp/2p1p3/8/4P3/2N5/PPP2PPP/6K1 w - - 0 1",
+   "caption": "The knight on c3 has six jumps. Two of them, b5 and d5, are legal but dangerous: the pawn on c6 attacks both, and the pawn on e6 attacks d5 as well.",
+   "chapter": "When it does not apply",
+   "line": [
+    {
+     "move": "c3d5",
+     "say": "The knight lands on d5, where two pawns attack it."
+    },
+    {
+     "move": "e6d5",
+     "say": "A pawn takes the knight. A knight is worth more than a pawn, so Black is happy."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c3",
+     "to": "d5"
+    },
+    {
+     "from": "c3",
+     "to": "b5"
+    },
+    {
+     "from": "e6",
+     "to": "d5"
+    },
+    {
+     "from": "c6",
+     "to": "d5"
+    },
+    {
+     "from": "c6",
+     "to": "b5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "b5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "c3",
+      "to": [
+       "a4",
+       "b1",
+       "b5",
+       "d1",
+       "d5",
+       "e2"
+      ]
+     },
+     "statement": "The knight on c3 has exactly six legal jumps."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Two black pawns attack d5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black pawn attacks b5."
+    },
+    {
+     "id": "C4",
+     "type": "move_loses",
+     "params": {
+      "move": "c3d5",
+      "cp": 150
+     },
+     "statement": "Jumping to d5 loses material compared with the best move."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "A jump can be legal and still be a mistake. Before you jump, ask what attacks the landing square. A pawn is the usual surprise, because a pawn is worth much less than a knight. *Rule of thumb:* first check the landing square, then think about the target."
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/4n3/8/8/8/5PPP/4R1K1 b - - 0 1",
+   "caption": "The count assumes the knight is free to move. Here Black's knight stands between its king and the rook, so it is pinned: any jump would expose the king, and the knight has no legal move at all.",
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e6",
+    "e8",
+    "e1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e6",
+      "to": []
+     },
+     "statement": "The pinned knight on e6 has no legal move."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "The rook attacks the knight."
+    }
+   ]
+  }
+ ]
+}

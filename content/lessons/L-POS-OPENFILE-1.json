@@ -1,1861 +1,682 @@
 {
-  "id": "L-POS-OPENFILE-1",
-  "title": "Open files: find the entry square",
-  "skill": "POS.OPENFILE",
-  "depth": "D1",
-  "minutes": 30,
-  "outcomes": [
-    "Reads a position and names the open file and the half-open files, and the pawn trade that created each",
-    "Names the entry square before moving a rook onto an open file, and checks which pieces attack it",
-    "Knows a pawn can never guard a seventh-rank square, and a piece can: checks for the piece, not the pawn",
-    "Says what a defender can do (cover the entry square, contest the file, take it first) and finds the move that contests",
-    "Counts attackers and defenders on a pawn that blocks the file, and tells a protected blocker from an unprotected one",
-    "Explains the idea to a beginner with an example they can set up on a board"
-  ],
-  "steps": [
+ "id": "L-POS-OPENFILE-1",
+ "title": "Open files: find the entry square (part 1 of 3)",
+ "skill": "POS.OPENFILE",
+ "depth": "D1",
+ "minutes": 11,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (ideas 6-8, 12: file, entry square, seventh rank, protected and unprotected obstructions; the sheet author read the whole book; this lesson relies on the sheet, not on the book) [S]",
+  "sources/sheets/edlasker_chess-strategy.md (K20: the side whose rooks reach the file first; a file with no entry square gives no benefit; K2-K3 counts) [S]",
+  "sources/sheets/znosko-borovsky_middle-game.md (C27: ask who benefits before opening a line) [S]",
+  "docs/citable-views.md 3.14 and 8.5 (rooks work where the pawn structure opens files; Nimzowitsch on the open file behind an outpost) [S]",
+  "docs/council-synthesis.md CD-4 (conditions, not rules)",
+  "Real game: Carlsen v Vachier-Lagrave, Tata Steel Masters 2021, round 13, 31 January 2021, 1-0: moves from the Lichess broadcast database export (CC0), game xxXcvwgx/vaENvYpp, read locally 7 Nov 2026 [V]; every board position in that part replayed from the score with python-chess",
+  "Positions at steps 8 and 16 and in item ICR-LPOSOPENFILE1-6 are described only as master-level positions said to come from 2021 broadcast games: a review pass could not re-find the games in the local Lichess broadcast files (CC0), so game ids are NOT recorded and the positions are unverified as to source [unverified]; legality and engine claims are checked [V]",
+  "Constructed boards (family of shipped IA2-1): pieces placed on an empty board, legality and equal material checked with python-chess, claims checked by the engine at depth 16 (evidence under recorded limits, not proof) [V]",
+  "Opening boards replayed from the start position with python-chess: 1.d4 d5 2.c4 c6 3.Nf3 Nf6 (then 4.cxd5 cxd5 as the line) and 1.e4 e6 2.d4 d5 3.exd5 exd5 4.Nf3 Nf6 5.Bd3 Bd6 6.O-O O-O 7.Bg5 Bg4 8.Nbd2 Nbd7 9.c3 c6 [V]",
+  "content/items/lesson-cr-l-pos-openfile-1.json (new items) and shipped items IA2-1 to IA2-7 from content/items/lesson-pos-1.json",
+  "Conjecture labelled [H] or [I] in the text is the author's own and is not checked; no learner data was used"
+ ],
+ "part": {
+  "of": "L-POS-OPENFILE-1",
+  "n": 1,
+  "total": 3
+ },
+ "steps": [
+  {
+   "type": "board",
+   "fen": "r2q1rk1/pp1n1ppp/2pb1n2/3p2B1/3P2b1/2PB1N2/PP1N1PPP/R2Q1RK1 w - - 0 10",
+   "caption": "White to move, move ten of a French Exchange. Look at the pawns, not the pieces. One file has no pawns of either colour. Find it before you read on.",
+   "highlight": [
+    "e1",
+    "e2",
+    "e3",
+    "e4",
+    "e5",
+    "e6",
+    "e7",
+    "e8"
+   ],
+   "claims": [
     {
-      "type": "board",
-      "fen": "r2q1rk1/pp1n1ppp/2pb1n2/3p2B1/3P2b1/2PB1N2/PP1N1PPP/R2Q1RK1 w - - 0 10",
-      "caption": "White to move, move ten of a French Exchange. Look at the pawns, not the pieces. One file has no pawns of either colour. Find it before you read on.",
-      "highlight": [
-        "e1",
-        "e2",
-        "e3",
-        "e4",
-        "e5",
-        "e6",
-        "e7",
-        "e8"
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "e"
       ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "e"
-            ],
-            "half_open_white": [],
-            "half_open_black": []
-          },
-          "statement": "The e-file is the only open file; every other file still holds a pawn of at least one side."
-        },
-        {
-          "id": "C2",
-          "type": "eval_range",
-          "params": {
-            "min": -40,
-            "max": 60
-          },
-          "statement": "The engine rates the position as about equal (depth 16)."
-        }
-      ],
-      "chapter": "See the road"
+      "half_open_white": [],
+      "half_open_black": []
+     },
+     "statement": "The e-file is the only open file; every other file still holds a pawn of at least one side."
     },
     {
-      "type": "reflect",
-      "kind": "expect",
-      "prompt": "Before any explanation: which file would you like a rook on, and which square on it could the rook land on? Do not worry about being right. You will come back to this at the end.",
-      "fields": [
-        {
-          "id": "file",
-          "label": "The file I would use:",
-          "options": [
-            "the e-file",
-            "the d-file",
-            "the c-file",
-            "none of them"
-          ]
-        },
-        {
-          "id": "land",
-          "label": "A square my rook could land on, and why it might fail:"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Today's question.** An open file is a road with no pawns on it. Roads lead somewhere, or nowhere. By the end you will look at a position and say which file is worth a rook, which square the rook will land on, who can stop it, and what each side does about it. First, learn to see the road at all."
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/R4RK1 w - - 0 1",
-      "caption": "White to move. No pawn of either colour stands on the e-file, so it is open. Every other file still has pawns, so those files are closed. Either rook can use the open file.",
-      "line": [
-        {
-          "move": "a1e1",
-          "say": "The rook on a1 steps onto the open file. Nothing can block it on the way up."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a1",
-          "to": "e1"
-        },
-        {
-          "from": "f1",
-          "to": "e1"
-        }
-      ],
-      "highlight": [
-        "e1",
-        "e2",
-        "e3",
-        "e4",
-        "e5",
-        "e6",
-        "e7",
-        "e8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "e"
-            ],
-            "half_open_white": [],
-            "half_open_black": []
-          },
-          "statement": "The e-file is open and no other file is open or half-open."
-        },
-        {
-          "id": "C2",
-          "type": "moves_where",
-          "params": {
-            "property": "rook_to_open_file",
-            "moves": [
-              "a1e1",
-              "f1e1"
-            ]
-          },
-          "statement": "Exactly two moves put a rook on the open file: the rook on a1 or the rook on f1 goes to e1."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-1"
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/R3R1K1 w - - 0 1",
-      "caption": "Same pawns, one rook already on e1. Count the squares each rook can move to. The rook on the open file has room; the rook on a1 has its own pawn in front of it and its own rook at the end of the rank.",
-      "arrows": [
-        {
-          "from": "e1",
-          "to": "e8"
-        }
-      ],
-      "highlight": [
-        "e1",
-        "a1"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "mobility",
-          "params": {
-            "square": "e1",
-            "mode": "legal",
-            "count": 11
-          },
-          "statement": "The rook on e1 can move to 11 squares."
-        },
-        {
-          "id": "C2",
-          "type": "mobility",
-          "params": {
-            "square": "a1",
-            "mode": "legal",
-            "count": 3
-          },
-          "statement": "The rook on a1 can move to only 3 squares."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/4RRK1 w - - 0 1",
-      "caption": "Rooks on e1 and f1. The lit squares are the open file the rook on e1 attacks. It sees all the way to e8: the file is a road into Black's camp.",
-      "line": [
-        {
-          "move": "e1e7",
-          "say": "The rook slides the whole file and lands on e7. No black piece attacks that square."
-        },
-        {
-          "move": "b7b6",
-          "say": "Black moves the pawn the rook was attacking."
-        },
-        {
-          "move": "f1e1",
-          "say": "The second rook joins the first on the same file, behind it."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e1",
-          "to": "e7"
-        }
-      ],
-      "highlight": [
-        "e2",
-        "e3",
-        "e4",
-        "e5",
-        "e6",
-        "e7",
-        "e8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "piece_attacks",
-          "params": {
-            "square": "e1",
-            "squares": [
-              "a1",
-              "b1",
-              "c1",
-              "d1",
-              "e2",
-              "e3",
-              "e4",
-              "e5",
-              "e6",
-              "e7",
-              "e8",
-              "f1"
-            ]
-          },
-          "statement": "The rook on e1 attacks every square of the e-file up to e8."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks e7."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "b7",
-            "color": "white",
-            "count": 1,
-            "after_move": "e1e7"
-          },
-          "statement": "From e7 the rook attacks the pawn on b7."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "r2r2k1/1p1nppbp/p5p1/8/3PP3/4BN2/P4PPP/2R1K2R w K - 0 17",
-      "caption": "A position from a 2021 broadcast game (we could not re-find the game, so treat it as an illustration). White to move. Read the files: which is open, which is half-open for White (no white pawn, but a black one), which for Black?",
-      "highlight": [
-        "c1",
-        "c8",
-        "b7",
-        "d4"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [
-              "b"
-            ],
-            "half_open_black": [
-              "d"
-            ]
-          },
-          "statement": "The c-file is open, the b-file is half-open for White and the d-file is half-open for Black."
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**A road, not a prize.** A rook on an open file with no way in still ties pieces down; it just does not win material by itself. What matters is where it can *land* in the enemy camp: its **entry square**. A common best landing [I] is the seventh rank, where the enemy pawns start and the king is boxed in. Aron Nimzowitsch's *My System* treats a file as a way to reach a point [S]. Ask: which square, and who watches it?"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pp3ppp/8/8/4n3/4B3/PP3PPP/3R2K1 w - - 0 1",
-      "caption": "White to move. The d-file is open and no black piece attacks d7. Black's knight on e4 is also loose, so White is better for two reasons; the entry is one of them [I]. Follow the rook.",
-      "line": [
-        {
-          "move": "d1d7",
-          "say": "The rook lands on d7, an entry square no black piece watches. It attacks the pawns on b7 and f7."
-        },
-        {
-          "move": "b7b5",
-          "say": "Black pushes one attacked pawn forward. The pawn on a7 was never defended: the pawn on b7 only blocked the rook's view along the rank. Now the rook sees it."
-        },
-        {
-          "move": "d7a7",
-          "say": "The rook takes the pawn on a7. The landing paid off."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d1",
-          "to": "d7"
-        },
-        {
-          "from": "d7",
-          "to": "b7"
-        },
-        {
-          "from": "d7",
-          "to": "f7"
-        }
-      ],
-      "highlight": [
-        "d7",
-        "b7",
-        "f7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_move",
-          "params": {
-            "move": "d1d7"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "d7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks d7."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "b7",
-            "color": "white",
-            "count": 1,
-            "after_move": "d1d7"
-          },
-          "statement": "From d7 the rook attacks the pawn on b7."
-        },
-        {
-          "id": "C4",
-          "type": "attackers",
-          "params": {
-            "square": "f7",
-            "color": "white",
-            "count": 1,
-            "after_move": "d1d7"
-          },
-          "statement": "From d7 the rook attacks the pawn on f7."
-        },
-        {
-          "id": "C5",
-          "type": "loose_pieces",
-          "params": {
-            "color": "black",
-            "squares": [
-              "a7"
-            ],
-            "after_moves": [
-              "d1d7",
-              "b7b5"
-            ]
-          },
-          "statement": "After the pawn push, the pawn on a7 is attacked and undefended."
-        },
-        {
-          "id": "C6",
-          "type": "material_after_move",
-          "params": {
-            "move": "d1d7",
-            "min": 1
-          },
-          "statement": "Landing on d7 wins at least a pawn along the engine line."
-        },
-        {
-          "id": "C7",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d1d7",
-              "f2f3"
-            ]
-          },
-          "statement": "Landing on d7 is among the engine's first choices (depth 16)."
-        }
-      ],
-      "chapter": "The landing square"
-    },
-    {
-      "type": "card",
-      "text": "**When it usually works.** Three things usually need to hold [I]. Your rook reaches the file before the enemy contests it. The entry square is not guarded by a pawn or a minor piece. And something is waiting there: loose pawns, or a king with no room to move. If one is missing, ask what else makes up for it; a landing with tempo or a forcing follow-up can still work."
-    },
-    {
-      "type": "contrast",
-      "title": "Same rook, one change",
-      "prompt": "Black's knight stands on e8 instead of h5. Does Rc7 still win a pawn? Predict first, then check.",
-      "working": "IA2-1",
-      "failing": "IA2-2",
-      "irrelevant": "IA2-3"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pp3ppp/8/4b3/8/4B3/PP3PPP/3R2K1 w - - 0 1",
-      "caption": "Compare with the board before: the same idea with a bishop on e5 instead of the knight on e4. The bishop does not attack d7. White to move.",
-      "line": [
-        {
-          "move": "d1d7",
-          "say": "The rook lands on d7. The bishop on e5 does not attack that square."
-        },
-        {
-          "move": "b7b5",
-          "say": "Black pushes the attacked pawn."
-        },
-        {
-          "move": "d7d5",
-          "say": "The rook switches along the file to attack the bishop and the pawn on b5 together."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d1",
-          "to": "d7"
-        }
-      ],
-      "highlight": [
-        "d7",
-        "e5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "d7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks d7."
-        },
-        {
-          "id": "C2",
-          "type": "material_after_move",
-          "params": {
-            "move": "d1d7",
-            "min": 1
-          },
-          "statement": "Landing on d7 wins at least a pawn along the engine line."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "e5",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "d1d7",
-              "b7b5",
-              "d7d5"
-            ]
-          },
-          "statement": "From d5 the rook attacks the bishop on e5."
-        },
-        {
-          "id": "C4",
-          "type": "attackers",
-          "params": {
-            "square": "b5",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "d1d7",
-              "b7b5",
-              "d7d5"
-            ]
-          },
-          "statement": "From d5 the rook also attacks the pawn on b5."
-        },
-        {
-          "id": "C5",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d1d7"
-            ]
-          },
-          "statement": "Landing on d7 is the engine's first choice (depth 16)."
-        },
-        {
-          "id": "C6",
-          "type": "eval_range",
-          "params": {
-            "min": 60,
-            "max": 250
-          },
-          "statement": "The engine prefers White by between a half and two and a half pawns (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/ppp1pppp/8/8/8/4P3/PPP2PPP/3R1RK1 w - - 0 1",
-      "caption": "The d-file is open. Black's pawns on c7 and e7 guard the square d6, so a rook could not safely stop there. Does that stop it from landing on d7? White to move.",
-      "line": [
-        {
-          "move": "d1d7",
-          "say": "The rook jumps over the guarded square d6 and lands on d7. A rook moves through attacked squares as long as they are empty."
-        },
-        {
-          "move": "a8c8",
-          "say": "Black adds a defender to the pawn on c7."
-        },
-        {
-          "move": "f1d1",
-          "say": "The second rook joins the first. The pawn on e7 is still under attack."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d1",
-          "to": "d7"
-        }
-      ],
-      "highlight": [
-        "d6",
-        "d7",
-        "c7",
-        "e7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "pawn_attackers",
-          "params": {
-            "square": "d6",
-            "color": "black",
-            "count": 2
-          },
-          "statement": "Two black pawns guard d6."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "d7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks d7."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "e7",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "d1d7",
-              "a8c8",
-              "f1d1"
-            ]
-          },
-          "statement": "The rook on d7 attacks the pawn on e7."
-        },
-        {
-          "id": "C4",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d1d7"
-            ]
-          },
-          "statement": "The rook move to d7 is the engine's first choice (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "1r3rk1/1R1b1pp1/pB1P3p/4p3/P7/1P3P2/5P2/2R3K1 w - - 2 33",
-      "caption": "Real-example stage: a master-level position (said to be from a 2021 broadcast game; we could not re-find it, so treat it as an illustration). One white rook already stands on the seventh rank. The other can join it. White to move.",
-      "line": [
-        {
-          "move": "c1c7",
-          "say": "The second rook lands on c7 and attacks the bishop on d7. Nothing black attacks that square."
-        },
-        {
-          "move": "d7e6",
-          "say": "The bishop moves away from the attack."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c1",
-          "to": "c7"
-        }
-      ],
-      "highlight": [
-        "b7",
-        "c7",
-        "d7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "c7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks c7."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "d7",
-            "color": "white",
-            "count": 1,
-            "after_move": "c1c7"
-          },
-          "statement": "From c7 the rook attacks the bishop on d7."
-        },
-        {
-          "id": "C3",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "c1c7"
-            ]
-          },
-          "statement": "Doubling on the seventh rank is the engine's first choice (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Why the seventh rank? [I]** Three reasons, in our reading. No enemy pawn can guard a square there, because pawns never stand on their own back rank; only pieces can. The pawns still at home can be attacked from the side. And the king is often boxed in behind them, so two rooks there can threaten mate. Edward Lasker, in *Chess Strategy*, says the side whose rooks reach the file first gets the raids on the seventh [S]."
-    },
-    {
-      "type": "card",
-      "text": "**When the landing is a trap [I].** A rook on the seventh can be cut off. If a bishop or knight attacks it, its retreat squares are covered, and the king or a pawn guards the squares beside it, the rook may be lost for a piece. Before you land, ask not only who attacks the square now but where the rook goes if it is attacked next. [H] This may cost club players more rooks than a slow arrival does. (No board yet: unchecked idea.)"
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-2",
-      "silent": true
-    },
-    {
-      "type": "card",
-      "text": "**Four things a defender can try [I].** Cover the entry square with a piece. Put a rook on the file and offer a trade. Take the file first: the mirror board below is the same road seen from the other side. Or ignore the file and threaten something bigger; we show no board for that one here. [H] I suspect club players lose more games by landing on a covered square than by arriving late; we have no count. The next boards show the first two.",
-      "chapter": "When it fails"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pp3ppp/8/5b2/8/4B3/PP3PPP/3R2K1 w - - 0 1",
-      "caption": "The same position as before, with one change: the bishop stands on f5 instead of e5. White to move. Does the bishop attack d7?",
-      "line": [
-        {
-          "move": "d1d7",
-          "say": "The rook lands on d7."
-        },
-        {
-          "move": "f5d7",
-          "say": "The bishop captures the rook, and nothing recaptures. The entry square was guarded."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f5",
-          "to": "d7"
-        }
-      ],
-      "highlight": [
-        "d7",
-        "f5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "d7",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "One black piece, the bishop, attacks d7."
-        },
-        {
-          "id": "C2",
-          "type": "move_loses",
-          "params": {
-            "move": "d1d7",
-            "cp": 200
-          },
-          "statement": "Landing on d7 is worse than the best move by at least two pawns (depth 16)."
-        },
-        {
-          "id": "C3",
-          "type": "eval_range",
-          "params": {
-            "min": -40,
-            "max": 60
-          },
-          "statement": "The position is about equal before the rook move (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-3"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pp3pp1/5b1p/8/8/5N1P/PP3PP1/3R2K1 b - - 0 1",
-      "caption": "Black to move. White's rook owns the d-file and could land on d7 next. Black can ask a question with a rook of his own.",
-      "line": [
-        {
-          "move": "f8d8",
-          "say": "Black puts a rook opposite White's. A landing on d7 now runs into the rook on d8."
-        },
-        {
-          "move": "d1d8",
-          "say": "White trades. The file is now empty of rooks."
-        },
-        {
-          "move": "f6d8",
-          "say": "The bishop recaptures. Neither side has gained the file."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f8",
-          "to": "d8"
-        }
-      ],
-      "highlight": [
-        "d8",
-        "d1"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "f8d8"
-            ]
-          },
-          "statement": "Contesting the file is the engine's first choice (depth 16)."
-        },
-        {
-          "id": "C2",
-          "type": "eval_range",
-          "params": {
-            "min": -60,
-            "max": 60
-          },
-          "statement": "The position is about equal (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "3r1rk1/ppp1pppp/8/8/8/4P3/PPP2PPP/R4RK1 b - - 0 1",
-      "caption": "The same road, seen from the other side: Black takes the file first, and no white piece watches d2. White's pawns on c2 and e3 guard d3 and d4, not d2.",
-      "line": [
-        {
-          "move": "d8d2",
-          "say": "Black's rook lands on d2 and attacks the pawns on c2 and f2."
-        },
-        {
-          "move": "a1c1",
-          "say": "White defends the pawn on c2 with a rook, which also guards the first rank."
-        },
-        {
-          "move": "f8d8",
-          "say": "The second black rook joins the first. White's rook on c1 holds the balance, so the landing gains little here [I]."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d8",
-          "to": "d2"
-        }
-      ],
-      "highlight": [
-        "d2",
-        "c2",
-        "f2"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "d2",
-            "color": "white",
-            "count": 0
-          },
-          "statement": "No white piece attacks d2."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "c2",
-            "color": "black",
-            "count": 1,
-            "after_move": "d8d2"
-          },
-          "statement": "From d2 the rook attacks the pawn on c2."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "f2",
-            "color": "black",
-            "count": 1,
-            "after_move": "d8d2"
-          },
-          "statement": "From d2 the rook attacks the pawn on f2."
-        },
-        {
-          "id": "C4",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d8d2"
-            ]
-          },
-          "statement": "Landing on d2 is the engine's first choice (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "reflect",
-      "kind": "expect",
-      "prompt": "Think of an open file in one of your own games: who landed first, and which square did the rook want? No game to hand? Use the Carlsen game below and say who arrived first and why. [H] The player who arrived second may often believe they were first; this is untested.",
-      "fields": [
-        {
-          "id": "first",
-          "label": "Who gets there first, and why:"
-        },
-        {
-          "id": "sq",
-          "label": "The square I would land on:"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Opening the road, being first.** Files open by trades: a pawn exchange, or a capture that removes the pawn. Edward Lasker (*Chess Strategy*) advises being the side that puts rooks on the file first [S]. Znosko-Borovsky adds a question to ask before opening any line: who benefits? As a rule, opening a line tends to help the stronger side, or the side with the stronger part of the position [S]. A rule of thumb, not a law.",
-      "chapter": "Set it up, prevent it, test it"
-    },
-    {
-      "type": "board",
-      "fen": "rnbqkb1r/pp2pppp/2p2n2/3p4/2PP4/5N2/PP2PPPP/RNBQKB1R w KQkq - 2 4",
-      "caption": "The Slav Defence, move four. Every file still holds a pawn, so no file is open. A pawn trade on d5 changes that. Follow the trade and ask which file opens.",
-      "line": [
-        {
-          "move": "c4d5",
-          "say": "White captures on d5 with the c-pawn. The white pawn has left the c-file."
-        },
-        {
-          "move": "c6d5",
-          "say": "Black recaptures with the c-pawn. Now neither side has a pawn on the c-file: it is open."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c4",
-          "to": "d5"
-        },
-        {
-          "from": "c6",
-          "to": "d5"
-        }
-      ],
-      "highlight": [
-        "c1",
-        "c2",
-        "c7",
-        "c8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [],
-            "half_open_white": [],
-            "half_open_black": []
-          },
-          "statement": "Before the trade no file is open or half-open."
-        },
-        {
-          "id": "C2",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [],
-            "half_open_black": [],
-            "after_moves": [
-              "c4d5",
-              "c6d5"
-            ]
-          },
-          "statement": "After the trade the c-file is open and every other file is closed."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rnb2rk1/p2qppbp/1p4p1/2p5/3PP3/Q1P1BN2/P4PPP/3RKB1R b K - 3 11",
-      "caption": "A real game: Carlsen against Vachier-Lagrave. Black's c-pawn and White's c-pawn face each other. Watch the pawn trade open the c-file.",
-      "line": [
-        {
-          "move": "c5d4",
-          "say": "Black captures the pawn on d4 with the c-pawn. One of the two c-file pawns leaves the file."
-        },
-        {
-          "move": "c3d4",
-          "say": "White recaptures with the c-pawn. The c-file now holds no pawns at all."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c5",
-          "to": "d4"
-        },
-        {
-          "from": "c3",
-          "to": "d4"
-        }
-      ],
-      "highlight": [
-        "c3",
-        "c5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "after_moves": [
-              "c5d4",
-              "c3d4"
-            ]
-          },
-          "statement": "After the two captures the c-file is open."
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "c5d4"
-          }
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**A pawn on the road.** Sometimes a pawn blocks the file. Nimzowitsch (*My System*) separates a *protected* blocker from an unprotected one [S]. Undermine a protected one with a pawn lever. Besiege an unprotected one: bring more attackers than it has defenders, and capture with the cheapest piece first, so you give up the least if the exchange goes on. Sacrifices to clear the file come last."
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/1p3ppp/2p5/8/1P6/4P3/5PPP/2R2RK1 w - - 0 1",
-      "caption": "A pawn blocks the c-file: the pawn on c6, protected by the pawn on b7. A rook cannot take it. A pawn lever can attack it. White to move. The engine sees the position as about level either way (depth 16).",
-      "line": [
-        {
-          "move": "b4b5",
-          "say": "The lever attacks the blocker. Black may also decline with ...c5: the lever only gains the file if Black takes [H]."
-        },
-        {
-          "move": "c6b5",
-          "say": "Black takes the lever pawn. The blocker has left the file: the c-file is now open for both rooks."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b4",
-          "to": "b5"
-        }
-      ],
-      "highlight": [
-        "c6",
-        "b7",
-        "b5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "pawn_set",
-          "params": {
-            "kind": "protected",
-            "color": "black",
-            "squares": [
-              "c6"
-            ]
-          },
-          "statement": "The pawn on c6 is protected by the pawn on b7."
-        },
-        {
-          "id": "C2",
-          "type": "open_files",
-          "params": {
-            "half_open_white": [
-              "c"
-            ]
-          },
-          "statement": "The c-file is half-open for White: no white pawn, one black pawn."
-        },
-        {
-          "id": "C3",
-          "type": "moves_where",
-          "params": {
-            "property": "pawn_move_attacks",
-            "square": "c6",
-            "moves": [
-              "b4b5"
-            ]
-          },
-          "statement": "The only pawn move that attacks c6 is the lever b4-b5."
-        },
-        {
-          "id": "C4",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "a",
-              "c",
-              "d"
-            ],
-            "after_moves": [
-              "b4b5",
-              "c6b5"
-            ]
-          },
-          "statement": "If Black takes the lever pawn, the c-file is open (the a-file and the d-file hold no pawns either)."
-        },
-        {
-          "id": "C5",
-          "type": "open_files",
-          "params": {
-            "half_open_white": [
-              "c"
-            ],
-            "after_moves": [
-              "b4b5",
-              "c6c5"
-            ]
-          },
-          "statement": "If Black answers ...c5 instead, a black pawn still stands on the c-file: it is half-open for White, not open."
-        },
-        {
-          "id": "C6",
-          "type": "eval_range",
-          "params": {
-            "min": -40,
-            "max": 60
-          },
-          "statement": "The engine rates the position as about equal (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Half-open: pressure on one pawn [I].** A file where your own pawn is gone but theirs still stands is half-open for you. The rook cannot pass the blocker, but it points at it and ties defenders to it. Add attackers until they outnumber the defenders, then take."
-    },
-    {
-      "type": "board",
-      "fen": "r4rk1/p2b1ppp/1pp5/8/3N4/4P3/PP3PPP/2R2RK1 w - - 0 1",
-      "caption": "The c-file is half-open for White and the pawn on c6 has no pawn protection: two attackers (rook and knight), one defender (the bishop). Which piece should take first?",
-      "line": [
-        {
-          "move": "d4c6",
-          "say": "The knight takes first: it is the cheapest attacker."
-        },
-        {
-          "move": "d7c6",
-          "say": "The bishop, the only defender, recaptures."
-        },
-        {
-          "move": "c1c6",
-          "say": "The rook takes the bishop. White gave a knight for a pawn and a bishop."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c1",
-          "to": "c6"
-        },
-        {
-          "from": "d4",
-          "to": "c6"
-        }
-      ],
-      "highlight": [
-        "c6",
-        "c1",
-        "d4",
-        "d7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "c6",
-            "color": "white",
-            "count": 2
-          },
-          "statement": "Two white pieces attack c6: the rook and the knight."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "c6",
-            "color": "black",
-            "count": 1
-          },
-          "statement": "One black piece, the bishop, defends c6."
-        },
-        {
-          "id": "C3",
-          "type": "open_files",
-          "params": {
-            "half_open_white": [
-              "c"
-            ]
-          },
-          "statement": "The c-file is half-open for White."
-        },
-        {
-          "id": "C4",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "d4c6"
-            ]
-          },
-          "statement": "Knight takes on c6 is the engine's first choice (depth 16)."
-        },
-        {
-          "id": "C5",
-          "type": "move_loses",
-          "params": {
-            "move": "c1c6",
-            "cp": 100
-          },
-          "statement": "Taking with the rook first is worse than the knight capture by at least a pawn (depth 16)."
-        },
-        {
-          "id": "C6",
-          "type": "material_after_move",
-          "params": {
-            "move": "d4c6",
-            "min": 1
-          },
-          "statement": "The knight capture wins at least a pawn along the engine line."
-        }
-      ]
-    },
-    {
-      "type": "contrast",
-      "title": "Same pawn, one change",
-      "prompt": "Black's b-pawn stands on b7 instead of b6, so it protects c6. Does the knight capture still win a pawn? Predict first, then check.",
-      "working": "IA2-4",
-      "failing": "IA2-5"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pp3ppp/4b3/3p4/3P4/4B3/PP3PPP/2R3K1 w - - 0 1",
-      "caption": "Not every file is open. The d-file is closed by a white pawn and a black pawn. Two files are open: which one does the rook belong on? White to move.",
-      "line": [
-        {
-          "move": "c1c7",
-          "say": "The rook uses the open c-file. No black piece attacks c7, and the closed d-file never mattered."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c1",
-          "to": "c7"
-        }
-      ],
-      "highlight": [
-        "c1",
-        "c7",
-        "d4",
-        "d5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c",
-              "e"
-            ],
-            "half_open_white": [],
-            "half_open_black": []
-          },
-          "statement": "The c-file and the e-file are open; the d-file is closed."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "c7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks c7."
-        },
-        {
-          "id": "C3",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "c1c7"
-            ]
-          },
-          "statement": "Landing on c7 is the engine's first choice (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IA2-6",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IA2-7",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-4",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-5",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-6",
-      "silent": true
-    },
-    {
-      "type": "card",
-      "text": "**A real game.** Magnus Carlsen against Maxime Vachier-Lagrave, Tata Steel 2021, round 13. The c-file opened early by a pawn trade, and the game shows our three stages: take the file, face a contest, find the entry. The moves are facts from a broadcast database; the explanations are ours and labelled where they are guesses.",
-      "chapter": "A real game"
-    },
-    {
-      "type": "board",
-      "fen": "rnb2rk1/p2qppbp/1p4p1/2p5/3PP3/Q1P1BN2/P4PPP/3RKB1R b K - 3 11",
-      "caption": "Back to the Carlsen game, a few moves on. After the c-file opens, Black offers a queen trade. Follow it and ask what changes.",
-      "line": [
-        {
-          "move": "c5d4",
-          "say": "Black takes on d4 with the c-pawn."
-        },
-        {
-          "move": "c3d4",
-          "say": "White recaptures with the c-pawn; the c-file is open."
-        },
-        {
-          "move": "d7d6",
-          "say": "The black queen offers a trade on d6."
-        },
-        {
-          "move": "a3d6",
-          "say": "White takes the queen."
-        },
-        {
-          "move": "e7d6",
-          "say": "The pawn recaptures. Queens are off, and the e-file is now half-open for Black."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d7",
-          "to": "d6"
-        }
-      ],
-      "highlight": [
-        "c1",
-        "c8",
-        "e1",
-        "e8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [
-              "b"
-            ],
-            "half_open_black": [
-              "e"
-            ],
-            "after_moves": [
-              "c5d4",
-              "c3d4",
-              "d7d6",
-              "a3d6",
-              "e7d6"
-            ]
-          },
-          "statement": "After the queen trade the c-file is open, the b-file is half-open for White and the e-file for Black."
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "c5d4"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rnb2rk1/p4pbp/1p1p2p1/8/3PP3/4BN2/P4PPP/3RKB1R w K - 0 14",
-      "caption": "White to move. The c-file is open. Watch the rook take it, and what Black does about it.",
-      "line": [
-        {
-          "move": "d1c1",
-          "say": "The rook takes the open c-file at once. From c1 it attacks the bishop on c8 along the file."
-        },
-        {
-          "move": "c8b7",
-          "say": "Black develops the bishop to b7."
-        },
-        {
-          "move": "f1d3",
-          "say": "White develops the bishop to d3, which frees the first rank for the rooks."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d1",
-          "to": "c1"
-        }
-      ],
-      "highlight": [
-        "c1",
-        "c8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [
-              "b"
-            ],
-            "half_open_black": [
-              "e"
-            ]
-          },
-          "statement": "The c-file is open, the b-file is half-open for White and the e-file for Black."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "c8",
-            "color": "white",
-            "count": 1,
-            "after_move": "d1c1"
-          },
-          "statement": "From c1 the rook attacks the bishop on c8."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rn3rk1/pb3pbp/1p1p2p1/8/3PP3/3BBN2/P4PPP/2R1K2R b K - 3 15",
-      "caption": "Black to move, the same game. The white rook holds the c-file. How does Black answer it, and why does White step the king aside?",
-      "line": [
-        {
-          "move": "b8c6",
-          "say": "The knight comes to c6."
-        },
-        {
-          "move": "e1d2",
-          "say": "The king steps to d2, off the first rank. The rooks on c1 and h1 now see each other, so each backs up the other [I]."
-        },
-        {
-          "move": "a8c8",
-          "say": "Black puts a rook on c8, opposite White's. A white rook landing on c7 would now be met by that rook [I]: the contest we saw earlier."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a8",
-          "to": "c8"
-        }
-      ],
-      "highlight": [
-        "c1",
-        "c8",
-        "d2"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [
-              "b"
-            ],
-            "half_open_black": [
-              "e"
-            ]
-          },
-          "statement": "The c-file is open, the b-file is half-open for White and the e-file for Black."
-        },
-        {
-          "id": "C2",
-          "type": "rooks_connected",
-          "params": {
-            "color": "white",
-            "value": true,
-            "after_moves": [
-              "b8c6",
-              "e1d2"
-            ]
-          },
-          "statement": "After the king step the two white rooks are connected."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4rrk1/pb3pbp/1p1p2p1/8/1n1PP2P/4BN2/P2K1PP1/1BR4R w - - 3 19",
-      "caption": "Black has left the c-file (the rook went to e8 to attack the pawn on e4). White to move. No black piece watches c7, but is landing there best? The engine prefers a3 first, to drive the knight away. An open entry square is a condition, not an order.",
-      "line": [
-        {
-          "move": "a2a3",
-          "say": "The pawn attacks the knight on b4. The engine rates this above the landing on c7 (depth 16)."
-        },
-        {
-          "move": "b4c6",
-          "say": "The knight retreats to c6."
-        },
-        {
-          "move": "b1a2",
-          "say": "The bishop retreats to a2."
-        },
-        {
-          "move": "e8e4",
-          "say": "Black's rook takes the pawn on e4. White has given a pawn; the next board shows what it gets back."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a2",
-          "to": "b4"
-        }
-      ],
-      "highlight": [
-        "c7",
-        "c8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "c7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks c7 in this position."
-        },
-        {
-          "id": "C2",
-          "type": "open_files",
-          "params": {
-            "open": [
-              "c"
-            ],
-            "half_open_white": [
-              "b"
-            ],
-            "half_open_black": [
-              "e"
-            ]
-          },
-          "statement": "The c-file is still open."
-        },
-        {
-          "id": "C3",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "a2a3"
-            ]
-          },
-          "statement": "The pawn move a3 is the engine's first choice (depth 16)."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/pb3pbp/1pnp2p1/8/3Pr2P/P3BN2/B2K1PP1/2R4R w - - 0 21",
-      "caption": "Black's rook stands on e4 and the knight on c6 blocks its own bishop. White to move. Follow the exchange that ends with no black piece attacking c7.",
-      "line": [
-        {
-          "move": "a2d5",
-          "say": "The bishop attacks the rook on e4 from d5."
-        },
-        {
-          "move": "c6a5",
-          "say": "The knight steps to a5, so the bishop on b7 now attacks the bishop on d5."
-        },
-        {
-          "move": "d5e4",
-          "say": "White's bishop takes the rook on e4."
-        },
-        {
-          "move": "b7e4",
-          "say": "Black's bishop recaptures. White has won a rook for a bishop, and no black piece attacks c7 now."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a2",
-          "to": "d5"
-        }
-      ],
-      "highlight": [
-        "d5",
-        "e4",
-        "c7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "d5",
-            "color": "black",
-            "count": 1,
-            "after_moves": [
-              "a2d5",
-              "c6a5"
-            ]
-          },
-          "statement": "After the knight move, the bishop on b7 attacks the bishop on d5."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "c7",
-            "color": "black",
-            "count": 0,
-            "after_moves": [
-              "a2d5",
-              "c6a5",
-              "d5e4",
-              "b7e4"
-            ]
-          },
-          "statement": "At the end of the line no black piece attacks c7."
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "ICR-LPOSOPENFILE1-7"
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/p4pbp/1p1p2p1/n7/3Pb2P/P3BN2/3K1PP1/2R4R w - - 0 23",
-      "caption": "White to move. The same position as the question you just answered, now with the game continuation.",
-      "line": [
-        {
-          "move": "c1c7",
-          "say": "The rook lands on c7. No black piece attacks the square, and it attacks the pawns on a7 and f7."
-        },
-        {
-          "move": "a7a6",
-          "say": "Black moves the a-pawn to a6."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "c1",
-          "to": "c7"
-        }
-      ],
-      "highlight": [
-        "c7",
-        "a7",
-        "f7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "c7",
-            "color": "black",
-            "count": 0
-          },
-          "statement": "No black piece attacks c7."
-        },
-        {
-          "id": "C2",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "c1c7"
-            ]
-          },
-          "statement": "Rc7 is the engine's first choice (depth 16)."
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "a7",
-            "color": "white",
-            "count": 1,
-            "after_move": "c1c7"
-          },
-          "statement": "From c7 the rook attacks the pawn on a7."
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "5rk1/2R2pbp/pp1p2p1/n7/3Pb2P/P3BN2/3K1PP1/7R w - - 0 24",
-      "caption": "The rook stays on c7. White now starts the h-pawn forward on the other wing, and Black has to answer on both wings. White to move.",
-      "line": [
-        {
-          "move": "h4h5",
-          "say": "White starts the h-pawn forward."
-        },
-        {
-          "move": "b6b5",
-          "say": "Black pushes the b-pawn to b5."
-        },
-        {
-          "move": "h5h6",
-          "say": "The h-pawn reaches h6 and attacks the bishop on g7."
-        },
-        {
-          "move": "g7f6",
-          "say": "The bishop retreats to f6."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "h4",
-          "to": "h6"
-        }
-      ],
-      "highlight": [
-        "c7",
-        "h4",
-        "g7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "piece_on",
-          "params": {
-            "square": "c7",
-            "piece": "R"
-          },
-          "statement": "The white rook still stands on c7."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "g7",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "h4h5",
-              "b6b5",
-              "h5h6"
-            ]
-          },
-          "statement": "The pawn on h6 attacks the bishop on g7."
-        }
-      ]
-    },
-    {
-      "type": "reflect",
-      "kind": "expect",
-      "prompt": "In the game Vachier-Lagrave moved his rook off the c-file (...Rce8) to chase a pawn. [H] I think the c-file was already hard to hold. Do you think leaving it was a mistake, or the best of bad options? Write a reason, not just a verdict. The engine's opinion is a number; your reason is what you will use next game.",
-      "fields": [
-        {
-          "id": "verdict",
-          "label": "My answer:",
-          "options": [
-            "a mistake",
-            "the best of bad options",
-            "I cannot tell"
-          ]
-        },
-        {
-          "id": "why",
-          "label": "Because:"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "r2q1rk1/pp1n1ppp/2pb1n2/3p2B1/3P2b1/2PB1N2/PP1N1PPP/R2Q1RK1 w - - 0 10",
-      "caption": "Back to the first position. Check the entry squares. Now that you know what to look for, does the open e-file give a rook an easy landing?",
-      "highlight": [
-        "e7",
-        "e8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "attackers",
-          "params": {
-            "square": "e7",
-            "color": "black",
-            "count": 2
-          },
-          "statement": "Two black pieces attack e7: the bishop and the queen."
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e8",
-            "color": "black",
-            "count": 3
-          },
-          "statement": "Three black pieces attack e8."
-        },
-        {
-          "id": "C3",
-          "type": "best_move_in",
-          "params": {
-            "moves": [
-              "h2h3",
-              "f1e1"
-            ]
-          },
-          "statement": "The engine counts h3 and Re1 among its first choices (depth 16)."
-        }
-      ],
-      "chapter": "Teach it back"
-    },
-    {
-      "type": "card",
-      "text": "**The answer: not yet a landing.** The bishop and queen watch e7, and the queen, knight and rook watch e8, so a rook that jumped in would be taken. White may still put a rook on e1 to contest the file and tie pieces down; the engine counts that among its better moves (depth 16). The file here is a road to be fought for, not a landing."
-    },
-    {
-      "type": "card",
-      "text": "**What to remember.** An open file is a road, not a prize. Find the entry square and count who watches it. Pawns never guard a seventh-rank square. Reach the file first, or contest it. A blocking pawn is protected or unprotected: treat them differently. A rook on an open file with no entry still ties pieces down. [H] Keep a list of the files you used in your own games and the squares you landed on; the pattern will teach you more than this page."
-    },
-    {
-      "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Teach it back. Write four sentences for a beginner who knows how the pieces move: (1) what an open file is and what the entry square is, (2) when a rook on it works, (3) an example they could set up on a board, (4) one warning. Self-check: did you say what makes a file open, name the entry square, say when the landing fails, give an example a beginner could set up, and name one answer the defender has? Then look at your first guess and ask it again: was the e-file ready to use?",
-      "fields": [
-        {
-          "id": "idea",
-          "label": "The idea:"
-        },
-        {
-          "id": "when",
-          "label": "When it works:"
-        },
-        {
-          "id": "ex",
-          "label": "An example:"
-        },
-        {
-          "id": "warn",
-          "label": "A warning:"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**A model answer, to read after you wrote yours.** An open file has no pawn of either colour. The entry square is where a rook can land in the enemy camp, often on the seventh rank. It works when you arrive first, nothing covers the square, and something is waiting there. Example: a rook on d1, an empty d-file, no black piece watching d7. Warning: a bishop or knight covering the entry square can win your rook. A defender can cover the square or contest the file [I]."
-    },
-    {
-      "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Compare the model answer with yours. What did it include that you left out, and what did you say that it did not?",
-      "fields": [
-        {
-          "id": "gap",
-          "label": "What I missed or added:"
-        }
-      ]
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 60
+     },
+     "statement": "The engine rates the position as about equal (depth 16)."
     }
-  ],
-  "review": {
-    "status": "needs-human",
-    "reviewer": null
+   ],
+   "chapter": "See the road"
   },
-  "sources": [
-    "sources/sheets/nimzowitsch_my-system.md (ideas 6-8, 12: file, entry square, seventh rank, protected and unprotected obstructions; the sheet author read the whole book; this lesson relies on the sheet, not on the book) [S]",
-    "sources/sheets/edlasker_chess-strategy.md (K20: the side whose rooks reach the file first; a file with no entry square gives no benefit; K2-K3 counts) [S]",
-    "sources/sheets/znosko-borovsky_middle-game.md (C27: ask who benefits before opening a line) [S]",
-    "docs/citable-views.md 3.14 and 8.5 (rooks work where the pawn structure opens files; Nimzowitsch on the open file behind an outpost) [S]",
-    "docs/council-synthesis.md CD-4 (conditions, not rules)",
-    "Real game: Carlsen v Vachier-Lagrave, Tata Steel Masters 2021, round 13, 31 January 2021, 1-0: moves from the Lichess broadcast database export (CC0), game xxXcvwgx/vaENvYpp, read locally 7 Nov 2026 [V]; every board position in that part replayed from the score with python-chess",
-    "Positions at steps 8 and 16 and in item ICR-LPOSOPENFILE1-6 are described only as master-level positions said to come from 2021 broadcast games: a review pass could not re-find the games in the local Lichess broadcast files (CC0), so game ids are NOT recorded and the positions are unverified as to source [unverified]; legality and engine claims are checked [V]",
-    "Constructed boards (family of shipped IA2-1): pieces placed on an empty board, legality and equal material checked with python-chess, claims checked by the engine at depth 16 (evidence under recorded limits, not proof) [V]",
-    "Opening boards replayed from the start position with python-chess: 1.d4 d5 2.c4 c6 3.Nf3 Nf6 (then 4.cxd5 cxd5 as the line) and 1.e4 e6 2.d4 d5 3.exd5 exd5 4.Nf3 Nf6 5.Bd3 Bd6 6.O-O O-O 7.Bg5 Bg4 8.Nbd2 Nbd7 9.c3 c6 [V]",
-    "content/items/lesson-cr-l-pos-openfile-1.json (new items) and shipped items IA2-1 to IA2-7 from content/items/lesson-pos-1.json",
-    "Conjecture labelled [H] or [I] in the text is the author's own and is not checked; no learner data was used"
-  ]
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Before any explanation: which file would you like a rook on, and which square on it could the rook land on? Do not worry about being right. You will come back to this at the end.",
+   "fields": [
+    {
+     "id": "file",
+     "label": "The file I would use:",
+     "options": [
+      "the e-file",
+      "the d-file",
+      "the c-file",
+      "none of them"
+     ]
+    },
+    {
+     "id": "land",
+     "label": "A square my rook could land on, and why it might fail:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Today's question.** An open file is a road with no pawns on it. Roads lead somewhere, or nowhere. By the end you will look at a position and say which file is worth a rook, which square the rook will land on, who can stop it, and what each side does about it. First, learn to see the road at all."
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/R4RK1 w - - 0 1",
+   "caption": "White to move. No pawn of either colour stands on the e-file, so it is open. Every other file still has pawns, so those files are closed. Either rook can use the open file.",
+   "line": [
+    {
+     "move": "a1e1",
+     "say": "The rook on a1 steps onto the open file. Nothing can block it on the way up."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "e1"
+    },
+    {
+     "from": "f1",
+     "to": "e1"
+    }
+   ],
+   "highlight": [
+    "e1",
+    "e2",
+    "e3",
+    "e4",
+    "e5",
+    "e6",
+    "e7",
+    "e8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "e"
+      ],
+      "half_open_white": [],
+      "half_open_black": []
+     },
+     "statement": "The e-file is open and no other file is open or half-open."
+    },
+    {
+     "id": "C2",
+     "type": "moves_where",
+     "params": {
+      "property": "rook_to_open_file",
+      "moves": [
+       "a1e1",
+       "f1e1"
+      ]
+     },
+     "statement": "Exactly two moves put a rook on the open file: the rook on a1 or the rook on f1 goes to e1."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "ICR-LPOSOPENFILE1-1"
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/R3R1K1 w - - 0 1",
+   "caption": "Same pawns, one rook already on e1. Count the squares each rook can move to. The rook on the open file has room; the rook on a1 has its own pawn in front of it and its own rook at the end of the rank.",
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e1",
+    "a1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mobility",
+     "params": {
+      "square": "e1",
+      "mode": "legal",
+      "count": 11
+     },
+     "statement": "The rook on e1 can move to 11 squares."
+    },
+    {
+     "id": "C2",
+     "type": "mobility",
+     "params": {
+      "square": "a1",
+      "mode": "legal",
+      "count": 3
+     },
+     "statement": "The rook on a1 can move to only 3 squares."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/pp3ppp/2p5/3p4/3P4/2P5/PP3PPP/4RRK1 w - - 0 1",
+   "caption": "Rooks on e1 and f1. The lit squares are the open file the rook on e1 attacks. It sees all the way to e8: the file is a road into Black's camp.",
+   "line": [
+    {
+     "move": "e1e7",
+     "say": "The rook slides the whole file and lands on e7. No black piece attacks that square."
+    },
+    {
+     "move": "b7b6",
+     "say": "Black moves the pawn the rook was attacking."
+    },
+    {
+     "move": "f1e1",
+     "say": "The second rook joins the first on the same file, behind it."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e7"
+    }
+   ],
+   "highlight": [
+    "e2",
+    "e3",
+    "e4",
+    "e5",
+    "e6",
+    "e7",
+    "e8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_attacks",
+     "params": {
+      "square": "e1",
+      "squares": [
+       "a1",
+       "b1",
+       "c1",
+       "d1",
+       "e2",
+       "e3",
+       "e4",
+       "e5",
+       "e6",
+       "e7",
+       "e8",
+       "f1"
+      ]
+     },
+     "statement": "The rook on e1 attacks every square of the e-file up to e8."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks e7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "b7",
+      "color": "white",
+      "count": 1,
+      "after_move": "e1e7"
+     },
+     "statement": "From e7 the rook attacks the pawn on b7."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2r2k1/1p1nppbp/p5p1/8/3PP3/4BN2/P4PPP/2R1K2R w K - 0 17",
+   "caption": "A position from a 2021 broadcast game (we could not re-find the game, so treat it as an illustration). White to move. Read the files: which is open, which is half-open for White (no white pawn, but a black one), which for Black?",
+   "highlight": [
+    "c1",
+    "c8",
+    "b7",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "open_files",
+     "params": {
+      "open": [
+       "c"
+      ],
+      "half_open_white": [
+       "b"
+      ],
+      "half_open_black": [
+       "d"
+      ]
+     },
+     "statement": "The c-file is open, the b-file is half-open for White and the d-file is half-open for Black."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A road, not a prize.** A rook on an open file with no way in still ties pieces down; it just does not win material by itself. What matters is where it can *land* in the enemy camp: its **entry square**. A common best landing [I] is the seventh rank, where the enemy pawns start and the king is boxed in. Aron Nimzowitsch's *My System* treats a file as a way to reach a point [S]. Ask: which square, and who watches it?"
+  },
+  {
+   "type": "contrast",
+   "title": "Same rook, one change",
+   "prompt": "Black's knight stands on e8 instead of h5. Does Rc7 still win a pawn? Predict first, then check.",
+   "working": "IA2-1",
+   "failing": "IA2-2",
+   "irrelevant": "IA2-3"
+  },
+  {
+   "type": "board",
+   "fen": "5rk1/pp3ppp/8/8/4n3/4B3/PP3PPP/3R2K1 w - - 0 1",
+   "caption": "White to move. The d-file is open and no black piece attacks d7. Black's knight on e4 is also loose, so White is better for two reasons; the entry is one of them [I]. Follow the rook.",
+   "line": [
+    {
+     "move": "d1d7",
+     "say": "The rook lands on d7, an entry square no black piece watches. It attacks the pawns on b7 and f7."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black pushes one attacked pawn forward. The pawn on a7 was never defended: the pawn on b7 only blocked the rook's view along the rank. Now the rook sees it."
+    },
+    {
+     "move": "d7a7",
+     "say": "The rook takes the pawn on a7. The landing paid off."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "d7"
+    },
+    {
+     "from": "d7",
+     "to": "b7"
+    },
+    {
+     "from": "d7",
+     "to": "f7"
+    }
+   ],
+   "highlight": [
+    "d7",
+    "b7",
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d1d7"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks d7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "b7",
+      "color": "white",
+      "count": 1,
+      "after_move": "d1d7"
+     },
+     "statement": "From d7 the rook attacks the pawn on b7."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1,
+      "after_move": "d1d7"
+     },
+     "statement": "From d7 the rook attacks the pawn on f7."
+    },
+    {
+     "id": "C5",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "a7"
+      ],
+      "after_moves": [
+       "d1d7",
+       "b7b5"
+      ]
+     },
+     "statement": "After the pawn push, the pawn on a7 is attacked and undefended."
+    },
+    {
+     "id": "C6",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d7",
+      "min": 1
+     },
+     "statement": "Landing on d7 wins at least a pawn along the engine line."
+    },
+    {
+     "id": "C7",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d1d7",
+       "f2f3"
+      ]
+     },
+     "statement": "Landing on d7 is among the engine's first choices (depth 16)."
+    }
+   ],
+   "chapter": "The landing square"
+  },
+  {
+   "type": "card",
+   "text": "**When it usually works.** Three things usually need to hold [I]. Your rook reaches the file before the enemy contests it. The entry square is not guarded by a pawn or a minor piece. And something is waiting there: loose pawns, or a king with no room to move. If one is missing, ask what else makes up for it; a landing with tempo or a forcing follow-up can still work."
+  },
+  {
+   "type": "item",
+   "item": "ICR-LPOSOPENFILE1-2",
+   "silent": true
+  },
+  {
+   "type": "board",
+   "fen": "5rk1/pp3ppp/8/4b3/8/4B3/PP3PPP/3R2K1 w - - 0 1",
+   "caption": "Compare with the board before: the same idea with a bishop on e5 instead of the knight on e4. The bishop does not attack d7. White to move.",
+   "line": [
+    {
+     "move": "d1d7",
+     "say": "The rook lands on d7. The bishop on e5 does not attack that square."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black pushes the attacked pawn."
+    },
+    {
+     "move": "d7d5",
+     "say": "The rook switches along the file to attack the bishop and the pawn on b5 together."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "d7"
+    }
+   ],
+   "highlight": [
+    "d7",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks d7."
+    },
+    {
+     "id": "C2",
+     "type": "material_after_move",
+     "params": {
+      "move": "d1d7",
+      "min": 1
+     },
+     "statement": "Landing on d7 wins at least a pawn along the engine line."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d1d7",
+       "b7b5",
+       "d7d5"
+      ]
+     },
+     "statement": "From d5 the rook attacks the bishop on e5."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d1d7",
+       "b7b5",
+       "d7d5"
+      ]
+     },
+     "statement": "From d5 the rook also attacks the pawn on b5."
+    },
+    {
+     "id": "C5",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d1d7"
+      ]
+     },
+     "statement": "Landing on d7 is the engine's first choice (depth 16)."
+    },
+    {
+     "id": "C6",
+     "type": "eval_range",
+     "params": {
+      "min": 60,
+      "max": 250
+     },
+     "statement": "The engine prefers White by between a half and two and a half pawns (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/ppp1pppp/8/8/8/4P3/PPP2PPP/3R1RK1 w - - 0 1",
+   "caption": "The d-file is open. Black's pawns on c7 and e7 guard the square d6, so a rook could not safely stop there. Does that stop it from landing on d7? White to move.",
+   "line": [
+    {
+     "move": "d1d7",
+     "say": "The rook jumps over the guarded square d6 and lands on d7. A rook moves through attacked squares as long as they are empty."
+    },
+    {
+     "move": "a8c8",
+     "say": "Black adds a defender to the pawn on c7."
+    },
+    {
+     "move": "f1d1",
+     "say": "The second rook joins the first. The pawn on e7 is still under attack."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "d7"
+    }
+   ],
+   "highlight": [
+    "d6",
+    "d7",
+    "c7",
+    "e7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "d6",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Two black pawns guard d6."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks d7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d1d7",
+       "a8c8",
+       "f1d1"
+      ]
+     },
+     "statement": "The rook on d7 attacks the pawn on e7."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "d1d7"
+      ]
+     },
+     "statement": "The rook move to d7 is the engine's first choice (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "1r3rk1/1R1b1pp1/pB1P3p/4p3/P7/1P3P2/5P2/2R3K1 w - - 2 33",
+   "caption": "Real-example stage: a master-level position (said to be from a 2021 broadcast game; we could not re-find it, so treat it as an illustration). One white rook already stands on the seventh rank. The other can join it. White to move.",
+   "line": [
+    {
+     "move": "c1c7",
+     "say": "The second rook lands on c7 and attacks the bishop on d7. Nothing black attacks that square."
+    },
+    {
+     "move": "d7e6",
+     "say": "The bishop moves away from the attack."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "c7"
+    }
+   ],
+   "highlight": [
+    "b7",
+    "c7",
+    "d7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c7",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece attacks c7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "white",
+      "count": 1,
+      "after_move": "c1c7"
+     },
+     "statement": "From c7 the rook attacks the bishop on d7."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c1c7"
+      ]
+     },
+     "statement": "Doubling on the seventh rank is the engine's first choice (depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Why the seventh rank? [I]** Three reasons, in our reading. No enemy pawn can guard a square there, because pawns never stand on their own back rank; only pieces can. The pawns still at home can be attacked from the side. And the king is often boxed in behind them, so two rooks there can threaten mate. Edward Lasker, in *Chess Strategy*, says the side whose rooks reach the file first gets the raids on the seventh [S]."
+  },
+  {
+   "type": "card",
+   "text": "**When the landing is a trap [I].** A rook on the seventh can be cut off. If a bishop or knight attacks it, its retreat squares are covered, and the king or a pawn guards the squares beside it, the rook may be lost for a piece. Before you land, ask not only who attacks the square now but where the rook goes if it is attacked next. [H] This may cost club players more rooks than a slow arrival does. (No board yet: unchecked idea.)"
+  }
+ ]
 }

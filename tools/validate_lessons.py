@@ -201,7 +201,8 @@ def validate_lesson(path, eng, items):
             elif n > 70: warns.append(f"{where}: card has {n} words (aim <= 70)")
             nxt = [x.get("type") for x in steps[i + 1:i + 3]]
             if not any(x in TASK_STEPS or x == "board" and steps[i + 1 + j].get("claims") for j, x in enumerate(nxt)):
-                if not any(x in ("item", "practice", "contrast", "reflect") for x in nxt):
+                closing = all(x.get("type") in ("board", "card") for x in steps[i + 1:])  # the closing cards, followed only by cards and boards to play: nothing left to ask
+                if not closing and not any(x in ("item", "practice", "contrast", "reflect") for x in nxt):
                     errs.append(f"{where}: no task (item/practice/contrast/reflect) within the next two steps")
         if t == "finale":   # an optional game against Maia or Stockfish from the position the lesson taught (D41): {fen, color: white|black|both, moves?, prompt?}
             try: fb = chess.Board(s["fen"])

@@ -1,0 +1,250 @@
+{
+ "id": "L-FND-DRAWS-1B",
+ "title": "Ways a game is drawn (part 2 of 4)",
+ "skill": "FND.DRAWS",
+ "depth": "D1",
+ "minutes": 8,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/first-hours.md session 3 (draws)",
+  "content/skills/FND.DRAWS.json (D1 outcome, conditions, misconceptions)",
+  "[R] FIDE Laws of Chess, Article 9 (draws): threefold repetition and fifty-move rule claimed by a player, fivefold and seventy-five-move automatic. Recalled from memory, not re-read this session; the two [R] sentences in the lesson say so.",
+  "[V] Board lines are legal move by move (tools/validate_lessons.py). Repetition counts and halfmove clocks were checked with python-chess (Board.is_repetition, can_claim_threefold_repetition, can_claim_fifty_moves, halfmove_clock) when written; no claim type exists for them.",
+  "[V] The perpetual-check position was found by a random search over generated positions and engine-checked at depth 18 (level); its one-piece variants (bishop on g8, white rook and no black rooks) are checked by eval_range and mate_in claims in content/items/lesson-bg-l-fnd-draws-1.json.",
+  "[H]/[I] The 'why do these rules exist' card and the rule of thumb on the worse and better side are our conjectures and are labelled as such. No view of a named player or coach is used: docs/citable-views.md holds no entry on draw rules.",
+  "split from the former combined lesson 'Ways a game is drawn' (D24, one building block per lesson); insufficient material is taught in L-FND-DRAWS-2. Rebuilt 7 Nov 2026 to docs/lesson-depth-standard.md class A.",
+  "[V] Round of 7 Nov 2026 (reviewer fixes): the second perpetual line, the en passant recurrence, the stalemate-avoiding mate and the pawn-capture clock line are legal move by move and python-chess checked; the 150-half-move and fivefold statements are labelled [S] (rules library) pending a human reviewer. Simplification stated openly: claims are counted once the count is reached."
+ ],
+ "part": {
+  "of": "L-FND-DRAWS-1",
+  "n": 2,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 2 of 4: Ways a game is drawn. This part covers The fifty-move clock. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-6"
+  },
+  {
+   "type": "card",
+   "text": "The second way to a draw is **no progress**. Count in **half-moves**: one move by one player is one half-move. The count goes back to zero after any capture or any pawn move, because those change the game for good. When it reaches 100, which is fifty moves by each player, a player may claim a draw. This is the **fifty-move rule**.",
+   "chapter": "The fifty-move clock"
+  },
+  {
+   "type": "contrast",
+   "title": "Does the clock go back to zero?",
+   "prompt": "Predict, then check.",
+   "working": "IBG-LFNDDRAWS1-7",
+   "failing": "IBG-LFNDDRAWS1-8",
+   "irrelevant": "IBG-LFNDDRAWS1-9"
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+   "caption": "Nothing is captured and no pawn moves, so every half-move adds one to the count. Say the clock aloud as you step.",
+   "line": [
+    {
+     "move": "a1a2",
+     "say": "Clock 1."
+    },
+    {
+     "move": "e8d8",
+     "say": "Clock 2."
+    },
+    {
+     "move": "a2a3",
+     "say": "Clock 3."
+    },
+    {
+     "move": "d8e8",
+     "say": "Clock 4. Even a changing position adds to the count when nothing is captured and no pawn moves."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a1a2"
+     },
+     "statement": "The rook can step to a2.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/p7/8/8/8/R3K3 w - - 40 60",
+   "caption": "The clock shows 40 here. Both kings walk, then the rook takes a loose pawn. Watch what the capture does to the count.",
+   "line": [
+    {
+     "move": "e1d2",
+     "say": "The white king steps. Clock 41."
+    },
+    {
+     "move": "e8d7",
+     "say": "The black king steps. Clock 42."
+    },
+    {
+     "move": "d2c3",
+     "say": "Clock 43."
+    },
+    {
+     "move": "d7c7",
+     "say": "Clock 44."
+    },
+    {
+     "move": "a1a5",
+     "say": "The rook takes the unprotected pawn. The count goes back to 0."
+    }
+   ],
+   "claims": [
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "a5",
+      "piece": "R",
+      "after_moves": [
+       "e1d2",
+       "e8d7",
+       "d2c3",
+       "d7c7",
+       "a1a5"
+      ]
+     },
+     "statement": "After the capture the rook stands on a5.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e1d2"
+     },
+     "statement": "The king can step to d2.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/3R4/8/8/8/4K3 b - - 0 62",
+   "caption": "The clock shows 0 after the capture. Black to move. A check is coming; does it reset the count?",
+   "line": [
+    {
+     "move": "e8e7",
+     "say": "Black's king steps. Clock 1."
+    },
+    {
+     "move": "d5a5",
+     "say": "The rook moves. Clock 2."
+    },
+    {
+     "move": "e7f6",
+     "say": "The king steps again. Clock 3."
+    },
+    {
+     "move": "a5a6",
+     "say": "The rook gives check. Clock 4: a check does not reset the count."
+    }
+   ],
+   "claims": [
+    {
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e8e7",
+       "d5a5",
+       "e7f6",
+       "a5a6"
+      ]
+     },
+     "statement": "After the last move the black king on f6 is attacked, so it is a check.",
+     "id": "C1"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/P7/8/R3K3 w - - 30 70",
+   "caption": "The clock shows 30. Now a pawn moves. Watch the count.",
+   "line": [
+    {
+     "move": "a3a4",
+     "say": "A pawn move. The count goes back to 0."
+    },
+    {
+     "move": "e8d7",
+     "say": "Black's king steps. Clock 1."
+    },
+    {
+     "move": "a1b1",
+     "say": "The rook moves. Clock 2."
+    },
+    {
+     "move": "d7e7",
+     "say": "The king steps again. Clock 3."
+    },
+    {
+     "move": "b1b2",
+     "say": "The rook moves. Clock 4. Only the pawn move reset the count; nothing since has."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a3a4"
+     },
+     "statement": "The pawn can advance to a4.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "a4",
+      "piece": "P",
+      "after_moves": [
+       "a3a4"
+      ]
+     },
+     "statement": "After the move the pawn stands on a4.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-10"
+  },
+  {
+   "type": "card",
+   "text": "At 100 half-moves a player whose turn it is **may** claim the draw. Until someone claims, play goes on. The player who is ahead may well prefer to play on. [S] At 150 half-moves the game ends without a claim, unless the last move is checkmate. A rules library agrees; a human reviewer still has to check the printed Laws."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-11"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-12"
+  },
+  {
+   "type": "card",
+   "text": "**Claiming and agreeing.** To claim, you tell the arbiter or press the claim button on a screen. For agreement, one player offers and the other must accept; a declined offer changes nothing. [R] Details differ by event, and a reviewer is to check them against Article 9."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-23"
+  }
+ ]
+}

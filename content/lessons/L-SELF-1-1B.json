@@ -1,0 +1,345 @@
+{
+ "id": "L-SELF-1-1B",
+ "title": "Observe: one unsure moment, and what you actually saw (part 2 of 4)",
+ "skill": "SELF.1",
+ "depth": "D1",
+ "minutes": 9,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/curriculum-map-v1.md S11 (SELF.1 observe)",
+  "docs/council-synthesis.md CD-11, CD-12 (observe before judging; Botvinnik, Dvoretsky, Rowson recalled [R]); Guardian study ch. 18, 23 (user's document: noticing uncertainty; observation versus explanation)",
+  "docs/citable-views.md 10.4 and 10.5 (Dan Heisman, Hope Chess, paraphrased [S]); 10.10 (Capablanca on his own thinking failures, paraphrased [V-sheet CI-51]); 10.13 (Silman: an engine shows what to play but not why, paraphrased [S]); 10.9 (E. Lasker, count attackers and defenders with values [V-sheet K2])",
+  "positions: Lichess 2013-01 game ha48pwvj (CC0) for the two middlegame boards; the opening trap board is authored by replaying legal moves with python-chess; engine claims at the validator's recorded depth",
+  "[H] and [I] marks in the text are conjecture by the author, not results"
+ ],
+ "part": {
+  "of": "L-SELF-1-1",
+  "n": 2,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 2 of 4: Observe: one unsure moment, and what you actually saw. This part covers Test the guess; Feelings are different; Test the guess, once more. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LSELF11-3"
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/3p1n2/4p3/2BnP3/P1NP1Q1P/1PP2PP1/R1B1K2R w KQkq - 1 9",
+   "caption": "A worked test of note two, 'my queen is safe'. Play it out: let White ignore the knight with a quiet move, and see what happens.",
+   "chapter": "Test the guess",
+   "line": [
+    {
+     "move": "a3a4",
+     "say": "White ignores the knight and plays a quiet pawn move."
+    },
+    {
+     "move": "d4f3",
+     "say": "The knight takes the queen and attacks the king."
+    },
+    {
+     "move": "g2f3",
+     "say": "The pawn takes the knight. White gave a queen for a knight, so the guess failed."
+    }
+   ],
+   "highlight": [
+    "f3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "a3a4",
+      "max": -4
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a3a4",
+       "d4f3"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three ways to test a guess.** Count the attackers and defenders. Play the line out and add up what each side takes. Or ask an **engine**, a chess program that calculates far deeper than you can. One warning from the last board: a defended piece is not always safe, because a cheaper attacker can still win a dearer piece."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LSELF11-4"
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/3p1n2/4p3/2BnP3/P1NP1Q1P/1PP2PP1/R1B1K2R w KQkq - 1 9",
+   "caption": "Another guess: 'I can move the queen anywhere, it will be fine.' Test one square, g3.",
+   "line": [
+    {
+     "move": "f3g3",
+     "say": "The queen steps away, but c2 stays loose."
+    },
+    {
+     "move": "d4c2",
+     "say": "The knight takes the pawn with check and also attacks the rook on a1."
+    },
+    {
+     "move": "e1d1",
+     "say": "The king steps aside."
+    },
+    {
+     "move": "c2a1",
+     "say": "The knight takes the rook. White has lost a pawn and a rook so far; the engine rates it about -3 pawns for White at depth 18."
+    }
+   ],
+   "highlight": [
+    "c2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "move_loses",
+     "params": {
+      "move": "f3g3",
+      "cp": 200
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f3g3",
+       "d4c2"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "a1",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f3g3",
+       "d4c2"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/3p1n2/4p3/2BnP3/P1NP1Q1P/1PP2PP1/R1B1K2R w KQkq - 1 9",
+   "caption": "The test of that guess. The bishop takes the pawn with check, and the king takes the bishop.",
+   "line": [
+    {
+     "move": "c4f7",
+     "say": "The bishop takes a pawn and gives check."
+    },
+    {
+     "move": "e8f7",
+     "say": "The king takes the bishop. White gave 3 for 1."
+    }
+   ],
+   "highlight": [
+    "f7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "c4f7",
+      "max": -1
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "white",
+      "count": 1,
+      "after_move": "c4f7"
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/3p1n2/4p3/2BnP3/P1NP1Q1P/1PP2PP1/R1B1K2R w KQkq - 1 9",
+   "caption": "Now test the guess 'the queen to d1 is my best move'. The engine agrees, and the move does two jobs.",
+   "line": [
+    {
+     "move": "f3d1",
+     "say": "The queen leaves the knight's reach and guards the pawn on c2, so no White piece is attacked and unguarded any more."
+    },
+    {
+     "move": "c7c6",
+     "say": "Black makes a quiet move."
+    },
+    {
+     "move": "e1g1",
+     "say": "White castles: the king is safe and the rook joins in."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "c2"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f3d1"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "white",
+      "squares": [],
+      "after_move": "f3d1"
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/3p1n2/4p3/2BnP3/P1NP1Q1P/1PP2PP1/R1B1K2R w KQkq - 1 9",
+   "caption": "The guess 'I am lost' tested: the engine rates this position as close to level. [H] A queen under attack is vivid, and a vivid danger may make the whole position feel worse than it is. That is a hypothesis, not a result.",
+   "highlight": [
+    "f3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": -100,
+      "max": 100
+     }
+    }
+   ]
+  },
+  {
+   "type": "contrast",
+   "title": "Guesses can be tested",
+   "prompt": "Compare a confirmed guess, a refuted guess and an observation. For a guess, predict whether a test will confirm it, then check.",
+   "working": "IA5-55",
+   "failing": "IA5-54",
+   "irrelevant": "IA5-53"
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/2np1n2/4p3/2B1P3/P1N2Q1P/1PPP1PP1/R1B1K2R w KQkq - 1 8",
+   "caption": "A quiet moment in the same game, one move earlier. 'I can castle now' is an observation, because the board allows it. 'Castling feels scary' is a feeling. It is real, but it is about you, not about this board.",
+   "chapter": "Feelings are different",
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "g1"
+    }
+   ],
+   "highlight": [
+    "e1",
+    "g1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e1g1"
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Three boxes.** Some notes are observations, settled by looking. Some are guesses you can test. Some are feelings the board cannot answer, such as 'I feel nervous'. [I] A feeling is still worth one line in your notes, because it shows where you were unsure. Just do not write it in the observation box."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LSELF11-5"
+  },
+  {
+   "type": "item",
+   "item": "IA5-56"
+  },
+  {
+   "type": "board",
+   "fen": "r2qk2r/ppp1bppp/2np1n2/4p3/2B1P3/P1N2Q1P/1PPP1PP1/R1B1K2R w KQkq - 1 8",
+   "caption": "Testing the note 'Black will win my e4 pawn'. White actually played d3 here, adding a third guard. Black takes the pawn anyway.",
+   "line": [
+    {
+     "move": "d2d3",
+     "say": "White adds a third guard to the pawn on e4."
+    },
+    {
+     "move": "f6e4",
+     "say": "Black takes the pawn with the knight."
+    },
+    {
+     "move": "d3e4",
+     "say": "The pawn takes the knight, which nothing defends. Black gave a knight for a pawn, so this try fails."
+    }
+   ],
+   "highlight": [
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 3,
+      "after_move": "d2d3"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "loose_pieces",
+     "params": {
+      "color": "black",
+      "squares": [
+       "e4"
+      ],
+      "after_moves": [
+       "d2d3",
+       "f6e4"
+      ]
+     }
+    }
+   ],
+   "chapter": "Test the guess, once more"
+  }
+ ]
+}

@@ -1,0 +1,504 @@
+{
+ "id": "L-FND-PIECE-KING-2C",
+ "title": "The king in a busy position (part 3 of 4)",
+ "skill": "FND.PIECE.KING",
+ "depth": "D2",
+ "minutes": 8,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.PIECE.KING.json (D2 outcome)",
+  "content/lessons/L-FND-PIECE-KING-1.json and L-FND-QUEENKING-1.json",
+  "content/items/lesson-ds12.json (IBds12-4, IBds12-6, IBds12-19, IBds12-21) and generated items IG-MOVE-141, 142, 144",
+  "content/items/lesson-bg-l-fnd-piece-king-2.json (new items and positions, all replayed with python-chess)",
+  "docs/citable-views.md 4.4: Emanuel Lasker, Common Sense in Chess, Lectures 7-8 [V-sheet], paraphrased; the link to the king's checklist is [I]",
+  "docs/competition-chess-steps.md (rules before mating; short reminder card)",
+  "[H] the two likely slips (distant defender, square behind the king) are a hypothesis, no data",
+  "rules of chess (python-chess legal move generation, via tools/validate.py)"
+ ],
+ "part": {
+  "of": "L-FND-PIECE-KING-2",
+  "n": 3,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 3 of 4: The king in a busy position. This part covers Pieces next to the king. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-9"
+  },
+  {
+   "type": "card",
+   "text": "A piece standing next to the king can be captured by the king, but only if it is not **defended**. A piece is defended when a friendly piece could take back on that square. Taking a defended piece would put the king on an attacked square, which is illegal. So ask: who else sees that square?",
+   "chapter": "Pieces next to the king"
+  },
+  {
+   "type": "contrast",
+   "title": "Defended or not",
+   "prompt": "Predict first. Each of the three positions differs from the first by exactly one piece. Which change matters for the king's squares, and which does not? Say why before you look.",
+   "working": "IBds12-4",
+   "failing": "IBG-LFNDPIECEKING2-13",
+   "irrelevant": "IBds12-6"
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/8/4n3/3K4/8/P6P/8 w - - 0 1",
+   "caption": "The black knight on e5 touches the king. Nothing black attacks e5, so the knight is undefended and the king may take it.",
+   "line": [
+    {
+     "move": "d4e5",
+     "say": "The king captures. It lands on a square no black piece attacks."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "e5"
+    }
+   ],
+   "highlight": [
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4e5"
+     },
+     "statement": "The king may capture on e5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "No black piece defends the knight."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/3p4/4n3/3K4/8/P6P/8 w - - 0 1",
+   "caption": "Now a black pawn on d6 defends the knight. If the king took it, the pawn could take the king, so the capture is illegal.",
+   "line": [
+    {
+     "move": "d4c3",
+     "say": "The king settles for a safe step. Nothing attacks c3."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d6",
+     "to": "e5"
+    },
+    {
+     "from": "d4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "c3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4e5"
+     },
+     "statement": "The king may not capture a defended piece."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece (the pawn) defends the knight."
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "d4c3"
+     },
+     "statement": "c3 is a legal step."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3r3k/8/8/3n4/4K3/8/P6P/8 w - - 0 1",
+   "caption": "A defender can be far away. The rook on d8 looks down the open d-file at the knight, so it defends the knight from the other side of the board.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "The king takes a safe step instead."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d8",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "e4d5"
+     },
+     "statement": "The king may not capture the defended knight."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The rook defends the knight."
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "e4e5"
+     },
+     "statement": "e5 is a legal step."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3r3k/3p4/8/3n4/4K3/8/P6P/8 w - - 0 1",
+   "caption": "Same position with a black pawn on d7. The pawn stands between the rook and the knight, so the rook no longer defends it. The king may take.",
+   "line": [
+    {
+     "move": "e4d5",
+     "say": "The king takes the knight. The pawn on d7 keeps the rook's line shut."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d8",
+     "to": "d7"
+    },
+    {
+     "from": "e4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e4d5"
+     },
+     "statement": "The king may capture on d5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "With the pawn in the way, nothing defends the knight."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/3k4/3n4/3K4/8/P6P/8 w - - 0 1",
+   "caption": "Kings defend too. The black king on d6 defends the knight on d5, so White's king cannot take it.",
+   "line": [
+    {
+     "move": "d4e4",
+     "say": "A safe step instead."
+    },
+    {
+     "move": "d6e6",
+     "say": "Black's king steps to e6 and still defends the knight."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The king may not capture the defended knight."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The black king defends the knight."
+    },
+    {
+     "id": "C3",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "c4",
+       "d3",
+       "e4"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "R5bk/8/8/3n4/4K3/8/8/8 w - - 0 1",
+   "caption": "A pinned piece still guards its squares. The rook on a8 pins the black bishop to its king, yet the bishop still attacks d5, so White's king may not take the knight.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "The king takes a safe step instead."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g8",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "e4d5"
+     },
+     "statement": "The king cannot take the knight on d5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece defends the knight."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/3q4/3K4/8/P6P/8 w - - 0 1",
+   "caption": "The same rule works when the piece gives check. The queen on d5 attacks the king, but nothing defends her, so the king simply takes her.",
+   "line": [
+    {
+     "move": "d4d5",
+     "say": "The king captures the queen, and the check is over."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "White is in check from the queen."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The king may capture the queen."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "Nothing defends the queen."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/2p5/3q4/3K4/8/P6P/8 w - - 0 1",
+   "caption": "Give the queen a defender, the pawn on c6, and the king cannot take her. It must step away: only c3 and e3 are safe.",
+   "line": [
+    {
+     "move": "d4c3",
+     "say": "Stepping aside ends the check."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c6",
+     "to": "d5"
+    },
+    {
+     "from": "d4",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "e3"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "White is in check."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The king may not capture the defended queen."
+    },
+    {
+     "id": "C3",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "c3",
+       "e3"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "A king in check has three answers: step away, capture the checker, or block the line. This lesson trains the first two. Blocking and pins get their own lessons later. [I]"
+  },
+  {
+   "type": "card",
+   "text": "A far-away piece matters only if its line reaches the king's own square or a square the king could step to or capture on. A rook across the board can look frightening and change nothing. Emanuel Lasker (Common Sense in Chess, lectures 7 and 8, our summary of the sheet) counted the king's square and its eight neighbours when judging a mate. [I] Your checklist counts the same squares from the king's side."
+  },
+  {
+   "type": "board",
+   "fen": "r6k/8/8/3n4/4K3/8/P6P/8 w - - 0 1",
+   "caption": "The rook on a8 attacks only its own rank and file. It touches none of the king's neighbouring squares, so it changes nothing.",
+   "line": [
+    {
+     "move": "e4d5",
+     "say": "The king takes the knight. Nothing defends it."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a8",
+     "to": "h8"
+    },
+    {
+     "from": "e4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "e4d5"
+     },
+     "statement": "The king may capture on d5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "The far rook does not defend the knight."
+    },
+    {
+     "id": "C3",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e4",
+      "to": [
+       "d3",
+       "d4",
+       "d5",
+       "e5",
+       "f3",
+       "f5"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    }
+   ]
+  }
+ ]
+}

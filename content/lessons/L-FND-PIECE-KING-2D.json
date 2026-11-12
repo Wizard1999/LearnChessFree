@@ -1,0 +1,136 @@
+{
+ "id": "L-FND-PIECE-KING-2D",
+ "title": "The king in a busy position (part 4 of 4)",
+ "skill": "FND.PIECE.KING",
+ "depth": "D2",
+ "minutes": 11,
+ "outcomes": [
+  "Names the piece on a given square before using its rule, with no hint in the prompt",
+  "Taps every square the king can step to, removing squares held by its own pieces, squares next to the enemy king and squares attacked by enemy pieces",
+  "Remembers that the square behind the king on the line of a rook or bishop check is also attacked",
+  "Decides whether an enemy piece next to the king can be taken, by checking whether anything defends it, including a distant piece, a king, or a piece whose line is blocked",
+  "Ignores distant enemy pieces whose lines reach neither the king's square nor any square the king could step to or capture on"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.PIECE.KING.json (D2 outcome)",
+  "content/lessons/L-FND-PIECE-KING-1.json and L-FND-QUEENKING-1.json",
+  "content/items/lesson-ds12.json (IBds12-4, IBds12-6, IBds12-19, IBds12-21) and generated items IG-MOVE-141, 142, 144",
+  "content/items/lesson-bg-l-fnd-piece-king-2.json (new items and positions, all replayed with python-chess)",
+  "docs/citable-views.md 4.4: Emanuel Lasker, Common Sense in Chess, Lectures 7-8 [V-sheet], paraphrased; the link to the king's checklist is [I]",
+  "docs/competition-chess-steps.md (rules before mating; short reminder card)",
+  "[H] the two likely slips (distant defender, square behind the king) are a hypothesis, no data",
+  "rules of chess (python-chess legal move generation, via tools/validate.py)"
+ ],
+ "part": {
+  "of": "L-FND-PIECE-KING-2",
+  "n": 4,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 4 of 4: The king in a busy position. This part covers Check yourself. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "card",
+   "text": "**A guess of mine, [H], with no data behind it.** I suspect two slips cause most wrong king moves: forgetting a defender that stands far away, and stepping back along the line of a check. If that is right, those two questions deserve a pause before every king move. Notice which one catches you in the next items.",
+   "chapter": "Check yourself"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-14",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IG-MOVE-141",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IG-MOVE-142",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IG-MOVE-144",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "IBds12-19",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "node.FND.PIECE.KING",
+    "cue.3"
+   ],
+   "n": 6
+  },
+  {
+   "type": "reflect",
+   "kind": "teachback",
+   "prompt": "In three sentences, explain to a friend how to find a king's legal squares. Include the square behind the king on a check line. Write it first, then read the model answer.",
+   "fields": [
+    {
+     "id": "explanation",
+     "label": "My explanation:"
+    },
+    {
+     "id": "own",
+     "label": "Own pieces and the enemy king close squares",
+     "options": [
+      "I said it",
+      "I missed it"
+     ]
+    },
+    {
+     "id": "behind",
+     "label": "The square behind the king on a check line is attacked too",
+     "options": [
+      "I said it",
+      "I missed it"
+     ]
+    },
+    {
+     "id": "def",
+     "label": "A piece next to the king is safe to take only if nothing defends it",
+     "options": [
+      "I said it",
+      "I missed it"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Model answer, to compare with yours.** Name the piece first, then ask three questions of each neighbouring square: my own piece, next to the enemy king, attacked? Remember the square behind the king on a check line. A piece next to the king can be taken only when nothing defends it, however far away the defender stands, and a pinned defender still counts."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "In the silent items, which question did you skip first: the own piece, the enemy king, the attacked square, or the far-away defender?"
+  }
+ ]
+}

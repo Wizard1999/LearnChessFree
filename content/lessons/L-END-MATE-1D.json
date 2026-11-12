@@ -1,0 +1,217 @@
+{
+ "id": "L-END-MATE-1D",
+ "title": "Mate with king and queen: the supported check (part 4 of 4)",
+ "skill": "END.MATE-KQ",
+ "depth": "D1",
+ "minutes": 12,
+ "outcomes": [
+  "Gives checkmate in one with king and queen against a lone king, beside the king or from far away",
+  "Tests any queen check with three questions: can the king take her, which squares are free, is a legal move left",
+  "Finds a quiet move or a king move that forces mate in two",
+  "Says why a check from beside the king must be protected, and why a check from far away needs only covered squares",
+  "Sees the stalemate trap before playing the queen move",
+  "Explains the supported check to a beginner with a position they could set up"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/capablanca_chess-fundamentals.md (CI-01, CI-03: ideas only)",
+  "sources/sheets/edlasker_chess-strategy.md (K22: what can mate a bare king; lectures 7 and 8: count the squares, safe checking piece; docs/citable-views.md 4.4) [V-sheet]",
+  "content/skills/END.MATE-KQ.json (conditions and contrasts)",
+  "Real examples: Lichess rated games 8fn548ue and 7jgv1v62, January 2013, from the Lichess open database (CC0), library/data/lichess_db_standard_rated_2013-01.pgn.zst; moves are facts, ratings from the game headers [V]",
+  "All other positions: own constructions, each replayed with python-chess; results from the validator (engine and tablebase claims); items in content/items/lesson-cr-l-end-mate-1.json",
+  "Conjecture: the stalemate-trap explanation is labelled [H]; the long-range protection remark is labelled [I]"
+ ],
+ "part": {
+  "of": "L-END-MATE-1",
+  "n": 4,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 4 of 4: Mate with king and queen: the supported check. This part covers Mixed test; Real games, say it back. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "ISsp9-6",
+   "silent": true,
+   "chapter": "Mixed test"
+  },
+  {
+   "type": "item",
+   "item": "ISsp9-4",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ISsp9-5",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-6",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-7",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-8",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-9",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-21",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-22",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-23",
+   "silent": true
+  },
+  {
+   "type": "card",
+   "text": "**Two real endings.** These come from rated online games played in January 2013, in the free Lichess database (CC0). The side with the queen was rated about 1450 in the first and 1340 in the second [V] from the game record. Moves are facts, the comments are ours. In each ending, ask the three questions before you read the comment.",
+   "chapter": "Real games, say it back"
+  },
+  {
+   "type": "board",
+   "fen": "8/8/8/8/5K1Q/8/7k/8 b - - 0 60",
+   "caption": "Lichess game 8fn548ue. Black to move, in check on the h-file.",
+   "line": [
+    {
+     "move": "h2g1",
+     "say": "Black's king was in check on the h-file and stepped to g1."
+    },
+    {
+     "move": "f4f3",
+     "say": "White's king steps to f3. From there it covers e2, f2 and g2."
+    },
+    {
+     "move": "g1f1",
+     "say": "Black's king goes to f1."
+    },
+    {
+     "move": "h4h1",
+     "say": "The queen checks from the corner along the first rank, and the king on f3 covers the squares in front of the black king. Checkmate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     }
+    }
+   ],
+   "highlight": [
+    "f3",
+    "h1"
+   ]
+  },
+  {
+   "type": "item",
+   "item": "ICR-LENDMATE1-11"
+  },
+  {
+   "type": "board",
+   "fen": "5K2/6q1/5k2/8/8/8/8/8 w - - 0 76",
+   "caption": "Lichess game 7jgv1v62. The lone king is in check and has a single legal move.",
+   "line": [
+    {
+     "move": "f8e8",
+     "say": "White's king was in check from the queen, and this was its only legal move."
+    },
+    {
+     "move": "g7e7",
+     "say": "The queen lands beside the king, protected by the black king on f6. Checkmate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "f8e8"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "type": "tablebase",
+     "params": {
+      "result": "loss"
+     }
+    }
+   ],
+   "highlight": [
+    "f6",
+    "e7"
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Recap.** Three questions for any queen check: can the king take her, is a neighbouring square free, does Black still have a legal move? A check beside the king needs a protector. From far away, the king and the edge must cover the flight squares. Quiet moves prepare it. No check and no move is a draw. Your task: explain this to a beginner, in your own words, with a position they could set up."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Teach it back to an imagined beginner. Then check your answer: did you say when it works, when it fails, give a position a beginner could set up on a board, and name one mistake?",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea in my words:"
+    },
+    {
+     "id": "works",
+     "label": "When it works:"
+    },
+    {
+     "id": "example",
+     "label": "A position to set up:"
+    },
+    {
+     "id": "warning",
+     "label": "One mistake to avoid:"
+    }
+   ]
+  }
+ ]
+}

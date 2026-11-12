@@ -1,1187 +1,242 @@
 {
-  "id": "L-FND-CHECK-2",
-  "title": "Check, checkmate or neither?",
-  "skill": "FND.CHECK",
-  "depth": "D2",
-  "minutes": 20,
-  "outcomes": [
-    "Says for each position whether the side to move is in check, checkmate or neither",
-    "Closes the three ways out in order before calling checkmate",
-    "Does not call a blocked line a check",
-    "Knows a guarded checker cannot be taken by the king, and a piece held in front of its own king cannot take or block",
-    "Recognises a king with no move that is not attacked as neither check nor checkmate"
-  ],
-  "steps": [
+ "id": "L-FND-CHECK-2",
+ "title": "Check, checkmate or neither? (part 1 of 4)",
+ "skill": "FND.CHECK",
+ "depth": "D2",
+ "minutes": 5,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.CHECK.json (D2 outcome)",
+  "content/lessons/L-FND-CHECK-1.json (the three ways out are taught there, not repeated)",
+  "items IBds11-22..35 (shipped; claims checked by tools/validate.py) and content/items/lesson-bg-l-fnd-check-2.json (IBG-LFNDCHECK2-1..13)",
+  "Dan Heisman, advice to list the opponent's checks and captures before moving: [S] chess.com article 'passive vs basic hope chess' via docs/citable-views.md 10.4 (paraphrased)",
+  "The four-question order is this project's rule of thumb [I]; the guess about practice is [H]",
+  "Positions replayed or constructed and checked with python-chess; the short game is a sequence of legal moves (moves are facts)"
+ ],
+ "part": {
+  "of": "L-FND-CHECK-2",
+  "n": 1,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
+   "caption": "Black is in check: the white queen looks down a diagonal at the black king. Black has exactly one legal move. Step through it.",
+   "chapter": "Meet the idea",
+   "line": [
     {
-      "type": "board",
-      "fen": "rnbqkbnr/ppppp1pp/8/5p1Q/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 1 2",
-      "caption": "Black is in check: the white queen looks down a diagonal at the black king. Black has exactly one legal move. Step through it.",
-      "chapter": "Meet the idea",
-      "line": [
-        {
-          "move": "g7g6",
-          "say": "The pawn steps into the queen's line, so the queen no longer reaches the king. Blocking is one way out of check."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "h5",
-          "to": "e8"
-        }
-      ],
-      "highlight": [
-        "e8",
-        "g6"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "g7g6"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "Every position gets one of three labels. **Check**: the king is attacked, and it has a way out. **Checkmate**: the king is attacked and every way out is closed. **Neither**: the king is not attacked at all. Start with one question only: is the king attacked right now? Trace every line that ends on the king."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-1"
-    },
-    {
-      "type": "item",
-      "item": "IBds11-22"
-    },
-    {
-      "type": "board",
-      "fen": "R5k1/5ppp/8/8/8/8/8/4K3 b - - 0 1",
-      "caption": "Checkmate, questions in order. Attacked? Yes, by the rook along the eighth row. Can anything of Black's take the rook? No. Can anything step in the way? No. Does the king have a safe square? No: three pawns fill the front, and h8 is covered too, as the next board shows.",
-      "arrows": [
-        {
-          "from": "a8",
-          "to": "g8"
-        }
-      ],
-      "highlight": [
-        "f7",
-        "g7",
-        "h7",
-        "f8",
-        "h8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "g8",
-            "color": "white",
-            "count": 1
-          }
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "a8",
-            "color": "black",
-            "count": 0
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "R5k1/5ppp/8/8/8/8/8/4K3 b - - 0 1",
-      "caption": "The king cannot step along the rook's line away from the rook. Once it leaves, the rook's line extends through its old square, so h8 is covered. Moving there is illegal. Learners often miss this and think the king has a flight square.",
-      "arrows": [
-        {
-          "from": "a8",
-          "to": "h8"
-        }
-      ],
-      "highlight": [
-        "h8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "illegal_move",
-          "params": {
-            "move": "g8h8"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "These are the **four questions**, in this order. One: is the king attacked? If not, it is neither, and you stop. Two: can the checker be captured? Three: can something go in the way? Four: does the king have a safe square? Any yes after the first means only check. [I] The order runs from cheapest to dearest: a capture is one look, a block takes a search, king squares come last. It settles almost every position; double check is the exception."
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/5N2/8/8/8/8/4RK2 b - - 0 1",
-      "caption": "Two pieces giving check at once is a double check. Taking or blocking cannot answer both, so only a king move works. [I] Questions two and three are skipped here. The double-check lesson goes deeper.",
-      "arrows": [
-        {
-          "from": "e1",
-          "to": "e8"
-        },
-        {
-          "from": "f6",
-          "to": "e8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e8",
-            "color": "white",
-            "count": 2
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_destinations",
-          "params": {
-            "from": "e8",
-            "to": [
-              "d8",
-              "f8",
-              "f7"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-2"
-    },
-    {
-      "type": "board",
-      "fen": "7k/7p/8/8/8/8/8/K6R b - - 0 1",
-      "caption": "Question one gets a no. The white rook looks up the h-file, but Black's own pawn stands in the way, so the king is not attacked. Neither. Stop there; the other questions are not needed.",
-      "arrows": [
-        {
-          "from": "h1",
-          "to": "h7"
-        }
-      ],
-      "highlight": [
-        "h7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "h8",
-            "color": "white",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_move",
-          "params": {
-            "move": "h7h6"
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-3"
-    },
-    {
-      "type": "board",
-      "fen": "6k1/8/5N2/8/8/8/8/4K3 b - - 0 1",
-      "caption": "A knight gives check by jumping, so there is no line to block. [I] A block needs squares between the pieces, and a jump has none. Question three is always no against a knight. Question two is no as well: nothing of Black's can take it. But four squares are free for the king, so this is only check.",
-      "chapter": "Try it",
-      "line": [
-        {
-          "move": "g8g7",
-          "say": "The king steps off the knight's jump and onto a square it does not attack. The check is over."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f6",
-          "to": "g8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "f6",
-            "color": "black",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_destinations",
-          "params": {
-            "from": "g8",
-            "to": [
-              "f8",
-              "f7",
-              "g7",
-              "h8"
-            ]
-          }
-        },
-        {
-          "id": "C4",
-          "type": "illegal_move",
-          "params": {
-            "move": "g8h7"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "kr6/ppN5/8/8/8/8/8/4K3 b - - 0 1",
-      "caption": "The same knight check, but now the king's own rook and pawns fill every square beside it. Nothing can block a knight, nothing can take it, and the king has nowhere to go. Checkmate.",
-      "arrows": [
-        {
-          "from": "c7",
-          "to": "a8"
-        }
-      ],
-      "highlight": [
-        "a7",
-        "b7",
-        "b8"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "a8",
-            "color": "white",
-            "count": 1
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-4"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/5p2/6K1 w - - 0 1",
-      "caption": "A pawn gives check too, from the square diagonally in front of it. A pawn cannot be blocked either: it attacks the next square, so nothing fits between. Here nothing guards it, so the king may take it.",
-      "line": [
-        {
-          "move": "g1f2",
-          "say": "The king takes the pawn. The attacker is gone, so there is no check."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "f2",
-          "to": "g1"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "g1",
-            "color": "black",
-            "count": 1
-          }
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "f2",
-            "color": "black",
-            "count": 0
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/5PPP/R3r1K1 w - - 0 1",
-      "caption": "Question two is a yes. The black rook checks along the first row, the king has no safe square, and nothing can stand between them. But the white rook can take the checker. The only legal move is that capture, so this is check.",
-      "line": [
-        {
-          "move": "a1e1",
-          "say": "The rook takes the checking rook. The attacker is gone, so there is no check."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e1",
-          "to": "g1"
-        },
-        {
-          "from": "a1",
-          "to": "e1"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "a1e1"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "k7/1Q6/2K5/8/8/8/8/8 b - - 0 1",
-      "caption": "The queen checks from the square beside the king. Can the king take her? Only if nothing guards her. The white king guards her, so the capture would put the black king in check. Checkmate.",
-      "arrows": [
-        {
-          "from": "b7",
-          "to": "a8"
-        },
-        {
-          "from": "c6",
-          "to": "b7"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "b7",
-            "color": "white",
-            "count": 1
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "k7/1Q6/3K4/8/8/8/8/8 b - - 0 1",
-      "caption": "Move the white king one step away and the same queen check is only check. Nothing guards the queen now, so the black king takes her.",
-      "line": [
-        {
-          "move": "a8b7",
-          "say": "The king takes the queen. She was guarded by nothing, so the capture is legal."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "b7",
-          "to": "a8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "b7",
-            "color": "white",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_destinations",
-          "params": {
-            "from": "a8",
-            "to": [
-              "b7"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "contrast",
-      "title": "Is the queen guarded?",
-      "prompt": "The queen checks from beside the king. Predict first: checkmate, check or neither with the white king close, with it one step further away, and with a pawn added far away?",
-      "working": "IBG-LFNDCHECK2-6",
-      "failing": "IBG-LFNDCHECK2-7",
-      "irrelevant": "IBG-LFNDCHECK2-8"
-    },
-    {
-      "type": "board",
-      "fen": "R5k1/3b1ppp/8/8/8/8/8/4K3 b - - 0 1",
-      "caption": "A rook check, but this time Black has a bishop. The rook cannot be taken and the king has no square, yet the bishop can go in the way. One answer is enough, so this is check.",
-      "line": [
-        {
-          "move": "d7e8",
-          "say": "The bishop steps onto the eighth row between the rook and the king. The line is shut."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a8",
-          "to": "g8"
-        },
-        {
-          "from": "d7",
-          "to": "e8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "d7c8",
-              "d7e8"
-            ]
-          }
-        },
-        {
-          "id": "C3",
-          "type": "attackers",
-          "params": {
-            "square": "a8",
-            "color": "black",
-            "count": 0
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-      "caption": "A mate after only four moves. The moves are the worst White could choose, shown only so you can run the four questions on the final position. The position is the point, not the play.",
-      "line": [
-        {
-          "move": "f2f3",
-          "say": "Empties f2, one of the two squares between the queen's target and the king."
-        },
-        {
-          "move": "e7e5",
-          "say": "Black opens a path for the queen."
-        },
-        {
-          "move": "g2g4",
-          "say": "A second pawn move that does not help White. The pawn on f2 has already left, and the g-pawn now cannot step to g3 to block."
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "legal_move",
-          "params": {
-            "move": "f2f3"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "g2g4"
-          }
-        },
-        {
-          "id": "C3",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rnbqkbnr/pppp1ppp/8/4p3/6P1/5P2/PPPPP2P/RNBQKBNR b KQkq - 0 2",
-      "caption": "Black to move. The queen can go all the way across the board, to the end of the diagonal.",
-      "line": [
-        {
-          "move": "d8h4",
-          "say": "The queen gives check from far away."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d8",
-          "to": "h4"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "d8h4"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "rnb1kbnr/pppp1ppp/8/4p3/6Pq/5P2/PPPPP2P/RNBQKBNR w KQkq - 1 3",
-      "caption": "Run the four questions on White. Attacked? Yes, along the diagonal. Take the queen? Nothing of White's reaches her. Block? No piece can reach the two squares between. A king square? Its own pieces and the queen's line cover them. Checkmate.",
-      "arrows": [
-        {
-          "from": "h4",
-          "to": "e1"
-        }
-      ],
-      "highlight": [
-        "f2",
-        "g3"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e1",
-            "color": "black",
-            "count": 1
-          }
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "[I] A typical slip, made up here as an illustration: a player sees a queen beside the enemy king and shouts mate, without asking who guards her. If nothing does, the king simply takes her. Question two exists for exactly this moment: always ask whether the checker can be captured before you call mate."
-    },
-    {
-      "type": "card",
-      "text": "Some positions look like check and are not. A piece beside the king is not always attacking it. A line with a piece in the way gives no check. A pawn attacks only diagonally forward. And a king that is not attacked but has no legal move is stalemate, also neither. Stalemate has its own lesson; in short, the side to move has no legal move and is not attacked, and the game is drawn.",
-      "chapter": "When it does not apply"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/3n4/4K3 w - - 0 1",
-      "caption": "The black knight stands right beside the white king, but a knight attacks by jumping to squares two and one away. It does not attack the king, so White is not in check.",
-      "arrows": [
-        {
-          "from": "d2",
-          "to": "b1"
-        },
-        {
-          "from": "d2",
-          "to": "f1"
-        },
-        {
-          "from": "d2",
-          "to": "f3"
-        },
-        {
-          "from": "d2",
-          "to": "b3"
-        },
-        {
-          "from": "d2",
-          "to": "c4"
-        },
-        {
-          "from": "d2",
-          "to": "e4"
-        }
-      ],
-      "highlight": [
-        "d2",
-        "e1"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e1",
-            "color": "black",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_move",
-          "params": {
-            "move": "e1d2"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/4p3/4K3 w - - 0 1",
-      "caption": "This pawn stands straight in front of the king. Pawns attack the squares diagonally ahead of them, not straight ahead. Not check, and the king may even take it.",
-      "arrows": [
-        {
-          "from": "e2",
-          "to": "d1"
-        },
-        {
-          "from": "e2",
-          "to": "f1"
-        }
-      ],
-      "highlight": [
-        "e2",
-        "e1"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e1",
-            "color": "black",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_move",
-          "params": {
-            "move": "e1e2"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/2R5/8/4B3/8/8/4K3 b - - 0 1",
-      "caption": "Two more look-alikes. The bishop is on the king's file, but a bishop attacks only along diagonals. The rook is on one of the king's diagonals, but a rook attacks only along rows and files. Neither attacks the king, so Black is not in check.",
-      "arrows": [
-        {
-          "from": "e4",
-          "to": "e8"
-        },
-        {
-          "from": "c6",
-          "to": "e8"
-        }
-      ],
-      "highlight": [
-        "e4",
-        "c6"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "e8",
-            "color": "white",
-            "count": 0
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-5"
-    },
-    {
-      "type": "board",
-      "fen": "7k/5Q2/6K1/8/8/8/8/8 b - - 0 1",
-      "caption": "Black has no legal move, but the king is not attacked: the queen covers every square around it and does not attack it. That is stalemate, a draw. It is neither check nor checkmate.",
-      "arrows": [
-        {
-          "from": "f7",
-          "to": "g8"
-        },
-        {
-          "from": "f7",
-          "to": "g7"
-        }
-      ],
-      "highlight": [
-        "g8",
-        "g7",
-        "h7"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "stalemate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "h8",
-            "color": "white",
-            "count": 0
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": []
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/6Q1/6K1/8/8/8/8/8 b - - 0 1",
-      "caption": "Move the queen one square and the same pieces give checkmate instead of stalemate. Now the queen attacks the king, the white king guards her, and every other square is covered.",
-      "arrows": [
-        {
-          "from": "g7",
-          "to": "h8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "g7",
-            "color": "white",
-            "count": 1
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-9"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/1b6/8/3N4/4K3 w - - 0 1",
-      "caption": "A gentler pin first. White is not in check, but the knight stands between the bishop and its king. A piece that cannot leave a line without exposing its own king is pinned. Every knight move is illegal.",
-      "arrows": [
-        {
-          "from": "b4",
-          "to": "e1"
-        }
-      ],
-      "highlight": [
-        "d2"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "illegal_move",
-          "params": {
-            "move": "d2f3"
-          }
-        },
-        {
-          "id": "C3",
-          "type": "illegal_move",
-          "params": {
-            "move": "d2b3"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "3R2k1/6pp/8/3q2N1/8/8/B7/6K1 b - - 0 1",
-      "caption": "Looks like check, not mate? The black queen can see the rook. But the white bishop looks along the diagonal at the king, with only the queen between. If she moves off it, the king would be attacked, so she may not take the rook. Checkmate.",
-      "arrows": [
-        {
-          "from": "a2",
-          "to": "g8"
-        },
-        {
-          "from": "d5",
-          "to": "d8"
-        }
-      ],
-      "highlight": [
-        "d5"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "checkmate"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "attackers",
-          "params": {
-            "square": "d8",
-            "color": "black",
-            "count": 1
-          }
-        },
-        {
-          "id": "C3",
-          "type": "illegal_move",
-          "params": {
-            "move": "d5d8"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "3R2k1/6pp/8/3q2N1/8/8/8/6K1 b - - 0 1",
-      "caption": "Take the bishop away and the queen is free. She takes the rook and the check is over. Same check, a different answer.",
-      "line": [
-        {
-          "move": "d5d8",
-          "say": "The queen takes the checking rook. Nothing attacks the king now."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "d5",
-          "to": "d8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "check"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_moves_set",
-          "params": {
-            "moves": [
-              "d5d8"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "A pinned piece is not free to move. It cannot take the checker, and it cannot block. So when you count ways out, count only legal moves. Check must be answered at once, and you may never make a move that leaves your own king attacked. The king obeys the same rule: it may not step onto an attacked square, nor take a guarded piece, nor go next to the enemy king."
-    },
-    {
-      "type": "board",
-      "fen": "8/8/8/8/8/3k4/8/4K3 w - - 0 1",
-      "caption": "Two kings can never stand next to each other, because each would attack the other. The white king cannot step to e2 or d2, beside the black king, though nothing else attacks those squares. Moving to f2 is fine.",
-      "arrows": [
-        {
-          "from": "d3",
-          "to": "e2"
-        },
-        {
-          "from": "d3",
-          "to": "d2"
-        }
-      ],
-      "highlight": [
-        "e2",
-        "d2"
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "illegal_move",
-          "params": {
-            "move": "e1e2"
-          }
-        },
-        {
-          "id": "C3",
-          "type": "legal_move",
-          "params": {
-            "move": "e1f2"
-          }
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/4N3/8/8/4R1K1 w - - 0 1",
-      "caption": "A discovered check: White moves a piece, and the piece behind it gives check. Here the knight leaves the e-file, so the rook attacks the king. The knight need not give check itself.",
-      "line": [
-        {
-          "move": "e4g5",
-          "say": "The knight steps away and the rook on the open file now attacks the king. Black must answer at once."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e1",
-          "to": "e8"
-        }
-      ],
-      "claims": [
-        {
-          "id": "C1",
-          "type": "game_state",
-          "params": {
-            "state": "ongoing"
-          }
-        },
-        {
-          "id": "C2",
-          "type": "legal_move",
-          "params": {
-            "move": "e4g5"
-          }
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-10"
-    },
-    {
-      "type": "contrast",
-      "title": "One pawn changes the answer",
-      "prompt": "The rook checks along the back row. Predict first: checkmate, check or neither with the pawns as shown, with one pawn moved, and with a far-away bishop added?",
-      "working": "IBds11-23",
-      "failing": "IBds11-24",
-      "irrelevant": "IBds11-25"
-    },
-    {
-      "type": "card",
-      "text": "Dan Heisman, a chess coach, advises listing the opponent's checks, captures and threats before you move (chess.com article, secondary source). [I] Running the four questions on each check you find is one way to use that. [H] Practising on positions you did not set up may make it quick; no study here tests that.",
-      "chapter": "Check yourself"
-    },
-    {
-      "type": "item",
-      "item": "IBds11-26",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-27",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-28",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-29",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-31",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-34",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBds11-35",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-11",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-12",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDCHECK2-13",
-      "silent": true
-    },
-    {
-      "type": "practice",
-      "tags": [
-        "node.FND.CHECK",
-        "cue.3"
-      ],
-      "n": 6,
-      "silent": true
-    },
-    {
-      "type": "reflect",
-      "kind": "review",
-      "prompt": "Explain to a friend why a queen next to the king is sometimes checkmate and sometimes not. Say it aloud or write it down, then compare with the model answer next."
-    },
-    {
-      "type": "card",
-      "text": "**Model answer.** First ask whether the king is attacked; if not, it is neither. If it is, ask: can I take the checker, put something in the way, or move the king to a safe square? Any yes means only check. A queen beside the king is mate only if something guards her, so the king cannot take her, and every other square is covered. Three closed doors, and the king attacked, mean checkmate. Knight and pawn checks cannot be blocked."
-    },
-    {
-      "type": "reflect",
-      "kind": "plan",
-      "prompt": "Which of the three doors (take, block, step) is hardest for you to spot? Pick one habit for next time, and say which position fooled you most in this lesson."
+     "move": "g7g6",
+     "say": "The pawn steps into the queen's line, so the queen no longer reaches the king. Blocking is one way out of check."
     }
-  ],
-  "review": {
-    "status": "needs-human",
-    "reviewer": null
+   ],
+   "arrows": [
+    {
+     "from": "h5",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "e8",
+    "g6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "g7g6"
+      ]
+     }
+    }
+   ]
   },
-  "sources": [
-    "content/skills/FND.CHECK.json (D2 outcome)",
-    "content/lessons/L-FND-CHECK-1.json (the three ways out are taught there, not repeated)",
-    "items IBds11-22..35 (shipped; claims checked by tools/validate.py) and content/items/lesson-bg-l-fnd-check-2.json (IBG-LFNDCHECK2-1..13)",
-    "Dan Heisman, advice to list the opponent's checks and captures before moving: [S] chess.com article 'passive vs basic hope chess' via docs/citable-views.md 10.4 (paraphrased)",
-    "The four-question order is this project's rule of thumb [I]; the guess about practice is [H]",
-    "Positions replayed or constructed and checked with python-chess; the short game is a sequence of legal moves (moves are facts)"
-  ]
+  {
+   "type": "card",
+   "text": "Every position gets one of three labels. **Check**: the king is attacked, and it has a way out. **Checkmate**: the king is attacked and every way out is closed. **Neither**: the king is not attacked at all. Start with one question only: is the king attacked right now? Trace every line that ends on the king."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDCHECK2-1"
+  },
+  {
+   "type": "board",
+   "fen": "R5k1/5ppp/8/8/8/8/8/4K3 b - - 0 1",
+   "caption": "Checkmate, questions in order. Attacked? Yes, by the rook along the eighth row. Can anything of Black's take the rook? No. Can anything step in the way? No. Does the king have a safe square? No: three pawns fill the front, and h8 is covered too, as the next board shows.",
+   "arrows": [
+    {
+     "from": "a8",
+     "to": "g8"
+    }
+   ],
+   "highlight": [
+    "f7",
+    "g7",
+    "h7",
+    "f8",
+    "h8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "checkmate"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g8",
+      "color": "white",
+      "count": 1
+     }
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "a8",
+      "color": "black",
+      "count": 0
+     }
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "R5k1/5ppp/8/8/8/8/8/4K3 b - - 0 1",
+   "caption": "The king cannot step along the rook's line away from the rook. Once it leaves, the rook's line extends through its old square, so h8 is covered. Moving there is illegal. Learners often miss this and think the king has a flight square.",
+   "arrows": [
+    {
+     "from": "a8",
+     "to": "h8"
+    }
+   ],
+   "highlight": [
+    "h8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "g8h8"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "game_state",
+     "params": {
+      "state": "checkmate"
+     }
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "These are the **four questions**, in this order. One: is the king attacked? If not, it is neither, and you stop. Two: can the checker be captured? Three: can something go in the way? Four: does the king have a safe square? Any yes after the first means only check. [I] The order runs from cheapest to dearest: a capture is one look, a block takes a search, king squares come last. It settles almost every position; double check is the exception."
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/5N2/8/8/8/8/4RK2 b - - 0 1",
+   "caption": "Two pieces giving check at once is a double check. Taking or blocking cannot answer both, so only a king move works. [I] Questions two and three are skipped here. The double-check lesson goes deeper.",
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    },
+    {
+     "from": "f6",
+     "to": "e8"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "white",
+      "count": 2
+     }
+    },
+    {
+     "id": "C3",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e8",
+      "to": [
+       "d8",
+       "f8",
+       "f7"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDCHECK2-2"
+  },
+  {
+   "type": "board",
+   "fen": "7k/7p/8/8/8/8/8/K6R b - - 0 1",
+   "caption": "Question one gets a no. The white rook looks up the h-file, but Black's own pawn stands in the way, so the king is not attacked. Neither. Stop there; the other questions are not needed.",
+   "arrows": [
+    {
+     "from": "h1",
+     "to": "h7"
+    }
+   ],
+   "highlight": [
+    "h7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "ongoing"
+     }
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h8",
+      "color": "white",
+      "count": 0
+     }
+    },
+    {
+     "id": "C3",
+     "type": "legal_move",
+     "params": {
+      "move": "h7h6"
+     }
+    }
+   ]
+  }
+ ]
 }

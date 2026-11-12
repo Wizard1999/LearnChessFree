@@ -1,0 +1,354 @@
+{
+ "id": "L-FND-PIECE-KING-2B",
+ "title": "The king in a busy position (part 2 of 4)",
+ "skill": "FND.PIECE.KING",
+ "depth": "D2",
+ "minutes": 5,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.PIECE.KING.json (D2 outcome)",
+  "content/lessons/L-FND-PIECE-KING-1.json and L-FND-QUEENKING-1.json",
+  "content/items/lesson-ds12.json (IBds12-4, IBds12-6, IBds12-19, IBds12-21) and generated items IG-MOVE-141, 142, 144",
+  "content/items/lesson-bg-l-fnd-piece-king-2.json (new items and positions, all replayed with python-chess)",
+  "docs/citable-views.md 4.4: Emanuel Lasker, Common Sense in Chess, Lectures 7-8 [V-sheet], paraphrased; the link to the king's checklist is [I]",
+  "docs/competition-chess-steps.md (rules before mating; short reminder card)",
+  "[H] the two likely slips (distant defender, square behind the king) are a hypothesis, no data",
+  "rules of chess (python-chess legal move generation, via tools/validate.py)"
+ ],
+ "part": {
+  "of": "L-FND-PIECE-KING-2",
+  "n": 2,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 2 of 4: The king in a busy position. This part covers Attackers and lines. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-6"
+  },
+  {
+   "type": "card",
+   "text": "You met each kind of attacker alone in the last lesson. On a busy board they arrive together. Cross out squares one attacker at a time: the rook along its rank and file, the bishop along its diagonals, the knight by its jump, the pawn one step diagonally forward. A rook or bishop attacks only as far as the first piece in its way.",
+   "chapter": "Attackers and lines"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-7"
+  },
+  {
+   "type": "board",
+   "fen": "8/8/2p5/1n6/4K3/r7/8/2bk4 w - - 0 1",
+   "caption": "Four black pieces watch White's king on e4. The rook covers d3, e3 and f3. The bishop covers e3 and f4. The knight covers d4. The pawn covers d5. Only e5 and f5 remain.",
+   "line": [
+    {
+     "move": "e4e5",
+     "say": "e5 is attacked by none of the four pieces, so the king steps up the board."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a3",
+     "to": "f3"
+    },
+    {
+     "from": "c1",
+     "to": "f4"
+    },
+    {
+     "from": "b5",
+     "to": "d4"
+    },
+    {
+     "from": "c6",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "e5",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e4",
+      "to": [
+       "e5",
+       "f5"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d3",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Only the rook attacks d3."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "The rook and the bishop attack e3."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Only the knight attacks d4."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "d5",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Only the pawn attacks d5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/8/2p5/1n6/4K3/r1P5/8/2bk4 w - - 0 1",
+   "caption": "The same position with a White pawn on c3. A line stops at the first piece in its way, so the pawn shelters d3 and f3 from the rook. Four squares are free now.",
+   "line": [
+    {
+     "move": "e4d3",
+     "say": "d3 is safe: the pawn on c3 blocks the rook's line along the third rank."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a3",
+     "to": "c3"
+    },
+    {
+     "from": "e4",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "d3",
+    "f3",
+    "e5",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e4",
+      "to": [
+       "d3",
+       "e5",
+       "f3",
+       "f5"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d3",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "Nothing attacks d3 once the pawn blocks the rook."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f3",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "Nothing attacks f3 either."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "When a rook gives check, the king stands on the rook's line. Here is the trap: the square directly behind the king is attacked too, because the king would still be on that line after stepping back. The king does not shelter the square behind it. Study the board, then predict."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEKING2-8"
+  },
+  {
+   "type": "board",
+   "fen": "4r3/8/8/8/4K3/8/8/k7 w - - 0 1",
+   "caption": "White is in check from the rook on e8. The king may not step up to e5, and it may not step back to e3 either. Six squares are left.",
+   "line": [
+    {
+     "move": "e4d4",
+     "say": "A step sideways leaves the rook's file, so the check is over."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e8",
+     "to": "e5"
+    },
+    {
+     "from": "e4",
+     "to": "d4"
+    },
+    {
+     "from": "e4",
+     "to": "f4"
+    }
+   ],
+   "highlight": [
+    "d3",
+    "d4",
+    "d5",
+    "f3",
+    "f4",
+    "f5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "White is in check from the rook."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "e4",
+      "to": [
+       "d3",
+       "d4",
+       "d5",
+       "f3",
+       "f4",
+       "f5"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    },
+    {
+     "id": "C3",
+     "type": "illegal_move",
+     "params": {
+      "move": "e4e3"
+     },
+     "statement": "Stepping back along the line is illegal."
+    },
+    {
+     "id": "C4",
+     "type": "illegal_move",
+     "params": {
+      "move": "e4e5"
+     },
+     "statement": "Stepping forward along the line is illegal."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/6b1/8/8/3K4/8/8/7k w - - 0 1",
+   "caption": "A bishop gives check along a diagonal. The same idea holds: e5 is on the diagonal, and so is c3 behind the king. Both are crossed out.",
+   "line": [
+    {
+     "move": "d4e4",
+     "say": "Stepping off the diagonal ends the check."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "g7",
+     "to": "e5"
+    },
+    {
+     "from": "d4",
+     "to": "e4"
+    },
+    {
+     "from": "d4",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "c4",
+    "c5",
+    "d3",
+    "d5",
+    "e3",
+    "e4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "game_state",
+     "params": {
+      "state": "check"
+     },
+     "statement": "White is in check from the bishop."
+    },
+    {
+     "id": "C2",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d4",
+      "to": [
+       "c4",
+       "c5",
+       "d3",
+       "d5",
+       "e3",
+       "e4"
+      ]
+     },
+     "statement": "These are exactly the squares the piece can move to."
+    },
+    {
+     "id": "C3",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4c3"
+     },
+     "statement": "Stepping back along the diagonal is illegal."
+    },
+    {
+     "id": "C4",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4e5"
+     },
+     "statement": "Stepping forward along the diagonal is illegal."
+    }
+   ]
+  }
+ ]
+}

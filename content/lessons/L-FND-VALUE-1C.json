@@ -1,0 +1,344 @@
+{
+ "id": "L-FND-VALUE-1C",
+ "title": "Piece values: counting what you win and lose (part 3 of 4)",
+ "skill": "FND.VALUE",
+ "depth": "D1",
+ "minutes": 10,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/first-hours.md session 2",
+  "docs/council-synthesis.md CD-1, CD-4",
+  "sources/sheets/edlasker_chess-strategy.md (values are conditional)",
+  "sources/sheets/capablanca_chess-fundamentals.md",
+  "content/items/lesson-split-sp4.json (claims check the counting in every trade)",
+  "sources/sheets/capablanca_chess-fundamentals.md (pairwise comparisons, CI-16; paraphrased [S])",
+  "sources/sheets/edlasker_chess-strategy.md (mobility as the measure of a piece, K5; paraphrased [S])",
+  "docs/citable-views.md 8.1, 8.3",
+  "content/items/lesson-bg-l-fnd-value-1.json (new items; positions built by hand and engine-checked)",
+  "docs/competition-chess-steps.md, docs/lesson-depth-standard.md (design)"
+ ],
+ "part": {
+  "of": "L-FND-VALUE-1",
+  "n": 3,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 3 of 4: Piece values: counting what you win and lose. This part covers Points, not pieces; When it does not apply. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDVALUE1-5"
+  },
+  {
+   "type": "card",
+   "text": "Count **points**, not pieces. Giving a rook (5) to win a bishop and a knight (3 and 3) leaves you one point ahead, although you lose one piece and win two. Giving a queen (9) for two minor pieces (6) loses three points, although you win more pieces than you lose. The next board shows how the **order** of the captures changes what you give up.",
+   "chapter": "Points, not pieces"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDVALUE1-6"
+  },
+  {
+   "type": "board",
+   "fen": "2b3k1/pp4p1/4n3/8/8/1B6/PP6/4R1K1 w - - 0 1",
+   "caption": "Two pieces for one. Add the points, not the number of pieces, and send the cheaper piece in first.",
+   "line": [
+    {
+     "move": "b3e6",
+     "say": "The bishop takes the knight first: 3 points in."
+    },
+    {
+     "move": "c8e6",
+     "say": "The black bishop takes it back: 3 points out."
+    },
+    {
+     "move": "e1e6",
+     "say": "The rook takes the bishop: 3 more in. Three minus three plus three is plus three."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "b3",
+     "to": "e6"
+    },
+    {
+     "from": "e1",
+     "to": "e6"
+    }
+   ],
+   "highlight": [
+    "e6"
+   ],
+   "claims": [
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "b3e6",
+      "min": 3
+     },
+     "statement": "Bishop first nets at least three points.",
+     "id": "C1"
+    },
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "e1e6",
+      "min": 1,
+      "max": 1
+     },
+     "statement": "Rook first nets only one point.",
+     "id": "C2"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 2
+     },
+     "statement": "The rook and the bishop both attack the knight.",
+     "id": "C3"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Only the bishop guards the knight.",
+     "id": "C4"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "Had the rook gone first, the same exchange would end only one point ahead, because the rook would be the piece Black takes. The cheapest piece goes in first, so the dearest piece is not the one you give up."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDVALUE1-7"
+  },
+  {
+   "type": "board",
+   "fen": "6k1/5pp1/n3p3/3p4/8/3Q4/5PPP/6K1 w - - 0 1",
+   "caption": "Count what each target costs. The queen can take a pawn that is guarded, or a knight that nothing guards.",
+   "line": [
+    {
+     "move": "d3a6",
+     "say": "The queen takes the knight. Nothing guards it: 3 points in and nothing out."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d3",
+     "to": "a6"
+    }
+   ],
+   "highlight": [
+    "a6",
+    "d5"
+   ],
+   "claims": [
+    {
+     "type": "material_after_move",
+     "params": {
+      "move": "d3a6",
+      "min": 3,
+      "max": 3
+     },
+     "statement": "The loose knight is a free 3 points.",
+     "id": "C1"
+    },
+    {
+     "type": "attackers",
+     "params": {
+      "square": "a6",
+      "color": "black",
+      "count": 0
+     },
+     "statement": "Nothing guards the knight.",
+     "id": "C2"
+    },
+    {
+     "type": "move_loses",
+     "params": {
+      "move": "d3d5",
+      "cp": 500
+     },
+     "statement": "Taking the guarded pawn with the queen loses the queen.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "The numbers are a **rule of thumb**: a good first guide, not a law. They compare swaps when nothing else is going on. Two things can override them: a king with no way out, and a piece that cannot move. Look at both.",
+   "chapter": "When it does not apply"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDVALUE1-13"
+  },
+  {
+   "type": "board",
+   "fen": "6k1/5ppp/r7/3q4/8/8/5PPP/4R1K1 w - - 0 1",
+   "caption": "Black has a queen and a rook (14 points). White has one rook (5). It is White's move.",
+   "line": [
+    {
+     "move": "e1e8",
+     "say": "The rook gives checkmate. Black's own pawns block the king's escape, so the extra points are useless."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "e1",
+     "to": "e8"
+    }
+   ],
+   "highlight": [
+    "g8",
+    "e8"
+   ],
+   "claims": [
+    {
+     "type": "mate_in",
+     "params": {
+      "move": "e1e8",
+      "n": 1
+     },
+     "statement": "The rook move is checkmate.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e1e8"
+     },
+     "statement": "The rook can reach e8.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Checkmate ends the game** whatever the points say. A quick mate can come from a position that looks lost on the count."
+  },
+  {
+   "type": "item",
+   "item": "ISsp4-1"
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/8/3b4/8/8/P7/RN2K3 w - - 0 1",
+   "caption": "[H] The rook is worth 5 and the bishop 3, yet the rook is shut in by its own knight and pawn. Here one knight move frees it, so this board only shows the mechanism: a piece that cannot move does less than its number says.",
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "b1"
+    },
+    {
+     "from": "a1",
+     "to": "a2"
+    }
+   ],
+   "highlight": [
+    "a1",
+    "b1",
+    "a2",
+    "d5"
+   ],
+   "claims": [
+    {
+     "type": "mobility",
+     "params": {
+      "square": "a1",
+      "mode": "legal",
+      "count": 0
+     },
+     "statement": "The white rook has no legal move.",
+     "id": "C1"
+    },
+    {
+     "type": "mobility",
+     "params": {
+      "square": "d5",
+      "mode": "legal",
+      "count": 13
+     },
+     "statement": "The black bishop has 13 legal moves.",
+     "id": "C2"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 500
+     },
+     "statement": "The engine still rates White clearly better, because one move frees the rook.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "7k/P7/8/8/8/8/8/K7 w - - 0 1",
+   "caption": "The reverse can happen too. A pawn is worth 1, but this one is one step from the last row and nothing can stop it.",
+   "line": [
+    {
+     "move": "a7a8q",
+     "say": "The pawn reaches the last row and becomes a queen: its 1 point has just become 9."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a7",
+     "to": "a8"
+    }
+   ],
+   "highlight": [
+    "a8"
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a7a8q"
+     },
+     "statement": "The pawn can promote on a8.",
+     "id": "C1"
+    },
+    {
+     "type": "eval_range",
+     "params": {
+      "min": 500,
+      "max": 100000
+     },
+     "statement": "With a queen soon, White is far ahead.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "Where do the numbers come from? [H] A guess: players wanted a sum they could do in their head, and the table fits that, since a queen is close to a rook plus a minor piece plus a pawn (9 against 5, 3 and 1). [S] Capablanca (1921) compared pieces in pairs, for example a rook as a minor piece plus about two pawns. [S] Edward Lasker (1915) saw how freely a piece can move as its real value."
+  },
+  {
+   "type": "item",
+   "item": "ISsp4-2"
+  },
+  {
+   "type": "card",
+   "text": "Two honest limits. [I] A bishop and a knight share a number but are not identical: a bishop tends to be stronger in open positions, a knight in closed ones. [I] A common habit is to trade pieces when ahead in points and avoid trades when behind, because the lead becomes a larger share of what is left."
+  },
+  {
+   "type": "item",
+   "item": "ISsp4-3"
+  }
+ ]
+}

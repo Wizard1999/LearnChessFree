@@ -1,0 +1,553 @@
+{
+ "id": "L-FND-PIECE-ROOK-2B",
+ "title": "The rook in a busy position (part 2 of 4)",
+ "skill": "FND.PIECE.ROOK",
+ "depth": "D2",
+ "minutes": 12,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "content/skills/FND.PIECE.ROOK.json (D2 and D3 outcomes, conditions, misconceptions)",
+  "docs/first-hours.md",
+  "content/lessons/L-FND-ROOKBISHOP-1.json (the rook's moves, taught earlier in the path)",
+  "docs/competition-chess-steps.md (method: short explanation, many exercises; no text reused)",
+  "Items IBds13-1..6 (authored, content/items/lesson-ds13.json, rules-checked); IG-MOVE-28, IG-MOVE-31 (generated, reused); IBG-LFNDPIECEROOK2-1..10 (authored here, content/items/lesson-bg-l-fnd-piece-rook-2.json)",
+  "Positions built with python-chess from piece placements; every line replayed move by move; counts and blocks are rule facts checked by tools/validate_lessons.py. Statements marked [I] or [H] are inference or hypothesis, not checked claims."
+ ],
+ "part": {
+  "of": "L-FND-PIECE-ROOK-2",
+  "n": 2,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 2 of 4: The rook in a busy position. This part covers What stops a rook. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEROOK2-3"
+  },
+  {
+   "type": "card",
+   "text": "The first piece on a line ends it. If it is yours, the rook stops one square short. If it is an enemy, the rook may take it and then stops there. It never goes through, and a piece beside the line, not on it, blocks nothing.",
+   "chapter": "What stops a rook"
+  },
+  {
+   "type": "contrast",
+   "title": "Same rook, one change",
+   "prompt": "A white knight now stands on e3. Predict first: can the rook still reach g3?",
+   "working": "IBds13-2",
+   "failing": "IBds13-3",
+   "irrelevant": "IBds13-4"
+  },
+  {
+   "type": "board",
+   "fen": "6k1/8/8/8/N7/8/8/R5K1 w - - 0 1",
+   "caption": "The white knight on a4 is the first piece on the a-file.",
+   "line": [
+    {
+     "move": "a1a3",
+     "say": "The rook can come up to a3. The knight is its own piece, so a4 is off limits and a5 to a8 are out of reach."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "a3"
+    }
+   ],
+   "highlight": [
+    "a2",
+    "a3",
+    "a4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "a1a3"
+     },
+     "statement": "The rook can go to a3."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "a1a4"
+     },
+     "statement": "The rook cannot land on its own knight."
+    },
+    {
+     "id": "C3",
+     "type": "illegal_move",
+     "params": {
+      "move": "a1a8"
+     },
+     "statement": "The rook cannot reach a8."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "a4",
+      "piece": "N"
+     },
+     "statement": "A white knight stands on a4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "6k1/8/p7/8/n7/8/8/R5K1 w - - 0 1",
+   "caption": "Now the first piece on the file is an enemy knight, with a black pawn behind it on a6.",
+   "line": [
+    {
+     "move": "a1a4",
+     "say": "The rook takes the knight. Taking ends the slide, so the pawn on a6 is not reachable this move."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "a4"
+    }
+   ],
+   "highlight": [
+    "a4",
+    "a6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "a1a4"
+     },
+     "statement": "The rook can take on a4."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "a1a5"
+     },
+     "statement": "The rook cannot go past the knight."
+    },
+    {
+     "id": "C3",
+     "type": "illegal_move",
+     "params": {
+      "move": "a1a6"
+     },
+     "statement": "The rook cannot reach the pawn behind the knight."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "a4",
+      "piece": "n"
+     },
+     "statement": "A black knight stands on a4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/3p4/3R4/8/8/7K w - - 0 1",
+   "caption": "The first piece can be right next to the rook. The black pawn on d5 is an enemy, so the rook may take it at once.",
+   "line": [
+    {
+     "move": "d4d5",
+     "say": "The nearest square is a capture. The slide ends there, so d6 and beyond stay out of reach."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "d5"
+    }
+   ],
+   "highlight": [
+    "d5",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The rook can take on d5."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d6"
+     },
+     "statement": "The rook cannot go past the pawn."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on d5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/7k/8/8/3n4/8/8/R5K1 w - - 0 1",
+   "caption": "The black knight sits on d4, on neither of the rook's lines. The a-file is clear, so the rook goes all the way up. Only a piece on the line counts.",
+   "line": [
+    {
+     "move": "a1a8",
+     "say": "Seven squares up the file in one move. The knight is beside the rook's route, so it does not matter."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "a8"
+    }
+   ],
+   "highlight": [
+    "a8",
+    "d4"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "a1a8"
+     },
+     "statement": "The rook can go from a1 to a8."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d4",
+      "piece": "n"
+     },
+     "statement": "A black knight stands on d4."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "7k/8/8/8/8/2p5/8/2R3K1 w - - 0 1",
+   "caption": "A far target behind an enemy piece. The black pawn on c3 is the first piece on the c-file.",
+   "line": [
+    {
+     "move": "c1c3",
+     "say": "The rook takes the pawn and the slide ends. It cannot carry on to c8."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "c1",
+     "to": "c3"
+    }
+   ],
+   "highlight": [
+    "c3",
+    "c8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_move",
+     "params": {
+      "move": "c1c3"
+     },
+     "statement": "The rook can take on c3."
+    },
+    {
+     "id": "C2",
+     "type": "illegal_move",
+     "params": {
+      "move": "c1c8"
+     },
+     "statement": "The rook cannot reach c8."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "c3",
+      "piece": "p"
+     },
+     "statement": "A black pawn stands on c3."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBds13-6"
+  },
+  {
+   "type": "card",
+   "text": "**Counting moves without a board.** Is the target on my rank or file? Is any piece on the line between? If nothing, one move. If one blocker is all that stops it, look for another line that reaches the same square: that is often two moves. [H] Beginners may miss a blocker mostly because they scan the line too fast; naming each square aloud may help."
+  },
+  {
+   "type": "board",
+   "fen": "8/8/7k/8/N7/8/8/R5K1 w - - 0 1",
+   "caption": "The white knight on a4 blocks the a-file, so the top row is not reachable in one move. The rook sidesteps to a clear file. [I] A second blocker, or blockers on the neighbouring files, can make it three moves or more.",
+   "line": [
+    {
+     "move": "a1b1",
+     "say": "Step sideways onto the b-file. The rook does not need a2 or a3."
+    },
+    {
+     "move": "h6g6",
+     "say": "Black moves the king. Nothing changes on the b-file."
+    },
+    {
+     "move": "b1b8",
+     "say": "The b-file is clear all the way. Here one blocker cost one extra move."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "b1"
+    },
+    {
+     "from": "b1",
+     "to": "b8"
+    }
+   ],
+   "highlight": [
+    "a4",
+    "b8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "a1a8"
+     },
+     "statement": "The rook cannot reach a8 in one move."
+    },
+    {
+     "id": "C2",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b1",
+      "squares": [
+       "a1",
+       "b2",
+       "b3",
+       "b4",
+       "b5",
+       "b6",
+       "b7",
+       "b8",
+       "c1",
+       "d1",
+       "e1",
+       "f1",
+       "g1"
+      ],
+      "after_moves": [
+       "a1b1"
+      ]
+     },
+     "statement": "After the sidestep, the rook on b1 attacks the whole b-file up to b8."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEROOK2-4"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEROOK2-5"
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDPIECEROOK2-6"
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/3P4/3R4/8/8/7K w - - 0 1",
+   "caption": "A common slip: trying to take your own pawn. The pawn on d5 is white, like the rook. The square is off limits.",
+   "line": [
+    {
+     "move": "d4d3",
+     "say": "Down is free. Up, the first piece is a friend, so the rook goes nowhere on that side."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "d3"
+    }
+   ],
+   "highlight": [
+    "d5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4d5"
+     },
+     "statement": "The rook cannot take its own pawn."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4d3"
+     },
+     "statement": "The rook can go down to d3."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "k7/8/8/8/3R4/8/8/7K w - - 0 1",
+   "caption": "Another slip: turning a corner. A rook goes in one direction per move, so f6 takes two moves, never one.",
+   "line": [
+    {
+     "move": "d4f4",
+     "say": "First slide right along the rank."
+    },
+    {
+     "move": "a8b8",
+     "say": "Black's king moves."
+    },
+    {
+     "move": "f4f6",
+     "say": "Then slide up the f-file. Two moves, two straight lines."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d4",
+     "to": "f4"
+    },
+    {
+     "from": "f4",
+     "to": "f6"
+    }
+   ],
+   "highlight": [
+    "f6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "d4f6"
+     },
+     "statement": "The rook cannot reach f6 in one move."
+    },
+    {
+     "id": "C2",
+     "type": "legal_move",
+     "params": {
+      "move": "d4f4"
+     },
+     "statement": "The rook can slide to f4 first."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "6k1/8/8/8/R7/8/8/R5K1 w - - 0 1",
+   "caption": "Pieces on your own side block too. The rook on a1 can only come up to a3, because the other white rook on a4 is its first piece.",
+   "highlight": [
+    "a2",
+    "a3",
+    "a4",
+    "b1",
+    "c1",
+    "d1",
+    "e1",
+    "f1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "a1",
+      "to": [
+       "a2",
+       "a3",
+       "b1",
+       "c1",
+       "d1",
+       "e1",
+       "f1"
+      ]
+     },
+     "statement": "These are exactly the squares the rook on a1 can move to."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "6k1/8/8/8/8/8/8/2NRB1K1 w - - 0 1",
+   "caption": "Friends can shut a rook in on one line and leave it free on the other. Here the knight and the bishop close the first rank, so only the d-file is open.",
+   "line": [
+    {
+     "move": "d1d7",
+     "say": "Six squares up the open file in one move. The rank gave it nothing, but the file is clear."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "d1",
+     "to": "d7"
+    }
+   ],
+   "highlight": [
+    "d2",
+    "d3",
+    "d4",
+    "d5",
+    "d6",
+    "d7",
+    "d8"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_destinations",
+     "params": {
+      "from": "d1",
+      "to": [
+       "d2",
+       "d3",
+       "d4",
+       "d5",
+       "d6",
+       "d7",
+       "d8"
+      ]
+     },
+     "statement": "These are exactly the squares the rook on d1 can move to."
+    }
+   ]
+  }
+ ]
+}

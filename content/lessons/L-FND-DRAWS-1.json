@@ -1,1070 +1,448 @@
 {
-  "id": "L-FND-DRAWS-1",
-  "title": "Ways a game is drawn",
-  "skill": "FND.DRAWS",
-  "depth": "D1",
-  "minutes": 20,
-  "outcomes": [
-    "Lists the ways a game can end drawn and says which can be claimed and which are automatic",
-    "Says when a position has occurred for the third time, and what must match (same side to move, same rights)",
-    "Counts the fifty-move clock and says what resets it (a capture or a pawn move, not a check)",
-    "Says when repeating a position helps (the side that is behind) and when it throws away an advantage"
-  ],
-  "steps": [
-    {
-      "type": "card",
-      "text": "You just brought the rook home, and Black's king can do the same. Players sometimes shuffle without noticing. The rules answer with a **draw**: the game ends and nobody wins. Two situations lead there in this lesson: the *same position coming back*, and *a long stretch with no progress*. First, watch a shuffle on the board.",
-      "chapter": "Meet the idea"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "White is a rook ahead and could win, but shuffles instead. Watch where the pieces end up.",
-      "line": [
-        {
-          "move": "a1a2",
-          "say": "White moves the rook one step. Nothing is attacked; this is a waiting move."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black's king steps sideways. It has little else to do."
-        },
-        {
-          "move": "a2a1",
-          "say": "The rook goes home."
-        },
-        {
-          "move": "d8e8",
-          "say": "The king goes home too. The starting position is back, White to move: its second appearance."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a1",
-          "to": "a2"
-        }
-      ],
-      "claims": [
-        {
-          "type": "tablebase",
-          "params": {
-            "result": "win"
-          },
-          "statement": "White to move wins in this position (tablebase).",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1a2"
-          },
-          "statement": "The rook can step to a2.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-1"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "The same four moves again. Count the appearances of the start: the beginning, after one round, after two.",
-      "line": [
-        {
-          "move": "a1a2",
-          "say": "The same waiting move."
-        },
-        {
-          "move": "e8d8",
-          "say": "The same reply."
-        },
-        {
-          "move": "a2a1",
-          "say": "Home again."
-        },
-        {
-          "move": "d8e8",
-          "say": "Second appearance of the starting position."
-        },
-        {
-          "move": "a1a2",
-          "say": "Once more, the rook steps out."
-        },
-        {
-          "move": "e8d8",
-          "say": "And the king answers."
-        },
-        {
-          "move": "a2a1",
-          "say": "The rook returns."
-        },
-        {
-          "move": "d8e8",
-          "say": "The starting position for the third time. White may claim a draw."
-        }
-      ],
-      "claims": [
-        {
-          "type": "tablebase",
-          "params": {
-            "result": "win"
-          },
-          "statement": "White to move wins in this position (tablebase).",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1a2"
-          },
-          "statement": "The rook can step to a2.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "card",
-      "text": "**Repetition:** when the same position appears for the third time, the player whose turn it is may **claim** a draw. To claim means to ask for it because the rules allow it; the game does not stop by itself. Here a claim comes once the count is reached. [R] Over a real board you may also claim on a move that would make it three; a reviewer is to check this against Article 9. At the fifth time the game ends on its own [S]."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-2"
-    },
-    {
-      "type": "card",
-      "text": "A repeat only counts when it is the **same position**. Three things must match: the pieces on the same squares, the same player to move, and the same **rights**. Rights are whether castling or capturing en passant is still allowed. Change any one and it is a new position. Watch each in turn.",
-      "chapter": "What counts as the same"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "Same squares, other player to move.",
-      "line": [
-        {
-          "move": "a1a2",
-          "say": "The rook steps out."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black's king steps aside."
-        },
-        {
-          "move": "a2a3",
-          "say": "The rook goes a different way this time."
-        },
-        {
-          "move": "d8e8",
-          "say": "The king returns."
-        },
-        {
-          "move": "a3a1",
-          "say": "The rook is home. The pieces stand as at the start, but now Black must move: a different position."
-        }
-      ],
-      "claims": [
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "a1",
-            "piece": "R",
-            "after_moves": [
-              "a1a2",
-              "e8d8",
-              "a2a3",
-              "d8e8",
-              "a3a1"
-            ]
-          },
-          "statement": "After the five moves the rook is back on a1.",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1a2"
-          },
-          "statement": "The rook can step to a2.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-3"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/4K2R w K - 0 1",
-      "caption": "White may castle on the short side now. Watch what the rook's trip costs.",
-      "line": [
-        {
-          "move": "h1h2",
-          "say": "The rook leaves its corner. White can no longer castle on this side, even if the rook returns."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black's king steps aside."
-        },
-        {
-          "move": "h2h1",
-          "say": "The rook comes home."
-        },
-        {
-          "move": "d8e8",
-          "say": "The king returns. The squares look like the start, but the right to castle is gone: a different position."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e1g1"
-          },
-          "statement": "White can castle here, with the king moving to g1.",
-          "id": "C1"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "h1",
-            "piece": "R",
-            "after_moves": [
-              "h1h2",
-              "e8d8",
-              "h2h1",
-              "d8e8"
-            ]
-          },
-          "statement": "At the end the rook is back on h1.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-4"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/3p4/8/4P3/4K3 w - - 0 1",
-      "caption": "A second right: capturing en passant. The white pawn jumps two squares past a black pawn.",
-      "line": [
-        {
-          "move": "e2e4",
-          "say": "The pawn jumps two squares and lands beside Black's pawn. Black may capture it in passing, but only on the very next move."
-        },
-        {
-          "move": "d4e3",
-          "say": "Black takes en passant. Had Black waited, the chance would be gone for good, and the position would then be different."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e2e4"
-          },
-          "statement": "The pawn can jump two squares.",
-          "id": "C1"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "e3",
-            "piece": "p",
-            "after_moves": [
-              "e2e4",
-              "d4e3"
-            ]
-          },
-          "statement": "After the capture a black pawn stands on e3.",
-          "id": "C2"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "e4",
-            "piece": "empty",
-            "after_moves": [
-              "e2e4",
-              "d4e3"
-            ]
-          },
-          "statement": "The white pawn is gone from e4.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/3p4/8/4P3/4K3 w - - 0 1",
-      "caption": "Same pieces on the same squares twice. Only the first time can Black capture en passant.",
-      "line": [
-        {
-          "move": "e2e4",
-          "say": "The pawn jumps beside Black's pawn. Black may capture it in passing, right now. Remember this position."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black declines, and the chance is gone for good."
-        },
-        {
-          "move": "e1f1",
-          "say": "White waits."
-        },
-        {
-          "move": "d8e8",
-          "say": "Black waits."
-        },
-        {
-          "move": "f1e1",
-          "say": "The same squares as after the jump, Black to move. But no capture exists now. The legal moves differ, so this is not the same position."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e2e4"
-          },
-          "statement": "The pawn can jump two squares.",
-          "id": "C1"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "e4",
-            "piece": "P",
-            "after_moves": [
-              "e2e4",
-              "e8d8",
-              "e1f1",
-              "d8e8",
-              "f1e1"
-            ]
-          },
-          "statement": "After the five moves the white pawn is still on e4.",
-          "id": "C2"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "e1",
-            "piece": "K",
-            "after_moves": [
-              "e2e4",
-              "e8d8",
-              "e1f1",
-              "d8e8",
-              "f1e1"
-            ]
-          },
-          "statement": "The white king is back on e1.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "Appearances do not need to follow one another. Here a different rook trip comes between the rounds.",
-      "line": [
-        {
-          "move": "a1a2",
-          "say": "The rook steps out."
-        },
-        {
-          "move": "e8d8",
-          "say": "The king steps aside."
-        },
-        {
-          "move": "a2a1",
-          "say": "The rook goes home."
-        },
-        {
-          "move": "d8e8",
-          "say": "Second appearance of the start."
-        },
-        {
-          "move": "a1b1",
-          "say": "Now a different trip: the rook slides along the first row."
-        },
-        {
-          "move": "e8d7",
-          "say": "Black's king takes another route."
-        },
-        {
-          "move": "b1a1",
-          "say": "The rook returns."
-        },
-        {
-          "move": "d7e8",
-          "say": "Third appearance, even with a detour in between. White may claim."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1b1"
-          },
-          "statement": "The rook can slide to b1.",
-          "id": "C1"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "e8",
-            "piece": "k",
-            "after_moves": [
-              "a1a2",
-              "e8d8",
-              "a2a1",
-              "d8e8",
-              "a1b1",
-              "e8d7",
-              "b1a1",
-              "d7e8"
-            ]
-          },
-          "statement": "At the end the king is back on e8.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-5"
-    },
-    {
-      "type": "card",
-      "text": "The second way to a draw is **no progress**. Count in **half-moves**: one move by one player is one half-move. The count goes back to zero after any capture or any pawn move, because those change the game for good. When it reaches 100, which is fifty moves by each player, a player may claim a draw. This is the **fifty-move rule**.",
-      "chapter": "The fifty-move clock"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "Nothing is captured and no pawn moves, so every half-move adds one to the count. Say the clock aloud as you step.",
-      "line": [
-        {
-          "move": "a1a2",
-          "say": "Clock 1."
-        },
-        {
-          "move": "e8d8",
-          "say": "Clock 2."
-        },
-        {
-          "move": "a2a3",
-          "say": "Clock 3."
-        },
-        {
-          "move": "d8e8",
-          "say": "Clock 4. Even a changing position adds to the count when nothing is captured and no pawn moves."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1a2"
-          },
-          "statement": "The rook can step to a2.",
-          "id": "C1"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/p7/8/8/8/R3K3 w - - 40 60",
-      "caption": "The clock shows 40 here. Both kings walk, then the rook takes a loose pawn. Watch what the capture does to the count.",
-      "line": [
-        {
-          "move": "e1d2",
-          "say": "The white king steps. Clock 41."
-        },
-        {
-          "move": "e8d7",
-          "say": "The black king steps. Clock 42."
-        },
-        {
-          "move": "d2c3",
-          "say": "Clock 43."
-        },
-        {
-          "move": "d7c7",
-          "say": "Clock 44."
-        },
-        {
-          "move": "a1a5",
-          "say": "The rook takes the unprotected pawn. The count goes back to 0."
-        }
-      ],
-      "claims": [
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "a5",
-            "piece": "R",
-            "after_moves": [
-              "e1d2",
-              "e8d7",
-              "d2c3",
-              "d7c7",
-              "a1a5"
-            ]
-          },
-          "statement": "After the capture the rook stands on a5.",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e1d2"
-          },
-          "statement": "The king can step to d2.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/3R4/8/8/8/4K3 b - - 0 62",
-      "caption": "The clock shows 0 after the capture. Black to move. A check is coming; does it reset the count?",
-      "line": [
-        {
-          "move": "e8e7",
-          "say": "Black's king steps. Clock 1."
-        },
-        {
-          "move": "d5a5",
-          "say": "The rook moves. Clock 2."
-        },
-        {
-          "move": "e7f6",
-          "say": "The king steps again. Clock 3."
-        },
-        {
-          "move": "a5a6",
-          "say": "The rook gives check. Clock 4: a check does not reset the count."
-        }
-      ],
-      "claims": [
-        {
-          "type": "attackers",
-          "params": {
-            "square": "f6",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "e8e7",
-              "d5a5",
-              "e7f6",
-              "a5a6"
-            ]
-          },
-          "statement": "After the last move the black king on f6 is attacked, so it is a check.",
-          "id": "C1"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-6"
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/P7/8/R3K3 w - - 30 70",
-      "caption": "The clock shows 30. Now a pawn moves. Watch the count.",
-      "line": [
-        {
-          "move": "a3a4",
-          "say": "A pawn move. The count goes back to 0."
-        },
-        {
-          "move": "e8d7",
-          "say": "Black's king steps. Clock 1."
-        },
-        {
-          "move": "a1b1",
-          "say": "The rook moves. Clock 2."
-        },
-        {
-          "move": "d7e7",
-          "say": "The king steps again. Clock 3."
-        },
-        {
-          "move": "b1b2",
-          "say": "The rook moves. Clock 4. Only the pawn move reset the count; nothing since has."
-        }
-      ],
-      "claims": [
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a3a4"
-          },
-          "statement": "The pawn can advance to a4.",
-          "id": "C1"
-        },
-        {
-          "type": "piece_on",
-          "params": {
-            "square": "a4",
-            "piece": "P",
-            "after_moves": [
-              "a3a4"
-            ]
-          },
-          "statement": "After the move the pawn stands on a4.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "contrast",
-      "title": "Does the clock go back to zero?",
-      "prompt": "Predict, then check.",
-      "working": "IBG-LFNDDRAWS1-7",
-      "failing": "IBG-LFNDDRAWS1-8",
-      "irrelevant": "IBG-LFNDDRAWS1-9"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-10"
-    },
-    {
-      "type": "card",
-      "text": "At 100 half-moves a player whose turn it is **may** claim the draw. Until someone claims, play goes on. The player who is ahead may well prefer to play on. [S] At 150 half-moves the game ends without a claim, unless the last move is checkmate. A rules library agrees; a human reviewer still has to check the printed Laws."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-11"
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-12"
-    },
-    {
-      "type": "card",
-      "text": "**Claiming and agreeing.** To claim, you tell the arbiter or press the claim button on a screen. For agreement, one player offers and the other must accept; a declined offer changes nothing. [R] Details differ by event, and a reviewer is to check them against Article 9."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-23"
-    },
-    {
-      "type": "card",
-      "text": "The draw rules are tools. [H] A rule of thumb, not a law: the side that is **worse** asks 'can I make a position come back?', and the side that is **better** asks 'which different move improves my position?'. A side with a winning plan usually changes the plan; a side with no way to make progress may be happy to repeat. Watch a side that is behind use it.",
-      "chapter": "Use it or avoid it"
-    },
-    {
-      "type": "board",
-      "fen": "7k/6p1/7p/8/4Q3/8/5PPP/6K1 w - - 0 1",
-      "caption": "A lighter version first. Black's own pawns on g7 and h6 take squares from its king, so a single check leaves one square.",
-      "line": [
-        {
-          "move": "e4e8",
-          "say": "Check along the last row. The queen also covers g8, so only h7 is left."
-        }
-      ],
-      "claims": [
-        {
-          "type": "attackers",
-          "params": {
-            "square": "g8",
-            "color": "white",
-            "count": 1,
-            "after_move": "e4e8"
-          },
-          "statement": "After the queen checks, g8 is covered.",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e4e8"
-          },
-          "statement": "The queen can go to e8.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/6p1/7p/8/4Q3/rrr5/5PPP/6K1 w - - 0 1",
-      "caption": "White is behind: three rooks against one queen. But the queen can check again and again. Checks that never end are called **perpetual check**.",
-      "line": [
-        {
-          "move": "e4e8",
-          "say": "Check along the last row. The queen also covers g8, so the king has one square: h7."
-        },
-        {
-          "move": "h8h7",
-          "say": "Black's king steps to h7."
-        },
-        {
-          "move": "e8e4",
-          "say": "Check again, along the diagonal. The king must move or block."
-        },
-        {
-          "move": "h7h8",
-          "say": "Black goes back to h8. The starting position has returned."
-        },
-        {
-          "move": "e4e8",
-          "say": "Check again."
-        },
-        {
-          "move": "h8h7",
-          "say": "Black steps to h7 again."
-        },
-        {
-          "move": "e8e4",
-          "say": "Check again."
-        },
-        {
-          "move": "h7h8",
-          "say": "The third appearance. White may claim a draw."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "e4",
-          "to": "e8"
-        }
-      ],
-      "claims": [
-        {
-          "type": "eval_range",
-          "params": {
-            "min": -30,
-            "max": 30
-          },
-          "statement": "The engine rates the position as level, depth 16.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "g8",
-            "color": "white",
-            "count": 1,
-            "after_move": "e4e8"
-          },
-          "statement": "After Qe8 the queen attacks g8, so Black's king has only h7.",
-          "id": "C2"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e4e8"
-          },
-          "statement": "The queen can go to e8.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "7k/6p1/7p/8/4Q3/rrr5/5PPP/6K1 w - - 0 1",
-      "caption": "From the same start Black can also block with a pawn. The queen still has a new check each time.",
-      "line": [
-        {
-          "move": "e4e8",
-          "say": "Check on the last row."
-        },
-        {
-          "move": "h8h7",
-          "say": "The king steps."
-        },
-        {
-          "move": "e8e4",
-          "say": "Check on the diagonal."
-        },
-        {
-          "move": "g7g6",
-          "say": "Black blocks with the pawn."
-        },
-        {
-          "move": "e4e7",
-          "say": "A new check along the seventh row."
-        },
-        {
-          "move": "h7g8",
-          "say": "The king runs to g8."
-        },
-        {
-          "move": "e7e8",
-          "say": "Check again."
-        },
-        {
-          "move": "g8h7",
-          "say": "Back to h7."
-        },
-        {
-          "move": "e8e7",
-          "say": "Check again. In each line the queen finds a check [engine, depth 16]."
-        }
-      ],
-      "claims": [
-        {
-          "type": "eval_range",
-          "params": {
-            "min": -30,
-            "max": 30
-          },
-          "statement": "The engine rates the starting position as level, depth 16.",
-          "id": "C1"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "h7",
-            "color": "white",
-            "count": 1,
-            "after_moves": [
-              "e4e8",
-              "h8h7",
-              "e8e4",
-              "g7g6",
-              "e4e7"
-            ]
-          },
-          "statement": "After the block the queen checks on the seventh row.",
-          "id": "C2"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e4e8"
-          },
-          "statement": "The queen can go to e8.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-16"
-    },
-    {
-      "type": "contrast",
-      "title": "Can the checks go on forever?",
-      "prompt": "Predict, then check.",
-      "working": "IBG-LFNDDRAWS1-13",
-      "failing": "IBG-LFNDDRAWS1-14",
-      "irrelevant": "IBG-LFNDDRAWS1-15"
-    },
-    {
-      "type": "card",
-      "text": "In these examples every reply Black has allows another check; the bishop on g8 took the checks away. [I] My reading, not a published rule. Perpetual check is not a separate rule: the draw comes from the repetition rule, or from a claim when the same position keeps returning."
-    },
-    {
-      "type": "board",
-      "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
-      "caption": "Now the other side. White is the one ahead and wants to win. Repeating would allow a draw claim, so White changes the plan.",
-      "line": [
-        {
-          "move": "a1a7",
-          "say": "The rook takes the seventh row. Black's king is cut off from everything below it."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black's king can only shuffle on the last row."
-        },
-        {
-          "move": "e1f2",
-          "say": "The white king starts walking up to help. Every move now creates a new position."
-        },
-        {
-          "move": "d8e8",
-          "say": "Black waits."
-        },
-        {
-          "move": "f2f3",
-          "say": "The king keeps walking."
-        },
-        {
-          "move": "e8d8",
-          "say": "Black waits again."
-        },
-        {
-          "move": "f3g4",
-          "say": "The king climbs further."
-        },
-        {
-          "move": "d8e8",
-          "say": "Nothing repeats. The king is on its way to help the rook finish the game."
-        }
-      ],
-      "arrows": [
-        {
-          "from": "a1",
-          "to": "a7"
-        }
-      ],
-      "claims": [
-        {
-          "type": "tablebase",
-          "params": {
-            "result": "win"
-          },
-          "statement": "White to move wins in this position (tablebase).",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "a1a7"
-          },
-          "statement": "The rook can go to a7.",
-          "id": "C2"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "e1f2"
-          },
-          "statement": "The white king can step to f2.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-17"
-    },
-    {
-      "type": "card",
-      "text": "Five ways to a draw, in one place. **Stalemate** and **too few pieces left to give mate**: the game ends by itself. **Agreement:** both players say yes. **Repetition** and the **fifty-move rule:** a player must claim. The next lesson on draws covers positions with too few pieces."
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/1K6/8/8/8/8/2Q5 w - - 0 1",
-      "caption": "The first draw on the list needs no claim at all.",
-      "line": [
-        {
-          "move": "c1c7",
-          "say": "The queen takes the last escape square. Black is not in check and has no move: stalemate, and the game is over."
-        }
-      ],
-      "claims": [
-        {
-          "type": "mobility",
-          "params": {
-            "square": "a8",
-            "mode": "legal",
-            "count": 0,
-            "after_move": "c1c7"
-          },
-          "statement": "After Qc7 the black king has no legal move.",
-          "id": "C1"
-        },
-        {
-          "type": "move_is_not_mate",
-          "params": {
-            "move": "c1c7"
-          },
-          "statement": "Qc7 is not checkmate.",
-          "id": "C2"
-        },
-        {
-          "type": "attackers",
-          "params": {
-            "square": "a8",
-            "color": "white",
-            "count": 0,
-            "after_move": "c1c7"
-          },
-          "statement": "After Qc7 nothing attacks the black king.",
-          "id": "C3"
-        }
-      ]
-    },
-    {
-      "type": "board",
-      "fen": "k7/8/1K6/8/8/8/8/2Q5 w - - 0 1",
-      "caption": "The same position, a different queen move. When you are winning, check before every move that the other king still has a move or is in check.",
-      "line": [
-        {
-          "move": "c1c8",
-          "say": "The queen checks along the last row and the king has nowhere to go: checkmate, not stalemate."
-        }
-      ],
-      "claims": [
-        {
-          "type": "mate_in",
-          "params": {
-            "move": "c1c8",
-            "n": 1
-          },
-          "statement": "Qc8 is checkmate.",
-          "id": "C1"
-        },
-        {
-          "type": "legal_move",
-          "params": {
-            "move": "c1c8"
-          },
-          "statement": "The queen can go to c8.",
-          "id": "C2"
-        }
-      ]
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-18"
-    },
-    {
-      "type": "card",
-      "text": "**[H] A guess about why these rules exist.** Without a repetition rule, a worse side could shuffle for ever. Without a fifty-move rule, a side that cannot make progress could do the same. [I] Both rules seem to answer one question: how long may a game go on while nothing changes? Do you think they protect the stronger side or the weaker one? There is no checked answer."
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-19",
-      "chapter": "Check yourself",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-20",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-21",
-      "silent": true
-    },
-    {
-      "type": "item",
-      "item": "IBG-LFNDDRAWS1-22",
-      "silent": true
-    },
-    {
-      "type": "card",
-      "text": "**Say it back.** A position has repeated only when the pieces, whose turn it is and the rights all match, and the third time lets a player claim a draw. The half-move count resets after a capture or a pawn move, not after a check, and at 100 a player may claim. [H] A side with a winning plan usually changes the plan; a side with no way to make progress may be happy to repeat."
-    },
-    {
-      "type": "reflect",
-      "kind": "unsure",
-      "prompt": "Explain to a friend in three sentences why the third repeat lets you claim a draw, and why a check does not reset the 50-move count."
-    }
-  ],
-  "review": {
-    "status": "needs-human",
-    "reviewer": null
+ "id": "L-FND-DRAWS-1",
+ "title": "Ways a game is drawn (part 1 of 4)",
+ "skill": "FND.DRAWS",
+ "depth": "D1",
+ "minutes": 7,
+ "outcomes": [],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "docs/first-hours.md session 3 (draws)",
+  "content/skills/FND.DRAWS.json (D1 outcome, conditions, misconceptions)",
+  "[R] FIDE Laws of Chess, Article 9 (draws): threefold repetition and fifty-move rule claimed by a player, fivefold and seventy-five-move automatic. Recalled from memory, not re-read this session; the two [R] sentences in the lesson say so.",
+  "[V] Board lines are legal move by move (tools/validate_lessons.py). Repetition counts and halfmove clocks were checked with python-chess (Board.is_repetition, can_claim_threefold_repetition, can_claim_fifty_moves, halfmove_clock) when written; no claim type exists for them.",
+  "[V] The perpetual-check position was found by a random search over generated positions and engine-checked at depth 18 (level); its one-piece variants (bishop on g8, white rook and no black rooks) are checked by eval_range and mate_in claims in content/items/lesson-bg-l-fnd-draws-1.json.",
+  "[H]/[I] The 'why do these rules exist' card and the rule of thumb on the worse and better side are our conjectures and are labelled as such. No view of a named player or coach is used: docs/citable-views.md holds no entry on draw rules.",
+  "split from the former combined lesson 'Ways a game is drawn' (D24, one building block per lesson); insufficient material is taught in L-FND-DRAWS-2. Rebuilt 7 Nov 2026 to docs/lesson-depth-standard.md class A.",
+  "[V] Round of 7 Nov 2026 (reviewer fixes): the second perpetual line, the en passant recurrence, the stalemate-avoiding mate and the pawn-capture clock line are legal move by move and python-chess checked; the 150-half-move and fivefold statements are labelled [S] (rules library) pending a human reviewer. Simplification stated openly: claims are counted once the count is reached."
+ ],
+ "part": {
+  "of": "L-FND-DRAWS-1",
+  "n": 1,
+  "total": 4
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "You just brought the rook home, and Black's king can do the same. Players sometimes shuffle without noticing. The rules answer with a **draw**: the game ends and nobody wins. Two situations lead there in this lesson: the *same position coming back*, and *a long stretch with no progress*. First, watch a shuffle on the board.",
+   "chapter": "Meet the idea"
   },
-  "sources": [
-    "docs/first-hours.md session 3 (draws)",
-    "content/skills/FND.DRAWS.json (D1 outcome, conditions, misconceptions)",
-    "[R] FIDE Laws of Chess, Article 9 (draws): threefold repetition and fifty-move rule claimed by a player, fivefold and seventy-five-move automatic. Recalled from memory, not re-read this session; the two [R] sentences in the lesson say so.",
-    "[V] Board lines are legal move by move (tools/validate_lessons.py). Repetition counts and halfmove clocks were checked with python-chess (Board.is_repetition, can_claim_threefold_repetition, can_claim_fifty_moves, halfmove_clock) when written; no claim type exists for them.",
-    "[V] The perpetual-check position was found by a random search over generated positions and engine-checked at depth 18 (level); its one-piece variants (bishop on g8, white rook and no black rooks) are checked by eval_range and mate_in claims in content/items/lesson-bg-l-fnd-draws-1.json.",
-    "[H]/[I] The 'why do these rules exist' card and the rule of thumb on the worse and better side are our conjectures and are labelled as such. No view of a named player or coach is used: docs/citable-views.md holds no entry on draw rules.",
-    "split from the former combined lesson 'Ways a game is drawn' (D24, one building block per lesson); insufficient material is taught in L-FND-DRAWS-2. Rebuilt 7 Nov 2026 to docs/lesson-depth-standard.md class A.",
-    "[V] Round of 7 Nov 2026 (reviewer fixes): the second perpetual line, the en passant recurrence, the stalemate-avoiding mate and the pawn-capture clock line are legal move by move and python-chess checked; the 150-half-move and fivefold statements are labelled [S] (rules library) pending a human reviewer. Simplification stated openly: claims are counted once the count is reached."
-  ]
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+   "caption": "White is a rook ahead and could win, but shuffles instead. Watch where the pieces end up.",
+   "line": [
+    {
+     "move": "a1a2",
+     "say": "White moves the rook one step. Nothing is attacked; this is a waiting move."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black's king steps sideways. It has little else to do."
+    },
+    {
+     "move": "a2a1",
+     "say": "The rook goes home."
+    },
+    {
+     "move": "d8e8",
+     "say": "The king goes home too. The starting position is back, White to move: its second appearance."
+    }
+   ],
+   "arrows": [
+    {
+     "from": "a1",
+     "to": "a2"
+    }
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White to move wins in this position (tablebase).",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a1a2"
+     },
+     "statement": "The rook can step to a2.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-1"
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+   "caption": "The same four moves again. Count the appearances of the start: the beginning, after one round, after two.",
+   "line": [
+    {
+     "move": "a1a2",
+     "say": "The same waiting move."
+    },
+    {
+     "move": "e8d8",
+     "say": "The same reply."
+    },
+    {
+     "move": "a2a1",
+     "say": "Home again."
+    },
+    {
+     "move": "d8e8",
+     "say": "Second appearance of the starting position."
+    },
+    {
+     "move": "a1a2",
+     "say": "Once more, the rook steps out."
+    },
+    {
+     "move": "e8d8",
+     "say": "And the king answers."
+    },
+    {
+     "move": "a2a1",
+     "say": "The rook returns."
+    },
+    {
+     "move": "d8e8",
+     "say": "The starting position for the third time. White may claim a draw."
+    }
+   ],
+   "claims": [
+    {
+     "type": "tablebase",
+     "params": {
+      "result": "win"
+     },
+     "statement": "White to move wins in this position (tablebase).",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a1a2"
+     },
+     "statement": "The rook can step to a2.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Repetition:** when the same position appears for the third time, the player whose turn it is may **claim** a draw. To claim means to ask for it because the rules allow it; the game does not stop by itself. Here a claim comes once the count is reached. [R] Over a real board you may also claim on a move that would make it three; a reviewer is to check this against Article 9. At the fifth time the game ends on its own [S]."
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-2"
+  },
+  {
+   "type": "card",
+   "text": "A repeat only counts when it is the **same position**. Three things must match: the pieces on the same squares, the same player to move, and the same **rights**. Rights are whether castling or capturing en passant is still allowed. Change any one and it is a new position. Watch each in turn.",
+   "chapter": "What counts as the same"
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+   "caption": "Same squares, other player to move.",
+   "line": [
+    {
+     "move": "a1a2",
+     "say": "The rook steps out."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black's king steps aside."
+    },
+    {
+     "move": "a2a3",
+     "say": "The rook goes a different way this time."
+    },
+    {
+     "move": "d8e8",
+     "say": "The king returns."
+    },
+    {
+     "move": "a3a1",
+     "say": "The rook is home. The pieces stand as at the start, but now Black must move: a different position."
+    }
+   ],
+   "claims": [
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "a1",
+      "piece": "R",
+      "after_moves": [
+       "a1a2",
+       "e8d8",
+       "a2a3",
+       "d8e8",
+       "a3a1"
+      ]
+     },
+     "statement": "After the five moves the rook is back on a1.",
+     "id": "C1"
+    },
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a1a2"
+     },
+     "statement": "The rook can step to a2.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IBG-LFNDDRAWS1-3"
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/4K2R w K - 0 1",
+   "caption": "White may castle on the short side now. Watch what the rook's trip costs.",
+   "line": [
+    {
+     "move": "h1h2",
+     "say": "The rook leaves its corner. White can no longer castle on this side, even if the rook returns."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black's king steps aside."
+    },
+    {
+     "move": "h2h1",
+     "say": "The rook comes home."
+    },
+    {
+     "move": "d8e8",
+     "say": "The king returns. The squares look like the start, but the right to castle is gone: a different position."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e1g1"
+     },
+     "statement": "White can castle here, with the king moving to g1.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "h1",
+      "piece": "R",
+      "after_moves": [
+       "h1h2",
+       "e8d8",
+       "h2h1",
+       "d8e8"
+      ]
+     },
+     "statement": "At the end the rook is back on h1.",
+     "id": "C2"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/3p4/8/4P3/4K3 w - - 0 1",
+   "caption": "A second right: capturing en passant. The white pawn jumps two squares past a black pawn.",
+   "line": [
+    {
+     "move": "e2e4",
+     "say": "The pawn jumps two squares and lands beside Black's pawn. Black may capture it in passing, but only on the very next move."
+    },
+    {
+     "move": "d4e3",
+     "say": "Black takes en passant. Had Black waited, the chance would be gone for good, and the position would then be different."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e2e4"
+     },
+     "statement": "The pawn can jump two squares.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e3",
+      "piece": "p",
+      "after_moves": [
+       "e2e4",
+       "d4e3"
+      ]
+     },
+     "statement": "After the capture a black pawn stands on e3.",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "empty",
+      "after_moves": [
+       "e2e4",
+       "d4e3"
+      ]
+     },
+     "statement": "The white pawn is gone from e4.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/3p4/8/4P3/4K3 w - - 0 1",
+   "caption": "Same pieces on the same squares twice. Only the first time can Black capture en passant.",
+   "line": [
+    {
+     "move": "e2e4",
+     "say": "The pawn jumps beside Black's pawn. Black may capture it in passing, right now. Remember this position."
+    },
+    {
+     "move": "e8d8",
+     "say": "Black declines, and the chance is gone for good."
+    },
+    {
+     "move": "e1f1",
+     "say": "White waits."
+    },
+    {
+     "move": "d8e8",
+     "say": "Black waits."
+    },
+    {
+     "move": "f1e1",
+     "say": "The same squares as after the jump, Black to move. But no capture exists now. The legal moves differ, so this is not the same position."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "e2e4"
+     },
+     "statement": "The pawn can jump two squares.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e4",
+      "piece": "P",
+      "after_moves": [
+       "e2e4",
+       "e8d8",
+       "e1f1",
+       "d8e8",
+       "f1e1"
+      ]
+     },
+     "statement": "After the five moves the white pawn is still on e4.",
+     "id": "C2"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e1",
+      "piece": "K",
+      "after_moves": [
+       "e2e4",
+       "e8d8",
+       "e1f1",
+       "d8e8",
+       "f1e1"
+      ]
+     },
+     "statement": "The white king is back on e1.",
+     "id": "C3"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4k3/8/8/8/8/8/8/R3K3 w - - 0 1",
+   "caption": "Appearances do not need to follow one another. Here a different rook trip comes between the rounds.",
+   "line": [
+    {
+     "move": "a1a2",
+     "say": "The rook steps out."
+    },
+    {
+     "move": "e8d8",
+     "say": "The king steps aside."
+    },
+    {
+     "move": "a2a1",
+     "say": "The rook goes home."
+    },
+    {
+     "move": "d8e8",
+     "say": "Second appearance of the start."
+    },
+    {
+     "move": "a1b1",
+     "say": "Now a different trip: the rook slides along the first row."
+    },
+    {
+     "move": "e8d7",
+     "say": "Black's king takes another route."
+    },
+    {
+     "move": "b1a1",
+     "say": "The rook returns."
+    },
+    {
+     "move": "d7e8",
+     "say": "Third appearance, even with a detour in between. White may claim."
+    }
+   ],
+   "claims": [
+    {
+     "type": "legal_move",
+     "params": {
+      "move": "a1b1"
+     },
+     "statement": "The rook can slide to b1.",
+     "id": "C1"
+    },
+    {
+     "type": "piece_on",
+     "params": {
+      "square": "e8",
+      "piece": "k",
+      "after_moves": [
+       "a1a2",
+       "e8d8",
+       "a2a1",
+       "d8e8",
+       "a1b1",
+       "e8d7",
+       "b1a1",
+       "d7e8"
+      ]
+     },
+     "statement": "At the end the king is back on e8.",
+     "id": "C2"
+    }
+   ]
+  }
+ ]
 }
