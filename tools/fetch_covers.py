@@ -41,6 +41,7 @@ def candidates(b):
     if i.startswith("ia_"):
         k = i[3:]
         if k in PAGE: return [f"https://archive.org/download/{k}/page/n{PAGE[k]}_w400.jpg"]
+        if "goog" in k or k.startswith("bub_gb"): return []   # Google Books scans open with Google's notice page; add the title page to PAGE after looking
         return [f"https://archive.org/download/{k}/page/cover_w400.jpg", f"https://archive.org/services/img/{k}"]
     if i in PG_REAL:
         n = i[2:]
