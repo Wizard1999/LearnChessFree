@@ -15,6 +15,13 @@ const hueOf = (b: Book) => { const base = SUBJECT_HUE[b.subjects[0]] ?? 220; let
 const base = () => `${import.meta.env.BASE_URL}library/`
 
 /** The texts we may share, each with how we know. Subjects and levels are our labels about how a book reads, not claims about its author. */
+/** The cover shows a short title (the part before the first colon, semicolon or comma, at most seven words); the full title stays in the details card. */
+function coverTitle(title: string): string {
+  const head = title.split(/\s*[:;,]\s*|\s+and\s+(?=[A-Z])/)[0].trim() || title
+  const w = head.split(/\s+/)
+  return w.length > 7 ? `${w.slice(0, 6).join(' ')}…` : head
+}
+
 export function Bookshelf() {
   const [books, setBooks] = useState<Book[] | null>(null)
   const [failed, setFailed] = useState(false)
@@ -64,7 +71,7 @@ export function Bookshelf() {
                   <button type="button" className={`coverface${b.cover ? ' haspic' : ''}${b.cover && b.coverBlank ? ' blank' : ''}`} aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
                     {b.cover && <img className="coverpic" src={`${base()}${b.cover}`} alt="" loading="lazy" decoding="async" />}
                     <span className="coverlevel">{b.level}</span>
-                    <span className="covertitle">{b.title}</span>
+                    <span className="covertitle">{coverTitle(b.title)}</span>
                     <span className="coverrule" aria-hidden="true" />
                     <span className="coverauthor">{b.author.replace(/,.*$/, '')}</span>
                     <span className="coveryear">{b.year ?? ''}</span>

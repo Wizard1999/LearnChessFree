@@ -38,7 +38,7 @@ PG_REAL = {"pg55278", "pg5614", "pg78804"}
 
 # Covers that are a plain binding with no lettering and no picture, so our typographic title goes over them. Judged by eye on a montage of every
 # dark cover (12 Nov 2026); a brightness test wrongly caught covers with a stamped board or emblem, which keep their own picture.
-BLANK = {"ia_artofchess00maso", "ia_grandtacticsofch00younrich", "ia_majortacticsofch00younrich", "ia_memorablechessga00moffiala", "ia_modernchessinstr00steirich"}
+BLANK = {"ia_morphysgamesofch00frer", "ia_principlesofches00masoiala", "ia_artofchess00maso", "ia_grandtacticsofch00younrich", "ia_majortacticsofch00younrich", "ia_memorablechessga00moffiala", "ia_modernchessinstr00steirich"}
 
 
 def candidates(b):

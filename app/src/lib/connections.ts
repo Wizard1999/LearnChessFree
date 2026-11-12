@@ -15,8 +15,15 @@ export function connectionsFor(lesson: LessonMeta, lessons: LessonMeta[], skillB
   for (const n of teaches(lesson)) for (const p of skillById.get(n)?.depths?.[lesson.depth]?.prereqs ?? []) if (nodeOf(p) !== n) preNodes.add(nodeOf(p))
   const buildsOn = uniq([...preNodes].flatMap(byNode)).filter(l => !l.course && l.role !== 'assessment')
   const mine = teaches(lesson)
-  const needsMine = (l: LessonMeta) => [...teaches(l)].some(n => Object.values(skillById.get(n)?.depths ?? {}).some(d => (d.prereqs ?? []).some(p => mine.has(nodeOf(p)) && !teaches(l).has(nodeOf(p)))))
-  const leadsTo = uniq(lessons.filter(l => l.id !== lesson.id && !l.course && l.role !== 'assessment' && needsMine(l)))
+  // A lesson that needs this one directly: one of its own depth's prerequisites is a skill this lesson teaches (and it does not teach that skill itself).
+  const needs = (l: LessonMeta, skills: Set<string>) => [...teaches(l)].some(n => (skillById.get(n)?.depths?.[l.depth]?.prereqs ?? []).some(p => skills.has(nodeOf(p)) && !teaches(l).has(nodeOf(p))))
+  const direct = lessons.filter(l => l.id !== lesson.id && !l.course && l.role !== 'assessment' && needs(l, teaches(lesson)))
+  // Several lessons that need the same skill are one step, not many: a split lesson shows as its first part, and a lesson that also needs one of the
+  // others (so it comes after it) is left out, leaving only the next steps rather than everything downstream.
+  const series = (l: LessonMeta) => l.title.replace(/ \(part \d+ of \d+\)$/, '')
+  const own = series(lesson)
+  const firsts = [...new Map(direct.filter(l => series(l) !== own && !/\(part ([2-9]|\d\d+) of \d+\)$/.test(l.title)).map(l => [series(l), l])).values()]
+  const leadsTo = firsts.filter(l => !firsts.some(m => m !== l && needs(l, teaches(m))))
   const usedIn = uniq(lessons.filter(l => l.id !== lesson.id && l.course && (l.uses ?? []).some(u => mine.has(u))))
   const uses = uniq((lesson.uses ?? []).flatMap(byNode)).filter(l => !l.course && l.role !== 'assessment')
   return { buildsOn, leadsTo, usedIn, uses }
