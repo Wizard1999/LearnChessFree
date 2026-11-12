@@ -74,3 +74,7 @@ Rights labels: **CC0 [V]** verified on the provider's page; **PD-US [V-notice]**
 ## G. Sheets and backlog
 - Synthesis sheets (5, ~57,000 words): `sources/sheets/*.md`.
 - Tablebase checks closed so far, and the open backlog: `docs/curriculum-map-v1.1.md` §4.
+
+## Library covers and a removal (12 Nov 2026)
+- **Covers:** `tools/fetch_covers.py` takes, for each public-domain scan we already hold, the scan's own cover or title page from the Internet Archive (a photograph of a public-domain book, itself cleared under its row above) and, for three Project Gutenberg books, the real cover scan. Gutenberg's generated abstract covers are not used. Files are 300 px WebP in `app/public/library/covers/`; the catalog row records `cover` and `coverSource`. Six books keep the typographic cover. [V: pages looked at by eye; rights are those of the books]
+- **Removed:** `ia_bub_gb_7YIOM64yy8sC` was an 1805 Neapolitan criminal-law text that the title-based subject guess had filed as "game collections". It is not a chess book; its text and catalog row are deleted.

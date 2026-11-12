@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 
 interface Book {
   id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string | null; size: number
-  rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
+  cover?: string; rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
 }
 type Sort = 'title' | 'author' | 'year' | 'level' | 'size'
 const LEVELS = ['Beginner', 'Improver', 'Club', 'Advanced', 'Reference']
@@ -61,7 +61,8 @@ export function Bookshelf() {
               const hue = hueOf(b)
               return (
                 <li key={b.id} className={`cover${open ? ' open' : ''}${flip ? ' flip' : ''}${pinned === b.id ? ' pinned' : ''}`} style={{ ['--h' as string]: hue }} onMouseEnter={e => enter(b.id, e.currentTarget)} onMouseLeave={leave} onFocus={e => enter(b.id, e.currentTarget)}>
-                  <button type="button" className="coverface" aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
+                  <button type="button" className={`coverface${b.cover ? ' haspic' : ''}`} aria-expanded={open} aria-label={`${b.title}, ${b.author}. Show details`} onClick={() => setPinned(pinned === b.id ? null : b.id)}>
+                    {b.cover && <img className="coverpic" src={`${base()}${b.cover}`} alt="" loading="lazy" decoding="async" />}
                     <span className="coverlevel">{b.level}</span>
                     <span className="covertitle">{b.title}</span>
                     <span className="coverrule" aria-hidden="true" />
