@@ -1,0 +1,1494 @@
+{
+ "id": "L-FG-WEI-YI-BRUZON-2015-1",
+ "course": "famous-games",
+ "title": "Wei Yi v Bruzon, 2015: a king hunt in the open",
+ "skill": "ATK.CASTLED",
+ "depth": "D3",
+ "uses": [
+  "ATK.CASTLED",
+  "TAC.MATE-SEARCH",
+  "TAC.QUIET-MOVE",
+  "TAC.DECOY",
+  "SAC.TYPES",
+  "INI.INITIATIVE",
+  "LOOP.V2"
+ ],
+ "minutes": 25,
+ "game": {
+  "white": "Wei Yi",
+  "black": "Lazaro Bruzon Batista",
+  "place": "Danzhou, China (6th Hainan Danzhou GM, round 2)",
+  "year": 2015,
+  "date": "2015-07-03",
+  "result": "1-0",
+  "eco": "B40",
+  "score_checked": "Moves 1 to 36 (71 plies) are identical in the Daily Chess Musings PGN page (header: 6th Hainan Danzhou GM, Danzhou, 2015.07.03, round 2, 1-0) and in the Stabroek News article 'The game of the decade' (prints the same 36 moves, ends 36.Be1 1-0); ChessBase 'Two Chinese brilliancies' prints moves 22 to 31 identically; every move is legal in python-chess. The Daily Chess Musings PGN continues 36...Rf8 37.Qd3+ Kg4 38.Qg3+ Kh5 39.Qh3+ Bh4 40.Qxh4#; the other sources stop at 36.Be1, so the lesson ends the played game there and shows the continuation as an unconfirmed mating line. The ECO code B40 is as one listing gives it; chess.com calls the structure a Classical Scheveningen."
+ },
+ "outcomes": [
+  "Finds the key White moves at eight moments of a real game with no idea named, from the pawn lever to the quiet retreat that stops Black's own mate threat, and spots White's threat at two more",
+  "Says what each sacrifice was for: it forces the black king to take on a square where the next piece can use it, and it works because declining loses as well, which the declined lines show",
+  "Tells a forcing check from a quiet move that carries a threat, and says where the engine's first choice differed from the game move or changed with depth"
+ ],
+ "steps": [
+  {
+   "type": "board",
+   "fen": "q3r3/3r4/p2p2p1/1p2p1b1/8/P6k/1PP1QB1P/5RK1 w - - 7 36",
+   "caption": "A position from late in a game played in July 2015, White to move. Black's king stands on h3, deep inside White's camp. It stood on g8, behind its pawns, after castling, and nobody captured it. Keep this picture in mind while you follow how it got there.",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "h3",
+      "piece": "k"
+     },
+     "statement": "Black's king stands on h3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "a8",
+      "piece": "q"
+     },
+     "statement": "Black still has a queen, on a8."
+    }
+   ],
+   "orientation": "white",
+   "highlight": [
+    "h3"
+   ],
+   "chapter": "The setting"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "A king castles to g8 and ends on h3 among enemy pieces. Before you read on, guess how White could have pulled it that far.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "My guess:",
+     "options": [
+      "White gave up pieces so that the king had to capture them",
+      "Black blundered the king forward",
+      "White gave a long series of checks and nothing else",
+      "I have no guess"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Wei Yi (White) against Lazaro Bruzon (Black)**, round 2 of the 6th Hainan Danzhou tournament, played on 3 July 2015 [S: a game record's header]. The record gives Wei Yi 2724 and Bruzon 2669. It is a Sicilian Defense in which both players castle kingside, so the fight happens around the black king. You will find White's move at eight moments and spot White's threat at two, then see how the game move compares with the engine. The board starts at move 9; earlier moves are skipped."
+  },
+  {
+   "type": "board",
+   "fen": "r1b1k2r/1pqpbppp/p1n1pn2/8/3NP3/2N1B3/PPP1BPPP/R2Q1RK1 w kq - 5 9",
+   "caption": "Moves 9 and 10. White plays f4 and tucks the king on h1 to prepare an attack there. Black castles as well, so both kings stand on the kingside.",
+   "line": [
+    {
+     "move": "f2f4",
+     "say": "The f-pawn steps forward. It gains space and prepares to open the f-file later."
+    },
+    {
+     "move": "d7d6"
+    },
+    {
+     "move": "g1h1",
+     "say": "A quiet king move off the g1 square; a common precaution in this setup [I]."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles as well, so both kings stand on the kingside."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "king_wing",
+     "params": {
+      "color": "white",
+      "wing": "kingside",
+      "after_moves": [
+       "f2f4",
+       "d7d6",
+       "g1h1",
+       "e8g8"
+      ]
+     },
+     "statement": "After move 10 White's king is on the kingside."
+    },
+    {
+     "id": "C2",
+     "type": "king_wing",
+     "params": {
+      "color": "black",
+      "wing": "kingside",
+      "after_moves": [
+       "f2f4",
+       "d7d6",
+       "g1h1",
+       "e8g8"
+      ]
+     },
+     "statement": "After move 10 Black's king is on the kingside."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "f4",
+      "piece": "P",
+      "after_moves": [
+       "f2f4",
+       "d7d6",
+       "g1h1",
+       "e8g8"
+      ]
+     },
+     "statement": "White has a pawn on f4."
+    },
+    {
+     "id": "C4",
+     "type": "piece_on",
+     "params": {
+      "square": "h1",
+      "piece": "K",
+      "after_moves": [
+       "f2f4",
+       "d7d6",
+       "g1h1",
+       "e8g8"
+      ]
+     },
+     "statement": "White's king is on h1."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "r1b2rk1/1pq1bppp/p1nppn2/8/3NPP2/2N1B3/PPP1B1PP/R2Q1R1K w - - 2 11",
+   "caption": "Moves 11 to 13. Knights are swapped and the white queen reaches g3. Black plays on the queenside.",
+   "line": [
+    {
+     "move": "d1e1",
+     "say": "The queen starts a trip toward the kingside."
+    },
+    {
+     "move": "c6d4",
+     "say": "Black swaps knights."
+    },
+    {
+     "move": "e3d4",
+     "say": "The bishop retakes and keeps the centre square."
+    },
+    {
+     "move": "b7b5",
+     "say": "Black gains space on the queenside."
+    },
+    {
+     "move": "e1g3",
+     "say": "The queen has reached g3, pointing at the black king."
+    },
+    {
+     "move": "c8b7",
+     "say": "Black develops the bishop to the long diagonal."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "r4rk1/1bq1bppp/p2ppn2/1p6/3BPP2/2N3Q1/PPP1B1PP/R4R1K w - - 2 14",
+   "caption": "Move 14. A quiet pawn move, and Black brings a rook to the d-file.",
+   "line": [
+    {
+     "move": "a2a3",
+     "say": "A quiet pawn move that takes the b4 square away from Black's pieces [I]."
+    },
+    {
+     "move": "a8d8",
+     "say": "Black brings a rook to the d-file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g3",
+      "piece": "Q",
+      "after_moves": [
+       "a2a3",
+       "a8d8"
+      ]
+     },
+     "statement": "After 13.Qg3 the white queen stands on g3."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "b5",
+      "piece": "p",
+      "after_moves": [
+       "a2a3",
+       "a8d8"
+      ]
+     },
+     "statement": "Black has a pawn on b5."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3r1rk1/1bq1bppp/p2ppn2/1p6/3BPP2/P1N3Q1/1PP1B1PP/R4R1K w - - 1 15",
+   "caption": "Moves 15 to 17. White lines up the queen on h3 and the rooks on the e- and f-files. Black answers with g6.",
+   "line": [
+    {
+     "move": "a1e1",
+     "say": "Both white rooks now stand on the e- and f-files."
+    },
+    {
+     "move": "d8d7",
+     "say": "Black doubles the rooks on the d-file."
+    },
+    {
+     "move": "e2d3",
+     "say": "The bishop supports the pawn on e4, which holds the centre."
+    },
+    {
+     "move": "c7d8",
+     "say": "Black's queen goes back to help the king."
+    },
+    {
+     "move": "g3h3",
+     "say": "The queen lands on h3, aimed along the h-file."
+    },
+    {
+     "move": "g7g6",
+     "say": "Black's pawn on g6 now attacks f5 and h5, squares White's pawns and queen want."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "h3",
+      "piece": "Q",
+      "after_moves": [
+       "a1e1",
+       "d8d7",
+       "e2d3",
+       "c7d8",
+       "g3h3",
+       "g7g6"
+      ]
+     },
+     "statement": "After 17.Qh3 the white queen stands on h3."
+    },
+    {
+     "id": "C2",
+     "type": "pawn_attackers",
+     "params": {
+      "square": "f5",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "a1e1",
+       "d8d7",
+       "e2d3",
+       "c7d8",
+       "g3h3",
+       "g7g6"
+      ]
+     },
+     "statement": "After 17...g6 two black pawns, on e6 and g6, attack f5."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "card",
+   "text": "**The attacker's question.** Black's king sits behind pawns on f7, g6 and h7. White has a queen on h3, two rooks behind the pawns and a pawn on f4 ready to jump. Before any attack, ask: how many of my pieces can reach the king's side, and which pawn can open a line for them? Here the f-pawn is the lever. The next position asks you to find it."
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-1"
+  },
+  {
+   "type": "board",
+   "fen": "3q1rk1/1b1rbp1p/p2ppnp1/1p6/3BPP2/P1NB3Q/1PP3PP/4RR1K w - - 0 18",
+   "caption": "Moves 18 to 20. The pawn trade opens the f-file for the rooks and removes Black's h-pawn from the h-file.",
+   "line": [
+    {
+     "move": "f4f5",
+     "say": "The pawn steps up. It is attacked twice and defended three times."
+    },
+    {
+     "move": "e6e5",
+     "say": "Black's pawn attacks the bishop on d4 and closes the centre."
+    },
+    {
+     "move": "d4e3",
+     "say": "The bishop retreats from the attack."
+    },
+    {
+     "move": "f8e8",
+     "say": "The rook goes to e8, where it defends the bishop on e7."
+    },
+    {
+     "move": "f5g6",
+     "say": "White trades his f-pawn for the g-pawn. The f-file now has no white pawn on it."
+    },
+    {
+     "move": "h7g6",
+     "say": "Black retakes with the h-pawn. That leaves h7 defended only by the king and the knight on f6."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f5",
+      "color": "white",
+      "count": 3,
+      "after_moves": [
+       "f4f5"
+      ]
+     },
+     "statement": "After f5 three white pieces defend the pawn."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "f5",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "f4f5"
+      ]
+     },
+     "statement": "After f5 two black pawns attack it."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f4f5",
+       "e6e5"
+      ]
+     },
+     "statement": "After 18...e5 one black piece, the pawn on e5, attacks the bishop on d4."
+    },
+    {
+     "id": "C4",
+     "type": "open_files",
+     "params": {
+      "half_open_white": [
+       "d",
+       "f"
+      ],
+      "half_open_black": [
+       "c",
+       "h"
+      ],
+      "after_moves": [
+       "f4f5",
+       "e6e5",
+       "d4e3",
+       "f8e8",
+       "f5g6",
+       "h7g6"
+      ]
+     },
+     "statement": "After 20...hxg6 the d- and f-files are half-open for White and the c- and h-files for Black."
+    },
+    {
+     "id": "C5",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "f4f5",
+       "e6e5",
+       "d4e3",
+       "f8e8",
+       "f5g6",
+       "h7g6"
+      ]
+     },
+     "statement": "After 20...hxg6 two black pieces, the king and the knight on f6, defend h7."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "f4f5",
+       "e6e5",
+       "d4e3",
+       "f8e8",
+       "f5g6",
+       "h7g6"
+      ]
+     },
+     "statement": "After 20...hxg6 one white piece, the queen, attacks h7."
+    }
+   ],
+   "orientation": "white",
+   "chapter": "Opening the f-file"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-2"
+  },
+  {
+   "type": "board",
+   "fen": "3qr1k1/1b1rbp2/p2p1np1/1p1Np3/4P3/P2BB2Q/1PP3PP/4RR1K b - - 1 21",
+   "caption": "Black takes the knight with his knight. Look at the squares h7 and f6 before and after. At depth 16 the engine ranks 21...Nxd5 first for Black; at depth 22 it rates the resulting position at least four pawns better for White. After 21...Bxd5 22.exd5 White is only a little better (at most one pawn at depth 22), and Rxf7 is not even possible while a knight stands on f6. Numbers change with depth: evidence, not proof.",
+   "line": [
+    {
+     "move": "f6d5",
+     "say": "The knight takes the knight on d5, and so leaves f6 and the defence of h7."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Before Black's reply two black pieces defend h7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "f6d5"
+      ]
+     },
+     "statement": "After 21...Nxd5 one black piece, the king, defends h7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "b7d5"
+      ]
+     },
+     "statement": "After 21...Bxd5 the knight stays on f6 and h7 keeps two defenders."
+    },
+    {
+     "id": "C4",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f6d5"
+      ]
+     },
+     "statement": "At depth 16 the engine's first choice for Black is Nxd5."
+    },
+    {
+     "id": "C5",
+     "type": "eval_range",
+     "params": {
+      "min": 400,
+      "depth": 22,
+      "after_moves": [
+       "f6d5"
+      ]
+     },
+     "statement": "At depth 22 the position after 21...Nxd5 is at least four pawns better for White."
+    },
+    {
+     "id": "C6",
+     "type": "eval_range",
+     "params": {
+      "max": 100,
+      "depth": 22,
+      "after_moves": [
+       "b7d5"
+      ]
+     },
+     "statement": "At depth 22 the position after 21...Bxd5 is at most one pawn better for White."
+    },
+    {
+     "id": "C7",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 0,
+      "after_moves": [
+       "b7d5",
+       "e4d5"
+      ]
+     },
+     "statement": "After 21...Bxd5 22.exd5 no white piece attacks f7: the knight on f6 blocks the rook on f1."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr1k1/1b1rbp2/p2p2p1/1p1np3/4P3/P2BB2Q/1PP3PP/4RR1K w - - 0 22",
+   "caption": "Black has taken on d5 with the knight. White to move. The knight that just left f6 did two jobs there: it guarded h7, and it stood in front of the rook on f1. Before you choose, count the pieces around h7 and f7: the queen on h3 sees down the h-file, and the king is the only piece that guards f7.",
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the queen on h3, attacks h7."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the king, defends h7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "One white piece, the rook on f1, attacks f7."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the king, defends f7."
+    }
+   ],
+   "orientation": "white",
+   "highlight": [
+    "h7",
+    "f7"
+   ],
+   "chapter": "Two sacrifices"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-3"
+  },
+  {
+   "type": "board",
+   "fen": "3qr1k1/1b1rbp2/p2p2p1/1p1np3/4P3/P2BB2Q/1PP3PP/4RR1K w - - 0 22",
+   "caption": "The first sacrifice. White gives a rook for a pawn so that the king leaves g8 and h7 is left undefended.",
+   "line": [
+    {
+     "move": "f1f7",
+     "say": "The rook takes the pawn. Only the king can take it back, and that moves the king off the back rank."
+    },
+    {
+     "move": "g8f7",
+     "say": "The king takes the rook and stands on f7, in the open."
+    },
+    {
+     "move": "h3h7",
+     "say": "The queen checks along the seventh rank. Nothing defends h7 any more."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "f7",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Only the king defends f7 before the sacrifice."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "h7",
+      "color": "black",
+      "count": 0,
+      "after_moves": [
+       "f1f7",
+       "g8f7"
+      ]
+     },
+     "statement": "After Kxf7 no black piece defends h7."
+    },
+    {
+     "id": "C3",
+     "type": "piece_on",
+     "params": {
+      "square": "h7",
+      "piece": "Q",
+      "after_moves": [
+       "f1f7",
+       "g8f7",
+       "h3h7"
+      ]
+     },
+     "statement": "After 23.Qh7+ the white queen stands on h7."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr1k1/1b1rbp2/p2p2p1/1p1np3/4P3/P2BB2Q/1PP3PP/4RR1K w - - 0 22",
+   "caption": "What if Black does not take? Two natural ways to decline both lose. At depth 16 the engine rates 22...Nf6 at least three pawns better for White, and 22...Bf6 runs into mate at once. Taking is Black's best try, not a forced one.",
+   "line": [
+    {
+     "move": "f1f7",
+     "say": "The rook takes the pawn on f7."
+    },
+    {
+     "move": "e7f6",
+     "say": "Black declines and the bishop attacks nothing that matters; h7 is still undefended."
+    },
+    {
+     "move": "h3h7",
+     "say": "The queen takes on h7 with check, guarded by the rook on f7: checkmate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "h3h7",
+      "n": 1,
+      "after_moves": [
+       "f1f7",
+       "e7f6"
+      ]
+     },
+     "statement": "After 22.Rxf7 Bf6, Qh7 is checkmate."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "depth": 16,
+      "after_moves": [
+       "f1f7",
+       "d5f6"
+      ]
+     },
+     "statement": "At depth 16 the position after 22.Rxf7 Nf6 is at least three pawns better for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rbk1Q/p2p2p1/1p1np3/4P3/P2BB3/1PP3PP/4R2K b - - 1 23",
+   "caption": "Black has exactly three legal replies to the check. In the game he chose Ke6. The next two boards show why the other two lose faster.",
+   "line": [
+    {
+     "move": "f7e6",
+     "say": "The king steps to e6, the one square that avoids a quick mate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "legal_moves_set",
+     "params": {
+      "moves": [
+       "f7f8",
+       "f7f6",
+       "f7e6"
+      ]
+     },
+     "statement": "Black has exactly three legal replies: Kf8, Kf6 and Ke6."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qrk2/1b1rb2Q/p2p2p1/1p1np3/4P3/P2BB3/1PP3PP/4R2K w - - 2 24",
+   "caption": "Not played: 23...Kf8. The bishop on e3 has a diagonal to h6.",
+   "line": [
+    {
+     "move": "e3h6",
+     "say": "The bishop checks from h6 and the king has no square. Checkmate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e3h6",
+      "n": 1
+     },
+     "statement": "After Kf8, Bh6 is checkmate."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb2Q/p2p1kp1/1p1np3/4P3/P2BB3/1PP3PP/4R2K w - - 2 24",
+   "caption": "Not played: 23...Kf6. At depth 16 the engine finds a forced mate in five for White; here is the start of one line.",
+   "line": [
+    {
+     "move": "e4d5",
+     "say": "The pawn takes the knight on d5."
+    },
+    {
+     "move": "e5e4"
+    },
+    {
+     "move": "e3d4",
+     "say": "The bishop checks from d4, along the diagonal the black pawn left."
+    },
+    {
+     "move": "f6f5"
+    },
+    {
+     "move": "h7h3",
+     "say": "The queen checks from h3."
+    },
+    {
+     "move": "f5g5"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e4d5",
+      "n": 5
+     },
+     "statement": "After Kf6, White has a forced mate in at most five moves, beginning with exd5."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb3/p2p2p1/1p1P2k1/3Bp3/P2B3Q/1PP3PP/4R2K w - - 4 27",
+   "caption": "The rest of the same line: the rook and the queen finish.",
+   "line": [
+    {
+     "move": "e1e4",
+     "say": "The rook takes the pawn on e4."
+    },
+    {
+     "move": "b7d5"
+    },
+    {
+     "move": "e4g4",
+     "say": "Checkmate: the rook gives check from g4."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-4"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb2Q/p2pk1p1/1p1np3/4P3/P2BB3/1PP3PP/4R2K w - - 2 24",
+   "caption": "The pawn takes with check. The king takes the pawn and walks into the centre.",
+   "line": [
+    {
+     "move": "e4d5",
+     "say": "The pawn takes the knight and gives check: the pawn on d5 attacks the king on e6."
+    },
+    {
+     "move": "e6d5",
+     "say": "The king takes the pawn. It now stands on d5, in the middle of the board."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e6",
+      "color": "white",
+      "count": 1,
+      "after_move": "e4d5"
+     },
+     "statement": "After exd5 one white piece, the pawn, attacks the king on e6."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "d5",
+      "piece": "k",
+      "after_moves": [
+       "e4d5",
+       "e6d5"
+      ]
+     },
+     "statement": "After Kxd5 the black king stands on d5."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb2Q/p2pk1p1/1p1Pp3/8/P2BB3/1PP3PP/4R2K b - - 0 24",
+   "caption": "Not played, the other two answers to the check. 24...Kf6 allows mate at once; 24...Bxd5 is rated at least three pawns better for White at depth 16.",
+   "line": [
+    {
+     "move": "e6f6",
+     "say": "The king steps to f6."
+    },
+    {
+     "move": "h7g6",
+     "say": "The queen takes the pawn on g6 with check: checkmate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "h7g6",
+      "n": 1,
+      "after_moves": [
+       "e6f6"
+      ]
+     },
+     "statement": "After 24...Kf6, Qxg6 is checkmate."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "depth": 16,
+      "after_moves": [
+       "b7d5"
+      ]
+     },
+     "statement": "At depth 16 the position after 24...Bxd5 is at least three pawns better for White."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-5"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb2Q/p2p2p1/1p1kp3/8/P2BB3/1PP3PP/4R2K w - - 0 25",
+   "caption": "The second sacrifice. White gives a bishop that only the king can take. The other king moves lose faster: at depth 16 the engine rates 25...Ke6 at least five pawns better for White.",
+   "line": [
+    {
+     "move": "d3e4",
+     "say": "The bishop checks from e4. Nothing defends it, and only the king can take it."
+    },
+    {
+     "move": "d5e4",
+     "say": "The king takes the bishop and stands on e4, in the middle of White's pieces."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 0,
+      "after_move": "d3e4"
+     },
+     "statement": "No white piece defends the bishop on e4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "black",
+      "count": 1,
+      "after_move": "d3e4"
+     },
+     "statement": "Only the black king attacks the bishop on e4."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 500,
+      "depth": 16,
+      "after_moves": [
+       "d3e4",
+       "d5e6"
+      ]
+     },
+     "statement": "At depth 16 the position after 25...Ke6 is at least five pawns better for White."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "card",
+   "text": "**Three gifts, one purpose.** White gave a rook for a pawn, then the pawn on d5, then a bishop for nothing, and each time the king took and walked on: to f7, d5, e4. Luring a piece to a chosen square is a *decoy*. [I] Test it before you try it: after the capture, what check or threat follows, and what else could the opponent do instead of taking? Here declining lost as well."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Each sacrifice cost material. Which of the two would you have been more afraid to play, and what would you have wanted to check first?",
+   "fields": [
+    {
+     "id": "afraid",
+     "label": "The one I would fear:",
+     "options": [
+      "Rxf7: what if the king does not take? (the declined lines answer this)",
+      "Be4+: nothing protects the bishop",
+      "Neither: I would play both",
+      "I would not sacrifice at all"
+     ]
+    },
+    {
+     "id": "check",
+     "label": "What I would check first:",
+     "options": [
+      "who can take the piece",
+      "what the king can do instead",
+      "what the queen can do next",
+      "something else"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1rb2Q/p2p2p1/1p2p3/4k3/P3B3/1PP3PP/4R2K w - - 0 26",
+   "caption": "The game move was 26.Qf7. The engine's first choice at depth 16 is 26.c4, so even in a won game the move played need not be the best one. Step through the game move and look at what the queen attacks.",
+   "line": [
+    {
+     "move": "h7f7",
+     "say": "The queen attacks the bishop on e7 and the rook on e8."
+    },
+    {
+     "move": "e7f6",
+     "say": "Black moves the attacked bishop to f6, where the queen on d8 defends it."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "c2c4"
+      ]
+     },
+     "statement": "At depth 16 the engine's first choice is c4."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e7",
+      "color": "white",
+      "count": 1,
+      "after_move": "h7f7"
+     },
+     "statement": "After Qf7 the queen attacks the bishop on e7."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e8",
+      "color": "white",
+      "count": 1,
+      "after_move": "h7f7"
+     },
+     "statement": "After Qf7 the queen attacks the rook on e8."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "f6",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "h7f7",
+       "e7f6"
+      ]
+     },
+     "statement": "After 26...Bf6 one black piece, the queen on d8, defends the bishop."
+    }
+   ],
+   "orientation": "white",
+   "chapter": "The hunt in the open"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1r1Q2/p2p1bp1/1p2p3/4k3/P3B3/1PP3PP/4R2K w - - 2 27",
+   "caption": "Moves 27 to 29. Two checks, then a quiet queen move.",
+   "line": [
+    {
+     "move": "e3d2",
+     "say": "The bishop leaves the e-file and the rook on e1 gives check: a discovered check."
+    },
+    {
+     "move": "e4d4",
+     "say": "The king steps to d4."
+    },
+    {
+     "move": "d2e3",
+     "say": "The bishop checks again from e3 and blocks the e-file."
+    },
+    {
+     "move": "d4e4",
+     "say": "The king returns to e4."
+    },
+    {
+     "move": "f7b3",
+     "say": "The queen leaves f7 for b3. It is neither a check nor a capture, but it threatens mate."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e4",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e3d2"
+      ]
+     },
+     "statement": "After Bd2 the rook on e1 attacks the king on e4, so Bd2 is a discovered check."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "b3d3",
+      "n": 1,
+      "null_move_first": true,
+      "after_moves": [
+       "e3d2",
+       "e4d4",
+       "d2e3",
+       "d4e4",
+       "f7b3"
+      ]
+     },
+     "statement": "After 29.Qb3, if Black passed, Qd3 would be checkmate."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-6"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1r4/p2p1bp1/1p2p3/4k3/PQ2B3/1PP3PP/4R2K b - - 7 29",
+   "caption": "Black has to answer the mate threat. In the game he ran with the king. Ignoring it fails: both 29...d5 and 29...Bd5 allow Qd3 mate.",
+   "line": [
+    {
+     "move": "e4f5",
+     "say": "The king runs to f5, away from the d3 square."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "b3d3",
+      "n": 1,
+      "after_moves": [
+       "d6d5"
+      ]
+     },
+     "statement": "After 29...d5, Qd3 is checkmate."
+    },
+    {
+     "id": "C2",
+     "type": "mate_in",
+     "params": {
+      "move": "b3d3",
+      "n": 1,
+      "after_moves": [
+       "b7d5"
+      ]
+     },
+     "statement": "After 29...Bd5, Qd3 is checkmate."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-7"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1r4/p2p1bp1/1p2pk2/8/PQ2B3/1PP3PP/4R2K w - - 8 30",
+   "caption": "Moves 30 and 31. A check, then another quiet move that carries a threat.",
+   "line": [
+    {
+     "move": "e1f1",
+     "say": "The rook checks along the open f-file."
+    },
+    {
+     "move": "f5g4",
+     "say": "The king steps to g4."
+    },
+    {
+     "move": "b3d3",
+     "say": "Another quiet queen move: no check, no capture. The queen eyes the pawn on g6 along the diagonal."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e1f1",
+       "f5g4",
+       "b3d3"
+      ]
+     },
+     "statement": "After 31.Qd3 the white queen attacks the pawn on g6."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "3qr3/1b1r4/p2p1bp1/1p2p3/6k1/P2QB3/1PP3PP/5R1K b - - 11 31",
+   "caption": "Moves 31 to 33. Black throws in a bishop to bring the queen into play with check.",
+   "line": [
+    {
+     "move": "b7g2",
+     "say": "Black gives the bishop for a pawn and checks."
+    },
+    {
+     "move": "h1g2",
+     "say": "The king takes the bishop."
+    },
+    {
+     "move": "d8a8",
+     "say": "The queen checks along the long diagonal to g2."
+    },
+    {
+     "move": "g2g1",
+     "say": "The king steps back to g1."
+    },
+    {
+     "move": "f6g5",
+     "say": "The bishop goes to g5 and attacks the bishop on e3."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g2",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7g2",
+       "h1g2",
+       "d8a8"
+      ]
+     },
+     "statement": "After 32...Qa8+ the black queen attacks the king on g2."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e3",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "b7g2",
+       "h1g2",
+       "d8a8",
+       "g2g1",
+       "f6g5"
+      ]
+     },
+     "statement": "After 33...Bg5 a black piece attacks the bishop on e3."
+    }
+   ],
+   "orientation": "white",
+   "chapter": "The finish"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-9"
+  },
+  {
+   "type": "board",
+   "fen": "q3r3/3r4/p2p2p1/1p2p1b1/6k1/P2QB3/1PP4P/5RK1 w - - 3 34",
+   "caption": "Moves 34 and 35. Two checks drive the king to the edge of the board.",
+   "line": [
+    {
+     "move": "d3e2",
+     "say": "The queen checks along the diagonal. The bishop on e3 is attacked, but a check comes first."
+    },
+    {
+     "move": "g4h4",
+     "say": "The king steps to h4."
+    },
+    {
+     "move": "e3f2",
+     "say": "The bishop leaves the attack with check."
+    },
+    {
+     "move": "h4h3",
+     "say": "Kh3 is the only legal reply."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mobility",
+     "params": {
+      "square": "h4",
+      "mode": "legal",
+      "count": 1,
+      "after_moves": [
+       "d3e2",
+       "g4h4",
+       "e3f2"
+      ]
+     },
+     "statement": "After 35.Bf2+ the king on h4 has exactly one legal move."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "h3",
+      "piece": "k",
+      "after_moves": [
+       "d3e2",
+       "g4h4",
+       "e3f2",
+       "h4h3"
+      ]
+     },
+     "statement": "After 35...Kh3 the black king stands on h3."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "item",
+   "item": "IFGweiyibruzon-10"
+  },
+  {
+   "type": "board",
+   "fen": "q3r3/3r4/p2p2p1/1p2p1b1/8/P6k/1PP1QB1P/5RK1 w - - 7 36",
+   "caption": "The score printed by most sources ends with 36.Be1 and the result 1-0. One record (Daily Chess Musings) goes on to checkmate; the others stop at move 36, so treat the moves after Be1 as an unconfirmed mating line, not as settled game moves.",
+   "line": [
+    {
+     "move": "f2e1",
+     "say": "The bishop retreats. The queen on e2 now guards g2, so Black's mate threat is gone."
+    },
+    {
+     "move": "e8f8",
+     "say": "Black's rook goes to f8 (Daily Chess Musings record)."
+    },
+    {
+     "move": "e2d3",
+     "say": "The queen checks along the third rank."
+    },
+    {
+     "move": "h3g4"
+    },
+    {
+     "move": "d3g3",
+     "say": "Another check, from g3."
+    },
+    {
+     "move": "g4h5"
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g2",
+      "color": "white",
+      "count": 2,
+      "after_move": "f2e1"
+     },
+     "statement": "After Be1 the king and the queen both guard g2."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 90000,
+      "depth": 22,
+      "after_move": "f2e1"
+     },
+     "statement": "At depth 22 the engine finds a forced mate from this position after Be1."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "board",
+   "fen": "q4r2/3r4/p2p2p1/1p2p1bk/8/P5Q1/1PP4P/4BRK1 w - - 13 39",
+   "caption": "Unconfirmed, from that one record only: the queen checks once more and takes the bishop on h4, checkmate.",
+   "line": [
+    {
+     "move": "g3h3",
+     "say": "The queen checks from h3."
+    },
+    {
+     "move": "g5h4"
+    },
+    {
+     "move": "h3h4",
+     "say": "The queen takes the bishop on h4: checkmate."
+    }
+   ],
+   "orientation": "white"
+  },
+  {
+   "type": "card",
+   "text": "**What decided the game.** First, the knight on f6 did two jobs: it guarded h7 and it blocked the f-file for the rook; once it left, the sacrifice on f7 worked. Second, Qb3 and Qd3 were quiet moves that made threats (mate in one, then a mating attack); Be1 was a quiet move that stopped Black's threat of Qg2#. Before a quiet move, name the opponent's threat first. Third, the engine's first choice sometimes differed from the game move, as at move 26.",
+   "chapter": "What it teaches"
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Which of the ten moments would you have missed in a game of your own, and what would you have needed to notice to find it?",
+   "fields": [
+    {
+     "id": "missed",
+     "label": "The moment I would have missed:",
+     "options": [
+      "18.f5 (the lever)",
+      "21.Nd5 (attack the guard)",
+      "22.Rxf7 (the first sacrifice)",
+      "25.Be4+ (the second sacrifice)",
+      "29.Qb3 (the quiet threat)",
+      "31.Qd3 (another quiet threat)",
+      "36.Be1 (stopping Black's threat)",
+      "none of them"
+     ]
+    },
+    {
+     "id": "notice",
+     "label": "What I would have needed to notice:",
+     "options": [
+      "which defender guards the king's cover",
+      "that only the king could take",
+      "that a quiet move can carry a mate threat",
+      "that I had a threat to meet myself",
+      "something else"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "reflect",
+   "kind": "teachback",
+   "prompt": "Say it back. Tell a beginner how a sacrifice can drag a king out of its shelter, using this game as your example.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea in one sentence:"
+    },
+    {
+     "id": "when",
+     "label": "When it works:"
+    },
+    {
+     "id": "example",
+     "label": "An example a beginner could set up on a board:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning or when it fails:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Did you say when a decoy works, when it fails, give an example a beginner could set up, and name one mistake? **Recap.** Count attackers and defenders before you open lines. Lure or remove the guard of the key square. A sacrifice works when taking is the opponent's best try and declining loses as well; check both. Check the opponent's threat before every quiet move. Engine numbers depend on depth: evidence, not proof."
+  }
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Game score, moves 1 to 40 with header (6th Hainan Danzhou GM, Danzhou, 2015.07.03, round 2, 1-0, WhiteElo 2724, BlackElo 2669): Daily Chess Musings, 'Wei Yi - Lazaro Bruzon Batista 2015 pgn' (https://dailychessmusings.com/2015/07/03/wei-yi-lazaro-bruzon-batista-2015-pgn/; read via a page fetch, 11 Nov 2026) [S]",
+  "Game score, moves 1 to 36 and result 1-0: Stabroek News, 'The game of the decade' (https://www.stabroeknews.com/2015/features/07/12/the-game-of-the-decade/; read via a page fetch, 11 Nov 2026) [S]",
+  "Moves 22 to 31 only, round 2 of the 6th Hainan Danzhou Masters, Sicilian Scheveningen: ChessBase, 'Two Chinese brilliancies' (https://en.chessbase.com/post/two-chinese-brilliancies; read via a page fetch, partial score) [S]",
+  "Event, round, players, Classical Scheveningen, the rook sacrifice and the later bishop sacrifice, no full move list: chess.com news, 'Wei Yi Plays 21st-Century Immortal Game' (https://www.chess.com/news/view/wei-yi-plays-21st-century-immortal-game-2240; read via a page fetch) [S]",
+  "The Daily Chess Musings PGN continues 36...Rf8 37.Qd3+ Kg4 38.Qg3+ Kh5 39.Qh3+ Bh4 40.Qxh4#; Stabroek News stops at 36.Be1 and chess.com lists the game as 36 moves in a search result; the lesson therefore treats the continuation as unconfirmed [S]",
+  "The ECO code B40 comes from a search-result listing and was not checked on the page; the opening name 'Sicilian' and 'Classical Scheveningen' are from the chess.com article [S]",
+  "The move record was replayed in python-chess (71 plies, all legal) and every position in the lesson is generated from it [V]",
+  "Engine statements: Stockfish 19 lite, single thread, depth 16 (depth 22 where the text says so), via tools/validate.py and tools/validate_lessons.py; evidence in content/_evidence; evidence under recorded settings, not proofs [V]",
+  "No annotator's commentary was read or copied; all wording is ours. Course design: docs/course-families.md",
+  "Core skills used, not re-taught: ATK.CASTLED (main skill), TAC.MATE-SEARCH, TAC.QUIET-MOVE, TAC.DECOY, SAC.TYPES, INI.INITIATIVE, LOOP.V2; items in content/items/lesson-fg-wei-yi-bruzon-2015.json"
+ ]
+}

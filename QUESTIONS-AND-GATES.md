@@ -83,3 +83,4 @@ Logged in `DECISIONS-LOG.md` as I go; veto any by telling me.
 | Q23 | Q | Is the Checkmate icon (frightened king, spear) and Hidden danger (snake) too strong for Stage 2 learners? | Tone for the youngest | Kept as is |
 | Q24 | Q | Stage 3 total is still about 10 h (parts only shorten sittings, D91). Which guided boards may move to Practice or review? | Real cut needs authoring judgement | Left as is; parts make each sitting 11-14 min |
 | G21 | G | chess.com trial ends 15 Nov: cancel on 13 or 14 Nov; research agents need the browser signed in | Money and research | Research paused |
+| Q25 | Q | Kasparov v Short 1993 famous game lesson was NOT written: the famous king-walk game is Short v Kasparov (PCA match, London 1993, ends in perpetual check after 36.Ne5), and two sources could not be reached (chessgames 403). A PGN from a second source would let a later run write it | Rule 1: no unverified claim | Skipped; retry when a second source is reachable |

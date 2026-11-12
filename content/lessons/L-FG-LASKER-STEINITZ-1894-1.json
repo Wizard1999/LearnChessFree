@@ -1,0 +1,1314 @@
+{
+ "id": "L-FG-LASKER-STEINITZ-1894-1",
+ "course": "famous-games",
+ "series": "lasker-steinitz-1894",
+ "title": "Lasker v Steinitz, 1894: a new champion",
+ "skill": "POS.BISHOPS",
+ "depth": "D2",
+ "uses": [
+  "POS.BISHOPS",
+  "SAF.COUNT",
+  "TAC.REMOVE-DEFENDER",
+  "POS.CONVERT",
+  "POS.ACTIVITY"
+ ],
+ "minutes": 30,
+ "outcomes": [
+  "Finds the engine's move at six decision points of a real world-championship game before seeing it",
+  "Says when two bishops are strong (open lines, no safe knight posts) and when they are not, and why the engine barely changes its reading when Black declines the trade",
+  "Counts attackers and defenders on a square, and sees why a piece with two jobs can be removed",
+  "Knows the first move that lost a point is not always the one that lost the most (26...Rd7 against 27...Ke7)"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "Game choice: game 19 of the 1894 match, the decisive last game, picked because Lasker wins the match and the queenless middlegame fits the bishop pair and counting skills [I]",
+  "Full game score (52 moves, 1-0): Wikipedia, 'World Chess Championship 1894', game 19, fetched 2026-11-11 [S]. Replayed move by move with python-chess [V]. Second source: I could not read a second full score (chessgames.com returned 403, chessarch.com failed its certificate check, other pages carried no moves), so the score is NOT proven by two independent sources. Partial corroboration [S]: search summaries of chessarch.com give 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 Be7 5.e3 O-O 6.Bd3 c5, chessgames.com and 365chess list the game as 52 moves, 1-0, date 26 May 1894 in Montreal; the Wikipedia caption names 26...Rd7 as the losing move. A human should confirm the score against a printed source before this lesson is marked reviewed",
+  "Engine remarks: Stockfish 19 lite, depth 16, through tools/validate.py and tools/validate_lessons.py [V]",
+  "Views: Capablanca on the two bishops (docs/citable-views.md 8.3 [V-sheet]); advice to open the position with two bishops (8.12, Silman, summary only [S]); Steinitz's approach as summarised on Wikipedia (6.11 [S]). Paraphrases, no quotation",
+  "Ages: Lasker 25 and Steinitz 58 on 26 May 1894 from recalled birth dates [R]"
+ ],
+ "steps": [
+  {
+   "type": "card",
+   "text": "**Lasker v Steinitz, Montreal, 26 May 1894: game 19.** Emanuel Lasker, 25, plays White against the champion, Wilhelm Steinitz, 58 [R]. Lasker wins this last game and the match, 10 wins to 5 with 4 draws [S]. The queens leave early, so there is no attack to hunt. You choose six moves, four for White and two for Black, and answer one question about the bishops. The hints get more direct; use them one at a time. The move list comes from one source, checked against an engine only [S].",
+   "chapter": "A champion falls"
+  },
+  {
+   "type": "board",
+   "fen": "2rr1bk1/pp1b1ppp/5nn1/4p3/1P1N4/PBN1P3/1B1RKPPP/R7 w - - 0 18",
+   "caption": "Black has just played ...e5. White to move. Look at the knight on d4 and at what the new pawn does to it.",
+   "arrows": [
+    {
+     "from": "e5",
+     "to": "d4"
+    }
+   ],
+   "highlight": [
+    "d4",
+    "e5"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d4",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "One black piece, the pawn on e5, attacks the knight on d4."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 0,
+      "max": 80,
+      "depth": 16
+     },
+     "statement": "At depth 16 the engine rates the position between level and 0.8 pawns better for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-1"
+  },
+  {
+   "type": "board",
+   "fen": "2rr1bk1/pp1b1ppp/5nn1/4p3/1P1N4/PBN1P3/1B1RKPPP/R7 w - - 0 18",
+   "caption": "The game continued like this.",
+   "line": [
+    {
+     "move": "d4f3",
+     "say": "The knight leaves the pawn's attack and now attacks the pawn on e5 itself."
+    },
+    {
+     "move": "d7g4",
+     "say": "Black's bishop pins the knight to the king on e2: if the knight moves, the bishop gives check."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d4f3"
+      ]
+     },
+     "statement": "After the knight retreat one white piece, that knight, attacks the pawn on e5."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "d4f3"
+      ]
+     },
+     "statement": "Only one black piece, the knight on g6, defends it at that moment."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**What just happened.** Black's last move kicked a knight, but it also left a pawn that the knight can attack at once. Lasker kept the knight active instead of losing time. Now rewind: how does a game with no queens and no obvious attack arrive at this position? Watch for small facts that pile up: which pieces do something, and which only stand there."
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+   "caption": "Moves 1 to 3. Step through, and say each purpose aloud before you read it.",
+   "line": [
+    {
+     "move": "d2d4",
+     "say": "White takes space in the centre and opens a path for the queen's bishop."
+    },
+    {
+     "move": "d7d5",
+     "say": "Black takes the same square-claim in return."
+    },
+    {
+     "move": "c2c4",
+     "say": "The c-pawn attacks the d5 pawn."
+    },
+    {
+     "move": "e7e6",
+     "say": "Black guards d5 with a pawn and keeps a solid chain."
+    },
+    {
+     "move": "b1c3",
+     "say": "The knight adds pressure on d5."
+    },
+    {
+     "move": "g8f6",
+     "say": "Black develops and guards d5 a second time."
+    }
+   ],
+   "chapter": "How the queens left"
+  },
+  {
+   "type": "board",
+   "fen": "rnbqkb1r/ppp2ppp/4pn2/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4",
+   "caption": "Moves 4 to 5, continued.",
+   "line": [
+    {
+     "move": "g1f3",
+     "say": "The other knight develops and eyes the centre."
+    },
+    {
+     "move": "f8e7",
+     "say": "The bishop gets out of the way so Black can castle."
+    },
+    {
+     "move": "e2e3",
+     "say": "The pawn frees the bishop on f1 and supports d4."
+    },
+    {
+     "move": "e8g8",
+     "say": "Black castles: the king is safe and a rook is on the f-file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "g8",
+      "piece": "k",
+      "after_moves": [
+       "g1f3",
+       "f8e7",
+       "e2e3",
+       "e8g8"
+      ]
+     },
+     "statement": "After ten plies the black king stands on g8, castled."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnbq1rk1/ppp1bppp/4pn2/3p4/2PP4/2N1PN2/PP3PPP/R1BQKB1R w KQ - 1 6",
+   "caption": "Moves 6 to 8. Watch what the pawn on c5 does, then watch the queens.",
+   "line": [
+    {
+     "move": "f1d3",
+     "say": "The bishop takes a post aimed at the kingside."
+    },
+    {
+     "move": "c7c5",
+     "say": "Black strikes at the centre: the pawn attacks d4."
+    },
+    {
+     "move": "d4c5",
+     "say": "White takes the pawn, and the d-file opens: the queens now face each other."
+    },
+    {
+     "move": "d5c4",
+     "say": "Black takes the pawn on c4."
+    },
+    {
+     "move": "d3c4",
+     "say": "White retakes with the bishop, aimed at f7."
+    },
+    {
+     "move": "d8d1",
+     "say": "Black's queen takes White's queen, with check."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/pp2bppp/4pn2/2P5/2B5/2N1PN2/PP3PPP/R1BqK2R w KQ - 0 9",
+   "caption": "Move 9, continued.",
+   "line": [
+    {
+     "move": "e1d1",
+     "say": "White recaptures with the king. Castling is gone."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "d1",
+      "piece": "K",
+      "after_move": "e1d1"
+     },
+     "statement": "After the queen trade the white king stands on d1."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -40,
+      "max": 40,
+      "depth": 16,
+      "after_move": "e1d1"
+     },
+     "statement": "At depth 16 the engine rates the position as level, within 0.4 pawns."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Why queens off does not mean quiet.** With the queens gone, kings are not hunted down, and they become pieces that can walk, but they can also be checked and pinned. [I] Lines matter more: rooks on files, bishops on diagonals. In the next position White's king is about to feel a rook check on the d-file; watch where it goes and what Lasker builds around it."
+  },
+  {
+   "type": "board",
+   "fen": "rnb2rk1/pp2bppp/4pn2/2P5/2B5/2N1PN2/PP3PPP/R1BK3R b - - 0 9",
+   "caption": "Moves 9 to 12: White builds its setup.",
+   "line": [
+    {
+     "move": "b8c6",
+     "say": "Black develops the knight; the bishop on e7 already attacks the pawn on c5."
+    },
+    {
+     "move": "a2a3",
+     "say": "A preparing move: it supports the coming b4 push."
+    },
+    {
+     "move": "e7c5",
+     "say": "Black takes the pawn back with the bishop."
+    },
+    {
+     "move": "b2b4",
+     "say": "The pawn attacks the bishop and gains space on the queenside."
+    },
+    {
+     "move": "f8d8",
+     "say": "Check along the open d-file: Black gains a tempo."
+    },
+    {
+     "move": "d1e2",
+     "say": "The king steps off the file and toward the centre."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "c5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "b8c6",
+       "a2a3",
+       "e7c5",
+       "b2b4"
+      ]
+     },
+     "statement": "After the pawn reaches b4 one white piece, that pawn, attacks the bishop on c5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1br2k1/pp3ppp/2n1pn2/2b5/1PB5/P1N1PN2/4KPPP/R1B4R b - - 2 12",
+   "caption": "Moves 12 to 13, continued.",
+   "line": [
+    {
+     "move": "c5f8",
+     "say": "The bishop retreats from the pawn."
+    },
+    {
+     "move": "c1b2",
+     "say": "The bishop reaches the long diagonal; its own knight on c3 stands in the way for now."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": -10,
+      "max": 50,
+      "depth": 16,
+      "after_moves": [
+       "c5f8",
+       "c1b2"
+      ]
+     },
+     "statement": "At depth 16 the position after the bishop reaches b2 is rated between level and half a pawn better for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "r1br1bk1/pp3ppp/2n1pn2/8/1PB5/P1N1PN2/1B2KPPP/R6R b - - 4 13",
+   "caption": "Moves 13 to 16: the pieces find their posts. Notice that both sides put a rook on an open file.",
+   "line": [
+    {
+     "move": "c8d7",
+     "say": "Black develops the bishop."
+    },
+    {
+     "move": "h1d1",
+     "say": "The rook takes the open d-file."
+    },
+    {
+     "move": "a8c8",
+     "say": "Black's rook takes the open c-file."
+    },
+    {
+     "move": "c4b3",
+     "say": "The bishop steps back to b3 and keeps the light diagonal toward e6."
+    },
+    {
+     "move": "c6e7",
+     "say": "Black develops the knight; it will go on to g6."
+    },
+    {
+     "move": "f3d4",
+     "say": "The knight reaches d4, a strong central square for the moment."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rr1bk1/pp1bnppp/4pn2/8/1P1N4/PBN1P3/1B2KPPP/R2R4 b - - 10 16",
+   "caption": "Moves 16 to 17, continued.",
+   "line": [
+    {
+     "move": "e7g6",
+     "say": "The knight reroutes to g6, where it guards e5 and f4."
+    },
+    {
+     "move": "d1d2",
+     "say": "The rook steps to d2 so the other rook can join it."
+    },
+    {
+     "move": "e6e5",
+     "say": "Black hits the knight with a pawn, and we are back at the hook."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "p",
+      "after_moves": [
+       "e7g6",
+       "d1d2",
+       "e6e5"
+      ]
+     },
+     "statement": "After the last move shown a black pawn stands on e5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "2rr1bk1/pp3ppp/5nn1/4p3/1P4b1/PBN1PN2/1B1RKPPP/R7 w - - 2 19",
+   "caption": "From the pin to the trade on f3. The pinned knight cannot take on e5, so White first changes the structure.",
+   "line": [
+    {
+     "move": "d2d8",
+     "say": "White trades a pair of rooks on the open d-file."
+    },
+    {
+     "move": "c8d8",
+     "say": "Black takes back with the other rook."
+    },
+    {
+     "move": "h2h3",
+     "say": "The pawn gives the king a flight square and asks the bishop a question."
+    },
+    {
+     "move": "g4f3",
+     "say": "Black takes the knight with check."
+    },
+    {
+     "move": "g2f3",
+     "say": "White retakes with the g-pawn, and the f-pawns are doubled."
+    }
+   ],
+   "highlight": [
+    "f3",
+    "e2"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "illegal_move",
+     "params": {
+      "move": "f3e5"
+     },
+     "statement": "The pinned knight on f3 cannot capture on e5."
+    },
+    {
+     "id": "C2",
+     "type": "bishop_pair",
+     "params": {
+      "holders": [
+       "white"
+      ],
+      "after_moves": [
+       "d2d8",
+       "c8d8",
+       "h2h3",
+       "g4f3",
+       "g2f3"
+      ]
+     },
+     "statement": "After the trade White owns both bishops and Black does not."
+    },
+    {
+     "id": "C3",
+     "type": "pawn_set",
+     "params": {
+      "kind": "doubled",
+      "color": "white",
+      "squares": [
+       "f2",
+       "f3"
+      ],
+      "after_moves": [
+       "d2d8",
+       "c8d8",
+       "h2h3",
+       "g4f3",
+       "g2f3"
+      ]
+     },
+     "statement": "White's pawns on f2 and f3 are doubled."
+    }
+   ],
+   "chapter": "The two bishops"
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-2"
+  },
+  {
+   "type": "card",
+   "text": "**Two bishops, with conditions.** Capablanca held that two bishops nearly always beat two knights [V-sheet 8.3], and the usual advice is to open the position when you hold them [S]. Both are rules of thumb. [I] They work when lines are open, when the knights lack safe posts, and when pawns stand on both wings. They fail in locked positions, where a knight on a protected square can be the better piece."
+  },
+  {
+   "type": "board",
+   "fen": "3r1bk1/pp3ppp/5nn1/4p3/1P4b1/PBN1PN1P/1B2KPP1/R7 b - - 0 20",
+   "caption": "What if Black had declined the trade? The engine's reading barely changes. Compare the two lines.",
+   "line": [
+    {
+     "move": "g4d7",
+     "say": "Black keeps the bishop and avoids the doubled pawns."
+    },
+    {
+     "move": "a1d1",
+     "say": "White's rook takes the open file."
+    },
+    {
+     "move": "d8c8",
+     "say": "Black's rook takes the other open file."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 40,
+      "max": 110,
+      "depth": 16,
+      "after_moves": [
+       "g4d7",
+       "a1d1",
+       "d8c8"
+      ]
+     },
+     "statement": "After the quiet alternative the engine at depth 16 rates White 0.4 to 1.1 pawns better."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 40,
+      "max": 110,
+      "depth": 16,
+      "after_moves": [
+       "g4f3",
+       "g2f3"
+      ]
+     },
+     "statement": "After the actual trade on f3 and the recapture the engine rates White 0.4 to 1.1 pawns better too."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**The pair has a price.** Taking on f3 and recapturing with the g-pawn gives White the only pair of bishops, but also doubled f-pawns. Declining keeps Black's bishop and spares him the doubled pawns. Gain and cost roughly cancel, so the engine reads White as 0.4 to 1.1 pawns better either way [V]. That is why the bishop pair is a bonus to weigh against the pawn structure, not a verdict [I]."
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "Name one thing the doubled f-pawns cost White, and one thing the pair of bishops gives White.",
+   "fields": [
+    {
+     "id": "cost",
+     "label": "What the doubled pawns cost:"
+    },
+    {
+     "id": "gain",
+     "label": "What the pair gives:"
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3r1bk1/pp3ppp/5nn1/4p3/1P6/PBN1PP1P/1B2KP2/R7 b - - 0 21",
+   "caption": "Moves 21 to 24: White improves, Black waits. Notice which pieces get better squares.",
+   "line": [
+    {
+     "move": "f8e7",
+     "say": "Black's bishop steps to e7."
+    },
+    {
+     "move": "a1c1",
+     "say": "White's rook takes the open c-file."
+    },
+    {
+     "move": "g8f8",
+     "say": "Black's king steps toward the centre."
+    },
+    {
+     "move": "c3a4",
+     "say": "The knight heads for c5."
+    },
+    {
+     "move": "b7b6",
+     "say": "Black stops that, at the price of loosening c6."
+    },
+    {
+     "move": "a4c3",
+     "say": "The knight goes back, heading for b5."
+    }
+   ],
+   "chapter": "The squeeze"
+  },
+  {
+   "type": "board",
+   "fen": "3r1k2/p3bppp/1p3nn1/4p3/1P6/PBN1PP1P/1B2KP2/2R5 b - - 1 24",
+   "caption": "Moves 24 to 25, continued.",
+   "line": [
+    {
+     "move": "e7d6",
+     "say": "Black's bishop takes the d6 post, aimed at b4."
+    },
+    {
+     "move": "c1d1",
+     "say": "The rook takes the d-file against the bishop."
+    },
+    {
+     "move": "f6e8",
+     "say": "The knight covers d6 and c7."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "e7d6",
+       "c1d1",
+       "f6e8"
+      ]
+     },
+     "statement": "At the end White has one piece, the rook on d1, attacking d6."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "e7d6",
+       "c1d1",
+       "f6e8"
+      ]
+     },
+     "statement": "Black has two pieces, the rook and the knight, defending d6."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 40,
+      "max": 190,
+      "depth": 16,
+      "after_moves": [
+       "e7d6",
+       "c1d1",
+       "f6e8"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the position between 0.4 and 1.9 pawns better for White."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-3"
+  },
+  {
+   "type": "board",
+   "fen": "3rnk2/p4ppp/1p1b2n1/4p3/1P6/PBN1PP1P/1B2KP2/3R4 w - - 4 26",
+   "caption": "Count what Nb5 does. Notice how many pieces attack the bishop on d6, and how many defend it.",
+   "line": [
+    {
+     "move": "c3b5",
+     "say": "The knight attacks d6, a7 and c7. On d6 it is the second attacker, after the rook, and it opens the b2 bishop onto e5."
+    }
+   ],
+   "highlight": [
+    "b5",
+    "d6",
+    "a7",
+    "c7"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "c3b5"
+      ]
+     },
+     "statement": "After the knight move, two white pieces attack the bishop on d6."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "c3b5"
+      ]
+     },
+     "statement": "Two black pieces defend d6."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 0
+     },
+     "statement": "Before the knight moves, no white piece attacks the pawn on e5: the knight on c3 blocks the bishop."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c3b5"
+      ]
+     },
+     "statement": "After the knight move the bishop on b2 attacks the pawn on e5."
+    },
+    {
+     "id": "C5",
+     "type": "piece_attacks",
+     "params": {
+      "square": "b5",
+      "squares": [
+       "a3",
+       "a7",
+       "c3",
+       "c7",
+       "d4",
+       "d6"
+      ],
+      "after_moves": [
+       "c3b5"
+      ]
+     },
+     "statement": "The knight on b5 attacks a3, a7, c3, c7, d4 and d6."
+    },
+    {
+     "id": "C6",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 1
+     },
+     "statement": "Before the knight move one white piece, the rook on d1, already attacks the bishop on d6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-4"
+  },
+  {
+   "type": "card",
+   "text": "**Count, then choose.** Two attackers and two defenders on d6: a capture sequence that runs to the end costs the side that starts it, so nothing is won yet. [I] Black's task is to keep the count even and make White decide something: a pawn can kick the knight at once, or a piece can add a defender. You have just chosen. The engine prefers the kick; Steinitz chose the defender. Watch both."
+  },
+  {
+   "type": "board",
+   "fen": "3rnk2/p4ppp/1p1b2n1/1N2p3/1P6/PB2PP1P/1B2KP2/3R4 b - - 5 26",
+   "caption": "The engine's defence at depth 16: kick the knight, accept the trade on d6. White keeps an edge but Black is still in the game.",
+   "line": [
+    {
+     "move": "a7a6",
+     "say": "The pawn attacks the knight at once."
+    },
+    {
+     "move": "b5d6",
+     "say": "White takes the bishop before the knight is chased."
+    },
+    {
+     "move": "d8d6",
+     "say": "Black retakes with the rook."
+    },
+    {
+     "move": "d1c1",
+     "say": "White's rook takes the open file."
+    },
+    {
+     "move": "f7f6",
+     "say": "Black guards e7 and e5 with a pawn."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 40,
+      "max": 230,
+      "depth": 16,
+      "after_moves": [
+       "a7a6",
+       "b5d6",
+       "d8d6",
+       "d1c1",
+       "f7f6"
+      ]
+     },
+     "statement": "After the engine's line the position is rated between 0.4 and 2.3 pawns better for White."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "b5",
+      "color": "black",
+      "count": 1,
+      "after_moves": [
+       "a7a6"
+      ]
+     },
+     "statement": "After the pawn move one black piece attacks the knight on b5."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "3rnk2/p4ppp/1p1b2n1/1N2p3/1P6/PB2PP1P/1B2KP2/3R4 b - - 5 26",
+   "caption": "The game continued like this. Wikipedia's caption calls 26...Rd7 the losing move [S].",
+   "line": [
+    {
+     "move": "d8d7",
+     "say": "Black adds a rook to the defence of d6 and steps off the back rank."
+    },
+    {
+     "move": "b3c2",
+     "say": "The bishop swings to the diagonal toward g6 and the kingside."
+    }
+   ],
+   "highlight": [
+    "g6",
+    "e5",
+    "d6"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g6",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d8d7",
+       "b3c2"
+      ]
+     },
+     "statement": "After the bishop move one white piece attacks the knight on g6."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "d8d7",
+       "b3c2"
+      ]
+     },
+     "statement": "One white piece, the bishop on b2, attacks the pawn on e5."
+    },
+    {
+     "id": "C3",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 2,
+      "after_moves": [
+       "d8d7",
+       "b3c2"
+      ]
+     },
+     "statement": "Two black pieces, the knight on g6 and the bishop on d6, defend e5."
+    },
+    {
+     "id": "C4",
+     "type": "attackers",
+     "params": {
+      "square": "d6",
+      "color": "white",
+      "count": 2,
+      "after_moves": [
+       "d8d7",
+       "b3c2"
+      ]
+     },
+     "statement": "Two white pieces still attack the bishop on d6."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-5"
+  },
+  {
+   "type": "card",
+   "text": "**Remove the defenders.** The pawn on e5 has two defenders, the knight on g6 and the bishop on d6, and White's pieces threaten both: one bishop hits the knight, and the other knight and the rook hit the bishop. Take a defender with tempo and the pawn falls. In the game Black answered with his king; the engine's choice shows the threat on the next board."
+  },
+  {
+   "type": "board",
+   "fen": "4nk2/p2r1ppp/1p1b2n1/1N2p3/1P6/P3PP1P/1BB1KP2/3R4 b - - 7 27",
+   "caption": "The engine's line at depth 16 shows the threat: both defenders of e5 get removed.",
+   "line": [
+    {
+     "move": "a7a6",
+     "say": "Black kicks the knight."
+    },
+    {
+     "move": "c2g6",
+     "say": "The bishop takes the knight on g6, one defender of e5."
+    },
+    {
+     "move": "h7g6",
+     "say": "A pawn retakes."
+    },
+    {
+     "move": "b5d6",
+     "say": "The knight takes the bishop on d6, the other defender."
+    },
+    {
+     "move": "d7d6",
+     "say": "The rook retakes."
+    },
+    {
+     "move": "b2e5",
+     "say": "The bishop takes the pawn on e5, which no longer has a defender."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "e5",
+      "color": "black",
+      "count": 2
+     },
+     "statement": "Two black pieces defend e5."
+    },
+    {
+     "id": "C2",
+     "type": "piece_on",
+     "params": {
+      "square": "e5",
+      "piece": "B",
+      "after_moves": [
+       "a7a6",
+       "c2g6",
+       "h7g6",
+       "b5d6",
+       "d7d6",
+       "b2e5"
+      ]
+     },
+     "statement": "At the end of the line a white bishop stands on e5."
+    },
+    {
+     "id": "C3",
+     "type": "eval_range",
+     "params": {
+      "min": 100,
+      "max": 260,
+      "depth": 16,
+      "after_moves": [
+       "a7a6",
+       "c2g6",
+       "h7g6",
+       "b5d6",
+       "d7d6",
+       "b2e5"
+      ]
+     },
+     "statement": "After the line the engine at depth 16 rates White between 1.0 and 2.6 pawns better."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4nk2/p2r1ppp/1p1b2n1/1N2p3/1P6/P3PP1P/1BB1KP2/3R4 b - - 7 27",
+   "caption": "The game move, 27...Ke7, against the engine's choice. After the game move the engine, at depth 16, rates White about four pawns better.",
+   "line": [
+    {
+     "move": "f8e7",
+     "say": "The king steps up to guard the rook on d7 and the bishop on d6."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 700,
+      "depth": 16,
+      "after_moves": [
+       "f8e7"
+      ]
+     },
+     "statement": "After 27...Ke7 the engine at depth 16 rates White at least three pawns better."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-6"
+  },
+  {
+   "type": "board",
+   "fen": "4n3/p2rkppp/1p1b2n1/1N2p3/1P6/P3PP1P/1BB1KP2/3R4 w - - 8 28",
+   "caption": "The game continued like this.",
+   "line": [
+    {
+     "move": "c2f5",
+     "say": "The bishop attacks the rook on d7, defended only by the king."
+    },
+    {
+     "move": "a7a6",
+     "say": "Black attacks the knight on b5 instead."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "d7",
+      "color": "white",
+      "count": 1,
+      "after_moves": [
+       "c2f5"
+      ]
+     },
+     "statement": "After the bishop move one white piece attacks the rook on d7."
+    },
+    {
+     "id": "C2",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 700,
+      "depth": 16,
+      "after_moves": [
+       "c2f5",
+       "a7a6"
+      ]
+     },
+     "statement": "At depth 16 the engine rates the position at least three pawns better for White."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4n3/3rkppp/pp1b2n1/1N2pB2/1P6/P3PP1P/1B2KP2/3R4 w - - 0 29",
+   "caption": "Count the material after the exchange.",
+   "line": [
+    {
+     "move": "f5d7",
+     "say": "Bishop (3) for rook (5): White is up the exchange."
+    },
+    {
+     "move": "e7d7",
+     "say": "Black has no better recapture."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "material_after_move",
+     "params": {
+      "move": "f5d7",
+      "min": 2
+     },
+     "statement": "The bishop takes the rook and the king recaptures: White is two counting points up."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Converting.** Up the exchange in a queenless game, White still has to avoid counterplay. [I] Typical aims: trade what helps the other side, keep the king safe, open a second front, and win a pawn when a piece is left loose. Steinitz fought on for more than twenty more moves [S]. You do not need to follow every move; watch the plan.",
+   "chapter": "Converting the advantage"
+  },
+  {
+   "type": "board",
+   "fen": "4n3/3k1ppp/pp1b2n1/1N2p3/1P6/P3PP1P/1B2KP2/3R4 w - - 0 30",
+   "caption": "Moves 30 to 32. The knight sidesteps, a pawn lever opens the queenside, and the extra exchange stays on the board. Engine reading below.",
+   "line": [
+    {
+     "move": "b5c3",
+     "say": "The knight leaves b5 before the a-pawn can kick it."
+    },
+    {
+     "move": "f7f5",
+     "say": "Black's f-pawn advances two squares."
+    },
+    {
+     "move": "b4b5",
+     "say": "A pawn lever attacks a6 and opens lines on the queenside."
+    },
+    {
+     "move": "a6b5",
+     "say": "The a-pawn takes the pawn on b5."
+    },
+    {
+     "move": "c3b5",
+     "say": "The knight returns to b5, now that the a6 pawn has gone."
+    },
+    {
+     "move": "d7e6",
+     "say": "Black's king steps to e6."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 700,
+      "depth": 16,
+      "after_moves": [
+       "b5c3",
+       "f7f5",
+       "b4b5",
+       "a6b5",
+       "c3b5",
+       "d7e6"
+      ]
+     },
+     "statement": "At depth 16 the engine rates White at least three pawns better after these moves."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "8/6pp/1p1nk3/3npp2/8/P3PP1P/3BKP2/2R5 w - - 6 38",
+   "caption": "Moves 38 to 40. The king joins the centre and a pawn break opens the position, which suits the extra material.",
+   "line": [
+    {
+     "move": "e2d3",
+     "say": "The king steps toward the centre; with queens off it is safe there."
+    },
+    {
+     "move": "e6d7",
+     "say": "Black's king steps to d7."
+    },
+    {
+     "move": "e3e4",
+     "say": "A pawn break to open the position, which suits the extra piece."
+    },
+    {
+     "move": "d5f6",
+     "say": "The knight goes to f6 and attacks the pawn on e4."
+    },
+    {
+     "move": "d2e3",
+     "say": "The bishop steps to e3."
+    },
+    {
+     "move": "f5e4",
+     "say": "The f-pawn takes the pawn on e4, with check."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 700,
+      "depth": 16,
+      "after_moves": [
+       "e2d3",
+       "e6d7",
+       "e3e4",
+       "d5f6",
+       "d2e3",
+       "f5e4"
+      ]
+     },
+     "statement": "At depth 16 the engine rates White at least three pawns better after these moves."
+    }
+   ]
+  },
+  {
+   "type": "item",
+   "item": "IFGlaskersteinitz-7"
+  },
+  {
+   "type": "board",
+   "fen": "8/2nk2pp/3n4/1pR1p3/4P3/P2K1P1P/8/2B5 w - - 7 46",
+   "caption": "Moves 46 to 48. The rook takes the loose pawn. Black's pawns fall one by one, and the score ends with Lasker's 52nd move [S].",
+   "line": [
+    {
+     "move": "c5e5",
+     "say": "The rook takes the loose pawn on e5."
+    },
+    {
+     "move": "c7e6",
+     "say": "Black's knight goes to e6."
+    },
+    {
+     "move": "e5h5",
+     "say": "The rook goes to h5 and attacks the pawn on h7."
+    },
+    {
+     "move": "h7h6",
+     "say": "The pawn steps to h6."
+    },
+    {
+     "move": "h5e5",
+     "say": "The rook returns to e5."
+    },
+    {
+     "move": "g7g5",
+     "say": "The g-pawn steps to g5."
+    }
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "eval_range",
+     "params": {
+      "min": 400,
+      "max": 900,
+      "depth": 16,
+      "after_moves": [
+       "c5e5",
+       "c7e6",
+       "e5h5",
+       "h7h6",
+       "h5e5",
+       "g7g5"
+      ]
+     },
+     "statement": "At depth 16 the engine rates White at least four pawns better after these moves."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Where was the game decided?** Two moves lost ground. At depth 16 the validator checks that 26...Rd7 is at least 0.6 pawns worse than the engine's 26...a6, and 27...Ke7 at least 1.5 pawns worse than 27...a6 [V]. Repeated runs here put the gaps near 1 and 2 pawns or more. So the larger drop came a move after the one history remembers. [I] An annotation may mark the first slip, not the biggest.",
+   "chapter": "What the game teaches"
+  },
+  {
+   "type": "reflect",
+   "kind": "expect",
+   "prompt": "[H] Steinitz was one of the strongest players of his day, yet 26...Rd7 and 27...Ke7 lost ground. Why might a strong player misjudge a quiet position? Write your hypothesis and one thing you could check in the game, for example which pieces defended e5.",
+   "fields": [
+    {
+     "id": "hyp",
+     "label": "My hypothesis:"
+    },
+    {
+     "id": "check",
+     "label": "One thing I could check:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**A named view.** Lasker's own summary of Steinitz's approach, as quoted on the Wikipedia page about Steinitz, is: build small advantages and combine later [S]. This game fits that description from White's side: better placed pieces, two bishops, a squeeze, then one slip decides it. That is an interpretation [I], not a quotation."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach-back: in two or three sentences, explain to a friend how two bishops and a count of attackers decided this game. Say when the pair is strong and when it is not, give one example you could set up on a board, and name one mistake to avoid. Self-check afterwards: did you say when it works and when it fails, give an example a beginner could set up, and name a mistake? The app grades nothing; compare with the recap.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea:"
+    },
+    {
+     "id": "when",
+     "label": "When it works and when it fails:"
+    },
+    {
+     "id": "example",
+     "label": "One example:"
+    },
+    {
+     "id": "warning",
+     "label": "One warning:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Recap.** Queens off does not mean nothing to do. Two bishops help most on open lines and when the knights have no safe posts. Count attackers and defenders on a square before you trade. A piece with two jobs, like the defenders of e5, is a target. The first move that loses a point is not always the one that loses the most. An exchange up in a queenless position is a long task, not a finish. Next: Emanuel Lasker against Bauer, or Counting attackers and defenders."
+  }
+ ]
+}
