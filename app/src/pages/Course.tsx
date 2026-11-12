@@ -1,4 +1,5 @@
 import { RadialMap } from '../components/RadialMap'
+import { SkillIcon } from '../components/SkillIcon'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { coreLessonsOf, teachingCoreOf } from '../lib/coreLessons'
@@ -138,7 +139,7 @@ export function Course() {
       return (
             <section className={`card skilldetail detaildrawer`} role="dialog" aria-label={`${node.title} detail`}>
               <button type="button" className="closebtn" onClick={() => setPicked(null)}>Close ✕</button>
-              <h2>{node.title}</h2>
+              <h2 className="skilltitle"><SkillIcon skill={node.id} size={40} />{node.title}</h2>
               <p className="small stageline"><strong>{stageSentence(homeStages.get(node.id) ?? 0)}</strong>{homeStages.get(node.id) === hereStage ? ' · you are here' : ''}</p>
               <h3 className="sdh">What it lets you do</h3>
               <p>{outcome}</p>

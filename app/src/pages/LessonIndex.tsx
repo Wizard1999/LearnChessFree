@@ -23,6 +23,8 @@ import { Button } from '../components/Button'
 import { SectionHead, useOpenSections } from '../components/Disclosure'
 import { useNextCoreLesson } from '../lib/useNextCoreLesson'
 import { UpNextMark } from '../components/UpNextMark'
+import { SkillIcon } from '../components/SkillIcon'
+import { stageShowsIcons } from '../lib/skillIcons'
 
 /** A list row; the up next row carries the shared persimmon mark (UpNextMark). */
 function UpNextOrLi({ up, skillId, className, id, children }: { up: boolean; skillId: string; className: string; id: string; children: React.ReactNode }) {
@@ -196,7 +198,7 @@ export function LessonIndex({ picked, onPick }: { picked?: string | null; onPick
                 <UpNextOrLi key={l.id} id={`lessonrow-${l.id}`} up={upNextIds.has(l.id)} skillId={l.skill} className={`row lessonrow ${flash === l.id ? 'flash ' : ''}${p?.done ? (p.skipped ? 'skipped' : 'finished') : p && p.step > 0 ? 'inprogress' : 'todo'}`}>
                   <span className="statusmark" aria-hidden="true">{p?.done ? (p.skipped ? '»' : '✓') : p && p.step > 0 ? '◐' : '○'}</span>
                   <Link className={p?.done ? 'button' : p && p.step > 0 ? 'button primary' : 'button'} to={`/lesson/${l.id}`} aria-label={`Open lesson: ${l.title}`}>{earlier ? 'Review the new version' : p?.done ? 'Review' : p && p.step > 0 ? 'Continue' : 'Open'}</Link>
-                  <span>{nextCore?.id === l.id && <span className="nextlabel">Next</span>}<strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {aboutMinutes(lessonMinutes(l))} · {status}</span></span>
+                  <span>{nextCore?.id === l.id && <span className="nextlabel">Next</span>}{stageShowsIcons(l.stage) && <SkillIcon skill={l.skill} size={26} />}<strong>{l.title}</strong> <span className="muted small">· {content.skillById.get(l.skill)?.title ?? l.skill} · {aboutMinutes(lessonMinutes(l))} · {status}</span></span>
                   <span className="actions">
                     {!p?.done && <><button type="button" className="btn btn-quiet" aria-label={`Mark finished: ${l.title}`} onClick={() => void mark(l, false)}>Mark finished</button> <button type="button" className="btn btn-quiet" aria-label={`Skip: ${l.title}`} onClick={() => void mark(l, true)}>Skip</button></>}
                     {(p?.done || (p && p.step > 0)) && <button type="button" className="btn btn-quiet btn-danger" aria-label={`Reset progress: ${l.title}`} onClick={() => void reset(l.id)}>Reset</button>}
