@@ -151,3 +151,6 @@ Andrew: Stage 3 lessons run about 30 minutes and the stage about 10 hours, too l
 
 ## D89b — Icons in every stage, never below 32 px (Andrew, 11 Nov 2026)
 Overrides the Stage-3-onward default of D89: lists show icons in every stage. Still no icons on lesson boards, in the first guided game or before an answer. Icons are drawn at 32 px at the least (below that the painting is lost), larger where there is room: 36 in the lesson list, 40 by default, 40 in the Constellations panel; a picture shared by many skills is drawn at 85% but never under 32.
+
+## D89c — Icon map review (11 Nov 2026)
+Checked all 167 shown assignments against what each skill teaches. Changed in `tools/build_icons.py` (OVERRIDE): Mating without stalemating now shows Stalemate (Checkmate said the opposite); no icon for En passant, Desperado pieces, Multi-motif combinations and What does this pawn move leave behind? (the proposed picture misleads). Still questionable, kept [H]: Rule of the square on the abacus, Pawn weaknesses and Out-of-play pieces sharing Weakness/Blockade, Good and bad pieces on Evaluation. Andrew should look at those in the app.

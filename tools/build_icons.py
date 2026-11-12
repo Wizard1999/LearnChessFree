@@ -16,6 +16,16 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "app" / "public" / "icons"
 
 
+# My review of the proposed map against what each skill teaches (11 Nov 2026, D89c; [H], Andrew can overrule). None = show no icon: the proposed picture would mislead.
+OVERRIDE = {
+    "END.MATE-STALEMATE-AVOID": "Stalemate",   # the lesson is about NOT mating into a stalemate; the Checkmate picture says the opposite
+    "FND.ENPASSANT": None,                      # Capture shows an ordinary capture; en passant is the odd one, and its own art is still blank
+    "TAC.DESPERADO": None,                      # the sacrifice bird means giving; a desperado sells a doomed piece for the most it can take
+    "TAC.COMBO": None,                          # Connection (linked rooks) does not stand for combining motifs
+    "POS.PAWNMOVE": None,                       # Weakness suggests the move is bad; the skill asks what it leaves behind
+}
+
+
 def main():
     rows = list(csv.DictReader((ROOT / "docs/icons/scholarmate-core-icon-map.csv").open(encoding="utf-8")))
     tiles = json.loads((ROOT / "assets/icons/icons.json").read_text(encoding="utf-8"))
@@ -24,7 +34,9 @@ def main():
         if t["file"] and t["status"] == "Approved": by_name.setdefault(t["name"].casefold().strip(), t)
     out, skipped = {}, []
     for r in rows:
-        t = by_name.get(r["Proposed existing icon"].casefold().strip())
+        want = OVERRIDE.get(r["Skill ID"], r["Proposed existing icon"])
+        if want is None: skipped.append((r["Skill ID"], "(overridden: none)", "Review")); continue
+        t = by_name.get(want.casefold().strip())
         if r["Gallery status"] != "Approved" or not t: skipped.append((r["Skill ID"], r["Proposed existing icon"], r["Gallery status"])); continue
         out[r["Skill ID"]] = {"icon": t["name"], "label": t["description"] or t["name"], "file": t["file"]}
     uses = {}
