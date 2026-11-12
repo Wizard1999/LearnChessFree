@@ -4,7 +4,7 @@ interface Book {
   id: string; title: string; author: string; year: number | null; language: string; source_url: string; file: string | null; size: number
   cover?: string; rights: { label: string; basis: string; checked: string }; subjects: string[]; level: string; blurb: string
 }
-type Sort = 'title' | 'author' | 'year' | 'level' | 'size'
+type Sort = 'title' | 'author' | 'year' | 'level' | 'subject' | 'size'
 const LEVELS = ['Beginner', 'Improver', 'Club', 'Advanced', 'Reference']
 const PAGE = 5000
 
@@ -36,7 +36,7 @@ export function Bookshelf() {
     const rank = (l: string) => LEVELS.indexOf(l)
     return (books ?? [])
       .filter(b => (!subject || b.subjects.includes(subject)) && (!level || b.level === level) && (!t || `${b.title} ${b.author} ${b.subjects.join(' ')} ${b.blurb}`.toLowerCase().includes(t)))
-      .sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'author' ? a.author.localeCompare(b.author) : sort === 'year' ? (a.year ?? 9999) - (b.year ?? 9999) : sort === 'level' ? rank(a.level) - rank(b.level) : a.size - b.size)
+      .sort((a, b) => sort === 'title' ? a.title.localeCompare(b.title) : sort === 'author' ? a.author.localeCompare(b.author) : sort === 'year' ? (a.year ?? 9999) - (b.year ?? 9999) : sort === 'level' ? rank(a.level) - rank(b.level) || a.title.localeCompare(b.title) : sort === 'subject' ? (a.subjects[0] ?? '').localeCompare(b.subjects[0] ?? '') || a.title.localeCompare(b.title) : a.size - b.size)
   }, [books, sort, subject, level, q])
 
   if (open) return <Reader book={open} onClose={() => setOpen(null)} />
@@ -49,7 +49,7 @@ export function Bookshelf() {
         <>
           <div className="bookfilters">
             <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="Search books" aria-label="Search books" />
-            <label className="small">Sort <select value={sort} onChange={e => setSort(e.target.value as Sort)}><option value="title">Title A to Z</option><option value="author">Author A to Z</option><option value="year">Year</option><option value="level">Level</option><option value="size">Length</option></select></label>
+            <label className="small">Sort <select value={sort} onChange={e => setSort(e.target.value as Sort)}><option value="title">Title A to Z</option><option value="author">Author A to Z</option><option value="year">Year</option><option value="level">Level (Beginner first)</option><option value="subject">Subject</option><option value="size">Length</option></select></label>
             <label className="small">Subject <select value={subject} onChange={e => setSubject(e.target.value)}><option value="">All</option>{subjects.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
             <label className="small">Level <select value={level} onChange={e => setLevel(e.target.value)}><option value="">All</option>{LEVELS.map(l => <option key={l} value={l}>{l}</option>)}</select></label>
           </div>
@@ -73,7 +73,7 @@ export function Bookshelf() {
                     <strong>{b.title}</strong>
                     <p className="small muted">{b.author}{b.year ? ` · ${b.year}` : ''} · {Math.round(b.size / 1024)} KB</p>
                     <p className="small">{b.blurb}</p>
-                    <p className="small muted">{b.subjects.join(', ')}</p>
+                    <p className="small"><strong>{b.level}</strong> · {b.subjects.join(', ')}</p>
                     <p className="small"><span className="badge" title={b.rights.basis}>{b.rights.label}</span></p>
                     {pinned === b.id ? (
                       <>
