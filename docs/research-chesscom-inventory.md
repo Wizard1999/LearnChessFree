@@ -3,6 +3,8 @@
 Source [V]: library pages `https://www.chess.com/lessons/all-lessons?page=1..17` read as page text in the 8 Nov run, 395 courses; the full row data (incl. status) lives in `research-chesscom-progress.md`. This file regroups every course by the LOWEST level badge shown (B, I, A, M), the order Andrew asked for. Columns: Lv badges, Instr (CC = Chess.com Coach, CT = Chess.com Team), Les = lessons, Ch = challenges where shown, Sampled = status from the tracker (`listed` = not yet sampled). URL = `https://www.chess.com/lessons/<slug>`.
 
 
+Segment 19 correction (11 Nov 2026) [V, counted from this file]: the "113 rows still say listed" figure below is stale. In this inventory 1 row of 395 says `listed` (#191 The Best Chess Games of 2019); 109 rows are `played*`, 277 `sampled*`, 9 other (Pawn Endings lesson-list plus L1/L87, Forks, Philidor, Rinck, Komodo, Morphy, 1950s list, Simon-French skipped, #191). The progress table still carries 35 stale `listed` rows (34 Play Like rows plus #191) that were sampled at L1 C1 in segment 16. No Learn-the-X, Wolff or Kane row is `listed`; Forks and Philidor are spot-check-only.
+
 Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all are logged near-duplicate families (Play Like 43, Learn the X 44, Wolff 9, Top-10 lists 7, Kane Studies 5, Learn From The Best engines 2, Tal 2/3 2, Candidates Highlights 1); one member of each major family was spot-checked (see the Segment 14 section of the mastery sweep). Every other course has a note.
 
 ## Beginner (badge B present): 38 courses
@@ -36,7 +38,7 @@ Segment 14 reconciliation (9 Nov 2026) [V]: 113 rows still say `listed` and all 
 |306|Winning with Tactics|Misc|BI|CT|10|50|played-all-lessons|winning-with-tactics|
 |307|Capturing Pieces|Misc|B|CT|9|45|played-all (L1 in sweep-beginner.md)|capturing-pieces|
 |308|Playing the Game|Misc|B|CT|7|35|played-all-lessons|playing-the-game|
-|310|Learn To Play Chess|Misc|B|CT|13|65|played; seg 17: L2 Queen in full, L3-9 and L11 first screens, L11 mate (families-b)|learn-to-play-chess|
+|310|Learn To Play Chess|Misc|B|CT|13|65|played; seg 17: L2 Queen in full, L3-9 and L11 first screens, L11 mate (families-b); seg 19: L1, L10-L13 in full (families-b)|learn-to-play-chess|
 |325|Exploiting Opening Errors 2|Openings|BIAM|CT|19||sampled-L1-c1 (seg 8)|exploiting-opening-errors-2|
 |329|Exploiting Opening Errors 3|Openings|BIAM|CT|9||played-partly|exploiting-opening-errors-3|
 |330|Exploiting Typical Opening Errors|Openings|BIAM|CT|20||sampled-L1-c1 (seg 14)|exploiting-typical-opening-errors|

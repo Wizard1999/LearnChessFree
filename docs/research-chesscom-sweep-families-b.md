@@ -319,3 +319,95 @@ Where chess.com is still ahead is the size of the atom: five-step lessons of one
 5. chess.com has no game-first beginner path in either beginner shell; the first opponent piece is minute 11 (2018) to 21 (2021), and mate-in-one tasks put the goal in the prompt.
 
 RESUME HERE (segment 18): not done: Scotch #213 C4-C5 and ending; the rest of Cullip-Ward, Kramnik-Kasparov 2000 C2-C5, Capablanca-Janowski C2-C7, Learn To Play Chess lessons 1 and 10 to 13 beyond the first screen; Silman's Lessons in Strategy (2) mid and last; Strategic Errors L1-L9 and L11-L19; Mental Domination mid and last; Every Pawn Structure L1-L4, L6-L9, L11-L19, L21-L29; Hall of Fame L2-L12, L14-L24, L26-L32, L34-L47, L49; Play Like L2-L5 for Petrosian-Spassky, Fischer-Karpov, Steinitz Years and the other lessons of the Lasker and Capablanca-Alekhine-Euwe courses.
+
+
+## Segment 19 (11 Nov 2026): 2018 beginner course played in full, lesson-length table for beginner courses, and a blocker
+
+Sign convention [V]: no engine score is quoted in this segment (every position was checked with python-chess legal-move, check and mate lists, not the engine); where an engine is used in later segments, eng.py scores are from the side to move. Labels: [V] seen and checked here, [I] inference. Wording is original.
+
+**Blocker that cut this segment short [V].** The Claude in Chrome extension (Andrew's logged-in browser, used in segments 1-18) was not connected (`list_connected_browsers` returned an empty list on two tries). The only browser available was the Browser pane, which is logged out. Logged out, only the free courses play (Learn To Play Chess, Learn To Play, Advanced Bongcloud Theory). Every other lesson I opened showed the "Sign up to unlock Lessons!" modal on pressing Start: Play the Game of Chess / Piece Values (path tile 15) and Silman's Lessons in Strategy (2) mid lesson ("Schlechter-E.Lasker, 5th Match Game 1910") were both tested [V]. I did not sign in, create an account or work around the modal. So list items 2 and 3 (the middle and last lessons of the other courses: Silman, Mental Domination, Strategic Errors, Pawn Structure, Hall of Fame, Play Like, Scotch C4-C5) were NOT played and remain open; course pages (lesson lists, minutes, challenge counts) are open logged out and were read.
+
+Tool notes [V] for this pane: viewport 1234 x 1284 CSS px, screenshot frame 800 x 832, scale 0.648; board rect (70, 16, 640 x 640) so a square is 80 CSS px = 51.9 frame px. Unflipped click centre x = 71.3 + 51.86 * file, y = 36.3 + 51.86 * (8 - rank); flipped x = 71.3 + 51.86 * (7 - file), y = 36.3 + 51.86 * (rank - 1). Retry (634, 764), Next arrow (620, 764) once a challenge is solved. The coach bubble text is rendered about 1 to 3 s AFTER the move, so read `document.body.innerText` (text after the file label `h`) with a 2.5 s delay; the first prompt of Check, Getting Out of Check and Castling was empty in the page text at 3.5 s (it may sit on the Start screen or be spoken; I did not check audio). Per-lesson minutes and step counts are in the course page markup: `.lesson-content` blocks with `.lesson-title` and `.lesson-info-item` ("3 min", "5 Challenges"); fetch the course URL from the lesson tab. A `\n` inside a javascript_tool string in a browser_batch JSON breaks the call; define helpers in a standalone call.
+
+### A. Learn To Play Chess (2018 Chess.com Team course), lessons 1 and 10 to 13 played in full [V]
+
+Each lesson: 5 challenges, a progress bar that fills one fifth per solved challenge, a "+1" counter flash on a correct answer, a "Sign Up to Save Your Progress" modal on the last one (logged out), no end-of-lesson summary. Minutes below are what the course page states [V]; my wall-clock was far longer because every move was a tool call, so any per-step figure is [I] from word counts (a prompt of 10 to 25 words plus one move is about 12 to 20 s for a reader).
+
+| Lesson | Card min | Steps | What is taught | Wrong tries I made and the reply [V] |
+|---|---|---|---|---|
+| 1 King and the Goal | 1 | 5 | one-square king steps (up, up into the corner, diagonal, sideways, down into the corner); the lesson name's "goal" is only a corner square | Kb5 (away from the corner): "this move brings the king away from the top of the board", try again. A two-square king jump: refused silently, nothing changes. After the last move the page went straight to the Learn hub |
+| 10 Check | 1 | 5 | find the one check among the legal moves: Qe3+ (queen on the e-file), Re1+, g7+ (pawn check, "protected by the king"), Bc3+ (a check that forces the queen to block), then Ne7+ (a discovered line for the rook) | Bb4 (no check): "incorrect" with no reason; Nf6+ (check that loses the knight to g7): "this does check the black king, but the knight will get captured by the pawn on g7. Try to find a safe check." Every position had 1 or 2 legal checks (listed with python-chess), so the task is a search of 1 to 2 candidates, not a free choice |
+| 11 Getting Out of Check | 1 | 5 | the three answers: move the king (the only legal move, Kg1), capture the checker (Rxh3 winning a queen), block (Bd2, the only legal move), capture with check (Qxh4+), block with check (Ng6+) | Kg1 when a capture was available: "this move escapes the check, but there is a much stronger move" (challenges 2 and 4): a legal escape is marked wrong when a capture wins material. Nd3 (block that loses the knight): "Black's queen can simply capture it for free, checking the White king again." |
+| 12 Checkmate | 1 | 5 | mate in one with a rook (Ra8#), queen (Qf8#, Qh3#), two bishops (Be4#) and a knight (Nd6#); a "Winner" overlay and the word Checkmate appear on each | Qxa7, Qxf7+, Bc7 all got the same generic line "This move does not attack/check the black king. Try again.": for Qxf7+ that sentence is false (it is a check, just not mate), and Bc7 stalemates Black, which the lesson never says [V]. python-chess: exactly one mate in each challenge |
+| 13 Castling | 3 | 5 | castle kingside in a real Italian-Game position (C1), queenside in a Dragon position (C2), block a check then castle later (C3: c3 is right, Qd2 "loses the queen"), choose the legal side (C4: Ba6 covers f1, so only O-O-O works; the illegal O-O is refused silently), block the bishop with a protected pawn (C5: g5 over the unprotected f4) and then castle | d3 on C1: "This move does not castle White's king." f4 on C5: "right idea, but this pawn isn't protected. Can you move another pawn that attacks the bishop and is protected by a pawn?" (the best reply seen in this course: it names the missing property). C5 is two steps under a 5/5 counter: after g5 the bishop retreats and the bubble says to make the castling move |
+
+Findings from the five lessons [V]:
+1. Error replies come in three grades: generic (does not do X, try again), consequence-naming (the knight will be captured by the pawn on g7), property-naming (the pawn is not protected; find a protected one). Only the third says what to look for next. A legal escape can be marked wrong because a stronger move exists (Getting Out of Check C2, C4), which teaches capture-before-retreat without saying so.
+2. The generic reply can be factually wrong (Qxf7+ "does not attack the king"), and stalemate is never named in a lesson whose wrong answers can be stalemates (Checkmate C3, Bc7). A content gap Scholarmate can fill: the stalemate lesson (S1) should follow that near-miss.
+3. Rule lessons use real game positions from lesson 13 on (Castling C1 is the Italian after 1.e4 e5 2.Nf3 Nf6 3.Bc4 Bc5): the first 30-piece board appears at minute 15 to 18, as a position to answer a question about, not a game to play.
+4. A check lesson with only 1 or 2 legal checks per position is a search over a tiny set; it rewards trying every move, and a hint-free rule lesson cannot tell that from understanding.
+
+### B. Timeline of the first hour: 2018 course, 2021 starter and beginner path [V for minutes printed on pages, I for conversion]
+
+Cumulative minutes use the course-page card values (1, 1, 1, 1, 1, 2, 1, 1, 3, 1, 1, 1, 3 min; note the printed order has Pawn Promotion and En Passant at 1 min each).
+
+| chess.com unit | Steps | Card minutes | Cumulative | First of what |
+|---|---|---|---|---|
+| 2018 L1 King and the Goal | 5 | 1 | 1 | first move on a board (a king; about 20 s from Start) |
+| 2018 L2 to L5 (queen, rook, bishop, knight) | 20 | 4 | 5 | |
+| 2018 L6 Pawn (2), L7 Promotion (1), L8 En Passant (1) | 15 | 4 | 9 | |
+| 2018 L9 Moving and Capturing | 5 | 3 | 12 | first enemy piece (a capture choice; minute 9 to 12) |
+| 2018 L10 Check | 5 | 1 | 13 | first check |
+| 2018 L11 Getting Out of Check | 5 | 1 | 14 | |
+| 2018 L12 Checkmate | 5 | 1 | 15 | first mate (minute 14 to 15) |
+| 2018 L13 Castling | 5 | 3 | 18 | first full-board position |
+| 2021 starter group (Learn To Play, 12 lessons, 1 to 4 steps) | 35 | no minutes printed; 22 to 28 by the journey file [I] | about 28 | first opponent piece in lesson 8 (about minute 21), first mate in lesson 11 (about minute 31 in a straight run per the journey file) |
+| 2021 Beginner group "Play the Game of Chess" (15 lessons) | 111 | not printed | beyond 60 | no lesson there is a game |
+| a real game against a bot or player | none | | not on the path | reachable from the home page at any time |
+
+Lesson length and steps for the beginner courses I could read logged out (course pages) [V]:
+
+| Course (lessons) | Printed minutes per lesson | Steps per lesson | Total minutes / steps |
+|---|---|---|---|
+| Learn To Play Chess, 2018 (13) | 1 to 3, mean 1.4 | 5 | 18 / 65 |
+| Learn To Play, 2021 starter (12) | not printed | 1 to 4 | none / 35 |
+| Intro to Book Openings (5) | 3 to 6 | 5 | 21 / 25 |
+| Opening Principles (5) | 2 to 7 | 5 to 6 | 26 / 26 |
+| Finding Checkmate (6) | 3 to 4 | 5 | 20 / 30 |
+| Winning the Game (5) | 1 to 6 | 5 | 16 / 25 |
+| Winning with Tactics (10) | 2 to 5 | 5 | 29 / 50 |
+| Capturing Pieces (9) | 1 to 8 | 5 | 34 / 45 |
+| Playing the Game (7) | 3 to 5 plus one printed 27 (Other Draws; the course card says 43, so the 27 may be a video or a data error) | 5 | 43 / 35 |
+| Your First Tournament (4) | 9 to 10 | 5 | 37 / 20 |
+| PogChamps Tactics (4) | 5 to 15 | 5 | 32 / 20 |
+| Mastering the Endgame (5) | 14 to 19 (one not printed) | 5 | 70 / 25 |
+| Games That Changed Chess History (10) | 7 to 22 | 5 | 150 / 50 |
+| Checkmate Patterns You Should Know (15) | 6 to 12 | 5 | 123 / 75 |
+| Learn the X, 3 lessons (Queen's Gambit Exchange, Najdorf, Dragon) | one total per course (28, 10, 13) | 1 to 10 | 10 to 28 / 21 |
+| Exploiting Opening Errors 2 (19), 3 (9), Typical Opening Errors (20) | not printed | 1 to 3 | none / 34, 20, 34 |
+| Defeating Pet Openings (16) | not printed | 2 to 8 | none / 70 |
+| A Kaleidoscope of Openings (90) | not printed | 2 to 14 | none / 527 |
+| Pawn Endings: Beginner to Expert (87) | not printed | 1 to 20 | none / 674 |
+| Basic Checkmates and More (77) | not printed | 1 to 5 | none / 88 |
+| Introduction to Tactics (112) | not printed | 1 to 19 | none / 256 |
+| Essential Checkmate Patterns (130) | not printed | 1 to 9 | none / 353 |
+| Exclusively Checkmates (99) | not printed | 1 to 4 | none / 148 |
+
+Pattern [V from the table, I for the reading]: the printed minutes per lesson are tied to the amount of reading and video, not to the step count (every lesson on the minute-printing courses has five steps, yet 1 to 22 min). The 1-minute lessons of the 2018 rules course are five drills of 10 to 25 words; the 8 to 22 minute lessons are model games and master lessons. A beginner finishing the 2018 rules course by the card spends 18 minutes and meets 65 steps.
+
+Other course-page figures read for later, not played [V]: Silman's Lessons in Strategy (2): 51 lessons, 1 to 15 steps, 284 in all; Mental Domination 20 lessons, 3 to 7 steps, 82; Strategic Errors 20 lessons, 3 to 5 steps, 75; Every Pawn Structure Explained 30 lessons x 5 steps, printed 19 to 40 min each, 816 min; Hall of Fame 50 lessons, 2 to 3 steps, 7 to 21 min each, 623 min; Play Like Petrosian and Spassky 3 lessons (5, 1, 1 steps), Fischer and Karpov 3 lessons (5, 1, 5), The Steinitz Years 4 lessons of 1 step; Play the Scotch Game 9 lessons x 5 steps, 10 to 14 min each, 107 min; Play Against Capablanca 22 lessons, 1 to 7 steps, 78.
+
+### C. What Scholarmate should match or beat (against `content/path.json` S0 to S2) [I]
+
+path.json S0 ("Moves and the board", 8 lessons), S1 ("Legal play", 7) and S2 ("First complete games", 22) cover the same rule content as the 2018 course (13 lessons) and the 2021 starter group (12 lessons) plus the first game; ours puts the game first (L-FND-FIRSTGAME-1, then board and pieces).
+- Match: time to first legal move (about 20 s from Start to a king move) and the size of the atom (5 short steps, a one-sentence prompt of 10 to 25 words, a retry that returns to the same position).
+- Match or beat: first enemy piece (chess.com: minute 9 to 12 in 2018, about 21 in 2021; ours is the opening game) and first mate (minute 14 to 15 in 2018, about 31 in 2021). Beat the way the 2018 mate arrives: it gives the goal away in the prompt; a mate we reach should be found by the learner (a one-move choice with a reason). `tools/check_path_time.py` is the measuring tool.
+- Beat: wrong-answer replies. chess.com has three grades and the best, property-naming reply appears in about one challenge in five lessons; our `why_wrong` should always name the missing property and never be wrong (their "does not attack the king" for a check is false). Name stalemate when the learner's near-miss is a stalemate.
+- Beat: toy positions until minute 15 to 18. Their first 30-piece position is a Castling question at minute 15 to 18; ours is a real game at minute 3, so castling is taught at the move the game needs it (D56).
+- Do not copy: the order (king, each piece, rules last, castling last), five steps for every lesson whatever it teaches (1 to 22 minutes for the same step count shows the minute figure is not a design unit), and lessons whose only difficulty is trying every legal move (Check: 1 to 2 candidates). Length follows difficulty: our early lessons that run long should be cut to the single-fact shape with the explanation shorter than the exercise.
+- Pace target [I]: the early S0 and S1 lessons (15) should average at most 2 minutes each, against chess.com's 1.4 minutes per 2018 lesson and about 2 per starter lesson; S2 lessons that contain a full game can be longer because they are play, not reading.
+
+### D. Not done, and the resume point [V]
+
+Not played (blocked logged out): all of list items 2 and 3, Beginner group tiles 15 to 28 in full (only first screens from earlier segments), Silman (2) mid and last (slugs on the course page: mid `schlechter-e-lasker-5th-match-game-1910`, last `peter-svidler-andrey-sokolov-elista-1994`), Mental Domination, Strategic Errors, Every Pawn Structure L7, L13, L24, L28, Hall of Fame, Play Like L2 to L5, Kramnik-Kasparov 2000, Capablanca-Janowski ("draw after Kf4"), Cullip-Ward, Scotch #213 C4-C5, and the timed run of the 2021 path. Learn To Play Chess lessons 2 to 9 were not replayed (see `research-chesscom-lessons.md` A2.1 and section G above).
+RESUME HERE (segment 20): needs Andrew's logged-in browser (reconnect the Claude in Chrome extension): the trial account opens the paywalled lessons. When it is back: Beginner group tiles 15 to 28 in full with timing first, then the 15 Beginner/Intermediate middle and last lessons, then the Silman and Pawn Structure lessons. Trial ends 15 Nov 2026.
