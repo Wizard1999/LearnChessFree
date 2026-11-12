@@ -117,6 +117,8 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   const [text, setText] = useState<string | null>(null)
   const [page, setPage] = useState(() => { try { return +(localStorage.getItem(`book:${book.id}`) ?? 0) || 0 } catch { return 0 } })
   const [find, setFind] = useState('')
+  const iaId = book.source_url.match(/archive\.org\/details\/([^/?#]+)/)?.[1] ?? null
+  const [view, setView] = useState<'text' | 'scan'>(iaId ? 'scan' : 'text')
   useEffect(() => {
     fetch(`${base()}${book.file}`).then(r => r.text()).then(t0 => {
       const t = t0.replace(/\r\n?/g, '\n')
@@ -135,8 +137,15 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   return (
     <section className="card reader" aria-label={`Reading ${book.title}`}>
       <div className="sectionhead"><h2>{book.title}</h2><button type="button" onClick={onClose}>Back to the shelf</button></div>
-      <p className="small muted">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.rights.label}. Diagrams in these texts are plain-text drawings.{book.source_url.includes('archive.org') && <> <a href={book.source_url} target="_blank" rel="noreferrer">See the original page scans on the Internet Archive</a> (opens their site; the text here is machine-read from those scans).</>}</p>
-      {text === null ? <p className="muted">Loading…</p> : (
+      <p className="small muted">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.rights.label}. Diagrams in these texts are plain-text drawings.</p>
+      {iaId && <div className="row filters" role="group" aria-label="What to show">
+        <button type="button" className={view === 'text' ? 'primary' : ''} aria-pressed={view === 'text'} onClick={() => setView('text')}>Text</button>
+        <button type="button" className={view === 'scan' ? 'primary' : ''} aria-pressed={view === 'scan'} onClick={() => setView('scan')}>Original scan</button>
+        <a href={book.source_url} target="_blank" rel="noreferrer" className="small">Open on the Internet Archive</a>
+      </div>}
+      {view === 'scan' && iaId
+        ? <><iframe className="bookscan" title={`Original page scans of ${book.title}`} src={`https://archive.org/embed/${iaId}`} allowFullScreen /><p className="small muted">The scan is the Internet Archive's own viewer, so it needs a connection; it shows the printed pages with their pictures and diagrams. Books from Project Gutenberg have no scan here.</p></>
+        : text === null ? <p className="muted">Loading…</p> : (
         <>
           <div className="row filters">
             <button type="button" onClick={() => go(page - 1)} disabled={page === 0}>◀ Previous</button>
