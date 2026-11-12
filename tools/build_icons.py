@@ -22,6 +22,7 @@ OVERRIDE = {
     "FND.ENPASSANT": None,                      # Capture shows an ordinary capture; en passant is the odd one, and its own art is still blank
     "TAC.DESPERADO": None,                      # the sacrifice bird means giving; a desperado sells a doomed piece for the most it can take
     "TAC.COMBO": None,                          # Connection (linked rooks) does not stand for combining motifs
+    "POS.SEVENTH": None,                        # Rank is a stack of books; nothing says "seventh rank" (seen in the contact sheet)
     "POS.PAWNMOVE": None,                       # Weakness suggests the move is bad; the skill asks what it leaves behind
 }
 
