@@ -24,6 +24,7 @@ import { playSound } from '../lib/sound'
 import { wrongTry } from '../lib/encourage'
 import { usePhone } from '../lib/usePhone'
 import { PhoneFold, Sheet } from './Sheet'
+import { SkillIcon } from './SkillIcon'
 
 export interface ItemResult { correct: boolean; hints: number; wrongs: number; timeMs: number }
 interface Props {
@@ -45,7 +46,9 @@ interface Props {
 const norm = (s?: string) => (s ?? '').trim().toLowerCase()
 
 export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = 'Next', silent = false, loopShown, askConfidence = false, orientation: orientationProp }: Props) {
-  const { verified } = useContent()
+  const { verified, skillById } = useContent()
+  const skillBase = item.skill.slice(0, item.skill.lastIndexOf('.'))
+  const skillTitle = skillById.get(skillBase)?.title // shown only after the answer (D89): the tag would give the technique away before
   const askFen = item.task === 'threat_detection' ? flipTurn(item.fen) : item.fen
   const orientation = orientationProp ?? (item.orientation && item.orientation !== 'auto' ? item.orientation : sideToMove(askFen))
   const start = useRef(Date.now())
@@ -335,6 +338,7 @@ export function ItemPlayer({ item, source, onDone, promptOverride, nextLabel = '
             {item.task === 'select_squares' && <> The squares are: {(item.answer.squares ?? []).join(', ') || 'none'}.</>}
             {options.length > 0 && <> The answer is <strong>{item.answer.outcome ?? item.answer.class ?? 'none'}</strong>.</>}</p>
           <p className={lead.written ? undefined : 'muted'}>{lead.text}</p>
+          {skillTitle && <p className="small muted skilltag"><SkillIcon skill={skillBase} size={32} />Skill: {skillTitle}</p>}
           {altNote && <p className="small muted">Why {altNote.san} is sound: {altNote.why}</p>}
           <div className="small">
             {reported ? <span role="status">Thank you: your report is saved on this device (send it from Settings → Reviews).</span> : !reporting ? <button type="button" className="btn btn-quiet" onClick={() => setReporting(true)}>Report a problem with this exercise</button> : (

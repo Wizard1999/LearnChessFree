@@ -632,7 +632,7 @@ When: after the core curriculum is mostly or entirely complete (priority order, 
 - [~] Show approved icons in the Constellations skill panel and star details, lists from Stage 3, and after-answer tags (never in Stages 1-2 or before feedback)
 - [x] Icons in every stage of the lessons list, at least 32 px (D89b); map reviewed against the pictures and six misleading assignments removed or fixed (D89c); my own inventory in `docs/icons/inventory.md`
 - [x] School-level icons (`AppIcon`): Practice, Openings, Review hub, milestone cards (Reward, Mastery)
-- [ ] More icon placements: skill tag after the answer in Practice, Contrast lab and Games review; recap; search results; the Lesson and Progress pictures
+- [~] More icon placements: skill tag after the answer in exercises (done, `ItemPlayer`); still: Contrast lab, Games review, recap, search results, the Lesson and Progress pictures
 - [ ] Andrew approves or redoes the draft icons (En Passant, Good and Bad Bishops, Exchange Sacrifice, Perpetual Check, Battery, Hanging Pawns, Endgame candle) so they replace stand-ins
 - [ ] Andrew looks at the shared-picture stand-ins and the strong Checkmate and Hidden danger pictures at Stage 2
 - [ ] (feedback) After release: can learners match icon to skill name after one session? Does the icon speed finding a skill?
