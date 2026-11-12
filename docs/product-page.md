@@ -33,13 +33,13 @@ Three promises set it apart.
 ## Everything you would expect, and more
 
 ### A real curriculum, not a pile of lessons
-- **444 lessons across 206 skills**, from "how the rook moves" to rook endings, attack and defence, and calculation.
+- **617 lessons across 206 skills**, from "how the rook moves" to rook endings, attack and defence, and calculation.
 - **A recommended path in eight stages**, each ending with something you can do in a real game: Moves and the board, Legal play, First complete games, First wins, Becoming independent, Developing strength, Advanced craft, Specialization.
 - **One idea per lesson.** Nothing is taught twice; lessons link to each other instead.
 - **Stage checks:** mixed, unlabelled tests at the end of each stage, including positions where the right choice is a quiet move or to decline a tactic.
 
 ### Practice that does what it says
-- **8,594 exercises**, each tied to a skill and a depth, drawn from checked positions, real master games and openly licensed puzzle collections.
+- **10,506 exercises**, each tied to a skill and a depth, drawn from checked positions, real master games and openly licensed puzzle collections.
 - **Silent mode:** no hints, no theme names, like a real game.
 - **Spaced review:** skills come back when you are due to forget them.
 - **Contrast lab:** the same position with one feature changed, so you learn what actually matters and what does not.

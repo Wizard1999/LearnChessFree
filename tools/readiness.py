@@ -16,7 +16,7 @@ States: 'not started' (no evidence yet), 'in progress', 'ready for a first audie
 import sys as _s, pathlib as _p; _s.path.insert(0, str(_p.Path(__file__).resolve().parent))  # allow `python -I tools/<script>.py`
 import json, re
 from pathlib import Path
-from check_depth import TARGET, classify, target, stage_map, lessonMinutes, BOARD_STEPS
+from check_depth import TARGET, classify, target, stage_map, lessonMinutes, BOARD_STEPS, shape_misses
 from check_text_notation import card_moves, MOVES_LIMIT
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,7 +38,7 @@ def meets_depth(lesson, early, stage=None):
     lo, hi, share, mx = target(cls, stage)
     boards = sum(s.get("type") in BOARD_STEPS for s in steps)
     heavy = sum(card_moves(s.get("text", "")) >= MOVES_LIMIT for s in steps if s.get("type") == "card")
-    ok = lo <= len(steps) <= hi and (mx is None or lessonMinutes(steps) <= mx) and (boards / len(steps) if steps else 0) >= share and not heavy
+    ok = lo <= len(steps) <= hi and (mx is None or lessonMinutes(steps) <= mx) and (boards / len(steps) if steps else 0) >= share and not heavy and not shape_misses(cls, steps)
     return cls, ok, heavy
 
 
@@ -59,9 +59,15 @@ def gather(phases):
     stages = stage_map(path)
     lessons = [_load(f) for f in sorted((ROOT / "content" / "lessons").glob("*.json"))]
     by_class, heavy_cards, human_lessons, early_human, early_n = {}, 0, 0, 0, 0
+    series = {}   # D92: split part lessons (B, C, D) are one lesson in the count; the series meets the standard only if every part does
     for l in lessons:
         cls, ok, heavy = meets_depth(l, early, stages.get(l['id']))
-        c = by_class.setdefault(cls, [0, 0]); c[1] += 1; c[0] += ok; heavy_cards += heavy
+        heavy_cards += heavy
+        key = (l.get("part") or {}).get("of") or l["id"]
+        s = series.setdefault(key, [cls, True]); s[1] = s[1] and bool(ok)
+    for cls, ok in series.values():
+        c = by_class.setdefault(cls, [0, 0]); c[1] += 1; c[0] += ok
+    for l in lessons:
         reviewed = (l.get("review") or {}).get("status") == "human-reviewed"
         human_lessons += reviewed
         if l["id"] in early:
@@ -117,7 +123,7 @@ def _reliability(f, t2g, t2g_n):
 def build_readiness(f):
     """Pure: facts -> the seven areas, a summary and the lists 'rely on' / 'experimental'. No file access."""
     dc = f["depthByClass"]; a_ok, a_n = dc.get("A", [0, 0]); b_ok, b_n = dc.get("B", [0, 0])
-    all_ok = sum(v[0] for v in dc.values())
+    all_ok = sum(v[0] for v in dc.values()); all_n = sum(v[1] for v in dc.values())
     t2e, t2e_n = f["phases"]["beginner"]; tg, tg_n = f["phases"]["game"]; t2g, t2g_n = f["phases"]["reliability"]
     areas = [
         _area("beginner", "Beginner journey", a_ok > 0 or t2e > 0 or f["pilots"] > 0, [
@@ -129,13 +135,13 @@ def build_readiness(f):
             {"label": f"Rebuild the core skill lessons to the depth standard ({b_n - b_ok} of {b_n} still short)", "met": b_n > 0 and b_ok == b_n},
             {"label": f"Show every move line on a board instead of in prose ({f['heavyCards']} cards still carry long move chains)", "met": f["heavyCards"] == 0},
         ], [f"{b_ok} of {b_n} core lessons meet the depth standard ({_pct(b_ok, b_n)}%)",
-            f"{all_ok} of {f['lessons']} lessons of every class meet it ({_pct(all_ok, f['lessons'])}%)",
+            f"{all_ok} of {all_n} lessons of every class meet it ({_pct(all_ok, all_n)}%)",
             f"{f['heavyCards']} cards carry long move chains in prose"]),
         _area("assessment", "Independent assessment", f["itemsWithEvidence"] > 0, [
             {"label": f"Attach a passing machine record to every shipped exercise ({f['items'] - f['itemsWithEvidence']} of {f['items']} have none)",
              "met": f["items"] > 0 and f["itemsWithEvidence"] == f["items"] and f["itemsEvidenceFailing"] == 0},
         ], [f"{f['itemsWithEvidence']} of {f['items']} shipped exercises carry a passing engine, tablebase or rules record ({_pct(f['itemsWithEvidence'], f['items'])}%); {f['itemsEvidenceFailing']} have a failing one",
-            f"{f['lessonsWithEvidence']} of {f['lessons']} lessons have passing evidence records for their checked claims"]),
+            "Lesson claims are carried by their exercises' records above; separate lesson-level records are not required"]),
         _area("games", "Game integration", tg > 0, [
             {"label": f"Finish games as part of the curriculum: Maia finales, prescriptions, game review ({tg_n - tg} of {tg_n} roadmap tasks open)", "met": tg_n > 0 and tg == tg_n},
         ], [f"{tg} of {tg_n} tasks done in the game-playing phases"]),
@@ -152,7 +158,7 @@ def build_readiness(f):
     if f["lessonsWithEvidence"]:
         rely.append(f"{f['lessonsWithEvidence']} {'lesson carries' if f['lessonsWithEvidence'] == 1 else 'lessons carry'} machine-checked claims in the evidence files.")
     if all_ok:
-        rely.append(f"{all_ok} of {f['lessons']} lessons meet the written depth standard.")
+        rely.append(f"{all_ok} of {all_n} lessons meet the written depth standard.")
     rely += [f"{a['name']} is ready for a first audience." for a in ready]
     experimental = [f"{a['name']}: {a['state']}. Next: {a['next']}." for a in areas if a["state"] != READY]
     after = [f"{f['humanLessons']} of {f['lessons']} lessons and {f['itemsHuman']} of {f['items']} exercises reviewed by a person so far",
@@ -163,13 +169,14 @@ def build_readiness(f):
 def core_complete(f, checklist_percent):
     """One headline figure for 'how far is the complete core': half the written lessons that meet the depth standard, half the build checklist
     (feedback tasks excluded). Both parts are shown so nobody has to trust the blend. Pure."""
-    dc = f["depthByClass"]; ok = sum(v[0] for v in dc.values()); n = sum(v[1] for v in dc.values())
+    dc = f["depthByClass"]; ok = sum(dc.get(c, [0, 0])[0] for c in "AB"); n = sum(dc.get(c, [0, 0])[1] for c in "AB")   # core only: bonus classes C, D, E are reported apart
+    bonus_ok = sum(dc.get(c, [0, 0])[0] for c in "CDE"); bonus_n = sum(dc.get(c, [0, 0])[1] for c in "CDE")
     lessons_pct = _pct(ok, n)
     percent = round((lessons_pct + checklist_percent) / 2)
     return {"percent": percent, "parts": [
-        {"label": "Lessons that meet the depth standard", "percent": lessons_pct, "detail": f"{ok} of {n} lessons written so far"},
+        {"label": "Lessons that meet the depth standard", "percent": lessons_pct, "detail": f"{ok} of {n} core lessons (split parts count as one); bonus lessons not counted: {bonus_ok} of {bonus_n} meet their own standard"},
         {"label": "Build checklist (feedback tasks excluded)", "percent": checklist_percent, "detail": "tasks done, in-progress counting half"}],
-        "note": "An even blend of the two parts. Lessons still to be written are not in the denominator, so this number can fall when the plan grows."}
+        "note": "An even blend of the two parts. The lesson standard (D92) is a length ceiling per stage plus a shape check (at least two tasks, and a board in core skill lessons). Lessons still to be written are not in the denominator, so this number can fall when the plan grows."}
 
 
 def render_core(c):

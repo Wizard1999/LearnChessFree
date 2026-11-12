@@ -27,9 +27,23 @@ def target(cls, stage):
     """(min steps, max steps, min share of boards, max minutes or None) for a lesson of this class in this stage. Only classes A and B scale with the stage."""
     lo, hi, share = TARGET[cls]
     if cls in ("A", "B") and stage in STAGE_STEPS:
-        lo, hi, mx = STAGE_STEPS[stage]
-        return lo, hi, share, mx
+        _, hi, mx = STAGE_STEPS[stage]
+        return CORE_MIN_STEPS, hi, 0.0, mx   # D92: core lessons have a ceiling only (length follows difficulty, D55/D91); the floor is the shape check below
     return lo, hi, share, None
+
+
+TASK_STEPS = ("item", "practice", "contrast", "reflect", "finale", "guided", "reach")
+CORE_MIN_STEPS = 5
+
+
+def shape_misses(cls, steps):
+    """D92 shape rule for core lessons (classes A and B), replacing the old step-count floor and 50% board share, which rewarded long lessons: at least two tasks
+    (something to answer or play) and, for class B, at least one board. Bonus classes keep their own targets."""
+    if cls not in ("A", "B"): return []
+    miss = []
+    if sum(s.get("type") in TASK_STEPS for s in steps) < 2: miss.append("tasks<2")
+    if cls == "B" and not any(s.get("type") in BOARD_STEPS for s in steps): miss.append("no board")
+    return miss
 BOARD_STEPS = ("board", "contrast", "guided", "reach")   # step types that count as a board (tools/readiness.py uses the same tuple)
 NAME = {"A": "beginner block", "B": "core skill", "C": "opening deep dive", "D": "culture/history", "E": "famous game"}
 
@@ -80,6 +94,7 @@ def main():
         if mx and lessonMinutes(st) > mx: miss.append(f"minutes>{mx}")
         if share_v < share: miss.append(f"boards<{int(share*100)}%")
         if heavy: miss.append("notation-in-prose")
+        miss += shape_misses(cls, st)
         rows.append(dict(id=d["id"], cls=cls, steps=len(st), boards=boards, share=share_v, words=words, heavy=heavy, miss=miss))
     lim = int(_s.argv[_s.argv.index("--list") + 1]) if "--list" in _s.argv else 25
     only = _s.argv[_s.argv.index("--class") + 1] if "--class" in _s.argv else None
