@@ -1022,6 +1022,8 @@ label:has(> input[type="checkbox"]), label:has(> input[type="radio"]) { min-heig
 .upnext-label { position: absolute; top: 0; right: 0.5rem; transform: translateY(-55%); z-index: 3; padding: 0.05rem 0.55rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.12s; }
 .upnext-mark:hover > .upnext-label, .upnext-mark:focus-within > .upnext-label, .upnext-mark.linked > .upnext-label { opacity: 1; }
 .upnext-mark.card { padding-left: 1.25rem; }
+/* a card clips what pokes out of it, so its label sits inside the top edge (it was cut off at the corner) */
+.upnext-mark.card > .upnext-label { top: 0.45rem; transform: none; }
 @media (prefers-reduced-motion: reduce) { .upnext-mark, .upnext-label { transition: none; } }
 :root[data-motion='reduce'] .upnext-mark, :root[data-motion='reduce'] .upnext-label { transition: none; }
 /* Result marks: shape + tick or cross + word. Jade is demonstrated skill; unsuccessful stays neutral (ink), never alarm red. */
@@ -1197,3 +1199,9 @@ main.mappage.curriculum .mapbar { padding-top: 0.2rem; padding-bottom: 0.2rem; g
 .pathtile[data-hue]:not([data-state='next']) { border-left-width: 8px; border-left-color: var(--hue-line, var(--control-boundary)); } /* strand colour on the rim; the strand is also in the lesson itself */
 @media (max-width: 760px) { .rung { --step: 1.2rem; } }
 @media (max-width: 760px) { .viewtabs .tabsleft { width: 100%; } .viewtabs .tabsleft .chip { padding-inline: 0.3rem; font-size: 0.92rem; } }
+
+/* the short "what is this chart" card on Constellations (opens the first time, then behind the ? button) */
+.mapgrid .maphelpcard { position: absolute; z-index: 40; top: 6.4rem; left: 50%; transform: translateX(-50%); width: min(34rem, calc(100% - 2rem)); max-height: calc(100% - 7.5rem); overflow: auto; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); }
+.maphelpcard h2 { margin-top: 0; }
+.maphelpcard ul { padding-left: 1.2rem; margin: 0.5rem 0; }
+.maphelpcard li { margin-bottom: 0.35rem; }

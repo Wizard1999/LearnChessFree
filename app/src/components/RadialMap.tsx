@@ -218,10 +218,10 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
   // a native, non-passive wheel listener: React's onWheel cannot stop the page from scrolling
   useEffect(() => {
     const el = svg.current; if (!el) return
-    const h = (e: WheelEvent) => { e.preventDefault(); zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12) }
+    const h = (e: WheelEvent) => { e.preventDefault(); const next = zoomAt(viewRef.current, e.deltaY < 0 ? 1.12 : 1 / 1.12, R, el.getBoundingClientRect(), e.clientX, e.clientY); viewRef.current = next; setView(next) } // zoom toward the pointer, so the spot you aim at stays under it
     el.addEventListener('wheel', h, { passive: false })
     return () => el.removeEventListener('wheel', h)
-  }, [])
+  }, [R])
   // the skill to do next: the one the path recommends, else the earliest skill that is ready and not yet mastered
   const rec = recommended ?? layout.nodes.filter(n => { const p = progress.get(n.id); return p && p.level < 4 && !p.noExercises && (readiness.get(n.id) ?? 0) >= 1 }).sort((a, b) => a.ring - b.ring || a.sub - b.sub)[0]?.id ?? null
   const hits = useMemo(() => {

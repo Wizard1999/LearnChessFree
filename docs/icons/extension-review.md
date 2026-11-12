@@ -1,0 +1,1 @@
+Owner review pending. Known generation drift: teal cloth, a brass pin, academic gate or gratuitous extra props appear in some images. The intended concept and exact prompt are recorded in manifest.json. These are candidate failures, not approvals. Remove those props in a subsequent focused revision. Several concepts may be too intricate at 32px.

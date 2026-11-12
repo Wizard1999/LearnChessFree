@@ -30,6 +30,13 @@ function useNarrow(): boolean {
 
 /** Choice chips. A row (`menu` off) wraps inside the bar and never scrolls sideways; a menu is one button that opens the chips above the map and closes when a choice is made.
  * On a phone every group is a menu. */
+const MAP_INTRO = 'This is a map of every skill in the course: the ones you have learned, what builds on them, and what comes next. Each skill is a star, and it lights up as you show you can do it.'
+const MAP_READING = [
+  'Rings are stages. The centre is where everyone starts, and each ring outward is a later stage of the path.',
+  'Slices are sections. Each slice is one subject, a constellation of its own, named around the edge.',
+  'Lines join a skill to the skills that build on it. The brightest lines lead from what you have done toward what you can reach now.',
+  'A star grows brighter and bigger as your evidence grows. The gold-ringed star is your next step.',
+]
 const MAP_HELP = 'Rings are the stages of the recommended path, and each slice is a constellation, one subject. Every skill is a star. Every skill can be picked at any time. Drag to move, scroll or pinch to zoom. A star brightens and grows as your evidence grows: seen, guided (the idea when it is named), independent (in positions where nobody names it), mastered (reliable at the deepest depth, and not due for a refresher). A mastered star gets rays. The gold-ringed star is your next step. Nothing is locked.'
 
 function ChipGroup({ label, current, menu = false, children }: { label: string; current: string; menu?: boolean; children: ReactNode }) {
@@ -67,6 +74,9 @@ export function Course() {
 
   const isAll = view === 'all' || !missions.some(m => m.strand === view)
   const [why, setWhy] = useState<string | null>(null)
+  // the short explanation opens by itself the first time and stays one click away behind the "?" button
+  const [helpOpen, setHelpOpen] = useState(() => { try { return localStorage.getItem('cs-constellation-help') !== 'seen' } catch { return true } })
+  const toggleHelp = () => setHelpOpen(o => { if (o) { try { localStorage.setItem('cs-constellation-help', 'seen') } catch { /* private window: it simply opens again next time */ } } return !o })
   const node = picked ? overall.nodes.find(n => n.id === picked) : undefined
   const homeStages = useMemo(() => skillHomeStages(content.skills, teachingCoreOf(content.lessons)), [content.skills, content.lessons])
   const hereStage = useMemo(() => currentStageIndex(coreLessonsOf(content.lessons), new Set((progress ?? []).filter(p => p.done).map(p => p.lessonId))), [content.lessons, progress])
@@ -227,9 +237,16 @@ export function Course() {
       <ChipGroup label="Stages" menu current={stageSel === null ? 'All stages' : stageSentence(stageSel)}>
         {stageChips}
       </ChipGroup>
-      <button type="button" className="chip maphelp" aria-label="How your constellation fills in" title={MAP_HELP}>?</button>
+      <button type="button" className="chip maphelp" aria-label="What is this chart and how to read it" aria-expanded={helpOpen} aria-controls="constellation-help" onClick={toggleHelp}>?</button>
       </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={coreLessonsOf(content.lessons)} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
+      {helpOpen && <section className="card maphelpcard" id="constellation-help" aria-label="About the constellations chart">
+        <h2>Your constellations</h2>
+        <p>{MAP_INTRO}</p>
+        <ul>{MAP_READING.map(r => <li key={r}>{r}</li>)}</ul>
+        <p className="small muted">Drag to move. Scroll to zoom in on whatever the pointer is over. Nothing is locked: pick any star.</p>
+        <button type="button" className="button primary" onClick={toggleHelp}>Got it</button>
+      </section>}
       </div>
 
     </main>

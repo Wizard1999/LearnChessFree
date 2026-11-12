@@ -84,11 +84,18 @@ export function layoutMap(skills: Skill[], stageOf?: ReadonlyMap<string, number>
     // spread each (strand, track) group evenly over its wedge
     const groups = new Map<string, Skill[]>()
     for (const s of here) groups.set(`${s.strand}|${sub.get(s.id)}`, [...(groups.get(`${s.strand}|${sub.get(s.id)}`) ?? []), s])
-    for (const group of groups.values()) {
-      group.sort((x, y) => x.id.localeCompare(y.id))
+    // inner tracks first, so a skill can follow the angle of its same-stage prerequisites; inside a track the order follows where the prerequisites sit (their mean angle, pulled into
+    // this wedge), so a chain of skills runs together as a figure instead of zig-zagging across the slice. Ties and skills with no prerequisite keep the id order.
+    const placed = new Map(nodes.map(n => [n.id, n.angle]))
+    const ordered = [...groups.values()].sort((a, b) => sub.get(a[0].id)! - sub.get(b[0].id)!)
+    for (const group of ordered) {
+      const w0 = wedgeOf.get(group[0].strand)!
+      const key = (s: Skill) => { const ang = (parents.get(s.id) ?? []).map(p => placed.get(p)).filter((v): v is number => v !== undefined).map(v => Math.max(w0.from, Math.min(w0.to, v))); return ang.length ? ang.reduce((x, y) => x + y, 0) / ang.length : (w0.from + w0.to) / 2 }
+      group.sort((x, y) => key(x) - key(y) || x.id.localeCompare(y.id))
       group.forEach((s, i) => {
         const w = wedgeOf.get(s.strand)!, t = sub.get(s.id)!
         const angle = w.from + ((i + 0.5) / group.length) * (w.to - w.from), rad = trackRadius(t)
+        placed.set(s.id, angle)
         nodes.push({ id: s.id, strand: s.strand, ring: si, stage: si, sub: t, angle, x: Math.cos(angle) * rad, y: Math.sin(angle) * rad, tier: s.tier })
       })
     }
