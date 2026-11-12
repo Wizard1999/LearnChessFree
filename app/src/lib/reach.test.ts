@@ -29,14 +29,20 @@ describe('reachRounds', () => {
 })
 
 describe('reachMoves', () => {
-  it('offers the rook, not the king, and never a move that gives check', () => {
+  it('offers the rook, not the king, and allows moves that give check', () => {
     const fen = normalise('4k3/8/8/8/8/8/8/R5K1 w - - 0 1', 'w')
     const moves = reachMoves(fen)
     expect(moves.every(m => m.from === 'a1')).toBe(true)
     expect(moves.some(m => m.to === 'a7')).toBe(true)
-    expect(moves.some(m => m.to === 'a8')).toBe(false) // a8 would check the king on e8
-    expect(moves.some(m => m.to === 'e1')).toBe(false) // e1 would check along the e-file
+    expect(moves.some(m => m.to === 'a8')).toBe(true) // a8 checks the king on e8: allowed, the other side never answers
+    expect(moves.some(m => m.to === 'e1')).toBe(true) // e1 checks along the e-file
     expect(reachDests(fen).get('a1')).toContain('a7')
+  })
+  it('keeps playing after a move that gives check', () => {
+    const fen = normalise('4k3/8/8/8/8/8/8/R5K1 w - - 0 1', 'w')
+    const r = applyReach(reachRounds({ type: 'reach', fen, stars: ['a8', 'a7'] } as never)[0], { fen, got: [], moves: 0 }, { from: 'a1', to: 'a8' })
+    expect(r?.collected).toBe('a8')
+    expect(reachMoves(r!.state.fen).some(m => m.to === 'a7')).toBe(true)
   })
   it('moves the king when it is the only piece', () => {
     expect(reachMoves(normalise('7k/8/8/8/8/8/8/K7 w - - 0 1', 'w')).every(m => m.from === 'a1')).toBe(true)
@@ -55,12 +61,12 @@ describe('applyReach', () => {
     expect(isDone(r, b.state)).toBe(true)
     expect(applyReach(r, b.state, { from: 'd5', to: 'd6' })).toBeNull() // nothing after the end
   })
-  it('refuses an illegal move, a king move and a move that gives check', () => {
+  it('refuses an illegal move and a king move, but allows a move that gives check', () => {
     const r = round('4k3/8/8/8/8/8/8/R5K1 w - - 0 1', ['a5'])
     const s = startState(r)
     expect(applyReach(r, s, { from: 'a1', to: 'b2' })).toBeNull()
     expect(applyReach(r, s, { from: 'g1', to: 'g2' })).toBeNull()
-    expect(applyReach(r, s, { from: 'a1', to: 'e1' })).toBeNull()
+    expect(applyReach(r, s, { from: 'a1', to: 'e1' })).not.toBeNull()
   })
   it('in order, only the next star counts', () => {
     const r = round(ROOK, ['d5', 'a5'], 'in-order')

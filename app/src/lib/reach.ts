@@ -66,14 +66,14 @@ function movableFrom(chess: Chess, side: 'w' | 'b'): Set<string> {
   return new Set((others.length ? others : mine).map(p => p.sq))
 }
 
-/** The moves on offer: legal moves of the movable pieces that do not give check (the other side never moves, so a check could never be answered). */
+/** The moves on offer: legal moves of the movable pieces; a move may give check (the other side never moves, so it is never answered, and the turn is handed straight back). */
 export function reachMoves(fen: string): ReachMove[] {
   let chess: Chess
   try { chess = new Chess(fen) } catch { return [] }
   const side = chess.turn()
   const movable = movableFrom(chess, side)
   return chess.moves({ verbose: true })
-    .filter(m => movable.has(m.from) && !/[+#]$/.test(m.san))
+    .filter(m => movable.has(m.from))
     .map(m => ({ from: m.from, to: m.to, ...(m.promotion ? { promotion: m.promotion as ReachMove['promotion'] } : {}) }))
 }
 
