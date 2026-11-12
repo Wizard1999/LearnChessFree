@@ -625,7 +625,7 @@ When: after the core curriculum is mostly or entirely complete (priority order, 
 - [x] The Map becomes **Constellations** (D88): renamed in the header, phone tabs, page text and tests; the address and code names stay
 - [x] The skill map drawn as an antique star chart (D88): night-sky field with fixed background stars, skills as stars (size and glow by level, water-fill, rays when Mastered), thin constellation lines (D74 rules kept), astrolabe rings with ticks and Roman numerals, italic constellation names, a gold compass rose, a pointer ring on the chosen skill, twinkle only when motion is allowed; contrast pairs gated
 - [x] Star chart second pass (D88b): near-black sky, faint dust, bright open frontier, trail highlight, optional Slice colours toggle
-- [ ] Fix the Curriculum layout at about 1100 px wide with a skill picked: the map shrinks to a 60 px strip (older than D88)
+- [x] Fix the Curriculum layout at about 1100 px wide with a skill picked (checked 11 Nov: the map fills the width, the docks overlay it; the strip is gone since D88)
 - [ ] (feedback) Andrew's look at the star chart: tune star sizes, line weight and the parchment light mode; the original is the tag `map-before-constellations`
 - [x] Icon set absorbed (D89): guidance, catalogs and 155 WebP icons in `docs/icons/` and `assets/icons/`; assessment and use rules written
 - [x] Build-time icon lookup (`tools/`): join the skill map to the icons, skip skills on draft or provisional art, write one JSON the app reads
