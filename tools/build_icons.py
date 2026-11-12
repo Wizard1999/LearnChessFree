@@ -27,6 +27,10 @@ OVERRIDE = {
 }
 
 
+# Pictures for the school itself, not a skill (D89c): name -> gallery name. Copied next to the skill icons; the app draws them by name (components/AppIcon.tsx).
+APP_ICONS = {"practice": "Memory", "review": "Review", "reflection": "Reflection", "observation": "Observation", "repertoire": "Repertoire", "reward": "Reward", "mastery": "Mastery", "progress": "Progress", "lesson": "Lesson", "compass": "Compass", "hint": "Hint"}
+
+
 def main():
     rows = list(csv.DictReader((ROOT / "docs/icons/scholarmate-core-icon-map.csv").open(encoding="utf-8")))
     tiles = json.loads((ROOT / "assets/icons/icons.json").read_text(encoding="utf-8"))
@@ -40,6 +44,10 @@ def main():
         t = by_name.get(want.casefold().strip())
         if r["Gallery status"] != "Approved" or not t: skipped.append((r["Skill ID"], r["Proposed existing icon"], r["Gallery status"])); continue
         out[r["Skill ID"]] = {"icon": t["name"], "label": t["description"] or t["name"], "file": t["file"]}
+    for key, name in APP_ICONS.items():
+        t = next((x for n, x in by_name.items() if n.split(" ")[0] == name.casefold().split(" ")[0]), None)
+        if t: out[f"app:{key}"] = {"icon": t["name"], "label": t["description"] or t["name"], "file": t["file"]}
+        else: print("  app icon missing:", key, name)
     uses = {}
     for v in out.values(): uses[v["file"]] = uses.get(v["file"], 0) + 1
     for v in out.values(): v["shared"] = uses[v["file"]]
@@ -47,7 +55,7 @@ def main():
     for old in OUT.glob("*.webp"): old.unlink()
     for f in uses: shutil.copy(ROOT / "assets/icons" / f, OUT / f)
     (OUT / "skill-icons.json").write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    print(f"{len(out)} of {len(rows)} skills have an approved icon ({len(uses)} pictures, {sum(1 for v in out.values() if v['shared'] > 1)} skills share one); {len(skipped)} left without")
+    print(f"{sum(1 for k in out if not k.startswith('app:'))} of {len(rows)} skills have an approved icon ({len(uses)} pictures, {sum(1 for v in out.values() if v['shared'] > 1)} skills share one); {len(skipped)} left without")
     for s in skipped[:12]: print("  none:", *s)
 
 

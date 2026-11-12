@@ -1,3 +1,4 @@
+import { AppIcon } from '../components/AppIcon'
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useContent } from '../lib/content'
@@ -72,7 +73,7 @@ export function Practice() {
 
   return (
     <main className="page stage">
-      <h1>Practice</h1>
+      <h1 className="skilltitle"><AppIcon name="practice" />Practice</h1>
       {!started && (
         <UpNextMark as="section" className="card">
           <p className="lede">Positions with no label telling you which idea to use. New ones come first.</p>

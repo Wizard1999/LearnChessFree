@@ -1,3 +1,4 @@
+import { AppIcon } from '../components/AppIcon'
 import { MastersCard } from '../components/MastersCard'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -113,7 +114,7 @@ export function Openings() {
 
   return (
     <main className="page wide stage">
-      <h1>Openings</h1>
+      <h1 className="skilltitle"><AppIcon name="repertoire" />Openings</h1>
       <p className="lede">Every opening is a route to positions, and different move orders often reach the same one. The tree shows what players actually play at each rating. Branch thickness is how often a move is chosen from that position; ⇄ marks a position reached by more than one move order.</p>
       {g.manifest.dev && <p className="msg warn" role="status">Development sample ({g.manifest.source.name}). The full dataset is still being built.</p>}
       <div className="card controls">
