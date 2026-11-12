@@ -41,3 +41,6 @@ Autonomous build phase (Andrew works at his day job and asks me to take over; qu
 
 ## Credit (permanent)
 9. **Andrew's name stays on it.** The masthead line "Created by Andrew Valentine" (`app/src/brand.ts`: `author`, `byline`) shows in the header of every page and look, with a footer line, `NOTICE`, the author meta tag and `package.json`. Never remove or hide it, in any redesign, name change, exe or deploy. If the credited name should change, he says so; the one edit is in `brand.ts`.
+
+## Survival (permanent)
+10. **It must stand alone.** If a USB stick with Scholarmate on it were the only thing of chess that survived, a person with a computer and no network must be able to learn the game from nothing and go on to strength: rules, every lesson and exercise, the engine, the opening and game data, and the library **with the original page scans, not only extracted text**, all inside the download and working with no connection. No feature may need a server, an account or a live embed to function (a link to the web may be offered as an extra, never as the way). When a size or repo limit forces a choice, the offline build gets everything and git gets only what the repository can carry (large assets such as `app/public/library/scans/` are built by tools and shipped in the offline build). Tracked in `ROADMAP.md` under "Core".

@@ -117,8 +117,16 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   const [text, setText] = useState<string | null>(null)
   const [page, setPage] = useState(() => { try { return +(localStorage.getItem(`book:${book.id}`) ?? 0) || 0 } catch { return 0 } })
   const [find, setFind] = useState('')
-  const iaId = book.source_url.match(/archive\.org\/details\/([^/?#]+)/)?.[1] ?? null
-  const [view, setView] = useState<'text' | 'scan'>(iaId ? 'scan' : 'text')
+  const [wantScan, setWantScan] = useState(true)
+  const [scanPages, setScanPages] = useState<number | null>(null)   // null = still checking, 0 = this book has no page images on disk
+  const [scanPage, setScanPage] = useState(() => { try { return +(localStorage.getItem(`scan:${book.id}`) ?? 0) || 0 } catch { return 0 } })
+  useEffect(() => {
+    let live = true
+    fetch(`${base()}library/scans/${book.id}/index.json`).then(r => (r.ok ? r.json() : null)).then(j => { if (live) setScanPages(j?.pages > 0 ? j.pages : 0) }).catch(() => { if (live) setScanPages(0) })
+    return () => { live = false }
+  }, [book.id])
+  const showScan = wantScan && scanPages !== null && scanPages > 0
+  const goScan = (p: number) => { const n = Math.max(0, Math.min((scanPages ?? 1) - 1, p)); setScanPage(n); try { localStorage.setItem(`scan:${book.id}`, String(n)) } catch { /* optional */ } }
   useEffect(() => {
     fetch(`${base()}${book.file}`).then(r => r.text()).then(t0 => {
       const t = t0.replace(/\r\n?/g, '\n')
@@ -138,13 +146,21 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
     <section className="card reader" aria-label={`Reading ${book.title}`}>
       <div className="sectionhead"><h2>{book.title}</h2><button type="button" onClick={onClose}>Back to the shelf</button></div>
       <p className="small muted">{book.author}{book.year ? ` · ${book.year}` : ''} · {book.rights.label}. Diagrams in these texts are plain-text drawings.</p>
-      {iaId && <div className="row filters" role="group" aria-label="What to show">
-        <button type="button" className={view === 'text' ? 'primary' : ''} aria-pressed={view === 'text'} onClick={() => setView('text')}>Text</button>
-        <button type="button" className={view === 'scan' ? 'primary' : ''} aria-pressed={view === 'scan'} onClick={() => setView('scan')}>Original scan</button>
-        <a href={book.source_url} target="_blank" rel="noreferrer" className="small">Open on the Internet Archive</a>
+      {(scanPages ?? 0) > 0 && <div className="row filters" role="group" aria-label="What to show">
+        <button type="button" className={showScan ? 'primary' : ''} aria-pressed={showScan} onClick={() => setWantScan(true)}>Original scan</button>
+        <button type="button" className={!showScan ? 'primary' : ''} aria-pressed={!showScan} onClick={() => setWantScan(false)}>Text</button>
+        <a href={book.source_url} target="_blank" rel="noreferrer" className="small">Where this came from</a>
       </div>}
-      {view === 'scan' && iaId
-        ? <><iframe className="bookscan" title={`Original page scans of ${book.title}`} src={`https://archive.org/embed/${iaId}`} allowFullScreen /><p className="small muted">The scan is the Internet Archive's own viewer, so it needs a connection; it shows the printed pages with their pictures and diagrams. Books from Project Gutenberg have no scan here.</p></>
+      {showScan
+        ? <div className="scanview" tabIndex={0} onKeyDown={e => { if (e.key === 'ArrowRight') goScan(scanPage + 1); if (e.key === 'ArrowLeft') goScan(scanPage - 1) }}>
+            <div className="row filters">
+              <button type="button" onClick={() => goScan(scanPage - 1)} disabled={scanPage === 0}>◀ Previous</button>
+              <label className="small">Page <input type="number" min={1} max={scanPages ?? 1} value={scanPage + 1} onChange={e => goScan((+e.target.value || 1) - 1)} aria-label="Page number" style={{ width: '5rem' }} /> of {scanPages}</label>
+              <button type="button" onClick={() => goScan(scanPage + 1)} disabled={scanPage >= (scanPages ?? 1) - 1}>Next ▶</button>
+              <span className="small muted">Arrow keys turn the page. Photographs of the printed pages, stored with the app, so they work with no connection.</span>
+            </div>
+            <img className="scanpage" src={`${base()}library/scans/${book.id}/${scanPage}.webp`} alt={`Scanned page ${scanPage + 1} of ${book.title}`} />
+          </div>
         : text === null ? <p className="muted">Loading…</p> : (
         <>
           <div className="row filters">
