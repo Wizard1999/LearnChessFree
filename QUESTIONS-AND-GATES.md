@@ -75,3 +75,11 @@ Logged in `DECISIONS-LOG.md` as I go; veto any by telling me.
 | Q20 | Q | History and "meta" course (chess history, players, how ideas changed): who reviews the history claims? They cannot be machine-checked | Hard rule 1 needs a check or a named human reviewer | Not started |
 | Q21 | Q | Opening deep dives: which openings first (suggest the Italian/Two Knights, Queen's Gambit, Sicilian Najdorf basics, French) and at what depth? | Each needs engine-checked claims and a clear scope | Not started |
 | Q22 | Q | The Windows exe is rebuilt after each wave. Do you want me to stop committing the 16 MB binary (it is currently not tracked) and publish it only as a release you approve? | Publishing a download is an outward step | Not tracked, not published |
+
+## Added 11 November 2026 (icons and pacing; answer when back, defaults apply)
+| ID | Type | Question or gate | Why it matters | Default if you do not answer |
+|---|---|---|---|---|
+| G20 | G | Approve or redo the draft icons: En Passant, Good and Bad Bishops, Exchange Sacrifice, Perpetual Check, Battery, Hanging Pawns, Endgame candle (see `docs/icons/inventory.md`) | They replace weaker stand-ins | Stand-ins stay; the drafts are unused |
+| Q23 | Q | Is the Checkmate icon (frightened king, spear) and Hidden danger (snake) too strong for Stage 2 learners? | Tone for the youngest | Kept as is |
+| Q24 | Q | Stage 3 total is still about 10 h (parts only shorten sittings, D91). Which guided boards may move to Practice or review? | Real cut needs authoring judgement | Left as is; parts make each sitting 11-14 min |
+| G21 | G | chess.com trial ends 15 Nov: cancel on 13 or 14 Nov; research agents need the browser signed in | Money and research | Research paused |
