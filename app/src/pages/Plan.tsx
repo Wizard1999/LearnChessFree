@@ -39,6 +39,20 @@ export function PlanPage() {
   const save = async (next: Plan[]) => { setPlans(next); await kvSet('plans', next) }
   const skillKeys = useMemo(() => [...new Set(content.items.filter(i => i.cue >= 3).map(i => i.skill))].sort(), [content.items])
 
+  // one suggested goal from what went wrong lately, offered before the full skill list (self-direction in stages): the skill with most recent misses
+  const suggestion = useMemo(() => {
+    if (!attempts) return null
+    const tally = new Map<string, number>()
+    for (const a of [...attempts].sort((x, y) => y.ts - x.ts).slice(0, 60)) {
+      if (a.correct || a.result === 'sound-alternative') continue
+      const k = content.itemById.get(a.itemId)?.skill
+      if (k && skillKeys.includes(k)) tally.set(k, (tally.get(k) ?? 0) + 1)
+    }
+    const best = [...tally.entries()].sort((x, y) => y[1] - x[1])[0]
+    return best ? { key: best[0], misses: best[1] } : null
+  }, [attempts, content, skillKeys])
+  const skillName = (k: string) => content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title ?? k
+
   const active = mode ? plans.find(p => p.id === mode.plan) : undefined
   const testItems = useMemo<Item[]>(() => {
     if (!mode || !active || !attempts) return []
@@ -93,6 +107,7 @@ export function PlanPage() {
       })}
       <section className="card">
         <h2>Start a new plan</h2>
+        {suggestion && !draft.focus && <p className="small"><strong>A place to start:</strong> you missed {suggestion.misses} recent {suggestion.misses === 1 ? 'exercise' : 'exercises'} on {skillName(suggestion.key)}. <button type="button" className="link" onClick={() => setDraft({ ...draft, focus: suggestion.key, goal: `Get steadier at ${skillName(suggestion.key).toLowerCase()}` })}>Plan around that</button>, or choose your own below.</p>}
         <label className="field"><span className="small muted">Skill to work on</span>
           <select value={draft.focus} onChange={e => setDraft({ ...draft, focus: e.target.value })}><option value="">Choose…</option>{skillKeys.map(k => <option key={k} value={k}>{content.skillById.get(k.slice(0, k.lastIndexOf('.')))?.title ?? k} ({k.slice(k.lastIndexOf('.') + 1)})</option>)}</select></label>
         <label className="field"><span className="small muted">Your goal, in your words</span><input type="text" value={draft.goal} onChange={e => setDraft({ ...draft, goal: e.target.value })} placeholder="e.g. Stop missing forks in my games" /></label>
