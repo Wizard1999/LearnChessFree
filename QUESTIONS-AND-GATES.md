@@ -4,6 +4,8 @@
 
 ## Autopilot log
 
+- 2026-11-13 (seventeenth scheduled run): shipped nothing; 387 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`) and node processes are active. Left untouched per the loop rules. Nothing waits on Andrew.
+
 - 2026-11-13 (sixteenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224) and 367 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
 
 - 2026-11-13 (fifteenth scheduled run): shipped nothing; python processes still running (PIDs 141892, 32416, 98244, 13224, 36988, 87412) and 366 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
@@ -129,3 +131,6 @@ Default (unless Andrew says otherwise): keep (a) everywhere; keep the Lab route 
 ## Q (13 Nov 2026): should an exercise that shows a position count as a board in the depth standard?
 About 19 core lessons (stage checks L-SC-S2..S6, reflective skills such as SELF, PRA, GAME) have no board step, but their exercises (practice/item steps) show positions. Counting those would lift the core figure by about 5 points without new teaching, so I have NOT changed the measure.
 Default if you do not answer: keep the strict measure; add a real board step only where a board helps the lesson, and leave reflective lessons as exceptions listed here.
+
+## Gate: offline service worker in a real browser (13 Nov 2026)
+Open `dist-offline/Scholarmate-offline/` with Start.bat in Chrome or Safari, wait a few seconds, then turn the network off and reload. If the school still loads, the service worker works. The built-in preview pane could not register it on any port but 5173, so I could not prove it. Default: nothing blocks on this; the app itself runs without the worker.
