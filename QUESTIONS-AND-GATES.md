@@ -1,6 +1,12 @@
 # Questions for Andrew and gates only he can open
 
+- 2026-11-13 Q (offline bundle distribution): the full offline bundle (app, engine, data, library with page scans for all 101 books) is 4.6 GB. GitHub and Vercel cannot host that, and most people will not download it. Default I will build toward: (1) the website stays the normal way in; (2) a "lite" offline zip without page scans (text library only, probably under 1 GB) as the everyday download; (3) the full 4.6 GB bundle as a separate file for USB sticks and archives, hosted wherever you choose (a release file on GitHub is limited to 2 GB per file, so it would need splitting, or a torrent or your own site). Tell me if you want a different split or a host; until then I only build the zips locally and publish nothing.
+
 ## Autopilot log
+
+- 2026-11-13 (sixteenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224) and 367 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
+
+- 2026-11-13 (fifteenth scheduled run): shipped nothing; python processes still running (PIDs 141892, 32416, 98244, 13224, 36988, 87412) and 366 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
 
 - 2026-11-12 (fourteenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224), a `validate_lessons.py` run is active, and about 367 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
 
