@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { MORE_LINKS, PHONE_TABS, isFocusRoute, phoneTabFor, type PhoneTab } from '../lib/phoneNav'
 import { usePhone } from '../lib/usePhone'
@@ -17,11 +17,26 @@ function Icon({ tab }: { tab: PhoneTab }) {
   )
 }
 
+/** iOS Safari: when its own toolbar slides away, a position:fixed bar can stay anchored to the old, shorter layout viewport and float above the bottom edge.
+ *  The visual viewport knows the real bottom, so the gap between the two is written to --vvgap and the bar is moved down by it (styles/mobile.css). */
+function useBottomGap(on: boolean) {
+  useEffect(() => {
+    const vv = window.visualViewport
+    if (!on || !vv) return
+    const root = document.documentElement
+    const sync = () => root.style.setProperty('--vvgap', `${Math.max(0, Math.round(vv.offsetTop + vv.height - root.clientHeight))}px`)
+    sync()
+    vv.addEventListener('resize', sync); vv.addEventListener('scroll', sync); window.addEventListener('scroll', sync, { passive: true })
+    return () => { vv.removeEventListener('resize', sync); vv.removeEventListener('scroll', sync); window.removeEventListener('scroll', sync); root.style.removeProperty('--vvgap') }
+  }, [on])
+}
+
 /** The phone tab bar (docs/mobile-design.md): Curriculum, Mastery, Progress, More. Renders only on a phone and steps aside inside a lesson. */
 export function PhoneTabBar() {
   const phone = usePhone()
   const loc = useLocation()
   const [moreOpen, setMoreOpen] = useState(false)
+  useBottomGap(phone)
   if (!phone || isFocusRoute(loc.pathname)) return null
   const active = phoneTabFor(loc.pathname, loc.search)
   return (
