@@ -110,7 +110,8 @@ def repair(body, spare=None):
 
 def bridge(i, n, title, names):
     cover = "; ".join(names[:3])
-    return {"type": "card", "text": f"Part {i} of {n}: {title}. This part covers {cover}. Each part is short on purpose: finish one, play a game or take a break, and come back."}
+    cover = f"This part covers {cover}. " if cover else ""
+    return {"type": "card", "text": f"Part {i} of {n}: {title}. {cover}Each part is short on purpose: finish one, play a game or take a break, and come back."}
 
 
 def main():

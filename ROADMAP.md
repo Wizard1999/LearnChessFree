@@ -233,7 +233,7 @@ These wait on real people and arrive over time; none of them blocks a release or
 - [x] Maia opponent (free, human-like, CPU only) as an option in Play
 - [x] Neural voice audio for lessons (pre-generated, free, static files; browser voice as fallback) 405 of 444 lessons voiced, 70 MB; regenerate after the rewrites.
 
-## Phase 5f: Finale games against Maia (Andrew, 31 October 2026; decision D41; to start when development resumes)
+## Phase 5f: DEFERRED past the first package (Andrew, 12 Nov 2026). Finale games against Maia (Andrew, 31 October 2026; decision D41; to start when development resumes)
 - [ ] Opening lessons end with an optional finale: play Maia from the opening position the lesson taught, one game as White and one as Black
 - [ ] The learner picks the Maia level (1100 to 1900); it is never required
 - [ ] Record each finale: lesson, colour, Maia level, result, date, and that it was done (kept with the learner's progress, exported with it)
@@ -315,7 +315,7 @@ From the question data (`docs/research-beginner-questions.md` forum research, `d
 - [ ] Hard rule: the whole map is always visible (Fit all) and EVERY node is always clickable and selectable, whatever the stage or zoom
 - [ ] Skills with lessons in several stages sit at their first stage, but the move is an illusion: the panel shows the earlier and later stages of that skill and lets the learner jump to any of them, and the map shows ghost markers on those rings for the selected skill
 
-## Phase 5g: Playing real games as part of the curriculum (Andrew, 31 October 2026; decision D42)
+## Phase 5g: DEFERRED past the first package (Andrew, 12 Nov 2026). Playing real games as part of the curriculum (Andrew, 31 October 2026; decision D42)
 - [ ] At the appropriate stage the curriculum invites the learner to start playing full games, and then prescribes a daily game against a bot (sometimes from a specific position the current lessons are about), and against people when ready (never a gate; the learner can decline)
 - [ ] Prescriptions adapt: bot strength (Maia level or Stockfish level) from the learner's results, opening positions from the lessons just studied, endgame positions from the endgame stage
 - [ ] The learner's own games feed education planning and training: mistakes by type, time use, openings reached, results by level become inputs to My plan and to what Up next recommends
