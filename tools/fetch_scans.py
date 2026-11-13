@@ -56,8 +56,9 @@ def main():
             im.save(f, "WEBP", quality=45, method=6); ok += 1
             time.sleep(0.15)
         print(f"{b['id']}: {ok}/{n} pages", flush=True)
-        if ok >= n - 1:   # one missing page does not stop a book; the reader shows a gap
-            (d / "index.json").write_text(json.dumps({"pages": n}), encoding="utf-8"); done += 1
+        have = [i for i in range(n) if (d / f"{i}.webp").exists()]
+        if ok >= n - 8 and have:   # the archive lists a few trailing leaves (covers, colour bars) it cannot serve; the reader ends at the last page we hold
+            (d / "index.json").write_text(json.dumps({"pages": max(have) + 1}), encoding="utf-8"); done += 1
     print(f"{done} books complete")
 
 
