@@ -2,6 +2,29 @@
 
 ## Autopilot log
 
+- 2026-11-12 (fourteenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224), a `validate_lessons.py` run is active, and about 367 foreign uncommitted files remain (lessons, `tools/fetch_ia_bulk.py`, `.claude/settings.json`). Left untouched per the loop rules. Nothing waits on Andrew.
+
+- 2026-11-12 (thirteenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224) and 386 foreign uncommitted files remain (lessons edited at 21:04, `pace_lessons.py`, `fetch_ia_bulk.py`). Nothing waits on Andrew.
+
+- 2026-11-12 (twelfth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416, 98244, 13224) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (eleventh scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (tenth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 141892, 32416) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (ninth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (eighth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (seventh scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (sixth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (fifth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+
+- 2026-11-12 (fourth scheduled run): shipped nothing; `tools/fetch_scans.py` still running (PIDs 134496, 85380) and foreign uncommitted edits remain. Nothing waits on Andrew.
+- 2026-11-12 (third scheduled run): shipped nothing; same blockers (`tools/fetch_scans.py` running, foreign uncommitted edits). Nothing waits on Andrew.
+- 2026-11-12 (second scheduled run): shipped nothing. `tools/fetch_scans.py` still running (PIDs 134496, 85380) and uncommitted edits to `tools/fetch_ia_bulk.py`, `app/public/readiness.json`, `app/public/roadmap.json` are not mine, so I stopped. Nothing waits on Andrew.
 - 2026-11-12 (scheduled run): shipped nothing (no commits). `tools/fetch_scans.py` was running (two python processes) and `git status` showed uncommitted edits I did not make (`tools/fetch_ia_bulk.py`, `app/public/readiness.json`, `app/public/roadmap.json`), so per the playbook I stopped rather than touch them or run `update_roadmap.py`. Nothing waits on Andrew.
 
 I keep working without stopping and log here anything I need from you. **Answer any time by editing this file or telling me; I'll read it at the start of each work session.** Nothing here blocks the rest of the work unless marked **BLOCKS**.
@@ -96,3 +119,7 @@ Logged in `DECISIONS-LOG.md` as I go; veto any by telling me.
 Origin [V]: my own design call at the start (`03-product-design.md` M-C, `DECISIONS-LOG.md` A9, from the learning-science idea of minimal pairs and contrast cases). It was never put to Andrew as its own decision; it entered CLAUDE.md's goal line from that design. Evidence for its benefit: none; `03-product-design.md` says "Not established: that the cue ladder or contrast lab improves real chess strength". The one spike [V] showed 79% of broken-idea edits got a correct automatic reason, so about one in five edits gets no explanation. Beginners must already understand the idea to edit it usefully, which the lab does not teach.
 Distinct parts: (a) the **contrast step inside lessons** (same position with one thing changed, answer revealed) is cheap, backed by what chess.com does in its Forks lesson [V] and costs the learner nothing; (b) the **standalone Lab page** needs the learner to design edits, which is the weak part.
 Default (unless Andrew says otherwise): keep (a) everywhere; keep the Lab route but remove it from beginner-facing copy (product page, comparisons), leave it under More, and stop counting it as a headline feature. Remove the route if the simplicity pass (`docs/design-simplicity-pass.md`) needs the space.
+
+## Q (13 Nov 2026): should an exercise that shows a position count as a board in the depth standard?
+About 19 core lessons (stage checks L-SC-S2..S6, reflective skills such as SELF, PRA, GAME) have no board step, but their exercises (practice/item steps) show positions. Counting those would lift the core figure by about 5 points without new teaching, so I have NOT changed the measure.
+Default if you do not answer: keep the strict measure; add a real board step only where a board helps the lesson, and leave reflective lessons as exceptions listed here.
