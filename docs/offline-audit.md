@@ -28,3 +28,6 @@ Built `dist-offline/Scholarmate-offline` (33,577 files, 4.6 GB, page scans for a
 - A scanned page (last page of one book) came back as image/webp; the reader showed page 3 of The Art of Chess.
 - Not proved: the service worker did not register on this run (no registration found), so a cold start after a restart with no server is not covered; the bundle needs its local server either way. Not tried: a machine with no network at all, a second operating system, a USB stick.
 
+
+### Bundle rebuild and service worker check, 13 Nov 2026 [V]
+Rebuilt with the latest CSS and the svh/phone changes: 33,578 files, 4,632 MB, 101 books with scans, zip 4,388 MB. Served three ways (the bundle's `serve.py`, `python -m http.server`, `vite preview`); the pages load and `sw.js` is fetched with status 200 and the right type from each. In the desktop app's built-in browser pane, registering `sw.js` failed on all three ("unknown error when fetching the script") yet succeeded on the dev server at port 5173 in the same pane, so the failure looks like a restriction of that pane on other ports, not of the bundle. [I] Not proved either way: a real browser (Chrome, Safari, Firefox) must register the worker from the bundle, then be taken offline and reloaded. This stays on Andrew's list (QUESTIONS-AND-GATES.md).
