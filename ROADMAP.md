@@ -25,7 +25,7 @@ An even blend of the two parts. The lesson standard (D92) is a length ceiling pe
 | Independent assessment | ready for a first audience | 10506 of 10506 shipped exercises carry a passing engine, tablebase or rules record (100%); 0 have a failing one; Lesson claims are carried by their exercises' records above; separate lesson-level records are not required | none |
 | Game integration | not started | 0 of 11 tasks done in the game-playing phases | Finish games as part of the curriculum: Maia finales, prescriptions, game review (11 of 11 roadmap tasks open) |
 | Accessibility | not started | 0 of 6 accessibility journeys tested | Test the planned journeys with keyboard, screen reader, narrow screen and enlarged text (6 of 6 untested) |
-| Reliability | in progress | 807 app tests passing, 0 failing (recorded 2026-11-12T10:59+00:00); 3 of 7 tasks done on the live-build review fixes | Fix the live-build review findings (4 of 7 roadmap tasks open) |
+| Reliability | in progress | 807 app tests passing, 0 failing (recorded 2026-11-12T10:59+00:00); 4 of 7 tasks done on the live-build review fixes | Fix the live-build review findings (3 of 7 roadmap tasks open) |
 
 **After release (does not gate readiness)**
 
@@ -45,11 +45,11 @@ An even blend of the two parts. The lesson standard (D92) is a length ceiling pe
 - Core lesson quality: in progress. Next: Rebuild the core skill lessons to the depth standard (19 of 386 still short).
 - Game integration: not started. Next: Finish games as part of the curriculum: Maia finales, prescriptions, game review (11 of 11 roadmap tasks open).
 - Accessibility: not started. Next: Test the planned journeys with keyboard, screen reader, narrow screen and enlarged text (6 of 6 untested).
-- Reliability: in progress. Next: Fix the live-build review findings (4 of 7 roadmap tasks open).
+- Reliability: in progress. Next: Fix the live-build review findings (3 of 7 roadmap tasks open).
 
 ## Checklist progress
 
-172 of 395 checklist tasks are done (in-progress tasks count half). This counts tasks, not effort, and says nothing about whether a person can rely on the course: the readiness table above does.
+173 of 395 checklist tasks are done (in-progress tasks count half). This counts tasks, not effort, and says nothing about whether a person can rely on the course: the readiness table above does.
 
 | Phase | Done | % |
 |---|---|---|
@@ -65,7 +65,7 @@ An even blend of the two parts. The lesson standard (D92) is a length ceiling pe
 | Phase 2n: Path view and a livelier map (Andrew, 8 Nov 2026; design: docs/map-visual-direction.md) | 15/25 | 68% |
 | Phase 2f: Map shows stages as well as subjects (Andrew, 31 October 2026; decision D42) | 0/5 | 0% |
 | Phase 5g: DEFERRED past the first package (Andrew, 12 Nov 2026). Playing real games as part of the curriculum (Andrew, 31 October 2026; decision D42) | 0/5 | 0% |
-| Phase 2g: Fixes from the live-build review of 5bb096 (31 October 2026) | 3/7 | 50% |
+| Phase 2g: Fixes from the live-build review of 5bb096 (31 October 2026) | 4/7 | 64% |
 | Phase 2h: Findings of the independent review of 31 October 2026 (a long PDF review of live build 5bb096 and repository 396d635; decision D43) | 4/16 | 25% |
 | Phase 3e: The new colour palette (Andrew, 7 November 2026; decision D45; after the current app queue, one coherent pass) | 0/7 | 0% |
 | Phase 3f: "Up next" is a colour, and the overall design direction (Andrew, 7 November 2026; decision D46) | 1/5 | 20% |
@@ -325,7 +325,7 @@ From the question data (`docs/research-beginner-questions.md` forum research, `d
 ## Phase 2g: Fixes from the live-build review of 5bb096 (31 October 2026)
 - [x] Skill panel bug: a skill's primary action must be its teaching lesson, never a stage check (course lessons such as L-SC-S3-1 carry a core skill and the panel lists every lesson of that skill; exclude course lessons or sort them last; stage checks appear after instruction or as an explicit test-out)
 - [x] Contrast step: show the original position and move BEFORE asking what changes (forks lesson step 4 asks about "the same square" before the position is shown)
-- [ ] Teaching explanation first, engine verification second: every exercise explanation says which pieces, why, what next, then offers the depth and centipawn evidence
+- [x] Teaching explanation first, engine verification second: every exercise explanation says which pieces, why, what next, then offers the depth and centipawn evidence (ItemPlayer: result and explanation first; the engine line and depth sit in a folded "How this was checked", labelled evidence, not an explanation) [V: read in code 13 Nov]
 - [~] Guided complete game much earlier (see 2e: the step type and the Start screen are built; the guided games in the beginner lessons are being written)
 - [x] Stale interface text: stage numbering Stage 0 in Curriculum vs Stage 1 in Progress; "stub: outcomes only, no items yet" on opening principles; famous games description says eight, there are nineteen; courses listed both as available and as planned
 - [ ] Map readability: readable zoom levels (region names far, skill names medium, connections near); stronger contrast for unstarted nodes; section buttons without horizontal scrolling; selected node, prerequisites and next steps stronger
