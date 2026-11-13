@@ -559,7 +559,7 @@ export function Analysis() {
             <section className="card" aria-label="Top-level games">
               <h2>Top-level games</h2>
               <p className="small muted">From {masters.info.games.toLocaleString()} over-the-board games between players rated {masters.info.minElo}+ (first {masters.info.maxPly / 2} moves). Counts are games, not evaluations.</p>
-              <table className="mastertable">
+              <div className="tablewrap"><table className="mastertable">
                 <thead><tr><th>Move</th><th>Games</th><th>White / draw / Black</th><th>Avg rating</th></tr></thead>
                 <tbody>
                   {masters.rows.slice(0, 8).map(r => {
@@ -574,7 +574,7 @@ export function Analysis() {
                     )
                   })}
                 </tbody>
-              </table>
+              </table></div>
             </section>
           )}
 
