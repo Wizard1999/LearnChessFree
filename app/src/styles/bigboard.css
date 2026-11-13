@@ -67,3 +67,15 @@
 /* No decorative abstract art in any look (Andrew, 9 Nov 2026: "I can not stand the random abstract art"). The components still render it (aria-hidden) so a future,
    deliberate art direction can switch it back on here; until then it is hidden everywhere, Scholarmate included. */
 :root .art, :root .art-scene, :root .art-emblem, :root .geoart, :root svg.art { display: none !important; }
+
+/* Tablets and phones turned sideways (700 to 1099px wide, landscape): the words beside the board, the board as tall as the screen allows, instead of one column
+   with a board taller than the screen. Lessons only; the single column stays in portrait and below 700px. */
+@media (min-width: 700px) and (max-width: 1099px) and (orientation: landscape) {
+  :root { --bsz: min(calc(100svh - 3.5rem), 46vw); }
+  .page.stage .lesson { display: grid; grid-template-columns: minmax(0, 1fr) var(--bsz); grid-template-rows: repeat(40, auto) 1fr; column-gap: 1.2rem; align-items: start; }
+  .page.stage .lesson > * { grid-column: 1; max-width: none; margin-left: 0; width: 100%; }
+  .page.stage .lesson > *:has(.board-wrap), .page.stage .lesson > *:has(.board-wrap) .item, .page.stage .lesson > *:has(.board-wrap) .lineplayer { display: contents; }
+  .page.stage .lesson > *:has(.board-wrap) > *:not(.board-wrap) { grid-column: 1; max-width: none; margin-left: 0; width: 100%; }
+  .page.stage .lesson:not(:has(.board-wrap)) > * { grid-column: 1 / -1; }
+  .page.stage .lesson .board-wrap { grid-column: 2; grid-row: 1 / 42; position: sticky; top: 0.5rem; width: var(--bsz); margin: 0; max-width: none; }
+}
