@@ -71,7 +71,7 @@ code { font-family: ui-monospace, Consolas, monospace; font-size: 0.85em; word-b
 .link { all: unset; cursor: pointer; color: var(--accent); text-decoration: underline; }
 hr { border: 0; border-top: 1px solid var(--line); margin: 0.8rem 0; }
 .opngrid { display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 1.25rem; align-items: start; } @media (max-width: 1000px) { .opngrid { grid-template-columns: 1fr; } }
-.treescroll { overflow: auto; max-height: 78vh; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.treescroll { overflow: auto; max-height: 78svh; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .edge { stroke: #9aa5aa; stroke-opacity: 0.45; } .edge.hot { stroke: var(--accent); stroke-opacity: 0.85; } .edge.cross { stroke-dasharray: 4 4; }
 .tnode rect { fill: #f2f1ea; stroke: #8b8f86; stroke-width: 1.2; } .tnode.b rect { fill: #2c3236; stroke: #6a7277; }
 .tnode.w .san { fill: #1d2327; } .tnode.b .san { fill: #e8e6df; } .tnode .san { font: 600 12px system-ui; }
@@ -353,7 +353,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .sidetoggles { margin: 0.4rem 0; }
 .radialmap { border: 1px solid var(--divider); border-radius: 6px; background: var(--surface); overflow: hidden; }
 .mapbar { padding: 0.4rem 0.6rem; margin: 0; border-bottom: 1px solid var(--divider); align-items: center; }
-.mapsvg { width: 100%; height: min(78vh, 760px); display: block; cursor: grab; touch-action: none; user-select: none; }
+.mapsvg { width: 100%; height: min(78svh, 760px); display: block; cursor: grab; touch-action: none; user-select: none; }
 .mapsvg:active { cursor: grabbing; }
 .wedgebg { fill: var(--info); opacity: 0.14; stroke: var(--divider); stroke-width: 1; }
 .mapwedge:nth-child(even) .wedgebg { opacity: 0.12; }
@@ -372,7 +372,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 
 /* Map page: the map fills the screen; the two panels slide out over it from the edges */
 .mappage h1, .mappage .lede { display: none; }
-.mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { position: relative; display: block; height: calc(100vh - 8.5rem); min-height: 520px; }
+.mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { position: relative; display: block; height: calc(100svh - 8.5rem); min-height: 520px; }
 .mapgrid .mapcenter { position: absolute; inset: 0; }
 .mapgrid .radialmap { height: 100%; display: flex; flex-direction: column; border-radius: 6px; }
 .mapgrid .mapsvg { flex: 1; height: auto; min-height: 0; }
@@ -408,7 +408,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .mapwedge.hi .wedgelabel { fill: var(--accent); }
 
 /* The skill detail is its own floating card (not inside a drawer): centred under the header, above both drawers */
-.sidechrome > .detaildrawer { top: 4.8rem; bottom: auto; right: auto; left: 50%; transform: translateX(-50%); width: min(540px, 92vw); max-height: calc(100vh - 6rem); z-index: 60; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); animation: none; }
+.sidechrome > .detaildrawer { top: 4.8rem; bottom: auto; right: auto; left: 50%; transform: translateX(-50%); width: min(540px, 92vw); max-height: calc(100svh - 6rem); z-index: 60; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); animation: none; }
 .maptip { position: absolute; z-index: 20; width: 300px; max-width: calc(100% - 16px); padding: 0.7rem 0.8rem; background: var(--surface); border: 1px solid var(--control-boundary); border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.5); font-size: 0.88rem; }
 .maptip h3 { margin: 0 0 0.2rem; font-size: 1rem; }
 .maptip ul { list-style: none; margin: 0.4rem 0 0; padding: 0; }
@@ -424,7 +424,7 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 @media (max-width: 900px) { .edgetab { top: auto; bottom: 0.6rem; } .edgetab[aria-expanded='true'] { top: auto; } }
 
 /* The skill detail docks beside the open left panel (or beside the left pull tab) so the map stays visible to its right */
-.sidechrome > .detaildrawer { left: 6.6rem; transform: none; width: min(330px, 92vw); max-height: calc(100vh - 5.6rem); }
+.sidechrome > .detaildrawer { left: 6.6rem; transform: none; width: min(330px, 92vw); max-height: calc(100svh - 5.6rem); }
 .sidechrome > .detaildrawer.afterleft { left: calc(min(400px, 92vw) + 2.4rem); }
 @media (max-width: 900px) { .sidechrome > .detaildrawer, .sidechrome > .detaildrawer.afterleft { left: 50%; transform: translateX(-50%); } }
 
@@ -444,9 +444,9 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .curriculum.dockopen { padding-right: calc(330px + 1.5rem); }
 .edgetab.right[aria-expanded='true'] { right: 330px; }
 @media (max-width: 900px) {
-  .dock { top: auto; width: 100%; height: 55vh; border-left: 0; border-top: 1px solid var(--control-boundary); }
+  .dock { top: auto; width: 100%; height: 55svh; border-left: 0; border-top: 1px solid var(--control-boundary); }
   .curriculum, .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; }
-  .edgetab.right[aria-expanded='true'] { right: 0.6rem; bottom: calc(55vh + 0.4rem); }
+  .edgetab.right[aria-expanded='true'] { right: 0.6rem; bottom: calc(55svh + 0.4rem); }
 }
 
 /* Nodes fill from the bottom as skills are mastered; paths light up behind them; the logical next skills glow */
@@ -468,9 +468,9 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 .edgetab.left { left: 0; right: auto; border-radius: 0 8px 8px 0; }
 .edgetab.left[aria-expanded='true'] { left: 330px; }
 @media (max-width: 900px) {
-  .dock.left, .dock.right { top: auto; width: 100%; height: 50vh; border: 0; border-top: 1px solid var(--control-boundary); }
+  .dock.left, .dock.right { top: auto; width: 100%; height: 50svh; border: 0; border-top: 1px solid var(--control-boundary); }
   .curriculum, .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; }
-  .edgetab.left[aria-expanded='true'] { left: 0.6rem; bottom: calc(50vh + 0.4rem); }
+  .edgetab.left[aria-expanded='true'] { left: 0.6rem; bottom: calc(50svh + 0.4rem); }
 }
 .curriculum.page, .mappage.curriculum { max-width: none; margin-left: 0; margin-right: 0; }
 .curriculum.dockopen { padding-left: calc(330px + 1rem); }
@@ -488,15 +488,15 @@ details .lineplayer > *:not(.board-wrap), .item .lineplayer > *:not(.board-wrap)
 
 /* Below 1100px there is no room beside the map: the panels become one bottom sheet and the page makes room under it, so nothing overlaps */
 @media (max-width: 1100px) {
-  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46vh; border: 0; border-top: 1px solid var(--control-boundary); z-index: 39; }
+  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46svh; border: 0; border-top: 1px solid var(--control-boundary); z-index: 39; }
   .dock.right { z-index: 40; }
-  .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; padding-bottom: 50vh; }
+  .curriculum.dockopen { padding-left: 1rem; padding-right: 1rem; padding-bottom: 50svh; }
   .curriculum, .curriculum.page { padding-left: 1rem; padding-right: 1rem; }
   .edgetab.left { top: auto; bottom: 0.6rem; }
 }
 @media (max-width: 1100px) {
   .curriculum { padding-bottom: 4.5rem; }
-  .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100vh - 13.5rem); }
+  .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100svh - 13.5rem); }
   .edgetab.left { left: 1rem; }
 }
 
@@ -509,8 +509,8 @@ main.curriculum, main.curriculum.dockopen, main.curriculum.page {
 /* Not enough room for two side gutters: one bottom sheet instead, and the centre takes the full width, again the same in every state */
 @media (max-width: 1300px) {
   main.curriculum, main.curriculum.dockopen, main.curriculum.page { width: auto; margin-left: 1rem; margin-right: 1rem; padding-bottom: 4.5rem; }
-  main.curriculum.dockopen { padding-bottom: calc(46vh + 1rem); }
-  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46vh; border: 0; border-top: 1px solid var(--control-boundary); }
+  main.curriculum.dockopen { padding-bottom: calc(46svh + 1rem); }
+  .dock.left, .dock.right { top: auto; bottom: 0; left: 0; right: 0; width: 100%; height: 46svh; border: 0; border-top: 1px solid var(--control-boundary); }
   .dock.right { z-index: 40; }
   .edgetab.left { top: auto; bottom: 0.6rem; left: 1rem; }
 }
@@ -569,7 +569,7 @@ main.curriculum { padding-top: 1.2rem; }
 .cover.open .coverinfo { visibility: visible; opacity: 1; pointer-events: auto; }
 .cover:hover .coverinfo, .cover:focus-within .coverinfo { transform: none; }
 @media (hover: none), (max-width: 700px) {
-  .cover.open .coverinfo, .cover.flip.open .coverinfo { position: fixed; left: 50%; right: auto; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 360px); max-height: 80vh; z-index: 80; }
+  .cover.open .coverinfo, .cover.flip.open .coverinfo { position: fixed; left: 50%; right: auto; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 360px); max-height: 80svh; z-index: 80; }
 }
 
 /* Hovering only previews (it never blocks the next cover); clicking pins the box and makes it usable */
@@ -623,7 +623,7 @@ main.mappage.curriculum, main.mappage.curriculum.dockopen {
 .mappage .sectionbar .chip { white-space: nowrap; flex: 0 0 auto; }
 .mappage .sectionlabel { flex: 0 0 auto; flex-basis: auto; }
 .mappage .tabs, .mappage .viewtabs { margin-bottom: 0.4rem; }
-.mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100vh - 9.5rem); min-height: 560px; }
+.mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100svh - 9.5rem); min-height: 560px; }
 @media (min-width: 1300px) {
   /* the docks (fixed, in the side gutters) now overlay the map: keep them clear of the header and above the map */
   .mappage ~ .sidechrome .dock, .mappage .dock { z-index: 30; }
@@ -744,7 +744,7 @@ main.page > p.small.muted > a { display: inline-flex; align-items: center; min-h
    Tap targets of at least 40px in the header, a compact map toolbar that does not wrap into half the screen, a skill list that opens under the toolbar,
    a small minimap in the free corner, and a bottom sheet that is shorter than the page and never covers the toolbar. */
 .mapbarwrap { position: relative; z-index: 9; }
-.maplist { top: 100%; left: 0.6rem; max-height: min(60vh, 28rem); }
+.maplist { top: 100%; left: 0.6rem; max-height: min(60svh, 28rem); }
 .maplisthead { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-bottom: 0.4rem; }
 .maplist .maplistrow .link { align-items: center; min-height: 40px; }
 .maplist .listmark { display: inline-block; width: 1.2rem; text-align: center; color: var(--text-secondary); }
@@ -766,18 +766,18 @@ main.page > p.small.muted > a { display: inline-flex; align-items: center; min-h
   .mapbar button[aria-label="Zoom in"], .mapbar button[aria-label="Zoom out"] { min-width: 44px; padding: 0.4rem 0; }
   .mapbar > .small.muted { display: none; }
   .mapbar .maplegend { font-size: 0.8rem; }
-  .maplist { left: 0.4rem; right: 0.4rem; width: auto; max-height: min(44vh, 22rem); }
+  .maplist { left: 0.4rem; right: 0.4rem; width: auto; max-height: min(44svh, 22rem); }
   .maplisthead button { white-space: nowrap; }
   .mapgrid, .mapgrid.lo, .mapgrid.ro, .mapgrid.lo.ro { height: calc(100dvh - 19rem); min-height: 440px; }
   svg.minimap { display: block; width: 5.5rem; height: 5.5rem; top: auto; right: 0.5rem; bottom: 0.5rem; }
-  .dock.left, .dock.right { height: min(36vh, 20rem); border-radius: 12px 12px 0 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.25); }
-  main.mappage.curriculum.dockopen { padding-bottom: calc(min(36vh, 20rem) + 1rem); }
+  .dock.left, .dock.right { height: min(36svh, 20rem); border-radius: 12px 12px 0 0; box-shadow: 0 -4px 16px rgba(0,0,0,0.25); }
+  main.mappage.curriculum.dockopen { padding-bottom: calc(min(36svh, 20rem) + 1rem); }
   .dock.right .dockbody { padding-top: 0; }
   .dock.right .closebtn { position: sticky; top: 0; z-index: 2; float: right; min-height: 44px; min-width: 44px; margin: 0.3rem 0 0 0.5rem; }
   .dock.right .detaildrawer h2 { font-size: 1.1rem; margin-top: 0.7rem; }
   .dockclose { min-width: 44px; min-height: 44px; }
   .edgetab { min-height: 44px; }
-  main.curriculum.skillopen { padding-bottom: calc(min(36vh, 20rem) + 1rem); }
+  main.curriculum.skillopen { padding-bottom: calc(min(36svh, 20rem) + 1rem); }
   .dock .dockbody a, .dock .dockbody button.link, .dock .dockbody summary, .dock .dockbody .why { display: inline-flex; align-items: center; min-height: 40px; box-sizing: border-box; }
   .dock .dockbody .linkrow { gap: 0 0.9rem; }
   .dock .dockbody .why { min-width: 40px; justify-content: center; }
@@ -839,10 +839,10 @@ main.mappage.curriculum.winright { margin-right: calc(330px + 1.25rem); }
 /* narrower windows: the panels become a bottom sheet and the map fits in what is left above it */
 @media (max-width: 1300px) {
   main.mappage.curriculum.winleft, main.mappage.curriculum.winright { margin-left: 0.75rem; margin-right: 0.75rem; }
-  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - 46vh); }
+  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - 46svh); }
 }
 @media (max-width: 700px) {
-  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - min(36vh, 20rem)); }
+  main.mappage.curriculum.winleft, main.mappage.curriculum.winright { height: calc(100dvh - var(--topH, 4.1rem) - var(--botH, 3rem) - min(36svh, 20rem)); }
 }
 
 /* the footer line stays (the credit), but takes little room under the map */
@@ -938,7 +938,7 @@ html { scrollbar-gutter: stable; }
 .mappage .sectionbar .chip.stagechip { text-align: left; }
 .chipmenu { position: relative; flex: 0 0 auto; margin: 0 0 0.3rem; }
 .chipmenubtn { min-height: 38px; width: 100%; text-align: left; }
-.chipmenubody { position: absolute; z-index: 70; left: 0; right: 0; top: calc(100% + 2px); display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.55rem; background: var(--surface); border: 1px solid var(--control-boundary); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); max-height: min(60vh, 24rem); overflow-y: auto; }
+.chipmenubody { position: absolute; z-index: 70; left: 0; right: 0; top: calc(100% + 2px); display: flex; flex-wrap: wrap; gap: 0.35rem; padding: 0.55rem; background: var(--surface); border: 1px solid var(--control-boundary); border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); max-height: min(60svh, 24rem); overflow-y: auto; }
 .chipmenubody .chip { font-size: 0.85rem; min-height: 34px; text-align: left; }
 .mappage .sectionbar .chip.stagechip.here:not(.on) { border-color: var(--accent); border-width: 2px; }
 @media (max-width: 700px) {
@@ -1241,7 +1241,7 @@ ul.lessonindex { margin-left: 1.9rem; }
 .coverface.haspic.blank .covertitle, .coverface.haspic.blank .coverauthor, .coverface.haspic.blank .coveryear { display: block; position: relative; color: white; text-shadow: 0 1px 3px black; }
 .coverface.haspic.blank .coverrule { display: block; position: relative; }
 
-.scanpage { display: block; width: auto; max-width: 100%; height: auto; max-height: calc(100vh - 11rem); object-fit: contain; margin: 0.6rem auto; border: 1px solid var(--divider); border-radius: 4px; background: white; }
+.scanpage { display: block; width: auto; max-width: 100%; height: auto; max-height: calc(100svh - 11rem); object-fit: contain; margin: 0.6rem auto; border: 1px solid var(--divider); border-radius: 4px; background: white; }
 .scanview:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
 /* reading a book takes the whole window so a page (and its diagrams) is as large as it can be */
 main.libpage:has(.reader) { width: calc(100vw - 2rem); max-width: none; }

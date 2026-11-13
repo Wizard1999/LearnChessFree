@@ -34,6 +34,7 @@ import { SoundEvents } from './components/SoundEvents'
 import { CelebrationLayer } from './components/CelebrationLayer'
 import { MORE_LINKS } from './lib/phoneNav'
 import { usePhone } from './lib/usePhone'
+import { useHideOnScroll } from './lib/useHideOnScroll'
 
 // The top bar (D72): the masthead, the Curriculum's three places (Curriculum, Electives, Constellations) centred, then More at the far right. Every other place is under More.
 const more = MORE_LINKS // shared with the phone tab bar's More sheet
@@ -42,6 +43,7 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
   const loc = useLocation()
   const phone = usePhone()
+  useHideOnScroll(phone)
   const moreRef = useRef<HTMLDetailsElement>(null)
   return (
     <ContentProvider>

@@ -355,7 +355,9 @@ export function playSound(id: SoundId): boolean {
     if (!prefs.on || !prefs[KIND_OF[id]]) return false
     if (blocked()) return false
     if (!limiter.allow(KIND_OF[id], Date.now())) return false
-    return start(id)
+    const ok = start(id)
+    if (ok && (id === 'right' || id === 'wrong') && typeof navigator !== 'undefined' && 'vibrate' in navigator && !(typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)) navigator.vibrate(id === 'right' ? 12 : [18, 40, 18])   // a light tap on a phone that supports it, with the same on/off as the sound
+    return ok
   } catch { return false }
 }
 

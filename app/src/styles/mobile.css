@@ -227,3 +227,33 @@
   ul.lessonindex > .lessonrow .actions .btn-danger { grid-row: 3; grid-column: 2 / -1; }
   ul.lessonindex > .lessonrow:not(:has(.nextlabel)) { grid-template-areas: none; }
 }
+
+/* ---- Phone polish: header that steps aside, touch targets, text floor, tab labels, pressed states ---- */
+@media (max-width: 760px) {
+  .top { transition: transform 0.2s ease; }
+  :root[data-hdr='hidden'] .top { transform: translateY(-100%); }
+  ul.lessonindex > .lessonrow .lessonskill { display: none; }
+  .tabbar { height: auto; min-height: var(--tabH); }
+  .tabbar .tab span { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; text-align: center; line-height: 1.05; }
+}
+/* A finger needs about 44px. Controls inside a chessboard keep their own sizes. */
+@media (pointer: coarse) {
+  main button:not(.cg-wrap *), main .button, main .chip, main summary, main select, .sheet button, .sheet a { min-height: 44px; }
+  main .chip { padding-top: 0.35rem; padding-bottom: 0.35rem; }
+  main input[type='checkbox'], main input[type='radio'] { width: 1.3rem; height: 1.3rem; }
+  button:active:not(:disabled), .button:active, .tab:active, .chip:active { transform: scale(0.97); transition: transform 0.06s; }
+  .small, .muted.small, .lessonmeta { font-size: max(0.82rem, 12.5px); }
+  .byline { font-size: max(0.78rem, 12px); }
+}
+@media (prefers-reduced-motion: reduce) { .top { transition: none; } button:active:not(:disabled), .button:active, .tab:active, .chip:active { transform: none; } }
+/* On a phone the board gets nearly the whole width: less padding around the lesson card. */
+@media (max-width: 700px) {
+  main.page.stage { padding-left: 0.4rem; padding-right: 0.4rem; }
+  main.page.stage .lesson .card, main.page.stage .lesson section.card { padding: 0.7rem 0.5rem; }
+}
+/* The guided game's buttons stay with the text under the board: no floating bar over the pieces, and a button only as big as its words. */
+@media (max-width: 760px) {
+  .guided .actionbar { position: static; margin: 0.3rem 0 0; padding: 0; background: none; border: 0; flex-wrap: wrap; }
+  .guided .actionbar > button, .guided .actionbar > .button { flex: 0 0 auto; min-height: 40px; padding: 0.2rem 1rem; }
+  .guided .actionbar > .primary { flex: 0 0 auto; }
+}
