@@ -62,21 +62,22 @@ assert "5 of 20" in a["next"] and "75%" in " ".join(a["evidence"])
 # 6. the plain summary is derived: rely lines quote the evidence, experimental lines name the area and its next condition
 f = copy.deepcopy(EMPTY); f["itemsWithEvidence"] = 12; f["depthByClass"]["B"] = [2, 5]
 s = rd.build_readiness(f)
-assert any("12 of 20" in x for x in s["rely"]) and any("2 of 10" in x for x in s["rely"])
+assert any("12 of 20" in x for x in s["rely"]) and any("2 of 9" in x for x in s["rely"])
 assert any(x.startswith("Core lesson quality: in progress. Next:") for x in s["experimental"])
 
-# 7. depth rule agrees with tools/check_depth.py: a stage-S0 lesson needs 6 to 14 steps and no long move chain in prose; too long fails too
+# 7. depth rule agrees with tools/check_depth.py (D92): a per-stage ceiling on length and minutes, at least two tasks, a board in class B, no long move chain in prose
 early = {"L-X-1"}
 card = {"type": "card", "text": "A plain sentence."}
-ok_l = {"id": "L-X-1", "steps": [card] * 8}
-assert rd.meets_depth(ok_l, early, "S0") == ("A", True, 0)
-assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 5}, early, "S0")[1] is False   # too short
-assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 30}, early, "S0")[1] is False  # far too long for the first stage
-heavy = {"id": "L-X-1", "steps": [card] * 7 + [{"type": "card", "text": "1.e4 e5 2.Nf3 Nc6 3.Bb5"}]}
+task = {"type": "item"}
+board = {"type": "board"}
+assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 6 + [task] * 2}, early, "S0") == ("A", True, 0)
+assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 8}, early, "S0")[1] is False            # no task to answer
+assert rd.meets_depth({"id": "L-X-1", "steps": [card] * 30 + [task] * 2}, early, "S0")[1] is False  # far too long for the first stage
+heavy = {"id": "L-X-1", "steps": [card] * 7 + [task] * 2 + [{"type": "card", "text": "1.e4 e5 2.Nf3 Nc6 3.Bb5"}]}
 assert rd.meets_depth(heavy, early, "S0") == ("A", False, 1)
-assert rd.meets_depth({"id": "L-Y-1", "steps": [card] * 20}, early, "S3")[:2] == ("B", False)  # B needs boards in half of the steps
-assert rd.meets_depth({"id": "L-Y-1", "steps": [{"type": "board"}] * 20}, early, "S3")[:2] == ("B", True)
-assert rd.meets_depth({"id": "L-Y-1", "steps": [{"type": "board"}] * 40}, early, "S3")[:2] == ("B", False)  # S3 lessons stay under 28 steps
+assert rd.meets_depth({"id": "L-Y-1", "steps": [card] * 14 + [task] * 2}, early, "S3")[:2] == ("B", False)  # class B needs a board
+assert rd.meets_depth({"id": "L-Y-1", "steps": [board] * 14 + [task] * 2}, early, "S3")[:2] == ("B", True)
+assert rd.meets_depth({"id": "L-Y-1", "steps": [board] * 40 + [task] * 2}, early, "S3")[:2] == ("B", False)  # too long for stage S3
 
 # 8. phase tasks are summed by id, not by prefix
 ph = [{"title": "Phase 2e: x", "done": 1, "total": 4}, {"title": "Phase 2eb: y", "done": 3, "total": 3}, {"title": "Phase 5g: z", "done": 2, "total": 5}, {"title": "Phase 5f: w", "done": 1, "total": 2}]
