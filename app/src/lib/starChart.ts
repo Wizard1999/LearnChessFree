@@ -10,7 +10,7 @@ export interface StarSpec {
   /** length of the longest ray, from the centre (0 = none) */ rayLen: number
 }
 
-const R = [5, 8.5, 11.5, 14, 16]
+const R = [6.5, 8.5, 11.5, 14, 16]
 const GLOW_OPACITY = [0, 0.3, 0.45, 0.62, 0.85]
 
 /** Size and brightness by level: bigger and brighter with every level. A star never started is a faint dim dot (never an empty ring); a star in the middle of a lit
