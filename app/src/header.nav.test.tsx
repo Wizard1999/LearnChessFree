@@ -53,7 +53,7 @@ describe('top bar (D72)', () => {
     expect(container.querySelector('footer')?.textContent).toContain(`Since ${BRAND.since}`)
     expect(BRAND.founded).toBe('2026-10-25')
     const nav = container.querySelector('header.top nav')!
-    expect([...nav.querySelectorAll('.navmain > a')].map(a => a.textContent)).toEqual(['Curriculum', 'Electives', 'Constellations'])
+    expect([...nav.querySelectorAll('.navmain > a')].map(a => a.textContent)).toEqual(['Curriculum', 'Electives', 'Observatory'])
     expect(nav.querySelector('.navsep')).toBeNull() // three views need no divider
     expect(nav.querySelectorAll('.navmain > a.on')).toHaveLength(0) // none is lit on another page
     expect([...nav.querySelectorAll('.morelist a:not(.folded)')].map(a => a.textContent)).toEqual(['Play', 'Play real people', 'Review', 'Library', 'Contrast lab', 'My plan', 'Learning record', 'Roadmap'])
@@ -155,7 +155,7 @@ describe('top bar (D72)', () => {
     expect(closed.getAttribute('aria-expanded')).toBe('true') // a search opens the sections that match
     expect(flags().every(f => f === 'false')).toBe(false) // matches open while searching
   })
-  it('the Constellations page has no Progress or Mastery windows: the selected-skill dock is all that is left', async () => {
+  it('the Observatory page has no Progress or Mastery windows: the selected-skill dock is all that is left', async () => {
     const { container } = await open('/course?view=map&win=progress')
     await waitFor(() => expect(container.querySelector('.sectionbar')).not.toBeNull(), { timeout: 15000 })
     expect(container.querySelector('.dock.left, .missionpanel, .dockwin')).toBeNull()
@@ -164,7 +164,7 @@ describe('top bar (D72)', () => {
     const { container } = await open('/course?view=map')
     await waitFor(() => expect(container.querySelector('.sectionbar')).not.toBeNull(), { timeout: 15000 })
     expect(container.querySelector('.sectionbar')?.textContent).not.toMatch(/View:|Progress window|Mastery challenge window/)
-    expect(container.querySelector('header .navmain > a.on')?.textContent).toBe('Constellations')
+    expect(container.querySelector('header .navmain > a.on')?.textContent).toBe('Observatory')
   })
   it('Play real people lists lichess and chess.com as plain new-tab links with labelled claims, and links on to the game review', async () => {
     const { container } = await open('/people')

@@ -548,7 +548,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
           )
         })()}
       </svg>
-      <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of your whole constellation"
+      <svg className="minimap" viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} role="img" aria-label="Overview of your whole Observatory"
         onPointerDown={e => { const b = e.currentTarget.getBoundingClientRect(); const fx = ((e.clientX - b.left) / b.width) * 2 * R - R, fy = ((e.clientY - b.top) / b.height) * 2 * R - R; go({ x: -fx, y: -fy, k: viewRef.current.k }) }}>
         <circle r={layout.radius} className="miniback" />
         {layout.nodes.map(n => <circle key={n.id} cx={n.x} cy={n.y} r={n.id === linkedHoverId ? 40 : n.id === rec ? 26 : 12} className={`${n.id === linkedHoverId ? 'minilink' : n.id === rec ? 'minirec' : (progress.get(n.id)?.level ?? 0) > 0 ? 'minidone' : 'minidot'} lv${level(n.id)}`} />)}
@@ -577,7 +577,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         )
       })()}
       {phone && (
-        <div className="mapfab" role="group" aria-label="Constellation controls">
+        <div className="mapfab" role="group" aria-label="Observatory controls">
           <button type="button" onClick={() => zoom(1.3)} aria-label="Zoom in"><span aria-hidden="true">+</span></button>
           <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Zoom out"><span aria-hidden="true">−</span></button>
           <button type="button" onClick={fit} aria-label="Fit all"><span aria-hidden="true">⤢</span></button>
@@ -587,7 +587,7 @@ export function RadialMap({ toolbarLead, phoneLead, phoneFilters, skills, progre
         </div>
       )}
       {phone && (
-        <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Constellation filters" className="filtersheet">
+        <Sheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="Observatory filters" className="filtersheet">
           <div onClick={e => { if ((e.target as HTMLElement).closest('button.chip')) setFiltersOpen(false) }}>{phoneFilters}</div>
           <h3>Skills</h3>
           <div className="options"><button type="button" className="chip" onClick={() => { setFiltersOpen(false); setFindOpen(true); setListOpen(true); setQ('') }}>Skill list</button></div>

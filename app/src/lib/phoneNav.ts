@@ -7,7 +7,7 @@ export type PhoneTab = 'curriculum' | 'electives' | 'map' | 'more'
 export const PHONE_TABS: { id: PhoneTab; to: string; label: string }[] = [
   { id: 'curriculum', to: '/course', label: 'Curriculum' },
   { id: 'electives', to: '/course?view=courses', label: 'Electives' },
-  { id: 'map', to: '/course?view=map', label: 'Constellations' },
+  { id: 'map', to: '/course?view=map', label: 'Observatory' },
   { id: 'more', to: '', label: 'More' },
 ]
 

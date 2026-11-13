@@ -164,3 +164,6 @@ Honest caveat [I]: the new bar is looser by design, so the jump (core lessons 6%
 ## 12 Nov 2026: first package scope (Andrew)
 Ship core with: finish lesson depth rebuild, offline package (rule 10), live-build review fixes, accessibility pass (keyboard, narrow screen, enlarged text; screen reader goes to QUESTIONS-AND-GATES), release plumbing. Games as curriculum (Phases 5f, 5g) are deferred to a later release; autopilot skips them.
 Lesson layout: steps without a board span the full width, left-aligned with the title; board steps anchor words and board to the left edge (bigboard.css). Fixed empty "This part covers ." bridge cards (pace_lessons.py).
+
+## 13 Nov 2026: the Constellations page is now "Observatory"
+Andrew renamed it. Header, phone tab bar, links, help and aria labels say Observatory; each slice is still called a constellation inside it. Storage keys and the `map-before-constellations` tag keep their old names on purpose.

@@ -156,9 +156,9 @@ export function Course() {
               </div>
               {returns.length > 0 && <>
                 <h3 className="sdh">Where this skill returns</h3>
-                <p className="small muted">It starts at {stageSentence(homeStages.get(node.id) ?? 0)} and comes back later. Each button shows that stage on your constellation.</p>
+                <p className="small muted">It starts at {stageSentence(homeStages.get(node.id) ?? 0)} and comes back later. Each button shows that stage in your Observatory.</p>
                 <ul className="plain returns">{returns.map(g => (
-                  <li key={g.stageId}><button type="button" className="link" aria-label={`Show ${stageSentence(g.stageIndex)} on your constellation`} onClick={() => requestMapJump({ skill: node.id, stage: g.stageIndex })}>{stageSentence(g.stageIndex)}</button>
+                  <li key={g.stageId}><button type="button" className="link" aria-label={`Show ${stageSentence(g.stageIndex)} in your Observatory`} onClick={() => requestMapJump({ skill: node.id, stage: g.stageIndex })}>{stageSentence(g.stageIndex)}</button>
                     <span className="small muted"> adds {g.items.map(i => i.adds).filter((a, k, all) => all.indexOf(a) === k).join(', ')}</span></li>))}</ul>
               </>}
               <h3 className="sdh">What it connects to</h3>
@@ -217,13 +217,13 @@ export function Course() {
     <div className="segmented" role="group" aria-label="Curriculum views">
       <button type="button" onClick={() => setTab('path')}>Curriculum</button>
       <button type="button" onClick={() => setTab('courses')}>Electives</button>
-      <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Constellations</button>
+      <button type="button" className="on" aria-pressed="true" onClick={() => setTab('map')}>Observatory</button>
     </div>
   )
   const phoneFilters = <>
     <h3>Sections</h3><div className="options">{sectionChips}</div>
     <h3>Stages</h3><div className="options">{stageChips}</div>
-    <details className="maphelptext"><summary>How your constellation fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
+    <details className="maphelptext"><summary>How your Observatory fills in</summary><p className="small">{MAP_HELP.replace('Drag to move, scroll or pinch to zoom.', 'Drag with one finger to move, pinch to zoom, tap a skill to open it.')}</p></details>
   </>
   return (
     <>
@@ -241,8 +241,8 @@ export function Course() {
       <button type="button" className="chip maphelp" aria-label="What is this chart and how to read it" aria-expanded={helpOpen} aria-controls="constellation-help" onClick={toggleHelp}>?</button>
       </div>} skills={content.skills} progress={new Map(overall.nodes.map(n => [n.id, n]))} picked={picked} onPick={pick} strandNames={STRAND_NAMES} highlightStrand={isAll ? null : view} highlightStage={stageSel} lessons={coreLessonsOf(content.lessons)} lessonProgress={progress ?? []} recommended={next[0]?.skill ?? null} upNext={next.map(x => x.skill)} /></div>
 
-      {helpOpen && <section className="card maphelpcard" id="constellation-help" aria-label="About the constellations chart">
-        <h2>Your constellations</h2>
+      {helpOpen && <section className="card maphelpcard" id="constellation-help" aria-label="About the Observatory">
+        <h2>Your Observatory</h2>
         <p>{MAP_INTRO}</p>
         <ul>{MAP_READING.map(r => <li key={r}>{r}</li>)}</ul>
         <p className="small muted">Drag to move. Scroll to zoom in on whatever the pointer is over. Nothing is locked: pick any star.</p>

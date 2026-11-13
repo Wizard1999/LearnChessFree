@@ -19,7 +19,7 @@ export function MapPreview({ skills, lessons, levels, nextId, nextTitle }: Props
   const next = nextId ? layout.nodes.find(n => n.id === nextId) : undefined
   const edge = (a: number) => `${Math.cos(a) * layout.radius},${Math.sin(a) * layout.radius}`
   return (
-    <Link to="/course?view=map" className="card mappreview" aria-label={`${text} Open your constellation.`}>
+    <Link to="/course?view=map" className="card mappreview" aria-label={`${text} Open your Observatory.`}>
       <svg viewBox={`${-R} ${-R} ${2 * R} ${2 * R}`} className="mappreviewsvg" aria-hidden="true" focusable="false">
         {layout.wedges.map(w => (
           <path key={w.strand} className={`pvwedge${w.strand === strand ? ' here' : ''}`} d={`M0,0 L${edge(w.from)} A${layout.radius},${layout.radius} 0 ${w.to - w.from > Math.PI ? 1 : 0} 1 ${edge(w.to)} Z`} />
@@ -32,8 +32,8 @@ export function MapPreview({ skills, lessons, levels, nextId, nextTitle }: Props
       </svg>
       <span className="mappreviewtext">
         <span className="eyebrow">Where you are</span>
-        <span className="pvnext">{nextTitle ? <>Next: <strong>{nextTitle}</strong></> : 'Open your constellation'}</span>
-        <span className="small muted">{started} of {nodes.length} skills started · See your constellation</span>
+        <span className="pvnext">{nextTitle ? <>Next: <strong>{nextTitle}</strong></> : 'Open your Observatory'}</span>
+        <span className="small muted">{started} of {nodes.length} skills started · See your Observatory</span>
       </span>
     </Link>
   )
