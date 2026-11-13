@@ -122,7 +122,7 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
   const [scanPage, setScanPage] = useState(() => { try { return +(localStorage.getItem(`scan:${book.id}`) ?? 0) || 0 } catch { return 0 } })
   useEffect(() => {
     let live = true
-    fetch(`${base()}library/scans/${book.id}/index.json`).then(r => (r.ok ? r.json() : null)).then(j => { if (live) setScanPages(j?.pages > 0 ? j.pages : 0) }).catch(() => { if (live) setScanPages(0) })
+    fetch(`${base()}scans/${book.id}/index.json`).then(r => (r.ok ? r.json() : null)).then(j => { if (live) setScanPages(j?.pages > 0 ? j.pages : 0) }).catch(() => { if (live) setScanPages(0) })
     return () => { live = false }
   }, [book.id])
   const showScan = wantScan && scanPages !== null && scanPages > 0
@@ -159,7 +159,7 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
               <button type="button" onClick={() => goScan(scanPage + 1)} disabled={scanPage >= (scanPages ?? 1) - 1}>Next ▶</button>
               <span className="small muted">Arrow keys turn the page. Photographs of the printed pages, stored with the app, so they work with no connection.</span>
             </div>
-            <img className="scanpage" src={`${base()}library/scans/${book.id}/${scanPage}.webp`} alt={`Scanned page ${scanPage + 1} of ${book.title}`} />
+            <img className="scanpage" src={`${base()}scans/${book.id}/${scanPage}.webp`} alt={`Scanned page ${scanPage + 1} of ${book.title}`} />
           </div>
         : text === null ? <p className="muted">Loading…</p> : (
         <>
