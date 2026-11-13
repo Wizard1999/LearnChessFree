@@ -157,9 +157,9 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
               <button type="button" onClick={() => goScan(scanPage - 1)} disabled={scanPage === 0}>◀ Previous</button>
               <label className="small">Page <input type="number" min={1} max={scanPages ?? 1} value={scanPage + 1} onChange={e => goScan((+e.target.value || 1) - 1)} aria-label="Page number" style={{ width: '5rem' }} /> of {scanPages}</label>
               <button type="button" onClick={() => goScan(scanPage + 1)} disabled={scanPage >= (scanPages ?? 1) - 1}>Next ▶</button>
-              <span className="small muted">Arrow keys turn the page. Photographs of the printed pages, stored with the app, so they work with no connection.</span>
+              <span className="small muted">Arrow keys turn the page, or click the right or left half of it. Photographs of the printed pages, stored with the app, so they work with no connection.</span>
             </div>
-            <img className="scanpage" src={`${base()}scans/${book.id}/${scanPage}.webp`} alt={`Scanned page ${scanPage + 1} of ${book.title}`} />
+            <img className="scanpage" src={`${base()}scans/${book.id}/${scanPage}.webp`} alt={`Scanned page ${scanPage + 1} of ${book.title}`} style={{ cursor: 'pointer' }} title="Click the right half for the next page, the left half for the previous" onClick={e => { const r = e.currentTarget.getBoundingClientRect(); goScan(scanPage + (e.clientX - r.left > r.width / 2 ? 1 : -1)) }} />
           </div>
         : text === null ? <p className="muted">Loading…</p> : (
         <>
