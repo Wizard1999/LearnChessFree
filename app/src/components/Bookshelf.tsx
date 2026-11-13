@@ -152,7 +152,7 @@ function Reader({ book, onClose }: { book: Book; onClose: () => void }) {
         <a href={book.source_url} target="_blank" rel="noreferrer" className="small">Where this came from</a>
       </div>}
       {showScan
-        ? <div className="scanview" tabIndex={0} onKeyDown={e => { if (e.key === 'ArrowRight') goScan(scanPage + 1); if (e.key === 'ArrowLeft') goScan(scanPage - 1) }}>
+        ? <div className="scanview" tabIndex={0} ref={el => { if (el && !el.dataset.seen) { el.dataset.seen = '1'; el.scrollIntoView({ block: 'start' }) } }} onKeyDown={e => { if (e.key === 'ArrowRight') goScan(scanPage + 1); if (e.key === 'ArrowLeft') goScan(scanPage - 1) }}>
             <div className="row filters">
               <button type="button" onClick={() => goScan(scanPage - 1)} disabled={scanPage === 0}>◀ Previous</button>
               <label className="small">Page <input type="number" min={1} max={scanPages ?? 1} value={scanPage + 1} onChange={e => goScan((+e.target.value || 1) - 1)} aria-label="Page number" style={{ width: '5rem' }} /> of {scanPages}</label>
