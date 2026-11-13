@@ -1,0 +1,228 @@
+{
+ "id": "L-TAC-BACKRANK-1C",
+ "title": "Back-rank mate, and luft as the cure (part 3 of 3)",
+ "skill": "TAC.BACKRANK",
+ "depth": "D1",
+ "minutes": 9,
+ "outcomes": [
+  "Finds a back-rank mate with a rook or a queen, for either side, in positions where nothing names the idea",
+  "Names which of the three conditions (flight square, capture, block) fails in a check that is not mate",
+  "Counts the defenders of the back rank and says whether an exchange removes the last one",
+  "Decides whether his own king needs luft now, and picks between h3, g3 and a guard on the rank, saying what each loosens",
+  "Explains the idea to a beginner in four parts: the idea, when it works, an example, one warning"
+ ],
+ "review": {
+  "status": "needs-human",
+  "reviewer": null
+ },
+ "sources": [
+  "sources/sheets/nimzowitsch_my-system.md (idea 21: a short series of exchanges can win a back-rank mate) [V-sheet]",
+  "docs/citable-views.md 4.4 (Emanuel Lasker, Common Sense in Chess: count the king's squares, keep the checker safe) [V-sheet]",
+  "docs/citable-views.md 4.12 and sources/sheets/edlasker_chess-strategy.md K17 and K6 (d): every pawn move leaves something behind; a luft is right once a mate threat shows it is needed [V-sheet]",
+  "docs/citable-views.md 5.8 and sheet K3: a defender can be an illusion, for instance when a mate threat ties it down (Edward Lasker) [V-sheet]",
+  "docs/citable-views.md 5.9 (Znosko-Borovsky: real and fictitious threats) [V-sheet]",
+  "docs/citable-views.md 10.4 and 10.6 (Heisman: list the opponent's forcing replies; Looking for Trouble) [S, not re-read]",
+  "docs/citable-views.md 12.13 (naming failures as a self-diagnosis aid) [H]",
+  "Lichess puzzle database (CC0), positions from real games: 3PuVM (hook), TRIMp (decoy), 33pRu (deflection), 2Vsf7 (exchange), 2f6Ew and 6ANXe (drift into the mate), eSn5l (real example, master game); each position is the position after the opponent's first recorded move, replayed with python-chess [V]",
+  "Shipped items re-used: IA1-054 to IA1-059, IG-MATE1-132, IL-tEHF0. Positions typed by hand and checked by the engine: see content/items/lesson-tac-l-tac-backrank-1.json [V]",
+  "Position olP4N (early luft costs a move) is from the Lichess puzzle database (CC0) [V]",
+  "competition docs docs/competition-chesscom.md and docs/competition-chess-steps.md (structure: short theory, worksheet, mixed review) [S]",
+  "No statistics from our own data are used in this lesson. Hypotheses labelled [H] in the text are the author's own and untested. The engine claim for every board is under the recorded settings (Stockfish 19 lite, depth 16): evidence, not proof."
+ ],
+ "part": {
+  "of": "L-TAC-BACKRANK-1",
+  "n": 3,
+  "total": 3
+ },
+ "steps": [
+  {
+   "type": "card",
+   "text": "Part 3 of 3: Back-rank mate, and luft as the cure. This part covers the closing questions, a practice round and a real game. Each part is short on purpose: finish one, play a game or take a break, and come back."
+  },
+  {
+   "type": "card",
+   "text": "**Two questions, every move.** Can I check on his first rank, and is it mate? Could he do it to me? [I] Looking at both kings every move is cheap and may catch these mates on both sides. This mirrors Heisman's looking-for-trouble routine [S]: find his threat, then the prevention. Asking 'what rook could check there?' before a quiet move is its practical form. More mixed practice: L-TAC-BACKRANK-2."
+  },
+  {
+   "type": "item",
+   "item": "ITAC-LTACBACKRANK1-10",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ITAC-LTACBACKRANK1-11",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ITAC-LTACBACKRANK1-12",
+   "silent": true
+  },
+  {
+   "type": "item",
+   "item": "ITAC-LTACBACKRANK1-13",
+   "silent": true
+  },
+  {
+   "type": "practice",
+   "tags": [
+    "theme.backRankMate",
+    "cue.3"
+   ],
+   "n": 6
+  },
+  {
+   "type": "board",
+   "fen": "4r2k/1Q4bp/p5p1/1p6/8/5B2/5NPP/4r1RK w - - 1 46",
+   "caption": "From a Lichess puzzle record (eSn5l, CC0), tagged as a master game in that database. White to move. Black's rook on e1 attacks the white rook on g1. In the game White took the pawn on a6 with the queen. What could go wrong with that?",
+   "highlight": [
+    "a6",
+    "e1",
+    "g1",
+    "h1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "attackers",
+     "params": {
+      "square": "g1",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "Black's rook on e1 attacks White's rook on g1."
+    },
+    {
+     "id": "C2",
+     "type": "move_loses",
+     "params": {
+      "move": "b7a6",
+      "cp": 1000
+     },
+     "statement": "The queen capture on a6 loses to a forced mate."
+    },
+    {
+     "id": "C3",
+     "type": "best_move_in",
+     "params": {
+      "moves": [
+       "f2e4"
+      ]
+     },
+     "statement": "A knight move is best."
+    },
+    {
+     "id": "C4",
+     "type": "eval_range",
+     "params": {
+      "min": 300,
+      "max": 1200
+     },
+     "statement": "White stands clearly better (engine, depth 16)."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4r2k/6bp/Q5p1/1p6/8/5B2/5NPP/4r1RK b - - 0 46",
+   "caption": "In the game the queen took on a6. Black to move. Predict Black's forcing move before you step: the white king has only its own pawns for cover.",
+   "line": [
+    {
+     "move": "e1g1",
+     "say": "A rook sacrifice: the capture on g1 forces the king to recapture."
+    },
+    {
+     "move": "h1g1",
+     "say": "The king takes the rook. Its shelter is now the first rank, with no air."
+    }
+   ],
+   "highlight": [
+    "e1",
+    "g1",
+    "h1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e1g1",
+      "n": 2
+     },
+     "statement": "Black mates in two moves."
+    },
+    {
+     "id": "C2",
+     "type": "attackers",
+     "params": {
+      "square": "g1",
+      "color": "black",
+      "count": 1
+     },
+     "statement": "The rook on e1 attacks g1."
+    }
+   ]
+  },
+  {
+   "type": "board",
+   "fen": "4r2k/6bp/Q5p1/1p6/8/5B2/5NPP/6K1 b - - 0 47",
+   "caption": "Black to move again. The second rook is still on e8. Predict the finish.",
+   "line": [
+    {
+     "move": "e8e1",
+     "say": "The second rook checks along the rank. The pawns hold the king in: mate. One sacrifice dragged the king where the other rook could reach it."
+    }
+   ],
+   "highlight": [
+    "e1",
+    "g1"
+   ],
+   "claims": [
+    {
+     "id": "C1",
+     "type": "mate_in",
+     "params": {
+      "move": "e8e1",
+      "n": 1
+     },
+     "statement": "Black mates in one."
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Recap.** A back-rank mate needs three things together: no flight square, nothing to capture the checker, nothing to block. Any piece that can check along the rank will do. The cure is cheap: a luft, a guard, or noticing that no heavy piece can arrive. Count defenders before an exchange. Look at both kings on every move. Positions with no mate are common, so ask the three questions every time."
+  },
+  {
+   "type": "card",
+   "text": "**Self-check.** Before you write, test yourself. Did I say when it works (all three conditions)? Did I say when it fails (flight, capture, block)? Did I give an example a beginner could set up with a few pieces? Did I name one mistake, such as grabbing a pawn with the only guard? Nothing here is graded; the list is only for you."
+  },
+  {
+   "type": "reflect",
+   "kind": "unsure",
+   "prompt": "Teach it back. Explain back-rank mate and luft to a beginner who knows how the pieces move. Use your own words.",
+   "fields": [
+    {
+     "id": "idea",
+     "label": "The idea:"
+    },
+    {
+     "id": "when",
+     "label": "When it works:"
+    },
+    {
+     "id": "ex",
+     "label": "An example a beginner could set up:"
+    },
+    {
+     "id": "warn",
+     "label": "One warning:"
+    }
+   ]
+  },
+  {
+   "type": "card",
+   "text": "**Remember.** Before each move, ask whether an enemy rook or queen can check your first rank, and whether you can do it to him. Count the defenders of the key square before you trade. A luft, a guard, or no heavy piece to arrive can each cure it. Give luft when a threat is near, not by habit."
+  }
+ ]
+}
