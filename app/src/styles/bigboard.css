@@ -86,3 +86,11 @@
   :root:root main.page:not(:has(.lesson)) section.item:has(> .board-wrap) > * { grid-column: 1; min-width: 0; }
   :root:root main.page:not(:has(.lesson)) section.item:has(> .board-wrap) > .board-wrap { grid-column: 2; grid-row: 1 / 42; position: sticky; top: 0.5rem; width: var(--bsz); margin: 0; max-width: none; }
 }
+
+/* Openings and Analysis turned sideways: the board column as tall as the screen allows, the tree or engine panel beside it. */
+@media (min-width: 700px) and (max-width: 1099px) and (orientation: landscape) {
+  :root:root .opngrid { grid-template-columns: minmax(0, 1fr) calc(var(--bsz) + 3rem); }
+  :root:root .opngrid > aside { position: sticky; top: 0.5rem; }
+  :root:root .opngrid .board-wrap, :root:root .page.stage .analysis .board-wrap { width: var(--bsz); max-width: none; }
+  :root:root .page.stage .analysis { --bsz: min(calc(100svh - 3.5rem), 46vw); grid-template-columns: calc(var(--bsz) + 3rem) minmax(0, 1fr); }
+}
