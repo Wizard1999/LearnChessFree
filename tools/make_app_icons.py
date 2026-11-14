@@ -26,7 +26,10 @@ def render(size, pad, bg=None):
     im = Image.new("RGBA", (big, big), bg or (0, 0, 0, 0)); d = ImageDraw.Draw(im)
     h = big * (1 - 2 * pad); k = h / 38; ox = (big - 32 * k) / 2; oy = (big - h) / 2
     tr = lambda pts: [(ox + x * k, oy + y * k) for x, y in pts]
-    d.polygon(tr(SHIELD), fill="#1f3a5f"); d.line(tr(SHIELD + [SHIELD[0]]), fill="#d9b45a", width=max(2, int(1.6 * k)), joint="curve")
+    d.polygon(tr(SHIELD), fill="#1f3a5f")
+    w = max(2, int(1.6 * k)); pts = tr(SHIELD + [SHIELD[0]])
+    d.line(pts, fill="#d9b45a", width=w)
+    for x, y in pts: d.ellipse((x - w / 2, y - w / 2, x + w / 2, y + w / 2), fill="#d9b45a")   # round joins, including the closing corner
     d.polygon(tr(TOWER), fill="#f6f1e4"); d.polygon(tr(WAVE), fill="#f09a7b")
     return im.resize((size, size), Image.LANCZOS)
 
